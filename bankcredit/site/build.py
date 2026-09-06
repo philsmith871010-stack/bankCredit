@@ -199,13 +199,70 @@ def page_events(board, generated):
     return c.shell("Events", content, "events", "../", generated)
 
 
+def page_brief(board, status, generated):
+    """Rules-based daily brief: what moved in the last seven days, drawn from the same tables as the site."""
+    today = datetime.utcnow().date()
+    since7 = (today - timedelta(days=7)).isoformat()
+    since30 = (today - timedelta(days=30)).isoformat()
+    rows = board["rows"]
+    by_id = {r["id"]: r for r in rows}
+    ratings, news, docs = [], [], []
+    for r in rows:
+        for e in (load(f"banks/{r['id']}").get("events") or []):
+            d = str(e.get("date"))[:10]
+            if d < since7:
+                continue
+            if e.get("type") == "rating" and "affirm" not in str(e.get("title", "")).lower():
+                ratings.append((d, r, e))
+            elif e.get("type") == "news" and e.get("severity") in ("bad", "warn", "good"):
+                news.append((d, r, e))
+            elif e.get("type") == "disclosure":
+                docs.append((d, r, e))
+    ratings.sort(key=lambda x: x[0], reverse=True); news.sort(key=lambda x: (x[2].get("severity") != "bad", x[0]), reverse=False)
+    bm = board.get("benchmarks") or []
+    widen = [b for b in bm if (b.get("change30") or 0) >= 5]
+    tighten = [b for b in bm if (b.get("change30") or 0) <= -5]
+    band_d = [r for r in rows if r.get("band") == "D"]
+    weak_mkt = [r for r in rows if (r.get("market_public") or r.get("market") or {}).get("direction") == "down"]
+    unverified = [d for d in (status.get("documents") or []) if d["status"] == "unverified" and d["fetched_at"][:10] >= since7]
+    queue = status.get("review") or []
+
+    def ev_line(d, r, e):
+        url = e.get("url") or ""
+        t = f'<a href="{c.esc(url)}" target="_blank" rel="noopener">{c.esc(e.get("title"))}</a>' if str(url).startswith("http") else c.esc(e.get("title"))
+        return f'<li><span class="mono muted">{d}</span> <a class="b" href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a> · {t} <span class="muted small">{c.esc(e.get("source"))}</span></li>'
+
+    def bank_links(xs):
+        return ", ".join(f'<a href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a>' for r in xs) or "none"
+
+    market_line = ("Credit benchmarks: " + "; ".join(f'{c.esc(b["label"])} {b["value"]:.0f}bp ({"+" if b["change30"] > 0 else ""}{b["change30"]:.0f}bp over 30 days)' for b in bm if b.get("change30") is not None)) if bm else "Credit benchmark series not yet collected."
+    lead = []
+    if widen:
+        lead.append(f'Spreads are wider on the month in {", ".join(c.esc(b["label"]) for b in widen)}.')
+    if tighten:
+        lead.append(f'Tighter on the month: {", ".join(c.esc(b["label"]) for b in tighten)}.')
+    if not widen and not tighten and bm:
+        lead.append("Benchmark spreads are little changed on the month.")
+    lead.append(f'{len(ratings)} rating action{"s" if len(ratings) != 1 else ""} and {len(news)} flagged headline{"s" if len(news) != 1 else ""} in the last seven days across {len(rows)} entities.')
+    content = f'''<div class="page-head"><div><h1>Brief</h1><div class="lede">Machine-drafted from the day's tables by fixed rules, not by a language model. {c.esc(today.isoformat())}. Read the linked sources before acting.</div></div></div>
+<div class="card pad prose">
+<p class="b">{" ".join(lead)}</p>
+<p>{market_line}</p>
+<h3>Rating actions, seven days</h3><ul class="small">{"".join(ev_line(*x) for x in ratings[:40]) or "<li class=muted>No rating changes, watch placements or outlook changes recorded.</li>"}</ul>
+<h3>Headlines that passed the credit filter and carry a flag</h3><ul class="small">{"".join(ev_line(*x) for x in news[:40]) or "<li class=muted>Nothing flagged.</li>"}</ul>
+<h3>New Pillar 3 documents</h3><p class="small">{len(docs)} collected in the last seven days. {len(unverified)} loaded with warnings and shown as unverified; {len(queue)} waiting in the review queue. <a href="../status/index.html">Status</a></p>
+<h3>Watch points</h3><ul class="small"><li>Band D (weakest public score): {bank_links(band_d)}</li><li>Market signal widening or equity weak: {bank_links(weak_mkt)}</li><li>Regulatory figures older than 150 days: {bank_links([r for r in rows if r["age_days"] and r["age_days"] > 150][:25])}</li></ul>
+</div>'''
+    return c.shell("Brief", content, "brief", "../", generated)
+
+
 def page_method(generated):
     pillar_rows = "".join(f'<tr><td class="b">{k.replace("_", " ").title()}</td><td class="mono">{w}</td><td>{", ".join(METRICS.get(m, m) for m in ms)}</td></tr>' for k, (w, ms) in PILLARS.items())
     thr = "".join(f'<tr><td>{METRICS.get(m, m)}</td><td class="mono small">{" · ".join(f"{v}→{s}" for v, s in pts)}</td></tr>' for _, (w, ms) in PILLARS.items() for m, pts in ms.items())
     bands = " · ".join(f'<span class="b">{b}</span> {f} and above' for f, b in BANDS)
     content = f'''<div class="page-head"><div><h1>Method</h1><div class="lede">Version 1, published in full. Information, not advice.</div></div></div>
 <div class="card pad prose">
-<h2>Sources</h2><p>Regulatory figures come from the FDIC API (US banks, lead bank subsidiary), the EBA Pillar 3 Data Hub (EU and EEA banks, consolidated), and each firm's own Pillar 3 disclosures (UK and other regions, extracted from PDF with a fixed template and validation checks). Ratings come from the ESMA European Rating Platform. Prices come from public market data. Every figure on a profile carries its source, method and reference date.</p>
+<h2>Sources</h2><p>Regulatory figures come from the FDIC API (US banks, lead bank subsidiary), the EBA Pillar 3 Data Hub (EU and EEA banks, consolidated), and each firm's own Pillar 3 disclosures (UK and other regions, read from PDF by a rules-based KM1 extractor with arithmetic validation; no AI service). Ratings and rating actions come from the ESMA European Rating Platform. Prices come from public market data. CDS levels are medians of the day's reported trades in DTCC's public swap-data files (indicative, inferred from upfront payments) and iTraxx and CDX index prints from the same source; benchmark bond spreads are ICE BofA option-adjusted spread indices from FRED. Headlines are discovered through Google News and kept only when they pass a credit vocabulary and noise filter. Every figure on a profile carries its source, method and reference date.</p>
 <h2>Score</h2><p>Each metric is converted to a 0 to 100 sub-score by straight-line interpolation between the thresholds below, then averaged within its pillar and weighted. Missing metrics do not score zero: the weights are re-scaled over what is available and the coverage percentage is shown. A band is only assigned when coverage is at least 50 percent.</p>
 <table class="plain"><thead><tr><th>Pillar</th><th>Weight</th><th>Metrics</th></tr></thead><tbody>{pillar_rows}</tbody></table>
 <h3>Thresholds (value → sub-score)</h3><table class="plain"><tbody>{thr}</tbody></table>
@@ -258,6 +315,8 @@ def build():
         (OUT / "banks" / f"{r['id']}.html").write_text(page_bank(load(f"banks/{r['id']}"), generated))
     (OUT / "events" / "index.html").write_text(page_events(board, generated))
     (OUT / "method" / "index.html").write_text(page_method(generated))
+    (OUT / "brief").mkdir(exist_ok=True)
+    (OUT / "brief" / "index.html").write_text(page_brief(board, status, generated))
     (OUT / "status" / "index.html").write_text(page_status(status, board, generated))
     (OUT / ".nojekyll").write_text("")
     print(f"built site/ with {len(board['rows'])} bank pages")

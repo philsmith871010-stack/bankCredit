@@ -144,7 +144,8 @@ def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | 
 
 
 NAV = [("board", "Board", "grid", "index.html"), ("banks", "Bank profiles", "bank", "banks/index.html"),
-       ("events", "Events", "activity", "events/index.html"), ("method", "Method", "list", "method/index.html"),
+       ("events", "Events", "activity", "events/index.html"), ("brief", "Brief", "doc", "brief/index.html"),
+       ("method", "Method", "list", "method/index.html"),
        ("status", "Status", "status", "status/index.html")]
 
 

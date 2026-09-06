@@ -9,7 +9,7 @@ on:
     inputs:
       adapters:
         description: "Adapters to run (space separated), default all daily"
-        default: "esma yahoo pillar3 events fred"
+        default: "esma yahoo pillar3 events fred dtcc"
 permissions:
   contents: write
   pages: write
@@ -25,7 +25,7 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Daily adapters (scheduled or manual)
         if: ${{ github.event_name != 'push' }}
-        run: python -m bankcredit.cli run ${{ github.event.inputs.adapters || 'esma yahoo pillar3 events fred' }}
+        run: python -m bankcredit.cli run ${{ github.event.inputs.adapters || 'esma yahoo pillar3 events fred dtcc' }}
       - name: Load answers from the review queue
         if: ${{ github.event_name != 'push' }}
         run: python -m bankcredit.cli review ingest
