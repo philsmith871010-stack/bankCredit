@@ -232,7 +232,7 @@ Recommendation: Python ingestion on GitHub Actions (or a VPS) writing to a small
 
 1. Universe: how many banks in the first cut? Suggest the roughly 80 EU/EEA large institutions, top 50 US by assets plus any watch list, the 10 UK banks and 8 largest building societies, and 20 other global names.
 2. Whether to rely on the unofficial P3DH Power BI route now (fast, complete, could break) or wait for the EBA's promised bulk download and use per-bank zip downloads meanwhile.
-3. Budget for EODHD (about £16 a month) versus free-only sources for news and prices.
+3. Decided 6 September 2026: free sources only for the initial release. Paid services (for example EODHD for full-text news and licensed prices) can be added later. Initial stack: Yahoo endpoints for prices and realised volatility (with a fallback to Stooq-style CSVs or exchange pages if they break), Google News RSS and GDELT for discovery, regulator and RNS feeds plus ESMA rating actions as primary sources, Claude for classification.
 4. Storage: Parquet in the repo (simple, versioned, fine for tens of megabytes) versus a hosted Postgres.
 5. Whether the private inputs (vol, spreads, ratings) live in the same repo (private repo required) or a separate private store.
 
