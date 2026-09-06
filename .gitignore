@@ -1,6 +1,6 @@
 __pycache__/
 *.pyc
 .venv/
-site/
+/site/
 data/cache/
 *.log
