@@ -36,16 +36,16 @@ class FredAdapter(Adapter):
 
     def fetch(self, item):
         last = None
-        for attempt in range(3):
+        for attempt in range(2):
             try:
-                r = self.session.get(URL, params={"id": item}, timeout=(20, 120),
+                r = self.session.get(URL, params={"id": item}, timeout=(15, 45),
                                      headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 Chrome/128 Safari/537.36"})
                 r.raise_for_status()
                 return r.text
             except Exception as exc:          # FRED is slow to first byte at times; retry with a pause
                 last = exc
                 import time
-                time.sleep(5 * (attempt + 1))
+                time.sleep(3)
         raise RuntimeError(f"{item}: {last}")
 
     def parse(self, item, raw) -> list[dict]:
