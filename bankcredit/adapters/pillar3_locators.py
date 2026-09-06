@@ -10,6 +10,7 @@ Fields
   kind      html (default) | nsm (site blocked, NSM only) | browser (site blocked and not on NSM;
             collected on the Mac with a real browser by the review skill) | pattern (no listing page:
             `urls` are templates tried for the last six fiscal quarters with {year} {yy} {q} {qend})
+  template  km1 (default) | us_capital (US Pillar 3 report) | us_lcr (US LCR public disclosure)
   note      free text for the maintainer
 """
 from __future__ import annotations
@@ -163,6 +164,34 @@ LOCATORS: list[dict] = [
     dict(entity="emirates-nbd", page="https://www.emiratesnbd.com/en/investor-relations/basel-iii-pillar-3", match=r"(basel|pillar).*\.pdf", currency="AED", kind="browser"),
     dict(entity="adcb", page="https://www.adcb.com/en/about-us/investor-relations/basel-iii/", match=r"(basel|pillar).*\.pdf", currency="AED", kind="browser"),
     dict(entity="qnb", page="https://www.qnb.com/sites/qnb/qnbglobal/page/en/eninvestorrelations.html", match=r"(basel|pillar).*\.pdf", currency="QAR", kind="browser"),
+]
+
+# ---- United States: holding-company Pillar 3 reports and LCR disclosures ----------
+LOCATORS += [
+    dict(entity="wells-fargo", kind="pattern", template="us_capital", currency="USD",
+         urls=["https://www.wellsfargo.com/assets/pdf/about/investor-relations/basel-disclosures/{year}-{qword}-quarter-pillar-3-disclosure.pdf"]),
+    dict(entity="wells-fargo", kind="pattern", template="us_lcr", currency="USD",
+         urls=["https://www.wellsfargo.com/assets/pdf/about/investor-relations/lcr-disclosures/{year}-{qword}-quarter-lcr-disclosure.pdf"]),
+    dict(entity="bank-of-america", template="us_capital", currency="USD",
+         page="https://investor.bankofamerica.com/regulatory-and-other-filings/basel-pillar-3-disclosures/pillar-3-regulatory-capital-disclosures",
+         match=r"cloudfront\.net/.*pillar.?3.?disclosure.*\.pdf", exclude=r"europe|securities|merrill"),
+    dict(entity="bank-of-america", template="us_lcr", currency="USD",
+         page="https://investor.bankofamerica.com/regulatory-and-other-filings/basel-pillar-3-disclosures/pillar-3-regulatory-liquidity-disclosures",
+         match=r"cloudfront\.net/.*liquidity.?coverage.?ratio.*\.pdf", exclude=r"nsfr|net.?stable"),
+    dict(entity="northern-trust", kind="pattern", template="us_capital", currency="USD",
+         urls=["https://www.northerntrust.com/content/dam/northerntrust/pws/nt/documents/earnings/pillar-3/northern-trust-pillar3-northern-trust-corporation-{year}Q{q}.pdf",
+               "https://www.northerntrust.com/content/dam/northerntrust/pws/nt/documents/earnings/pillar-3/northern-trust-pillar-3-northern-trust-corporation-{year}Q{q}.pdf"]),
+    dict(entity="jpmorgan-chase", kind="browser", template="us_capital", currency="USD",
+         page="https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures", match=r"static-files",
+         note="listing blocks scripts; Pillar 3 and LCR PDFs open once known"),
+    dict(entity="citigroup", kind="browser", template="us_capital", currency="USD",
+         page="https://www.citigroup.com/global/investors", match=r"rcs/citigpa/storage/public/.*(basel|pillar).*\.pdf"),
+    dict(entity="state-street", kind="browser", template="us_capital", currency="USD",
+         page="https://investors.statestreet.com/filings-and-reports/supplemental-public-disclosure-of-basel-iii-regulatory-capital/default.aspx", match=r"q4cdn\.com/.*P3-Capital.*\.pdf"),
+    dict(entity="goldman-sachs", kind="browser", template="us_capital", currency="USD",
+         page="https://www.goldmansachs.com/investor-relations/financials/other-information", match=P3 + r".*\.pdf", note="CET1 and SLR also come from EDGAR XBRL"),
+    dict(entity="ubs", kind="browser", currency="USD",
+         page="https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html", match=P3 + r".*\.pdf", note="UBS KM1 in the quarterly Pillar 3 report"),
 ]
 
 COUNTRY_CCY = {"GB": "GBP", "US": "USD", "AU": "AUD", "CA": "CAD", "SG": "SGD", "HK": "HKD", "JP": "JPY",

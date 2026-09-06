@@ -75,7 +75,7 @@ def ingest() -> int:
         ccy = ans.get("currency") or (item or {}).get("currency", "")
         facts = []
         from .extract.km1 import ROWS, PUBLISH
-        kinds = {m: k for _, (m, _, k) in ROWS.items()}
+        from .extract.km1 import KIND as kinds
         for metric, value in ans["values"].items():
             if metric not in PUBLISH or value is None:
                 continue

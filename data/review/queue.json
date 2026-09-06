@@ -909,5 +909,29 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-09-06T19:45:38"
+ },
+ {
+  "id": "95227de6c7e3",
+  "entity_id": "northern-trust",
+  "url": "https://www.northerntrust.com/content/dam/northerntrust/pws/nt/documents/earnings/pillar-3/northern-trust-pillar3-northern-trust-corporation-2025Q3.pdf",
+  "local": "cache/pdf/northern-trust/95227de6c7e3fdab.pdf",
+  "title": "northern-trust-pillar3-northern-trust-corporation-2025Q3.pdf",
+  "page": null,
+  "reference_date": "2025-09-30",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no CET1 ratio found"
+   ],
+   [
+    "warn",
+    "SLR not found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T21:22:15"
  }
 ]

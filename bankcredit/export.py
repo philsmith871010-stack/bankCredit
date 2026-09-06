@@ -39,9 +39,14 @@ def _series(facts: pd.DataFrame) -> dict:
         return out
     for metric, g in facts.groupby("metric"):
         g = g.sort_values("reference_date")
-        # keep one value per reference date, preferring the most confident source
-        g = g.sort_values(["reference_date", "confidence"]).drop_duplicates("reference_date", keep="last")
-        out[metric] = [{"d": str(r.reference_date)[:10], "v": _clean(float(r.value)), "src": r.source,
+        # A consolidated (holding company) series replaces a lead-bank proxy when it is reasonably current;
+        # otherwise both are kept and the latest date wins, each point carrying its basis.
+        cons = g[g.basis == "consolidated"]
+        if not cons.empty and (pd.Timestamp(g.reference_date.max()) - pd.Timestamp(cons.reference_date.max())).days <= 120:
+            g = cons
+        g = g.assign(_basis_rank=(g.basis == "consolidated").astype(int))
+        g = g.sort_values(["reference_date", "_basis_rank", "confidence"]).drop_duplicates("reference_date", keep="last")
+        out[metric] = [{"d": str(r.reference_date)[:10], "v": _clean(float(r.value)), "src": r.source, "basis": r.basis,
                         "doc": r.document, "page": _clean(r.page) if hasattr(r, "page") else None,
                         "method": r.method, "conf": _clean(float(r.confidence))} for r in g.itertuples()]
     return out

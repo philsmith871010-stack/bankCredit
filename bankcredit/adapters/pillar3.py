@@ -26,7 +26,7 @@ from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
 
 from .. import review, store
-from ..extract import km1
+from ..extract import km1, us
 from ..models import Fact
 from .base import Adapter, register
 from .pillar3_locators import COUNTRY_CCY, LOCATORS
@@ -142,7 +142,8 @@ class Pillar3Adapter(Adapter):
                 if end > today:
                     continue
                 for tpl in loc["urls"]:
-                    u = tpl.format(year=y, yy=f"{y % 100:02d}", q=q, qend=end.isoformat())
+                    u = tpl.format(year=y, yy=f"{y % 100:02d}", q=q, qend=end.isoformat(),
+                                   qword=("first", "second", "third", "fourth")[q - 1])
                     out.append((u, end, u.rsplit("/", 1)[-1]))
         return out[:12]
 
@@ -275,10 +276,10 @@ class Pillar3Adapter(Adapter):
         results = []
         for ent, url, path, sha, hint, title, origin in raw:
             e = self.by_id[ent]
-            loc = next((l for l in LOCATORS if l["entity"] == ent), {})
+            loc = self._locator_for(ent, url)
             ccy = loc.get("currency") or COUNTRY_CCY.get(e.country, "")
             try:
-                res = km1.extract(str(path), hint_date=hint, currency_hint=ccy, year_end=loc.get("year_end", "12-31"))
+                res = self._extract(loc, str(path), hint, ccy)
             except Exception as exc:
                 self._record(ent, url, sha, None, None, "error", 0.0, f"extract failed: {exc}", title, origin, {})
                 continue
@@ -325,8 +326,7 @@ class Pillar3Adapter(Adapter):
         e = self.by_id[entity_id]
         loc = next((l for l in LOCATORS if l["entity"] == entity_id), {})
         ccy = loc.get("currency") or COUNTRY_CCY.get(e.country, "")
-        res = km1.extract(str(cached), hint_date=infer_period(Path(path).name, loc.get("year_end", "12-31")), currency_hint=ccy,
-                          year_end=loc.get("year_end", "12-31"))
+        res = self._extract(loc, str(cached), infer_period(Path(path).name, loc.get("year_end", "12-31")), ccy)
         self.load([(entity_id, url, cached, sha, title or Path(path).name, origin, res)])
         row = self.docs = store.read("documents")
         status = row[row.url == url].status.iloc[-1] if not row.empty and (row.url == url).any() else "error"
@@ -356,7 +356,7 @@ class Pillar3Adapter(Adapter):
             ccy = loc.get("currency") or (COUNTRY_CCY.get(e.country, "") if e else "")
             hint = infer_period(r.title or "", loc.get("year_end", "12-31"))
             try:
-                res = km1.extract(str(path), hint_date=hint, currency_hint=ccy, year_end=loc.get("year_end", "12-31"))
+                res = self._extract(self._locator_for(r.entity_id, r.url), str(path), hint, ccy)
             except Exception as exc:
                 self._record(r.entity_id, r.url, r.sha256, None, None, "error", 0.0, f"extract failed: {exc}", r.title, r.origin, {})
                 counts["error"] = counts.get("error", 0) + 1
@@ -368,8 +368,26 @@ class Pillar3Adapter(Adapter):
             counts[status] = counts.get(status, 0) + 1
         return counts
 
+    @staticmethod
+    def _extract(loc: dict, path: str, hint, ccy: str) -> km1.Result:
+        tpl = (loc or {}).get("template", "km1")
+        if tpl == "us_capital":
+            return us.extract_capital(path, hint_date=hint)
+        if tpl == "us_lcr":
+            return us.extract_lcr(path, hint_date=hint)
+        return km1.extract(path, hint_date=hint, currency_hint=ccy, year_end=(loc or {}).get("year_end", "12-31"))
+
+    @staticmethod
+    def _locator_for(entity_id: str, url: str = "") -> dict:
+        """The locator that produced a document: match on URL when an entity has several."""
+        cands = [l for l in LOCATORS if l["entity"] == entity_id]
+        for l in cands:
+            if url and (l.get("match") and re.search(l["match"], unquote(url), re.I) or any(u.split("{")[0] in url for u in l.get("urls", []))):
+                return l
+        return cands[0] if cands else {}
+
     def _facts(self, ent: str, url: str, res: km1.Result) -> list[Fact]:
-        kinds = {m: k for _, (m, _, k) in km1.ROWS.items()}
+        kinds = km1.KIND
         out = []
         for metric, value in res.values.items():
             if metric not in km1.PUBLISH:

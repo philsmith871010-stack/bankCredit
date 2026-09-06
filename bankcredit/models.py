@@ -69,6 +69,7 @@ METRICS = {
     "tier1_ratio": "Tier 1 capital ratio",
     "total_capital_ratio": "Total capital ratio",
     "leverage_ratio": "Leverage ratio",
+    "tier1_leverage": "Tier 1 leverage ratio (US definition, average assets)",
     "lcr": "Liquidity coverage ratio",
     "nsfr": "Net stable funding ratio",
     "rwa": "Risk-weighted assets (currency millions)",

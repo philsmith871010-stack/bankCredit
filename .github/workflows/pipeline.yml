@@ -34,7 +34,7 @@ jobs:
       - name: Quarterly adapters on the 1st, 15th and 25th
         if: ${{ github.event_name == 'schedule' }}
         run: |
-          d=$(date -u +%d); case "$d" in 01|15|25) python -m bankcredit.cli run fdic eba ;; *) echo "skip";; esac
+          d=$(date -u +%d); case "$d" in 01|15|25) python -m bankcredit.cli run fdic eba edgar ;; *) echo "skip";; esac
         continue-on-error: true
       - name: Export and build site
         env:

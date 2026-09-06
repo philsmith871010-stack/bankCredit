@@ -72,11 +72,12 @@ LABEL_ROWS = [
     ("nsfr", r"^(?:net stable funding ratio|nsfr(?: ratio)?)$"),
 ]
 KIND = {m: k for _, (m, _, k) in ROWS.items()}
+KIND["tier1_leverage"] = "pct"
 CORE = ("cet1_capital", "rwa", "cet1_ratio", "leverage_ratio")
 # metrics that go to the facts table (the rest are kept in the document record only)
 PUBLISH = ("cet1_capital", "tier1_capital", "total_capital", "rwa", "cet1_ratio", "tier1_ratio",
            "total_capital_ratio", "overall_capital_requirement", "leverage_exposure", "leverage_ratio",
-           "lcr", "nsfr")
+           "lcr", "nsfr", "tier1_leverage")
 BOUNDS = {"cet1_ratio": (3, 80), "tier1_ratio": (3, 80), "total_capital_ratio": (3, 90),
           "leverage_ratio": (1.5, 40), "lcr": (60, 2500), "nsfr": (60, 1200),
           "overall_capital_requirement": (6, 30), "total_srep_requirement": (3, 25),
@@ -118,16 +119,21 @@ class Result:
     currency: str = ""
     scale: float = 1.0                                 # multiplier applied to raw amounts -> millions
     checks: list = field(default_factory=list)         # (severity, message); severity error|warn
-    template: str = ""                                 # UK KM1 | EU KM1 | KM1
+    template: str = ""                                 # UK KM1 | EU KM1 | KM1 | US Pillar 3 | US LCR
+    fixed_confidence: float | None = None              # set by extractors with their own scale (US documents)
 
     @property
     def ok(self) -> bool:
         """No validation errors and the capital rows present; a missing leverage row is an error only
         where the template requires it (validate() decides), so it is not re-checked here."""
+        if self.template.startswith("US"):
+            return not any(s == "error" for s, _ in self.checks) and bool(self.values)
         return not any(s == "error" for s, _ in self.checks) and all(m in self.values for m in ("cet1_capital", "rwa", "cet1_ratio"))
 
     @property
     def confidence(self) -> float:
+        if self.fixed_confidence is not None:
+            return self.fixed_confidence
         if not self.values:
             return 0.0
         errors = sum(1 for s, _ in self.checks if s == "error")

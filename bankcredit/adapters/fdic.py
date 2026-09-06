@@ -32,7 +32,7 @@ RATIOS = {
     "cet1_ratio": "RBCT1CER",
     "tier1_ratio": "IDT1RWAJR",
     "total_capital_ratio": "RBCRWAJ",
-    "leverage_ratio": "RBC1AAJ",
+    "tier1_leverage": "RBC1AAJ",      # US Tier 1 leverage on average assets; not the Basel leverage ratio
     "npl_ratio": "NCLNLSR",
     "roa": "ROA",
     "roe": "ROE",
