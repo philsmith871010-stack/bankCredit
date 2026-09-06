@@ -1,7 +1,7 @@
 name: Counterparty pipeline
 on:
   push:
-    branches: [main, claude/bank-credit-analysis-l5vmne]
+    branches: [main]
     paths-ignore: ["docs/**", "design/**", "research/**"]
   schedule:
     - cron: "10 5 * * *"     # daily 06:10 UK (BST) / 05:10 UTC
