@@ -306,3 +306,65 @@ The workable design is a per-firm "locator" record (page URL, link pattern, cade
 - Query notes: filter `type_s:parent` for the current state and `type_s:child` for the action history; `ratedObjectCode:ISR` gives issuer-level ratings and `INT` gives individual bonds; exclude `ratingStatusLabel:Withdrawal`; `issuerRatingName` distinguishes deposit, issuer, counterparty and resolution counterparty ratings; `racValidityDatetimeStr` is the action date. Child records carry press-release links. The register updates daily.
 - SEC Rule 17g-7(b) rating history files. Each US-registered agency must publish XBRL histories of all its ratings monthly, and these also cover global issuers because the registered entity is the group. The Moody's financial-institutions file from the community mirror at ratingshistory.info (88 MB CSV, July 2024 snapshot) contains Barclays (10,563 rows), Lloyds, Nationwide, Coventry, Yorkshire, Skipton, Deutsche Bank, Mitsubishi UFJ, Commonwealth Bank, Royal Bank of Canada and Santander. Caveats: the agencies' own download pages (Moody's `ratings.moodys.com/sec-17g-7b`, Fitch, S&P `disclosure.spglobal.com`) are JavaScript apps or return 403 to scripts, so fetching the fresh monthly files needs a browser session; the mirror's freshness must be checked before relying on it.
 - Recommendation: ESMA for current ratings and daily actions across all agencies, with the 17g-7 files as the long-history backfill. Both are public regulatory disclosures, so storing them privately for scoring is clean. Do not scrape the agencies' commercial sites.
+
+### 12.4 UK firm-by-firm: can a script fetch the Pillar 3 PDFs? [V]
+
+Tested 6 September 2026 with plain HTTP (desktop browser User-Agent, no JavaScript). "Plain HTTP" means the listing page's raw HTML contains the PDF links and the newest PDF downloaded with a PDF header. Reference date is that of the newest Pillar 3 found.
+
+| Firm | Plain HTTP? | Newest found | Cadence | Notes |
+|---|---|---|---|---|
+| Barclays PLC and subsidiaries | Yes | 30 Jun 2026 | Quarterly | Links inside CMS JSON on the financial-results page; folder pattern stable, filenames vary |
+| HSBC Holdings, HSBC UK Bank, HSBC Bank | Yes | 30 Jun 2026 | Quarterly | Most stable URL pattern of any UK bank |
+| Lloyds Banking Group and subsidiaries | No | 31 Dec 2025 | Quarterly | Akamai bot manager blocks pages and PDFs; not on the FCA NSM either. Needs a real browser |
+| NatWest Group and subsidiaries | Yes | 30 Jun 2026 | Quarterly | Publish-date folders, so scrape the results centre rather than guess |
+| Standard Chartered | Yes | 30 Jun 2026 | Quarterly | Also files every report on the FCA NSM |
+| Santander UK | Yes | 30 Jun 2026 | Quarterly | Called "ACRMD", not Pillar 3; opaque asset URLs |
+| Virgin Money UK, Clydesdale Bank | Yes | 31 Dec 2025 | Quarterly | Simple download path; now inside Nationwide |
+| TSB | Yes | 30 Jun 2026 | Quarterly | "Large Subsidiary Disclosure"; links in CMS JSON |
+| Co-operative Bank | Yes | 31 Mar 2026 | Semi-annual plus Q1 and Q3 | Clean pattern |
+| Metro Bank | Yes | 30 Jun 2026 | Semi-annual | Folder moves yearly |
+| Monzo | Partly | 31 Mar 2026 | Annual | Use the annual-report page; investor page uses JavaScript buttons |
+| Starling | Yes | 31 Mar 2026 | Annual | Links in page JSON; stable filename |
+| Revolut | No | 30 Jun 2025 | Semi-annual | Cloudflare challenge on the listing page; PDFs open once known |
+| OSB Group (including Charter Court) | Yes | 30 Jun 2026 | Quarterly | Hashed paths, scrape the page |
+| Paragon | No | 31 Mar 2026 | Semi-annual | Cloudflare on pages and PDFs; fully covered by the FCA NSM |
+| Close Brothers | No | 31 Jul 2025 | Annual | JavaScript shell, PDFs return 401; fully covered by the FCA NSM |
+| Shawbrook | Yes | 30 Jun 2026 | Semi-annual | Main site fine; investor subdomain refused by this proxy only |
+| Aldermore | Yes | 31 Dec 2025 | Semi-annual | |
+| Atom | Yes | 31 Mar 2026 | Semi-annual | Links in page JSON; path prefix differs from JSON |
+| Investec plc | No | 31 Dec 2024 | Quarterly | Cloudflare on pages; PDFs open once known |
+| Tandem, Zopa, Secure Trust, Vanquis, Hampshire Trust, Allica, OakNorth, Kroo | Yes | 2025 to Jun 2026 | Annual or semi-annual | Zopa needs a full browser header set; the rest are simple |
+| ClearBank | Partly | 31 Dec 2025 | Annual | JavaScript shell on the page; stable PDF filename |
+| Arbuthnot | Partly | 30 Jun 2025 | Semi-annual | PDF not linked from the documents page |
+| Cambridge & Counties | Yes | 31 Dec 2024 | Annual | Published as Word documents |
+| Handelsbanken plc | Yes | latest | Annual | Extension-less document IDs |
+| AIB UK, Danske UK, Bank of Ireland UK | No UK page | group documents | Group cadence | Covered by group Pillar 3 on the parent's site |
+| Sainsbury's Bank, Tesco Bank | Ceased | | | Absorbed by NatWest and Barclays |
+| Recognise, Chetwood, Griffin | Not found | | | Likely small domestic deposit takers with no Pillar 3 |
+
+| Building society | Plain HTTP? | Newest found | Cadence | Notes |
+|---|---|---|---|---|
+| Nationwide | Yes | 30 Jun 2026 | Quarterly | |
+| Yorkshire | Yes | 30 Jun 2026 | Quarterly | Extension-less URLs; slug format changes yearly |
+| Coventry | Yes | 31 Mar 2026 | Quarterly | |
+| Skipton | Yes | 30 Jun 2026 | Quarterly | Most predictable pattern; also files annual on the FCA NSM |
+| Leeds | Yes | 30 Jun 2026 | Quarterly | Folder moved this year |
+| Principality | Yes | 31 Dec 2025 | Annual | GUID paths |
+| West Brom | Yes | 30 Sep 2025 | Semi-annual | |
+| Nottingham | Yes | 30 Jun 2026 | Semi-annual | |
+| Newcastle | Partly | 31 Dec 2024 | Annual | No listing page found; PDF on a third-party CDN |
+| Cumberland | Yes | 31 Mar 2024 | Annual | Nothing newer listed |
+| Monmouthshire, Marsden | Yes | undated | Annual | Single URL overwritten each year, so no history survives |
+| Saffron, Ecology | Partly | 31 Dec 2024 | Annual | PDF found by search, listing page not confirmed |
+| Leek, Darlington, Melton, Market Harborough | Yes | 31 Dec 2023 | Stopped | Last published for 2023 |
+| Family, Hinckley & Rugby, Suffolk | Discontinued | 2021 to 2023 | Stopped | Small domestic deposit taker regime removed the requirement |
+| Remaining small societies | Not checked | | | Below the top 20 by assets; most have dropped Pillar 3 since 2025 |
+
+Conclusions:
+
+- About four fifths of firms with a live Pillar 3 programme can be collected with plain HTTP. Every PDF on those sites downloaded cleanly.
+- Six need a headless browser for the listing page: Lloyds, Revolut, Paragon, Investec, Close Brothers, ClearBank. Paragon and Close Brothers are fully covered by the FCA NSM instead, leaving Lloyds as the only large firm with no script-friendly route.
+- URL patterns are stable for HSBC, Skipton, Nationwide, Co-op, Starling, Secure Trust, ClearBank, Allica and Kroo; opaque for NatWest, OSB, Shawbrook, Nottingham, Santander, Yorkshire, Principality and Handelsbanken, which is fine as long as the listing page is scraped rather than URLs guessed.
+- Sniff the PDF header rather than trusting extensions: several firms serve extension-less URLs, one serves Word files and two serve spreadsheets.
+- The small-society tail has been shrinking since the 2025 small domestic deposit taker regime; expect annual Pillar 3 from perhaps 25 societies, not 40.
+- The FCA NSM criterion for company works as a plain string as well (for example company "Paragon Banking Group" with headline "Pillar"), which is the simplest way to poll the firms that file there.
