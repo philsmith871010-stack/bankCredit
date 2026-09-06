@@ -152,7 +152,7 @@ Beta runs as a static site on GitHub Pages; once you are happy it is handed to y
 |---|---|---|---|
 | 0 Foundations | 1 to 2 | Design canvas signed off; entity master for 130 names with locators; schema; storage; CI; adapter skeleton | A profile page renders from seeded data in the PWLBtoday shell |
 | 1 UK and EU core | 3 to 8 | FDIC, EBA hub, Transparency Exercise adapters; UK Pillar 3 fetch and KM1 extraction with review queue; ESMA ratings; Yahoo prices; Board and Profile pages; Method page draft | Board shows all UK and EU names with dated KM1 metrics and ratings; extraction accuracy above 98 percent on a 50-document sample |
-| 2 Signals and voice | 9 to 12 | News collectors and labelling; Events page; daily Brief; ICE and DTCC CDS; score version one with overlay; alerts; PDF export | Brief published daily for two weeks with editor review; back-test published |
+| 2 Signals and voice | 9 to 12 | News collectors and labelling; Events page; daily Brief; ICE and DTCC CDS; benchmark spread series (iTraxx Financials from DTCC, ICE BofA indices from FRED) with a bank-versus-sector divergence view; bank bond discovery (ESMA FIRDS) and daily pricing (Börse Frankfurt, LuxSE) feeding the overlay; score version one with overlay; alerts; PDF export | Brief published daily for two weeks with editor review; back-test published |
 | 3 Global and polish | 13 to 15 | Australia, Canada, Asia, Gulf, US adapters; Compare and Peers; Status page; performance and accessibility pass; launch | All 130 names populated; Lighthouse and accessibility targets met; launch inside PWLBtoday |
 | Ongoing | | Locator maintenance, review queue, method versioning, standalone site decision | |
 

@@ -491,3 +491,27 @@ Conclusions:
 - US banks use the US regulatory template rather than KM1, but the FDIC API gives their ratios directly, so their PDFs are not needed.
 - Language: English is available everywhere except QIB Qatar's newest half-year report (Arabic only) and BOCHK's parallel Chinese edition.
 - Three banks (ANZ, NAB, Westpac) encrypt their PDFs; readable, but the parser needs a crypto backend, which is another reason to prefer their spreadsheets.
+
+## 16. Credit news vendors, benchmark spreads and bank bond prices [V]
+
+Added 6 September 2026, answering three questions: does Cbonds have an open news endpoint, should the site show benchmark credit spreads, and can bank bond prices be sourced free.
+
+### 16.1 Cbonds news: no open endpoint
+
+- No RSS or Atom feed exists. The .com site, its news page, sitemaps and the JSON call the page makes are behind a Cloudflare challenge. The Russian mirror answers anonymously, but its English feed carries only syndicated third-party wire (SEC filings, PR Newswire, RNS) rather than Cbonds' own newswire, and article bodies are login-walled.
+- The official API has news methods (English and Russian public news, 35 sections including Ratings, Defaults and restructuring, Syndicated loans) but the demo user returns zero rows; it is a paid product at roughly $350 a month upward, with redistribution licensed separately by request.
+- Both the .com and .ru user agreements prohibit automated access and any republication.
+- Their own wire is bank-relevant (new issues, coupon resets, rating affirmations, results, defaults) with real depth in Russia, CIS and emerging markets. Verdict: link target only in the free release; a reasonable paid source later.
+
+### 16.2 Benchmark credit spreads: yes, and free
+
+- FRED serves the ICE BofA option-adjusted spread indices as CSV with no key, daily to 3 September 2026: US corporate (0.81), US high yield (2.65), euro corporate (1.20), euro high yield (2.65), emerging markets, by rating bucket (AAA 0.44, AA 0.61, A 0.69, BBB 1.00) and by maturity bucket (1 to 3 years 0.49 up to 7 to 10 years 0.99). There is no developed-market financials sub-index on FRED.
+- The sector benchmark comes from DTCC's public index prints: a volume-weighted daily series of iTraxx Senior Financials (53 to 55bp over the 15 business days to 4 September 2026, 10 to 30 prints a day), Sub Financials (86 to 89bp), iTraxx Europe, Crossover and CDX IG. This series is derived from public dissemination data and can be displayed. The one gap was 31 August, a UK bank holiday, when no European index printed.
+- Design: plot each bank's spread against the sector index, show the difference and its 30-day change, and flag banks widening while the sector is flat. Because bank-level CDS comes from ICE under restrictive terms, the bank leg is shown as a relative reading (z-score or difference to sector) rather than a level.
+
+### 16.3 Bank bond prices: free and scriptable via Börse Frankfurt
+
+- Börse Frankfurt's website API (`api.boerse-frankfurt.de/v1/data/...`) gives last, open, high, low, previous close, 52-week range, daily OHLC history and master data (issuer, coupon, issue volume, subordinated flag, call type) for any bond listed on the Frankfurt Open Market, which covers essentially every EUR, USD, GBP and AUD benchmark bank bond including AT1 and Tier 2. Requests need three computed headers (a trace id hashed from the timestamp, URL and a salt read from the site bundle). Verified with the Barclays PLC 6.125% AT1: last 99.15 on 4 September 2026, nine days of history, subordinated flag true. No yield field; compute yield to maturity or call from price, coupon and dates. Terms: free only for non-commercial, non-redistributed use, so bond levels feed the private overlay and are displayed only as spread-to-benchmark readings. Script: `research/boerse_frankfurt_probe.py`.
+- Secondary sources verified: Luxembourg Stock Exchange GraphQL (last price and sometimes yield for the many bank EMTN and AT1 programmes listed there), SIX for CHF lines (closing price, yield to worst, bid and ask), ASX for listed Australian hybrids, iShares holdings CSVs (daily marked price for hundreds of bank seniors, no ISIN), SSGA SPDR holdings (ISINs for USD bank bonds, no prices).
+- Discovering each bank's bonds: ESMA FIRDS weekly full files (every instrument admitted to an EU venue with issuer LEI, currency, maturity, coupon; 609 Barclays PLC records in one of four parts) is the best route; the GLEIF ISIN-to-LEI file is a cross-check but misses legacy XS ISINs. Include operating-company LEIs, not just the holding company. Seniority from the Frankfurt subordinated flag plus name tokens; perpetual maturity marks AT1.
+- Impossible for free: US TRACE prints anonymously (the Morningstar bond centre closes 1 October 2026 and its successor needs login and is non-commercial), Canadian and Nordic domestic lines, AUD, SGD, HKD and JPY domestic over-the-counter bonds beyond ASX hybrids, Stuttgart and Euronext prices (blocked or encrypted).
