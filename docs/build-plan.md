@@ -160,6 +160,10 @@ Beta runs as a static site on GitHub Pages; once you are happy it is handed to y
 
 Built and running: the Pillar 3 collector with per-firm locators for 70 firms (`bankcredit/adapters/pillar3_locators.py`), the FCA NSM poll matched by LEI, the KM1 extractor, the documents table, the review queue, the local review skill and Mac runner, the unverified badge and the documents card on the Status page. The extractor handles the UK and EU KM1 (row numbers first), the Basel KM1 used by APRA, MAS and OSFI filers (including the OSFI layout with the row number after the label and quarter labels on a fiscal calendar), tables without row numbers, tables split over two pages, and headers in five date styles. Locators of kind `pattern` reach banks that publish at predictable addresses without a listing page (RBC, TD, CIBC, BMO, Scotiabank). After the first day 87 of 130 entities are scored, from 267 collected documents. Firms whose PDFs carry no extractable text (Coventry) or no KM1 table (TSB quarterlies, pre-2022 small-society documents, CBA) are queued for the local skill; Lloyds, the Gulf banks, OCBC, UOB, Macquarie and the overseas-owned UK subsidiaries without a scriptable page need the browser.
 
+### Phase two status, 6 September 2026
+
+Started the same day, still with no AI service in the pipeline: the `events` adapter (ESMA rating-action history for every entity, every Pillar 3 document as it is collected, and Google News headlines that pass a credit vocabulary and a noise filter, with rules-based severity and a stored-row pruning step so rule improvements clean history) and the `fred` adapter for ICE BofA option-adjusted spread benchmarks shown as a strip on the Board. Still to do in phase two: the daily brief, DTCC iTraxx and single-name CDS snapshots, bond discovery and pricing, and the overlay wiring.
+
 ## 11. Risks
 
 - The EBA hub route is unofficial. Mitigation: adapter isolation, per-bank zip download as fallback, watch for the promised bulk download.

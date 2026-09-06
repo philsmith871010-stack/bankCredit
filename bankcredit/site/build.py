@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 import shutil
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from ..models import METRICS
@@ -41,6 +41,14 @@ def age_badge(asof, age):
     return f'<span class="age{" age-late" if late else ""}" title="Reference date of the latest regulatory figures">{c.esc(asof)}</span>'
 
 
+def benchmark_strip(board):
+    bm = board.get("benchmarks") or []
+    if not bm:
+        return ""
+    cells = "".join(f'<div class="bm"><div class="bm-label">{c.esc(b["label"])}</div><div class="bm-val"><span class="mono big-sm">{b["value"]:.0f}</span><span class="unit">bp</span>{c.chg(b["change30"], 0, "bp") if b.get("change30") is not None else ""}</div>{c.spark(b["spark"])}<div class="muted small mono">{c.esc(b["date"])}</div></div>' for b in bm)
+    return f'<div class="card pad bm-strip"><div class="bm-head"><h3>Credit benchmarks</h3><span class="muted small">ICE BofA option-adjusted spreads via FRED · 30-day change</span></div><div class="bm-grid">{cells}</div></div>'
+
+
 def page_board(board, generated):
     rows = sorted(board["rows"], key=lambda r: (r["score"] is None, -(r["score"] or 0), r["name"]))
     counts = {}
@@ -63,6 +71,7 @@ def page_board(board, generated):
     n_scored = sum(1 for r in rows if r["score"] is not None)
     content = f'''<div class="page-head"><div><h1>Board</h1><div class="lede">{len(rows)} banks and building societies · {n_scored} with enough data to score · figures as of the date on each row</div></div>
 <div class="actions"><label class="search">{c.ico("search", 16, c.MUTED)}<input id="q" type="search" placeholder="Search bank or country" aria-label="Search"></label></div></div>
+{benchmark_strip(board)}
 <div class="filters" id="filters">{filters}</div>
 <div class="card table-card"><div class="table-wrap"><table class="board" id="board"><thead><tr>
 <th data-sort="name">Bank</th><th data-sort="score">Score · peers</th><th>Band</th><th class="num" data-sort="cet1">CET1</th><th class="num" data-sort="leverage">Lev.</th><th class="num" data-sort="lcr">LCR</th><th>Ratings</th><th>Mkt</th><th data-sort="asof">As of</th></tr></thead>
@@ -165,12 +174,28 @@ def page_bank(b, generated):
 
 def page_events(board, generated):
     items = []
+    recent = (datetime.utcnow() - timedelta(days=45)).date().isoformat()
     for r in board["rows"]:
         for e in (load(f"banks/{r['id']}").get("events") or []):
-            items.append((str(e.get("date"))[:10], r, e))
+            d = str(e.get("date"))[:10]
+            # routine affirmations stay on the profile page; the universe feed shows them only when fresh
+            if e.get("type") == "rating" and "affirm" in str(e.get("title", "")).lower() and d < recent:
+                continue
+            items.append((d, r, e))
     items.sort(key=lambda x: x[0], reverse=True)
-    rows = "".join(f'<div class="event"><span class="mono muted">{d}</span><div><a class="b" href="../banks/{r["id"]}.html">{c.esc(r["name"])}</a><div>{c.esc(e.get("title"))}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("severity") or "info"))}</div>' for d, r, e in items[:200])
-    content = f'<div class="page-head"><div><h1>Events</h1><div class="lede">Rating actions, new disclosures and credit-relevant news across the universe, primary sources first</div></div></div><div class="card pad">{rows or "<div class=empty>The events pipeline (rating actions from ESMA, disclosures from the FCA National Storage Mechanism, regulator feeds, labelled news) is phase two. Nothing collected yet.</div>"}</div>'
+    tone = {"bad": "bad", "warn": "warn", "good": "good", "info": "muted"}
+    def row(d, r, e):
+        url = e.get("url") or ""
+        title = f'<a href="{c.esc(url)}" target="_blank" rel="noopener">{c.esc(e.get("title"))}</a>' if url and str(url).startswith("http") else c.esc(e.get("title"))
+        return (f'<div class="event" data-type="{c.esc(e.get("type") or "")}"><span class="mono muted">{d}</span><div><a class="b" href="../banks/{r["id"]}.html">{c.esc(r["name"])}</a>'
+                f'<div>{title}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("type") or ""), "navy")} {c.chip(c.esc(e.get("severity") or "info"), tone.get(e.get("severity"), "muted"))}</div>')
+    rows = "".join(row(d, r, e) for d, r, e in items[:400])
+    counts = {}
+    for _, _, e in items:
+        counts[e.get("type")] = counts.get(e.get("type"), 0) + 1
+    filters = f'<button class="filter active" data-type="all">All · {len(items)}</button>' + "".join(f'<button class="filter" data-type="{c.esc(t)}">{c.esc(t.title())} · {n}</button>' for t, n in sorted(counts.items()))
+    content = (f'<div class="page-head"><div><h1>Events</h1><div class="lede">Rating actions from the ESMA register, Pillar 3 documents as they are collected, and headlines that pass a credit-vocabulary filter. Severity is rules-based; read the source before acting.</div></div></div>'
+               f'<div class="filters" id="event-filters">{filters}</div><div class="card pad" id="events">{rows or "<div class=empty>Nothing collected yet.</div>"}</div>')
     return c.shell("Events", content, "events", "../", generated)
 
 

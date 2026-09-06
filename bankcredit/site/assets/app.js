@@ -22,3 +22,6 @@
   var h=location.hash.replace('#','');if(h){var t=document.querySelector('.tab[data-tab="'+h+'"]');if(t)t.click()}
   paintWatch();
 })();
+
+// Events page: type filter
+(function(){var f=document.getElementById('event-filters');if(!f)return;f.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;f.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b)});var t=b.dataset.type;document.querySelectorAll('#events .event').forEach(function(e){e.hidden=!(t==='all'||e.dataset.type===t)})})})();

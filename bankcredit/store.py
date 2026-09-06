@@ -21,6 +21,7 @@ KEYS = {
     "cds": ["entity_id", "date", "tier", "source"],
     "events": ["entity_id", "event_id"],
     "documents": ["entity_id", "url"],
+    "series": ["series_id", "date"],
     "runs": ["run_id"],
 }
 

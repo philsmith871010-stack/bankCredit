@@ -1,0 +1,240 @@
+"""Events feed: rating actions, new disclosures and credit-relevant news, no AI service.
+
+Three collectors write to the `events` table (key: entity_id + event_id):
+
+  rating      ESMA European Rating Platform action history (type_s:child records on the
+              entity's live issuer-level ratings), last 400 days
+  disclosure  every Pillar 3 document the pillar3 adapter loaded (documents table)
+  news        Google News RSS search per entity, kept only when the headline matches
+              a credit vocabulary and none of the consumer-product noise words
+
+Severity is rules-based: downgrade, watch negative, default, enforcement, loss,
+restatement -> warn or bad; upgrade, positive outlook -> good; everything else info.
+"""
+from __future__ import annotations
+
+import hashlib
+import logging
+import os
+import re
+import time
+import xml.etree.ElementTree as ET
+from datetime import date, datetime, timedelta
+from email.utils import parsedate_to_datetime
+
+from .. import store
+from ..models import Entity
+from .base import Adapter, register
+from .esma import ESMARatingsAdapter
+
+log = logging.getLogger("bankcredit.events")
+
+GNEWS = "https://news.google.com/rss/search"
+SLEEP = 1.0
+SINCE_DAYS = 400
+NEWS_DAYS = 120
+EDITION = {"GB": ("en-GB", "GB", "GB:en"), "US": ("en-US", "US", "US:en"), "AU": ("en-AU", "AU", "AU:en"),
+           "CA": ("en-CA", "CA", "CA:en"), "SG": ("en-SG", "SG", "SG:en"), "HK": ("en-HK", "HK", "HK:en")}
+
+# Headline must contain one of these (credit relevance)...
+CREDIT = re.compile(r"\b(rating|ratings|downgrad\w*|upgrad\w*|outlook|watch|moody'?s|fitch|s&p|dbrs|kbra|scope ratings|"
+                    r"capital|cet1|tier ?1|tier ?2|at1|coco|mrel|tlac|leverage|liquidity|deposit outflow|deposits? (fell|dropped|flight)|"
+                    r"loss|losses|impairment|provision|write-?down|bad loan|non-?performing|npl|"
+                    r"fine[ds]?|penalt\w*|enforcement|sanction\w*|regulator|pra\b|fca\b|ecb\b|bafin|finma|apra|osfi|mas\b|"
+                    r"stress test|resolution|bail-?in|restructur\w*|merger|acqui\w*|takeover|bid for|sale of|dispos\w*|"
+                    r"results|profit|earnings|dividend|buy-?back|guidance|cost of risk|"
+                    r"bond|notes? (offering|issue)|issuance|debt|senior|subordinated|covered bond|securiti[sz]ation|cds\b|spread\w*|"
+                    r"default|insolven\w*|administration|rescue|bailout|run on|lawsuit|litigation|fraud|money laundering|aml\b|"
+                    r"ceo|chief executive|chair\b|chairman|cfo|resign\w*|steps down|appoint\w*|"
+                    r"cyber|outage|data breach|it failure|job cuts?|cut[s]? [\d,]+ jobs|redundanc\w*|layoffs?)", re.I)
+# ...and none of these (retail product and lifestyle noise)
+NOISE = re.compile(r"\b(savings? (rate|account)|isa\b|mortgage rate|fixed rate|best buy|cashback|switch(ing)? (offer|bonus)|"
+                   r"current account|credit card|app\b|branch (opening|closure|closing)|house price|hpi\b|"
+                   r"sponsor\w*|charity|football|rugby|cricket|awards?\b|customer service|scam warning|"
+                   r"job(s)? (cut)?s? at|hiring|apprentice)\b", re.I)
+# equity-research and stock-promotion noise: the bank as analyst, valuation pieces, holdings filings
+ANALYST = re.compile(r"\b(upgrades|downgrades|initiates|reiterates|maintains|raises|cuts|lowers|trims|lifts)\b[^\n]{0,60}\b(stock|shares|price target|to (buy|sell|hold|neutral|overweight|underweight|outperform|underperform))\b", re.I)
+STOCKSPAM = re.compile(r"\b(undervalued|overvalued|fair value|should you buy|worth buying|stock looks|stock (holds|rallies|slips|jumps|dips)|"
+                       r"price target|analyst(s)? (say|says|expect)|shares? in [A-Z]|acquires new (shares|stake)|sells shares|position in|"
+                       r"\$[A-Z]{2,5}\b|13f|top \d+ (stocks|shares)|dividend season|buy rating|sell rating|hold rating|insider (buying|selling))\b", re.I)
+BLOCKED_SOURCES = {"marketbeat", "simplywall.st", "simply wall st", "kalkinemedia.com", "kalkine.ca", "stock titan", "ad hoc news",
+                   "finance.biggo.com", "defense world", "etf daily news", "americanbankingnews", "tickerreport", "zacks",
+                   "seeking alpha", "the motley fool", "gurufocus", "vt markets", "fxstreet", "iam patent", "connect cre",
+                   "insidermonkey", "benzinga", "investorplace", "the globe and mail"}
+# bank economists' macro views, deal-by-deal property news, auto-generated bond and transcript pages
+ECON = re.compile(r"\b(inflation|eurozone|gdp|economist|forex|fx\b|eur/usd|gbp/usd|usd/|treasury yields?|rate (cut|hike|rise)s?|"
+                  r"bond (risk |coupon )?profile|earnings call transcript|dividend watch|income stocks?|directors.? deals|"
+                  r"fund pays|portfolio for|patent|sponsor)\b", re.I)
+BAD = re.compile(r"\b(default|insolven\w*|administration|bailout|rescue|run on|bail-?in|resolution|fraud|money laundering|"
+                 r"restatement|going concern|breach)\b", re.I)
+WARN = re.compile(r"\b(downgrad\w*|negative|loss|losses|impairment|fine[ds]?|penalt\w*|enforcement|sanction\w*|lawsuit|job cuts?|redundanc\w*|layoffs?|"
+                  r"litigation|cyber|outage|deposit outflow|resign\w*|steps down|write-?down|provision)\b", re.I)
+# Short names that are ordinary words or place names: query the full name and require a banking word next to it.
+AMBIGUOUS = {"nationwide", "starling", "coventry", "leeds", "skipton", "nottingham", "newcastle", "cumberland", "family",
+             "progressive", "metro", "principality", "leek", "furness", "suffolk", "saffron", "darlington", "melton",
+             "monmouthshire", "hinckley and rugby", "yorkshire", "west brom", "paragon", "chase", "first direct", "atom",
+             "virgin money uk", "co-operative bank", "handelsbanken plc", "national bank of canada", "westpac", "nab"}
+BANKWORD = r"(building society|bank|banking|bs\b|plc|group|lender|society)"
+GOOD = re.compile(r"\b(upgrad\w*|positive outlook|outlook (revised )?to positive|record profit|beats?|raised guidance)\b", re.I)
+
+
+def severity(title: str) -> str:
+    if BAD.search(title):
+        return "bad"
+    if WARN.search(title):
+        return "warn"
+    if GOOD.search(title):
+        return "good"
+    return "info"
+
+
+def rating_severity(action: str, value: str = "") -> str:
+    low = (action or "").lower()
+    if "default" in low:
+        return "bad"
+    if "downgrade" in low or ("watch" in low and "negative" in low) or "negative" in low:
+        return "warn"
+    if "upgrade" in low or "positive" in low:
+        return "good"
+    return "info"
+
+
+@register
+class EventsAdapter(Adapter):
+    name = "events"
+    cadence = "daily"
+
+    def __init__(self):
+        super().__init__()
+        self.esma = ESMARatingsAdapter()
+        self.session.headers["User-Agent"] = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 "
+                                              "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36")
+
+    def discover(self):
+        only = {x for x in os.environ.get("BANKCREDIT_ONLY", "").split(",") if x}
+        for e in self.entities:
+            if not only or e.id in only:
+                yield e
+        yield "documents"
+
+    # ---- fetch ----
+    def fetch(self, item):
+        if item == "documents":
+            return {"documents": store.read("documents")}
+        e: Entity = item
+        out = {"actions": [], "news": []}
+        try:
+            out["actions"] = self.esma.actions(e, date.today() - timedelta(days=SINCE_DAYS))
+        except Exception as exc:
+            log.warning("events %s: esma actions failed: %s", e.id, exc)
+        try:
+            hl, gl, ceid = EDITION.get(e.country, ("en-GB", "GB", "GB:en"))
+            q = f'"{e.name}"' if (len(e.short_name) <= 3 or e.short_name.lower() in AMBIGUOUS) else f'"{e.short_name}"'
+            r = self.session.get(GNEWS, params={"q": q, "hl": hl, "gl": gl, "ceid": ceid}, timeout=60)
+            time.sleep(SLEEP)
+            if r.status_code == 200:
+                out["news"] = ET.fromstring(r.content).findall(".//item")
+            else:
+                log.warning("events %s: google news %s", e.id, r.status_code)
+        except Exception as exc:
+            log.warning("events %s: news failed: %s", e.id, exc)
+        return out
+
+    # ---- parse ----
+    def parse(self, item, raw) -> list[dict]:
+        rows = []
+        if item == "documents":
+            docs = raw["documents"]
+            if docs.empty:
+                return rows
+            for d in docs[docs.status.isin(["loaded", "unverified"])].itertuples():
+                rows.append({"entity_id": d.entity_id, "event_id": f"doc:{(d.sha256 or d.url)[:16]}",
+                             "date": str(d.fetched_at)[:10], "type": "disclosure",
+                             "title": f"Pillar 3 disclosure collected" + (f" (period {d.reference_date})" if d.reference_date else "") + f": {d.title}",
+                             "source": "FCA NSM" if d.origin == "nsm" else "firm website", "url": d.url,
+                             "severity": "info", "detail": d.status})
+            return rows
+        e: Entity = item
+        for a in raw["actions"]:
+            if not a.get("date"):
+                continue
+            agency = {"fitch": "Fitch", "sp": "S&P", "moodys": "Moody's", "dbrs": "DBRS", "kbra": "KBRA", "scope": "Scope", "jcr": "JCR"}.get(a["agency"], a["agency"])
+            rows.append({"entity_id": e.id, "event_id": f"esma:{a['event_id']}", "date": a["date"].isoformat(), "type": "rating",
+                         "title": f"{agency} {a['action'].lower()}: {a['rating_name']} {a['value']}".strip(),
+                         "source": "ESMA European Rating Platform", "url": "https://registers.esma.europa.eu/publication/searchRegister?core=esma_registers_radar",
+                         "severity": rating_severity(a["action"], a["value"]), "detail": a.get("horizon", "")})
+        cutoff = datetime.utcnow() - timedelta(days=NEWS_DAYS)
+        for it in raw["news"]:
+            title = (it.findtext("title") or "").strip()
+            link = (it.findtext("link") or "").strip()
+            src = it.find("source")
+            source = src.text.strip() if src is not None and src.text else "news"
+            try:
+                when = parsedate_to_datetime(it.findtext("pubDate") or "").replace(tzinfo=None)
+            except Exception:
+                continue
+            if when < cutoff or not title or not link:
+                continue
+            if NOISE.search(title) or not CREDIT.search(title):
+                continue
+            if source.lower() in BLOCKED_SOURCES or STOCKSPAM.search(title) or ANALYST.search(title) or ECON.search(title):
+                continue
+            # the entity must actually be named in the headline (Google widens queries)
+            short = e.short_name.lower()
+            low = title.lower()
+            if short in AMBIGUOUS:
+                if not re.search(rf"\b{re.escape(short)}\b[^.]{{0,30}}{BANKWORD}|{BANKWORD}[^.]{{0,20}}\b{re.escape(short)}\b", low):
+                    continue
+            else:
+                probe = short.split()[0] if len(short.split()[0]) > 3 else short
+                if probe not in low:
+                    continue
+            rows.append({"entity_id": e.id, "event_id": "news:" + hashlib.sha1(link.encode()).hexdigest()[:16],
+                         "date": when.date().isoformat(), "type": "news", "title": title[:240], "source": source[:60],
+                         "url": link, "severity": severity(title), "detail": ""})
+        return rows
+
+    def validate(self, records):
+        return [r for r in records if r["title"] and r["date"]]
+
+    def load(self, records) -> int:
+        return store.upsert("events", records)
+
+    def run(self):
+        result = super().run()
+        prune_news()
+        return result
+
+
+def keep_headline(entity: Entity, title: str, source: str) -> bool:
+    """The full news filter, applied to a stored row as well as to a fresh one."""
+    if NOISE.search(title) or not CREDIT.search(title):
+        return False
+    if (source or "").lower() in BLOCKED_SOURCES or STOCKSPAM.search(title) or ANALYST.search(title) or ECON.search(title):
+        return False
+    short, low = entity.short_name.lower(), title.lower()
+    if short in AMBIGUOUS:
+        return bool(re.search(rf"\b{re.escape(short)}\b[^.]{{0,30}}{BANKWORD}|{BANKWORD}[^.]{{0,20}}\b{re.escape(short)}\b", low))
+    probe = short.split()[0] if len(short.split()[0]) > 3 else short
+    return probe in low
+
+
+def prune_news() -> int:
+    """Re-apply the current news rules to stored rows, so rule improvements clean history too."""
+    from ..entities import load as load_entities
+    ev = store.read("events")
+    if ev.empty:
+        return 0
+    ents = {e.id: e for e in load_entities()}
+    keep = []
+    for r in ev.itertuples():
+        if r.type != "news":
+            keep.append(True)
+            continue
+        e = ents.get(r.entity_id)
+        keep.append(bool(e) and keep_headline(e, str(r.title), str(r.source)))
+    dropped = int(len(keep) - sum(keep))
+    if dropped:
+        ev[keep].to_parquet(store.path("events"), index=False)
+        log.info("events: pruned %d news rows under the current rules", dropped)
+    return dropped

@@ -193,7 +193,7 @@ def export_json() -> None:
             "prices": [{"d": str(x.date)[:10], "c": float(x.close)} for x in p.sort_values("date").tail(260).itertuples()] if not p.empty else [],
             "price_currency": (p.currency.iloc[-1] if not p.empty else None),
             "market_public": {k: market.get(k) for k in ("direction", "label", "vol30", "drawdown52", "last_price_date")},
-            "events": [{k: _clean(v) for k, v in x.items()} for x in ev.sort_values("date", ascending=False).head(50).to_dict("records")] if not ev.empty else [],
+            "events": [{k: _clean(v) for k, v in x.items()} for x in ev.sort_values("date", ascending=False).drop_duplicates(["date", "title"]).head(60).to_dict("records")] if not ev.empty else [],
         })
     # peer bands for the ribbon: 25th, 50th, 75th percentile of final score within peer group
     df = pd.DataFrame(board)
@@ -207,7 +207,20 @@ def export_json() -> None:
                         row["percentile"] = int(round((g.score < row["score"]).mean() * 100))
     for eid, (row, extra) in details.items():
         detail = dict(row); detail.update(extra); store.write_json(f"banks/{eid}", detail)
-    store.write_json("board", {"generated": datetime.utcnow().isoformat(timespec="seconds") + "Z", "rows": board})
+    benchmarks = []
+    series = store.read("series")
+    if not series.empty:
+        for sid, g in series.sort_values("date").groupby("series_id"):
+            g = g.dropna(subset=["value"])
+            if g.empty:
+                continue
+            last = g.iloc[-1]
+            month_ago = g[g.date <= (pd.Timestamp(last.date) - pd.Timedelta(days=30)).strftime("%Y-%m-%d")]
+            prev = float(month_ago.iloc[-1].value) if not month_ago.empty else None
+            benchmarks.append({"id": sid, "label": last.label, "date": str(last.date)[:10], "value": float(last.value),
+                               "change30": round(float(last.value) - prev, 1) if prev is not None else None,
+                               "spark": [float(v) for v in g.value.tail(60)]})
+    store.write_json("board", {"generated": datetime.utcnow().isoformat(timespec="seconds") + "Z", "rows": board, "benchmarks": benchmarks})
     status = []
     if not runs.empty:
         for src, g in runs.sort_values("finished").groupby("source"):

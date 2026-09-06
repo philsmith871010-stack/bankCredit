@@ -16,7 +16,7 @@ import sys
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
-ADAPTER_MODULES = ["fdic", "eba", "esma", "yahoo", "pillar3", "dtcc", "ice"]
+ADAPTER_MODULES = ["fdic", "eba", "esma", "yahoo", "pillar3", "events", "fred", "dtcc", "ice"]
 
 
 def _load_adapters():
@@ -67,6 +67,10 @@ def main(argv=None):
         for sev, msg in res.checks:
             print(f"  [{sev}] {msg}")
         return 0 if status in ("loaded", "unverified") else 1
+    if cmd == "prune-news":
+        from .adapters.events import prune_news
+        print(f"dropped {prune_news()} rows")
+        return 0
     if cmd == "reprocess":
         from .adapters.pillar3 import Pillar3Adapter
         print(Pillar3Adapter().reprocess(args[0] if args else None))

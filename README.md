@@ -17,7 +17,9 @@ python -m bankcredit.cli run esma yahoo fdic eba pillar3
 python -m bankcredit.cli build        # writes site/
 ```
 
-No AI API key is used anywhere. Pillar 3 PDFs are read by a rules-based KM1
+Adapters: `fdic`, `eba` (quarterly), `esma` ratings, `yahoo` prices, `pillar3`
+documents, `events` (rating actions, disclosures, filtered news) and `fred`
+benchmark spreads (daily). No AI API key is used anywhere. Pillar 3 PDFs are read by a rules-based KM1
 extractor (`bankcredit/extract/km1.py`) with arithmetic cross-checks; whatever
 fails goes to `data/review/queue.json`, which is worked through on the
 maintainer's Mac by the repository skill `/counterparty-review` under a Claude
