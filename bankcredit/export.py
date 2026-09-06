@@ -73,6 +73,9 @@ def _ratings_summary(r: pd.DataFrame) -> list[dict]:
     return out
 
 
+CDS_MAX_AGE_DAYS = 10     # a CDS level older than this is not used in the signal or the overlay
+
+
 def _market(prices: pd.DataFrame, cds: pd.DataFrame) -> dict:
     sig = {"direction": "none", "label": "No market data", "vol30": None, "drawdown52": None, "cds5y": None, "cds_change30": None}
     if not prices.empty:
@@ -86,9 +89,17 @@ def _market(prices: pd.DataFrame, cds: pd.DataFrame) -> dict:
             hi = max(closes[-252:])
             sig["drawdown52"] = round(float((closes[-1] / hi - 1) * 100), 1)
         sig["last_price_date"] = str(p.date.iloc[-1])[:10]
+    c = cds.iloc[0:0]
     if not cds.empty:
         c = cds.sort_values("date")
         c = c[c.tier == "senior"] if "tier" in c and (c.tier == "senior").any() else c
+        # a settlement price (ice) beats a trade-derived level (dtcc) on the same day
+        if "source" in c:
+            c = c.assign(_rank=(c.source == "ice").astype(int)).sort_values(["date", "_rank"]).drop_duplicates("date", keep="last")
+        last_date = date.fromisoformat(str(c.date.iloc[-1])[:10])
+        if (date.today() - last_date).days > CDS_MAX_AGE_DAYS:
+            c = c.iloc[0:0]                     # stale: the CDS says nothing about today, fall through to equity
+    if not cds.empty and not c.empty:
         last = float(c.level_bp.iloc[-1])
         ref = c[c.date <= str(date.fromisoformat(str(c.date.iloc[-1])[:10]) - timedelta(days=30))]
         chg = last - float(ref.level_bp.iloc[-1]) if not ref.empty else None

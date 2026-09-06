@@ -41,6 +41,13 @@ INDEXES = {
 }
 # reference-entity name fragments (upper case) -> entity id
 NAMES = {
+    # ICE's abbreviated forms first, longer fragments before shorter ones they contain
+    "LLOYDS BKG": "lloyds-banking-group", "LLOYDS BK PLC": "lloyds-bank", "BK OF SCOTLAND": "bank-of-scotland",
+    "HSBC HLDGS": "hsbc-holdings", "HSBC BK": "hsbc-bank", "NATL WESTMINSTER BK": "natwest-bank",
+    "STD CHARTERED": "standard-chartered", "BCO SANTANDER": "banco-santander", "BK OF AMERICA": "bank-of-america",
+    "CR AGRICOLE": "credit-agricole", "DEUTSCHE BK": "deutsche-bank", "ING BK": "ing", "AUST & NEW ZLD": "anz",
+    "COMWLTH BK": "commonwealth-bank", "NATL AUST BK": "nab", "BCO BPM": "banco-bpm", "SOC GEN": "societe-generale",
+    "BARCLAYS BK": "barclays-bank",
     "BARCLAYS": "barclays", "HSBC HOLDINGS": "hsbc-holdings", "HSBC BANK": "hsbc-bank", "LLOYDS BANKING": "lloyds-banking-group",
     "LLOYDS BANK": "lloyds-bank", "NATWEST GROUP": "natwest-group", "NATIONAL WESTMINSTER": "natwest-bank",
     "STANDARD CHARTERED": "standard-chartered", "NATIONWIDE": "nationwide", "SANTANDER UK": "santander-uk",
