@@ -116,10 +116,24 @@ def _bond_changes(bonds: pd.DataFrame, quotes: pd.DataFrame) -> dict[str, dict]:
 
 
 
-def _market(prices: pd.DataFrame, cds: pd.DataFrame, bond: dict | None = None) -> dict:
+def _index_change(index: pd.DataFrame | None, start: str, end: str) -> float | None:
+    """Change in an index series between the last print on or before each of two dates."""
+    if index is None or index.empty:
+        return None
+    ix = index.sort_values("date")
+    a = ix[ix.date.astype(str) <= start[:10]]
+    b = ix[ix.date.astype(str) <= end[:10]]
+    if a.empty or b.empty:
+        return None
+    return float(b.value.iloc[-1]) - float(a.value.iloc[-1])
+
+
+def _market(prices: pd.DataFrame, cds: pd.DataFrame, bond: dict | None = None, index: pd.DataFrame | None = None) -> dict:
     """Direction of the market's view over 30 days. Precedence: a fresh senior CDS, then the bank's own bonds
-    against peers in the same currency, then the share price. Each rung is used only when the one above is absent."""
+    against peers in the same currency, then the share price. Each rung is used only when the one above is absent.
+    A CDS move is also split into the part shared with iTraxx Senior Financials and the part that is the bank's own."""
     sig = {"direction": "none", "label": "No market data", "vol30": None, "drawdown52": None, "cds5y": None, "cds_change30": None,
+           "cds_index_change30": None, "cds_excess30": None,
            "bond_change30": None, "bond_count": 0, "bond_asof": None, "bond_window": None}
     if bond:
         sig.update(bond)
@@ -146,12 +160,38 @@ def _market(prices: pd.DataFrame, cds: pd.DataFrame, bond: dict | None = None) -
             c = c.iloc[0:0]                     # stale: the CDS says nothing about today, fall through to equity
     if not cds.empty and not c.empty:
         last = float(c.level_bp.iloc[-1])
-        ref = c[c.date <= str(date.fromisoformat(str(c.date.iloc[-1])[:10]) - timedelta(days=30))]
-        chg = last - float(ref.level_bp.iloc[-1]) if not ref.empty else None
+        # The 30-day change is measured within one source: settlement against settlement, or trade medians
+        # against trade medians on days with at least three trades. Mixing the two would turn the basis
+        # difference between a cleared settlement price and a thin day's trades into a spurious move.
+        chg, ref = None, c.iloc[0:0]
+        full = cds.sort_values("date")
+        full = full[full.tier == "senior"] if "tier" in full and (full.tier == "senior").any() else full
+        for src in ("ice", "dtcc"):
+            h = full[full.source == src] if "source" in full else full
+            if src == "dtcc" and "trades" in h:
+                h = h[h.trades.fillna(0) >= 3]
+            if h.empty or (date.today() - date.fromisoformat(str(h.date.iloc[-1])[:10])).days > CDS_MAX_AGE_DAYS:
+                continue
+            ref = h[h.date <= str(date.fromisoformat(str(h.date.iloc[-1])[:10]) - timedelta(days=30))]
+            if not ref.empty:
+                chg = float(h.level_bp.iloc[-1]) - float(ref.level_bp.iloc[-1])
+                c = h
+                break
         sig.update({"cds5y": round(last, 1), "cds_change30": round(chg, 1) if chg is not None else None})
         if chg is not None:
             sig["direction"] = "down" if chg > 5 else ("up" if chg < -5 else "flat")
             sig["label"] = {"down": "Widening", "up": "Tightening", "flat": "Stable"}[sig["direction"]]
+            ixc = _index_change(index, str(ref.date.iloc[-1]), str(c.date.iloc[-1]))
+            if ixc is not None:
+                sig["cds_index_change30"] = round(ixc, 1)
+                sig["cds_excess30"] = round(chg - ixc, 1)
+                # the public label says whether the move is the bank's own or the whole sector's, never the size
+                if sig["direction"] == "down":
+                    sig["label"] = "Widening (bank-specific)" if chg - ixc > 5 else "Widening (with the market)"
+                elif sig["direction"] == "up":
+                    sig["label"] = "Tightening (bank-specific)" if chg - ixc < -5 else "Tightening (with the market)"
+                elif chg - ixc > 5:
+                    sig["direction"], sig["label"] = "down", "Lagging the market"          # flat while the sector tightened
     if sig["direction"] != "none":
         pass                                     # a CDS with a 30-day history has spoken
     elif sig["bond_change30"] is not None:       # a CDS too young for a change, or none at all: the bonds
@@ -234,11 +274,13 @@ def export_json() -> None:
     entities = load_entities()
     facts, ratings, prices, cds, events, runs = (store.read(t) for t in ["facts", "ratings", "prices", "cds", "events", "runs"])
     bond_changes = _bond_changes(store.read("bonds"), store.read("bond_quotes"))
+    series_tbl = store.read("series")
+    snrfin = series_tbl[series_tbl.series_id == "ITRAXX_SNRFIN_5Y"] if not series_tbl.empty else None
     board, today, details = [], date.today(), {}
     active = [e for e in entities if e.active]
     series_all = {e.id: _series(facts[facts.entity_id == e.id] if not facts.empty else facts) for e in active}
     market_all = {e.id: _market(prices[prices.entity_id == e.id] if not prices.empty else prices,
-                                cds[cds.entity_id == e.id] if not cds.empty else cds, bond_changes.get(e.id)) for e in active}
+                                cds[cds.entity_id == e.id] if not cds.empty else cds, bond_changes.get(e.id), snrfin) for e in active}
     for e in active:
         f = facts[facts.entity_id == e.id] if not facts.empty else facts
         r = ratings[ratings.entity_id == e.id] if not ratings.empty else ratings

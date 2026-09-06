@@ -61,3 +61,17 @@ def test_market_uses_bonds_only_without_fresh_cds():
     assert sig["direction"] == "up"                  # the CDS wins when it is fresh
     assert export._overlay({"bond_change30": 35.0}, []) == -1.0
     assert export._overlay({"cds5y": 40.0, "cds_change30": -12.0, "bond_change30": 35.0}, []) == 1.5
+
+
+def test_cds_move_is_split_against_itraxx():
+    today = date.today()
+    empty = pd.DataFrame()
+    cds = pd.DataFrame([{"entity_id": "a", "date": str(today - timedelta(days=31)), "tier": "senior", "source": "ice", "level_bp": 50.0},
+                        {"entity_id": "a", "date": str(today), "tier": "senior", "source": "ice", "level_bp": 70.0}])
+    index = pd.DataFrame([{"date": str(today - timedelta(days=31)), "value": 60.0}, {"date": str(today), "value": 78.0}])
+    sig = export._market(empty, cds, None, index)
+    assert sig["cds_change30"] == 20.0 and sig["cds_index_change30"] == 18.0 and sig["cds_excess30"] == 2.0
+    assert sig["label"] == "Widening (with the market)"
+    index.loc[1, "value"] = 61.0
+    assert export._market(empty, cds, None, index)["label"] == "Widening (bank-specific)"
+    assert "cds_excess30" not in export._market(empty, cds, None, None) or export._market(empty, cds, None, None)["cds_excess30"] is None
