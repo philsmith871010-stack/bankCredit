@@ -43,6 +43,8 @@ jobs:
           git add data/
           git diff --cached --quiet || git commit -m "Pipeline data $(date -u +%F)"
           git push
+      - uses: actions/configure-pages@v5
+        with: { enablement: true }
       - uses: actions/upload-pages-artifact@v3
         with: { path: site }
   deploy:
