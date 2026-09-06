@@ -99,13 +99,15 @@ def _market(prices: pd.DataFrame, cds: pd.DataFrame) -> dict:
 
 
 OVERLAY_DEFAULT = {
-    # Neutral, published fallback. The real weighting is private: set the COUNTERPARTY_OVERLAY secret
-    # (JSON with the same keys) in GitHub Actions and it replaces this dict at run time.
-    "cds_bands": [[40, 0], [60, 0], [90, 0], [150, 0], [1e9, 0]],      # [upper bp, adjustment]
-    "cds_change_widen_bp": 15, "cds_change_widen_adj": 0, "cds_change_tighten_bp": -10, "cds_change_tighten_adj": 0,
-    "vol_high": 45, "vol_high_adj": 0, "vol_low": 25, "vol_low_adj": 0,
-    "drawdown_adj_threshold": -25, "drawdown_adj": 0,
-    "rating_grades": {"AAA": 0, "AA": 0, "A": 0, "BBB": 0, "BB": 0, "B": 0},
+    # Provisional equal weights (decided 6 September 2026): four signals, each worth at most 2.5 points
+    # either way, so the overlay stays inside the ±10 cap. Ratings: grade value averaged across agencies.
+    # CDS: level band plus 30-day change. Volatility: 30-day realised. Drawdown: from the 52-week high.
+    # A COUNTERPARTY_OVERLAY secret with the same keys replaces this dict at build time.
+    "cds_bands": [[40, 1.5], [60, 0.5], [90, 0], [150, -0.5], [1e9, -1.5]],      # [upper bp, adjustment]
+    "cds_change_widen_bp": 15, "cds_change_widen_adj": -1.0, "cds_change_tighten_bp": -10, "cds_change_tighten_adj": 1.0,
+    "vol_high": 45, "vol_high_adj": -2.5, "vol_low": 25, "vol_low_adj": 2.5,
+    "drawdown_adj_threshold": -25, "drawdown_adj": -2.5,
+    "rating_grades": {"AAA": 2.5, "AA": 2.0, "A": 1.0, "BBB": 0, "BB": -1.5, "B": -2.5},
     "cap": 10.0,
 }
 
@@ -122,7 +124,8 @@ def overlay_config() -> dict:
 
 
 def _overlay(market: dict, ratings: list[dict]) -> float:
-    """Private layer, bounded. Weights come from the COUNTERPARTY_OVERLAY secret; the code default is neutral."""
+    """Bounded market layer. Weights come from the COUNTERPARTY_OVERLAY secret when set; otherwise the
+    published provisional equal weights in OVERLAY_DEFAULT."""
     cfg = overlay_config()
     adj = 0.0
     if market.get("cds5y") is not None:

@@ -2,8 +2,9 @@
 
 The public score is fully published. The market overlay (ratings, CDS, volatility, drawdown) is private: its
 weights live only in the GitHub Actions secret `COUNTERPARTY_OVERLAY`, read at build time by `bankcredit/export.py`.
-Without the secret the overlay is neutral (all adjustments zero), so a public checkout of this repo reproduces
-the public score exactly and nothing else.
+Without the secret the code uses the provisional equal-weight default in `OVERLAY_DEFAULT` (decided 6 September
+2026): four signals, ratings, CDS level and change, volatility, drawdown, each worth at most 2.5 points, cap 10.
+Set the secret when you want private weights; the default is published.
 
 Set the secret to a JSON object with any of these keys (unset keys keep the neutral default):
 

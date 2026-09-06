@@ -267,7 +267,7 @@ def page_method(generated):
 <table class="plain"><thead><tr><th>Pillar</th><th>Weight</th><th>Metrics</th></tr></thead><tbody>{pillar_rows}</tbody></table>
 <h3>Thresholds (value → sub-score)</h3><table class="plain"><tbody>{thr}</tbody></table>
 <h3>Bands</h3><p>{bands}. Bands carry hysteresis in later versions so they do not flicker at boundaries.</p>
-<h2>Market overlay</h2><p>A private layer built from agency ratings, five-year CDS levels and changes where a CDS market exists, and equity volatility and drawdown. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points. The direction and size of the adjustment are shown; the underlying levels are not redistributed.</p>
+<h2>Market overlay</h2><p>A layer built from agency ratings, five-year CDS levels and 30-day changes where a CDS market exists, 30-day equity volatility and drawdown from the 52-week high. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points. Provisional weighting (September 2026): the four signals count equally, each worth at most 2.5 points either way; ratings use the grade averaged across the agencies that rate the bank. The direction and size of the adjustment are shown; CDS levels themselves are not redistributed.</p>
 <h2>Limitations</h2><ul><li>US figures are for the lead bank subsidiary, not the holding company, and follow the US regulatory template.</li><li>UK and other-region figures depend on PDF extraction; failed validations are shown as unverified rather than hidden.</li><li>Peer percentiles are computed only among entities with a score, so they are unstable while coverage is low.</li><li>Back-tests against past failures are planned for version 2.</li></ul>
 </div>'''
     return c.shell("Method", content, "method", "../", generated)
