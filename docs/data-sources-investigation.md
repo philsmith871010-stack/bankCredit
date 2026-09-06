@@ -421,3 +421,20 @@ Checked and not relevant or fully paid: Credit Benchmark, CreditRiskMonitor, Cre
 3. Handle ratings carefully: source from public registers, display the current symbol, agency, date and a link back, and do not re-serve histories or offer an API of agency data. Fitch's terms prohibit redistribution; ESMA's reuse licence does not cover third-party material. Scope and KBRA publish openly and could be asked for explicit permission.
 4. State a freshness commitment per data type (regulatory data within three weeks of the filing deadline, ratings daily, prices and volatility daily, news continuously) and show a data-age badge on every component.
 5. Target the UK and EU prosumer gap first: local authority treasurers, charity and corporate cash managers, and savers above the FSCS limit. Launch with building societies, UK banks and EU significant institutions; add the US second, where free competition already exists.
+
+## 14. CDS: a proper hunt for public data
+
+Added 6 September 2026. Earlier sections said single-name bank CDS was not obtainable for free. That was wrong for one source.
+
+### 14.1 DTCC public swap-data dissemination [V]
+
+- Under US post-trade transparency rules every reported credit derivative trade is published by DTCC's swap data repository. The daily cumulative files sit on a public S3 bucket with no registration:
+  `https://kgc0418-tdw-data-0.s3.amazonaws.com/sec/eod/SEC_CUMULATIVE_CREDITS_YYYY_MM_DD.zip` (security-based swaps, which is where single-name CDS live) and the `cftc/eod/CFTC_CUMULATIVE_CREDITS_...` equivalent (index trades: CDX, iTraxx). Intraday slices are at `sec/slices/SEC_SLICE_CREDITS_YYYY_MM_DD_N.zip`. Files exist from about 6 June 2024.
+- Each trade row carries: reference entity name and RED code, seniority (senior or subordinated, from the UPI descriptor), effective and maturity dates, fixed coupon (100bp for banks), the upfront payment amount and currency, notional (capped at a threshold and flagged with a trailing plus), cleared flag and platform. Counterparties and trade direction are not disclosed.
+- Coverage over 15 business days to 4 September 2026: 265 single-name bank trades with upfronts. Names seen: Citigroup, Morgan Stanley, Goldman Sachs, Bank of America, JPMorgan, Wells Fargo, PNC, Capital One, Barclays (senior and sub), HSBC, Lloyds (sub), NatWest (sub), Standard Chartered, Société Générale, BNP Paribas, Crédit Agricole, Deutsche Bank, Commerzbank, ING, Rabobank, Santander, BBVA, Intesa, UniCredit, Mediobanca, UBS, Handelsbanken, Swedbank, Danske. European banks appear because US persons trade them; the busiest names print daily, mid-tier European names a few times a month. Building societies and smaller UK banks do not trade in CDS at all, so nothing is lost there.
+- Converting to a spread: for an investment-grade bank trading below the 100bp coupon the protection seller pays the upfront, so spread is roughly coupon minus upfront per unit notional divided by the risky annuity. A crude version of that reproduces market levels: Barclays 5-year senior median 48bp (range 46 to 53), Barclays sub 90bp, Citigroup 48, Morgan Stanley 53, Goldman 50, Bank of America 49, HSBC 28, JPMorgan 35, BNP senior 35 and sub 80, Société Générale sub 93, Deutsche Bank sub 93, ING 40, Crédit Agricole 58. Block trades with capped notional distort the ratio, which a median across trades handles. A proper ISDA standard-model conversion with the SOFR or ESTR curve is a small piece of work.
+- Verdict: this is a usable free daily source of traded single-name bank CDS levels for the roughly 40 large banks that matter on a counterparty list, with about two years of history. It is traded prices rather than a dealer composite, so it is sparser and noisier than a Markit feed, but it is the real thing and the licence is public dissemination. Script: `research/dtcc_cds_probe.py`.
+
+### 14.2 Other public routes
+
+CDS_WEBSITES_PLACEHOLDER
