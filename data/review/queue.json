@@ -1059,5 +1059,243 @@
   "reason": "error:no reference date",
   "status": "open",
   "created": "2026-09-06T21:31:38"
+ },
+ {
+  "id": "c603ab8a98c9",
+  "entity_id": "standard-chartered",
+  "url": "https://www.sc.com/en/uploads/sites/66/content/docs/standard-chartered-plc-1q-2023-pillar-3-disclosure.pdf",
+  "local": "cache/pdf/standard-chartered/c603ab8a98c986d8.pdf",
+  "title": "standard-chartered-plc-1q-2023-pillar-3-disclosure.pdf",
+  "page": 4,
+  "reference_date": "2023-12-31",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 34402.0,
+   "tier1_capital": 39894.0,
+   "total_capital": 52318.0,
+   "cet1_ratio": 13.7,
+   "tier1_ratio": 15.9,
+   "total_capital_ratio": 20.9,
+   "combined_buffer": 3.78,
+   "overall_capital_requirement": 10.38,
+   "cet1_headroom": 7.09,
+   "leverage_exposure": 857214.0,
+   "leverage_ratio": 4.7,
+   "net_cash_outflows": 118202.0,
+   "lcr": 151.2,
+   "available_stable_funding": 392258.0,
+   "required_stable_funding": 298838.0,
+   "nsfr": 131.3,
+   "total_srep_requirement": 7.09
+  },
+  "checks": [
+   [
+    "warn",
+    "no period date found in the template header; using the expected date"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ]
+  ],
+  "reason": "warn:no period date found in the template header; using the expected date; error:missing core row rwa",
+  "status": "open",
+  "created": "2026-09-06T23:21:58"
+ },
+ {
+  "id": "1ab33666ac13",
+  "entity_id": "leeds-bs",
+  "url": "https://www.leedsbuildingsociety.co.uk/_resources/pdfs/press-pdfs/financial-results-pdfs/pillar-3-disclosures-2021.pdf",
+  "local": "cache/pdf/leeds-bs/1ab33666ac13abbb.pdf",
+  "title": "pillar-3-disclosures-2021.pdf",
+  "page": 4,
+  "reference_date": "2021-12-31",
+  "currency": "GBP",
+  "values": {
+   "rwa": 2021.0,
+   "cet1_capital": 1228.7,
+   "cet1_ratio": 38.0,
+   "tier1_ratio": 38.1,
+   "total_capital_ratio": 45.1,
+   "tier1_capital": 1231.2,
+   "leverage_ratio": 5.4
+  },
+  "checks": [
+   [
+    "warn",
+    "no period date found in the template header; using the expected date"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ],
+   [
+    "error",
+    "cet1_ratio 38.00 vs implied 60.80 from capital/RWA"
+   ]
+  ],
+  "reason": "warn:no period date found in the template header; using the expected date; warn:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 38.00 vs implied 60.80 from capital/RWA",
+  "status": "open",
+  "created": "2026-09-06T23:23:45"
+ },
+ {
+  "id": "7998745c1783",
+  "entity_id": "cumberland-bs",
+  "url": "https://www.cumberland.co.uk/neon/download/file/PDFs/Cumberland-Pillar-3.pdf",
+  "local": "cache/pdf/cumberland-bs/7998745c17831822.pdf",
+  "title": "Cumberland-Pillar-3.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T23:23:59"
+ },
+ {
+  "id": "8a385f61aaea",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2023-third-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/8a385f61aaeabf80.pdf",
+  "title": "2023-third-quarter-pillar-3-report.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T23:24:21"
+ },
+ {
+  "id": "888ffddcd88d",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2023-first-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/888ffddcd88d9a74.pdf",
+  "title": "2023-first-quarter-pillar-3-report.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T23:24:21"
+ },
+ {
+  "id": "ac3267311dd5",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/half-year-pillar-3-report-2023.pdf",
+  "local": "cache/pdf/nab/ac3267311dd5f45d.pdf",
+  "title": "half-year-pillar-3-report-2023.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T23:24:22"
+ },
+ {
+  "id": "c5c1b939b3bd",
+  "entity_id": "westpac",
+  "url": "https://www.westpac.com.au/content/dam/public/wbc/documents/pdf/aw/ic/wbc-pillar-3-report-september-2024.pdf",
+  "local": "cache/pdf/westpac/c5c1b939b3bdff0a.pdf",
+  "title": "wbc-pillar-3-report-september-2024.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T23:24:30"
+ },
+ {
+  "id": "48435cd3311a",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/fy-2021/31-march-basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/48435cd3311a85e3.pdf",
+  "title": "31-march-basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T23:24:39"
+ },
+ {
+  "id": "b91ac2b158b4",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/fy-2021/31-december---basel-iii-pillar-3-disclosures--prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/b91ac2b158b4fe39.pdf",
+  "title": "31-december---basel-iii-pillar-3-disclosures--prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T23:24:39"
+ },
+ {
+  "id": "bbd86215261d",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2020/31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/bbd86215261db2d4.pdf",
+  "title": "31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T23:24:39"
  }
 ]
