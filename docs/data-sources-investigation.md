@@ -437,4 +437,16 @@ Added 6 September 2026. Earlier sections said single-name bank CDS was not obtai
 
 ### 14.2 Other public routes
 
-CDS_WEBSITES_PLACEHOLDER
+- **ICE Clear Credit settlement prices [V].** The clearing house publishes end-of-day settlement prices for every cleared five-year single name and index as open JSON at `ice.com/api/cds-settlement-prices/icc-single-names` and `/icc-indexes`. On 4 September 2026 that was 1,129 instruments, 167 of them bank rows covering about 40 banks with separate senior, bail-in senior and subordinated tiers: Barclays (PLC and Bank), HSBC, Lloyds, Bank of Scotland, NatWest, Standard Chartered, BNP, Crédit Agricole, SocGen, Deutsche, Commerzbank, ING, Rabobank, Santander, Intesa, UniCredit, Mediobanca, Danske, Swedbank, Handelsbanken, UBS, Citi, JPMorgan, Goldman, Morgan Stanley, Wells Fargo, PNC, and the Australians ANZ, Commonwealth Bank, Westpac and Macquarie. Prices convert to spreads with the ISDA standard model (Barclays PLC senior at 102.06 is roughly 53bp). Only the current day is served, so a daily snapshot builds the history. Not covered: Canadian, Japanese and Gulf banks. ICE's terms of use restrict redistribution and derivative works, so this is an internal scoring input, not something to re-display. Script: `research/ice_cds_probe.py`.
+- **Index levels.** The DTCC CFTC file carries traded spreads for iTraxx Senior Financials, Sub Financials, Main and Crossover and for CDX IG, HY and EM (iTraxx Senior Financials five-year printed at 54.5bp on 3 September 2026); a volume-weighted daily average from it is the one index series that can be re-displayed without licence risk. ICE index prices confirm it. JSCC publishes a daily PDF with iTraxx Japan and about 57 Japanese corporate names, but no Japanese banks.
+- **LCH CDSClear** publishes daily volumes and open interest per single name and tier as CSV, useful as a liquidity indicator, but prices are licensed.
+- **Dead ends, all verified.** investing.com has daily five-year CDS pages for 15 to 25 large banks but blocks scripts and forbids reproduction; worldgovernmentbonds and tradingeconomics are sovereign only; assetmacro is down; cbonds and macromicro block scripts and gate history; German portals have no CDS pages; bank investor-relations pages publish ratings but not CDS; the ECB, Bank of England, RBA and Fed financial stability data packs contain no bank CDS series; ETFs expose only NAV; EU and UK post-trade transparency for CDS is not available in bulk for free; Moody's and S&P market-implied signals are subscription products; the DTCC Trade Information Warehouse "top 1000" reports have been wound down to quarterly summaries.
+
+Recommended free CDS stack:
+
+1. Daily snapshot of ICE settlement prices (internal input to the private weighting, about 40 banks, three tiers).
+2. Daily DTCC SEC file for trade prints per bank and an implied-level cross-check; DTCC CFTC file for the iTraxx and CDX series shown on the site.
+3. LCH volumes for liquidity context.
+4. Bond-price spreads and equity-implied distance to default for the banks that have no CDS market at all, which is every building society and most UK challengers.
+
+What stays impossible for free: a redistributable daily single-name spread series, history before you start collecting (DTCC keeps about a year), tenors other than five years, and Canadian, Japanese and Gulf bank names.
