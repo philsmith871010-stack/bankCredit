@@ -1,0 +1,46 @@
+name: Counterparty pipeline
+on:
+  schedule:
+    - cron: "10 5 * * *"     # daily 06:10 UK (BST) / 05:10 UTC
+  workflow_dispatch:
+    inputs:
+      adapters:
+        description: "Adapters to run (space separated), default all daily"
+        default: "esma yahoo"
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency: pipeline
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - name: Daily adapters
+        run: python -m bankcredit.cli run ${{ github.event.inputs.adapters || 'esma yahoo' }}
+      - name: Quarterly adapters on the 1st, 15th and 25th of the month
+        if: ${{ github.event_name == 'schedule' && (startsWith(github.run_started_at, '') && (contains('01 15 25', format('{0:dd}', github.run_started_at)))) }}
+        run: python -m bankcredit.cli run fdic eba
+        continue-on-error: true
+      - name: Export and build site
+        run: python -m bankcredit.cli build
+      - name: Commit data
+        run: |
+          git config user.name "counterparty-bot"
+          git config user.email "philsmith871010@gmail.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "Pipeline data $(date -u +%F)"
+          git push
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: site }
+  deploy:
+    needs: run
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: ${{ steps.deployment.outputs.page_url }} }
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

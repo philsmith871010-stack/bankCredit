@@ -86,6 +86,7 @@ METRICS = {
     "efficiency_ratio": "Cost-to-income or efficiency ratio",
     "deposits": "Total deposits (currency millions)",
     "uninsured_deposits": "Estimated uninsured deposits (currency millions)",
+    "htm_unrealised_loss": "Held-to-maturity securities fair value minus amortised cost (currency millions; negative = unrealised loss)",
 }
 
 
