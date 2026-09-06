@@ -677,5 +677,237 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-09-06T17:55:48"
+ },
+ {
+  "id": "98a65695bda8",
+  "entity_id": "metro-bank",
+  "url": "https://www.metrobankonline.co.uk/globalassets/documents/investor_documents/pillar-3-disclosure-2018.pdf",
+  "local": "cache/pdf/metro-bank/98a65695bda8e217.pdf",
+  "title": "pillar-3-disclosure-2018.pdf",
+  "page": 6,
+  "reference_date": "2018-12-31",
+  "currency": "GBP",
+  "values": {
+   "cet1_ratio": 13.1,
+   "tier1_ratio": 13.1,
+   "total_capital_ratio": 15.9,
+   "leverage_ratio": 5.4,
+   "lcr": 139.2,
+   "rwa": 8936.0
+  },
+  "checks": [
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "error",
+    "missing core row cet1_capital"
+   ]
+  ],
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing core row cet1_capital",
+  "status": "open",
+  "created": "2026-09-06T19:43:40"
+ },
+ {
+  "id": "418eca45ef20",
+  "entity_id": "vanquis",
+  "url": "https://www.vanquis.com/wp-content/uploads/2025/05/10-05-21_Pillar-3-regulatory-capital-disclosures.pdf",
+  "local": "cache/pdf/vanquis/418eca45ef204c2b.pdf",
+  "title": "10-05-21_Pillar-3-regulatory-capital-disclosures.pdf",
+  "page": 4,
+  "reference_date": "2020-12-31",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 674.8,
+   "tier1_capital": 674.8,
+   "total_capital": 674.8,
+   "cet1_ratio": 34.2,
+   "tier1_ratio": 34.2,
+   "total_capital_ratio": 34.2,
+   "leverage_exposure": 3236.7,
+   "leverage_ratio": 20.8
+  },
+  "checks": [
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "warn",
+    "header date 2020-12-31 disagrees with expected 2005-12-31"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:header date 2020-12-31 disagrees with expected 2005-12-31; error:missing core row rwa; warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-06T19:44:06"
+ },
+ {
+  "id": "4a6dbe73c1ce",
+  "entity_id": "commonwealth-bank",
+  "url": "https://www.commbank.com.au/content/dam/commbank-assets/investors/docs/results/1h25/CBA-2025-Half-Year-Basel-III-Pillar-3-Disclosure.pdf",
+  "local": "cache/pdf/commonwealth-bank/4a6dbe73c1ce8184.pdf",
+  "title": "CBA-2025-Half-Year-Basel-III-Pillar-3-Disclosure.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T19:45:18"
+ },
+ {
+  "id": "1eec4d497aed",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2024-first-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/1eec4d497aed9884.pdf",
+  "title": "2024-first-quarter-pillar-3-report.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T19:45:23"
+ },
+ {
+  "id": "d7d21c6f3523",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2024-half-year-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/d7d21c6f35237795.pdf",
+  "title": "2024-half-year-pillar-3-report.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T19:45:23"
+ },
+ {
+  "id": "2a2c85879a40",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2023-full-year-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/2a2c85879a40b373.pdf",
+  "title": "2023-full-year-pillar-3-report.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T19:45:23"
+ },
+ {
+  "id": "d4c4abc82768",
+  "entity_id": "westpac",
+  "url": "https://www.westpac.com.au/content/dam/public/wbc/documents/pdf/aw/ic/wbc-december-pillar-3-report-2024.pdf",
+  "local": "cache/pdf/westpac/d4c4abc827684e5c.pdf",
+  "title": "wbc-december-pillar-3-report-2024.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T19:45:31"
+ },
+ {
+  "id": "e30dc5976163",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2023/31-march--basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/e30dc59761631b88.pdf",
+  "title": "31-march--basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T19:45:38"
+ },
+ {
+  "id": "12bbd4b4bcd6",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2023/31-december---basel-iii-pillar-3-disclosures--prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/12bbd4b4bcd66939.pdf",
+  "title": "31-december---basel-iii-pillar-3-disclosures--prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T19:45:38"
+ },
+ {
+  "id": "08386c695a02",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2022/31-march-basel-iii-pillar-3-disclosures.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/08386c695a0290a6.pdf",
+  "title": "31-march-basel-iii-pillar-3-disclosures.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T19:45:38"
  }
 ]
