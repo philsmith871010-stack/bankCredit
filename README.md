@@ -1,2 +1,18 @@
-# bankCredit
-Bank credit analysis site 
+# Counterparty (PWLBtoday)
+
+Free, transparent credit view of banks and building societies that UK treasury teams place money with. Public regulatory data, public rating registers, traded market prices and primary-source news, every figure traceable to its document.
+
+- `docs/data-sources-investigation.md`: where every number comes from and what was verified.
+- `docs/build-plan.md`: product, architecture, method, phases and decisions.
+- `design/`: screen designs matching PWLBtoday's tokens.
+- `bankcredit/`: pipeline (adapters, store, export) and static site generator.
+- `research/`: probe scripts used during the investigation.
+- `data/`: entity master, Parquet tables and JSON exports committed by the pipeline.
+
+Run locally:
+
+```
+pip install -r requirements.txt
+python -m bankcredit.cli run esma yahoo fdic eba
+python -m bankcredit.cli build        # writes site/
+```
