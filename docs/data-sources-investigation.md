@@ -450,3 +450,44 @@ Recommended free CDS stack:
 4. Bond-price spreads and equity-implied distance to default for the banks that have no CDS market at all, which is every building society and most UK challengers.
 
 What stays impossible for free: a redistributable daily single-name spread series, history before you start collecting (DTCC keeps about a year), tenors other than five years, and Canadian, Japanese and Gulf bank names.
+
+## 15. Coverage gaps for the local-authority counterparty universe [V]
+
+Added 6 September 2026. The EU and EEA names on adviser lists are essentially all in the EBA hub (section 4.1; checked against the 1,494-entity list: only NRW.Bank, a promotional bank, and the EU arms of Barclays, SMBC and Mizuho failed to match by name). This section covers the rest: about 52 non-UK, non-EU entities fetched with plain HTTP on 6 September 2026.
+
+| Bank | Plain HTTP? | Newest Pillar 3 | Cadence | KM1 template? | Regulator bank-level data | Notes |
+|---|---|---|---|---|---|---|
+| ANZ (includes Suncorp Bank) | Yes | 30 Jun 2026 | Quarterly, plus XLSX | Yes | APRA centralised publication XLSX | PDF is encrypted, XLSX is easier |
+| Commonwealth Bank | Yes | 30 Jun 2026 | Quarterly, plus XLSX | Yes | APRA | |
+| NAB | Yes | 30 Jun 2026 | Quarterly, plus XLSX | Yes | APRA | PDF encrypted, XLSX fine |
+| Westpac | Yes | 30 Jun 2026 | Quarterly, plus XLSX | Yes | APRA | PDF encrypted, XLSX fine |
+| Macquarie Bank | Listing needs JavaScript | 31 Mar 2026 | Quarterly | Yes | APRA | PDFs open once the URL is known |
+| Bendigo and Adelaide, Bank of Queensland | Yes | Jun and May 2026 | Quarterly, plus XLSX | Yes | APRA | |
+| RBC, TD, Scotiabank, CIBC, National Bank of Canada | Yes | 31 Jul 2026 | Quarterly, plus XLSX | Yes | OSFI open data CSVs | TD and Scotia list only the current quarter on the results page |
+| BMO | No (connection dropped on GET through this proxy) | 31 Jan 2026 | Quarterly | Yes | OSFI | Needs a browser or a different egress; OSFI CSV covers the numbers anyway |
+| DBS, OCBC, UOB | Yes | Jun 2026 (UOB Mar 2026) | Quarterly | Yes, MAS layout | None at bank level | OCBC URL contains spaces; UOB has a firewall on some URL forms |
+| HSBC (Hongkong and Shanghai Banking Corp), Bank of China (HK), Standard Chartered HK | Yes | 30 Jun 2026 | Quarterly | Yes | HKMA register mirrors the PDFs | |
+| MUFG, SMFG, Sumitomo Mitsui Trust | Yes (Sumitomo Mitsui Trust needs a bare User-Agent and Referer) | 30 Jun 2026 | Quarterly, one small PDF per template | Yes | None | KM1 file is 1 to 3 pages, ideal for parsing |
+| Mizuho | Yes | Jun 2026 summary, FY2025 full | Semi-annual full report, quarterly capital sheet | Yes | None | Text extracts letter-spaced; parser must collapse spaces |
+| Norinchukin | No (Cloudflare) | | Semi-annual | | None | |
+| First Abu Dhabi Bank, Emirates NBD, Dubai Islamic Bank | Yes | Jun 2026 (ENBD Mar 2026) | Quarterly | Yes | None (central bank site blocks scripts) | |
+| QNB, ADCB | No (Cloudflare on pages and PDFs) | | Semi-annual, quarterly | | None | Need a browser session |
+| Al Rajhi, Saudi National Bank | Yes (SNB via JSON blob in page) | Jun 2026, Dec 2025 | Quarterly | Yes | SAMA aggregates only | |
+| National Bank of Kuwait | Yes | 30 Jun 2026 | Quarterly | No, Central Bank of Kuwait format | None | Composition of capital and leverage only |
+| Qatar Islamic Bank | Yes, flaky | Jun 2026 Arabic only; English annual | Semi-annual | Yes (English annual) | None | |
+| UK Islamic and overseas-owned banks: Al Rayan, Gatehouse, SBI UK, ICICI UK, Bank of Baroda UK, Bank of China UK, ICBC London | Yes (Al Rayan and ICBC via search, no listing page) | Dec 2024 to Mar 2026 | Annual | Yes | None | BLME last published 2023; QIB UK blocked by a firewall; Bank of India UK Cloudflare |
+| UBS | Needs a bare User-Agent; 2026 reports are HTML digital reports with an embedded PDF | 30 Jun 2026 | Quarterly | Yes | FINMA annual key metrics | |
+| JPMorgan, Citigroup, Goldman Sachs | Listing needs JavaScript; Goldman's PDFs come from a CloudFront origin | Mar to Jun 2026 | Quarterly | No, US template | FDIC API and Fed data cover them | Use FDIC for ratios |
+| Bank of America, Wells Fargo, Morgan Stanley, BNY, Northern Trust | Yes | Jun 2026 | Quarterly | No, US template | FDIC and Fed | |
+| Goldman Sachs International Bank (UK) | Yes | 31 Mar 2026 | Quarterly | Yes, UK KM1 | None | Inside the Goldman Sachs Group UK consolidated report |
+| State Street | No (Cloudflare) | | Quarterly | | FDIC | |
+
+Conclusions:
+
+- Roughly 36 of the 52 entities are collectable with plain HTTP today, including every Australian and Canadian name that matters, the Singapore three, the Hong Kong entities, the Japanese megabanks and the larger Gulf banks.
+- Australia and Canada are the best-served regions outside the US and EU: both regulators publish bank-level capital and liquidity tables (APRA XLSX, OSFI CSV) and the banks ship parallel spreadsheets with the KM1 sheet, so no PDF parsing is needed.
+- Singapore, Hong Kong, Japan and the Gulf have no regulator-level bank data, so the bank's own quarterly Pillar 3 PDF is the source. All follow the Basel KM1 template except National Bank of Kuwait, so one extractor covers them.
+- Blocked and needing a browser session or manual monthly refresh: QNB, ADCB, Norinchukin, State Street, BMO (proxy-specific), QIB UK, Bank of India UK. Of these only QNB matters much to council lists, and its ratings and equity are still available.
+- US banks use the US regulatory template rather than KM1, but the FDIC API gives their ratios directly, so their PDFs are not needed.
+- Language: English is available everywhere except QIB Qatar's newest half-year report (Arabic only) and BOCHK's parallel Chinese edition.
+- Three banks (ANZ, NAB, Westpac) encrypt their PDFs; readable, but the parser needs a crypto backend, which is another reason to prefer their spreadsheets.
