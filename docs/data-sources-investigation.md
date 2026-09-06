@@ -368,3 +368,56 @@ Conclusions:
 - Sniff the PDF header rather than trusting extensions: several firms serve extension-less URLs, one serves Word files and two serve spreadsheets.
 - The small-society tail has been shrinking since the 2025 small domestic deposit taker regime; expect annual Pillar 3 from perhaps 25 societies, not 40.
 - The FCA NSM criterion for company works as a plain string as well (for example company "Paragon Banking Group" with headline "Pillar"), which is the simplest way to poll the firms that file there.
+
+## 13. Competitive landscape: who already does this?
+
+Added 6 September 2026. Over 40 candidate sites fetched directly; presentation scores are a judgement from page structure, not rendered screenshots.
+
+### 13.1 Most relevant sites
+
+| Site | Region | Free data only? | Own score and method | Ratings | News | Prices | Pillar 3 | Free tier | Freshness | Presentation (1 to 5) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| BauerFinancial | US banks and credit unions | Yes | 0 to 5 stars; inputs listed, weights not | No | Blog | No | No | Free lookup, paid reports | 30 Jun 2026 data | 3 |
+| Weiss Ratings | US | Yes | A to E; five indexes named, weights not | No | Paid alerts | No | No | Grades free; about $99 to $199 a year for more | Not shown | 3 |
+| DepositAccounts health grades (LendingTree) | US | Yes | A+ to F; weights published (Texas ratio, capital, deposit growth) | No | Rate news | No | No | Free, ad-funded | Not verifiable (Cloudflare) | 3 |
+| IDC Financial Publishing | US | Yes | CAMEL-style rank 1 to 300 from 24 ratios; weights not public | No | No | No | No | Name lookup free, detail paid | Q1 2026 | 2 |
+| BankHealthData.com | US, 3,900 banks | Yes | A to F; weights published | No | Blog | No | No | Free | Site down during testing | n/a |
+| BankRegReports | US, 4,300 banks | Yes | No score; 1,000 metrics and peer benchmarks | No | No | No | No | Free tier plus API; Pro $50 a month | 2 to 3 weeks after filing deadline | 3 |
+| BankRegData | US | Yes | No score; 525 metrics | No | Email commentary | No | No | Trial then paid | Q2 2026 commentary, 2 Sep 2026 | 2 |
+| FDIC BankFind Suite | US | Yes | No | No | No | No | No | Free API | Quarterly | 3 |
+| FAU unrealised-losses screener | US, 152 banks over $10bn | Yes | Single metric | No | No | No | No | Free | Q4 2025, two quarters stale | 2 |
+| BankSift | US, 300 listed banks | Yes (SEC XBRL) | Screener, no score | No | No | Valuation ratios | No | Free | Daily | 3 |
+| Bank Health Monitor (GitHub, MIT) | US, 1,050 banks over $1bn | Yes (FDIC API, FRED) | Peer z-score on six metrics; fully open code | No | No | No | No | Free | Through Jun 2026, self-refreshing | 3 to 4 |
+| BankTracker (American University) | US | Yes | Troubled asset ratio | No | No | No | No | Defunct | Last updated 2022 | dead |
+| TheBanks.eu | About 9,000 European banks | Mostly | No score; directory with a top-rated list | Fitch and Moody's long-term | Some articles | No | No | Free plus consulting | Ratings list dated May 2025; aggressive Cloudflare | 2 to 3 |
+| EBA Pillar 3 Data Hub (EDAP) | EEA institutions | Yes | No | No | No | No | Yes, structured | Free | Live since 28 Jan 2026 | JavaScript portal |
+| EBA Risk Dashboard | EU aggregate | Yes | Aggregate indicators only | No | No | No | Aggregated | Free | Quarterly | 3 |
+| EBA Transparency Exercise | 119 EU banks | Yes | No | No | No | No | Bank-level | Free CSV | Discontinued after Jun 2025 data | 3 |
+| ESMA European Rating Platform | All EU-registered agencies | Yes | No | Yes, daily, history from 2015 | Press releases | No | No | Free; CAPTCHA on the UI, export fails on large sets | Daily | 1 to 2 |
+| Global Finance "World's Safest Banks" | 500 largest globally | Ratings only | Average of the three agencies' long-term ratings | Yes | Editorial | No | No | Free article | Annual, Nov 2025 | 3 |
+| TheGlobalBanker safest banks | 50 banks, 25 countries | Ratings, Pillar 3, own research | Four pillars with published weights | Yes | No | No | Inputs | Table gated behind sign-in | Q1 2026 | 3 |
+| RiskView (DSIO, Portugal) | About 10 global systemic and UK banks | Pillar 3 and news | Media sentiment 0 to 100 plus key risk metric benchmarking | No | Yes, sentiment | No | Yes | Pricing not shown | Not shown | 3 |
+| The Banker Database (FT) | Global top 1000 | Annual reports | Rankings by Tier 1 | No | Yes | No | Partial | Paid, trial only | 2026 edition | 4 |
+| Agency sites (Moody's, S&P, Fitch, KBRA) | Global | n/a | n/a | Free with registration (KBRA without) | Rating actions | No | No | Ratings free, research paid | Live | 3 to 4 |
+
+Checked and not relevant or fully paid: Credit Benchmark, CreditRiskMonitor, CreditSights, Bankers Almanac, Calcbench, Koyfin, MarketScreener, BankingRating.com (customer reviews), BankTrack (ESG campaigning), BankingHub, Wolf Street, Klaros, Visbanking, Bankrate Safe and Sound (discontinued about 2016), Savings Champion (closed), Which? and Moneyfacts (FSCS guidance only), Finder UK. Open-source: a CC-BY harmonised EBA transparency panel 2014 to 2025 on Zenodo (data only), two zero-star EBA pipeline repos with no demos, an old FDIC Django app, a Streamlit regional-bank dashboard with no demo.
+
+### 13.2 Gaps
+
+- Nothing free combines Pillar 3, agency ratings, news and equity signals for UK and EU banks and building societies. The closest are RiskView (about ten mega-banks, opaque pricing) and TheGlobalBanker (50 banks, table gated). Neither covers building societies, mid-tier EU banks or equity signals.
+- The nearest thing to a European directory, TheBanks.eu, is a directory rather than an assessment: no score, no Pillar 3 ratios, a ratings list dated May 2025, and heavy bot blocking.
+- The US has established free raters (Bauer, Weiss, DepositAccounts) but they are US-only, have no ratings, prices or Pillar 3, and mostly hide their weights. Only DepositAccounts, BankHealthData and the open-source Bank Health Monitor publish formulas; only the last publishes a back-test.
+- Staleness is common: the FAU screener is two quarters behind, BankTracker died in 2022, Bankrate's tool died around 2016, and the EBA Transparency Exercise has been discontinued in favour of the Pillar 3 hub.
+- The EBA Pillar 3 Data Hub is brand new and unexploited: no third-party front-end exists yet, and the official portal is a JavaScript report that many tools cannot even fetch. This is the single biggest opening.
+- UK building societies are a blank: no free site tabulates their capital, leverage, liquidity or ratings; consumer sites stop at FSCS guidance.
+- Ratings aggregation exists only in unusable forms (ESMA's platform is CAPTCHA-gated in the UI and fails on large exports; SEC histories are monthly per-agency files; Global Finance is an annual article).
+- Presentation is weak across the board. Regulator portals score 1 or 2; the only polished product, The Banker Database, is paid. Nobody in this space presents like PWLBtoday.
+- There is no free "prosumer" layer for treasurers, councils, charities or corporate cash managers in the UK and EU. The professional tier is entirely paid.
+
+### 13.3 Positioning
+
+1. Own the Pillar 3 Data Hub front-end: the first clean per-bank, cross-period view of KM1 metrics, backfilled from the Transparency Exercise panel, extended to the UK by parsing bank and building society PDFs, and mirrored for the US from the FDIC API.
+2. Publish the score formula, the peer band, the "as of" quarter on every number, and a back-test against Silicon Valley Bank, Credit Suisse and First Republic. Transparency and freshness are the only differentiators available against the incumbent raters.
+3. Handle ratings carefully: source from public registers, display the current symbol, agency, date and a link back, and do not re-serve histories or offer an API of agency data. Fitch's terms prohibit redistribution; ESMA's reuse licence does not cover third-party material. Scope and KBRA publish openly and could be asked for explicit permission.
+4. State a freshness commitment per data type (regulatory data within three weeks of the filing deadline, ratings daily, prices and volatility daily, news continuously) and show a data-age badge on every component.
+5. Target the UK and EU prosumer gap first: local authority treasurers, charity and corporate cash managers, and savers above the FSCS limit. Launch with building societies, UK banks and EU significant institutions; add the US second, where free competition already exists.
