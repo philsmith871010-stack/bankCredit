@@ -1,7 +1,7 @@
 # Generates the four artboards for the Counterparty canvas from real data captured 6 Sep 2026.
 import html
 NAVY="#0a2540"; NAVY_MID="#143659"; NAVY_LIGHT="#1a4775"; ORANGE="#fd7e14"; ORANGE_SOFT="#fff5e9"
-TEXT="#243240"; MUTED="#6c757d"; LINE="#e9ecef"; LINE_SOFT="#f1f3f5"; BG="#f7f8fa"; WHITE="#ffffff"; GREEN="#28a745"; RED="#b04632"
+TEXT="#243240"; MUTED="#6c757d"; LINE="#e9ecef"; LINE_SOFT="#f1f3f5"; BG="#f7f8fa"; WHITE="#ffffff"; GREEN="#1e7a3a"; RED="#b04632"
 GRAD="linear-gradient(180deg, #0a2540 0%, #143659 60%, #1a4775 100%)"
 FONTS='<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">'
 BASE_CSS=f"""
@@ -53,7 +53,7 @@ def chip(text, kind="rating"):
 def agency_chips(rt):
     out=[]
     for ag,val in rt:
-        out.append(f'<span style="display:inline-flex;align-items:center;gap:5px;height:21px;padding:0 6px 0 4px;border-radius:6px;background:{WHITE};border:1px solid {LINE};font-size:11.5px;white-space:nowrap"><span style="display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:3px;background:{NAVY};color:{WHITE};font-size:9px;font-weight:700">{ag}</span><span class="mono" style="font-weight:600;color:{TEXT}">{val}</span></span>')
+        out.append(f'<span style="display:inline-flex;align-items:center;gap:5px;height:21px;padding:0 6px 0 4px;border-radius:6px;background:{WHITE};border:1px solid {LINE};font-size:11.5px;white-space:nowrap"><span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:3px;background:{NAVY};color:{WHITE};font-size:10px;font-weight:700">{ag}</span><span class="mono" style="font-weight:600;color:{TEXT}">{val}</span></span>')
     return f'<div style="display:flex;gap:4px;flex-wrap:nowrap">{"".join(out)}</div>' if out else f'<span style="color:#adb5bd">—</span>'
 
 def shell(title, subtitle, content, active="board", width=1440, height=900, actions=""):
@@ -66,7 +66,7 @@ def shell(title, subtitle, content, active="board", width=1440, height=900, acti
   <div style="height:60px;flex:0 0 60px;background:{WHITE};border-bottom:1px solid {LINE};display:flex;align-items:center;padding:0 20px 0 0;gap:0">
     <div style="width:220px;flex:0 0 220px;display:flex;align-items:center;gap:8px;padding-left:18px"><span style="width:10px;height:10px;border-radius:50%;background:{ORANGE};display:inline-block"></span><span style="font-weight:800;font-size:18px;letter-spacing:-0.02em;color:{NAVY}">PWLB<span style="color:{ORANGE}">today</span></span></div>
     <div style="display:flex;align-items:center;gap:10px;flex:1 1 auto"><span style="font-weight:600;font-size:16px;color:{TEXT}">Counterparty</span><span style="color:{LINE}">/</span><span style="font-size:15px;color:{MUTED}">{title}</span></div>
-    <div style="display:flex;align-items:center;gap:10px">{actions}<span style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border:1px solid {LINE};border-radius:999px;font-size:13px;color:{TEXT};background:{WHITE}">{ico("bell",15,MUTED)} 3 alerts</span><span style="width:34px;height:34px;border-radius:50%;background:{NAVY};color:{WHITE};display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">PS</span></div>
+    <div style="display:flex;align-items:center;gap:10px">{actions}<span style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border:1px solid {LINE};border-radius:999px;font-size:13px;color:{TEXT};background:{WHITE}">{ico("bell",15,MUTED)} <span class="mono">3</span> alerts</span><span style="width:34px;height:34px;border-radius:50%;background:{NAVY};color:{WHITE};display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">PS</span></div>
   </div>
   <div style="display:flex;flex:1 1 auto;min-height:0">
     <aside style="width:220px;flex:0 0 220px;background:{GRAD};color:{WHITE};padding:14px 9px 16px;display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden">
@@ -88,7 +88,7 @@ rows=[
  # name, sub, ctry, score,p25,p50,p75, band, chg, cet1, lev, lcr, ratings, market(dir,label), events, asof
  ("Nationwide Building Society","Building society · UK","GB",82,58,68,79,"A","+1.4",18.6,5.2,174,[("F","AA-"),("S","A+"),("M","A1"),("D","A(H)")],("flat","Bond proxy"),3,"30 Jun 2026"),
  ("Skipton Building Society","Building society · UK","GB",79,58,68,79,"B","+0.6",27.9,None,177.5,[("F","A"),("M","A2")],("none","No CDS"),1,"30 Jun 2026"),
- ("Barclays PLC","Bank · UK","GB",71,55,66,76,"B","−0.8",14.3,None,None,[("F","AA-"),("S","A+"),("D","A(H)")],("down","Widening"),4,"30 Jun 2026"),
+ ("Barclays Bank PLC","Bank · UK · operating company","GB",71,55,66,76,"B","−0.8",14.3,None,None,[("F","AA-"),("S","A+"),("D","A(H)")],("down","Widening"),4,"30 Jun 2026"),
  ("HSBC Holdings plc","Bank · UK","GB",74,55,66,76,"B","−1.9",14.1,4.9,134,[("F","A+"),("S","A-"),("D","A(H)")],("flat","Stable"),5,"30 Jun 2026"),
  ("NatWest Bank plc","Bank · UK","GB",66,55,66,76,"B","−2.1",11.2,4.4,None,[("F","A+"),("M","A3"),("D","A")],("flat","Stable"),2,"30 Jun 2026"),
  ("Santander UK plc","Bank · UK","GB",70,55,66,76,"B","+0.3",None,None,None,[("F","AA-"),("S","A"),("M","A1")],("flat","Stable"),1,"30 Jun 2026"),
@@ -120,7 +120,7 @@ def chg(c):
 
 th=lambda t,al="left",w="": f'<th style="text-align:{al};padding:9px 8px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:{ORANGE};white-space:nowrap;{w}">{t}</th>'
 trs=[]
-for i,(n,sub,cc,sc,p25,p50,p75,b,c,cet,lev,lcr,rt,mk,ev,asof) in enumerate(rows):
+for i,(n,sub,cc,sc,p25,p50,p75,b,c,cet,lev,lcr,rt,mk,ev,asof) in enumerate(sorted(rows,key=lambda r:-r[3])[:12]):
     bg=WHITE if i%2==0 else "#fbfcfd"
     evc=f'<span style="display:inline-flex;align-items:center;gap:6px;font-size:13px"><span style="width:7px;height:7px;border-radius:50%;background:{ORANGE if ev else LINE};display:inline-block"></span><span class="mono">{ev}</span></span>'
     trs.append(f"""<tr style="background:{bg};border-bottom:1px solid {LINE_SOFT}">
@@ -136,10 +136,10 @@ for i,(n,sub,cc,sc,p25,p50,p75,b,c,cet,lev,lcr,rt,mk,ev,asof) in enumerate(rows)
 <td style="padding:8px">{evc}</td>
 <td class="mono" style="padding:8px 10px 8px 8px;font-size:12px;color:{MUTED};white-space:nowrap">{asof}</td>
 </tr>""")
-filters="".join(f'<span style="display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:999px;font-size:13px;font-weight:{600 if a else 500};background:{NAVY if a else WHITE};color:{WHITE if a else TEXT};border:1px solid {NAVY if a else LINE}">{t}</span>' for t,a in [("All · 132",True),("UK banks · 25",False),("Building societies · 20",False),("EU and EEA · 35",False),("Australia and Canada · 12",False),("Asia · 10",False),("Gulf · 6",False),("US and Swiss · 10",False),("My watchlist · 14",False)])
+filters="".join(f'<span style="display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:999px;font-size:13px;font-weight:{600 if a else 500};background:{NAVY if a else WHITE};color:{WHITE if a else TEXT};border:1px solid {NAVY if a else LINE}">{t}</span>' for t,a in [("All · 126",True),("UK banks · 25",False),("Building societies · 20",False),("UK overseas subsidiaries · 8",False),("EU and EEA · 35",False),("Australia and Canada · 12",False),("Asia · 10",False),("Gulf · 6",False),("US and Swiss · 10",False),("Watchlist · 14",False)])
 board=f"""
 <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px">
-  <div><h1 style="margin:0 0 4px;font-size:22.4px;font-weight:600;color:{TEXT};letter-spacing:-0.01em">Board</h1><div style="font-size:14px;color:{MUTED}">132 banks and building societies · scores recomputed 06:12 today · Pillar 3 data as of the date shown on each row</div></div>
+  <div><h1 style="margin:0 0 4px;font-size:22.4px;font-weight:600;color:{TEXT};letter-spacing:-0.01em">Board</h1><div style="font-size:14px;color:{MUTED}">126 banks and building societies · scores recomputed 06:12 today · Pillar 3 data as of the date shown on each row</div></div>
   <div style="display:flex;align-items:center;gap:10px">
     <span style="display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid {LINE};border-radius:8px;background:{WHITE};color:{MUTED};font-size:14px;width:240px">{ico("search",16,MUTED)}Search bank or LEI</span>
     <span style="display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:8px;background:{NAVY};color:{WHITE};font-size:14px;font-weight:600">{ico("download",16,WHITE)}Export list</span>
@@ -152,7 +152,7 @@ board=f"""
 <thead style="background:{GRAD};position:sticky;top:0"><tr>{th("Bank")}{th("Score · peers")}{th("Band","center")}{th("90d","right")}{th("CET1","right")}{th("Lev.","right")}{th("LCR","right")}{th("Ratings")}{th("Mkt","center")}{th("Events")}{th("As of")}</tr></thead>
 <tbody>{"".join(trs)}</tbody>
 </table></div>
-<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid {LINE};font-size:12.5px;color:{MUTED}"><span>Showing 17 of 132 · sorted by score · <span style="color:{TEXT}">Ratings</span> from the ESMA register · <span style="color:{TEXT}">Mkt</span> is the 30-day direction of five-year CDS or bond spread, never the level</span><span style="display:flex;gap:14px"><span style="display:inline-flex;align-items:center;gap:6px">{ribbon(72,52,64,74,60,8)} peer 25th to 75th percentile, median in orange</span></span></div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid {LINE};font-size:12.5px;color:{MUTED}"><span>Showing 12 of 126 · sorted by score · <span style="color:{TEXT}">Ratings</span> from the ESMA register · <span style="color:{TEXT}">Mkt</span> is the 30-day direction of five-year CDS or bond spread, never the level</span><span style="display:flex;gap:14px"><span style="display:inline-flex;align-items:center;gap:6px">{ribbon(72,52,64,74,60,8)} peer 25th to 75th percentile, median in orange</span></span></div>
 </div>"""
 open("Main.dc.html","w").write(shell("Board","",board,"board"))
 
@@ -168,12 +168,12 @@ def tile(label,val,unit,prev,series,peer,asof,dp=1,note=""):
 <div style="font-size:11.5px;color:{MUTED};display:flex;justify-content:space-between"><span>{note}</span><span class="mono">{asof}</span></div>
 </div>"""
 tiles="".join([
- tile("CET1 ratio",18.6,"%",19.1,S["cet1"],"22.4%","30 Jun 26",1,"requirement 12.3%"),
- tile("Leverage ratio",5.2,"%",5.3,[5.3,5.3,5.3,5.3,5.2],"5.6%","30 Jun 26",1,"requirement 4.3%, binding"),
- tile("Total capital",23.5,"%",23.8,S["tot"],"25.1%","30 Jun 26",1,"overall requirement 17.5%"),
+ tile("CET1 ratio",18.6,"%",19.1,S["cet1"],"22.4%","30 Jun 26",1,"requirement <span class=\"mono\">12.3%</span>"),
+ tile("Leverage ratio",5.2,"%",5.3,[5.3,5.3,5.3,5.3,5.2],"5.6%","30 Jun 26",1,"requirement <span class=\"mono\">4.3%</span>, binding"),
+ tile("Total capital",23.5,"%",23.8,S["tot"],"25.1%","30 Jun 26",1,"overall requirement <span class=\"mono\">17.5%</span>"),
  tile("LCR",174,"%",169,S["lcr"],"181%","30 Jun 26",0,"12-month average"),
  tile("NSFR",145,"%",143,S["nsfr"],"146%","30 Jun 26",0,"4-quarter average"),
- tile("Risk-weighted assets",90.3,"£bn",87.4,S["rwa"],"—","30 Jun 26",1,"+3.3% in the quarter"),
+ tile("Risk-weighted assets",90.3,"£bn",87.4,S["rwa"],"—","30 Jun 26",1,"<span class=\"mono\">+3.3%</span> in the quarter"),
 ])
 # trend chart (CET1 with requirement line), 12 quarters: only 5 real, so draw 5 real points on a wider axis honestly
 def chart(series, req, labels, w=560, h=200, ymin=10, ymax=22, unit="%", step=3, evlabel="Virgin Money integration", band=(20.5,24.5)):
@@ -187,12 +187,12 @@ def chart(series, req, labels, w=560, h=200, ymin=10, ymax=22, unit="%", step=3,
     dots="".join(f'<circle cx="{X(i):.1f}" cy="{Y(v):.1f}" r="3.2" fill="{WHITE}" stroke="{NAVY}" stroke-width="2"/>' for i,v in enumerate(s))
     end=f'<circle cx="{X(n-1):.1f}" cy="{Y(s[-1]):.1f}" r="4" fill="{ORANGE}"/><text x="{X(n-1)-10:.1f}" y="{Y(s[-1])-10:.1f}" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" fill="{TEXT}">{s[-1]}%</text>'
     xl="".join(f'<text x="{X(i):.1f}" y="{h-8}" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="{MUTED}">{l}</text>' for i,l in enumerate(labels))
-    ev=f'<line x1="{X(3):.1f}" x2="{X(3):.1f}" y1="{padt}" y2="{h-padb}" stroke="{MUTED}" stroke-width="1" stroke-dasharray="2 3"/><text x="{X(3)-5:.1f}" y="{padt+10}" text-anchor="end" font-family="Inter, sans-serif" font-size="10.5" fill="{MUTED}">{evlabel}</text>'
+    ev=f'<line x1="{X(3):.1f}" x2="{X(3):.1f}" y1="{padt}" y2="{h-padb}" stroke="{MUTED}" stroke-width="1" stroke-dasharray="2 3"/><text x="{X(3)-5:.1f}" y="{padt+10}" text-anchor="end" font-family="Inter, sans-serif" font-size="11" fill="{MUTED}">{evlabel}</text>'
     return f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" style="max-width:100%">{grid}{bandr}{ev}{reqline}{area}<polyline points="{pts}" fill="none" stroke="{NAVY}" stroke-width="2" stroke-linejoin="round"/>{dots}{end}{xl}</svg>'
 tabs="".join(f'<span style="padding:12px 4px;margin-right:22px;font-size:14px;font-weight:{600 if a else 500};color:{NAVY if a else MUTED};border-bottom:2px solid {ORANGE if a else "transparent"}">{t}</span>' for t,a in [("Trends",True),("Ratings",False),("Market",False),("News and events",False),("Documents",False),("Peers",False)])
-ratings_rows=[("Fitch","Long-term Issuer Default","AA-","Stable","12 May 2026"),("Fitch","Short-term Issuer Default","F1+","","12 May 2026"),("S&P","Issuer Credit Rating","A+","Stable","10 Sep 2025"),("S&P","Resolution Counterparty","AA-","","10 Sep 2025"),("Moody's","Long-term Deposit","A1","Stable","2 Mar 2026"),("Moody's","Counterparty Risk","Aa3","","2 Mar 2026"),("DBRS","Issuer Rating","A (high)","","25 Mar 2026")]
+ratings_rows=[("Fitch","Long-term Issuer Default","AA-","Stable","12 May 2026"),("Fitch","Short-term Issuer Default","F1+","","12 May 2026"),("S&amp;P","Issuer Credit Rating","A+","Stable","10 Sep 2025"),("S&amp;P","Resolution Counterparty","AA-","","10 Sep 2025"),("Moody's","Long-term Deposit","A1","Stable","2 Mar 2026"),("Moody's","Counterparty Risk","Aa3","","2 Mar 2026"),("DBRS","Issuer Rating","A (high)","","25 Mar 2026")]
 rtable="".join(f'<tr style="border-bottom:1px solid {LINE_SOFT}"><td style="padding:8px 10px;font-weight:600">{a}</td><td style="padding:8px 10px;color:{MUTED}">{t}</td><td class="mono" style="padding:8px 10px;font-weight:600">{v}</td><td style="padding:8px 10px;color:{MUTED}">{o}</td><td class="mono" style="padding:8px 10px;color:{MUTED};font-size:12.5px">{d}</td></tr>' for a,t,v,o,d in ratings_rows)
-docs=[("Pillar 3 disclosures Q1 2026/27","30 Jun 2026","nationwide.co.uk","KM1 extracted · 14 figures · validated"),("Pillar 3 disclosures FY 2025/26","31 Mar 2026","nationwide.co.uk","KM1 extracted · validated"),("Interim MREL and buffer statement","16 Apr 2026","Bank of England","MREL 9.7% of leverage exposure"),("Pillar 3 disclosures Q3 2025/26","31 Dec 2025","nationwide.co.uk","KM1 extracted · validated")]
+docs=[("Pillar 3 disclosures Q1 2026/27","30 Jun 2026","nationwide.co.uk","KM1 extracted · 14 figures · validated"),("Pillar 3 disclosures FY 2025/26","4 Apr 2026","nationwide.co.uk","KM1 extracted · validated"),("Interim MREL and buffer statement","16 Apr 2026","Bank of England","MREL <span class=\"mono\">9.7%</span> of leverage exposure"),("Pillar 3 disclosures Q3 2025/26","31 Dec 2025","nationwide.co.uk","KM1 extracted · validated")]
 dlist="".join(f'<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid {LINE_SOFT}"><span style="display:inline-flex;color:{NAVY}">{ico("doc",18,NAVY)}</span><div style="flex:1 1 auto;min-width:0"><div style="font-weight:600;font-size:14px">{t}</div><div style="font-size:12.5px;color:{MUTED}">{src} · {n}</div></div><span class="mono" style="font-size:12.5px;color:{MUTED}">{d}</span><span style="display:inline-flex;color:{MUTED}">{ico("chev",16,"#b8c2cc")}</span></div>' for t,d,src,n in docs)
 profile=f"""
 <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px">
@@ -213,7 +213,7 @@ profile=f"""
     <div style="position:relative;display:flex;flex-direction:column;gap:12px">
       <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.72)">Counterparty score</span>{chip("Band A","orange")}</div>
       <div style="display:flex;align-items:flex-end;gap:14px"><span class="mono" style="font-size:56px;font-weight:700;line-height:.95;color:{ORANGE};letter-spacing:-0.02em">82</span><div style="padding-bottom:6px;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.35"><div><span class="mono" style="color:{WHITE};font-weight:600">+1.4</span> in 90 days</div><div><span class="mono" style="color:{WHITE};font-weight:600">+3.0</span> in 12 months</div></div></div>
-      <div><div style="display:flex;justify-content:space-between;font-size:11.5px;color:rgba(255,255,255,0.65);margin-bottom:6px"><span>UK building societies, 20 peers</span><span>84th percentile</span></div>{ribbon(82,58,68,79,376,12)}</div>
+      <div><div style="display:flex;justify-content:space-between;font-size:11.5px;color:rgba(255,255,255,0.65);margin-bottom:6px"><span>UK building societies, 20 peers</span><span class="mono">84th percentile</span></div>{ribbon(82,58,68,79,330,12)}</div>
       <div style="font-size:13px;line-height:1.45;color:rgba(255,255,255,0.86);border-top:1px solid rgba(255,255,255,0.14);padding-top:10px">CET1 eased to 18.6% on higher risk-weighted assets after the Virgin Money integration; liquidity strengthened, ratings unchanged. Market overlay <span class="mono" style="color:{WHITE}">+2</span>.</div>
     </div>
   </div>
@@ -223,12 +223,12 @@ profile=f"""
   <div style="background:{WHITE};border:1px solid {LINE};border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px"><span style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:{NAVY}">Ratings</span>{agency_chips([("F","AA-"),("S","A+"),("M","A1"),("D","A(H)")])}<span style="font-size:12px;color:{MUTED}">All stable · last action 12 May 2026</span></div>
   <div style="background:{WHITE};border:1px solid {LINE};border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px"><span style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:{NAVY}">Market signal</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:{MUTED}">{ico("flat",15,MUTED)}Stable</span><span style="font-size:12px;color:{MUTED}">No CDS market · senior bond spread proxy, 30 days</span></div>
   <div style="background:{WHITE};border:1px solid {LINE};border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px"><span style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:{NAVY}">Equity</span><span style="font-size:14px;font-weight:600;color:{MUTED}">Not listed</span><span style="font-size:12px;color:{MUTED}">Mutual · core capital deferred shares only</span></div>
-  <div style="background:{WHITE};border:1px solid {LINE};border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px"><span style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:{NAVY}">Events, 90 days</span><span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600"><span style="width:8px;height:8px;border-radius:50%;background:{ORANGE};display:inline-block"></span>3 credit-relevant</span><span style="font-size:12px;color:{MUTED}">New disclosure · Fitch affirmation · MREL statement</span></div>
+  <div style="background:{WHITE};border:1px solid {LINE};border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px"><span style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:{NAVY}">Events, 6 months</span><span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600"><span style="width:8px;height:8px;border-radius:50%;background:{ORANGE};display:inline-block"></span>3 credit-relevant</span><span style="font-size:12px;color:{MUTED}">New disclosure · Fitch affirmation · MREL statement</span></div>
 </div>
 <div style="background:{WHITE};border:1px solid {LINE};border-radius:12px;box-shadow:0 6px 18px rgba(10,37,64,0.10);overflow:hidden">
   <div style="display:flex;padding:0 18px;border-bottom:1px solid {LINE}">{tabs}</div>
   <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:24px;padding:18px 18px 8px">
-    <div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><span style="font-size:13.5px;font-weight:600">CET1 ratio</span><span style="font-size:12px;color:{MUTED}">Requirement from KM1 row 12 · peer band shaded</span></div>{chart(S["cet1"],17.5,q)}</div>
+    <div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><span style="font-size:13.5px;font-weight:600">CET1 ratio</span><span style="font-size:12px;color:{MUTED}">CET1 requirement 12.3% (Pillar 1, Pillar 2A and buffers) · peer band illustrative</span></div>{chart(S["cet1"],12.3,q)}</div>
     <div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><span style="font-size:13.5px;font-weight:600">Liquidity coverage ratio</span><span style="font-size:12px;color:{MUTED}">12-month average, per KM1</span></div>{chart(S["lcr"],100,q,ymin=100,ymax=190,step=30,band=(165,195))}</div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:24px;padding:8px 18px 18px">
@@ -248,15 +248,15 @@ events=[
  ("Thu 13 Aug","Standard Chartered PLC","New disclosure","info","Half-year 2026 Pillar 3 filed: PDF and RNS notice","FCA National Storage Mechanism","primary"),
  ("Wed 12 Aug","NatWest Group","New disclosure","info","H1 2026 Pillar 3 published; NatWest Bank plc CET1 11.2%, leverage 4.4%","FCA National Storage Mechanism · natwestgroup.com","primary"),
  ("Tue 11 Aug","HSBC Holdings","Rating action","low","Fitch affirms A+ long-term IDR, outlook stable","ESMA register · Fitch","primary"),
- ("Thu 23 Jul","Standard Chartered PLC","Rating action","positive","S&P revises outlook to positive on BBB+ issuer credit rating","ESMA register · S&P","primary"),
+ ("Thu 23 Jul","Standard Chartered PLC","Rating action","positive","S&amp;P revises outlook to positive on BBB+ issuer credit rating","ESMA register · S&amp;P","primary"),
  ("Wed 8 Jul","Banco Santander","Rating action","low","Fitch affirms A+ long-term IDR, outlook stable","ESMA register · Fitch","primary"),
  ("Mon 8 Jun","Starling Bank","Rating action","positive","Moody's assigns first-time Baa2 issuer and deposit ratings, outlook stable","ESMA register · Moody's press release","primary"),
- ("Tue 26 May","HSBC Holdings","Rating action","positive","S&P revises outlook to positive on A- issuer credit rating","ESMA register · S&P","primary"),
+ ("Tue 26 May","HSBC Holdings","Rating action","positive","S&amp;P revises outlook to positive on A- issuer credit rating","ESMA register · S&amp;P","primary"),
  ("Tue 28 Apr","Barclays Bank PLC","New disclosure","info","Q1 2026 Pillar 3 published: CET1 12.3%, LCR 147.4%, UK leverage 5.4%","RNS via FCA National Storage Mechanism","primary"),
 ]
 sev={"positive":("good","Positive"),"low":("muted","Low"),"medium":("warn","Medium"),"high":("bad","High"),"info":("navy","Disclosure")}
 erows=[]
-for when,bank,typ,s,txt,src,kind in events:
+for when,bank,typ,s,txt,src,kind in events[:9]:
     k,l=sev[s]
     erows.append(f"""<div style="display:grid;grid-template-columns:110px 210px 1fr 260px;gap:14px;align-items:start;padding:12px 16px;border-bottom:1px solid {LINE_SOFT}">
 <span class="mono" style="font-size:12.5px;color:{MUTED};padding-top:2px">{when}</span>
@@ -267,7 +267,7 @@ for when,bank,typ,s,txt,src,kind in events:
 efilters="".join(f'<span style="display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:999px;font-size:13px;font-weight:{600 if a else 500};background:{NAVY if a else WHITE};color:{WHITE if a else TEXT};border:1px solid {NAVY if a else LINE}">{t}</span>' for t,a in [("All",True),("Rating actions",False),("New disclosures",False),("Regulatory",False),("Results and capital",False),("Market moves",False),("Press",False),("My watchlist",False)])
 ev=f"""
 <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px">
-  <div><h1 style="margin:0 0 4px;font-size:22.4px;font-weight:600;color:{TEXT};letter-spacing:-0.01em">Events</h1><div style="font-size:14px;color:{MUTED}">Credit-relevant events across the universe · primary sources first · 41 items in 90 days, 2 today</div></div>
+  <div><h1 style="margin:0 0 4px;font-size:22.4px;font-weight:600;color:{TEXT};letter-spacing:-0.01em">Events</h1><div style="font-size:14px;color:{MUTED}">Credit-relevant events across the universe · primary sources first · 63 items since 1 May, 2 today</div></div>
   <div style="display:flex;align-items:center;gap:10px"><span style="display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:8px;background:{WHITE};border:1px solid {LINE};font-size:14px;font-weight:500">{ico("bell",16,NAVY)}Alert rules</span><span style="display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:8px;background:{NAVY};color:{WHITE};font-size:14px;font-weight:600">{ico("book",16,WHITE)}Read today's brief</span></div>
 </div>
 <div style="display:flex;gap:8px;flex-wrap:wrap">{efilters}</div>
@@ -279,26 +279,26 @@ ev=f"""
 open("Events.dc.html","w").write(shell("Events","",ev,"events"))
 
 # ---------- Mobile profile ----------
-mtiles="".join(f"""<div style="background:{WHITE};border:1px solid {LINE};border-radius:10px;padding:12px 12px 10px;display:flex;flex-direction:column;gap:6px"><span style="font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:{NAVY}">{l}</span><div style="display:flex;align-items:flex-end;justify-content:space-between"><span><span class="mono" style="font-size:24px;font-weight:600;letter-spacing:-0.02em;line-height:1">{v}</span><span class="mono" style="font-size:12px;color:{MUTED}">{u}</span></span>{spark(s,64,22)}</div><span class="mono" style="font-size:11.5px;color:{GREEN if d.startswith('+') else (RED if d.startswith('−') else MUTED)}">{d} vs prior</span></div>""" for l,v,u,s,d in [("CET1","18.6","%",S["cet1"],"−0.5"),("Leverage","5.2","%",[5.3,5.3,5.3,5.3,5.2],"−0.1"),("LCR","174","%",S["lcr"],"+5"),("NSFR","145","%",S["nsfr"],"+2")])
+mtiles="".join(f"""<div style="background:{WHITE};border:1px solid {LINE};border-radius:10px;padding:12px 12px 10px;display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:{NAVY}">{l}</span><div style="display:flex;align-items:flex-end;justify-content:space-between"><span><span class="mono" style="font-size:24px;font-weight:600;letter-spacing:-0.02em;line-height:1">{v}</span><span class="mono" style="font-size:12px;color:{MUTED}">{u}</span></span>{spark(s,64,22)}</div><span class="mono" style="font-size:11.5px;color:{GREEN if d.startswith('+') else (RED if d.startswith('−') else MUTED)}">{d} vs prior</span></div>""" for l,v,u,s,d in [("CET1","18.6","%",S["cet1"],"−0.5"),("Leverage","5.2","%",[5.3,5.3,5.3,5.3,5.2],"−0.1"),("LCR","174","%",S["lcr"],"+5"),("NSFR","145","%",S["nsfr"],"+2")])
 mob=f"""<!doctype html><html><head><meta charset="utf-8"><script src="./support.js"></script></head><body><x-dc>
 <helmet>{FONTS}<style>{BASE_CSS}</style></helmet>
 <div style="width:390px;height:844px;background:{BG};display:flex;flex-direction:column;overflow:hidden">
   <div style="height:56px;flex:0 0 56px;background:{WHITE};border-bottom:1px solid {LINE};display:flex;align-items:center;justify-content:space-between;padding:0 12px;margin-top:44px">
-    <span style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:{NAVY}">{ico("back",20,NAVY)}Board</span>
+    <span style="display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:15px;color:{NAVY};height:44px;padding:0 4px">{ico("back",20,NAVY)}Board</span>
     <span style="font-weight:800;font-size:16px;letter-spacing:-0.02em;color:{NAVY}">PWLB<span style="color:{ORANGE}">today</span></span>
-    <span style="display:inline-flex;gap:14px">{ico("star",20,ORANGE)}{ico("download",20,NAVY)}</span>
+    <span style="display:inline-flex;gap:4px"><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px">{ico("star",20,ORANGE)}</span><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px">{ico("download",20,NAVY)}</span></span>
   </div>
   <div style="padding:16px 16px 0;display:flex;flex-direction:column;gap:12px">
     <div><div style="display:flex;align-items:center;gap:8px"><span style="width:34px;height:34px;border-radius:8px;background:{NAVY};color:{WHITE};display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:12px">NW</span><div><div style="font-weight:600;font-size:17px;line-height:1.2">Nationwide Building Society</div><div style="font-size:12px;color:{MUTED}">Building society · UK · as of 30 Jun 2026</div></div></div></div>
     <div style="background:{GRAD};border-radius:12px;color:{WHITE};padding:14px 16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 6px 18px rgba(10,37,64,0.10)">
       <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.72)">Counterparty score</span>{chip("Band A","orange")}</div>
-      <div style="display:flex;align-items:flex-end;gap:12px"><span class="mono" style="font-size:48px;font-weight:700;line-height:.95;color:{ORANGE};letter-spacing:-0.02em">82</span><span style="padding-bottom:5px;font-size:12.5px;color:rgba(255,255,255,0.75)"><span class="mono" style="color:{WHITE};font-weight:600">+1.4</span> in 90 days · 84th percentile of 20 societies</span></div>
+      <div style="display:flex;align-items:flex-end;gap:12px"><span class="mono" style="font-size:48px;font-weight:700;line-height:.95;color:{ORANGE};letter-spacing:-0.02em">82</span><span style="padding-bottom:5px;font-size:12.5px;color:rgba(255,255,255,0.75)"><span class="mono" style="color:{WHITE};font-weight:600">+1.4</span> in 90 days · <span class="mono">84th</span> percentile of 20 societies</span></div>
       {ribbon(82,58,68,79,326,12)}
     </div>
     <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:10px">{mtiles}</div>
     <div style="background:{WHITE};border:1px solid {LINE};border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:{NAVY}">Ratings</span><span style="font-size:11.5px;color:{MUTED}">ESMA register</span></div>{agency_chips([("F","AA-"),("S","A+"),("M","A1"),("D","A(H)")])}</div>
-    <div style="display:flex;align-items:flex-end;height:40px;border-bottom:1px solid {LINE};overflow:hidden">{"".join(f'<span style="padding:0 2px 9px;margin-right:16px;font-size:13.5px;font-weight:{600 if a else 500};color:{NAVY if a else MUTED};border-bottom:2px solid {ORANGE if a else "transparent"};white-space:nowrap">{t}</span>' for t,a in [("Trends",True),("Ratings",False),("Market",False),("Events",False),("Documents",False)])}</div>
-    <div style="background:{WHITE};border:1px solid {LINE};border-radius:10px;padding:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">CET1 ratio</span><span style="font-size:11.5px;color:{MUTED}">requirement 17.5%</span></div>{chart(S["cet1"],17.5,q,332,160,step=3,evlabel="VM integration")}</div>
+    <div style="display:flex;align-items:flex-end;height:44px;border-bottom:1px solid {LINE};overflow:hidden">{"".join(f'<span style="padding:0 2px 9px;margin-right:12px;font-size:13.5px;font-weight:{600 if a else 500};color:{NAVY if a else MUTED};border-bottom:2px solid {ORANGE if a else "transparent"};white-space:nowrap">{t}</span>' for t,a in [("Trends",True),("Ratings",False),("Market",False),("Events",False),("Docs",False)])}</div>
+    <div style="background:{WHITE};border:1px solid {LINE};border-radius:10px;padding:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">CET1 ratio</span><span style="font-size:11.5px;color:{MUTED}">requirement <span class="mono">12.3%</span></span></div>{chart(S["cet1"],12.3,q,332,140,step=3,evlabel="VM integration")}</div>
   </div>
 </div>
 </x-dc></body></html>"""
