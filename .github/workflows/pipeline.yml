@@ -1,5 +1,8 @@
 name: Counterparty pipeline
 on:
+  push:
+    branches: [main, claude/bank-credit-analysis-l5vmne]
+    paths-ignore: ["docs/**", "design/**", "research/**"]
   schedule:
     - cron: "10 5 * * *"     # daily 06:10 UK (BST) / 05:10 UTC
   workflow_dispatch:
@@ -20,15 +23,18 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.11", cache: pip }
       - run: pip install -r requirements.txt
-      - name: Daily adapters
+      - name: Daily adapters (scheduled or manual)
+        if: ${{ github.event_name != 'push' }}
         run: python -m bankcredit.cli run ${{ github.event.inputs.adapters || 'esma yahoo' }}
-      - name: Quarterly adapters on the 1st, 15th and 25th of the month
-        if: ${{ github.event_name == 'schedule' && (startsWith(github.run_started_at, '') && (contains('01 15 25', format('{0:dd}', github.run_started_at)))) }}
-        run: python -m bankcredit.cli run fdic eba
+      - name: Quarterly adapters on the 1st, 15th and 25th
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          d=$(date -u +%d); case "$d" in 01|15|25) python -m bankcredit.cli run fdic eba ;; *) echo "skip";; esac
         continue-on-error: true
       - name: Export and build site
         run: python -m bankcredit.cli build
       - name: Commit data
+        if: ${{ github.event_name != 'push' }}
         run: |
           git config user.name "counterparty-bot"
           git config user.email "philsmith871010@gmail.com"

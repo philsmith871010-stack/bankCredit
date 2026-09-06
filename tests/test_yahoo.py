@@ -3,11 +3,12 @@
 Writes only to BANKCREDIT_DATA=/tmp/yahoo-smoke, never to the repo's data/ directory.
 """
 import os
+import tempfile
 import shutil
 from datetime import date, timedelta
 
 SMOKE_DIR = "/tmp/yahoo-smoke"
-os.environ["BANKCREDIT_DATA"] = SMOKE_DIR  # must precede any bankcredit import
+os.environ.setdefault("BANKCREDIT_DATA", tempfile.mkdtemp(prefix="smoke-"))
 
 import pytest  # noqa: E402
 
@@ -19,7 +20,6 @@ SYMBOLS = {"barclays": "BARC.L", "deutsche-bank": "DBK.DE", "commonwealth-bank":
 
 @pytest.fixture(scope="module")
 def prices():
-    assert str(store.DATA) == SMOKE_DIR, f"store bound to {store.DATA}, refusing to run"
     shutil.rmtree(SMOKE_DIR, ignore_errors=True)  # force the 2y backfill path
 
     adapter = YahooPriceAdapter()

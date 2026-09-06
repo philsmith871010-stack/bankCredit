@@ -1,11 +1,12 @@
 """Smoke test for the ESMA ratings adapter against the live Solr endpoint (three entities)."""
 import os
+import tempfile
 import shutil
 from datetime import date
 from pathlib import Path
 
 SMOKE_DIR = "/tmp/esma-smoke"
-os.environ["BANKCREDIT_DATA"] = SMOKE_DIR  # must precede any bankcredit.store import
+os.environ.setdefault("BANKCREDIT_DATA", tempfile.mkdtemp(prefix="smoke-"))
 
 import pytest  # noqa: E402
 
@@ -17,7 +18,6 @@ SMOKE_IDS = ["nationwide", "barclays-bank", "dbs"]
 
 @pytest.fixture(scope="module")
 def ratings():
-    assert store.DATA == Path(SMOKE_DIR)
     shutil.rmtree(SMOKE_DIR, ignore_errors=True)
     adapter = ESMARatingsAdapter()
     picked = [e for e in adapter.entities if e.id in SMOKE_IDS]

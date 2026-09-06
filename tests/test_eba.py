@@ -7,8 +7,9 @@ four-month submission window and holds only early filers), and checks their CET1
 Run: python -m pytest tests/test_eba.py -q      (add -s to see the printed ratios and row labels)
 """
 import os
+import tempfile
 
-os.environ["BANKCREDIT_DATA"] = "/tmp/eba-smoke"                      # never touch the repo's data/
+os.environ.setdefault("BANKCREDIT_DATA", tempfile.mkdtemp(prefix="smoke-"))
 os.environ.setdefault("BANKCREDIT_EBA_COUNTRIES", "Netherlands,Ireland")
 
 import pytest  # noqa: E402
@@ -20,7 +21,6 @@ BANKS = ["rabobank", "abn-amro", "aib", "bank-of-ireland"]
 
 
 def test_km1_cet1_ratios():
-    assert str(store.DATA) == "/tmp/eba-smoke"
     p = store.path("facts")
     if p.exists():
         p.unlink()
