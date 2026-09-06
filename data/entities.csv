@@ -1,131 +1,131 @@
 id,name,short_name,country,type,region,group,lei,tickers,fdic_cert,peer_group,active
 barclays,Barclays PLC,Barclays,GB,holding,uk,,213800LBQA1Y9L22JB70,BARC.L,,uk_large,true
 barclays-bank,Barclays Bank PLC,Barclays Bank,GB,bank,uk,barclays,G5GSEF7VJP5I7OUK5573,,,uk_large,true
-barclays-bank-uk,Barclays Bank UK PLC,Barclays Bank UK,GB,bank,uk,barclays,,,,uk_large,true
-hsbc-holdings,HSBC Holdings plc,HSBC Holdings,GB,holding,uk,,,HSBA.L,,uk_large,true
-hsbc-uk,HSBC UK Bank plc,HSBC UK,GB,bank,uk,hsbc-holdings,,,,uk_large,true
-hsbc-bank,HSBC Bank plc,HSBC Bank,GB,bank,uk,hsbc-holdings,,,,uk_large,true
-lloyds-banking-group,Lloyds Banking Group plc,Lloyds Banking Group,GB,holding,uk,,,LLOY.L,,uk_large,true
-lloyds-bank,Lloyds Bank plc,Lloyds Bank,GB,bank,uk,lloyds-banking-group,,,,uk_large,true
-bank-of-scotland,Bank of Scotland plc,Bank of Scotland,GB,bank,uk,lloyds-banking-group,,,,uk_large,true
+barclays-bank-uk,Barclays Bank UK PLC,Barclays Bank UK,GB,bank,uk,barclays,213800UUGANOMFJ9X769,,,uk_large,true
+hsbc-holdings,HSBC Holdings plc,HSBC Holdings,GB,holding,uk,,MLU0ZO3ML4LN2LL2TL39,HSBA.L,,uk_large,true
+hsbc-uk,HSBC UK Bank plc,HSBC UK,GB,bank,uk,hsbc-holdings,21380081EP12LC86CB82,,,uk_large,true
+hsbc-bank,HSBC Bank plc,HSBC Bank,GB,bank,uk,hsbc-holdings,MP6I5ZYZBEU3UXPYFY54,,,uk_large,true
+lloyds-banking-group,Lloyds Banking Group plc,Lloyds Banking Group,GB,holding,uk,,549300PPXHEU2JF0AM85,LLOY.L,,uk_large,true
+lloyds-bank,Lloyds Bank plc,Lloyds Bank,GB,bank,uk,lloyds-banking-group,H7FNTJ4851HG0EXQ1Z70,,,uk_large,true
+bank-of-scotland,Bank of Scotland plc,Bank of Scotland,GB,bank,uk,lloyds-banking-group,OQ3T05P7YR8P5YJEVI93,,,uk_large,true
 natwest-group,NatWest Group plc,NatWest Group,GB,holding,uk,,2138005O9XJIJN4JPN90,NWG.L,,uk_large,true
-natwest-bank,National Westminster Bank Plc,NatWest Bank,GB,bank,uk,natwest-group,,,,uk_large,true
+natwest-bank,National Westminster Bank Plc,NatWest Bank,GB,bank,uk,natwest-group,213800IBT39XQ9C4CP71,,,uk_large,true
 standard-chartered,Standard Chartered PLC,Standard Chartered,GB,holding,uk,,U4LOSYZ7YG4W3S5F2G91,STAN.L,,uk_large,true
-santander-uk,Santander UK plc,Santander UK,GB,bank,uk,banco-santander,,,,uk_large,true
-virgin-money-uk,Virgin Money UK PLC,Virgin Money UK,GB,bank,uk,nationwide,,,,uk_mid,true
-clydesdale-bank,Clydesdale Bank PLC,Clydesdale Bank,GB,bank,uk,nationwide,,,,uk_mid,true
-tsb,TSB Bank plc,TSB,GB,bank,uk,banco-santander,,,,uk_mid,true
-co-operative-bank,The Co-operative Bank p.l.c.,Co-operative Bank,GB,bank,uk,coventry-bs,,,,uk_mid,true
-metro-bank,Metro Bank PLC,Metro Bank,GB,bank,uk,,,MTRO.L,,uk_mid,true
-osb-group,OSB Group PLC,OSB Group,GB,holding,uk,,,OSB.L,,uk_mid,true
-shawbrook,Shawbrook Bank Limited,Shawbrook,GB,bank,uk,,,,,uk_mid,true
-aldermore,Aldermore Bank PLC,Aldermore,GB,bank,uk,,,,,uk_mid,true
-close-brothers,Close Brothers Group plc,Close Brothers,GB,holding,uk,,,CBG.L,,uk_mid,true
+santander-uk,Santander UK plc,Santander UK,GB,bank,uk,banco-santander,PTCQB104N23FMNK2RZ28,,,uk_large,true
+virgin-money-uk,Virgin Money UK PLC,Virgin Money UK,GB,bank,uk,nationwide,213800ZK9VGCYYR6O495,,,uk_mid,true
+clydesdale-bank,Clydesdale Bank PLC,Clydesdale Bank,GB,bank,uk,nationwide,NHXOBHMY8K53VRC7MZ54,,,uk_mid,true
+tsb,TSB Bank plc,TSB,GB,bank,uk,banco-santander,549300XP222MV7P3CC54,,,uk_mid,true
+co-operative-bank,The Co-operative Bank p.l.c.,Co-operative Bank,GB,bank,uk,coventry-bs,213800TLZ6PCLYPSR448,,,uk_mid,true
+metro-bank,Metro Bank PLC,Metro Bank,GB,bank,uk,,213800X5WU57YL9GPK89,MTRO.L,,uk_mid,true
+osb-group,OSB Group PLC,OSB Group,GB,holding,uk,,213800ZBKL9BHSL2K459,OSB.L,,uk_mid,true
+shawbrook,Shawbrook Bank Limited,Shawbrook,GB,bank,uk,,213800XSHRKUIZK86B68,,,uk_mid,true
+aldermore,Aldermore Bank PLC,Aldermore,GB,bank,uk,,2138009CAEGO41Q6HB61,,,uk_mid,true
+close-brothers,Close Brothers Group plc,Close Brothers,GB,holding,uk,,213800W73SYHR14I3X91,CBG.L,,uk_mid,true
 paragon,Paragon Banking Group PLC,Paragon,GB,holding,uk,,213800S1TDKIB1IUTS72,PAG.L,,uk_mid,true
-secure-trust-bank,Secure Trust Bank PLC,Secure Trust Bank,GB,bank,uk,,,STB.L,,uk_small,true
-vanquis,Vanquis Banking Group plc,Vanquis,GB,holding,uk,,,VANQ.L,,uk_small,true
-investec,Investec plc,Investec,GB,holding,uk,,,INVP.L,,uk_mid,true
-monzo,Monzo Bank Limited,Monzo,GB,bank,uk,,,,,uk_small,true
-starling,Starling Bank Limited,Starling,GB,bank,uk,,,,,uk_small,true
-goldman-sachs-international-bank,Goldman Sachs International Bank,Goldman Sachs International Bank,GB,bank,uk,goldman-sachs,,,,uk_mid,true
-handelsbanken-plc,Handelsbanken plc,Handelsbanken plc,GB,bank,uk,svenska-handelsbanken,,,,uk_mid,true
+secure-trust-bank,Secure Trust Bank PLC,Secure Trust Bank,GB,bank,uk,,213800CXIBLC2TMIGI76,STB.L,,uk_small,true
+vanquis,Vanquis Banking Group plc,Vanquis,GB,holding,uk,,213800U93SZC44VXN635,VANQ.L,,uk_small,true
+investec,Investec plc,Investec,GB,holding,uk,,2138007Z3U5GWDN3MY22,INVP.L,,uk_mid,true
+monzo,Monzo Bank Limited,Monzo,GB,bank,uk,,213800PLUYXGZ8LU7T61,,,uk_small,true
+starling,Starling Bank Limited,Starling,GB,bank,uk,,213800AE5VSF3V1PAV23,,,uk_small,true
+goldman-sachs-international-bank,Goldman Sachs International Bank,Goldman Sachs International Bank,GB,bank,uk,goldman-sachs,N9FYJ29MC81JI74MJE92,,,uk_mid,true
+handelsbanken-plc,Handelsbanken plc,Handelsbanken plc,GB,bank,uk,svenska-handelsbanken,254900HILJ9CO56XA292,,,uk_mid,true
 nationwide,Nationwide Building Society,Nationwide,GB,building_society,uk,,549300XFX12G42QIKN82,,,uk_bs,true
-yorkshire-bs,Yorkshire Building Society,Yorkshire BS,GB,building_society,uk,,,,,uk_bs,true
-coventry-bs,Coventry Building Society,Coventry BS,GB,building_society,uk,,,,,uk_bs,true
+yorkshire-bs,Yorkshire Building Society,Yorkshire BS,GB,building_society,uk,,WXD0EHQRPI7HKN3I5T57,,,uk_bs,true
+coventry-bs,Coventry Building Society,Coventry BS,GB,building_society,uk,,2138004G59FXEAZ6IO10,,,uk_bs,true
 skipton-bs,Skipton Building Society,Skipton BS,GB,building_society,uk,,66AGRETLUXS4YO5MUH35,,,uk_bs,true
-leeds-bs,Leeds Building Society,Leeds BS,GB,building_society,uk,,,,,uk_bs,true
-principality-bs,Principality Building Society,Principality BS,GB,building_society,uk,,,,,uk_bs,true
-west-brom-bs,West Bromwich Building Society,West Brom BS,GB,building_society,uk,,,,,uk_bs,true
-nottingham-bs,Nottingham Building Society,Nottingham BS,GB,building_society,uk,,,,,uk_bs,true
-newcastle-bs,Newcastle Building Society,Newcastle BS,GB,building_society,uk,,,,,uk_bs,true
-cumberland-bs,Cumberland Building Society,Cumberland BS,GB,building_society,uk,,,,,uk_bs,true
-leek-bs,Leek Building Society,Leek BS,GB,building_society,uk,,,,,uk_bs,true
-hinckley-and-rugby-bs,Hinckley and Rugby Building Society,Hinckley and Rugby BS,GB,building_society,uk,,,,,uk_bs,true
-darlington-bs,Darlington Building Society,Darlington BS,GB,building_society,uk,,,,,uk_bs,true
-monmouthshire-bs,Monmouthshire Building Society,Monmouthshire BS,GB,building_society,uk,,,,,uk_bs,true
-saffron-bs,Saffron Building Society,Saffron BS,GB,building_society,uk,,,,,uk_bs,true
-suffolk-bs,Suffolk Building Society,Suffolk BS,GB,building_society,uk,,,,,uk_bs,true
-furness-bs,Furness Building Society,Furness BS,GB,building_society,uk,,,,,uk_bs,true
-family-bs,Family Building Society,Family BS,GB,building_society,uk,,,,,uk_bs,true
-progressive-bs,Progressive Building Society,Progressive BS,GB,building_society,uk,,,,,uk_bs,true
-melton-bs,Melton Mowbray Building Society,Melton BS,GB,building_society,uk,,,,,uk_bs,true
-al-rayan-bank,Al Rayan Bank PLC,Al Rayan Bank,GB,subsidiary,uk,,,,,uk_small,true
-gatehouse-bank,Gatehouse Bank plc,Gatehouse Bank,GB,subsidiary,uk,,,,,uk_small,true
-sbi-uk,State Bank of India (UK) Limited,SBI UK,GB,subsidiary,uk,,,,,uk_small,true
-icici-bank-uk,ICICI Bank UK PLC,ICICI Bank UK,GB,subsidiary,uk,,,,,uk_small,true
-bank-of-china-uk,Bank of China (UK) Limited,Bank of China UK,GB,subsidiary,uk,,,,,uk_small,true
-icbc-london,Industrial and Commercial Bank of China (London) plc,ICBC London,GB,subsidiary,uk,,,,,uk_small,true
-bank-of-baroda-uk,Bank of Baroda (UK) Limited,Bank of Baroda UK,GB,subsidiary,uk,,,,,uk_small,true
-qib-uk,Qatar Islamic Bank (UK) plc,QIB UK,GB,subsidiary,uk,,,,,uk_small,true
-nordea,Nordea Bank Abp,Nordea,FI,bank,eu,,,NDA-FI.HE,,eu_large,true
-seb,Skandinaviska Enskilda Banken AB,SEB,SE,bank,eu,,,SEB-A.ST,,eu_large,true
-swedbank,Swedbank AB,Swedbank,SE,bank,eu,,,SWED-A.ST,,eu_large,true
-svenska-handelsbanken,Svenska Handelsbanken AB,Svenska Handelsbanken,SE,bank,eu,,,SHB-A.ST,,eu_large,true
-danske-bank,Danske Bank A/S,Danske Bank,DK,bank,eu,,,DANSKE.CO,,eu_large,true
-dnb,DNB Bank ASA,DNB,NO,bank,eu,,,DNB.OL,,eu_large,true
-op-financial-group,OP Osuuskunta,OP Financial Group,FI,bank,eu,,,,,eu_large,true
-nykredit,Nykredit Realkredit A/S,Nykredit,DK,bank,eu,,,,,eu_large,true
-ing,ING Groep N.V.,ING,NL,holding,eu,,,INGA.AS,,eu_large,true
-rabobank,Cooperatieve Rabobank U.A.,Rabobank,NL,bank,eu,,,,,eu_large,true
-abn-amro,ABN AMRO Bank N.V.,ABN AMRO,NL,bank,eu,,,ABN.AS,,eu_large,true
-deutsche-bank,Deutsche Bank AG,Deutsche Bank,DE,bank,eu,,,DBK.DE,,eu_large,true
-commerzbank,Commerzbank AG,Commerzbank,DE,bank,eu,,,CBK.DE,,eu_large,true
-helaba,Landesbank Hessen-Thueringen Girozentrale,Helaba,DE,bank,eu,,,,,eu_large,true
-lbbw,Landesbank Baden-Wuerttemberg,LBBW,DE,bank,eu,,,,,eu_large,true
-bayernlb,Bayerische Landesbank,BayernLB,DE,bank,eu,,,,,eu_large,true
-dz-bank,DZ BANK AG Deutsche Zentral-Genossenschaftsbank,DZ Bank,DE,bank,eu,,,,,eu_large,true
-bnp-paribas,BNP Paribas,BNP Paribas,FR,bank,eu,,,BNP.PA,,eu_large,true
-credit-agricole,Credit Agricole S.A.,Credit Agricole,FR,bank,eu,,,ACA.PA,,eu_large,true
-societe-generale,Societe Generale,Societe Generale,FR,bank,eu,,,GLE.PA,,eu_large,true
-bpce,Groupe BPCE,BPCE,FR,bank,eu,,,,,eu_large,true
-credit-mutuel,Confederation Nationale du Credit Mutuel,Credit Mutuel,FR,bank,eu,,,,,eu_large,true
-la-banque-postale,La Banque Postale,La Banque Postale,FR,bank,eu,,,,,eu_large,true
-kbc,KBC Group NV,KBC,BE,holding,eu,,,KBC.BR,,eu_large,true
-belfius,Belfius Bank SA/NV,Belfius,BE,bank,eu,,,,,eu_large,true
-banco-santander,"Banco Santander, S.A.",Banco Santander,ES,bank,eu,,,SAN.MC,,eu_large,true
-bbva,"Banco Bilbao Vizcaya Argentaria, S.A.",BBVA,ES,bank,eu,,,BBVA.MC,,eu_large,true
-caixabank,"CaixaBank, S.A.",CaixaBank,ES,bank,eu,,,CABK.MC,,eu_large,true
-intesa-sanpaolo,Intesa Sanpaolo S.p.A.,Intesa Sanpaolo,IT,bank,eu,,,ISP.MI,,eu_large,true
-unicredit,UniCredit S.p.A.,UniCredit,IT,bank,eu,,,UCG.MI,,eu_large,true
-erste-group,Erste Group Bank AG,Erste Group,AT,bank,eu,,,EBS.VI,,eu_large,true
-raiffeisen-bank-international,Raiffeisen Bank International AG,Raiffeisen Bank International,AT,bank,eu,,,RBI.VI,,eu_large,true
-bank-of-ireland,Bank of Ireland Group plc,Bank of Ireland,IE,holding,eu,,,BIRG.IR,,eu_large,true
-aib,AIB Group plc,AIB,IE,holding,eu,,,A5G.IR,,eu_large,true
-anz,Australia and New Zealand Banking Group Limited,ANZ,AU,bank,aus_can,,,ANZ.AX,,aus,true
+leeds-bs,Leeds Building Society,Leeds BS,GB,building_society,uk,,O8VR8MK4M5SM9ZVEFS35,,,uk_bs,true
+principality-bs,Principality Building Society,Principality BS,GB,building_society,uk,,2138003CSNVJEPFZ3U52,,,uk_bs,true
+west-brom-bs,West Bromwich Building Society,West Brom BS,GB,building_society,uk,,45WSBJJYVGC91LG3H515,,,uk_bs,true
+nottingham-bs,Nottingham Building Society,Nottingham BS,GB,building_society,uk,,549300L5FZ06J1914B44,,,uk_bs,true
+newcastle-bs,Newcastle Building Society,Newcastle BS,GB,building_society,uk,,549300T1JIP3LZ5TZ694,,,uk_bs,true
+cumberland-bs,Cumberland Building Society,Cumberland BS,GB,building_society,uk,,549300EAUYM8Q506XY54,,,uk_bs,true
+leek-bs,Leek Building Society,Leek BS,GB,building_society,uk,,549300Z8SUT4F8XGZ462,,,uk_bs,true
+hinckley-and-rugby-bs,Hinckley and Rugby Building Society,Hinckley and Rugby BS,GB,building_society,uk,,213800IM7OJT6Z9NRD26,,,uk_bs,true
+darlington-bs,Darlington Building Society,Darlington BS,GB,building_society,uk,,213800YDBPLD3YO69A78,,,uk_bs,true
+monmouthshire-bs,Monmouthshire Building Society,Monmouthshire BS,GB,building_society,uk,,213800GI9A52IETUJJ18,,,uk_bs,true
+saffron-bs,Saffron Building Society,Saffron BS,GB,building_society,uk,,213800XVRPG36R8SG538,,,uk_bs,true
+suffolk-bs,Suffolk Building Society,Suffolk BS,GB,building_society,uk,,213800W381O32X1T4884,,,uk_bs,true
+furness-bs,Furness Building Society,Furness BS,GB,building_society,uk,,213800LGTSCCHWNQQQ47,,,uk_bs,true
+family-bs,Family Building Society,Family BS,GB,building_society,uk,,NL2I5A3IM3D6VE6JQP41,,,uk_bs,true
+progressive-bs,Progressive Building Society,Progressive BS,GB,building_society,uk,,54930035LV8RHKWLK185,,,uk_bs,true
+melton-bs,Melton Mowbray Building Society,Melton BS,GB,building_society,uk,,5493008CLR0AUM07SD15,,,uk_bs,true
+al-rayan-bank,Al Rayan Bank PLC,Al Rayan Bank,GB,subsidiary,uk,,213800AINT5U4D66UA65,,,uk_small,true
+gatehouse-bank,Gatehouse Bank plc,Gatehouse Bank,GB,subsidiary,uk,,213800UIMM88P3K5ZV42,,,uk_small,true
+sbi-uk,State Bank of India (UK) Limited,SBI UK,GB,subsidiary,uk,,213800LOV39TJH6YQY23,,,uk_small,true
+icici-bank-uk,ICICI Bank UK PLC,ICICI Bank UK,GB,subsidiary,uk,,2138002XB6T14IGKGU43,,,uk_small,true
+bank-of-china-uk,Bank of China (UK) Limited,Bank of China UK,GB,subsidiary,uk,,213800SVCJUHY6VX7884,,,uk_small,true
+icbc-london,Industrial and Commercial Bank of China (London) plc,ICBC London,GB,subsidiary,uk,,2138003HW6485HGVSH88,,,uk_small,true
+bank-of-baroda-uk,Bank of Baroda (UK) Limited,Bank of Baroda UK,GB,subsidiary,uk,,2549006RZET62B51UR82,,,uk_small,true
+qib-uk,Qatar Islamic Bank (UK) plc,QIB UK,GB,subsidiary,uk,,213800S4QPWSX1GXY767,,,uk_small,true
+nordea,Nordea Bank Abp,Nordea,FI,bank,eu,,529900ODI3047E2LIV03,NDA-FI.HE,,eu_large,true
+seb,Skandinaviska Enskilda Banken AB,SEB,SE,bank,eu,,F3JS33DEI6XQ4ZBPTN86,SEB-A.ST,,eu_large,true
+swedbank,Swedbank AB,Swedbank,SE,bank,eu,,M312WZV08Y7LYUC71685,SWED-A.ST,,eu_large,true
+svenska-handelsbanken,Svenska Handelsbanken AB,Svenska Handelsbanken,SE,bank,eu,,NHBDILHZTYCNBV5UYZ31,SHB-A.ST,,eu_large,true
+danske-bank,Danske Bank A/S,Danske Bank,DK,bank,eu,,MAES062Z21O4RZ2U7M96,DANSKE.CO,,eu_large,true
+dnb,DNB Bank ASA,DNB,NO,bank,eu,,549300GKFG0RYRRQ1414,DNB.OL,,eu_large,true
+op-financial-group,OP Osuuskunta,OP Financial Group,FI,bank,eu,,7437003B5WFBOIEFY714,,,eu_large,true
+nykredit,Nykredit Realkredit A/S,Nykredit,DK,bank,eu,,LIU16F6VZJSD6UKHD557,,,eu_large,true
+ing,ING Groep N.V.,ING,NL,holding,eu,,549300NYKK9MWM7GGW15,INGA.AS,,eu_large,true
+rabobank,Cooperatieve Rabobank U.A.,Rabobank,NL,bank,eu,,DG3RU1DBUFHT4ZF9WN62,,,eu_large,true
+abn-amro,ABN AMRO Bank N.V.,ABN AMRO,NL,bank,eu,,BFXS5XCH7N0Y05NIXW11,ABN.AS,,eu_large,true
+deutsche-bank,Deutsche Bank AG,Deutsche Bank,DE,bank,eu,,7LTWFZYICNSX8D621K86,DBK.DE,,eu_large,true
+commerzbank,Commerzbank AG,Commerzbank,DE,bank,eu,,851WYGNLUQLFZBSYGB56,CBK.DE,,eu_large,true
+helaba,Landesbank Hessen-Thueringen Girozentrale,Helaba,DE,bank,eu,,DIZES5CFO5K3I5R58746,,,eu_large,true
+lbbw,Landesbank Baden-Wuerttemberg,LBBW,DE,bank,eu,,B81CK4ESI35472RHJ606,,,eu_large,true
+bayernlb,Bayerische Landesbank,BayernLB,DE,bank,eu,,VDYMYTQGZZ6DU0912C88,,,eu_large,true
+dz-bank,DZ BANK AG Deutsche Zentral-Genossenschaftsbank,DZ Bank,DE,bank,eu,,529900HNOAA1KXQJUQ27,,,eu_large,true
+bnp-paribas,BNP Paribas,BNP Paribas,FR,bank,eu,,R0MUWSFPU8MPRO8K5P83,BNP.PA,,eu_large,true
+credit-agricole,Credit Agricole S.A.,Credit Agricole,FR,bank,eu,,969500TJ5KRTCJQWXH05,ACA.PA,,eu_large,true
+societe-generale,Societe Generale,Societe Generale,FR,bank,eu,,O2RNE8IBXP4R0TD8PU41,GLE.PA,,eu_large,true
+bpce,Groupe BPCE,BPCE,FR,bank,eu,,9695005MSX1OYEMGDF46,,,eu_large,true
+credit-mutuel,Confederation Nationale du Credit Mutuel,Credit Mutuel,FR,bank,eu,,9695000CG7B84NLR5984,,,eu_large,true
+la-banque-postale,La Banque Postale,La Banque Postale,FR,bank,eu,,96950066U5XAAIRCPA78,,,eu_large,true
+kbc,KBC Group NV,KBC,BE,holding,eu,,213800X3Q9LSAKRUWY91,KBC.BR,,eu_large,true
+belfius,Belfius Bank SA/NV,Belfius,BE,bank,eu,,A5GWLFH3KM7YV2SFQL84,,,eu_large,true
+banco-santander,"Banco Santander, S.A.",Banco Santander,ES,bank,eu,,5493006QMFDDMYWIAM13,SAN.MC,,eu_large,true
+bbva,"Banco Bilbao Vizcaya Argentaria, S.A.",BBVA,ES,bank,eu,,K8MS7FD7N5Z2WQ51AZ71,BBVA.MC,,eu_large,true
+caixabank,"CaixaBank, S.A.",CaixaBank,ES,bank,eu,,7CUNS533WID6K7DGFI87,CABK.MC,,eu_large,true
+intesa-sanpaolo,Intesa Sanpaolo S.p.A.,Intesa Sanpaolo,IT,bank,eu,,2W8N8UU78PMDQKZENC08,ISP.MI,,eu_large,true
+unicredit,UniCredit S.p.A.,UniCredit,IT,bank,eu,,549300TRUWO2CD2G5692,UCG.MI,,eu_large,true
+erste-group,Erste Group Bank AG,Erste Group,AT,bank,eu,,PQOH26KWDF7CG10L6792,EBS.VI,,eu_large,true
+raiffeisen-bank-international,Raiffeisen Bank International AG,Raiffeisen Bank International,AT,bank,eu,,9ZHRYM6F437SQJ6OUG95,RBI.VI,,eu_large,true
+bank-of-ireland,Bank of Ireland Group plc,Bank of Ireland,IE,holding,eu,,635400C8EK6DRI12LJ39,BIRG.IR,,eu_large,true
+aib,AIB Group plc,AIB,IE,holding,eu,,635400AKJBGNS5WNQL34,A5G.IR,,eu_large,true
+anz,Australia and New Zealand Banking Group Limited,ANZ,AU,bank,aus_can,,JHE42UYNWWTJB8YTTU19,ANZ.AX,,aus,true
 commonwealth-bank,Commonwealth Bank of Australia,Commonwealth Bank,AU,bank,aus_can,,MSFSBD3QN1GSN7Q6C537,CBA.AX,,aus,true
-nab,National Australia Bank Limited,NAB,AU,bank,aus_can,,,NAB.AX,,aus,true
+nab,National Australia Bank Limited,NAB,AU,bank,aus_can,,F8SB4JFBSYQFRQEH3Z21,NAB.AX,,aus,true
 westpac,Westpac Banking Corporation,Westpac,AU,bank,aus_can,,EN5TNI6CI43VEPAMHL14,WBC.AX,,aus,true
-macquarie-bank,Macquarie Bank Limited,Macquarie Bank,AU,bank,aus_can,,,MQG.AX,,aus,true
-bendigo-and-adelaide-bank,Bendigo and Adelaide Bank Limited,Bendigo and Adelaide Bank,AU,bank,aus_can,,,BEN.AX,,aus,true
-rbc,Royal Bank of Canada,RBC,CA,bank,aus_can,,,RY.TO,,can,true
-td-bank,The Toronto-Dominion Bank,TD Bank,CA,bank,aus_can,,,TD.TO,,can,true
-scotiabank,The Bank of Nova Scotia,Scotiabank,CA,bank,aus_can,,,BNS.TO,,can,true
-bmo,Bank of Montreal,BMO,CA,bank,aus_can,,,BMO.TO,,can,true
-cibc,Canadian Imperial Bank of Commerce,CIBC,CA,bank,aus_can,,,CM.TO,,can,true
-national-bank-of-canada,National Bank of Canada,National Bank of Canada,CA,bank,aus_can,,,NA.TO,,can,true
-dbs,DBS Bank Ltd.,DBS,SG,bank,asia,,,D05.SI,,asia,true
-ocbc,Oversea-Chinese Banking Corporation Limited,OCBC,SG,bank,asia,,,O39.SI,,asia,true
-uob,United Overseas Bank Limited,UOB,SG,bank,asia,,,U11.SI,,asia,true
-hsbc-hong-kong,The Hongkong and Shanghai Banking Corporation Limited,HSBC Hong Kong,HK,bank,asia,hsbc-holdings,,,,asia,true
-bochk,Bank of China (Hong Kong) Limited,BOCHK,HK,bank,asia,,,2388.HK,,asia,true
-standard-chartered-hk,Standard Chartered Bank (Hong Kong) Limited,Standard Chartered HK,HK,bank,asia,standard-chartered,,,,asia,true
-mufg,"Mitsubishi UFJ Financial Group, Inc.",MUFG,JP,holding,asia,,,8306.T,,asia,true
-smfg,"Sumitomo Mitsui Financial Group, Inc.",SMFG,JP,holding,asia,,,8316.T,,asia,true
-mizuho,"Mizuho Financial Group, Inc.",Mizuho,JP,holding,asia,,,8411.T,,asia,true
-sumitomo-mitsui-trust,"Sumitomo Mitsui Trust Group, Inc.",Sumitomo Mitsui Trust,JP,holding,asia,,,8309.T,,asia,true
-qnb,Qatar National Bank (Q.P.S.C.),QNB,QA,bank,gulf,,,QNBK.QA,,gulf,true
-first-abu-dhabi-bank,First Abu Dhabi Bank P.J.S.C.,First Abu Dhabi Bank,AE,bank,gulf,,,FAB.AE,,gulf,true
-emirates-nbd,Emirates NBD Bank P.J.S.C.,Emirates NBD,AE,bank,gulf,,,EMIRATESNBD.AE,,gulf,true
-adcb,Abu Dhabi Commercial Bank P.J.S.C.,ADCB,AE,bank,gulf,,,ADCB.AE,,gulf,true
-al-rajhi-bank,Al Rajhi Banking and Investment Corporation,Al Rajhi Bank,SA,bank,gulf,,,1120.SR,,gulf,true
-saudi-national-bank,The Saudi National Bank,Saudi National Bank,SA,bank,gulf,,,1180.SR,,gulf,true
-jpmorgan-chase,JPMorgan Chase & Co.,JPMorgan Chase,US,holding,us_ch,,,JPM,628,us,true
-bank-of-america,Bank of America Corporation,Bank of America,US,holding,us_ch,,,BAC,3510,us,true
-citigroup,Citigroup Inc.,Citigroup,US,holding,us_ch,,,C,7213,us,true
-wells-fargo,Wells Fargo & Company,Wells Fargo,US,holding,us_ch,,,WFC,3511,us,true
-goldman-sachs,"The Goldman Sachs Group, Inc.",Goldman Sachs,US,holding,us_ch,,,GS,33124,us,true
-morgan-stanley,Morgan Stanley,Morgan Stanley,US,holding,us_ch,,,MS,32992,us,true
-bny,The Bank of New York Mellon Corporation,BNY,US,holding,us_ch,,,BK,639,us,true
-state-street,State Street Corporation,State Street,US,holding,us_ch,,,STT,14,us,true
-northern-trust,Northern Trust Corporation,Northern Trust,US,holding,us_ch,,,NTRS,913,us,true
-ubs,UBS Group AG,UBS,CH,holding,us_ch,,,UBSG.SW,,ch,true
+macquarie-bank,Macquarie Bank Limited,Macquarie Bank,AU,bank,aus_can,,4ZHCHI4KYZG2WVRT8631,MQG.AX,,aus,true
+bendigo-and-adelaide-bank,Bendigo and Adelaide Bank Limited,Bendigo and Adelaide Bank,AU,bank,aus_can,,549300Y9URD6W70K0360,BEN.AX,,aus,true
+rbc,Royal Bank of Canada,RBC,CA,bank,aus_can,,ES7IP3U3RHIGC71XBU11,RY.TO,,can,true
+td-bank,The Toronto-Dominion Bank,TD Bank,CA,bank,aus_can,,PT3QB789TSUIDF371261,TD.TO,,can,true
+scotiabank,The Bank of Nova Scotia,Scotiabank,CA,bank,aus_can,,L3I9ZG2KFGXZ61BMYR72,BNS.TO,,can,true
+bmo,Bank of Montreal,BMO,CA,bank,aus_can,,NQQ6HPCNCCU6TUTQYE16,BMO.TO,,can,true
+cibc,Canadian Imperial Bank of Commerce,CIBC,CA,bank,aus_can,,2IGI19DL77OX0HC3ZE78,CM.TO,,can,true
+national-bank-of-canada,National Bank of Canada,National Bank of Canada,CA,bank,aus_can,,BSGEFEIOM18Y80CKCV46,NA.TO,,can,true
+dbs,DBS Bank Ltd.,DBS,SG,bank,asia,,ATUEL7OJR5057F2PV266,D05.SI,,asia,true
+ocbc,Oversea-Chinese Banking Corporation Limited,OCBC,SG,bank,asia,,5493007O3QFXCPOGWK22,O39.SI,,asia,true
+uob,United Overseas Bank Limited,UOB,SG,bank,asia,,IO66REGK3RCBAMA8HR66,U11.SI,,asia,true
+hsbc-hong-kong,The Hongkong and Shanghai Banking Corporation Limited,HSBC Hong Kong,HK,bank,asia,hsbc-holdings,2HI3YI5320L3RW6NJ957,,,asia,true
+bochk,Bank of China (Hong Kong) Limited,BOCHK,HK,bank,asia,,KNPC1X7GHDZW8U2ZSF89,2388.HK,,asia,true
+standard-chartered-hk,Standard Chartered Bank (Hong Kong) Limited,Standard Chartered HK,HK,bank,asia,standard-chartered,X5AV1MBDXGRPX5UGMX13,,,asia,true
+mufg,"Mitsubishi UFJ Financial Group, Inc.",MUFG,JP,holding,asia,,353800V2V8PUY9TK3E06,8306.T,,asia,true
+smfg,"Sumitomo Mitsui Financial Group, Inc.",SMFG,JP,holding,asia,,35380028MYWPB6AUO129,8316.T,,asia,true
+mizuho,"Mizuho Financial Group, Inc.",Mizuho,JP,holding,asia,,353800CI5L6DDAN5XZ33,8411.T,,asia,true
+sumitomo-mitsui-trust,"Sumitomo Mitsui Trust Group, Inc.",Sumitomo Mitsui Trust,JP,holding,asia,,353800P843RLCDBLNT17,8309.T,,asia,true
+qnb,Qatar National Bank (Q.P.S.C.),QNB,QA,bank,gulf,,549300FFSRVBS0SQXY75,QNBK.QA,,gulf,true
+first-abu-dhabi-bank,First Abu Dhabi Bank P.J.S.C.,First Abu Dhabi Bank,AE,bank,gulf,,2138002Y3WMK6RZS8H90,FAB.AE,,gulf,true
+emirates-nbd,Emirates NBD Bank P.J.S.C.,Emirates NBD,AE,bank,gulf,,54930029BCN8HF3B1286,EMIRATESNBD.AE,,gulf,true
+adcb,Abu Dhabi Commercial Bank P.J.S.C.,ADCB,AE,bank,gulf,,213800RWVKKIRX1AUH58,ADCB.AE,,gulf,true
+al-rajhi-bank,Al Rajhi Banking and Investment Corporation,Al Rajhi Bank,SA,bank,gulf,,558600BQZS4Y1DTU8589,1120.SR,,gulf,true
+saudi-national-bank,The Saudi National Bank,Saudi National Bank,SA,bank,gulf,,5586006ZEFQ542K7CY16,1180.SR,,gulf,true
+jpmorgan-chase,JPMorgan Chase & Co.,JPMorgan Chase,US,holding,us_ch,,8I5DZWZKVSZI1NUHU748,JPM,628,us,true
+bank-of-america,Bank of America Corporation,Bank of America,US,holding,us_ch,,9DJT3UXIJIZJI4WXO774,BAC,3510,us,true
+citigroup,Citigroup Inc.,Citigroup,US,holding,us_ch,,6SHGI4ZSSLCXXQSBB395,C,7213,us,true
+wells-fargo,Wells Fargo & Company,Wells Fargo,US,holding,us_ch,,PBLD0EJDB5FWOLXP3B76,WFC,3511,us,true
+goldman-sachs,"The Goldman Sachs Group, Inc.",Goldman Sachs,US,holding,us_ch,,784F5XWPLTWKTBV3E584,GS,33124,us,true
+morgan-stanley,Morgan Stanley,Morgan Stanley,US,holding,us_ch,,IGJSJL3JD5P30I6NJZ34,MS,32992,us,true
+bny,The Bank of New York Mellon Corporation,BNY,US,holding,us_ch,,WFLLPEPC7FZXENRZV188,BK,639,us,true
+state-street,State Street Corporation,State Street,US,holding,us_ch,,549300ZFEEJ2IP5VME73,STT,14,us,true
+northern-trust,Northern Trust Corporation,Northern Trust,US,holding,us_ch,,549300GLF98S992BC502,NTRS,913,us,true
+ubs,UBS Group AG,UBS,CH,holding,us_ch,,549300SZJ9VS8SGXAN81,UBSG.SW,,ch,true

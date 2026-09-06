@@ -136,15 +136,20 @@ U = [
 ]
 def slug(s):
     s = s.lower().replace("&", "and"); return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+out = ROOT / "data" / "entities.csv"
+existing = {}
+if out.exists():
+    with out.open(newline="", encoding="utf-8") as f:
+        existing = {r["id"]: r for r in csv.DictReader(f)}
 rows, seen = [], set()
 for name, short, cc, typ, reg, grp, lei, tick, cert, peer in U:
     sid = slug(short)
+    lei = lei or existing.get(sid, {}).get("lei", "")  # keep LEIs resolved by research/resolve_leis.py
     assert sid not in seen, sid; seen.add(sid)
     rows.append(dict(id=sid, name=name, short_name=short, country=cc, type=typ, region=reg, group=grp, lei=lei, tickers=tick, fdic_cert=cert, peer_group=peer, active="true"))
 ids = {r["id"] for r in rows}
 for r in rows:
     assert not r["group"] or r["group"] in ids, ("group slug missing", r["group"])
-out = ROOT / "data" / "entities.csv"
 with out.open("w", newline="", encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=list(rows[0].keys())); w.writeheader(); w.writerows(rows)
 print(len(rows), "entities;", sum(1 for r in rows if r["lei"]), "with LEI;", dict(collections.Counter(r["region"] for r in rows)))
