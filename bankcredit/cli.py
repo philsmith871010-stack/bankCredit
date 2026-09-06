@@ -3,6 +3,10 @@
   python -m bankcredit.cli run fdic eba esma yahoo   # run adapters
   python -m bankcredit.cli build                     # export JSON and build the site
   python -m bankcredit.cli list                      # list adapters
+  python -m bankcredit.cli extract file.pdf          # try the KM1 extractor on one PDF (no load)
+  python -m bankcredit.cli pdf <entity> file.pdf [url]  # extract one PDF and load or queue it
+  python -m bankcredit.cli review list|ingest        # review queue for failed extractions
+  python -m bankcredit.cli reprocess [entity]        # re-extract cached PDFs after an extractor change
 """
 from __future__ import annotations
 
@@ -12,7 +16,7 @@ import sys
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
-ADAPTER_MODULES = ["fdic", "eba", "esma", "yahoo", "dtcc", "ice"]
+ADAPTER_MODULES = ["fdic", "eba", "esma", "yahoo", "pillar3", "dtcc", "ice"]
 
 
 def _load_adapters():
@@ -45,6 +49,39 @@ def main(argv=None):
             print(f"{n}: {status}, {total} rows")
             rc = rc or (status == "failed")
         return rc
+    if cmd == "extract":
+        from .extract import km1
+        res = km1.extract(args[0])
+        print(f"pages {res.pages} template {res.template!r} date {res.reference_date} {res.currency} conf {res.confidence}")
+        for k, v in res.values.items():
+            print(f"  {k:28s} {v:,.2f}")
+        for sev, msg in res.checks:
+            print(f"  [{sev}] {msg}")
+        return 0 if res.ok else 1
+    if cmd == "pdf":
+        from .adapters.pillar3 import Pillar3Adapter
+        if len(args) < 2:
+            print("usage: pdf <entity> <file.pdf> [source-url]"); return 1
+        status, res = Pillar3Adapter().process_file(args[0], args[1], args[2] if len(args) > 2 else "")
+        print(f"{args[0]}: {status} (confidence {res.confidence}, date {res.reference_date}, page {res.page})")
+        for sev, msg in res.checks:
+            print(f"  [{sev}] {msg}")
+        return 0 if status in ("loaded", "unverified") else 1
+    if cmd == "reprocess":
+        from .adapters.pillar3 import Pillar3Adapter
+        print(Pillar3Adapter().reprocess(args[0] if args else None))
+        return 0
+    if cmd == "review":
+        from . import review
+        sub = args[0] if args else "list"
+        if sub == "ingest":
+            print(f"ingested {review.ingest()} facts")
+            return 0
+        items = review.load()
+        print(f"{len(items)} open items")
+        for it in items:
+            print(f"  {it['id']}  {it['entity_id']:28s} {it.get('reference_date') or '?':10s} p.{it.get('page') or '-':<4} {it['reason'][:90]}")
+        return 0
     if cmd == "build":
         from .site.build import build
         from .export import export_json

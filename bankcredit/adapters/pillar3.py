@@ -1,0 +1,359 @@
+"""Pillar 3 PDF collector and KM1 extractor for firms without an API or data hub.
+
+discover  -> one work item per locator (bankcredit/adapters/pillar3_locators.py) plus
+             the FCA National Storage Mechanism poll, matched to entities by LEI
+fetch     -> listing page HTML, candidate PDF links, download of unseen PDFs
+parse     -> rules-based KM1 extraction (bankcredit/extract/km1.py); no AI service
+validate  -> the extractor's own cross-checks decide loaded / unverified / review
+load      -> facts (source "pillar3", method "pdf_rules") and the documents table;
+             failures go to data/review/queue.json for the local review skill
+
+PDFs are cached under data/cache/pdf (not committed); the documents table holds
+the URL, hash and outcome so a run never downloads the same file twice.
+"""
+from __future__ import annotations
+
+import calendar
+import hashlib
+import html
+import json
+import logging
+import re
+import time
+from datetime import date, datetime, timedelta
+from pathlib import Path
+from urllib.parse import unquote, urljoin, urlsplit
+
+from .. import review, store
+from ..extract import km1
+from ..models import Fact
+from .base import Adapter, register
+from .pillar3_locators import COUNTRY_CCY, LOCATORS
+
+log = logging.getLogger("bankcredit.pillar3")
+
+BROWSER_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) "
+              "Chrome/128.0.0.0 Safari/537.36")
+NSM_API = "https://api.data.fca.org.uk/search?index=nsm-search"
+NSM_ARTEFACTS = "https://data.fca.org.uk/artefacts/"
+MAX_NEW_PER_ENTITY = 3          # newest unseen PDFs fetched per run
+LINK_RE = re.compile(r"""(?:https?:)?//[^\s"'<>\\)]+|/[^\s"'<>\\)]+""")
+SLEEP = 1.0
+
+
+# ---- period inference from a URL or headline ----------------------------
+def _month_end(y: int, m: int) -> date:
+    while m > 12:
+        m -= 12; y += 1
+    while m < 1:
+        m += 12; y -= 1
+    return date(y, m, calendar.monthrange(y, m)[1])
+
+
+def _shift(d: date, months: int) -> date:
+    y, m = d.year, d.month + months
+    while m > 12:
+        m -= 12; y += 1
+    while m < 1:
+        m += 12; y -= 1
+    return date(y, m, min(d.day, calendar.monthrange(y, m)[1]))
+
+
+TAGS = {"q1": 1, "q2": 2, "q3": 3, "q4": 4, "h1": 2, "hy": 2, "half year": 2, "half-year": 2, "halfyear": 2,
+        "half yearly": 2, "half-yearly": 2, "interim": 2, "h2": 4}
+
+
+def infer_period(text: str, year_end: str = "12-31") -> date | None:
+    """Best-effort period end from a filename or headline; None if nothing recognisable."""
+    t = unquote(text).lower().replace("%20", " ").replace("_", " ")
+    ye_m, ye_d = (int(x) for x in year_end.split("-"))
+    explicit = [d for d in km1.parse_dates(t.replace("-", " "), explicit_only=True)
+                if d.day >= 28 or (d.month, d.day) == (ye_m, ye_d)]
+    if explicit:
+        return max(explicit)
+    m = re.search(r"(20\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])", t)
+    if m:
+        return date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    tag = re.search(r"\b(q[1-4]|h[12]|hy|half[ -]?year(?:ly)?|interim)(?=\d{2}\b|\b)", t)
+    span = re.search(r"\b(20\d{2})[-/](?:20)?(\d{2})\b", t)          # 2025-2026 or 2025-26
+    year = None
+    if span:
+        year = 2000 + int(span.group(2))
+    else:
+        m = re.search(r"\b(20\d{2})\b", t)
+        if m:
+            year = int(m.group(1))
+        elif tag:
+            m = re.search(r"\b(?:q[1-4]|h[12]|hy)\s?-?(\d{2})\b(?!\d)", t)   # Q126, H126
+            if m:
+                year = 2000 + int(m.group(1))
+    if year is None:
+        return None
+    if not tag:
+        return date(year, ye_m, ye_d)
+    n = TAGS.get(tag.group(1), 2)
+    if (ye_m, ye_d) == (12, 31):
+        return _month_end(year, 3 * n)
+    end = _shift(date(year, ye_m, ye_d), -(4 - n) * 3)
+    if ye_d >= 28:
+        return _month_end(end.year, end.month)
+    return end if end.day >= 15 else _month_end(end.year, end.month - 1)
+
+
+# ---- adapter ------------------------------------------------------------
+@register
+class Pillar3Adapter(Adapter):
+    name = "pillar3"
+    cadence = "daily"
+
+    def __init__(self):
+        super().__init__()
+        self.session.headers["User-Agent"] = BROWSER_UA
+        self.session.headers["Accept"] = "text/html,application/xhtml+xml,application/pdf,*/*"
+        self.session.headers["Accept-Language"] = "en-GB,en;q=0.9"
+        self.by_id = {e.id: e for e in self.entities}
+        self.cache = store.DATA / "cache" / "pdf"
+        self.docs = store.read("documents")
+        self.seen = set(self.docs.url) if not self.docs.empty else set()
+        self._pages: dict[str, str] = {}
+        self._nsm: list[dict] | None = None
+
+    # ---- discover ----
+    def discover(self):
+        for loc in LOCATORS:
+            if loc["entity"] in self.by_id:
+                yield dict(loc, id=loc["entity"])
+        yield {"id": "nsm", "kind": "nsm-poll"}
+
+    # ---- fetch ----
+    def _get_page(self, url: str) -> str:
+        if url not in self._pages:
+            r = self.session.get(url, timeout=60)
+            time.sleep(SLEEP)
+            self._pages[url] = r.text if r.status_code == 200 else ""
+            if r.status_code != 200:
+                log.warning("listing %s -> %s", url, r.status_code)
+        return self._pages[url]
+
+    def _links(self, page_url: str, body: str) -> list[str]:
+        raw = html.unescape(body).replace("\\/", "/")
+        out, seen = [], set()
+        for m in LINK_RE.finditer(raw):
+            u = m.group(0)
+            if u.startswith("//"):
+                u = "https:" + u
+            try:
+                u = urljoin(page_url, u).split("#")[0]
+            except ValueError:
+                continue
+            u = re.sub(r'["\'\\].*$', "", u)
+            if u not in seen:
+                seen.add(u); out.append(u)
+        return out
+
+    def _candidates(self, loc: dict) -> list[tuple[str, date | None, str]]:
+        """(url, inferred period, title) for links on the listing page that match the locator."""
+        body = self._get_page(loc["page"])
+        if not body:
+            return []
+        mrx = re.compile(loc["match"], re.I)
+        xrx = re.compile(loc["exclude"], re.I) if loc.get("exclude") else None
+        found = []
+        for u in self._links(loc["page"], body):
+            d = unquote(u)
+            if not mrx.search(d) or (xrx and xrx.search(d)):
+                continue
+            if re.search(r"\.(jpg|png|gif|svg|css|js|xlsx?|docx?)(\?|$)", d, re.I):
+                continue
+            found.append((u, infer_period(d.rsplit("/", 1)[-1], loc.get("year_end", "12-31")) or infer_period(d, loc.get("year_end", "12-31")),
+                          d.rsplit("/", 1)[-1][:120]))
+        found.sort(key=lambda x: (x[1] or date(1900, 1, 1)), reverse=True)
+        return found
+
+    def _nsm_hits(self) -> list[dict]:
+        if self._nsm is None:
+            since = (date.today() - timedelta(days=400)).isoformat()
+            body = {"from": 0, "size": 300, "sortorder": "desc",
+                    "criteriaObj": {"criteria": [{"name": "headline", "value": "Pillar 3"}],
+                                    "dateCriteria": [{"name": "publication_date",
+                                                      "value": {"from": f"{since}T00:00:00Z", "to": "2035-01-01T23:59:59Z"}}]}}
+            try:
+                r = self.session.post(NSM_API, json=body, timeout=90,
+                                      headers={"Origin": "https://data.fca.org.uk", "Referer": "https://data.fca.org.uk/"})
+                r.raise_for_status()
+                self._nsm = [h["_source"] for h in r.json()["hits"]["hits"]]
+            except Exception as exc:
+                log.warning("NSM search failed: %s", exc)
+                self._nsm = []
+        return self._nsm
+
+    def _download(self, url: str, entity_id: str) -> tuple[Path, str] | None:
+        r = self.session.get(url, timeout=120)
+        time.sleep(SLEEP)
+        if r.status_code != 200 or not r.content.startswith(b"%PDF"):
+            log.warning("%s: %s not a PDF (%s)", entity_id, url, r.status_code)
+            return None
+        sha = hashlib.sha256(r.content).hexdigest()
+        p = self.cache / entity_id / f"{sha[:16]}.pdf"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_bytes(r.content)
+        return p, sha
+
+    def fetch(self, item: dict):
+        """Returns a list of (entity_id, url, path, sha, hint_date, title, origin) for unseen PDFs."""
+        work = []
+        if item.get("kind") == "nsm-poll":
+            lei_map = {e.lei: e for e in self.entities if e.lei}
+            for s in self._nsm_hits():
+                link = s.get("download_link") or ""
+                if not link.lower().endswith(".pdf"):
+                    continue
+                ent = lei_map.get((s.get("lei") or "").strip())
+                if not ent:
+                    continue
+                url = NSM_ARTEFACTS + link
+                if url in self.seen:
+                    continue
+                if re.search(r"chart pack|remuneration|glossary", s.get("headline", ""), re.I):
+                    continue
+                loc = next((l for l in LOCATORS if l["entity"] == ent.id), {})
+                hint = infer_period(s.get("headline", ""), loc.get("year_end", "12-31"))
+                work.append((ent.id, url, None, None, hint, s.get("headline", "").strip(), "nsm"))
+        elif item.get("kind", "html") == "html":
+            new = [c for c in self._candidates(item) if c[0] not in self.seen][:MAX_NEW_PER_ENTITY]
+            for url, hint, title in new:
+                work.append((item["id"], url, None, None, hint, title, "site"))
+        else:
+            return None   # nsm-only and browser kinds are served by the NSM poll or the Mac skill
+        out = []
+        for ent, url, _, _, hint, title, origin in work:
+            got = self._download(url, ent)
+            if got:
+                out.append((ent, url, got[0], got[1], hint, title, origin))
+            else:
+                self._record(ent, url, "", None, None, "error", 0.0, "download failed or not a PDF", title, origin, {})
+        return out or None
+
+    # ---- parse ----
+    def parse(self, item, raw) -> list:
+        results = []
+        for ent, url, path, sha, hint, title, origin in raw:
+            e = self.by_id[ent]
+            loc = next((l for l in LOCATORS if l["entity"] == ent), {})
+            ccy = loc.get("currency") or COUNTRY_CCY.get(e.country, "")
+            try:
+                res = km1.extract(str(path), hint_date=hint, currency_hint=ccy)
+            except Exception as exc:
+                self._record(ent, url, sha, None, None, "error", 0.0, f"extract failed: {exc}", title, origin, {})
+                continue
+            results.append((ent, url, path, sha, title, origin, res))
+        return results
+
+    # ---- validate / load ----
+    def validate(self, records: list) -> list:
+        return records
+
+    def load(self, records: list) -> int:
+        n = 0
+        for ent, url, path, sha, title, origin, res in records:
+            checks = "; ".join(f"{s}:{m}" for s, m in res.checks)
+            if not res.values:
+                self._record(ent, url, sha, res.page, res.reference_date, "no_km1", 0.0, checks, title, origin, res.values)
+                loc = next((l for l in LOCATORS if l["entity"] == ent), {})
+                hint = infer_period(title or url, loc.get("year_end", "12-31"))
+                if hint is None or hint >= date(2022, 1, 1):      # the KM1 template only exists from 2022
+                    review.add(self._queue_item(ent, url, path, sha, res, title, "no KM1 template found"))
+                continue
+            if res.ok:
+                status = "loaded" if res.confidence >= 0.9 else "unverified"
+                store.drop("facts", document=url, source=self.name)
+                n += store.upsert("facts", self._facts(ent, url, res))
+                review.remove((sha or hashlib.sha1(url.encode()).hexdigest())[:12])
+            else:
+                status = "review"
+                review.add(self._queue_item(ent, url, path, sha, res, title, checks))
+            self._record(ent, url, sha, res.page, res.reference_date, status, res.confidence, checks, title, origin, res.values)
+        return n
+
+    def process_file(self, entity_id: str, path: str, url: str = "", title: str = "", origin: str = "local") -> tuple[str, km1.Result]:
+        """Extract and load one PDF already on disk (downloaded by hand or by a browser). Returns (status, result)."""
+        data = Path(path).read_bytes()
+        if not data.startswith(b"%PDF"):
+            raise ValueError(f"{path} is not a PDF")
+        sha = hashlib.sha256(data).hexdigest()
+        cached = self.cache / entity_id / f"{sha[:16]}.pdf"
+        cached.parent.mkdir(parents=True, exist_ok=True)
+        if not cached.exists():
+            cached.write_bytes(data)
+        url = url or f"file:{Path(path).name}"
+        e = self.by_id[entity_id]
+        loc = next((l for l in LOCATORS if l["entity"] == entity_id), {})
+        ccy = loc.get("currency") or COUNTRY_CCY.get(e.country, "")
+        res = km1.extract(str(cached), hint_date=infer_period(Path(path).name, loc.get("year_end", "12-31")), currency_hint=ccy)
+        self.load([(entity_id, url, cached, sha, title or Path(path).name, origin, res)])
+        row = self.docs = store.read("documents")
+        status = row[row.url == url].status.iloc[-1] if not row.empty and (row.url == url).any() else "error"
+        return status, res
+
+    def reprocess(self, entity_id: str | None = None) -> dict:
+        """Re-run extraction on every cached PDF (after an extractor change). Returns status counts."""
+        docs = store.read("documents")
+        counts: dict[str, int] = {}
+        if docs.empty:
+            return counts
+        if entity_id is None:
+            store.drop("facts", source=self.name)      # every pillar3 fact is rebuilt from the cached documents
+            review.save([])                            # and the queue with them
+        else:
+            store.drop("facts", source=self.name, entity_id=entity_id)
+        for r in docs.itertuples():
+            if entity_id and r.entity_id != entity_id:
+                continue
+            if not r.sha256:
+                continue
+            path = self.cache / r.entity_id / f"{r.sha256[:16]}.pdf"
+            if not path.exists():
+                continue
+            e = self.by_id.get(r.entity_id)
+            loc = next((l for l in LOCATORS if l["entity"] == r.entity_id), {})
+            ccy = loc.get("currency") or (COUNTRY_CCY.get(e.country, "") if e else "")
+            hint = infer_period(r.title or "", loc.get("year_end", "12-31"))
+            try:
+                res = km1.extract(str(path), hint_date=hint, currency_hint=ccy)
+            except Exception as exc:
+                self._record(r.entity_id, r.url, r.sha256, None, None, "error", 0.0, f"extract failed: {exc}", r.title, r.origin, {})
+                counts["error"] = counts.get("error", 0) + 1
+                continue
+            if not res.ok:
+                store.drop("facts", document=r.url, source=self.name)
+            self.load([(r.entity_id, r.url, path, r.sha256, r.title, r.origin, res)])
+            status = "loaded" if res.ok and res.confidence >= 0.9 else "unverified" if res.ok else "review" if res.values else "no_km1"
+            counts[status] = counts.get(status, 0) + 1
+        return counts
+
+    def _facts(self, ent: str, url: str, res: km1.Result) -> list[Fact]:
+        kinds = {m: k for _, (m, _, k) in km1.ROWS.items()}
+        out = []
+        for metric, value in res.values.items():
+            if metric not in km1.PUBLISH:
+                continue
+            pct = kinds.get(metric) == "pct"
+            out.append(Fact(entity_id=ent, reference_date=res.reference_date, metric=metric, value=float(value),
+                            unit="pct" if pct else "ccy_m", currency="" if pct else res.currency,
+                            basis="consolidated", source=self.name, document=url, page=res.page,
+                            method="pdf_rules", confidence=res.confidence))
+        return out
+
+    def _queue_item(self, ent, url, path, sha, res, title, reason) -> dict:
+        return {"id": (sha or hashlib.sha1(url.encode()).hexdigest())[:12], "entity_id": ent, "url": url,
+                "local": str(path.relative_to(store.DATA)) if path else "", "title": title,
+                "page": res.page, "reference_date": res.reference_date.isoformat() if res.reference_date else None,
+                "currency": res.currency, "values": res.values, "checks": res.checks, "reason": reason}
+
+    def _record(self, ent, url, sha, page, ref, status, conf, message, title, origin, values) -> None:
+        row = {"entity_id": ent, "url": url, "sha256": sha or "", "title": title, "origin": origin,
+               "page": page, "reference_date": ref.isoformat() if ref else None, "status": status,
+               "confidence": conf, "message": message[:500], "values": json.dumps(values, default=str),
+               "fetched_at": datetime.utcnow().isoformat(timespec="seconds")}
+        store.upsert("documents", [row])
+        self.seen.add(url)

@@ -20,6 +20,7 @@ KEYS = {
     "prices": ["entity_id", "date", "symbol"],
     "cds": ["entity_id", "date", "tier", "source"],
     "events": ["entity_id", "event_id"],
+    "documents": ["entity_id", "url"],
     "runs": ["run_id"],
 }
 
@@ -58,6 +59,20 @@ def upsert(table: str, rows: list | pd.DataFrame) -> int:
     DATA.mkdir(parents=True, exist_ok=True)
     merged.to_parquet(path(table), index=False)
     return len(new)
+
+
+def drop(table: str, **eq) -> int:
+    """Delete rows whose columns equal the given values. Returns rows removed."""
+    df = read(table)
+    if df.empty:
+        return 0
+    mask = pd.Series(True, index=df.index)
+    for col, val in eq.items():
+        mask &= df[col] == val
+    if not mask.any():
+        return 0
+    df[~mask].to_parquet(path(table), index=False)
+    return int(mask.sum())
 
 
 def log_run(source: str, status: str, rows: int, message: str = "", started: datetime | None = None) -> None:

@@ -1,0 +1,627 @@
+[
+ {
+  "id": "858f80be5f71",
+  "entity_id": "tsb",
+  "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/Q1-2026-Pillar-3-Quarterly-Disclosure.pdf",
+  "local": "cache/pdf/tsb/858f80be5f71d16a.pdf",
+  "title": "Q1-2026-Pillar-3-Quarterly-Disclosure.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:17"
+ },
+ {
+  "id": "50c0bcbe7f28",
+  "entity_id": "tsb",
+  "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/Q3-2025-Pillar-3-Quarterly-Disclosure.pdf",
+  "local": "cache/pdf/tsb/50c0bcbe7f28748d.pdf",
+  "title": "Q3-2025-Pillar-3-Quarterly-Disclosure.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:17"
+ },
+ {
+  "id": "14fa57f28236",
+  "entity_id": "tsb",
+  "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/q1-2025-pillar-3-quarterly-disclosure-final.pdf",
+  "local": "cache/pdf/tsb/14fa57f282362069.pdf",
+  "title": "q1-2025-pillar-3-quarterly-disclosure-final.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:17"
+ },
+ {
+  "id": "9330e2ecd848",
+  "entity_id": "vanquis",
+  "url": "https://www.vanquis.com/wp-content/uploads/2025/08/JUN25_VANQ_Pillar-3-disclosures_SemiAnnual.pdf",
+  "local": "cache/pdf/vanquis/9330e2ecd8488a7f.pdf",
+  "title": "JUN25_VANQ_Pillar-3-disclosures_SemiAnnual.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:20"
+ },
+ {
+  "id": "45aae771392c",
+  "entity_id": "coventry-bs",
+  "url": "https://www.coventrybuildingsociety.co.uk/content/dam/cbs/member/pdfs/financial-results/2026/Pillar-3-Disclosures-31-March-2026.pdf",
+  "local": "cache/pdf/coventry-bs/45aae771392c0a59.pdf",
+  "title": "Pillar-3-Disclosures-31-March-2026.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:22"
+ },
+ {
+  "id": "45b270d12c9a",
+  "entity_id": "coventry-bs",
+  "url": "https://www.coventrybuildingsociety.co.uk/content/dam/cbs/member/pdfs/financial-results/2025/Pillar-3-Disclosures-31-December-2025.pdf",
+  "local": "cache/pdf/coventry-bs/45b270d12c9aca39.pdf",
+  "title": "Pillar-3-Disclosures-31-December-2025.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:22"
+ },
+ {
+  "id": "7c93aa83ea86",
+  "entity_id": "coventry-bs",
+  "url": "https://www.coventrybuildingsociety.co.uk/content/dam/cbs/member/pdfs/financial-results/2025/Pillar-3-Disclosures-30-September%202025.pdf",
+  "local": "cache/pdf/coventry-bs/7c93aa83ea866f8c.pdf",
+  "title": "Pillar-3-Disclosures-30-September 2025.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:22"
+ },
+ {
+  "id": "a307df241d72",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2026-third-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/a307df241d727b11.pdf",
+  "title": "2026-third-quarter-pillar-3-report.pdf",
+  "page": 6,
+  "reference_date": "2026-06-30",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 54021.0,
+   "tier1_capital": 61135.0,
+   "total_capital": 94181.0,
+   "rwa": 452888.0,
+   "cet1_ratio": 11.93,
+   "tier1_ratio": 13.5,
+   "total_capital_ratio": 20.8,
+   "combined_buffer": 10.0,
+   "cet1_headroom": 7.43,
+   "leverage_exposure": 1260607.0,
+   "hqla": 210694.0,
+   "net_cash_outflows": 156941.0,
+   "lcr": 134.0,
+   "nsfr": 115.0
+  },
+  "checks": [
+   [
+    "warn",
+    "header date 2026-06-30 disagrees with expected 2026-09-30"
+   ],
+   [
+    "error",
+    "missing core row leverage_ratio"
+   ]
+  ],
+  "reason": "warn:header date 2026-06-30 disagrees with expected 2026-09-30; error:missing core row leverage_ratio",
+  "status": "open",
+  "created": "2026-09-06T16:33:27"
+ },
+ {
+  "id": "dfb25cf5792a",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2026-first-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/dfb25cf5792ad799.pdf",
+  "title": "2026-first-quarter-pillar-3-report.pdf",
+  "page": 6,
+  "reference_date": "2025-12-31",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 51273.0,
+   "tier1_capital": 60262.0,
+   "total_capital": 89698.0,
+   "rwa": 446519.0,
+   "cet1_ratio": 11.48,
+   "tier1_ratio": 13.5,
+   "total_capital_ratio": 20.09,
+   "combined_buffer": 10.0,
+   "cet1_headroom": 6.98,
+   "leverage_exposure": 1241137.0,
+   "hqla": 210361.0,
+   "net_cash_outflows": 154197.0,
+   "lcr": 136.0,
+   "nsfr": 117.0
+  },
+  "checks": [
+   [
+    "warn",
+    "header date 2025-12-31 disagrees with expected 2026-09-30"
+   ],
+   [
+    "error",
+    "missing core row leverage_ratio"
+   ]
+  ],
+  "reason": "warn:header date 2025-12-31 disagrees with expected 2026-09-30; error:missing core row leverage_ratio",
+  "status": "open",
+  "created": "2026-09-06T16:33:27"
+ },
+ {
+  "id": "91d77864ae3d",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2026-half-year-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/91d77864ae3dde45.pdf",
+  "title": "2026-half-year-pillar-3-report.pdf",
+  "page": 7,
+  "reference_date": "2026-03-31",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 52390.0,
+   "tier1_capital": 61370.0,
+   "total_capital": 91968.0,
+   "rwa": 449771.0,
+   "cet1_ratio": 11.65,
+   "tier1_ratio": 13.64,
+   "total_capital_ratio": 20.45,
+   "combined_buffer": 10.0,
+   "cet1_headroom": 7.15,
+   "leverage_exposure": 1250912.0,
+   "hqla": 200027.0,
+   "net_cash_outflows": 152106.0,
+   "lcr": 132.0,
+   "nsfr": 116.0
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row leverage_ratio"
+   ]
+  ],
+  "reason": "error:missing core row leverage_ratio",
+  "status": "open",
+  "created": "2026-09-06T16:33:27"
+ },
+ {
+  "id": "daca8f677c57",
+  "entity_id": "hsbc-holdings",
+  "url": "https://www.hsbc.com/-/files/hsbc/investors/hsbc-results/2025/annual/pdfs/hsbc-holdings-plc/260325-pillar-3-disclosures-at-31-december-2025.pdf",
+  "local": "cache/pdf/hsbc-holdings/daca8f677c57119f.pdf",
+  "title": "260325-pillar-3-disclosures-at-31-december-2025.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:30"
+ },
+ {
+  "id": "b2843612c6b0",
+  "entity_id": "co-operative-bank",
+  "url": "https://www.co-operativebank.co.uk/pdfs/bank/investorrelations/2025-h2-pillar-3-disclosures.pdf",
+  "local": "cache/pdf/co-operative-bank/b2843612c6b04aa3.pdf",
+  "title": "2025-h2-pillar-3-disclosures.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:34"
+ },
+ {
+  "id": "07be48bcdc6e",
+  "entity_id": "aldermore",
+  "url": "https://www.aldermore.co.uk/media/hnhpw03l/pillar-3-2022_0.pdf",
+  "local": "cache/pdf/aldermore/07be48bcdc6e566e.pdf",
+  "title": "pillar-3-2022_0.pdf",
+  "page": 4,
+  "reference_date": "2022-06-30",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 1342.1,
+   "tier1_capital": 1450.1,
+   "total_capital": 1602.1,
+   "rwa": 9580.8,
+   "cet1_ratio": 14.0,
+   "tier1_ratio": 15.1,
+   "total_capital_ratio": 16.7,
+   "total_srep_requirement": 1.6,
+   "overall_capital_requirement": 12.1,
+   "cet1_headroom": 4.4,
+   "leverage_exposure": 18082.7,
+   "leverage_ratio": 8.0,
+   "hqla": 2844.1,
+   "net_cash_outflows": 711.6,
+   "lcr": 399.7,
+   "available_stable_funding": 16675.2,
+   "required_stable_funding": 12829.5,
+   "nsfr": 130.0
+  },
+  "checks": [
+   [
+    "warn",
+    "column headers split month and year across lines; reference date needs a check"
+   ],
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "error",
+    "total_srep_requirement 1.6 outside 3..25"
+   ]
+  ],
+  "reason": "warn:column headers split month and year across lines; reference date needs a check; warn:rows identified by label only (no row numbers in the table); error:total_srep_requirement 1.6 outside 3..25",
+  "status": "open",
+  "created": "2026-09-06T16:33:35"
+ },
+ {
+  "id": "dd511bebaed1",
+  "entity_id": "starling",
+  "url": "https://www.starlingbank.com/docs/annual-reports/Pillar3-2022.pdf",
+  "local": "cache/pdf/starling/dd511bebaed1bcee.pdf",
+  "title": "Pillar3-2022.pdf",
+  "page": 20,
+  "reference_date": "2022-03-31",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 397502.0,
+   "tier1_capital": 397502.0,
+   "total_capital": 397502.0,
+   "rwa": 994828.0,
+   "cet1_ratio": 39.96,
+   "tier1_ratio": 39.96,
+   "total_capital_ratio": 39.96,
+   "total_srep_requirement": 8.0,
+   "overall_capital_requirement": 10.5,
+   "cet1_headroom": 293045.0,
+   "leverage_exposure": 5063481.0,
+   "leverage_ratio": 7.85,
+   "hqla": 5128346.0,
+   "net_cash_outflows": 1002034.0,
+   "lcr": 515.0,
+   "available_stable_funding": 10660584.0,
+   "required_stable_funding": 4088546.0,
+   "nsfr": 261.0
+  },
+  "checks": [
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "error",
+    "cet1_headroom 293045 outside 0..70"
+   ]
+  ],
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:cet1_headroom 293045 outside 0..70",
+  "status": "open",
+  "created": "2026-09-06T16:33:36"
+ },
+ {
+  "id": "8657d981626d",
+  "entity_id": "coventry-bs",
+  "url": "https://www.coventrybuildingsociety.co.uk/content/dam/cbs/member/pdfs/financial-results/2025/Pillar-3-Document-June-2025-Final.pdf",
+  "local": "cache/pdf/coventry-bs/8657d981626da78b.pdf",
+  "title": "Pillar-3-Document-June-2025-Final.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:37"
+ },
+ {
+  "id": "b0a663318342",
+  "entity_id": "coventry-bs",
+  "url": "https://www.coventrybuildingsociety.co.uk/content/dam/cbs/member/pdfs/financial-results/2024/Pillar-3-Disclosures-31-December-2024.pdf",
+  "local": "cache/pdf/coventry-bs/b0a6633183422283.pdf",
+  "title": "Pillar-3-Disclosures-31-December-2024.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:38"
+ },
+ {
+  "id": "6e942290a984",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/notice/corporate/2025-full-year-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/6e942290a9845d90.pdf",
+  "title": "2025-full-year-pillar-3-report.pdf",
+  "page": 11,
+  "reference_date": "2025-09-30",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 51527.0,
+   "tier1_capital": 60516.0,
+   "total_capital": 89514.0,
+   "rwa": 440557.0,
+   "cet1_ratio": 11.7,
+   "tier1_ratio": 13.74,
+   "total_capital_ratio": 20.32,
+   "combined_buffer": 10.0,
+   "cet1_headroom": 7.2,
+   "leverage_exposure": 1229142.0,
+   "hqla": 207588.0,
+   "net_cash_outflows": 153403.0,
+   "lcr": 135.0,
+   "nsfr": 116.0
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row leverage_ratio"
+   ]
+  ],
+  "reason": "error:missing core row leverage_ratio",
+  "status": "open",
+  "created": "2026-09-06T16:33:42"
+ },
+ {
+  "id": "440b766dff4c",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/notice/corporate/2025-third-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/440b766dff4cdd85.pdf",
+  "title": "2025-third-quarter-pillar-3-report.pdf",
+  "page": 6,
+  "reference_date": "2025-06-30",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 53038.0,
+   "tier1_capital": 62628.0,
+   "total_capital": 89739.0,
+   "rwa": 436890.0,
+   "cet1_ratio": 12.14,
+   "tier1_ratio": 14.33,
+   "total_capital_ratio": 20.54,
+   "combined_buffer": 10.0,
+   "cet1_headroom": 7.64,
+   "leverage_exposure": 1226589.0,
+   "hqla": 211713.0,
+   "net_cash_outflows": 156597.0,
+   "lcr": 135.0,
+   "nsfr": 116.0
+  },
+  "checks": [
+   [
+    "warn",
+    "header date 2025-06-30 disagrees with expected 2025-09-30"
+   ],
+   [
+    "error",
+    "missing core row leverage_ratio"
+   ]
+  ],
+  "reason": "warn:header date 2025-06-30 disagrees with expected 2025-09-30; error:missing core row leverage_ratio",
+  "status": "open",
+  "created": "2026-09-06T16:33:42"
+ },
+ {
+  "id": "934f6588654c",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/notice/corporate/first-quarter-pillar-3-report-2025.pdf",
+  "local": "cache/pdf/nab/934f6588654c3f55.pdf",
+  "title": "first-quarter-pillar-3-report-2025.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-06T16:33:42"
+ },
+ {
+  "id": "2b45587dc108",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2026/31-march-basel-iii-pillar-3-disclosures-prudential-standard-aps-3302.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/2b45587dc108897a.pdf",
+  "title": "31-march-basel-iii-pillar-3-disclosures-prudential-standard-aps-3302.pdf",
+  "page": 4,
+  "reference_date": "2026-03-31",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 4486.2,
+   "tier1_capital": 5288.6,
+   "total_capital": 5998.1,
+   "rwa": 39426.5,
+   "cet1_ratio": 11.38,
+   "tier1_ratio": 13.41,
+   "total_capital_ratio": 15.21,
+   "combined_buffer": 3.5,
+   "cet1_headroom": 6.88,
+   "hqla": 12403.7,
+   "net_cash_outflows": 9143.4,
+   "lcr": 135.7,
+   "available_stable_funding": 76931.4,
+   "required_stable_funding": 65433.7,
+   "nsfr": 117.6
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row leverage_ratio"
+   ]
+  ],
+  "reason": "error:missing core row leverage_ratio",
+  "status": "open",
+  "created": "2026-09-06T16:33:42"
+ },
+ {
+  "id": "141366a3e8f0",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2026/31-december-basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/141366a3e8f0fada.pdf",
+  "title": "31-december-basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": 4,
+  "reference_date": "2025-12-31",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 4403.7,
+   "tier1_capital": 5206.1,
+   "total_capital": 5914.7,
+   "rwa": 38747.0,
+   "cet1_ratio": 11.37,
+   "tier1_ratio": 13.44,
+   "total_capital_ratio": 15.27,
+   "combined_buffer": 3.5,
+   "cet1_headroom": 6.87,
+   "hqla": 13087.5,
+   "net_cash_outflows": 9671.1,
+   "lcr": 135.3,
+   "available_stable_funding": 76677.5,
+   "required_stable_funding": 64405.3,
+   "nsfr": 119.1
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row leverage_ratio"
+   ]
+  ],
+  "reason": "error:missing core row leverage_ratio",
+  "status": "open",
+  "created": "2026-09-06T16:33:42"
+ },
+ {
+  "id": "fa00272b6ef3",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2025/31-march-basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/fa00272b6ef343e5.pdf",
+  "title": "31-march-basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": 4,
+  "reference_date": "2025-03-31",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 4240.0,
+   "tier1_capital": 5042.4,
+   "total_capital": 5909.2,
+   "rwa": 39164.9,
+   "cet1_ratio": 10.83,
+   "tier1_ratio": 12.87,
+   "total_capital_ratio": 15.09,
+   "combined_buffer": 9.0,
+   "cet1_headroom": 6.33,
+   "hqla": 13417.6,
+   "net_cash_outflows": 10005.2,
+   "lcr": 134.1,
+   "available_stable_funding": 77588.2,
+   "required_stable_funding": 66134.9,
+   "nsfr": 117.3
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row leverage_ratio"
+   ]
+  ],
+  "reason": "error:missing core row leverage_ratio",
+  "status": "open",
+  "created": "2026-09-06T16:33:42"
+ }
+]

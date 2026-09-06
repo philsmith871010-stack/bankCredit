@@ -213,4 +213,17 @@ def export_json() -> None:
         for src, g in runs.sort_values("finished").groupby("source"):
             last = g.iloc[-1]
             status.append({"source": src, "status": last.status, "rows": int(last.rows), "finished": str(last.finished), "message": last.message})
-    store.write_json("status", {"generated": datetime.utcnow().isoformat(timespec="seconds") + "Z", "runs": status})
+    docs = store.read("documents")
+    doc_rows, counts = [], {}
+    if not docs.empty:
+        docs = docs.sort_values("fetched_at", ascending=False)
+        counts = {k: int(v) for k, v in docs.status.value_counts().items()}
+        short = {e.id: e.short_name for e in entities}
+        for r in docs.head(80).itertuples():
+            doc_rows.append({"entity_id": r.entity_id, "short": short.get(r.entity_id, r.entity_id), "status": r.status,
+                             "reference_date": _clean(r.reference_date), "confidence": _clean(float(r.confidence)) or 0.0,
+                             "title": r.title, "url": r.url, "fetched_at": str(r.fetched_at)})
+    from . import review
+    queue = [{k: i.get(k) for k in ("id", "entity_id", "reference_date", "page", "reason", "url")} for i in review.load()]
+    store.write_json("status", {"generated": datetime.utcnow().isoformat(timespec="seconds") + "Z", "runs": status,
+                                "documents": doc_rows, "document_counts": counts, "review": queue})
