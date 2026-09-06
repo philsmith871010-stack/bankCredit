@@ -1,0 +1,55 @@
+{
+ "artboards": [
+  {
+   "file": "Main.dc.html",
+   "title": "Board",
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 900
+  },
+  {
+   "file": "Profile.dc.html",
+   "title": "Bank profile \u00b7 Nationwide",
+   "x": 1540,
+   "y": 0,
+   "w": 1440,
+   "h": 1400
+  },
+  {
+   "file": "Events.dc.html",
+   "title": "Events",
+   "x": 0,
+   "y": 1040,
+   "w": 1440,
+   "h": 900
+  },
+  {
+   "file": "MobileProfile.dc.html",
+   "title": "Mobile profile",
+   "x": 1540,
+   "y": 1540,
+   "w": 390,
+   "h": 844
+  }
+ ],
+ "annotations": [
+  {
+   "id": "note-data",
+   "x": 0,
+   "y": -150,
+   "w": 520,
+   "text": "Figures are real, captured 6 Sep 2026: Nationwide from Pillar 3 Q1 2026/27 (KM1, page 6), Barclays, HSBC, NatWest and Skipton from their H1 2026 reports, EU banks from the EBA hub (Dec 2025), ratings from the ESMA register, CDS from ICE and DTCC.\nScores, bands, peer percentiles and the market overlay are illustrative until the method is built."
+  },
+  {
+   "id": "note-design",
+   "x": 1540,
+   "y": -150,
+   "w": 420,
+   "text": "Matches PWLBtoday tokens: navy gradient shell, orange accent, Inter, IBM Plex Mono for every number, radii 6/10/14, navy table heads with orange labels, metric cards on the navy gradient.\nBand ribbon = five-step navy scale, peer 25th to 75th percentile in orange tint, median line, marker at the score."
+  }
+ ],
+ "launch": {
+  "view": "canvas"
+ }
+}
