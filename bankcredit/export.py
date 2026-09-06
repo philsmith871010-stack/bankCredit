@@ -98,26 +98,57 @@ def _market(prices: pd.DataFrame, cds: pd.DataFrame) -> dict:
     return sig
 
 
+OVERLAY_DEFAULT = {
+    # Neutral, published fallback. The real weighting is private: set the COUNTERPARTY_OVERLAY secret
+    # (JSON with the same keys) in GitHub Actions and it replaces this dict at run time.
+    "cds_bands": [[40, 0], [60, 0], [90, 0], [150, 0], [1e9, 0]],      # [upper bp, adjustment]
+    "cds_change_widen_bp": 15, "cds_change_widen_adj": 0, "cds_change_tighten_bp": -10, "cds_change_tighten_adj": 0,
+    "vol_high": 45, "vol_high_adj": 0, "vol_low": 25, "vol_low_adj": 0,
+    "drawdown_adj_threshold": -25, "drawdown_adj": 0,
+    "rating_grades": {"AAA": 0, "AA": 0, "A": 0, "BBB": 0, "BB": 0, "B": 0},
+    "cap": 10.0,
+}
+
+
+def overlay_config() -> dict:
+    import json, os
+    raw = os.environ.get("COUNTERPARTY_OVERLAY")
+    if not raw:
+        return OVERLAY_DEFAULT
+    try:
+        cfg = dict(OVERLAY_DEFAULT); cfg.update(json.loads(raw)); return cfg
+    except Exception:
+        return OVERLAY_DEFAULT
+
+
 def _overlay(market: dict, ratings: list[dict]) -> float:
-    """Private layer, bounded. Raw values never leave the pipeline; only the adjustment is exported."""
+    """Private layer, bounded. Weights come from the COUNTERPARTY_OVERLAY secret; the code default is neutral."""
+    cfg = overlay_config()
     adj = 0.0
     if market.get("cds5y") is not None:
         c = market["cds5y"]
-        adj += 4 if c < 40 else (2 if c < 60 else (0 if c < 90 else (-3 if c < 150 else -6)))
-        if market.get("cds_change30") is not None:
-            adj += -2 if market["cds_change30"] > 15 else (1 if market["cds_change30"] < -10 else 0)
+        for upper, a in cfg["cds_bands"]:
+            if c < upper:
+                adj += a; break
+        chg = market.get("cds_change30")
+        if chg is not None:
+            if chg > cfg["cds_change_widen_bp"]:
+                adj += cfg["cds_change_widen_adj"]
+            elif chg < cfg["cds_change_tighten_bp"]:
+                adj += cfg["cds_change_tighten_adj"]
     if market.get("vol30") is not None:
-        adj += -2 if market["vol30"] > 45 else (0 if market["vol30"] > 25 else 1)
-    if market.get("drawdown52") is not None and market["drawdown52"] < -25:
-        adj -= 3
-    grades = {"AAA": 5, "AA": 4, "A": 3, "BBB": 1, "BB": -3, "B": -6}
+        adj += cfg["vol_high_adj"] if market["vol30"] > cfg["vol_high"] else (cfg["vol_low_adj"] if market["vol30"] < cfg["vol_low"] else 0)
+    if market.get("drawdown52") is not None and market["drawdown52"] < cfg["drawdown_adj_threshold"]:
+        adj += cfg["drawdown_adj"]
+    grades = cfg["rating_grades"]
     for r in ratings:
         v = r["value"].replace("(H)", "").replace("(L)", "").replace("(high)", "").replace("(low)", "").strip()
         key = v.rstrip("+-").rstrip("1234").upper()
         key = {"AA": "AA", "AAA": "AAA", "A": "A", "BAA": "BBB", "BBB": "BBB", "BA": "BB", "BB": "BB", "B": "B"}.get(key, key)
         if key in grades:
             adj += grades[key] / max(1, len(ratings))
-    return round(max(-10.0, min(10.0, adj)), 1)
+    cap = float(cfg.get("cap", 10.0))
+    return round(max(-cap, min(cap, adj)), 1)
 
 
 def export_json() -> None:

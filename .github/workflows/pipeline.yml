@@ -32,6 +32,8 @@ jobs:
           d=$(date -u +%d); case "$d" in 01|15|25) python -m bankcredit.cli run fdic eba ;; *) echo "skip";; esac
         continue-on-error: true
       - name: Export and build site
+        env:
+          COUNTERPARTY_OVERLAY: ${{ secrets.COUNTERPARTY_OVERLAY }}
         run: python -m bankcredit.cli build
       - name: Commit data
         if: ${{ github.event_name != 'push' }}
