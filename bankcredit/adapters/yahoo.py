@@ -89,7 +89,6 @@ def closes_from_result(result: dict) -> list[tuple[date, float]]:
     return out
 
 
-@register
 # Yahoo exchange codes and symbol suffixes for each entity's home market, so a search that returns several
 # listings of the same company settles on the primary one rather than a Frankfurt or Milan cross-listing.
 HOME_MARKETS = {
@@ -101,6 +100,7 @@ HOME_MARKETS = {
 }
 
 
+@register
 class YahooPriceAdapter(Adapter):
     name = "yahoo"
     cadence = "daily"
