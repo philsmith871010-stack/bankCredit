@@ -9,7 +9,7 @@ Free, transparent credit view of banks and building societies that UK treasury t
 - `research/`: probe scripts used during the investigation.
 - `data/`: entity master, Parquet tables and JSON exports committed by the pipeline.
 
-Development happens on `main`; every push rebuilds and deploys the site.
+Development happens on `main`; every push rebuilds and deploys the site. A commit message containing `[collect]` also runs the daily adapters and commits the data, the same as the 06:10 UK schedule.
 
 Run locally:
 
