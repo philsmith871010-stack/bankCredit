@@ -31,13 +31,22 @@ class FredAdapter(Adapter):
     cadence = "daily"
 
     def discover(self):
-        yield "all"
+        # one request per series: smaller responses, and one slow series does not sink the rest
+        yield from SERIES
 
     def fetch(self, item):
-        r = self.session.get(URL, params={"id": ",".join(SERIES)}, timeout=90,
-                             headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 Chrome/128 Safari/537.36"})
-        r.raise_for_status()
-        return r.text
+        last = None
+        for attempt in range(3):
+            try:
+                r = self.session.get(URL, params={"id": item}, timeout=(20, 120),
+                                     headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 Chrome/128 Safari/537.36"})
+                r.raise_for_status()
+                return r.text
+            except Exception as exc:          # FRED is slow to first byte at times; retry with a pause
+                last = exc
+                import time
+                time.sleep(5 * (attempt + 1))
+        raise RuntimeError(f"{item}: {last}")
 
     def parse(self, item, raw) -> list[dict]:
         rows = []
