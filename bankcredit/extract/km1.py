@@ -100,6 +100,7 @@ def _year_group(tag: str) -> str:
 DATE_SCAN = re.compile(
     r"\b(?P<d1>\d{1,2})\s?(?:st|nd|rd|th)?[\s./-]?" + MON.replace("(", "(?P<m1>", 1) + r"\.?" + _year_group("a")
     + r"|\b(?P<d2>\d{1,2})[./](?P<m2>\d{2})[./](?P<y2>\d{4}|\d{2})\b"
+    + r"|\b" + MON.replace("(", "(?P<m4>", 1) + r"\s+(?P<d4>\d{1,2})(?!\d)[,.]?" + _year_group("c")
     + r"|\b" + MON.replace("(", "(?P<m3>", 1) + _year_group("b")
     + r"|\b(?P<qh>[QH])(?P<n>[1-4])\s?[-']?\s?(?P<y4>\d{4}|\d{2})\b", re.I)
 CURRENCY = [("£", "GBP"), ("A$", "AUD"), ("C$", "CAD"), ("S$", "SGD"), ("HK$", "HKD"), ("US$", "USD"),
@@ -121,7 +122,9 @@ class Result:
 
     @property
     def ok(self) -> bool:
-        return not any(s == "error" for s, _ in self.checks) and all(m in self.values for m in CORE)
+        """No validation errors and the capital rows present; a missing leverage row is an error only
+        where the template requires it (validate() decides), so it is not re-checked here."""
+        return not any(s == "error" for s, _ in self.checks) and all(m in self.values for m in ("cet1_capital", "rwa", "cet1_ratio"))
 
     @property
     def confidence(self) -> float:
@@ -165,9 +168,13 @@ def _tokens(line: str) -> list[str]:
     return [t for t in re.split(r"\s+", line.strip()) if t]
 
 
+def _is_num_tok(t: str) -> bool:
+    return bool(NUM_RE.match(t)) and t.count("(") == t.count(")")
+
+
 def _is_value_line(line: str) -> bool:
     toks = _tokens(line)
-    return bool(toks) and all(NUM_RE.match(t) or DASH_RE.match(t) for t in toks)
+    return bool(toks) and all(_is_num_tok(t) or DASH_RE.match(t) for t in toks)
 
 
 def _year(y: str) -> int:
@@ -179,10 +186,25 @@ def _month_end(y: int, m: int) -> date:
     return date(y, m, calendar.monthrange(y, m)[1])
 
 
-def parse_dates(text: str, explicit_only: bool = False) -> list[date]:
+def fiscal_quarter_end(year: int, n: int, year_end: str = "12-31") -> date:
+    """End of quarter n of the fiscal year ending on year_end of `year`."""
+    ye_m, ye_d = (int(x) for x in year_end.split("-"))
+    if (ye_m, ye_d) == (12, 31):
+        return _month_end(year, 3 * n)
+    y, m = year, ye_m - (4 - n) * 3
+    while m < 1:
+        m += 12; y -= 1
+    if ye_d >= 28:
+        return _month_end(y, m)
+    d = date(y, m, min(ye_d, calendar.monthrange(y, m)[1]))
+    return d if d.day >= 15 else _month_end(d.year, d.month - 1)
+
+
+def parse_dates(text: str, explicit_only: bool = False, year_end: str = "12-31") -> list[date]:
     """All period-like dates in reading order, de-duplicated, without sorting.
 
-    explicit_only skips the Q1 2026 / H1 2026 forms, whose meaning depends on the year end.
+    explicit_only skips the Q1 2026 / H1 2026 forms, whose meaning depends on the year end;
+    otherwise those forms are read against year_end (fiscal quarters for October year ends etc.).
     """
     out: list[date] = []
     for m in DATE_SCAN.finditer(text):
@@ -192,6 +214,8 @@ def parse_dates(text: str, explicit_only: bool = False) -> list[date]:
                 d = date(_year(g["y4a"] or g["y2a"]), MONTHS[g["m1"].lower()[:3]], int(g["d1"]))
             elif g["d2"]:
                 d = date(_year(g["y2"]), int(g["m2"]), int(g["d2"]))
+            elif g["d4"]:
+                d = date(_year(g["y4c"] or g["y2c"]), MONTHS[g["m4"].lower()[:3]], int(g["d4"]))
             elif g["m3"]:
                 d = _month_end(_year(g["y4b"] or g["y2b"]), MONTHS[g["m3"].lower()[:3]])
             else:
@@ -199,14 +223,14 @@ def parse_dates(text: str, explicit_only: bool = False) -> list[date]:
                     continue
                 n, y = int(g["n"]), _year(g["y4"])
                 if g["qh"].upper() == "Q":
-                    d = _month_end(y, 3 * n)
+                    d = fiscal_quarter_end(y, n, year_end)
                 elif n in (1, 2):
-                    d = _month_end(y, 6 * n)
+                    d = fiscal_quarter_end(y, 2 * n, year_end)
                 else:
                     continue
         except (ValueError, KeyError):
             continue
-        if 2005 <= d.year <= 2040 and d not in out:
+        if 2005 <= d.year <= date.today().year + 1 and d not in out:
             out.append(d)
     return out
 
@@ -241,7 +265,11 @@ INLINE_ROW_RE = re.compile(r"^(?:(?:UK|EU|CAN|AU|SG)\s?-?\s?)?(\d{1,2})\s?([a-h]
 
 def _row_key(m) -> str | None:
     key = (m.group(1) + (m.group(2) or "")).lower()
-    return key if key in ROWS else None
+    if key in ROWS:
+        return key
+    if key in ("14a", "14b", "14c"):
+        return key           # APRA/Basel leverage variants; used only when row 14 is absent
+    return None
 
 
 def _row_start(lines: list[str], i: int) -> tuple[str, str, int] | None:
@@ -289,7 +317,7 @@ def parse_rows(lines: list[str]) -> tuple[dict, dict]:
             while toks and re.fullmatch(r"\(\d{1,2}\)|\d", toks[-1]):
                 toks.pop()                       # footnote references: "(3)", "1"
             k = len(toks)
-            while k > 0 and (NUM_RE.match(toks[k - 1]) or DASH_RE.match(toks[k - 1])):
+            while k > 0 and (_is_num_tok(toks[k - 1]) or DASH_RE.match(toks[k - 1])):
                 k -= 1
             inline = toks[k:] if k < len(toks) and any(STRONG_RE.search(t) for t in toks[k:]) else []
             if inline:
@@ -313,12 +341,17 @@ def parse_rows(lines: list[str]) -> tuple[dict, dict]:
             continue
         values[key] = vals
         labels[key] = label
+    for alt in ("14a", "14b", "14c"):
+        if alt in values:
+            if "14" not in values:
+                values["14"], labels["14"] = values[alt], labels[alt]
+            del values[alt], labels[alt]
     return values, labels
 
 
 def _confirm(row: str, label: str) -> str | None:
     """Metric for the row if the label agrees, else None."""
-    spec = ROWS.get(row) or ROWS.get(row.rstrip("abcdefgh"))
+    spec = ROWS.get(row) or (ROWS.get("14") if row in ("14a", "14b", "14c") else None)
     if not spec:
         return None
     metric, pat, _ = spec
@@ -368,9 +401,13 @@ def parse_by_label(lines: list[str]) -> dict[str, list[str]]:
             i += 1
             continue
         j = i + used
+        # OSFI layout: the row number follows the label, and currency signs sit on their own lines
+        if j < n and re.fullmatch(r"\d{1,2}[a-e]?", lines[j].strip()) and j + 1 < n and (_is_value_line(lines[j + 1]) or lines[j + 1].strip() in ("$", "£", "€")):
+            j += 1
         vals: list[str] = []
-        while j < n and _is_value_line(lines[j]):
-            vals.extend(_tokens(lines[j]))
+        while j < n and (_is_value_line(lines[j]) or lines[j].strip() in ("$", "£", "€")):
+            if lines[j].strip() not in ("$", "£", "€"):
+                vals.extend(_tokens(lines[j]))
             j += 1
         if vals and not any(STRONG_RE.search(t) or DASH_RE.match(t) for t in vals[:1]):
             vals = []
@@ -390,7 +427,8 @@ def page_score(text: str) -> int:
 
 
 # ---- main entry ----------------------------------------------------------
-def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, currency_hint: str = "") -> Result:
+def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, currency_hint: str = "",
+            year_end: str = "12-31") -> Result:
     res = Result()
     doc = fitz.open(pdf_path)
     texts = [_norm_text(doc[i].get_text("text")) for i in range(min(doc.page_count, max_pages))]
@@ -444,12 +482,12 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
         header = "\n".join(plines[:k])
     # column dates: short header cells first, then date-only lines anywhere on the pages, then narrative text
     cells = "\n".join(l for l in header.splitlines() if _is_cell_line(l))
-    res.period_dates = parse_dates(cells)
+    res.period_dates = parse_dates(cells, year_end=year_end)
     if not res.period_dates:
-        standalone = [l.strip() for l in lines if len(l.strip()) <= 20 and parse_dates(l)]
-        res.period_dates = parse_dates("\n".join(standalone))
+        standalone = [l.strip() for l in lines if len(l.strip()) <= 20 and parse_dates(l, year_end=year_end)]
+        res.period_dates = parse_dates("\n".join(standalone), year_end=year_end)
     if not res.period_dates:
-        res.period_dates = parse_dates(header)
+        res.period_dates = parse_dates(header, year_end=year_end)
         if res.period_dates:
             res.checks.append(("warn", "reference date taken from narrative text, not a column header"))
     descending = True
@@ -513,7 +551,10 @@ def validate(res: Result) -> None:
     v = res.values
     for m in CORE:
         if m not in v:
-            res.checks.append(("error", f"missing core row {m}"))
+            if m == "leverage_ratio" and res.template == "KM1":
+                res.checks.append(("warn", "no leverage ratio row (not all Basel KM1 filers disclose one)"))
+            else:
+                res.checks.append(("error", f"missing core row {m}"))
     if "lcr" not in v:
         res.checks.append(("warn", "no LCR row (not disclosed at this level, or not read)"))
     for m, (lo, hi) in BOUNDS.items():

@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import calendar
 import hashlib
+import os
 import html
 import json
 import logging
@@ -120,10 +121,30 @@ class Pillar3Adapter(Adapter):
 
     # ---- discover ----
     def discover(self):
+        only = {x for x in os.environ.get("BANKCREDIT_ONLY", "").split(",") if x}
         for loc in LOCATORS:
-            if loc["entity"] in self.by_id:
+            if loc["entity"] in self.by_id and (not only or loc["entity"] in only):
                 yield dict(loc, id=loc["entity"])
-        yield {"id": "nsm", "kind": "nsm-poll"}
+        if not only or "nsm" in only:
+            yield {"id": "nsm", "kind": "nsm-poll"}
+
+    def _pattern_candidates(self, loc: dict) -> list[tuple[str, date | None, str]]:
+        """URL templates filled for the last six fiscal quarters, newest first."""
+        ye_m, ye_d = (int(x) for x in loc.get("year_end", "12-31").split("-"))
+        today = date.today()
+        out = []
+        fy = today.year + (1 if (today.month, today.day) > (ye_m, ye_d) else 0)
+        for y in (fy, fy - 1, fy - 2):
+            for q in (4, 3, 2, 1):
+                end = _shift(date(y, ye_m, ye_d), -(4 - q) * 3)
+                if ye_d >= 28:
+                    end = _month_end(end.year, end.month)
+                if end > today:
+                    continue
+                for tpl in loc["urls"]:
+                    u = tpl.format(year=y, yy=f"{y % 100:02d}", q=q, qend=end.isoformat())
+                    out.append((u, end, u.rsplit("/", 1)[-1]))
+        return out[:12]
 
     # ---- fetch ----
     def _get_page(self, url: str) -> str:
@@ -223,6 +244,21 @@ class Pillar3Adapter(Adapter):
             new = [c for c in self._candidates(item) if c[0] not in self.seen][:MAX_NEW_PER_ENTITY]
             for url, hint, title in new:
                 work.append((item["id"], url, None, None, hint, title, "site"))
+        elif item.get("kind") == "pattern":
+            found = 0
+            for url, hint, title in self._pattern_candidates(item):
+                if url in self.seen or found >= MAX_NEW_PER_ENTITY:
+                    continue
+                try:
+                    r = self.session.get(url, timeout=60, stream=True)
+                    ok = r.status_code == 200 and next(r.iter_content(5), b"").startswith(b"%PDF")
+                    r.close()
+                except Exception:
+                    ok = False
+                time.sleep(SLEEP)
+                if ok:
+                    work.append((item["id"], url, None, None, hint, title, "site"))
+                    found += 1
         else:
             return None   # nsm-only and browser kinds are served by the NSM poll or the Mac skill
         out = []
@@ -242,7 +278,7 @@ class Pillar3Adapter(Adapter):
             loc = next((l for l in LOCATORS if l["entity"] == ent), {})
             ccy = loc.get("currency") or COUNTRY_CCY.get(e.country, "")
             try:
-                res = km1.extract(str(path), hint_date=hint, currency_hint=ccy)
+                res = km1.extract(str(path), hint_date=hint, currency_hint=ccy, year_end=loc.get("year_end", "12-31"))
             except Exception as exc:
                 self._record(ent, url, sha, None, None, "error", 0.0, f"extract failed: {exc}", title, origin, {})
                 continue
@@ -289,7 +325,8 @@ class Pillar3Adapter(Adapter):
         e = self.by_id[entity_id]
         loc = next((l for l in LOCATORS if l["entity"] == entity_id), {})
         ccy = loc.get("currency") or COUNTRY_CCY.get(e.country, "")
-        res = km1.extract(str(cached), hint_date=infer_period(Path(path).name, loc.get("year_end", "12-31")), currency_hint=ccy)
+        res = km1.extract(str(cached), hint_date=infer_period(Path(path).name, loc.get("year_end", "12-31")), currency_hint=ccy,
+                          year_end=loc.get("year_end", "12-31"))
         self.load([(entity_id, url, cached, sha, title or Path(path).name, origin, res)])
         row = self.docs = store.read("documents")
         status = row[row.url == url].status.iloc[-1] if not row.empty and (row.url == url).any() else "error"
@@ -319,7 +356,7 @@ class Pillar3Adapter(Adapter):
             ccy = loc.get("currency") or (COUNTRY_CCY.get(e.country, "") if e else "")
             hint = infer_period(r.title or "", loc.get("year_end", "12-31"))
             try:
-                res = km1.extract(str(path), hint_date=hint, currency_hint=ccy)
+                res = km1.extract(str(path), hint_date=hint, currency_hint=ccy, year_end=loc.get("year_end", "12-31"))
             except Exception as exc:
                 self._record(r.entity_id, r.url, r.sha256, None, None, "error", 0.0, f"extract failed: {exc}", r.title, r.origin, {})
                 counts["error"] = counts.get("error", 0) + 1
