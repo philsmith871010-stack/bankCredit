@@ -6,6 +6,7 @@ the price-derived helpers (realised vol, 52-week drawdown) used by the export.
 """
 from __future__ import annotations
 
+import json
 import math
 import time
 from datetime import date, datetime, timezone
@@ -89,6 +90,17 @@ def closes_from_result(result: dict) -> list[tuple[date, float]]:
 
 
 @register
+# Yahoo exchange codes and symbol suffixes for each entity's home market, so a search that returns several
+# listings of the same company settles on the primary one rather than a Frankfurt or Milan cross-listing.
+HOME_MARKETS = {
+    "US": ("NYQ", "NMS", "NGM"), "GB": ("LSE", ".L"), "DE": ("GER", ".DE"), "FR": ("PAR", ".PA"), "CH": ("EBS", ".SW"),
+    "NL": ("AMS", ".AS"), "ES": ("MCE", ".MC"), "IT": ("MIL", ".MI"), "SE": ("STO", ".ST"), "DK": ("CPH", ".CO"),
+    "NO": ("OSL", ".OL"), "FI": ("HEL", ".HE"), "IE": ("ISE", ".IR"), "AT": ("VIE", ".VI"), "BE": ("BRU", ".BR"),
+    "AU": ("ASX", ".AX"), "CA": ("TOR", ".TO"), "SG": ("SES", ".SI"), "JP": ("JPX", ".T"), "HK": ("HKG", ".HK"),
+    "AE": ("ADX", "DFM", ".AE", ".AD", ".DU"), "QA": ("QAT", "DOH", ".QA"), "SA": ("SAU", ".SR"),
+}
+
+
 class YahooPriceAdapter(Adapter):
     name = "yahoo"
     cadence = "daily"
@@ -130,7 +142,7 @@ class YahooPriceAdapter(Adapter):
                 quotes = []
             if quotes:
                 break
-        home = {"AE": ("ADX", "DFM", ".AE", ".AD", ".DU"), "QA": ("QAT", "DOH", ".QA"), "SA": ("SAU", ".SR"), "GB": ("LSE", ".L")}.get(entity.country, ())
+        home = HOME_MARKETS.get(entity.country, ())
         pick = None
         for q in quotes:
             if q.get("quoteType") != "EQUITY":

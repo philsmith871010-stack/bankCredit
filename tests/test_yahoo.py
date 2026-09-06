@@ -58,3 +58,29 @@ def test_metrics(prices, entity_id):
 def test_missing_entity_returns_none(prices):
     assert realised_vol("no-such-entity") is None
     assert drawdown_52w("no-such-entity") is None
+
+
+def test_resolver_uses_search_and_caches(tmp_path, monkeypatch):
+    from bankcredit.adapters import yahoo as Y
+    from bankcredit import store
+    from bankcredit.models import Entity
+    monkeypatch.setattr(store, "DATA", tmp_path)
+
+    class R:
+        status_code = 200
+        def json(self):
+            return {"quotes": [{"symbol": "BN9.DE", "exchange": "GER", "quoteType": "EQUITY"},
+                               {"symbol": "BNY", "exchange": "NYQ", "quoteType": "EQUITY"}]}
+
+    class S:
+        calls = 0
+        def get(self, *a, **k):
+            S.calls += 1
+            return R()
+
+    ad = Y.YahooPriceAdapter.__new__(Y.YahooPriceAdapter)
+    ad.session = S()
+    e = Entity(id="bny", name="The Bank of New York Mellon Corporation", short_name="BNY", country="US", type="holding",
+               region="us_ch", group="", lei="", tickers="BK", fdic_cert="", peer_group="us", active=True)
+    assert ad._resolve(e) == "BNY"                       # the home-market listing, not the Frankfurt line
+    assert ad._resolve(e) == "BNY" and S.calls == 1      # cached

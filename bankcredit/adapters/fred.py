@@ -36,9 +36,9 @@ class FredAdapter(Adapter):
 
     def fetch(self, item):
         last = None
-        for attempt in range(2):
+        for attempt in range(1):        # FRED refuses data-centre traffic; one short try keeps the run moving
             try:
-                r = self.session.get(URL, params={"id": item}, timeout=(15, 45),
+                r = self.session.get(URL, params={"id": item}, timeout=(15, 30),
                                      headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 Chrome/128 Safari/537.36"})
                 r.raise_for_status()
                 return r.text
