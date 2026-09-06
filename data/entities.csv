@@ -125,7 +125,7 @@ citigroup,Citigroup Inc.,Citigroup,US,holding,us_ch,,6SHGI4ZSSLCXXQSBB395,C,7213
 wells-fargo,Wells Fargo & Company,Wells Fargo,US,holding,us_ch,,PBLD0EJDB5FWOLXP3B76,WFC,3511,us,true
 goldman-sachs,"The Goldman Sachs Group, Inc.",Goldman Sachs,US,holding,us_ch,,784F5XWPLTWKTBV3E584,GS,33124,us,true
 morgan-stanley,Morgan Stanley,Morgan Stanley,US,holding,us_ch,,IGJSJL3JD5P30I6NJZ34,MS,32992,us,true
-bny,The Bank of New York Mellon Corporation,BNY,US,holding,us_ch,,WFLLPEPC7FZXENRZV188,BK,639,us,true
+bny,The Bank of New York Mellon Corporation,BNY,US,holding,us_ch,,WFLLPEPC7FZXENRZV188,"BK,BNY",639,us,true
 state-street,State Street Corporation,State Street,US,holding,us_ch,,549300ZFEEJ2IP5VME73,STT,14,us,true
 northern-trust,Northern Trust Corporation,Northern Trust,US,holding,us_ch,,549300GLF98S992BC502,NTRS,913,us,true
 ubs,UBS Group AG,UBS,CH,holding,us_ch,,549300SZJ9VS8SGXAN81,UBSG.SW,,ch,true
