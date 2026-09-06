@@ -57,3 +57,5 @@ table.plain th{color:var(--muted);border-bottom:1px solid var(--line)}table.plai
 
 .bm-strip{margin-bottom:14px}.bm-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}.bm-head h3{margin:0}.bm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:10px}.bm{border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0}.bm-label{font-size:12px;color:var(--muted);font-weight:600}.bm-val{display:flex;align-items:baseline;gap:6px;margin:4px 0}.big-sm{font-size:22px;font-weight:600;letter-spacing:-.02em}
 .event .chip{margin-left:4px}
+
+td.num sup{font-size:9px;margin-left:2px}

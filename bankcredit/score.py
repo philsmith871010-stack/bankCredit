@@ -70,6 +70,11 @@ def band_for(score: float | None) -> str:
     return "E"
 
 
+# Substitutes scored on their own scale when the canonical metric is absent:
+# US banks report Tier 1 leverage on average assets (4% minimum, 5% well capitalised), not Basel leverage.
+ALTERNATES = {"leverage_ratio": ("tier1_leverage", [(4.0, 0), (5.0, 40), (6.5, 70), (8.0, 90), (10.0, 100)])}
+
+
 def compute(latest: dict[str, float], overlay: float = 0.0) -> ScoreResult:
     """latest: metric code -> latest value. overlay: signed adjustment from the private layer, capped."""
     latest = dict(latest)
@@ -86,6 +91,11 @@ def compute(latest: dict[str, float], overlay: float = 0.0) -> ScoreResult:
                 s = interp(float(latest[m]), pts)
                 subs.append(s)
                 inputs[m] = (latest[m], round(s))
+            elif m in ALTERNATES and latest.get(ALTERNATES[m][0]) is not None:
+                alt, alt_pts = ALTERNATES[m]
+                s = interp(float(latest[alt]), alt_pts)
+                subs.append(s)
+                inputs[alt] = (latest[alt], round(s))
         if subs:
             p = sum(subs) / len(subs)
             pillars[name] = (round(p, 1), weight)

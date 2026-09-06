@@ -6,6 +6,7 @@ so the Status page can show freshness and failures.
 from __future__ import annotations
 
 import logging
+import os
 from datetime import datetime
 from typing import Iterable
 
@@ -33,7 +34,9 @@ class Adapter:
     def __init__(self):
         self.session = requests.Session()
         self.session.headers["User-Agent"] = UA
-        self.entities: list[Entity] = [e for e in load_entities() if e.active and (not self.regions or e.region in self.regions)]
+        only = {x for x in os.environ.get("BANKCREDIT_ONLY", "").split(",") if x}
+        self.entities: list[Entity] = [e for e in load_entities() if e.active and (not self.regions or e.region in self.regions)
+                                       and (not only or e.id in only)]
 
     # ---- pipeline steps; override what applies ----
     def discover(self) -> Iterable:

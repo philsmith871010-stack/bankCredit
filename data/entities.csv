@@ -119,13 +119,22 @@ emirates-nbd,Emirates NBD Bank P.J.S.C.,Emirates NBD,AE,bank,gulf,,54930029BCN8H
 adcb,Abu Dhabi Commercial Bank P.J.S.C.,ADCB,AE,bank,gulf,,213800RWVKKIRX1AUH58,ADCB.AE,,gulf,true
 al-rajhi-bank,Al Rajhi Banking and Investment Corporation,Al Rajhi Bank,SA,bank,gulf,,558600BQZS4Y1DTU8589,1120.SR,,gulf,true
 saudi-national-bank,The Saudi National Bank,Saudi National Bank,SA,bank,gulf,,5586006ZEFQ542K7CY16,1180.SR,,gulf,true
-jpmorgan-chase,JPMorgan Chase & Co.,JPMorgan Chase,US,holding,us_ch,,8I5DZWZKVSZI1NUHU748,JPM,628,us,true
-bank-of-america,Bank of America Corporation,Bank of America,US,holding,us_ch,,9DJT3UXIJIZJI4WXO774,BAC,3510,us,true
-citigroup,Citigroup Inc.,Citigroup,US,holding,us_ch,,6SHGI4ZSSLCXXQSBB395,C,7213,us,true
-wells-fargo,Wells Fargo & Company,Wells Fargo,US,holding,us_ch,,PBLD0EJDB5FWOLXP3B76,WFC,3511,us,true
-goldman-sachs,"The Goldman Sachs Group, Inc.",Goldman Sachs,US,holding,us_ch,,784F5XWPLTWKTBV3E584,GS,33124,us,true
-morgan-stanley,Morgan Stanley,Morgan Stanley,US,holding,us_ch,,IGJSJL3JD5P30I6NJZ34,MS,32992,us,true
-bny,The Bank of New York Mellon Corporation,BNY,US,holding,us_ch,,WFLLPEPC7FZXENRZV188,"BK,BNY",639,us,true
-state-street,State Street Corporation,State Street,US,holding,us_ch,,549300ZFEEJ2IP5VME73,STT,14,us,true
-northern-trust,Northern Trust Corporation,Northern Trust,US,holding,us_ch,,549300GLF98S992BC502,NTRS,913,us,true
+jpmorgan-chase,JPMorgan Chase & Co.,JPMorgan Chase,US,holding,us_ch,,8I5DZWZKVSZI1NUHU748,JPM,,us,true
+jpmorgan-chase-bank,"JPMorgan Chase Bank, N.A.",JPMorgan Chase Bank,US,bank,us_ch,jpmorgan-chase,7H6GLXDRUGQFU57RNE97,,628,us,true
+bank-of-america,Bank of America Corporation,Bank of America,US,holding,us_ch,,9DJT3UXIJIZJI4WXO774,BAC,,us,true
+bank-of-america-na,"Bank of America, N.A.",Bank of America N.A.,US,bank,us_ch,bank-of-america,B4TYDEB6GKMZO031MB27,,3510,us,true
+citigroup,Citigroup Inc.,Citigroup,US,holding,us_ch,,6SHGI4ZSSLCXXQSBB395,C,,us,true
+citibank,"Citibank, N.A.",Citibank,US,bank,us_ch,citigroup,E57ODZWZ7FF32TWEFA76,,7213,us,true
+wells-fargo,Wells Fargo & Company,Wells Fargo,US,holding,us_ch,,PBLD0EJDB5FWOLXP3B76,WFC,,us,true
+wells-fargo-bank,"Wells Fargo Bank, N.A.",Wells Fargo Bank,US,bank,us_ch,wells-fargo,KB1H1DSPRFMYMCUFXT09,,3511,us,true
+goldman-sachs,"The Goldman Sachs Group, Inc.",Goldman Sachs,US,holding,us_ch,,784F5XWPLTWKTBV3E584,GS,,us,true
+goldman-sachs-bank-usa,Goldman Sachs Bank USA,GS Bank USA,US,bank,us_ch,goldman-sachs,KD3XUN7C6T14HNAYLU02,,33124,us,true
+morgan-stanley,Morgan Stanley,Morgan Stanley,US,holding,us_ch,,IGJSJL3JD5P30I6NJZ34,MS,,us,true
+morgan-stanley-bank,"Morgan Stanley Bank, N.A.",Morgan Stanley Bank,US,bank,us_ch,morgan-stanley,G1MLHIS0N32I3QPILB75,,32992,us,true
+bny,The Bank of New York Mellon Corporation,BNY,US,holding,us_ch,,WFLLPEPC7FZXENRZV188,"BK,BNY",,us,true
+bank-of-new-york-mellon,The Bank of New York Mellon,BNY (bank),US,bank,us_ch,bny,HPFHU0OQ28E4N0NFVK49,,639,us,true
+state-street,State Street Corporation,State Street,US,holding,us_ch,,549300ZFEEJ2IP5VME73,STT,,us,true
+state-street-bank,State Street Bank and Trust Company,State Street Bank,US,bank,us_ch,state-street,571474TGEMMWANRLN572,,14,us,true
+northern-trust,Northern Trust Corporation,Northern Trust,US,holding,us_ch,,549300GLF98S992BC502,NTRS,,us,true
+northern-trust-company,The Northern Trust Company,Northern Trust Co.,US,bank,us_ch,northern-trust,6PTKHDJ8HDUF78PFWH30,,913,us,true
 ubs,UBS Group AG,UBS,CH,holding,us_ch,,549300SZJ9VS8SGXAN81,UBSG.SW,,ch,true

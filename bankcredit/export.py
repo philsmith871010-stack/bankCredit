@@ -163,18 +163,42 @@ def export_json() -> None:
     entities = load_entities()
     facts, ratings, prices, cds, events, runs = (store.read(t) for t in ["facts", "ratings", "prices", "cds", "events", "runs"])
     board, today, details = [], date.today(), {}
-    for e in entities:
-        if not e.active:
-            continue
+    active = [e for e in entities if e.active]
+    series_all = {e.id: _series(facts[facts.entity_id == e.id] if not facts.empty else facts) for e in active}
+    market_all = {e.id: _market(prices[prices.entity_id == e.id] if not prices.empty else prices,
+                                cds[cds.entity_id == e.id] if not cds.empty else cds) for e in active}
+    for e in active:
         f = facts[facts.entity_id == e.id] if not facts.empty else facts
         r = ratings[ratings.entity_id == e.id] if not ratings.empty else ratings
         p = prices[prices.entity_id == e.id] if not prices.empty else prices
-        c = cds[cds.entity_id == e.id] if not cds.empty else cds
         ev = events[events.entity_id == e.id] if not events.empty else events
-        series = _series(f)
+        series = dict(series_all[e.id])
+        inherited = []
+        subs = [x for x in active if x.group == e.id and x.type == "bank"]
+        if subs:
+            # a holding company inherits bank-level asset quality, profitability and deposit figures from its
+            # principal bank (the one with the largest deposits), labelled as the lead bank's
+            def _dep(x):
+                pts = series_all[x.id].get("deposits") or []
+                return pts[-1]["v"] or 0 if pts else 0
+            lead = max(subs, key=_dep)
+            for m in ("npl_ratio", "roa", "roe", "nim", "efficiency_ratio", "deposits", "uninsured_deposits",
+                      "htm_unrealised_loss", "total_assets", "tier1_leverage"):
+                if m not in series and m in series_all[lead.id]:
+                    series[m] = [dict(pt, basis="lead_bank", src=pt["src"] + " (lead bank)") for pt in series_all[lead.id][m]]
+                    inherited.append(m)
+        if e.group and e.group in series_all:
+            # liquidity ratios are often disclosed only at group level; show the group's, labelled as such
+            for m in ("lcr", "nsfr"):
+                if m not in series and m in series_all[e.group]:
+                    series[m] = [dict(pt, basis="group", src=pt["src"] + " (group)") for pt in series_all[e.group][m]]
+                    inherited.append(m)
         latest = _latest(series)
         rsum = _ratings_summary(r)
-        market = _market(p, c)
+        market = market_all[e.id]
+        if market["direction"] == "none" and e.group in market_all and market_all[e.group]["direction"] != "none":
+            market = dict(market_all[e.group], label=market_all[e.group]["label"] + " (group equity)")
+            inherited.append("market")
         overlay = _overlay(market, rsum)
         sc = compute(latest, overlay)
         asof = max((pts[-1]["d"] for pts in series.values() if pts), default=None)
@@ -184,11 +208,14 @@ def export_json() -> None:
             "region": e.region, "group": e.group, "peer_group": e.peer_group, "lei": e.lei,
             "score": sc.final_score, "public_score": sc.public_score, "band": sc.band, "coverage": sc.coverage,
             "overlay": sc.overlay if sc.final_score is not None else None,
-            "cet1": latest.get("cet1_ratio"), "leverage": latest.get("leverage_ratio"), "lcr": latest.get("lcr"),
+            "cet1": latest.get("cet1_ratio"), "leverage": latest.get("leverage_ratio", latest.get("tier1_leverage")),
+            "leverage_basis": "basel" if "leverage_ratio" in latest else ("us_tier1" if "tier1_leverage" in latest else ""),
+            "lcr": latest.get("lcr"),
             "nsfr": latest.get("nsfr"), "ratings": rsum,
             "market": {k: market[k] for k in ("direction", "label")},
             "events90": int(len(ev)) if not ev.empty else 0, "asof": asof, "age_days": age,
             "basis": (f.sort_values("reference_date").basis.iloc[-1] if not f.empty else ""),
+            "inherited": inherited,
         }
         board.append(row)
         details[e.id] = (row, {

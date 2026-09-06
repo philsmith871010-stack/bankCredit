@@ -1,7 +1,8 @@
 """FDIC BankFind Suite `financials` adapter.
 
-Pulls quarterly Call Report ratios for the lead bank subsidiary of each US
-holding company (entities with an `fdic_cert`). No API key is needed. Balance
+Pulls quarterly Call Report ratios for each US bank entity (entities with an
+`fdic_cert`): the operating bank a depositor faces, held as its own entity with
+the holding company as its group, as for UK banking groups. No API key is needed. Balance
 sheet fields come back in USD thousands and are converted to millions here.
 
 Docs: docs/data-sources-investigation.md section 3.1.
@@ -108,7 +109,7 @@ class FDICAdapter(Adapter):
             except ValueError:
                 log.warning("fdic %s: bad/missing REPDTE %r, skipped", item.id, repdte)
                 continue
-            common = dict(entity_id=item.id, reference_date=ref, basis="lead_bank",
+            common = dict(entity_id=item.id, reference_date=ref, basis="consolidated",
                           source=self.name, document=url, method="api", confidence=1.0)
             for metric, code in RATIOS.items():
                 v = d.get(code)
