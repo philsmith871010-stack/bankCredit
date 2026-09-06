@@ -1039,79 +1039,25 @@
   "created": "2026-09-06T21:27:43"
  },
  {
-  "id": "19a11678f298",
+  "id": "f609547ee029",
   "entity_id": "citigroup",
-  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/c-baseI-iii-adv-approach-06-30-2026.pdf",
-  "local": "cache/pdf/citigroup/19a11678f2981806.pdf",
-  "title": "c-baseI-iii-adv-approach-06-30-2026.pdf",
-  "page": 8,
-  "reference_date": "2026-06-30",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/lcr240331.pdf",
+  "local": "cache/pdf/citigroup/f609547ee0298f01.pdf",
+  "title": "lcr240331.pdf",
+  "page": null,
+  "reference_date": null,
   "currency": "USD",
   "values": {
-   "tier1_ratio": 12.0,
-   "total_capital_ratio": 14.0,
-   "leverage_ratio": 4.0,
-   "tier1_capital": 180941.0,
-   "rwa": 1329505.0
+   "lcr": 117.0
   },
   "checks": [
    [
     "error",
-    "no CET1 ratio found"
+    "no reference date"
    ]
   ],
-  "reason": "error:no CET1 ratio found",
+  "reason": "error:no reference date",
   "status": "open",
-  "created": "2026-09-06T21:27:59"
- },
- {
-  "id": "badedd3d004d",
-  "entity_id": "citigroup",
-  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/c-baseI-iii-adv-approach-12-31-2025.pdf",
-  "local": "cache/pdf/citigroup/badedd3d004dd323.pdf",
-  "title": "c-baseI-iii-adv-approach-12-31-2025.pdf",
-  "page": 8,
-  "reference_date": "2025-12-31",
-  "currency": "USD",
-  "values": {
-   "tier1_ratio": 12.0,
-   "total_capital_ratio": 14.0,
-   "leverage_ratio": 5.0,
-   "rwa": 1316371.0
-  },
-  "checks": [
-   [
-    "error",
-    "no CET1 ratio found"
-   ]
-  ],
-  "reason": "error:no CET1 ratio found",
-  "status": "open",
-  "created": "2026-09-06T21:27:59"
- },
- {
-  "id": "7c9017459d77",
-  "entity_id": "citigroup",
-  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/c-baseI-iii-adv-approach-09-30-2025.pdf",
-  "local": "cache/pdf/citigroup/7c9017459d7772e9.pdf",
-  "title": "c-baseI-iii-adv-approach-09-30-2025.pdf",
-  "page": 8,
-  "reference_date": "2025-09-30",
-  "currency": "USD",
-  "values": {
-   "tier1_ratio": 12.0,
-   "total_capital_ratio": 14.0,
-   "leverage_ratio": 5.0,
-   "rwa": 1349747.0
-  },
-  "checks": [
-   [
-    "error",
-    "no CET1 ratio found"
-   ]
-  ],
-  "reason": "error:no CET1 ratio found",
-  "status": "open",
-  "created": "2026-09-06T21:27:59"
+  "created": "2026-09-06T21:31:38"
  }
 ]

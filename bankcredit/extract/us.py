@@ -23,10 +23,21 @@ from .km1 import Result, _norm_text, parse_dates, _tokens, _is_num_tok, _num
 
 PCT = r"(\d{1,2}\.\d{1,2})\s?%?"
 RATIO_ROWS = [
-    ("cet1_ratio", r"common equity tier 1 (?:capital )?ratio"),
-    ("tier1_ratio", r"(?<!common equity )tier 1 (?:capital )?ratio"),
+    ("cet1_ratio", r"(?:common equity tier 1|cet1) (?:capital )?ratio"),
+    ("tier1_ratio", r"(?<!common equity )(?<!cet1 )tier 1 (?:capital )?ratio"),
     ("total_capital_ratio", r"total (?:risk[- ]based )?capital ratio"),
 ]
+
+
+def _pick(vals: list[float], required_mode: bool, single: bool = False) -> float | None:
+    """Binding value from a row. Tables that list required ratios beside actual ones (Citi) carry the
+    actual figures in the second half of the row; otherwise the columns are approaches (Wells)."""
+    if not vals:
+        return None
+    if required_mode and len(vals) >= 2:
+        actual = vals[len(vals) // 2:]
+        return actual[-1] if single else min(actual[:2])
+    return vals[0] if single else min(vals[:2])
 AMOUNT_ROWS = [
     ("cet1_capital", r"^common equity tier 1 capital$"),
     ("tier1_capital", r"^tier 1 capital$"),
@@ -147,6 +158,7 @@ def extract_capital(pdf_path: str, hint_date: date | None = None) -> Result:
     block, page = _capital_block(lines)
     if block:
         res.values.update(block); res.page = page
+    required_pages = {p for p, l in lines if re.search(r"\brequired\b", l, re.I)}
     for metric, pat in RATIO_ROWS:
         if metric in res.values:
             continue
@@ -154,8 +166,9 @@ def extract_capital(pdf_path: str, hint_date: date | None = None) -> Result:
             low = l.lower()
             if re.search(pat, low) and not re.search(r"minimum|requirement|well[- ]capitalized|buffer|excess", low):
                 vals = [v for v in _nums_after(lines, i, decimals=True) if 3 < v < 60]
-                if vals:
-                    res.values[metric] = min(vals[:2])       # binding = lower of standardized and advanced
+                v = _pick(vals, p in required_pages)
+                if v is not None:
+                    res.values[metric] = v
                     res.page = res.page or p + 1
                     break
     text = "\n".join(l for _, l in lines)
@@ -171,14 +184,16 @@ def extract_capital(pdf_path: str, hint_date: date | None = None) -> Result:
         for i, (p, l) in enumerate(lines):
             if re.search(r"^supplementary leverage ratio", l.lower()):
                 vals = [v for v in _nums_after(lines, i, decimals=True) if 2 < v < 30]
-                if vals:
-                    res.values["leverage_ratio"] = vals[0]; break
+                v = _pick(vals, p in required_pages, single=True)
+                if v is not None:
+                    res.values["leverage_ratio"] = v; break
     if "tier1_leverage" not in res.values:
         for i, (p, l) in enumerate(lines):
-            if re.search(r"^tier 1 leverage ratio", l.lower()):
+            if re.search(r"^(?:tier 1 )?leverage ratio(?:\(\d\))?$", l.lower().strip()):
                 vals = [v for v in _nums_after(lines, i, decimals=True) if 2 < v < 30]
-                if vals:
-                    res.values["tier1_leverage"] = vals[0]; break
+                v = _pick(vals, p in required_pages, single=True)
+                if v is not None:
+                    res.values["tier1_leverage"] = v; break
     for metric, pat in AMOUNT_ROWS:
         for i, (p, l) in enumerate(lines):
             if re.search(pat, l.lower().rstrip(":")):
@@ -219,9 +234,13 @@ def extract_lcr(pdf_path: str, hint_date: date | None = None) -> Result:
             if vals:
                 res.values["lcr"] = vals[0]; res.page = p + 1; break
     if "lcr" not in res.values:
-        m = re.search(r"(?:average[^.]{0,40}?\blcr\b|\blcr\b|liquidity coverage ratio)[^.]{0,80}?(?:was|of|is|at|averaged)\s+(?:approximately\s+)?(\d{2,3}(?:\.\d)?)\s?(?:%|percent)", "\n".join(l for _, l in lines), re.I)
-        if m:
-            res.values["lcr"] = float(m.group(1))
+        for m in re.finditer(r"(?:average[^.]{0,40}?\blcr\b|\blcr\b|liquidity coverage ratio)[^.]{0,80}?(?:was|of|is|at|averaged)\s+(?:approximately\s+)?(\d{2,3}(?:\.\d)?)\s?(?:%|percent)", "\n".join(l for _, l in lines), re.I):
+            if re.search(r"cap|inflow|minimum|requirement|at least|floor", m.group(0), re.I):
+                continue                      # "caps cash inflows at 75%", "minimum LCR of 100%"
+            v = float(m.group(1))
+            if 90 <= v < 1000:
+                res.values["lcr"] = v
+                break
     for metric, pat in [("hqla", r"^total (?:eligible )?hqla"), ("net_cash_outflows", r"^(?:total |projected )?(?:total )?net cash outflows?")]:
         for i, (p, l) in enumerate(lines):
             if re.search(pat, l.lower()):

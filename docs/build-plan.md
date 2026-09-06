@@ -164,6 +164,10 @@ Built and running: the Pillar 3 collector with per-firm locators for 70 firms (`
 
 Started the same day, still with no AI service in the pipeline: the `events` adapter (ESMA rating-action history for every entity, every Pillar 3 document as it is collected, and Google News headlines that pass a credit vocabulary and a noise filter, with rules-based severity and a stored-row pruning step so rule improvements clean history) and the `fred` adapter for ICE BofA option-adjusted spread benchmarks shown as a strip on the Board. Still to do in phase two: the daily brief, DTCC iTraxx and single-name CDS snapshots, bond discovery and pricing, and the overlay wiring.
 
+### US banks, 6 September 2026 (evening)
+
+US holding companies now carry their binding Basel ratios (lower of standardised and advanced), the supplementary leverage ratio as the leverage measure, and the LCR from the public LCR disclosure. Sources: each bank's Pillar 3 report and LCR document read by `bankcredit/extract/us.py` (Wells Fargo, Bank of America, Citi, Northern Trust, BNY, Morgan Stanley LCR), and EDGAR XBRL company facts where the filer tags the ratios (Morgan Stanley, BNY, Goldman Sachs). FDIC lead-bank data remains for asset quality, profitability and deposits, and its Tier 1 leverage is stored separately and not scored as Basel leverage. JPMorgan, State Street and Goldman Sachs documents need the browser; Citi's 2025-26 LCR files have moved and need locating.
+
 ## 11. Risks
 
 - The EBA hub route is unofficial. Mitigation: adapter isolation, per-bank zip download as fallback, watch for the promised bulk download.
