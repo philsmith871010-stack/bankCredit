@@ -143,7 +143,8 @@ class Pillar3Adapter(Adapter):
                     continue
                 for tpl in loc["urls"]:
                     u = tpl.format(year=y, yy=f"{y % 100:02d}", q=q, qend=end.isoformat(),
-                                   qword=("first", "second", "third", "fourth")[q - 1])
+                                   qword=("first", "second", "third", "fourth")[q - 1],
+                                   mm=f"{end.month:02d}", dd=f"{end.day:02d}", yymmdd=end.strftime("%y%m%d"))
                     out.append((u, end, u.rsplit("/", 1)[-1]))
         return out[:12]
 

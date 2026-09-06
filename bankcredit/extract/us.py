@@ -219,7 +219,7 @@ def extract_lcr(pdf_path: str, hint_date: date | None = None) -> Result:
             if vals:
                 res.values["lcr"] = vals[0]; res.page = p + 1; break
     if "lcr" not in res.values:
-        m = re.search(r"(?:average (?:daily )?(?:u\.?s\.? )?lcr|liquidity coverage ratio)[^.]{0,80}?(?:was|of|is)\s+(\d{2,3}(?:\.\d)?)\s?(?:%|percent)", "\n".join(l for _, l in lines), re.I)
+        m = re.search(r"(?:average[^.]{0,40}?\blcr\b|\blcr\b|liquidity coverage ratio)[^.]{0,80}?(?:was|of|is|at|averaged)\s+(?:approximately\s+)?(\d{2,3}(?:\.\d)?)\s?(?:%|percent)", "\n".join(l for _, l in lines), re.I)
         if m:
             res.values["lcr"] = float(m.group(1))
     for metric, pat in [("hqla", r"^total (?:eligible )?hqla"), ("net_cash_outflows", r"^(?:total |projected )?(?:total )?net cash outflows?")]:
