@@ -22,6 +22,8 @@ KEYS = {
     "events": ["entity_id", "event_id"],
     "documents": ["entity_id", "url"],
     "series": ["series_id", "date"],
+    "bonds": ["isin"],
+    "bond_quotes": ["isin", "date"],
     "runs": ["run_id"],
 }
 

@@ -186,3 +186,20 @@ US holding companies now carry their binding Basel ratios (lower of standardised
 5. Browser jobs: weekly launchd job on your Mac for the seven bot-blocked sites.
 
 Phase 0 can start: entity master for the release-one universe, repository layout, data schema, the first adapters (FDIC, EBA hub, ESMA ratings, Yahoo prices), and the static site skeleton in the design canvas's markup.
+
+### Market signal without a CDS, 6 September 2026 (night)
+
+Two fixes to the market layer. First, bank bonds: a `bonds` adapter sweeps Börse Frankfurt's public bond list
+(about 36,000 lines, fetched eight pages at a time in three minutes), keeps up to four senior fixed-rate lines per
+bank with two to eight years to run, and backfills 45 days of closes for each. Yields are our own approximation from
+the price so today's quote and the history sit on one basis. The export takes each bank's median 30-day yield change
+less the median change of every bank bond in the same currency, so rate moves cancel and what remains is the bank's
+own credit. That relative change is the market signal wherever there is no fresh five-year CDS with a 30-day history,
+ahead of the equity fallback, and it takes the CDS-change slot in the overlay at the same provisional weight. Seventy-
+five entities have reference bonds; the Board now carries a market direction for 101 of 139 names. Quotes stay out of
+git (the exchange's terms are private use, not redistribution), which is why the adapter runs on every build.
+
+Second, Yahoo symbols: when a configured ticker returns nothing, the price adapter now asks Yahoo's search by short
+name and prefers a listing on the home market, remembering the answer in `data/cache/yahoo_symbols.json`. Bank of New
+York Mellon resolves to its new symbol this way. First Abu Dhabi Bank and ADCB are not on Yahoo at all (the Abu Dhabi
+exchange is not carried), so they rely on their bonds and ratings.

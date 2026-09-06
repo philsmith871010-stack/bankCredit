@@ -74,10 +74,55 @@ def _ratings_summary(r: pd.DataFrame) -> list[dict]:
 
 
 CDS_MAX_AGE_DAYS = 10     # a CDS level older than this is not used in the signal or the overlay
+BOND_MAX_AGE_DAYS = 10    # a bond quote older than this says nothing about today either
+BOND_MIN_WINDOW_DAYS = 5  # the shortest history a bond change may be measured over while quotes accumulate
+BOND_WINDOW_DAYS = 30
 
 
-def _market(prices: pd.DataFrame, cds: pd.DataFrame) -> dict:
-    sig = {"direction": "none", "label": "No market data", "vol30": None, "drawdown52": None, "cds5y": None, "cds_change30": None}
+def _bond_changes(bonds: pd.DataFrame, quotes: pd.DataFrame) -> dict[str, dict]:
+    """Per entity: median yield change of its reference bonds over the last 30 days, less the median change
+    of every bank bond in the same currency, so rate moves cancel and what remains is the bank's own credit.
+    Levels are never exported; only the relative change in basis points."""
+    if bonds is None or quotes is None or bonds.empty or quotes.empty:
+        return {}
+    q = quotes.merge(bonds[["isin", "entity_id", "currency"]], on="isin").sort_values("date")
+    q = q[q["yield"].notna()]
+    today = date.today()
+    rows = []
+    for isin, g in q.groupby("isin"):
+        last = g.iloc[-1]
+        last_d = date.fromisoformat(str(last.date)[:10])
+        if (today - last_d).days > BOND_MAX_AGE_DAYS:
+            continue
+        ref_cut = str(last_d - timedelta(days=BOND_WINDOW_DAYS))
+        ref = g[g.date.astype(str) <= ref_cut]
+        ref_row = ref.iloc[-1] if not ref.empty else g.iloc[0]
+        window = (last_d - date.fromisoformat(str(ref_row.date)[:10])).days
+        if window < BOND_MIN_WINDOW_DAYS:
+            continue
+        rows.append({"isin": isin, "entity_id": last.entity_id, "currency": last.currency, "asof": str(last_d),
+                     "window": window, "chg_bp": (float(last["yield"]) - float(ref_row["yield"])) * 100})
+    if not rows:
+        return {}
+    d = pd.DataFrame(rows)
+    peer = d.groupby("currency").chg_bp.median()
+    d["rel_bp"] = d.chg_bp - d.currency.map(peer)
+    out = {}
+    for ent, g in d.groupby("entity_id"):
+        out[ent] = {"bond_change30": round(float(g.rel_bp.median()), 1), "bond_count": int(len(g)),
+                    "bond_asof": str(g["asof"].max()), "bond_window": int(g.window.median())}
+    return out
+
+
+
+
+def _market(prices: pd.DataFrame, cds: pd.DataFrame, bond: dict | None = None) -> dict:
+    """Direction of the market's view over 30 days. Precedence: a fresh senior CDS, then the bank's own bonds
+    against peers in the same currency, then the share price. Each rung is used only when the one above is absent."""
+    sig = {"direction": "none", "label": "No market data", "vol30": None, "drawdown52": None, "cds5y": None, "cds_change30": None,
+           "bond_change30": None, "bond_count": 0, "bond_asof": None, "bond_window": None}
+    if bond:
+        sig.update(bond)
     if not prices.empty:
         p = prices.sort_values("date")
         closes = p.close.astype(float).values
@@ -107,6 +152,13 @@ def _market(prices: pd.DataFrame, cds: pd.DataFrame) -> dict:
         if chg is not None:
             sig["direction"] = "down" if chg > 5 else ("up" if chg < -5 else "flat")
             sig["label"] = {"down": "Widening", "up": "Tightening", "flat": "Stable"}[sig["direction"]]
+    if sig["direction"] != "none":
+        pass                                     # a CDS with a 30-day history has spoken
+    elif sig["bond_change30"] is not None:       # a CDS too young for a change, or none at all: the bonds
+        b = sig["bond_change30"]
+        bar = 20 if (sig.get("bond_count") or 0) >= 2 else 30      # one quoted line is noisier than a median of several
+        sig["direction"] = "down" if b > bar else ("up" if b < -bar else "flat")
+        sig["label"] = {"down": "Bonds widening", "up": "Bonds tightening", "flat": "Stable (bonds)"}[sig["direction"]]
     elif sig["drawdown52"] is not None:
         dd = sig["drawdown52"]
         sig["direction"] = "down" if dd < -15 else "flat"
@@ -121,6 +173,8 @@ OVERLAY_DEFAULT = {
     # A COUNTERPARTY_OVERLAY secret with the same keys replaces this dict at build time.
     "cds_bands": [[40, 1.5], [60, 0.5], [90, 0], [150, -0.5], [1e9, -1.5]],      # [upper bp, adjustment]
     "cds_change_widen_bp": 15, "cds_change_widen_adj": -1.0, "cds_change_tighten_bp": -10, "cds_change_tighten_adj": 1.0,
+    # Bonds stand in for the CDS change (never the level) when no fresh CDS exists: 30-day yield change against peers.
+    "bond_change_widen_bp": 20, "bond_change_widen_adj": -1.0, "bond_change_tighten_bp": -15, "bond_change_tighten_adj": 1.0,
     "vol_high": 45, "vol_high_adj": -2.5, "vol_low": 25, "vol_low_adj": 2.5,
     "drawdown_adj_threshold": -25, "drawdown_adj": -2.5,
     "rating_grades": {"AAA": 2.5, "AA": 2.0, "A": 1.0, "BBB": 0, "BB": -1.5, "B": -2.5},
@@ -155,6 +209,12 @@ def _overlay(market: dict, ratings: list[dict]) -> float:
                 adj += cfg["cds_change_widen_adj"]
             elif chg < cfg["cds_change_tighten_bp"]:
                 adj += cfg["cds_change_tighten_adj"]
+    elif market.get("bond_change30") is not None:
+        b = market["bond_change30"]
+        if b > cfg["bond_change_widen_bp"]:
+            adj += cfg["bond_change_widen_adj"]
+        elif b < cfg["bond_change_tighten_bp"]:
+            adj += cfg["bond_change_tighten_adj"]
     if market.get("vol30") is not None:
         adj += cfg["vol_high_adj"] if market["vol30"] > cfg["vol_high"] else (cfg["vol_low_adj"] if market["vol30"] < cfg["vol_low"] else 0)
     if market.get("drawdown52") is not None and market["drawdown52"] < cfg["drawdown_adj_threshold"]:
@@ -173,11 +233,12 @@ def _overlay(market: dict, ratings: list[dict]) -> float:
 def export_json() -> None:
     entities = load_entities()
     facts, ratings, prices, cds, events, runs = (store.read(t) for t in ["facts", "ratings", "prices", "cds", "events", "runs"])
+    bond_changes = _bond_changes(store.read("bonds"), store.read("bond_quotes"))
     board, today, details = [], date.today(), {}
     active = [e for e in entities if e.active]
     series_all = {e.id: _series(facts[facts.entity_id == e.id] if not facts.empty else facts) for e in active}
     market_all = {e.id: _market(prices[prices.entity_id == e.id] if not prices.empty else prices,
-                                cds[cds.entity_id == e.id] if not cds.empty else cds) for e in active}
+                                cds[cds.entity_id == e.id] if not cds.empty else cds, bond_changes.get(e.id)) for e in active}
     for e in active:
         f = facts[facts.entity_id == e.id] if not facts.empty else facts
         r = ratings[ratings.entity_id == e.id] if not ratings.empty else ratings
@@ -208,7 +269,7 @@ def export_json() -> None:
         rsum = _ratings_summary(r)
         market = market_all[e.id]
         if market["direction"] == "none" and e.group in market_all and market_all[e.group]["direction"] != "none":
-            market = dict(market_all[e.group], label=market_all[e.group]["label"] + " (group equity)")
+            market = dict(market_all[e.group], label=market_all[e.group]["label"] + " (group)")
             inherited.append("market")
         overlay = _overlay(market, rsum)
         sc = compute(latest, overlay)
@@ -238,7 +299,8 @@ def export_json() -> None:
                             for x in r.sort_values(["agency", "horizon", "rating_type"]).itertuples()] if not r.empty else [],
             "prices": [{"d": str(x.date)[:10], "c": float(x.close)} for x in p.sort_values("date").tail(260).itertuples()] if not p.empty else [],
             "price_currency": (p.currency.iloc[-1] if not p.empty else None),
-            "market_public": {k: market.get(k) for k in ("direction", "label", "vol30", "drawdown52", "last_price_date")},
+            "market_public": {k: market.get(k) for k in ("direction", "label", "vol30", "drawdown52", "last_price_date",
+                                                         "bond_change30", "bond_count", "bond_asof", "bond_window")},
             "events": [{k: _clean(v) for k, v in x.items()} for x in ev.sort_values("date", ascending=False).drop_duplicates(["date", "title"]).head(60).to_dict("records")] if not ev.empty else [],
         })
     # peer bands for the ribbon: 25th, 50th, 75th percentile of final score within peer group

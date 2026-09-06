@@ -36,6 +36,11 @@ jobs:
         run: |
           d=$(date -u +%d); case "$d" in 01|15|25) python -m bankcredit.cli run fdic eba edgar ;; *) echo "skip";; esac
         continue-on-error: true
+      # Bond quotes are fetched afresh for every build (45 days of history per bond) and never committed:
+      # the exchange's terms allow private use, not redistribution. Only the change against peers is published.
+      - name: Bond quotes (private, rebuilt each run)
+        run: python -m bankcredit.cli run bonds
+        continue-on-error: true
       - name: Export and build site
         env:
           COUNTERPARTY_OVERLAY: ${{ secrets.COUNTERPARTY_OVERLAY }}

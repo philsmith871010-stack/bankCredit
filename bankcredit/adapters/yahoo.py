@@ -113,18 +113,62 @@ class YahooPriceAdapter(Adapter):
             self._have_prices = set(df["entity_id"].unique()) if not df.empty and "entity_id" in df else set()
         return entity_id in self._have_prices
 
+    def _resolve(self, entity: Entity) -> str | None:
+        """Ask Yahoo's search for the entity by name when a configured symbol is unknown; prefer a
+        listing on the entity's home market. The answer is remembered in data/cache/yahoo_symbols.json."""
+        cache = store.DATA / "cache" / "yahoo_symbols.json"
+        known = json.loads(cache.read_text()) if cache.exists() else {}
+        if entity.id in known:
+            return known[entity.id] or None
+        quotes = []
+        for q in dict.fromkeys([entity.short_name, entity.name]):       # the short name finds more than the legal one
+            try:
+                r = self.session.get("https://query2.finance.yahoo.com/v1/finance/search",
+                                     params={"q": q, "quotesCount": 8, "newsCount": 0}, timeout=30)
+                quotes = [x for x in (r.json().get("quotes", []) if r.status_code == 200 else []) if x.get("quoteType") == "EQUITY"]
+            except Exception:
+                quotes = []
+            if quotes:
+                break
+        home = {"AE": ("ADX", "DFM", ".AE", ".AD", ".DU"), "QA": ("QAT", "DOH", ".QA"), "SA": ("SAU", ".SR"), "GB": ("LSE", ".L")}.get(entity.country, ())
+        pick = None
+        for q in quotes:
+            if q.get("quoteType") != "EQUITY":
+                continue
+            sym, exch = q.get("symbol", ""), q.get("exchange", "")
+            if any(sym.endswith(h) or exch == h for h in home):
+                pick = sym; break
+        if pick is None and quotes:
+            eq = [q for q in quotes if q.get("quoteType") == "EQUITY"]
+            pick = eq[0]["symbol"] if eq else None
+        known[entity.id] = pick
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        cache.write_text(json.dumps(known, indent=1))
+        if pick:
+            log.info("yahoo: resolved %s to %s", entity.id, pick)
+        return pick
+
     def fetch(self, item):
         entity, symbol = item
         range_ = "1mo" if self._has_prices(entity.id) else "2y"
         try:
             return get_chart(self.session, symbol, range_)
         except SymbolNotFound as exc:
+            alt = self._resolve(entity)
+            if alt and alt != symbol:
+                try:
+                    raw = get_chart(self.session, alt, range_)
+                    raw["_symbol"] = alt
+                    return raw
+                except SymbolNotFound:
+                    pass
             log.warning("yahoo: symbol not found, skipping: %s", exc)
             self.not_found.append(symbol)
             return None
 
     def parse(self, item, raw) -> list[Price]:
         entity, symbol = item
+        symbol = raw.get("_symbol") or symbol
         meta = raw.get("meta") or {}
         currency = meta.get("currency") or ""   # "GBp" = pence on the LSE; stored as-is
         return [
