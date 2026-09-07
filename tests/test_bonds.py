@@ -76,3 +76,11 @@ def test_cds_move_is_split_against_itraxx():
     index.loc[1, "value"] = 61.0
     assert export._market(empty, cds, None, index)["label"] == "Widening (bank-specific)"
     assert "cds_excess30" not in export._market(empty, cds, None, None) or export._market(empty, cds, None, None)["cds_excess30"] is None
+
+
+def test_rating_grade_scale():
+    from bankcredit.export import rating_grade, grade_letter
+    assert rating_grade("AA-") == rating_grade("Aa3") == rating_grade("AA (low)") == 4
+    assert rating_grade("A1") == rating_grade("A+") == rating_grade("A(H)") == 5
+    assert rating_grade("WD") is None and rating_grade(None) is None
+    assert grade_letter(5) == "A+" and grade_letter(8.4) == "BBB+" and grade_letter(4.5) == "A+"

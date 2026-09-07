@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 import shutil
+
+from .. import store
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
@@ -276,6 +278,7 @@ def page_method(generated):
 <table class="plain"><thead><tr><th>Pillar</th><th>Weight</th><th>Metrics</th></tr></thead><tbody>{pillar_rows}</tbody></table>
 <h3>Thresholds (value → sub-score)</h3><table class="plain"><tbody>{thr}</tbody></table>
 <h3>Bands</h3><p>{bands}. Bands carry hysteresis in later versions so they do not flicker at boundaries.</p>
+<h2>My policy</h2><p>A page for the treasurer's own approved list. You enter the counterparties you accept and the longest tenor for each; the page keeps the list in your browser (and in a link you can share with colleagues) and checks it on every visit against the current score, band, ratings, market signal, news and data age, flagging what has changed since the day each name was approved. Like-for-like shows the other covered names whose public standing is at least as strong as the weakest counterparty you already accept at each tenor. It compares public information; it does not suggest a tenor, a limit or a list, which remain the treasurer's policy and the adviser's advice.</p>
 <h2>Market overlay</h2><p>A layer built from agency ratings, five-year CDS levels and 30-day changes where a CDS market exists (otherwise the 30-day change in the bank's own bond yields against peers), 30-day equity volatility and drawdown from the 52-week high. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points. Provisional weighting (September 2026): the four signals count equally, each worth at most 2.5 points either way; ratings use the grade averaged across the agencies that rate the bank. A CDS move is measured within one source (settlement against settlement, or trade medians on days with three or more trades) and split into the part shared with iTraxx Senior Financials and the part that is the bank's own; the label says which. The direction and size of the adjustment are shown; CDS levels themselves are not redistributed.</p>
 <h2>Limitations</h2><ul><li>US banking groups appear twice, as in the UK: the operating bank a depositor faces (Call Report figures from the FDIC, with the US Tier 1 leverage ratio scored on its own scale, and the group's LCR shown as a group figure because banks do not publish their own) and the holding company (binding Basel ratios, the lower of the standardised and advanced approaches, from its Pillar 3 report or XBRL filings, the supplementary leverage ratio, the public LCR disclosure, and asset quality and profitability inherited from its lead bank, labelled).</li><li>UK and other-region figures depend on PDF extraction; failed validations are shown as unverified rather than hidden.</li><li>Peer percentiles are computed only among entities with a score, so they are unstable while coverage is low.</li><li>Back-tests against past failures are planned for version 2.</li></ul>
 </div>'''
@@ -313,6 +316,19 @@ def documents_card(status):
 <h4>Latest collected</h4><div class="table-wrap"><table class="plain"><thead><tr><th>Entity</th><th>Outcome</th><th>Reference</th><th>Confidence</th><th>Document</th><th>Fetched</th></tr></thead><tbody>{rows}</tbody></table></div></div>'''
 
 
+def page_policy(generated):
+    content = '''<div class="page-head"><div><h1>My policy</h1><div class="lede">Your approved counterparties and the longest tenor you accept for each, checked against today's public standing, market signal and news. The list lives in this browser and in the share link; nothing is sent anywhere.</div></div></div>
+<div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>
+<div class="card pad"><h3>Add a counterparty</h3>
+<div class="pol-form"><label>Name<input id="pol-name" list="pol-names" placeholder="Start typing a bank or building society" autocomplete="off"><datalist id="pol-names"></datalist></label>
+<label>Longest tenor you accept<select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button></div>
+<p class="note">Use the legal entity you actually place with: Barclays Bank UK PLC rather than Barclays PLC, HSBC UK Bank plc rather than HSBC Holdings. Each name is checked from the day you add it.</p></div>
+<div class="card pad" style="margin-top:16px"><h3>Your counterparties</h3><div id="policy-body"><div class="empty">Loading…</div></div>
+<div class="pol-share"><button class="filter" id="pol-copy">Copy link</button><input id="pol-link" readonly placeholder="A link that carries this policy appears here"><button class="filter" id="pol-clear">Clear all</button></div>
+<p class="note">Counterparty is information, not advice. The flags say what has changed in public information since you approved a name; whether that changes your policy is for you and your adviser.</p></div>'''
+    return c.shell("My policy", content, "policy", "../", generated).replace('<script src="../assets/app.js"></script>', '<script src="../assets/app.js"></script><script src="../assets/policy.js"></script>').replace("<body>", '<body data-root="../">')
+
+
 def learning_card(status):
     L = status.get("learning") or {}
     if not L.get("answers") and not L.get("entities_with_hints"):
@@ -341,6 +357,10 @@ def build():
         (OUT / "banks" / f"{r['id']}.html").write_text(page_bank(load(f"banks/{r['id']}"), generated))
     (OUT / "events" / "index.html").write_text(page_events(board, generated))
     (OUT / "method" / "index.html").write_text(page_method(generated))
+    (OUT / "policy").mkdir(exist_ok=True)
+    (OUT / "policy" / "index.html").write_text(page_policy(generated))
+    (OUT / "data").mkdir(exist_ok=True)
+    shutil.copy(store.DATA / "json" / "policy.json", OUT / "data" / "policy.json")
     (OUT / "brief").mkdir(exist_ok=True)
     (OUT / "brief" / "index.html").write_text(page_brief(board, status, generated))
     (OUT / "status" / "index.html").write_text(page_status(status, board, generated))

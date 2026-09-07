@@ -8,6 +8,7 @@ Outputs (data/json/):
 from __future__ import annotations
 
 import math
+import re
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 
@@ -71,6 +72,33 @@ def _ratings_summary(r: pd.DataFrame) -> list[dict]:
             out.append({"agency": ag, "letter": AGENCY_LETTER.get(ag, ag[:1].upper()), "value": row.value,
                         "type": row.rating_type, "outlook": row.outlook or "", "date": str(row.action_date)[:10]})
     return out
+
+
+# One numeric scale across agencies (1 = AAA/Aaa ... 10 = BBB-/Baa3 ... 17 = CCC and below), lower is stronger.
+_SP_SCALE = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-", "B+", "B", "B-", "CCC"]
+_MOODYS = ["Aaa", "Aa1", "Aa2", "Aa3", "A1", "A2", "A3", "Baa1", "Baa2", "Baa3", "Ba1", "Ba2", "Ba3", "B1", "B2", "B3", "Caa"]
+
+
+def rating_grade(value: str | None) -> int | None:
+    """Map any agency's long-term symbol to the common 1..17 scale; None when unrated or withdrawn."""
+    if not value:
+        return None
+    v = str(value).strip().replace(" ", "")
+    v = v.replace("(high)", "+").replace("(H)", "+").replace("(low)", "-").replace("(L)", "-").replace("(hyb)", "")
+    v = v.rstrip("u").split("/")[0]
+    if v in _MOODYS:
+        return _MOODYS.index(v) + 1
+    if v.startswith(("Caa", "Ca", "C")) and v[:1] == "C" and not v.startswith("CCC"):
+        return 17 if v[:2] in ("Ca", "Caa") else None
+    if v.startswith("CCC") or v in ("CC", "C", "D", "RD", "SD"):
+        return 17
+    return _SP_SCALE.index(v) + 1 if v in _SP_SCALE else None
+
+
+def grade_letter(grade: float | None) -> str:
+    if grade is None:
+        return ""
+    return _SP_SCALE[max(0, min(16, int(grade + 0.5) - 1))]
 
 
 CDS_MAX_AGE_DAYS = 10     # a CDS level older than this is not used in the signal or the overlay
@@ -276,7 +304,7 @@ def export_json() -> None:
     bond_changes = _bond_changes(store.read("bonds"), store.read("bond_quotes"))
     series_tbl = store.read("series")
     snrfin = series_tbl[series_tbl.series_id == "ITRAXX_SNRFIN_5Y"] if not series_tbl.empty else None
-    board, today, details = [], date.today(), {}
+    board, today, details, policy_rows = [], date.today(), {}, []
     active = [e for e in entities if e.active]
     series_all = {e.id: _series(facts[facts.entity_id == e.id] if not facts.empty else facts) for e in active}
     market_all = {e.id: _market(prices[prices.entity_id == e.id] if not prices.empty else prices,
@@ -331,7 +359,34 @@ def export_json() -> None:
             "basis": (f.sort_values("reference_date").basis.iloc[-1] if not f.empty else ""),
             "inherited": inherited,
         }
+        grades = [g for g in (rating_grade(x["value"]) for x in rsum) if g is not None]
+        row["rating_grade"] = round(float(pd.Series(grades).median()), 1) if grades else None
+        row["rating_composite"] = grade_letter(row["rating_grade"])
         board.append(row)
+        # the policy page carries everything a treasurer checks on an approved name, in one record
+        short_ratings = []
+        if not r.empty:
+            sh = r[r.horizon == "short"].sort_values("action_date", ascending=False)
+            for ag in AGENCY_ORDER:
+                g = sh[sh.agency == ag]
+                if not g.empty:
+                    short_ratings.append({"letter": AGENCY_LETTER.get(ag, ag[:1].upper()), "value": g.iloc[0].value})
+        recent, negative, news30 = [], [], {"bad": 0, "warn": 0, "good": 0}
+        if not ev.empty:
+            cutoff30 = (today - timedelta(days=30)).isoformat()
+            e2 = ev.sort_values("date", ascending=False).drop_duplicates(["date", "title"])
+            for x in e2.itertuples():
+                if x.type == "news" and str(x.date)[:10] >= cutoff30 and x.severity in news30:
+                    news30[x.severity] += 1
+                if x.type == "rating" and re.search(r"downgrade|negative|under review for downgrade|withdraw", str(x.title), re.I):
+                    negative.append({"date": str(x.date)[:10], "title": str(x.title)[:140]})
+                if x.severity != "info" and len(recent) < 8:
+                    recent.append({"date": str(x.date)[:10], "type": x.type, "severity": x.severity, "title": str(x.title)[:160], "url": _clean(getattr(x, "url", "")) or ""})
+        policy_rows.append({**{k: row[k] for k in ("id", "name", "short", "country", "type", "region", "group", "peer_group", "public_score", "band",
+                                                    "coverage", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "ratings", "market", "asof", "age_days",
+                                                    "rating_grade", "rating_composite", "inherited")},
+                            "score": row["public_score"], "short_ratings": short_ratings, "recent": recent, "negative": negative[:6], "news30": news30,
+                            "market_detail": {k: market.get(k) for k in ("vol30", "drawdown52", "bond_change30", "bond_count")}})
         details[e.id] = (row, {
             "series": {m: series[m] for m in series if m in SITE_METRICS},
             "metric_labels": {m: METRICS.get(m, m) for m in series},
@@ -370,7 +425,9 @@ def export_json() -> None:
             benchmarks.append({"id": sid, "label": last.label, "date": str(last.date)[:10], "value": float(last.value),
                                "change30": round(float(last.value) - prev, 1) if prev is not None else None,
                                "spark": [float(v) for v in g.value.tail(60)]})
-    store.write_json("board", {"generated": datetime.utcnow().isoformat(timespec="seconds") + "Z", "rows": board, "benchmarks": benchmarks})
+    generated = datetime.utcnow().isoformat(timespec="seconds") + "Z"
+    store.write_json("board", {"generated": generated, "rows": board, "benchmarks": benchmarks})
+    store.write_json("policy", {"generated": generated, "rows": policy_rows})
     status = []
     if not runs.empty:
         for src, g in runs.sort_values("finished").groupby("source"):

@@ -223,3 +223,16 @@ Note, 7 September: GitHub's 05:10 UTC schedule did not fire on its first day (no
 run; the default branch is main and the workflow is valid, so this is GitHub skipping a slot). Two
 backstops: a second weekday schedule at 11:40 UTC, and the Mac job's morning push now carries the
 [collect] marker, so a full collection runs whenever the Mac has been busy.
+
+### My policy, 7 September 2026
+
+The page treasurers will use daily. They enter their approved counterparties and the longest tenor accepted for
+each (kept in the browser and in a share link; no accounts, nothing sent anywhere). Each name is snapshotted on the
+day it is added, and every visit compares today's score, band, composite rating grade, negative rating actions,
+market signal, adverse news and data age with that snapshot, flagging what has changed. The full picture for each
+name is on the row: long and short-term ratings by agency, CET1, leverage, LCR with their reference date, market
+signal with the bond move against peers, and the latest notable events with links. Like-for-like lists the other
+covered names whose standing is at least as strong as the weakest counterparty accepted at each tenor (band,
+composite grade, score, no widening), so the user can see comparable names without the platform suggesting any
+tenor or limit. The comparison needs a common rating scale, so the export now carries a numeric composite grade
+(1 = AAA ... 17 = CCC, median across agencies) per entity. Data: site/data/policy.json, one record per entity.
