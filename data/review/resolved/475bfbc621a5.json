@@ -1,0 +1,13 @@
+{
+ "id": "475bfbc621a5",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2012/31-december---basel-ii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 2,
+ "reference_date": "2012-12-31",
+ "currency": "AUD",
+ "values": {
+  "tier1_ratio": 9.31,
+  "total_capital_ratio": 11.07
+ },
+ "note": "Bendigo and Adelaide Bank reports under APRA's APS 330, which has no KM1 template. Neither LCR nor NSFR was reported in Australia at these dates, and APS 330 required no leverage ratio. This is a Basel II disclosure, not Basel III - the announcement of 27 February 2013 is headed 'Basel II Pillar 3 Disclosures'. As with the March 2013 report it prints no total RWA row and only the total and Tier 1 capital ratios; there is no CET1 concept under Basel II, so no CET1 ratio is recorded. The table is headed 'Capital Adequacy as at December 31st 2012'."
+}

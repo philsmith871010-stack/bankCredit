@@ -1,0 +1,19 @@
+{
+ "id": "18777ea821cf",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2019-third-quarter-pillar-3-report.pdf",
+ "page": 4,
+ "reference_date": "2019-06-30",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 50409.0,
+  "rwa": 404635.0,
+  "cet1_ratio": 10.4,
+  "tier1_ratio": 12.5,
+  "total_capital_ratio": 14.3,
+  "leverage_exposure": 927846.0,
+  "leverage_ratio": 5.4,
+  "lcr": 128.0
+ },
+ "note": "NAB APS 330 quarterly report, Level 2 basis - the table says so explicitly, 'capital ratios and leverage ratios for the Level 2 Group'. APS 330 has no KM1 template. The reference date needed correcting: the queue had 2019-09-30, but the title page carries no date and the ratios table is headed 'As at 30 Jun 19 / 31 Mar 19', so this third-quarter-2019 report is the position at 30 June 2019. Quarterly reports give no CET1 or total capital amount, so neither is recorded. Check: 50,409/404,635 = 12.46%, matching the published 12.5% Tier 1 ratio, and 50,409/927,846 = 5.43%, matching the 5.4% leverage ratio."
+}

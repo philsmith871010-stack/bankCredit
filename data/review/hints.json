@@ -135,7 +135,7 @@
   }
  },
  "bendigo-and-adelaide-bank": {
-  "page": 2,
+  "page": 3,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2024-12-31",
@@ -243,7 +243,7 @@
   }
  },
  "nab": {
-  "page": 4,
+  "page": 5,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2026-06-30",
