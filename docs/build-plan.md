@@ -394,3 +394,13 @@ machine-readable: the German public and cooperative banks (Bundesanzeiger, HTML)
 overseas-owned UK subsidiaries (Companies House serves their full accounts as PDF without a key, so a single locator
 pattern and a statement reader would cover all sixteen), twelve small building societies (their own sites and the
 FCA Mutuals Register, PDF), and FAB and ADCB (the Abu Dhabi exchange). Those are the PDF work that remains.
+
+### Score history and the 9.5 pass, 7 September 2026 (night)
+
+A history table now takes a snapshot of every entity's published score and composite grade on each build, and the
+export backcasts the score at each of the last 24 quarter ends: today's method and today's rating applied to the
+ratios as they stood then, labelled as such. Profiles open Trends with a Standing group (the recomputed score, and
+the published score once snapshots accumulate); Compare's trends and rank-over-time work on the score and the
+composite grade; the Ratings matrix carries a Since column that shows the held-since date now and a grade sparkline
+once two snapshots exist. Compare trends have a hover legend: a line or a name lights up its counterpart with the
+latest value and date.

@@ -140,3 +140,6 @@ table.board thead th,table.coverage thead th,table.ratings thead th{position:sti
 
 .ev-toolbar{flex-wrap:wrap;gap:10px}.ev-toolbar .small{flex-basis:100%;margin-left:0}.wbar span{font-size:11px}
 .event[hidden],.doc[hidden],.nv-row[hidden],.pol-row[hidden]{display:none!important}.ev-toolbar .small{width:100%}
+
+.cp-chart{position:relative}.cp-tip{position:absolute;background:#0a2540;color:#fff;font-size:12px;padding:4px 8px;border-radius:6px;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow);z-index:3}.cp-tip .muted{color:rgba(255,255,255,.7)}
+.cp-line.hot{stroke:#0a2540!important;stroke-width:2.8!important;opacity:1!important}.cp-mine>div.hot{background:var(--orange-soft)}.cp-line{cursor:pointer;stroke-linecap:round}

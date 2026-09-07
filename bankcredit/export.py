@@ -7,6 +7,7 @@ Outputs (data/json/):
 """
 from __future__ import annotations
 
+import calendar
 import math
 import re
 from collections import defaultdict
@@ -381,7 +382,7 @@ AUDIT_METRICS = ["cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_r
                  "overall_capital_requirement", "npl_ratio", "roe", "roa", "efficiency_ratio", "total_assets"]
 
 
-COMPARE_METRICS = [("score", "Counterparty score", "", 1, True), ("cet1_ratio", "CET1 ratio", "%", 1, True), ("leverage_ratio", "Leverage ratio", "%", 1, True),
+COMPARE_METRICS = [("score", "Counterparty score", "", 1, True), ("rating_grade", "Composite rating (grade, 1 = AAA)", "", 1, False), ("cet1_ratio", "CET1 ratio", "%", 1, True), ("leverage_ratio", "Leverage ratio", "%", 1, True),
                    ("total_capital_ratio", "Total capital ratio", "%", 1, True), ("lcr", "LCR", "%", 0, True), ("nsfr", "NSFR", "%", 0, True),
                    ("roe", "Return on equity", "%", 1, True), ("roa", "Return on assets", "%", 2, True), ("nim", "Net interest margin", "%", 2, True),
                    ("efficiency_ratio", "Cost to income", "%", 0, False), ("npl_ratio", "Non-performing loans", "%", 2, False),
@@ -400,10 +401,58 @@ def compare_rows(board: list[dict], series_all: dict) -> list[dict]:
             pts = series_all.get(r["id"], {}).get(m) or []
             if pts:
                 ser[m] = [[p["d"], p["v"]] for p in pts[-COMPARE_POINTS:] if p["v"] is not None]
+        h = r.get("history") or {}
+        sc_series = list(h.get("score") or [])
+        last_back = sc_series[-1][0] if sc_series else ""
+        sc_series += [[d, v] for d, v, _g in (h.get("snapshots") or []) if d > last_back and v is not None]
+        if len(sc_series) >= 2:
+            ser["score"] = sc_series[-COMPARE_POINTS:]
+        grades = [[d, g] for d, _v, g in (h.get("snapshots") or []) if g is not None]
+        if len({d for d, _ in grades}) >= 2:
+            ser["rating_grade"] = grades[-COMPARE_POINTS:]
         rows.append({"id": r["id"], "short": r["short"], "name": r["name"], "region": r["region"], "type": r["type"], "country": r["country"],
                      "peer_group": r["peer_group"], "band": r["band"], "score": r["score"], "grade": r["rating_grade"], "rating": r["rating_composite"],
                      "assets": (series_all.get(r["id"], {}).get("total_assets") or [{}])[-1].get("v"), "series": ser})
     return rows
+
+
+BACKCAST_QUARTERS = 24
+
+
+def _quarter_ends(n: int, today: date) -> list[date]:
+    out, y, m = [], today.year, ((today.month - 1) // 3) * 3 + 3
+    d = date(y, m, calendar.monthrange(y, m)[1])
+    if d > today:
+        m -= 3
+        if m == 0:
+            y, m = y - 1, 12
+        d = date(y, m, calendar.monthrange(y, m)[1])
+    while len(out) < n:
+        out.append(d)
+        y, m = (d.year, d.month - 3) if d.month > 3 else (d.year - 1, 12)
+        d = date(y, m, calendar.monthrange(y, m)[1])
+    return sorted(out)
+
+
+def score_history(series: dict, composite: float | None, today: date) -> list[dict]:
+    """The score recomputed at each of the last quarter ends on the ratios as they stood then, with today's
+    method and today's composite rating: a like-for-like path of the ratio pillars through time."""
+    out = []
+    for q in _quarter_ends(BACKCAST_QUARTERS, today):
+        latest = {}
+        for m, pts in series.items():
+            for p in reversed(pts):
+                if p["v"] is not None and p["d"] <= q.isoformat():
+                    if (q - date.fromisoformat(p["d"])).days <= 550:
+                        latest[m] = p["v"]
+                    break
+        if not latest:
+            continue
+        sc = compute(latest, 0.0, composite)
+        if sc.public_score is None:
+            continue
+        out.append({"date": q.isoformat(), "score": sc.public_score, "band": sc.band, "coverage": sc.coverage})
+    return out
 
 
 def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=None) -> list[dict]:
@@ -457,6 +506,12 @@ def export_json() -> None:
     series_tbl = store.read("series")
     snrfin = series_tbl[series_tbl.series_id == "ITRAXX_SNRFIN_5Y"] if not series_tbl.empty else None
     board, today, details, policy_rows = [], date.today(), {}, []
+    hist_tbl = store.read("history")
+    hist_all: dict[str, list] = {}
+    if not hist_tbl.empty:
+        for r in hist_tbl[hist_tbl.kind == "snapshot"].sort_values("date").itertuples():
+            hist_all.setdefault(r.entity_id, []).append({"date": str(r.date)[:10], "score": _clean(r.score), "rating_grade": _clean(r.rating_grade)})
+    new_hist: list[dict] = []
     active = [e for e in entities if e.active]
     series_all = {e.id: _series(facts[facts.entity_id == e.id] if not facts.empty else facts) for e in active}
     market_all = {e.id: _market(prices[prices.entity_id == e.id] if not prices.empty else prices,
@@ -516,6 +571,12 @@ def export_json() -> None:
         row["rating_grade"] = composite
         row["rating_composite"] = grade_letter(composite)
         row["unrated"] = sc.unrated
+        back = score_history(series, composite, today)
+        snaps = hist_all.get(e.id, [])
+        row["history"] = {"score": [[h["date"], h["score"]] for h in back],
+                          "snapshots": [[h["date"], h["score"], h["rating_grade"]] for h in snaps]}
+        new_hist.append({"entity_id": e.id, "date": today, "kind": "snapshot", "score": sc.final_score, "band": sc.band,
+                         "rating_grade": composite, "coverage": sc.coverage})
         board.append(row)
         # the policy page carries everything a treasurer checks on an approved name, in one record
         short_ratings = []
@@ -597,7 +658,9 @@ def export_json() -> None:
                                "change30": round(float(last.value) - prev, 1) if prev is not None else None,
                                "spark": [float(v) for v in g.value.tail(60)]})
     generated = datetime.utcnow().isoformat(timespec="seconds") + "Z"
-    store.write_json("board", {"generated": generated, "rows": board, "benchmarks": benchmarks})
+    if new_hist:
+        store.upsert("history", pd.DataFrame(new_hist))
+    store.write_json("board", {"generated": generated, "rows": [{k: v for k, v in r.items() if k != "history"} for r in board], "benchmarks": benchmarks})
     store.write_json("policy", {"generated": generated, "rows": policy_rows})
     store.write_json("audit", {"generated": generated, "rows": data_audit(active, facts, ratings, prices, cds, store.read("bonds"), events, board)})
     store.write_json("compare", {"generated": generated, "metrics": COMPARE_METRICS, "rows": compare_rows(board, series_all)})

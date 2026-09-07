@@ -268,6 +268,25 @@ def page_bank(b, generated):
                     ("Balance sheet", [("total_assets", "Total assets", "m", 0)])]
     LOWER_BETTER = {"efficiency_ratio", "npl_ratio", "cost_of_risk"}
     charts, n_charts = [], 0
+    hist = b.get("history") or {}
+    standing = []
+    sc_pts = [(qlabel(d), v) for d, v in (hist.get("score") or []) if v is not None]
+    if len(sc_pts) >= 2:
+        last, prev = sc_pts[-1][1], sc_pts[-2][1]; delta = last - prev
+        dchip = f'<span class="delta {"up" if delta >= 0 else "down"}">{"+" if delta > 0 else ("−" if delta < 0 else "")}{abs(delta):.1f}</span>' if abs(delta) > 0.05 else '<span class="delta flat">no change</span>'
+        big = c.chart(sc_pts, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)
+        small = c.chart(sc_pts, unit="", dp=1, w=300, h=96, compact=True)
+        standing.append(f'<button class="sm" type="button" data-title="Counterparty score, recomputed" data-sub="Today\'s method and composite rating applied to the ratios as they stood at each quarter end · {len(sc_pts)} quarters" aria-label="Expand score history">'
+                        f'<div class="sm-head"><span class="sm-label">Score, recomputed</span><span class="sm-val mono">{last:.0f}</span></div><div class="sm-sub">{dchip}<span class="muted">vs {c.esc(sc_pts[-2][0])}</span></div>{small}<template>{big}</template></button>')
+    snaps = [(d[5:], v) for d, v, _g in (hist.get("snapshots") or []) if v is not None]
+    if len(snaps) >= 2:
+        big = c.chart(snaps, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)
+        small = c.chart(snaps, unit="", dp=1, w=300, h=96, compact=True)
+        standing.append(f'<button class="sm" type="button" data-title="Published score, daily" data-sub="The score as published on each build since snapshots began · {len(snaps)} days" aria-label="Expand published score">'
+                        f'<div class="sm-head"><span class="sm-label">Published score</span><span class="sm-val mono">{snaps[-1][1]:.0f}</span></div><div class="sm-sub"><span class="muted">since {c.esc(hist["snapshots"][0][0])}</span></div>{small}<template>{big}</template></button>')
+    if standing:
+        charts.append(f'<div class="sm-group"><h4>Standing</h4><div class="sm-grid">{"".join(standing)}</div></div>')
+        n_charts += len(standing)
     for group, metrics in TREND_GROUPS:
         cards = []
         for metric, label, unit, dp in metrics:
@@ -578,6 +597,19 @@ def rating_grade_site(value):
     return rating_grade(value)
 
 
+def grade_trend(r) -> str:
+    """Composite grade through the daily snapshots: a sparkline once there are two, the held-since date before that."""
+    try:
+        h = load(f"banks/{r['id']}").get("history") or {}
+    except Exception:
+        h = {}
+    pts = [g for _d, _v, g in (h.get("snapshots") or []) if g is not None]
+    if len(pts) >= 2 and len({d for d, _v, g in h["snapshots"] if g is not None}) >= 2:
+        return c.spark([-g for g in pts], w=72, h=20) + f'<span class="small muted"> {len(pts)}d</span>'
+    since = min((a.get("date") or "9999" for a in (r.get("agencies") or {}).values() if a.get("date")), default=None)
+    return f'<span class="small muted">held since {c.esc(since)}</span>' if since and since != "9999" else '<span class="muted">—</span>'
+
+
 def page_ratings(generated):
     R = load("ratings")
     rows = R["rows"]
@@ -631,7 +663,7 @@ def page_ratings(generated):
         f'<td><a class="b" href="../banks/{c.esc(r["id"])}.html">{c.esc(r["short"])}</a><div class="small muted">{c.esc(r["country"])} · {c.esc(r["type"].replace("_", " "))}</div></td>'
         f'<td><span class="band mono" style="background:{grade_colour(r["grade"])};color:{"#fff" if r["grade"] is not None and r["grade"] <= 10 else "#243240"}">{c.esc(r["composite"] or "NR")}</span></td>'
         + "".join(cell(r["agencies"].get(ag)) for ag, _ in AG)
-        + f'<td class="mono small muted">{c.esc(r["last_action"] or "—")}</td></tr>'
+        + f'<td class="mono small muted">{c.esc(r["last_action"] or "—")}</td><td>{grade_trend(r)}</td></tr>'
         for r in sorted(rows, key=lambda r: (r["grade"] is None, r["grade"] or 99, r["short"])))
     regions = [("all", "All"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
     filters = "".join(f'<button class="filter{" active" if k == "all" else ""}" data-region="{k}">{c.esc(l)}</button>' for k, l in regions)
@@ -642,7 +674,7 @@ def page_ratings(generated):
 <p class="note">Long-term issuer ratings only, one per agency per entity. Differences between the bars are mostly which banks each agency rates, not disagreement about the same bank.</p></div></div>
 <div class="card pad"><h3>Latest rating actions <span class="muted small">· 90 days, affirmations excluded</span></h3><div class="racts">{acts}</div></div>
 <div class="card" style="margin-top:16px"><div class="toolbar"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>
-<div class="table-wrap"><table id="board" class="plain ratings"><thead><tr><th data-sort="name">Entity</th><th data-sort="score" title="Median grade across agencies, on a common scale">Composite</th>{"".join(f"<th>{n}</th>" for _, n in AG)}<th>Last action</th></tr></thead><tbody>{trs}</tbody></table></div>
+<div class="table-wrap"><table id="board" class="plain ratings"><thead><tr><th data-sort="name">Entity</th><th data-sort="score" title="Median grade across agencies, on a common scale">Composite</th>{"".join(f"<th>{n}</th>" for _, n in AG)}<th>Last action</th><th title="composite grade on each build since snapshots began">Since</th></tr></thead><tbody>{trs}</tbody></table></div>
 <div class="table-foot"><span>▲ positive outlook · ▼ negative · ◆ on watch · ▶ stable · the small figure is the short-term rating · composite is the median of the agencies' long-term ratings on a common scale, AAA to CCC · symbols are the agencies' and are shown with attribution; histories are not redistributed</span></div></div>'''
     return c.shell("Ratings", content, "ratings", "../", generated)
 

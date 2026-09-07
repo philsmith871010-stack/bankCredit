@@ -18,7 +18,7 @@
     state.extra.forEach(function(id){if(ids.indexOf(id)<0)ids.push(id)});
     return ids.map(function(id){return byId[id]}).filter(Boolean)}
   function marked(){var m={};watchIds().concat(policyIds()).forEach(function(id){m[id]=1});return m}
-  function latest(r,code){if(code==='score')return r.score==null?null:{d:D.generated.slice(0,10),v:r.score};var s=r.series[code];return s&&s.length?{d:s[s.length-1][0],v:s[s.length-1][1]}:null}
+  function latest(r,code){if(code==='score')return r.score==null?null:{d:D.generated.slice(0,10),v:r.score};if(code==='rating_grade')return r.grade==null?null:{d:D.generated.slice(0,10),v:r.grade};var s=r.series[code];return s&&s.length?{d:s[s.length-1][0],v:s[s.length-1][1]}:null}
   function fmt(v,m){if(v==null)return '—';var dp=m[3];if(m[0]==='total_assets')return v>=1e6?(v/1e6).toFixed(2)+'tn':v>=1000?(v/1000).toFixed(0)+'bn':v.toFixed(0)+'m';return v.toFixed(dp)+(m[2]==='%'?'%':'')}
   function median(a){if(!a.length)return null;var s=a.slice().sort(function(x,y){return x-y}),n=s.length;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2}
   function qEnd(d){var y=+d.slice(0,4),m=+d.slice(5,7),qm=Math.ceil(m/3)*3;var last=new Date(Date.UTC(y,qm,0)).getUTCDate();return y+'-'+(qm<10?'0':'')+qm+'-'+last}
@@ -45,7 +45,7 @@
     side.innerHTML='<div class="rtile"><div class="rtile-n">'+vals.length+'</div><div class="rtile-l">names with a figure</div></div><div class="rtile"><div class="rtile-n">'+fmt(med,m)+'</div><div class="rtile-l">set median</div></div><div class="rtile"><div class="rtile-n">'+fmt(vals[0].p.v,m)+'</div><div class="rtile-l">best: '+esc(vals[0].r.short)+'</div></div>'+
       (mine.length?'<div class="card pad cp-mine"><h4>Your names</h4>'+mine.map(function(o){return '<div><span>'+link(o.x.r)+'</span><span class="mono">'+fmt(o.x.p.v,m)+'</span><span class="muted small">#'+(o.i+1)+' of '+vals.length+'</span></div>'}).join('')+'</div>':'<p class="small muted">Watch a bank or add it to My policy and it is picked out here.</p>')}
 
-  function renderTrend(rows,m,mark){var code=m[0];if(code==='score'){chart.innerHTML='<div class="empty">The score has no stored history yet; pick a ratio. Rank over time works on ratios too.</div>';side.innerHTML='';return}
+  function renderTrend(rows,m,mark){var code=m[0];
     var bs=buckets(rows,code,24);if(!bs.length){chart.innerHTML='<div class="empty">No history for this measure in the set.</div>';side.innerHTML='';return}
     var lines=rows.map(function(r){return{r:r,pts:bs.map(function(b){return atBucket(r,code,b)})}}).filter(function(l){return l.pts.some(function(v){return v!=null})});
     var med=bs.map(function(b,i){return median(lines.map(function(l){return l.pts[i]}).filter(function(v){return v!=null}))});
@@ -62,10 +62,20 @@
     last.sort(function(a,b){return b.v-a.v});var used=[];var mi=med.length-1;var labels=[{y:Y(med[mi]),t:'median',c:NAVY,w:'700'}];
     last.forEach(function(o){var hl=mark[o.l.r.id],rank=last.indexOf(o);if(!hl&&rank>=6&&rank<last.length-2)return;labels.push({y:Y(o.v),t:o.l.r.short.slice(0,16),c:hl?ORANGE:'#6c757d',w:hl?'700':'400'})});
     labels.sort(function(a,b){return a.y-b.y});labels.forEach(function(lb){var y=lb.y;while(used.some(function(u){return Math.abs(u-y)<11}))y+=11;used.push(y);out+='<text x="'+(W-R+6)+'" y="'+(y+4)+'" fill="'+lb.c+'" font-weight="'+lb.w+'">'+esc(lb.t)+'</text>'});
-    chart.innerHTML=out+'</svg>';
-    side.innerHTML='<div class="card pad cp-mine"><h4>Set, latest and change</h4>'+last.slice(0,40).map(function(o){var first=null;for(var i=0;i<o.l.pts.length;i++)if(o.l.pts[i]!=null){first=o.l.pts[i];break}var ch=first==null?null:o.v-first;return '<div><span>'+link(o.l.r)+'</span><span class="mono">'+fmt(o.v,m)+'</span><span class="small '+(ch==null?'muted':(ch>=0)===m[4]?'good':'bad')+'">'+(ch==null?'':(ch>=0?'+':'')+ch.toFixed(m[3])+' since '+bs[0].slice(0,4))+'</span></div>'}).join('')+'</div>'}
+    chart.innerHTML=out+'</svg><div class="cp-tip" id="cp-tip" hidden></div>';
+    side.innerHTML='<div class="card pad cp-mine"><h4>Set, latest and change <span class="muted small">· hover a line or a name</span></h4>'+last.slice(0,40).map(function(o){var first=null;for(var i=0;i<o.l.pts.length;i++)if(o.l.pts[i]!=null){first=o.l.pts[i];break}var ch=first==null?null:o.v-first;return '<div data-id="'+o.l.r.id+'"><span>'+link(o.l.r)+'</span><span class="mono">'+fmt(o.v,m)+'</span><span class="small '+(ch==null?'muted':(ch>=0)===m[4]?'good':'bad')+'">'+(ch==null?'':(ch>=0?'+':'')+ch.toFixed(m[3])+' since '+bs[0].slice(0,4))+'</span></div>'}).join('')+'</div>';
+    hoverWire(lines,m,bs)}
+  function hoverWire(lines,m,bs){var tip=document.getElementById('cp-tip'),byId2={};lines.forEach(function(l){byId2[l.r.id]=l});
+    function hot(id,on){document.querySelectorAll('.cp-line[data-id="'+id+'"]').forEach(function(p){p.classList.toggle('hot',on)});document.querySelectorAll('.cp-mine [data-id="'+id+'"]').forEach(function(d){d.classList.toggle('hot',on)})}
+    chart.addEventListener('mousemove',function(e){var p=e.target.closest('.cp-line');if(!p){tip.hidden=true;document.querySelectorAll('.hot').forEach(function(x){x.classList.remove('hot')});return}
+      var l=byId2[p.dataset.id];if(!l)return;document.querySelectorAll('.hot').forEach(function(x){x.classList.remove('hot')});hot(p.dataset.id,true);
+      var last=null,li=-1;for(var i=l.pts.length-1;i>=0;i--)if(l.pts[i]!=null){last=l.pts[i];li=i;break}
+      tip.innerHTML='<b>'+esc(l.r.short)+'</b> '+fmt(last,m)+' <span class="muted">'+(li>=0?bs[li].slice(0,7):'')+'</span>';var r=chart.getBoundingClientRect();tip.style.left=(e.clientX-r.left+12)+'px';tip.style.top=(e.clientY-r.top-28)+'px';tip.hidden=false});
+    chart.addEventListener('mouseleave',function(){tip.hidden=true;document.querySelectorAll('.hot').forEach(function(x){x.classList.remove('hot')})});
+    side.addEventListener('mouseover',function(e){var d=e.target.closest('[data-id]');if(!d)return;document.querySelectorAll('.hot').forEach(function(x){x.classList.remove('hot')});hot(d.dataset.id,true)});
+    side.addEventListener('mouseleave',function(){document.querySelectorAll('.hot').forEach(function(x){x.classList.remove('hot')})})}
 
-  function renderBump(rows,m,mark){var code=m[0];if(code==='score'){chart.innerHTML='<div class="empty">Pick a ratio for rank over time.</div>';side.innerHTML='';return}
+  function renderBump(rows,m,mark){var code=m[0];
     var bs=buckets(rows,code,16);if(bs.length<2){chart.innerHTML='<div class="empty">Not enough history in the set.</div>';side.innerHTML='';return}
     var lines=rows.map(function(r){return{r:r,pts:bs.map(function(b){return atBucket(r,code,b)}),rank:[]}}).filter(function(l){return l.pts.some(function(v){return v!=null})});
     bs.forEach(function(b,i){var have=lines.filter(function(l){return l.pts[i]!=null}).sort(function(a,b){return m[4]?b.pts[i]-a.pts[i]:a.pts[i]-b.pts[i]});lines.forEach(function(l){l.rank[i]=null});have.forEach(function(l,k){l.rank[i]=k+1})});

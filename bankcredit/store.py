@@ -25,6 +25,7 @@ KEYS = {
     "bonds": ["isin"],
     "bond_quotes": ["isin", "date"],
     "runs": ["run_id"],
+    "history": ["entity_id", "date", "kind"],          # score and composite grade: daily snapshots and a quarterly backcast
 }
 
 
