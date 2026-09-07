@@ -36,3 +36,13 @@
   document.addEventListener('click',function(e){var b=e.target.closest('.sm');if(b){if(!d.isConnected)document.body.appendChild(d);var t=b.querySelector('template');d.querySelector('h3').textContent=b.dataset.title||'';d.querySelector('.cd-head .small').textContent=b.dataset.sub||'';d.querySelector('.cd-body').innerHTML=t?t.innerHTML:'';d.showModal();return}
     if(e.target.closest('.cd-close')||(e.target===d))d.close()});
 })();
+
+// Ratings grid: band tiles, grade bars and the "moved" chip filter the rows alongside region and search
+(function(){var tb=document.querySelector('table.rgrid tbody');if(!tb)return;var grade=null,band=null,cnt=document.getElementById('rg-count'),clear=document.querySelector('.gclear');
+  function apply(){var region=(document.querySelector('.filter.active[data-region]')||{}).dataset||{},term=((document.getElementById('q')||{}).value||'').toLowerCase(),w=[];try{w=JSON.parse(localStorage.getItem('counterparty.watch')||'[]')}catch(e){}
+    var n=0;tb.querySelectorAll('tr').forEach(function(tr){var d=tr.dataset,ok=true;
+      if(region.region&&region.region!=='all'){ok=region.region==='watch'?w.indexOf(d.id)>=0:region.region==='moved'?d.moved==='1':d.region===region.region}
+      if(ok&&grade)ok=d.grade===grade;if(ok&&band)ok=d.band===band;if(ok&&term)ok=tr.textContent.toLowerCase().indexOf(term)>=0;tr.style.display=ok?'':'none';if(ok)n++});
+    if(cnt)cnt.textContent=n+' shown';document.querySelectorAll('.gfilter').forEach(function(b){b.classList.toggle('active',b.dataset.grade===grade)});document.querySelectorAll('.bfilter').forEach(function(b){b.classList.toggle('active',b.dataset.band===band)});if(clear)clear.hidden=!grade&&!band}
+  document.addEventListener('click',function(e){var g=e.target.closest('.gfilter');if(g){grade=grade===g.dataset.grade?null:g.dataset.grade;band=null;apply();return}var b=e.target.closest('.bfilter');if(b){band=band===b.dataset.band?null:b.dataset.band;grade=null;apply();return}if(e.target.closest('.gclear')){grade=null;band=null;apply();return}if(e.target.closest('.filter[data-region]'))setTimeout(apply,0)});
+  var q=document.getElementById('q');if(q)q.addEventListener('input',apply);apply()})();

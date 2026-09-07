@@ -181,7 +181,7 @@ def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | 
             f'<polyline points="{pts}" fill="none" stroke="{NAVY}" stroke-width="2" stroke-linejoin="round"/>{dots}{end}{xl}</svg>')
 
 
-NAV = [("board", "Board", "grid", "index.html"), ("policy", "My policy", "compare", "policy/index.html"), ("compare", "Compare", "activity", "compare/index.html"), ("ratings", "Ratings", "star", "ratings/index.html"), ("banks", "Banks", "bank", "banks/index.html"),
+NAV = [("board", "Board", "grid", "index.html"), ("policy", "My policy", "compare", "policy/index.html"), ("compare", "Analysis", "activity", "compare/index.html"), ("ratings", "Ratings", "star", "ratings/index.html"), ("banks", "Banks", "bank", "banks/index.html"),
        ("events", "Events", "activity", "events/index.html"), ("brief", "Brief", "doc", "brief/index.html"),
        ("method", "Method", "list", "method/index.html"),
        ("coverage", "Coverage", "search", "coverage/index.html"),

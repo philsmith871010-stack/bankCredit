@@ -449,7 +449,7 @@ def score_history(series: dict, composite: float | None, today: date) -> list[di
         if not latest:
             continue
         sc = compute(latest, 0.0, composite)
-        if sc.public_score is None:
+        if sc.public_score is None or sc.coverage < 0.5:          # a half-empty quarter is not a comparable point
             continue
         out.append({"date": q.isoformat(), "score": sc.public_score, "band": sc.band, "coverage": sc.coverage})
     return out

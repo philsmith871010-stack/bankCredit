@@ -614,30 +614,53 @@ def page_ratings(generated):
     R = load("ratings")
     rows = R["rows"]
     rated = [r for r in rows if r["grade"] is not None]
-    bands = {"AA- and above": sum(1 for r in rated if r["grade"] <= 4), "A range": sum(1 for r in rated if 4 < r["grade"] <= 7),
-             "BBB range": sum(1 for r in rated if 7 < r["grade"] <= 10), "Below BBB-": sum(1 for r in rated if r["grade"] > 10)}
-    unrated = len(rows) - len(rated)
-    recent30 = [a for a in R["actions"] if a["date"] >= (datetime.utcnow() - timedelta(days=30)).date().isoformat()]
+    today = datetime.utcnow().date()
+    since90 = (today - timedelta(days=90)).isoformat()
+    since30 = (today - timedelta(days=30)).isoformat()
+    acts_all = R["actions"]
+    recent30 = [a for a in acts_all if a["date"] >= since30]
     ups = sum(1 for a in recent30 if a["severity"] == "good")
     downs = sum(1 for a in recent30 if a["severity"] in ("warn", "bad"))
-    tiles = "".join(f'<div class="rtile"><div class="rtile-n mono" style="color:{col}">{n}</div><div class="rtile-l">{c.esc(k)}</div></div>'
-                    for (k, n), col in zip(bands.items(), ["#0a2540", "#3f5f85", "#7d93ad", "#b04632"]))
-    tiles += f'<div class="rtile"><div class="rtile-n mono muted">{unrated}</div><div class="rtile-l">Unrated</div></div>'
-    tiles += f'<div class="rtile"><div class="rtile-n mono"><span style="color:#1e7a3a">{ups}▲</span> <span style="color:#b04632">{downs}▼</span></div><div class="rtile-l">Actions, 30 days</div></div>'
-    # the ladder: every rated entity placed on one AAA-to-B scale by composite grade, chips coloured by band
-    GR = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-", "B+", "B", "B-"]
-    by_grade = {}
+    moved = {a["id"] for a in acts_all if a["date"] >= since90}
+    # distribution by composite grade: the filter control for the grid
+    GR = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-", "B+", "B", "B-", "CCC"]
+    counts = {i: 0 for i in range(1, 18)}
     for r in rated:
-        by_grade.setdefault(int(r["grade"] + 0.5), []).append(r)
-    ladder = ""
-    for i, g in enumerate(GR, start=1):
-        ents = sorted(by_grade.get(i, []), key=lambda r: r["short"])
-        if not ents and i > 10:
-            continue
-        col = grade_colour(i)
-        chips = "".join(f'<a class="lchip" style="border-color:{col};color:{col}" href="../banks/{c.esc(r["id"])}.html" title="{c.esc(r["name"])} · {c.esc(r["country"])}">{c.esc(r["short"])}</a>' for r in ents)
-        ladder += f'<div class="lrow"><div class="lgrade mono" style="background:{col}">{g}</div><div class="lbar" style="width:{min(90, max(4, len(ents) * 3))}px;background:{col}"></div><div class="lcount mono muted">{len(ents) or ""}</div><div class="lchips">{chips}</div></div>'
-    # per-agency distribution: how each agency spreads the universe across bands
+        counts[max(1, min(17, int(r["grade"] + 0.5)))] += 1
+    mx = max(counts.values()) or 1
+    hist = "".join(f'<button class="gbar gfilter" data-grade="{i}" title="{GR[i-1]}: {counts[i]}" {"disabled" if not counts[i] else ""}><span class="gcount mono">{counts[i] or ""}</span><i style="height:{max(3, counts[i] / mx * 64):.0f}px;background:{grade_colour(i)}"></i><span class="glabel">{GR[i-1]}</span></button>' for i in range(1, 14))
+    hist += f'<button class="gbar gfilter" data-grade="nr" title="Unrated: {len(rows) - len(rated)}"><span class="gcount mono">{len(rows) - len(rated)}</span><i style="height:{max(3, (len(rows) - len(rated)) / mx * 64):.0f}px;background:#dfe5eb"></i><span class="glabel">NR</span></button>'
+    band_tiles = [("AA- and above", sum(1 for r in rated if r["grade"] <= 4), "#0a2540"), ("A range", sum(1 for r in rated if 4 < r["grade"] <= 7), "#3f5f85"),
+                  ("BBB range", sum(1 for r in rated if 7 < r["grade"] <= 10), "#7d93ad"), ("Below BBB-", sum(1 for r in rated if r["grade"] > 10), "#b04632"),
+                  ("Unrated", len(rows) - len(rated), "#6c757d")]
+    tiles = "".join(f'<button class="rtile bfilter" data-band="{k}"><div class="rtile-n mono" style="color:{col}">{n}</div><div class="rtile-l">{c.esc(k)}</div></button>' for k, n, col in band_tiles)
+    tiles += f'<a class="rtile" href="#actions"><div class="rtile-n mono"><span style="color:#1e7a3a">{ups}▲</span> <span style="color:#b04632">{downs}▼</span></div><div class="rtile-l">Actions, 30 days</div></a>'
+    # the grid: one row per entity, one tinted cell per agency
+    AG = [("fitch", "Fitch"), ("sp", "S&amp;P"), ("moodys", "Moody's"), ("dbrs", "DBRS"), ("kbra", "KBRA"), ("scope", "Scope")]
+    used = [(k, n) for k, n in AG if any(r["agencies"].get(k, {}).get("lt") for r in rows)]
+    def cell(a):
+        if not a or not a.get("lt"):
+            return '<td class="rc rc-na">—</td>'
+        g = rating_grade_site(a["lt"])
+        col = grade_colour(g)
+        light = g is None or g > 10 or g <= 4 or (7 < g <= 10 and False)
+        typ = "" if a.get("lt_type") in ("idr", "issuer") else f' <span class="rc-typ" title="rating type">{c.esc(str(a.get("lt_type") or "")[:3])}</span>'
+        return (f'<td class="rc" style="--g:{col}"><span class="rc-lt mono">{c.esc(a["lt"])}</span>{outlook_glyph(a.get("outlook"))}{typ}'
+                f'<span class="rc-sub small">{c.esc(a.get("st") or "")}<span class="muted"> {c.esc((a.get("date") or "")[:7])}</span></span></td>')
+    def band_key(g):
+        return "Unrated" if g is None else "AA- and above" if g <= 4 else "A range" if g <= 7 else "BBB range" if g <= 10 else "Below BBB-"
+    trs = "".join(
+        f'<tr data-id="{c.esc(r["id"])}" data-region="{c.esc(r["region"])}" data-name="{c.esc(r["short"].lower())} {c.esc(r["name"].lower())}" data-score="{100 - (r["grade"] or 99)}" '
+        f'data-grade="{max(1, min(17, int(r["grade"] + 0.5))) if r["grade"] is not None else "nr"}" data-band="{band_key(r["grade"])}" data-moved="{1 if r["id"] in moved else 0}">'
+        f'<td><a class="b" href="../banks/{c.esc(r["id"])}.html">{c.esc(r["short"])}</a><div class="small muted">{c.esc(COUNTRY.get(r["country"], r["country"]))} · {c.esc(TYPE_LABEL.get(r["type"], r["type"]))}</div></td>'
+        f'<td class="rc rc-comp" style="--g:{grade_colour(r["grade"])}"><span class="band mono" style="background:{grade_colour(r["grade"])};color:{"#fff" if r["grade"] is not None and r["grade"] <= 10 else "#243240"}">{c.esc(r["composite"] or "NR")}</span><span class="rc-sub small muted">{len([1 for k, _ in used if r["agencies"].get(k, {}).get("lt")])} agenc{"y" if len([1 for k, _ in used if r["agencies"].get(k, {}).get("lt")]) == 1 else "ies"}</span></td>'
+        + "".join(cell(r["agencies"].get(k)) for k, _ in used)
+        + f'<td class="small">{("<span class=chip-dot></span> " if r["id"] in moved else "")}<span class="mono muted">{c.esc(r["last_action"] or "—")}</span></td><td>{grade_trend(r)}</td></tr>'
+        for r in sorted(rows, key=lambda r: (r["grade"] is None, r["grade"] or 99, r["short"])))
+    regions = [("all", "All"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
+    filters = "".join(f'<button class="filter{" active" if k == "all" else ""}" data-region="{k}">{c.esc(l)}</button>' for k, l in regions)
+    tone = {"bad": "bad", "warn": "warn", "good": "good", "info": "muted"}
+    acts = "".join(f'<div class="ract"><span class="mono muted">{a["date"]}</span><a class="b" href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><span>{c.esc(a["title"])}</span>{c.chip(c.esc({"good": "positive", "warn": "watch", "bad": "adverse"}.get(a["severity"], a["severity"])), tone.get(a["severity"], "muted"))}</div>' for a in acts_all[:30]) or '<div class="empty">No rating actions other than affirmations in the last 90 days.</div>'
     AGN = [("fitch", "Fitch"), ("sp", "S&amp;P"), ("moodys", "Moody's"), ("dbrs", "DBRS")]
     dist = ""
     for ag, label in AGN:
@@ -645,39 +668,19 @@ def page_ratings(generated):
         gs = [g for g in gs if g is not None]
         if not gs:
             continue
-        counts = [sum(1 for g in gs if g <= 4), sum(1 for g in gs if 4 < g <= 7), sum(1 for g in gs if 7 < g <= 10), sum(1 for g in gs if g > 10)]
-        total = sum(counts)
-        segs = "".join(f'<div class="dseg" style="flex:{n};background:{col}" title="{lab}: {n}"></div>' for n, col, lab in zip(counts, ["#0a2540", "#3f5f85", "#7d93ad", "#b04632"], ["AA- and above", "A range", "BBB range", "below BBB-"]) if n)
-        dist += f'<div class="drow"><div class="dlabel">{label} <span class="muted small">{total} rated</span></div><div class="dbar">{segs}</div></div>'
-    tone = {"bad": "bad", "warn": "warn", "good": "good", "info": "muted"}
-    acts = "".join(f'<div class="ract"><span class="mono muted">{a["date"]}</span><a class="b" href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><span>{c.esc(a["title"])}</span>{c.chip(c.esc(a["severity"]), tone.get(a["severity"], "muted"))}</div>' for a in R["actions"][:40]) or '<div class="empty">No rating actions other than affirmations in the last 90 days.</div>'
-    AG = [("fitch", "Fitch"), ("sp", "S&amp;P"), ("moodys", "Moody's"), ("dbrs", "DBRS"), ("kbra", "KBRA"), ("scope", "Scope")]
-    def cell(a):
-        if not a or not a.get("lt"):
-            return '<td class="na">—</td>'
-        st = f'<span class="small muted">{c.esc(a["st"])}</span>' if a.get("st") else ""
-        typ = "" if a.get("lt_type") in ("idr", "issuer") else f'<span class="small muted" title="rating type">{c.esc(str(a.get("lt_type") or "").replace("_", " "))}</span>'
-        return f'<td><span class="mono b">{c.esc(a["lt"])}</span> {outlook_glyph(a.get("outlook"))} {st} {typ}<div class="small muted mono">{c.esc(a["date"])}</div></td>'
-    trs = "".join(
-        f'<tr data-id="{c.esc(r["id"])}" data-region="{c.esc(r["region"])}" data-name="{c.esc(r["short"].lower())}" data-score="{100 - (r["grade"] or 99)}">'
-        f'<td><a class="b" href="../banks/{c.esc(r["id"])}.html">{c.esc(r["short"])}</a><div class="small muted">{c.esc(r["country"])} · {c.esc(r["type"].replace("_", " "))}</div></td>'
-        f'<td><span class="band mono" style="background:{grade_colour(r["grade"])};color:{"#fff" if r["grade"] is not None and r["grade"] <= 10 else "#243240"}">{c.esc(r["composite"] or "NR")}</span></td>'
-        + "".join(cell(r["agencies"].get(ag)) for ag, _ in AG)
-        + f'<td class="mono small muted">{c.esc(r["last_action"] or "—")}</td><td>{grade_trend(r)}</td></tr>'
-        for r in sorted(rows, key=lambda r: (r["grade"] is None, r["grade"] or 99, r["short"])))
-    regions = [("all", "All"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
-    filters = "".join(f'<button class="filter{" active" if k == "all" else ""}" data-region="{k}">{c.esc(l)}</button>' for k, l in regions)
-    content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">Every entity's latest long-term rating by agency with its outlook, the short-term rating beneath, and a composite grade across agencies. From the ESMA European Rating Platform, refreshed daily, shown with agency attribution.</div></div></div>
-<div class="rtiles">{tiles}</div>
-<div class="grid-2 rgrid"><div class="card pad"><h3>Rating ladder <span class="muted small">· composite grade, one chip per entity</span></h3><div class="ladder">{ladder}</div></div>
+        cnts = [sum(1 for g in gs if g <= 4), sum(1 for g in gs if 4 < g <= 7), sum(1 for g in gs if 7 < g <= 10), sum(1 for g in gs if g > 10)]
+        segs = "".join(f'<div class="dseg" style="flex:{n};background:{col}" title="{lab}: {n}"></div>' for n, col, lab in zip(cnts, ["#0a2540", "#3f5f85", "#7d93ad", "#b04632"], ["AA- and above", "A range", "BBB range", "below BBB-"]) if n)
+        dist += f'<div class="drow"><div class="dlabel">{label} <span class="muted small">{sum(cnts)} rated</span></div><div class="dbar">{segs}</div></div>'
+    content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">Who rates whom, and how. One row per entity, one tinted cell per agency: the long-term rating with its outlook, the short-term rating and month beneath. Click a band, a grade bar or a region to filter; the ESMA European Rating Platform is the source, refreshed daily.</div></div></div>
+<div class="rtiles rtiles-f">{tiles}</div>
+<div class="card rgrid-card"><div class="toolbar rg-tools"><div class="filters">{filters}<button class="filter" data-region="moved">Moved in 90 days</button></div><input id="q" class="search" placeholder="Search"><span class="small muted" id="rg-count"></span></div>
+<div class="rg-hist"><span class="small muted">Composite grade</span>{hist}<button class="filter small gclear" hidden>Clear grade</button></div>
+<div class="table-wrap"><table id="board" class="plain rgrid"><thead><tr><th data-sort="name">Entity</th><th data-sort="score" title="Median of the agencies' long-term ratings on a common scale">Composite</th>{"".join(f"<th>{n}</th>" for _, n in used)}<th>Last action</th><th title="composite grade on each build since snapshots began">Since</th></tr></thead><tbody>{trs}</tbody></table></div>
+<div class="table-foot"><span>▲ positive outlook · ▼ negative · ◆ on watch · ▶ stable · cell tint follows the grade · a dot marks an action in 90 days · symbols are the agencies' and are shown with attribution; histories are not redistributed</span></div></div>
+<div class="grid-2 rgrid2"><div class="card pad" id="actions"><h3>Latest rating actions <span class="muted small">· 90 days, affirmations excluded</span></h3><div class="racts">{acts}</div></div>
 <div class="card pad"><h3>How each agency sees the universe</h3><div class="dist">{dist}</div><div class="dlegend"><span><i style="background:#0a2540"></i>AA- and above</span><span><i style="background:#3f5f85"></i>A range</span><span><i style="background:#7d93ad"></i>BBB range</span><span><i style="background:#b04632"></i>below BBB-</span></div>
-<p class="note">Long-term issuer ratings only, one per agency per entity. Differences between the bars are mostly which banks each agency rates, not disagreement about the same bank.</p></div></div>
-<div class="card pad"><h3>Latest rating actions <span class="muted small">· 90 days, affirmations excluded</span></h3><div class="racts">{acts}</div></div>
-<div class="card" style="margin-top:16px"><div class="toolbar"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>
-<div class="table-wrap"><table id="board" class="plain ratings"><thead><tr><th data-sort="name">Entity</th><th data-sort="score" title="Median grade across agencies, on a common scale">Composite</th>{"".join(f"<th>{n}</th>" for _, n in AG)}<th>Last action</th><th title="composite grade on each build since snapshots began">Since</th></tr></thead><tbody>{trs}</tbody></table></div>
-<div class="table-foot"><span>▲ positive outlook · ▼ negative · ◆ on watch · ▶ stable · the small figure is the short-term rating · composite is the median of the agencies' long-term ratings on a common scale, AAA to CCC · symbols are the agencies' and are shown with attribution; histories are not redistributed</span></div></div>'''
+<p class="note">Long-term issuer ratings only, one per agency per entity. Differences between the bars are mostly which banks each agency rates, not disagreement about the same bank.</p></div></div>'''
     return c.shell("Ratings", content, "ratings", "../", generated)
-
 
 def page_policy(generated):
     content = '''<div class="page-head"><div><h1>My policy</h1><div class="lede">Your approved counterparties and the longest tenor you accept for each, checked against today's public standing, market signal and news. The list lives in this browser and in the share link; nothing is sent anywhere.</div></div></div>
@@ -802,17 +805,26 @@ def page_compare(generated):
             ("eu_large", "EU and Nordic"), ("us", "US"), ("ch", "Switzerland"), ("aus", "Australia"), ("can", "Canada"), ("asia", "Asia"), ("gulf", "Gulf"),
             ("watch", "Watching"), ("policy", "My policy")]
     chips = "".join(f'<button class="filter cp-set" data-set="{k}">{c.esc(l)}<span class="cnt"></span></button>' for k, l in sets)
-    content = f'''<div class="page-head"><div><h1>Compare</h1><div class="lede">Any peer set against any measure: where each name stands today, how it has moved, how its rank among the set has changed, and two measures against each other. Names you watch or hold in My policy are picked out.</div></div></div>
+    def panel(pid, title, sub):
+        return (f'<section class="panel-c" id="p-{pid}"><div class="pc-head"><h3>{c.esc(title)} <span class="muted small">{c.esc(sub)}</span></h3>'
+                f'<button class="pc-x" data-panel="{pid}" title="Expand or restore" aria-label="Expand {c.esc(title)}">⤢</button></div><div class="pc-body cp-chart" id="c-{pid}"><div class="empty">Loading…</div></div></section>')
+    content = f'''<div class="page-head"><div><h1>Analysis</h1><div class="lede">One peer set, one measure, every view at once. Pin up to six names and they carry the same colour in every panel; hover any name anywhere and it lights up everywhere.</div></div></div>
 <div class="card cp-card"><div class="cp-tools">
 <div class="filters" id="cp-sets">{chips}</div>
 <div class="cp-row"><label class="small muted">Measure <select id="cp-metric"></select></label>
-<label class="small muted cp-y" hidden>against <select id="cp-metric2"></select></label>
-<div class="tabs cp-views"><button class="tab active" data-view="rank">Ranking</button><button class="tab" data-view="trend">Trends</button><button class="tab" data-view="bump">Rank over time</button><button class="tab" data-view="scatter">Two measures</button></div>
+<label class="small muted">against <select id="cp-metric2"></select></label>
 <div class="search cp-add">{c.ico("search", 16, c.MUTED)}<input id="cp-q" placeholder="Add a name to the set" autocomplete="off"><div class="cp-sugg" id="cp-sugg" hidden></div></div>
-<span class="small muted" id="cp-count"></span></div></div>
-<div class="cp-body"><div class="cp-chart" id="cp-chart"><div class="empty">Loading…</div></div><div class="cp-side" id="cp-side"></div></div>
-<div class="table-foot"><span id="cp-foot">Ratios are the latest reported by each name; the peer line is the set's median. Sources and dates are on each profile. Ranks count only names with a figure at that date.</span></div></div>'''
-    return c.shell("Compare", content, "compare", "../", generated).replace("</body>", '<script src="../assets/compare.js"></script></body>')
+<span class="small muted" id="cp-count"></span></div>
+<div class="cp-pins" id="cp-pins"></div></div></div>
+<div class="dash" id="dash">
+{panel("rank", "Ranking now", "latest figure, set median")}
+{panel("trend", "Trend", "quarter ends, set median dashed")}
+{panel("bump", "Rank over time", "position within the set")}
+{panel("scatter", "Two measures", "bubble size follows total assets")}
+</div>
+<div class="card cp-card"><div class="pc-head"><h3>The set in numbers <span class="muted small">· latest reported figures; click a heading to sort, a swatch to pin</span></h3></div><div class="table-wrap" id="c-table"></div></div>
+<div class="table-foot"><span>Figures are the latest reported by each name; sources and dates are on each profile. Ranks count only names with a figure at that date. The score's history is recomputed with today's method and rating on the ratios as they stood.</span></div>'''
+    return c.shell("Analysis", content, "compare", "../", generated).replace("</body>", '<script src="../assets/compare.js"></script></body>')
 
 def build():
     board = load("board"); status = load("status"); generated = board["generated"]
