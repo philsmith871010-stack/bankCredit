@@ -834,6 +834,9 @@ def build():
         shutil.rmtree(OUT)
     (OUT / "banks").mkdir(parents=True); (OUT / "events").mkdir(); (OUT / "method").mkdir(); (OUT / "status").mkdir()
     shutil.copytree(ASSETS, OUT / "assets")
+    faces = (ASSETS / "fonts.css").read_text()
+    css = OUT / "assets" / "site.css"
+    css.write_text(faces + css.read_text())        # one stylesheet: the faces first, then everything that uses them
     _write(OUT / "index.html", page_board(board, generated))
     _write(OUT / "banks" / "index.html", page_banks_index(board, generated))
     for r in board["rows"]:

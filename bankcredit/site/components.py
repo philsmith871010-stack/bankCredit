@@ -94,12 +94,23 @@ def _chart_compact(pts_in, w, h, unit, req, dp) -> str:
 
 
 def ribbon(score, p25=None, p50=None, p75=None, w=96, h=10) -> str:
-    """Band scale as a CSS gradient on the element; only the peer band, median and marker are drawn."""
-    x = lambda v: v / 100 * w
-    band = f'<rect x="{x(p25):.0f}" y="0" width="{x(p75)-x(p25):.0f}" height="{h}" fill="{ORANGE}" fill-opacity="0.18"/>' if p25 is not None and p75 is not None else ""
-    med = f'<rect x="{x(p50)-0.5:.0f}" y="0" width="1" height="{h}" fill="{ORANGE}" fill-opacity="0.9"/>' if p50 is not None else ""
-    mark = f'<circle cx="{x(score):.0f}" cy="{h/2:.0f}" r="4.5" fill="{WHITE}" stroke="{NAVY}" stroke-width="2"/>' if score is not None else ""
-    return f'<svg class="ribbon" width="{w}" height="{h}" viewBox="0 0 {w} {h}" aria-hidden="true">{band}{med}{mark}</svg>'
+    """The band scale with the peer quartile band, the peer median and this bank's marker.
+    One element, no children: every layer is a background gradient, so a 152-row table
+    carries 152 nodes rather than 800."""
+    if score is None:
+        return ""
+    pc = lambda v: f"{max(0.0, min(100.0, v)):.1f}%"
+    r = 4.6                                        # the marker travels inside the bar so it never clips at either end
+    mark = (r + max(0.0, min(100.0, score)) / 100 * (w - 2 * r)) / w * 100
+    style = f"width:{w}px;height:{h}px;--s:{mark:.1f}%"
+    cls = "ribbon"
+    if p25 is not None and p75 is not None:
+        style += f";--a:{pc(p25)};--b:{pc(p75)}"
+        cls += " rb-band"
+    if p50 is not None:
+        style += f";--m:{pc(p50)}"
+        cls += " rb-med"
+    return f'<span class="{cls}" style="{style}" aria-hidden="true"></span>'
 
 
 def chip(text: str, kind: str = "muted") -> str:
@@ -195,9 +206,11 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)} · Counterparty · PWLBtoday</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+<meta name="color-scheme" content="light">
+<link rel="preload" href="{root}assets/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{root}assets/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{root}assets/site.css">
+<script type="speculationrules">{{"prerender":[{{"where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}</script>
 </head><body>{symbols()}
 <header class="top"><a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>
 <button class="menu-btn" id="menuBtn" aria-label="Menu">{ico("menu", 20, NAVY)}</button>

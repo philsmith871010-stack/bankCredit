@@ -404,3 +404,23 @@ the published score once snapshots accumulate); Compare's trends and rank-over-t
 composite grade; the Ratings matrix carries a Since column that shows the held-since date now and a grade sparkline
 once two snapshots exist. Compare trends have a hover legend: a line or a name lights up its counterpart with the
 latest value and date.
+
+### Speed, and why not a framework, 7 September 2026 (night)
+
+Measured before deciding. Wire payloads were never the problem: the board is 17 KB gzipped and GitHub Pages answers
+in 250 to 470 ms. What made every page slow was the Google Fonts stylesheet, a render-blocking request to a third
+party that must resolve before the intended typeface appears, and which a council proxy may block outright; behind
+one, the load event waited 12.5 seconds. The fonts are now self-hosted, subsetted to the glyphs the site actually
+renders (no bank name in the universe carries a non-ASCII character), 7 faces and 127 KB where Google served 16 and
+735 KB, preloaded and served from the same origin as one stylesheet. Load fell from 12.5 s to 65-550 ms.
+
+Two more: speculation rules prerender a page when the pointer settles on its link, and the View Transitions API
+cross-fades between documents, so navigation feels instant on Chromium and unchanged elsewhere. The board's 153
+peer ribbons were an SVG each (43 KB, ~450 nodes); they are now one element apiece with every layer a background
+gradient, and the board's parse time fell from 377 ms to 63 ms. Long tables carry content-visibility so the browser
+skips layout for rows below the fold.
+
+A React or Next rewrite was considered and rejected. The data is a daily snapshot with no accounts and no server, so
+a static site is the right shape; a framework would ship 40 to 130 KB of JavaScript before any content, add a Node
+build to a Python pipeline, and buy nothing the four measures above did not. The one thing a single-page app gives
+free, instant navigation, the speculation rules give without it.
