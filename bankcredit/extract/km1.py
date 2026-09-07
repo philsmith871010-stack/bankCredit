@@ -121,6 +121,7 @@ class Result:
     checks: list = field(default_factory=list)         # (severity, message); severity error|warn
     template: str = ""                                 # UK KM1 | EU KM1 | KM1 | US Pillar 3 | US LCR
     fixed_confidence: float | None = None              # set by extractors with their own scale (US documents)
+    history: dict = field(default_factory=dict)        # prior-period columns: iso date -> {metric: value}
     confidence_bonus: float = 0.0                      # continuity with the last verified disclosure
 
     @property
@@ -524,6 +525,7 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
             picked.append((metric, toks, "label"))
     if picked and not numbered:
         res.checks.append(("warn", "rows identified by label only (no row numbers in the table)"))
+    res.history = prior_columns(picked, res.period_dates, descending, res.scale)
     for metric, toks, row in picked:
         kind = KIND[metric]
         pick = toks[0] if descending else toks[-1]
@@ -557,6 +559,50 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
 
     validate(res)
     return res
+
+
+def _cell(metric: str, tok: str, scale: float) -> float | None:
+    if DASH_RE.match(tok):
+        return None
+    v = _num(tok)
+    if v is None:
+        return None
+    if KIND[metric] == "amount":
+        return v * scale
+    if 0 < v < 1.0 and metric in ("cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "lcr", "nsfr"):
+        return v * 100
+    return v
+
+
+def prior_columns(picked: list, period_dates: list, descending: bool, scale: float) -> dict:
+    """The template's earlier columns (T-1 ... T-4) as {iso date: {metric: value}}.
+
+    A row contributes only when it carries exactly one value per header date, so a stray footnote or a
+    merged cell cannot shift a value into the wrong period. Each prior column must pass the same
+    capital arithmetic as the current one before it is kept."""
+    if len(period_dates) < 2:
+        return {}
+    dates = list(period_dates) if descending else list(reversed(period_dates))
+    out: dict[str, dict] = {}
+    for metric, toks, _row in picked:
+        if len(toks) != len(dates):
+            continue
+        cols = list(toks) if descending else list(reversed(toks))
+        for d, tok in zip(dates[1:], cols[1:]):
+            v = _cell(metric, tok, scale)
+            if v is not None:
+                out.setdefault(d.isoformat(), {})[metric] = v
+    keep = {}
+    for d, vals in out.items():
+        if "cet1_capital" in vals and "rwa" in vals and "cet1_ratio" in vals and vals["rwa"]:
+            if abs(vals["cet1_capital"] / vals["rwa"] * 100 - vals["cet1_ratio"]) > 0.35:
+                continue
+        if any(not (0 < vals[m] < 80) for m in ("cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio") if m in vals):
+            continue
+        if any(not (20 < vals[m] < 1000) for m in ("lcr", "nsfr") if m in vals):
+            continue
+        keep[d] = vals
+    return keep
 
 
 def validate(res: Result) -> None:

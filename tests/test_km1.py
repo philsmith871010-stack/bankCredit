@@ -132,3 +132,20 @@ def test_infer_period():
     assert infer_period("Santander UK 2026 Half Yearly ACRMD.pdf") == date(2026, 6, 30)
     assert infer_period("2023-interim-pillar-3-report-FINAL.pdf", "09-30") == date(2023, 3, 31)
     assert infer_period("nwg-pillar-3-report.pdf") is None
+
+
+def test_prior_columns_follow_header_dates():
+    from datetime import date
+    from bankcredit.extract.km1 import prior_columns
+    dates = [date(2026, 6, 30), date(2026, 3, 31), date(2025, 12, 31)]
+    picked = [("cet1_capital", ["2,575", "2,540", "2,500"], "1"), ("rwa", ["9,141", "9,100", "9,000"], "2"),
+              ("cet1_ratio", ["28.2%", "27.9%", "27.8%"], "3"), ("lcr", ["186.7", "180.1"], "17")]   # LCR has one column short: ignored
+    h = prior_columns(picked, dates, True, 1.0)
+    assert set(h) == {"2026-03-31", "2025-12-31"}
+    assert h["2026-03-31"]["cet1_ratio"] == 27.9 and h["2025-12-31"]["rwa"] == 9000.0 and "lcr" not in h["2026-03-31"]
+    # ascending headers (oldest first) are read the other way round
+    h2 = prior_columns([("cet1_ratio", ["27.8%", "27.9%", "28.2%"], "3")], list(reversed(dates)), False, 1.0)
+    assert h2["2026-03-31"]["cet1_ratio"] == 27.9
+    # a prior column failing the capital arithmetic is dropped
+    bad = [("cet1_capital", ["2,575", "1,000"], "1"), ("rwa", ["9,141", "9,100"], "2"), ("cet1_ratio", ["28.2%", "27.9%"], "3")]
+    assert prior_columns(bad, dates[:2], True, 1.0) == {}

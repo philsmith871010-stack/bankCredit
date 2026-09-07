@@ -416,6 +416,22 @@ class Pillar3Adapter(Adapter):
                             unit="pct" if pct else "ccy_m", currency="" if pct else res.currency,
                             basis="consolidated", source=self.name, document=url, page=res.page,
                             method="pdf_rules", confidence=res.confidence))
+        # the template's earlier columns give history; they never replace a figure read from that period's own document
+        if getattr(res, "history", None):
+            have = store.read("facts")
+            have = have[(have.entity_id == ent) & (have.source == self.name) & (have.method != "pdf_rules_prior")] if not have.empty else have
+            taken = set(zip(have.reference_date.astype(str).str[:10], have.metric)) if not have.empty else set()
+            for d, vals in res.history.items():
+                if res.reference_date and d >= res.reference_date.isoformat():
+                    continue
+                for metric, value in vals.items():
+                    if metric not in km1.PUBLISH or (d, metric) in taken:
+                        continue
+                    pct = kinds.get(metric) == "pct"
+                    out.append(Fact(entity_id=ent, reference_date=date.fromisoformat(d), metric=metric, value=float(value),
+                                    unit="pct" if pct else "ccy_m", currency="" if pct else res.currency,
+                                    basis="consolidated", source=self.name, document=url, page=res.page,
+                                    method="pdf_rules_prior", confidence=min(res.confidence, 0.85)))
         return out
 
     def _queue_item(self, ent, url, path, sha, res, title, reason) -> dict:
