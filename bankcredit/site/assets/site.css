@@ -82,3 +82,6 @@ table.ratings td{font-size:13px;vertical-align:top}table.ratings .band{display:i
 table.coverage td.cov{text-align:center;white-space:nowrap;padding:6px 6px}table.coverage td.cov b{display:block;font-family:var(--mono,ui-monospace,monospace);font-size:12px}table.coverage td.cov span{font-size:10px;color:var(--muted)}
 table.coverage td.cov0{color:#c4ccd6}table.coverage td.cov1{background:#f3f6fa}table.coverage td.cov2{background:#dfe7f1}table.coverage td.cov3{background:#c3d2e4}
 table.coverage th{white-space:nowrap}table.coverage td{vertical-align:middle}
+
+svg.ribbon{background:linear-gradient(90deg,#c9d3de 0 35%,#a9b8c9 35% 50%,#7d93ad 50% 65%,#3f5f85 65% 80%,#0a2540 80% 100%);background-clip:content-box;padding:3px 0;box-sizing:border-box;border-radius:2px}
+.band-A{background:#0a2540;color:#fff}.band-B{background:#3f5f85;color:#fff}.band-C{background:#7d93ad;color:#fff}.band-D{background:#a9b8c9;color:#243240}.band-E{background:#c9d3de;color:#243240}.band-x{background:#dfe5eb;color:#243240}

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 
 from .. import store
@@ -66,7 +67,7 @@ def page_board(board, generated):
         peer = r.get("peer") or {}
         sub = f'{TYPE_LABEL.get(r["type"], r["type"])} · {COUNTRY.get(r["country"], r["country"])}'
         trs.append(f'''<tr data-id="{r["id"]}" data-region="{r["region"]}" data-score="{r["score"] if r["score"] is not None else -1}" data-name="{c.esc(r["name"])}">
-<td class="col-name"><button class="watch" data-id="{r["id"]}" aria-label="Watch">{c.ico("star", 15, "#cbd3dc")}</button><a href="banks/{r["id"]}.html"><span class="nm">{c.esc(r["name"])}</span><span class="sub">{sub}</span></a></td>
+<td class="col-name"><button class="watch" data-id="{r["id"]}" aria-label="Watch">{c.use_icon("star", 15, "#cbd3dc")}</button><a href="banks/{r["id"]}.html"><span class="nm">{c.esc(r["name"])}</span><span class="sub">{sub}</span></a></td>
 <td class="col-score"><span class="mono score">{sc(r)}</span>{c.ribbon(r["score"], peer.get("p25"), peer.get("p50"), peer.get("p75"))}</td>
 <td class="col-band">{c.band_chip(r["band"])}</td>
 <td class="num">{c.fmt(r["cet1"], 1, "%")}</td><td class="num">{c.fmt(r["leverage"], 1, "%")}{'<sup class="muted" title="US Tier 1 leverage ratio on average assets, not the Basel leverage ratio">T1</sup>' if r.get("leverage_basis") == "us_tier1" else ""}</td><td class="num">{c.fmt(r["lcr"], 0, "%")}</td>
@@ -256,7 +257,7 @@ def page_events(board, generated):
     rows = "".join(row(d, r, e) for d, r, e in items[:400])
     flagged = [(d, r, e) for d, r, e in items if e.get("severity") in ("bad", "warn", "good") or (e.get("type") == "rating" and "affirm" not in str(e.get("title", "")).lower())][:100]
     (OUT / "events").mkdir(exist_ok=True)
-    (OUT / "events" / "feed.xml").write_text(events_feed(flagged, generated))
+    _write(OUT / "events" / "feed.xml", events_feed(flagged, generated))
     counts = {}
     for _, _, e in items:
         counts[e.get("type")] = counts.get(e.get("type"), 0) + 1
@@ -608,28 +609,36 @@ def page_coverage(generated):
     return c.shell("Coverage", content, "coverage", "../", generated)
 
 
+_WS = re.compile(r">\s+<")
+
+
+def _write(path, html: str) -> None:
+    """Write a page with the whitespace between tags collapsed (there is no <pre> content on the site)."""
+    path.write_text(_WS.sub("><", html))
+
+
 def build():
     board = load("board"); status = load("status"); generated = board["generated"]
     if OUT.exists():
         shutil.rmtree(OUT)
     (OUT / "banks").mkdir(parents=True); (OUT / "events").mkdir(); (OUT / "method").mkdir(); (OUT / "status").mkdir()
     shutil.copytree(ASSETS, OUT / "assets")
-    (OUT / "index.html").write_text(page_board(board, generated))
-    (OUT / "banks" / "index.html").write_text(page_banks_index(board, generated))
+    _write(OUT / "index.html", page_board(board, generated))
+    _write(OUT / "banks" / "index.html", page_banks_index(board, generated))
     for r in board["rows"]:
-        (OUT / "banks" / f"{r['id']}.html").write_text(page_bank(load(f"banks/{r['id']}"), generated))
-    (OUT / "events" / "index.html").write_text(page_events(board, generated))
-    (OUT / "method" / "index.html").write_text(page_method(generated))
+        _write(OUT / "banks" / f"{r['id']}.html", page_bank(load(f"banks/{r['id']}"), generated))
+    _write(OUT / "events" / "index.html", page_events(board, generated))
+    _write(OUT / "method" / "index.html", page_method(generated))
     (OUT / "ratings").mkdir(exist_ok=True)
-    (OUT / "ratings" / "index.html").write_text(page_ratings(generated))
+    _write(OUT / "ratings" / "index.html", page_ratings(generated))
     (OUT / "coverage").mkdir(exist_ok=True)
-    (OUT / "coverage" / "index.html").write_text(page_coverage(generated))
+    _write(OUT / "coverage" / "index.html", page_coverage(generated))
     (OUT / "policy").mkdir(exist_ok=True)
-    (OUT / "policy" / "index.html").write_text(page_policy(generated))
+    _write(OUT / "policy" / "index.html", page_policy(generated))
     (OUT / "data").mkdir(exist_ok=True)
     shutil.copy(store.DATA / "json" / "policy.json", OUT / "data" / "policy.json")
     (OUT / "brief").mkdir(exist_ok=True)
-    (OUT / "brief" / "index.html").write_text(page_brief(board, status, generated))
-    (OUT / "status" / "index.html").write_text(page_status(status, board, generated))
-    (OUT / ".nojekyll").write_text("")
+    _write(OUT / "brief" / "index.html", page_brief(board, status, generated))
+    _write(OUT / "status" / "index.html", page_status(status, board, generated))
+    _write(OUT / ".nojekyll", "")
     print(f"built site/ with {len(board['rows'])} bank pages")

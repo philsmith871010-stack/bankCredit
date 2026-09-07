@@ -38,6 +38,16 @@ def ico(name: str, size: int = 18, color: str = "currentColor") -> str:
             f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{ICONS[name]}</svg>')
 
 
+def symbols() -> str:
+    """Icons drawn many times on one page are defined once and referenced with <use>."""
+    return ('<svg width="0" height="0" style="position:absolute" aria-hidden="true">'
+            f'<symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{ICONS["star"]}</symbol></svg>')
+
+
+def use_icon(name: str, size: int = 15, color: str = "currentColor") -> str:
+    return f'<svg width="{size}" height="{size}" style="color:{color}" aria-hidden="true"><use href="#i-{name}"/></svg>'
+
+
 def fmt(v, dp=1, suffix="") -> str:
     if v is None:
         return '<span class="na">—</span>'
@@ -48,24 +58,26 @@ def spark(series: list[float], w=92, h=28, color=NAVY) -> str:
     s = [v for v in series if v is not None]
     if len(s) < 2:
         return f'<svg width="{w}" height="{h}" aria-hidden="true"></svg>'
+    if len(s) > 48:                                   # a year of prices needs no more points than pixels
+        step = len(s) / 48
+        s = [s[int(i * step)] for i in range(48)] + [s[-1]]
     lo, hi = min(s), max(s); rng = (hi - lo) or 1; pad = 3
     pts = [(pad + i * (w - 2 * pad) / (len(s) - 1), h - pad - (v - lo) / rng * (h - 2 * pad)) for i, v in enumerate(s)]
-    poly = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+    path = "M" + "L".join(f"{x:.0f} {y:.0f}" for x, y in pts)
     ex, ey = pts[-1]
     return (f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" aria-hidden="true">'
-            f'<polygon points="{pad},{h-pad} {poly} {ex:.1f},{h-pad}" fill="{color}" fill-opacity="0.08"/>'
-            f'<polyline points="{poly}" fill="none" stroke="{color}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>'
-            f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="2.6" fill="{ORANGE}"/></svg>')
+            f'<path d="{path}V{h-pad}H{pad}Z" fill="{color}" fill-opacity="0.08"/>'
+            f'<path d="{path}" fill="none" stroke="{color}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>'
+            f'<circle cx="{ex:.0f}" cy="{ey:.0f}" r="2.6" fill="{ORANGE}"/></svg>')
 
 
 def ribbon(score, p25=None, p50=None, p75=None, w=96, h=10) -> str:
-    steps = [(0, 35, "#c9d3de"), (35, 50, "#a9b8c9"), (50, 65, "#7d93ad"), (65, 80, "#3f5f85"), (80, 100, NAVY)]
+    """Band scale as a CSS gradient on the element; only the peer band, median and marker are drawn."""
     x = lambda v: v / 100 * w
-    rects = "".join(f'<rect x="{x(a):.1f}" y="3" width="{x(b)-x(a):.1f}" height="{h-6}" fill="{c}"/>' for a, b, c in steps)
-    band = f'<rect x="{x(p25):.1f}" y="0" width="{x(p75)-x(p25):.1f}" height="{h}" fill="{ORANGE}" fill-opacity="0.18"/>' if p25 is not None and p75 is not None else ""
-    med = f'<rect x="{x(p50)-0.5:.1f}" y="0" width="1" height="{h}" fill="{ORANGE}" fill-opacity="0.9"/>' if p50 is not None else ""
-    mark = f'<circle cx="{x(score):.1f}" cy="{h/2}" r="4.5" fill="{WHITE}" stroke="{NAVY}" stroke-width="2"/>' if score is not None else ""
-    return f'<svg class="ribbon" width="{w}" height="{h}" viewBox="0 0 {w} {h}" aria-hidden="true">{band}{rects}{med}{mark}</svg>'
+    band = f'<rect x="{x(p25):.0f}" y="0" width="{x(p75)-x(p25):.0f}" height="{h}" fill="{ORANGE}" fill-opacity="0.18"/>' if p25 is not None and p75 is not None else ""
+    med = f'<rect x="{x(p50)-0.5:.0f}" y="0" width="1" height="{h}" fill="{ORANGE}" fill-opacity="0.9"/>' if p50 is not None else ""
+    mark = f'<circle cx="{x(score):.0f}" cy="{h/2:.0f}" r="4.5" fill="{WHITE}" stroke="{NAVY}" stroke-width="2"/>' if score is not None else ""
+    return f'<svg class="ribbon" width="{w}" height="{h}" viewBox="0 0 {w} {h}" aria-hidden="true">{band}{med}{mark}</svg>'
 
 
 def chip(text: str, kind: str = "muted") -> str:
@@ -75,7 +87,7 @@ def chip(text: str, kind: str = "muted") -> str:
 def band_chip(b: str) -> str:
     label = b or "?"
     title = {"?": "Insufficient data for a band", "": "No data yet"}.get(b, f"Band {b}")
-    return f'<span class="band mono" title="{title}" style="background:{BAND_COLOURS.get(b, "#dfe5eb")};color:{WHITE if b in "ABC" and b else TEXT}">{label}</span>'
+    return f'<span class="band mono band-{b if b in "ABCDE" and b else "x"}" title="{title}">{label}</span>'
 
 
 def agency_chips(ratings: list[dict]) -> str:
@@ -122,23 +134,23 @@ def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | 
     Y = lambda v: padt + (ymax - v) / (ymax - ymin) * (h - padt - padb)
     grid, v = [], ymin
     while v <= ymax + 1e-9:
-        grid.append(f'<line x1="{padl}" x2="{w-padr}" y1="{Y(v):.1f}" y2="{Y(v):.1f}" stroke="{LINE}"/>'
-                    f'<text x="{padl-8}" y="{Y(v)+4:.1f}" text-anchor="end" class="axis">{v:.{dp}f}{unit}</text>')
+        grid.append(f'<line x1="{padl}" x2="{w-padr}" y1="{Y(v):.0f}" y2="{Y(v):.0f}" stroke="{LINE}"/>'
+                    f'<text x="{padl-8}" y="{Y(v)+4:.0f}" text-anchor="end" class="axis">{v:.{dp}f}{unit}</text>')
         v += step
-    bandr = f'<rect x="{padl}" y="{Y(band[1]):.1f}" width="{w-padl-padr}" height="{Y(band[0])-Y(band[1]):.1f}" fill="{ORANGE}" fill-opacity="0.10"/>' if band else ""
-    reqline = (f'<line x1="{padl}" x2="{w-padr}" y1="{Y(req):.1f}" y2="{Y(req):.1f}" stroke="{ORANGE}" stroke-width="1.5" stroke-dasharray="4 4"/>'
-               f'<text x="{padl+6}" y="{Y(req)-6:.1f}" class="axis" fill="#b35900">{req_label} {req:.{dp}f}{unit}</text>') if req else ""
-    pts = " ".join(f"{X(i):.1f},{Y(v):.1f}" for i, (_, v) in enumerate(pts_in))
-    area = f'<polygon points="{X(0):.1f},{Y(ymin):.1f} {pts} {X(n-1):.1f},{Y(ymin):.1f}" fill="{NAVY}" fill-opacity="0.06"/>'
-    dots = "".join(f'<circle cx="{X(i):.1f}" cy="{Y(v):.1f}" r="3" fill="{WHITE}" stroke="{NAVY}" stroke-width="2"><title>{esc(l)}: {v:.{dp}f}{unit}</title></circle>' for i, (l, v) in enumerate(pts_in))
+    bandr = f'<rect x="{padl}" y="{Y(band[1]):.0f}" width="{w-padl-padr}" height="{Y(band[0])-Y(band[1]):.0f}" fill="{ORANGE}" fill-opacity="0.10"/>' if band else ""
+    reqline = (f'<line x1="{padl}" x2="{w-padr}" y1="{Y(req):.0f}" y2="{Y(req):.0f}" stroke="{ORANGE}" stroke-width="1.5" stroke-dasharray="4 4"/>'
+               f'<text x="{padl+6}" y="{Y(req)-6:.0f}" class="axis" fill="#b35900">{req_label} {req:.{dp}f}{unit}</text>') if req else ""
+    pts = " ".join(f"{X(i):.0f},{Y(v):.0f}" for i, (_, v) in enumerate(pts_in))
+    area = f'<polygon points="{X(0):.0f},{Y(ymin):.0f} {pts} {X(n-1):.0f},{Y(ymin):.0f}" fill="{NAVY}" fill-opacity="0.06"/>'
+    dots = "".join(f'<circle cx="{X(i):.0f}" cy="{Y(v):.0f}" r="3" fill="{WHITE}" stroke="{NAVY}" stroke-width="2"><title>{esc(l)}: {v:.{dp}f}{unit}</title></circle>' for i, (l, v) in enumerate(pts_in))
     last = pts_in[-1][1]
-    end = f'<circle cx="{X(n-1):.1f}" cy="{Y(last):.1f}" r="4" fill="{ORANGE}"/><text x="{X(n-1)-10:.1f}" y="{Y(last)-10:.1f}" text-anchor="end" class="mono" font-size="12" font-weight="600" fill="{TEXT}">{last:.{dp}f}{unit}</text>'
+    end = f'<circle cx="{X(n-1):.0f}" cy="{Y(last):.0f}" r="4" fill="{ORANGE}"/><text x="{X(n-1)-10:.0f}" y="{Y(last)-10:.0f}" text-anchor="end" class="mono" font-size="12" font-weight="600" fill="{TEXT}">{last:.{dp}f}{unit}</text>'
     every = max(1, -(-n // 7))
     idx = [i for i in range(0, n, every)]
     if idx and n - 1 - idx[-1] < every / 2:
         idx = idx[:-1]
     idx.append(n - 1)
-    xl = "".join(f'<text x="{X(i):.1f}" y="{h-8}" text-anchor="{"end" if i == n - 1 else "middle"}" class="axis">{esc(pts_in[i][0])}</text>' for i in idx)
+    xl = "".join(f'<text x="{X(i):.0f}" y="{h-8}" text-anchor="{"end" if i == n - 1 else "middle"}" class="axis">{esc(pts_in[i][0])}</text>' for i in idx)
     return (f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" class="chart" style="max-width:100%">{"".join(grid)}{bandr}{reqline}{area}'
             f'<polyline points="{pts}" fill="none" stroke="{NAVY}" stroke-width="2" stroke-linejoin="round"/>{dots}{end}{xl}</svg>')
 
@@ -160,7 +172,7 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{root}assets/site.css">
-</head><body>
+</head><body>{symbols()}
 <header class="top"><a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>
 <button class="menu-btn" id="menuBtn" aria-label="Menu">{ico("menu", 20, NAVY)}</button>
 <div class="crumb"><span class="crumb-app">Counterparty</span><span class="crumb-sep">/</span><span class="crumb-page">{esc(title)}</span></div>
