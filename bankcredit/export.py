@@ -107,6 +107,22 @@ BOND_MIN_WINDOW_DAYS = 5  # the shortest history a bond change may be measured o
 BOND_WINDOW_DAYS = 30
 
 
+def _story_key(title: str) -> str:
+    """The same story from several outlets: strip the outlet suffix and punctuation, keep the first eight words."""
+    t = re.sub(r"\s+[-–|]\s+[^-–|]{2,40}$", "", str(title)).lower()
+    words = re.findall(r"[a-z0-9€$£]+", t)
+    return " ".join(w for w in words if w not in ("the", "a", "an", "of", "to", "and", "in", "on", "for", "with", "by", "at", "its"))[:80]
+
+
+def _dedupe_events(ev: pd.DataFrame) -> pd.DataFrame:
+    ev = ev.sort_values("date", ascending=False).drop_duplicates(["date", "title"])
+    news = ev.type == "news"
+    key = ev.title.map(_story_key)
+    week = pd.to_datetime(ev.date).dt.to_period("W").astype(str)
+    dup = news & ev.assign(_k=key, _w=week).duplicated(["_k", "_w"])
+    return ev[~dup]
+
+
 def _bond_changes(bonds: pd.DataFrame, quotes: pd.DataFrame) -> dict[str, dict]:
     """Per entity: median yield change of its reference bonds over the last 30 days, less the median change
     of every bank bond in the same currency, so rate moves cancel and what remains is the bank's own credit.
@@ -421,7 +437,7 @@ def export_json() -> None:
             "price_currency": (p.currency.iloc[-1] if not p.empty else None),
             "market_public": {k: market.get(k) for k in ("direction", "label", "vol30", "drawdown52", "last_price_date",
                                                          "bond_change30", "bond_count", "bond_asof", "bond_window")},
-            "events": [{k: _clean(v) for k, v in x.items()} for x in ev.sort_values("date", ascending=False).drop_duplicates(["date", "title"]).head(60).to_dict("records")] if not ev.empty else [],
+            "events": [{k: _clean(v) for k, v in x.items()} for x in _dedupe_events(ev).head(60).to_dict("records")] if not ev.empty else [],
         })
     # peer bands for the ribbon: 25th, 50th, 75th percentile of final score within peer group
     df = pd.DataFrame(board)

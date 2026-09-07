@@ -36,6 +36,7 @@ by hand any time with `scripts/mac/counterparty.sh`; the log is
 | Collect | `python -m bankcredit.cli run pillar3` | Same collector the pipeline runs, from your home connection |
 | Browser sites | `python -m bankcredit.cli browser` | Bot-blocked sites: browser headers, then headless Chromium; reports what is still blocked |
 | Review | `claude -p "/counterparty-review"` | Opens each queued PDF page, writes `data/review/resolved/<id>.json` |
+| News | `claude -p "/counterparty-news"` | Judges the fortnight's headlines; verdicts in `data/review/news_verdicts.json` are applied by every pipeline run |
 | Load | `python -m bankcredit.cli review ingest` | Answers become facts with method `pdf_manual` |
 | Publish | `git push` | The pipeline rebuilds and deploys the site |
 

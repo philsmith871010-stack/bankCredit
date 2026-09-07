@@ -30,3 +30,28 @@ def test_generic_first_words_need_the_full_name_and_analyst_calls_are_dropped():
     assert not E.keep_headline(barc, "Barclays upgrades AutoStore on Amazon deal", "x")
     assert E.keep_headline(barc, "Fitch upgrades Barclays to A+", "x")
     assert not E.keep_headline(barc, "ASOS Plc : Upgraded to Neutral by Barclays", "x")
+
+
+def test_routine_housekeeping_and_promotional_sources_are_dropped():
+    hsbc = Entity(id="hsbc-holdings", name="HSBC Holdings plc", short_name="HSBC", country="GB", type="holding", region="uk", group="", lei="", tickers="", fdic_cert="", peer_group="uk_large", active=True)
+    assert not E.keep_headline(hsbc, "HSBC Holdings plc share buy-back programme: transactions in week 36", "Reuters")
+    assert not E.keep_headline(hsbc, "Edison International $EIX Shares Acquired by HSBC Holdings PLC", "marketbeat.com")
+    assert not E.keep_headline(hsbc, "Over 2,000 runners warm up for HSBC Nairobi Marathon", "Capital FM")
+    assert not E.keep_headline(hsbc, "Euro: limited gains from ECB tightening – HSBC", "fxstreet.com")
+    assert E.keep_headline(hsbc, "HSBC fined £57m by PRA over deposit protection failings", "Financial Times")
+    assert E.blocked_source("Kalkine Media") and E.blocked_source("TipRanks") and not E.blocked_source("Financial Times")
+    gs = Entity(id="goldman-sachs", name="The Goldman Sachs Group", short_name="Goldman Sachs", country="US", type="holding", region="us_ch", group="", lei="", tickers="", fdic_cert="", peer_group="us", active=True)
+    assert not E.keep_headline(gs, "Goldman Sachs backs KOSPI 12,000 as Korea earnings rise", "Chosunbiz")
+    assert not E.keep_headline(gs, "Goldman Sachs Research Report Analysis: AI server upgrade", "x")
+    assert E.keep_headline(gs, "Goldman Sachs fined $2bn over 1MDB fraud findings", "Reuters")
+
+
+def test_same_story_from_many_outlets_collapses():
+    import pandas as pd
+    from bankcredit.export import _dedupe_events
+    ev = pd.DataFrame([{"date": "2026-09-07", "type": "news", "title": "Deutsche Bank settles €152mn lawsuit with former executive - Financial Times", "severity": "warn"},
+                       {"date": "2026-09-07", "type": "news", "title": "Deutsche Bank settles €152mn lawsuit with former executive - Reuters", "severity": "warn"},
+                       {"date": "2026-09-06", "type": "news", "title": "Deutsche Bank cuts 500 jobs in Frankfurt - Reuters", "severity": "warn"},
+                       {"date": "2026-09-07", "type": "rating", "title": "Fitch affirmation: Long Term IDR A", "severity": "info"}])
+    out = _dedupe_events(ev)
+    assert len(out) == 3

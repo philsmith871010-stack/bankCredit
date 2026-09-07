@@ -14,6 +14,7 @@ restatement -> warn or bad; upgrade, positive outlook -> good; everything else i
 from __future__ import annotations
 
 import hashlib
+import json
 import logging
 import os
 import re
@@ -49,6 +50,15 @@ CREDIT = re.compile(r"\b(rating|ratings|downgrad\w*|upgrad\w*|outlook|watch|mood
                     r"default|insolven\w*|administration|rescue|bailout|run on|lawsuit|litigation|fraud|money laundering|aml\b|"
                     r"ceo|chief executive|chair\b|chairman|cfo|resign\w*|steps down|appoint\w*|"
                     r"cyber|outage|data breach|it failure|job cuts?|cut[s]? [\d,]+ jobs|redundanc\w*|layoffs?)", re.I)
+# routine housekeeping and commentary that says nothing about the bank's credit
+ROUTINE = re.compile(r"\b(buy-?backs?|share (re)?purchase|transactions? in week|treasury shares|voting rights|total number of shares|"
+                     r"shares? acquired|acquires? [\d,]+ shares|stake in [A-Z]|position in [A-Z]|holdings? (in|of) [A-Z]|13f|"
+                     r"etf\b|spdr|fund declares|distribution per|cents per unit|asset servic\w*|custodian|appoint\w* .* (analyst|economist|strategist)|"
+                     r"marathon|sponsor\w*|tournament|festival|scholarship|"
+                     r"stock (heads|opens|closes|slips|rises|falls|edges|gains|drops)|shares? (open|close|slip|rise|fall|edge|gain|drop)s? (higher|lower|after|ahead)|"
+                     r"why is [A-Z].* (delivering|extending|posting)|weekly recap|"
+                     r"(sees|expects|forecasts?|predicts?) .* (dollar|euro|sterling|yen|kospi|s&p 500|ftse|nikkei|oil|gold|bitcoin|fed|ecb|boe)|"
+                     r"[–-] (commerzbank|rabobank|ing|danske|nordea|seb|swedbank|dnb|ubs|barclays|hsbc|natwest|lloyds|goldman sachs|morgan stanley|citi|jpmorgan)\s*$)", re.I)
 # ...and none of these (retail product and lifestyle noise)
 NOISE = re.compile(r"\b(savings? (rate|account)|isa\b|mortgage rate|fixed rate|best buy|cashback|switch(ing)? (offer|bonus)|"
                    r"current account|credit card|app\b|branch (opening|closure|closing)|house price|hpi\b|"
@@ -59,10 +69,17 @@ ANALYST = re.compile(r"\b(upgrades|downgrades|initiates|reiterates|maintains|rai
 STOCKSPAM = re.compile(r"\b(undervalued|overvalued|fair value|should you buy|worth buying|stock looks|stock (holds|rallies|slips|jumps|dips)|"
                        r"price target|analyst(s)? (say|says|expect)|shares? in [A-Z]|acquires new (shares|stake)|sells shares|position in|"
                        r"\$[A-Z]{2,5}\b|13f|top \d+ (stocks|shares)|dividend season|buy rating|sell rating|hold rating|insider (buying|selling))\b", re.I)
-BLOCKED_SOURCES = {"marketbeat", "simplywall.st", "simply wall st", "kalkinemedia.com", "kalkine.ca", "stock titan", "ad hoc news",
+BLOCKED_SOURCES = {"marketbeat", "simplywall.st", "simply wall st", "kalkine", "stock titan", "ad hoc news", "ad-hoc-news",
                    "finance.biggo.com", "defense world", "etf daily news", "americanbankingnews", "tickerreport", "zacks",
-                   "seeking alpha", "the motley fool", "gurufocus", "vt markets", "fxstreet", "iam patent", "connect cre",
-                   "insidermonkey", "benzinga", "investorplace", "the globe and mail"}
+                   "seeking alpha", "seekingalpha", "the motley fool", "gurufocus", "vt markets", "fxstreet", "iam patent", "connect cre",
+                   "insidermonkey", "benzinga", "investorplace", "the globe and mail", "tipranks", "stockinvest", "marketscreener",
+                   "tradingview", "investing.com", "yahoo finance", "the manila times", "sharecast", "morningstar", "moomoo",
+                   "ainvest", "nasdaq.com", "streetinsider", "fintel", "quiver", "wallstreetzen", "coincodex", "medianet"}
+
+
+def blocked_source(source: str) -> bool:
+    low = (source or "").lower()
+    return any(b in low for b in BLOCKED_SOURCES)
 # bank economists' macro views, deal-by-deal property news, auto-generated bond and transcript pages
 ECON = re.compile(r"\b(inflation|eurozone|gdp|economist|forex|fx\b|eur/usd|gbp/usd|usd/|treasury yields?|rate (cut|hike|rise)s?|"
                   r"bond (risk |coupon )?profile|earnings call transcript|dividend watch|income stocks?|directors.? deals|"
@@ -195,7 +212,7 @@ class EventsAdapter(Adapter):
                 continue
             if NOISE.search(title) or not CREDIT.search(title):
                 continue
-            if source.lower() in BLOCKED_SOURCES or STOCKSPAM.search(title) or ANALYST.search(title) or ECON.search(title):
+            if blocked_source(source) or STOCKSPAM.search(title) or ANALYST.search(title) or ECON.search(title) or ROUTINE.search(title):
                 continue
             # the entity must actually be named in the headline (Google widens queries)
             if not keep_headline(e, title, source):
@@ -252,10 +269,14 @@ def keep_headline(entity: Entity, title: str, source: str) -> bool:
     """The full news filter, applied to a stored row as well as to a fresh one."""
     if NOISE.search(title) or not CREDIT.search(title):
         return False
-    if (source or "").lower() in BLOCKED_SOURCES or STOCKSPAM.search(title) or ANALYST.search(title) or ECON.search(title):
+    if blocked_source(source) or STOCKSPAM.search(title) or ANALYST.search(title) or ECON.search(title) or ROUTINE.search(title):
         return False
     short, low = entity.short_name.lower(), title.lower()
-    # the bank as an equity analyst ("Barclays upgrades AutoStore") is not news about the bank
+    # the bank as commentator, analyst or asset manager is not news about the bank
+    if re.search(rf"\b{re.escape(short)}(?:'s)?\b[^.]{{0,40}}\b(says|said|sees|favou?rs|backs|charts|breaks down|research (report|note|analysis)|strategist|economist|"
+                 rf"analysts?|asset manag\w*|alternatives|wealth|private bank|research)\b", low) \
+            or re.search(rf"\b(analysts?|strategists?|economists?) at {re.escape(short)}\b|according to {re.escape(short)}\b|advises? on .* {re.escape(short)}\b", low):
+        return False
     if re.search(rf"\b{re.escape(short)}\b\s+(upgrades?|downgrades?|initiates|reiterates|raises|cuts|lifts|trims|lowers|sees|expects|says|names|picks)\b", low) \
             or re.search(rf"\b(upgraded|downgraded|initiated|reiterated|raised|cut|lowered)\b[^.]{{0,80}}\bby {re.escape(short)}\b", low):
         return False
@@ -266,22 +287,40 @@ def keep_headline(entity: Entity, title: str, source: str) -> bool:
     return bool(re.search(rf"\b{re.escape(probe)}", low))
 
 
+VERDICTS = store.DATA / "review" / "news_verdicts.json"
+
+
+def load_verdicts() -> dict:
+    """{event_id: {"keep": bool, "severity": str|None, "why": str}} written by the news-review skill on the Mac."""
+    try:
+        return json.loads(VERDICTS.read_text()) if VERDICTS.exists() else {}
+    except Exception:
+        return {}
+
+
 def prune_news() -> int:
-    """Re-apply the current news rules to stored rows, so rule improvements clean history too."""
+    """Re-apply the current news rules and the reviewer's verdicts to stored rows, so improvements clean history too."""
     from ..entities import load as load_entities
     ev = store.read("events")
     if ev.empty:
         return 0
     ents = {e.id: e for e in load_entities()}
-    keep = []
+    verdicts = load_verdicts()
+    keep, sev = [], []
     for r in ev.itertuples():
         if r.type != "news":
-            keep.append(True)
+            keep.append(True); sev.append(r.severity)
             continue
+        v = verdicts.get(r.event_id)
         e = ents.get(r.entity_id)
-        keep.append(bool(e) and keep_headline(e, str(r.title), str(r.source)))
+        ok = bool(e) and keep_headline(e, str(r.title), str(r.source))
+        if v is not None:
+            ok = ok and bool(v.get("keep", True))
+        keep.append(ok)
+        sev.append(v.get("severity") or r.severity if v and v.get("severity") in ("bad", "warn", "good", "info") else r.severity)
+    ev = ev.assign(severity=sev)
     dropped = int(len(keep) - sum(keep))
+    ev[keep].to_parquet(store.path("events"), index=False)
     if dropped:
-        ev[keep].to_parquet(store.path("events"), index=False)
-        log.info("events: pruned %d news rows under the current rules", dropped)
+        log.info("events: pruned %d news rows under the current rules and verdicts", dropped)
     return dropped

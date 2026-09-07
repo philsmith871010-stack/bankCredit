@@ -24,10 +24,14 @@ python -m bankcredit.cli browser || true
 if command -v claude >/dev/null 2>&1; then
   claude -p "/counterparty-review" --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --max-turns 80 || echo "claude review step failed"
 fi
+# 2b. judge the fortnight's headlines (subscription login, no API key); verdicts are applied by every pipeline run
+if command -v claude >/dev/null 2>&1; then
+  claude -p "/counterparty-news" --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --max-turns 40 || echo "claude news step failed"
+fi
 # 3. load any answers and push the data; the GitHub pipeline rebuilds the site on push
 python -m bankcredit.cli review ingest || true
 python -m bankcredit.cli learn > /dev/null 2>&1 || true
-git add data/facts.parquet data/documents.parquet data/runs.parquet data/review 2>/dev/null || true   # data/review includes browser-links.json
+git add data/facts.parquet data/documents.parquet data/runs.parquet data/events.parquet data/review 2>/dev/null || true   # data/review includes browser-links.json and news_verdicts.json
 if ! git diff --cached --quiet; then
   # [collect] makes the push run the full daily collection too, a backstop for GitHub's schedule
   git commit -m "Local run $(date -u +%F): Pillar 3 collection and review [collect]"

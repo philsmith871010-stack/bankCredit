@@ -285,3 +285,14 @@ flagged events sits at events/feed.xml for readers and alerting tools. Attributi
 acting as an equity analyst is not news about the bank, and generic first words (Bank of ..., Credit ...) require the
 full name. Barclays' locators now read the annual-reports page as well as the results page and accept the older
 filename styles: Barclays PLC 6 -> 35 periods (2017), Barclays Bank PLC 30 (2015), Barclays Bank UK 21 (2019).
+
+### Headline quality, 7 September 2026 (evening)
+
+Two layers, still no API key in the pipeline. Rules: promotional and wire-copy sources are blocked by substring, and
+routine housekeeping (buy-back notices, 13F holdings, ETF and asset-management items, sponsorship, the bank as
+commentator or analyst) is dropped; the same story from several outlets collapses to one per bank per week on the
+site. That took the stored headlines from 1,480 to about 870. Judgement: a `counterparty-news` skill runs daily on the
+Mac under the subscription, judges the fortnight's headlines against a treasurer's test, and writes
+`data/review/news_verdicts.json`; the pipeline's prune step applies the verdicts (drop, or corrected severity) on
+every run, so each headline is judged once and stays judged. What the reviewer drops most often is the work order for
+the next rule.
