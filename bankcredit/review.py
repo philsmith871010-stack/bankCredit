@@ -15,7 +15,7 @@ import json
 from datetime import date, datetime
 from pathlib import Path
 
-from . import store
+from . import learn, store
 from .models import Fact
 
 QUEUE = store.DATA / "review" / "queue.json"
@@ -62,6 +62,7 @@ def ingest() -> int:
     for f in sorted(RESOLVED.glob("*.json")):
         ans = json.loads(f.read_text())
         item = by_id.get(ans.get("id") or f.stem)
+        learn.record_answer(item, ans)          # hints for next time, and a record of how the rules did
         if ans.get("skip"):
             if item:
                 item["status"] = "skipped"

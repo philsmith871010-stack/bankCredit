@@ -24,6 +24,7 @@ if command -v claude >/dev/null 2>&1; then
 fi
 # 3. load any answers and push the data; the GitHub pipeline rebuilds the site on push
 python -m bankcredit.cli review ingest || true
+python -m bankcredit.cli learn > /dev/null 2>&1 || true
 git add data/facts.parquet data/documents.parquet data/runs.parquet data/review 2>/dev/null || true
 if ! git diff --cached --quiet; then
   git commit -m "Local run $(date -u +%F): Pillar 3 collection and review"

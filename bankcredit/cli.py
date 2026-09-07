@@ -6,6 +6,7 @@
   python -m bankcredit.cli extract file.pdf          # try the KM1 extractor on one PDF (no load)
   python -m bankcredit.cli pdf <entity> file.pdf [url]  # extract one PDF and load or queue it
   python -m bankcredit.cli review list|ingest        # review queue for failed extractions
+  python -m bankcredit.cli learn                     # what the reviewer's answers taught the extractor
   python -m bankcredit.cli reprocess [entity]        # re-extract cached PDFs after an extractor change
 """
 from __future__ import annotations
@@ -74,6 +75,11 @@ def main(argv=None):
     if cmd == "reprocess":
         from .adapters.pillar3 import Pillar3Adapter
         print(Pillar3Adapter().reprocess(args[0] if args else None))
+        return 0
+    if cmd == "learn":
+        from .learn import summary
+        import json as _json
+        print(_json.dumps(summary(), indent=1))
         return 0
     if cmd == "review":
         from . import review

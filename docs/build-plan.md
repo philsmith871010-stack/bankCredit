@@ -203,3 +203,18 @@ Second, Yahoo symbols: when a configured ticker returns nothing, the price adapt
 name and prefers a listing on the home market, remembering the answer in `data/cache/yahoo_symbols.json`. Bank of New
 York Mellon resolves to its new symbol this way. First Abu Dhabi Bank and ADCB are not on Yahoo at all (the Abu Dhabi
 exchange is not carried), so they rely on their bonds and ratings.
+
+### Self-improving review loop, 7 September 2026
+
+The review queue now feeds back into the rules (`bankcredit/learn.py`), still with no AI service in the pipeline.
+On `review ingest` every answer updates `data/review/hints.json` for its bank: the page the template was found
+on (the extractor tries that page and its neighbours first next time), the currency, whether the table carries
+row numbers (so the "label only" warning no longer costs confidence once a reviewer has confirmed it), filename
+patterns of documents that hold no KM1 table (never queued again), and the last verified figures. Each new
+extraction is checked for continuity against that baseline: figures in the same place earn a little confidence,
+figures that contradict it (a units slip, the wrong column) go to review instead of the site. High-confidence
+rules extractions also refresh the baseline, so the check keeps working between reviews.
+
+`data/review/learning.json` records, per answer, where the rules agreed with the reviewer and where they did not,
+by metric and by the reason the item was queued. `python -m bankcredit.cli learn` summarises it and the Status page
+shows it, which is the work order for extractor fixes: the failure modes that keep recurring are the ones to code.

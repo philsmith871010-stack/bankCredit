@@ -389,4 +389,5 @@ def export_json() -> None:
     from . import review
     queue = [{k: i.get(k) for k in ("id", "entity_id", "reference_date", "page", "reason", "url")} for i in review.load()]
     store.write_json("status", {"generated": datetime.utcnow().isoformat(timespec="seconds") + "Z", "runs": status,
-                                "documents": doc_rows, "document_counts": counts, "review": queue})
+                                "documents": doc_rows, "document_counts": counts, "review": queue,
+                                "learning": __import__("bankcredit.learn", fromlist=["summary"]).summary()})

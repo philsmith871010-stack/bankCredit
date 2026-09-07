@@ -121,6 +121,7 @@ class Result:
     checks: list = field(default_factory=list)         # (severity, message); severity error|warn
     template: str = ""                                 # UK KM1 | EU KM1 | KM1 | US Pillar 3 | US LCR
     fixed_confidence: float | None = None              # set by extractors with their own scale (US documents)
+    confidence_bonus: float = 0.0                      # continuity with the last verified disclosure
 
     @property
     def ok(self) -> bool:
@@ -139,7 +140,7 @@ class Result:
         errors = sum(1 for s, _ in self.checks if s == "error")
         warns = sum(1 for s, _ in self.checks if s == "warn")
         core_missing = sum(1 for m in CORE if m not in self.values)
-        return max(0.0, round(0.95 - 0.3 * errors - 0.08 * warns - 0.1 * core_missing, 2))
+        return max(0.0, min(0.98, round(0.95 - 0.3 * errors - 0.08 * warns - 0.1 * core_missing + self.confidence_bonus, 2)))
 
 
 # ---- helpers -------------------------------------------------------------
@@ -434,7 +435,7 @@ def page_score(text: str) -> int:
 
 # ---- main entry ----------------------------------------------------------
 def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, currency_hint: str = "",
-            year_end: str = "12-31") -> Result:
+            year_end: str = "12-31", page_hint: int | None = None) -> Result:
     res = Result()
     doc = fitz.open(pdf_path)
     texts = [_norm_text(doc[i].get_text("text")) for i in range(min(doc.page_count, max_pages))]
@@ -445,6 +446,11 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
         worded = bool(re.search(r"\bKM ?1\b|key (?:prudential |regulatory )?metrics", t, re.I))
         if (worded and scores[i] >= 3) or scores[i] >= 8:
             scored.append((scores[i] + (1 if worded else 0), -i, i))
+    # a page the reviewer confirmed last time (1-based) wins when it, or a neighbour, still looks like the template
+    if page_hint and 0 < page_hint <= len(texts):
+        near = [(scores[i] + 2, -i, i) for i in range(max(0, page_hint - 3), min(len(texts), page_hint + 2)) if scores[i] >= 2]
+        if near:
+            scored = near + [s for s in scored if s[2] not in {n[2] for n in near}]
     if not scored:
         res.checks.append(("error", "no KM1 page found"))
         return res

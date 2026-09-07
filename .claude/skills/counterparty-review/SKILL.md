@@ -62,8 +62,17 @@ Never invent a figure. If a value is unreadable, leave it out and say so in `not
 
 ```bash
 python3 -m bankcredit.cli review ingest
+python3 -m bankcredit.cli learn
 python3 -m bankcredit.cli build
 ```
+
+`review ingest` also teaches the extractor: your page, currency and figures become
+hints for that bank's next document (`data/review/hints.json`), a skipped document's
+filename shape is never queued again, and your figures are the baseline the next
+extraction is checked against for continuity. `learn` prints how often the rules
+agreed with you and on which metrics they did not; it is committed with the data so
+the maintainer can fix the rules where they keep failing. Nothing more is needed
+from you for this.
 
 Open `site/banks/<entity_id>.html` for one or two of the entities you touched
 and confirm the figures and reference dates look right.

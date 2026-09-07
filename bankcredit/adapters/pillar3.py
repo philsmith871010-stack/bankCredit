@@ -25,7 +25,7 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
 
-from .. import review, store
+from .. import learn, review, store
 from ..extract import km1, us
 from ..models import Fact
 from .base import Adapter, register
@@ -278,9 +278,10 @@ class Pillar3Adapter(Adapter):
         for ent, url, path, sha, hint, title, origin in raw:
             e = self.by_id[ent]
             loc = self._locator_for(ent, url)
-            ccy = loc.get("currency") or COUNTRY_CCY.get(e.country, "")
+            h = learn.hint_for(ent)
+            ccy = loc.get("currency") or h.get("currency") or COUNTRY_CCY.get(e.country, "")
             try:
-                res = self._extract(loc, str(path), hint, ccy)
+                res = self._extract(loc, str(path), hint, ccy, h)
             except Exception as exc:
                 self._record(ent, url, sha, None, None, "error", 0.0, f"extract failed: {exc}", title, origin, {})
                 continue
@@ -299,7 +300,7 @@ class Pillar3Adapter(Adapter):
                 self._record(ent, url, sha, res.page, res.reference_date, "no_km1", 0.0, checks, title, origin, res.values)
                 loc = next((l for l in LOCATORS if l["entity"] == ent), {})
                 hint = infer_period(title or url, loc.get("year_end", "12-31"))
-                if hint is None or hint >= date(2022, 1, 1):      # the KM1 template only exists from 2022
+                if (hint is None or hint >= date(2022, 1, 1)) and not learn.skip_matches(ent, url):
                     review.add(self._queue_item(ent, url, path, sha, res, title, "no KM1 template found"))
                 continue
             if res.ok:
@@ -307,6 +308,8 @@ class Pillar3Adapter(Adapter):
                 store.drop("facts", document=url, source=self.name)
                 n += store.upsert("facts", self._facts(ent, url, res))
                 review.remove((sha or hashlib.sha1(url.encode()).hexdigest())[:12])
+                if status == "loaded" and res.reference_date:
+                    learn.remember_verified(ent, res.reference_date, res.values)
             else:
                 status = "review"
                 review.add(self._queue_item(ent, url, path, sha, res, title, checks))
@@ -357,7 +360,7 @@ class Pillar3Adapter(Adapter):
             ccy = loc.get("currency") or (COUNTRY_CCY.get(e.country, "") if e else "")
             hint = infer_period(r.title or "", loc.get("year_end", "12-31"))
             try:
-                res = self._extract(self._locator_for(r.entity_id, r.url), str(path), hint, ccy)
+                res = self._extract(self._locator_for(r.entity_id, r.url), str(path), hint, ccy, learn.hint_for(r.entity_id))
             except Exception as exc:
                 self._record(r.entity_id, r.url, r.sha256, None, None, "error", 0.0, f"extract failed: {exc}", r.title, r.origin, {})
                 counts["error"] = counts.get("error", 0) + 1
@@ -370,13 +373,28 @@ class Pillar3Adapter(Adapter):
         return counts
 
     @staticmethod
-    def _extract(loc: dict, path: str, hint, ccy: str) -> km1.Result:
+    def _extract(loc: dict, path: str, hint, ccy: str, hints: dict | None = None) -> km1.Result:
+        hints = hints or {}
         tpl = (loc or {}).get("template", "km1")
         if tpl == "us_capital":
-            return us.extract_capital(path, hint_date=hint)
-        if tpl == "us_lcr":
-            return us.extract_lcr(path, hint_date=hint)
-        return km1.extract(path, hint_date=hint, currency_hint=ccy, year_end=(loc or {}).get("year_end", "12-31"))
+            res = us.extract_capital(path, hint_date=hint)
+        elif tpl == "us_lcr":
+            res = us.extract_lcr(path, hint_date=hint)
+        else:
+            res = km1.extract(path, hint_date=hint, currency_hint=ccy, year_end=(loc or {}).get("year_end", "12-31"),
+                              page_hint=hints.get("page"))
+            if hints.get("trust_labels"):       # the reviewer confirmed this bank's table carries no row numbers
+                res.checks = [c for c in res.checks if "label only" not in c[1]]
+        # continuity with the last verified figures: agreement earns a little confidence, contradiction goes to review
+        ent = (loc or {}).get("entity")
+        if ent and res.values and res.fixed_confidence is None:
+            verdict, msg = learn.continuity(ent, res.values, res.reference_date)
+            if verdict == "ok":
+                res.confidence_bonus = learn.CONTINUITY_BONUS
+                res.checks.append(("info", msg))
+            elif verdict == "contradiction":
+                res.checks.append(("error", "disagrees with the last verified disclosure: " + msg))
+        return res
 
     @staticmethod
     def _locator_for(entity_id: str, url: str = "") -> dict:
