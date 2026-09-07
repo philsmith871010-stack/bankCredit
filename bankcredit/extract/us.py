@@ -64,6 +64,21 @@ def _period(texts, max_pages=4) -> date | None:
     return max(ds) if ds else None
 
 
+REQ_HEADING = re.compile(r"minimum|requirement|buffer|well[- ]capitalized", re.I)
+
+
+def _under_requirement_heading(lines, i, back: int = 14) -> bool:
+    """True when the nearest heading above line i says the block lists minimums or requirements
+    rather than actual ratios (Goldman's Table 1: minimum, total requirement, then the actual block)."""
+    for j in range(i - 1, max(-1, i - back), -1):
+        l = lines[j][1].strip()
+        if not l or lines[j][0] != lines[i][0]:
+            continue
+        if not re.search(r"\d+\.\d|\d\s?%", l) and len(l) < 90:   # a heading: short, no ratio figures (a date is fine)
+            return bool(REQ_HEADING.search(l)) and not re.search(r"actual|ratios? as of|reported", l, re.I)
+    return False
+
+
 def _nums_after(lines, i, limit=6, decimals=False) -> list[float]:
     """Numeric tokens on the label line after the label, then on following value-only lines.
     decimals=True keeps only tokens with a decimal point (percentages), which drops footnote marks."""
@@ -169,6 +184,8 @@ def extract_capital(pdf_path: str, hint_date: date | None = None) -> Result:
         for i, (p, l) in enumerate(lines):
             low = l.lower()
             if re.search(pat, low) and not re.search(r"minimum|requirement|well[- ]capitalized|buffer|excess", low):
+                if _under_requirement_heading(lines, i):
+                    continue
                 vals = [v for v in _nums_after(lines, i, decimals=True) if 3 < v < 60]
                 v = _pick(vals, p in required_pages)
                 if v is not None:

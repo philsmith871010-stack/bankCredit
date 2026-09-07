@@ -327,3 +327,15 @@ the agencies behind it, share price, CDS and bond depth, headlines in 90 days, a
 number of reporting periods held and the years they span, shaded by depth. The same rows are in `audit.json`. It is a
 build-time view: it says where the history is thin (most UK small banks and building societies: one to five periods,
 no asset quality or profitability) before anyone trusts a score built on it.
+
+### Goldman and UBS, 7 September 2026 (evening)
+
+The Mac's run reached both: Goldman's PDFs through the challenge capture (six documents) and UBS's web-page reports
+laid out as PDFs (two). Two faults followed. Goldman's Table 1 prints minimum ratios, total requirements and the
+actual ratios as three blocks with the same row labels, and the extractor took the first CET1 line (4.5 percent);
+rows under a heading that says minimum, requirement or buffer are now skipped. The UBS web-page reports loaded as
+"unverified" with facts live, but the extractor had read the second column and labelled it with a third date, so
+both quarters landed on 2025-12-31; the reviewer corrected them. A header date a quarter or more away from the
+date expected from the file name or link text is now an error, which sends the document to review with no facts
+published, rather than a warning that publishes them. The column choice on that layout still needs the rendered
+document to reproduce, which this environment cannot fetch (the site answers 403 to data-centre addresses).

@@ -593,7 +593,10 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
     split_header = any("split month and year" in m for _, m in res.checks)
     if res.period_dates and not (split_header and hint_date):
         res.reference_date = res.period_dates[0] if descending else res.period_dates[-1]
-        if hint_date and abs((res.reference_date - hint_date).days) > 45:
+        if hint_date and abs((res.reference_date - hint_date).days) > 100:
+            # a whole quarter or more apart: one of the two is wrong, and a wrong period is worse than a gap
+            res.checks.append(("error", f"header date {res.reference_date} disagrees with expected {hint_date}; period needs a check"))
+        elif hint_date and abs((res.reference_date - hint_date).days) > 45:
             res.checks.append(("warn", f"header date {res.reference_date} disagrees with expected {hint_date}"))
     elif split_header and hint_date:
         res.reference_date = hint_date
