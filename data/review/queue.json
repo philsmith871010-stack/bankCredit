@@ -1,1 +1,167 @@
-[]
+[
+ {
+  "id": "6e56c1d93ff3",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/june-2018-pillar-3-report-final.pdf",
+  "local": "cache/pdf/nab/6e56c1d93ff32178.pdf",
+  "title": "june-2018-pillar-3-report-final.pdf",
+  "page": 4,
+  "reference_date": "2018-06-30",
+  "currency": "AUD",
+  "values": {
+   "rwa": 395053.0,
+   "cet1_ratio": 9.7,
+   "tier1_ratio": 11.9,
+   "total_capital_ratio": 13.6,
+   "tier1_capital": 46967.0,
+   "leverage_ratio": 5.3
+  },
+  "checks": [
+   [
+    "warn",
+    "column headers split month and year across lines; reference date needs a check"
+   ],
+   [
+    "error",
+    "missing core row cet1_capital"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:column headers split month and year across lines; reference date needs a check; error:missing core row cet1_capital; warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T15:07:51"
+ },
+ {
+  "id": "7a37121931b1",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/march-2018-pillar-3-report-final.pdf",
+  "local": "cache/pdf/nab/7a37121931b1edad.pdf",
+  "title": "march-2018-pillar-3-report-final.pdf",
+  "page": 5,
+  "reference_date": "2018-03-31",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 10.21,
+   "tier1_capital": 12.4
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "warn",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; warn:no leverage ratio row (not all Basel KM1 filers disclose one); warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T15:07:51"
+ },
+ {
+  "id": "ac5444bdaca6",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2017-full-year-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/ac5444bdaca691d3.pdf",
+  "title": "2017-full-year-pillar-3-report.pdf",
+  "page": 5,
+  "reference_date": "2013-01-01",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 10.06,
+   "tier1_capital": 12.41
+  },
+  "checks": [
+   [
+    "warn",
+    "reference date taken from narrative text, not a column header"
+   ],
+   [
+    "warn",
+    "header date 2013-01-01 disagrees with expected 2017-09-30"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "warn",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:reference date taken from narrative text, not a column header; warn:header date 2013-01-01 disagrees with expected 2017-09-30; error:missing core row rwa; error:missing core row cet1_ratio; warn:no leverage ratio row (not all Basel KM1 filers disclose one); warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T15:07:51"
+ },
+ {
+  "id": "640fb208fdeb",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2026/30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/640fb208fdeba4c2.pdf",
+  "title": "30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": 4,
+  "reference_date": "2025-09-30",
+  "currency": "AUD",
+  "values": {
+   "rwa": 38999.5,
+   "combined_buffer": 2.5,
+   "net_cash_outflows": 13036.2,
+   "required_stable_funding": 76634.9,
+   "total_capital": 4261.7,
+   "total_capital_ratio": 10.93,
+   "nsfr": 76634.9
+  },
+  "checks": [
+   [
+    "warn",
+    "header date 2025-09-30 disagrees with expected 2030-06-30"
+   ],
+   [
+    "error",
+    "missing core row cet1_capital"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "warn",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ],
+   [
+    "error",
+    "nsfr 76634.9 outside 60..1200"
+   ],
+   [
+    "info",
+    "consistent with the last verified disclosure (RWA is 1.00x the last verified figure)"
+   ]
+  ],
+  "reason": "warn:header date 2025-09-30 disagrees with expected 2030-06-30; error:missing core row cet1_capital; error:missing core row cet1_ratio; warn:no leverage ratio row (not all Basel KM1 filers disclose one); warn:no LCR row (not disclosed at this level, or not read); error:nsfr 76634.9 outside 60..1200; info:consistent with the last verified disclosure (RWA is 1.00x the last verified figure)",
+  "status": "open",
+  "created": "2026-09-07T15:07:59"
+ }
+]
