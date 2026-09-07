@@ -139,3 +139,16 @@ state-street-bank,State Street Bank and Trust Company,State Street Bank,US,bank,
 northern-trust,Northern Trust Corporation,Northern Trust,US,holding,us_ch,,549300GLF98S992BC502,NTRS,,us,true
 northern-trust-company,The Northern Trust Company,Northern Trust Co.,US,bank,us_ch,northern-trust,6PTKHDJ8HDUF78PFWH30,,913,us,true
 ubs,UBS Group AG,UBS,CH,holding,us_ch,,549300SZJ9VS8SGXAN81,UBSG.SW,,ch,true
+bnp-paribas-fortis,BNP Paribas Fortis SA/NV,BNP Paribas Fortis,BE,bank,eu,bnp-paribas,KGCEPHLVVKVRZYO1T647,,,eu_large,true
+op-corporate-bank,OP Corporate Bank plc,OP Corporate Bank,FI,bank,eu,op-financial-group,549300NQ588N7RWKBP98,,,eu_large,true
+credit-agricole-cib,Credit Agricole Corporate and Investment Bank,Credit Agricole CIB,FR,bank,eu,credit-agricole,1VUV7VQFKUOQSJ21A208,,,eu_large,true
+cic,Credit Industriel et Commercial,CIC,FR,bank,eu,credit-mutuel,N4JDFKKH2FTD8RKFXO39,,,eu_large,true
+rentenbank,Landwirtschaftliche Rentenbank,Rentenbank,DE,bank,eu,,529900Z3J0N6S0F7CT25,,,eu_large,true
+nord-lb,Norddeutsche Landesbank Girozentrale,NORD/LB,DE,bank,eu,,DSNHHQ2B9X5N6OUJ1236,,,eu_large,true
+nrw-bank,NRW.BANK,NRW.BANK,DE,bank,eu,,52990002O5KK6XOGJ020,,,eu_large,true
+bng-bank,BNG Bank N.V.,BNG Bank,NL,bank,eu,,529900GGYMNGRQTDOO93,,,eu_large,true
+nwb-bank,Nederlandse Waterschapsbank N.V.,NWB Bank,NL,bank,eu,,JLP5FSPH9WPSHY3NIM24,,,eu_large,true
+lloyds-bank-corporate-markets,Lloyds Bank Corporate Markets plc,Lloyds Bank Corporate Markets,GB,bank,uk,lloyds-banking-group,213800MBWEIJDM5CU638,,,uk_large,true
+nbk-international,National Bank of Kuwait (International) plc,NBK International,GB,bank,uk,,213800OTQ2BHFRVL6A46,,,uk_mid,true
+santander-financial-services,Santander Financial Services plc,Santander Financial Services,GB,bank,uk,,R83QYRLEMH4ZSHI0L097,,,uk_mid,true
+smbc-bank-international,SMBC Bank International plc,SMBC Bank International,GB,bank,uk,,NT7C58H5HPZYKZDPOO64,,,uk_mid,true

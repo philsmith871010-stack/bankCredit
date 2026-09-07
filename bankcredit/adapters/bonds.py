@@ -40,6 +40,14 @@ CURRENCIES = {"EUR", "GBP", "USD"}
 
 # issuer token (lower case, matched at the start of the bond name) -> entity id; longer tokens first
 ISSUERS = [
+    # adviser-list counterparties added 7 September 2026 (most specific names first)
+    ("bnp paribas fortis", "bnp-paribas-fortis"), ("op corporate bank", "op-corporate-bank"), ("op yrityspankki", "op-corporate-bank"),
+    ("credit agricole corporate", "credit-agricole-cib"), ("crédit agricole corporate", "credit-agricole-cib"), ("credit agricole cib", "credit-agricole-cib"),
+    ("credit industriel", "cic"), ("crédit industriel", "cic"), ("landwirtschaftliche rentenbank", "rentenbank"), ("rentenbank", "rentenbank"),
+    ("norddeutsche landesbank", "nord-lb"), ("nord/lb", "nord-lb"), ("nrw.bank", "nrw-bank"), ("nrw bank", "nrw-bank"), ("bng bank", "bng-bank"),
+    ("nederlandse waterschapsbank", "nwb-bank"), ("lloyds bank corporate", "lloyds-bank-corporate-markets"),
+    ("smbc bank international", "smbc-bank-international"), ("santander financial services", "santander-financial-services"),
+    ("landesbank baden", "lbbw"), ("bayerische landesbank", "bayernlb"), ("landesbank hessen", "helaba"), ("dz bank", "dz-bank"),
     ("barclays bank uk", "barclays-bank-uk"), ("barclays bank plc", "barclays-bank"), ("barclays plc", "barclays"), ("barclays", "barclays"),
     ("hsbc holdings", "hsbc-holdings"), ("hsbc uk bank", "hsbc-uk"), ("hsbc bank plc", "hsbc-bank"), ("hsbc bank", "hsbc-bank"),
     ("lloyds banking", "lloyds-banking-group"), ("lloyds bank", "lloyds-bank"), ("bank of scotland", "bank-of-scotland"),
