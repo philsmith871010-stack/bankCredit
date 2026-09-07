@@ -180,3 +180,16 @@ def test_single_digit_month_dates_keep_column_order():
     assert km1.parse_dates("30.6.26 31.3.26 31.12.25 30.9.25") == [
         km1.date(2026, 6, 30), km1.date(2026, 3, 31), km1.date(2025, 12, 31), km1.date(2025, 9, 30)]
     assert km1.detect_units("Key metrics (KM1)\nUSD m, except where indicated")[0] == "USD"
+
+
+def test_split_column_headers_are_joined_in_order():
+    dates, left = km1.join_split_headers("31 December\n30 September\n30 June\n31 March\n31  December\n2023\n2023\n2023\n2023\n2022")
+    assert [d.isoformat() for d in dates] == ["2023-12-31", "2023-09-30", "2023-06-30", "2023-03-31", "2022-12-31"] and left == 0
+    dates, _ = km1.join_split_headers("Bank\n30 June\n2023\n30 June 2022\n30 June 2023")          # Aldermore
+    assert [d.isoformat() for d in dates] == ["2023-06-30", "2022-06-30"]
+    dates, _ = km1.join_split_headers("31 Dec\n22\n30 Jun\n22\n31 Dec\n21")                       # Co-operative Bank
+    assert [d.isoformat() for d in dates] == ["2022-12-31", "2022-06-30", "2021-12-31"]
+    dates, _ = km1.join_split_headers("31 Dec 24\n30 Jun 24\n31 Dec 231")                             # Vanquis, footnote on the year
+    assert [d.isoformat() for d in dates] == ["2024-12-31", "2024-06-30", "2023-12-31"]
+    dates, left = km1.join_split_headers("31 September\n30 June\n2022")                              # typo, and one year short
+    assert dates == [km1.date(2022, 9, 30)] and left == 1

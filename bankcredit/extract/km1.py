@@ -245,6 +245,42 @@ def parse_dates(text: str, explicit_only: bool = False, year_end: str = "12-31")
     return out
 
 
+DAY_MONTH = re.compile(r"\b(\d{1,2})\s+" + MON + r"\b(?![\s,.]*\d{4})", re.I)
+YEAR_ONLY = re.compile(r"(?<!\d)(20\d{2})(?!\d)")
+
+
+def join_split_headers(cells: str, year_end: str = "12-31") -> tuple[list[date], int]:
+    """Column headers read in order, pairing a day-month printed on one line with the year printed on a
+    later line (NatWest and RBC print a block of day-months, then a block of years; Aldermore prints
+    "30 June" / "2023" for the first column and full dates for the rest). Returns (dates, unresolved):
+    unresolved counts day-months that never met a year, the sign of a header the reader cannot trust."""
+    out: list[date] = []
+    pending: list[tuple[int, int]] = []
+    for l in cells.splitlines():
+        t = l.strip()
+        if not t:
+            continue
+        if re.fullmatch(r"(?:20\d{2}[\s,]*)+", t) or (pending and re.fullmatch(r"(?:\d{2}[\s,]*)+", t)):
+            for y in re.findall(r"\d{4}|\d{2}", t):
+                if not pending:
+                    break
+                y = int(y) if len(y) == 4 else 2000 + int(y)          # "31 Dec" over "22" (Co-operative Bank)
+                dd, mm = pending.pop(0)
+                d = date(y, mm, min(dd, calendar.monthrange(y, mm)[1]))   # "31 September" is a typo
+                if d not in out:
+                    out.append(d)
+            continue
+        t = re.sub(r"(\b\d{1,2}\s+" + MON + r"\s+\d{2})(\d)\b", r"\1", t, flags=re.I)   # "31 Dec 231": footnote glued to the year
+        loose = DAY_MONTH.findall(t)
+        full = parse_dates(t, year_end=year_end)
+        if loose and not full:
+            pending += [(int(dd), MONTHS[mm.lower()[:3]]) for dd, mm in loose]
+        for d in full:
+            if d not in out:
+                out.append(d)
+    return out, len(pending)
+
+
 def _is_cell_line(line: str) -> bool:
     """A column-header cell: dates or short labels, not narrative text."""
     rest = DATE_SCAN.sub(" ", line)
@@ -543,6 +579,9 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
     # column dates: short header cells first, then date-only lines anywhere on the pages, then narrative text
     cells = "\n".join(l for l in header.splitlines() if _is_cell_line(l))
     res.period_dates = parse_dates(cells, year_end=year_end)
+    joined, unresolved = join_split_headers(cells, year_end)
+    if len(joined) > len(res.period_dates):
+        res.period_dates = joined            # day-month lines and year lines printed as two blocks
     if not res.period_dates:
         standalone = [l.strip() for l in lines if len(l.strip()) <= 20 and parse_dates(l, year_end=year_end)]
         res.period_dates = parse_dates("\n".join(standalone), year_end=year_end)
@@ -553,9 +592,7 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
     descending = True
     if len(res.period_dates) >= 2 and res.period_dates[0] < res.period_dates[1]:
         descending = False
-    cells = [l for l in header.splitlines() if _is_cell_line(l)]
-    months_in_header = len(re.findall(r"\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\b", "\n".join(cells), re.I))
-    if months_in_header > len(res.period_dates):
+    if unresolved:
         res.checks.append(("warn", "column headers split month and year across lines; reference date needs a check"))
     res.currency, res.scale = detect_units(text)
     if currency_hint and (not res.currency or (res.currency == "USD" and currency_hint != "USD" and "US$" not in text)):
@@ -660,11 +697,11 @@ def validate(res: Result) -> None:
     for m in CORE:
         if m not in v:
             if m == "leverage_ratio" and res.template == "KM1":
-                res.checks.append(("warn", "no leverage ratio row (not all Basel KM1 filers disclose one)"))
+                res.checks.append(("info", "no leverage ratio row (not all Basel KM1 filers disclose one)"))
             else:
                 res.checks.append(("error", f"missing core row {m}"))
     if "lcr" not in v:
-        res.checks.append(("warn", "no LCR row (not disclosed at this level, or not read)"))
+        res.checks.append(("info", "no LCR row (not disclosed at this level, or not read)"))
     for m, (lo, hi) in BOUNDS.items():
         if m in v and not (lo <= v[m] <= hi):
             res.checks.append(("error", f"{m} {v[m]:g} outside {lo}..{hi}"))
