@@ -175,17 +175,52 @@ class Browser:
         finally:
             page.close()
 
+    def _get(self, url: str) -> bytes | None:
+        r = self.ctx.request.get(url, timeout=120000, headers={"Accept": "application/pdf,*/*"})
+        data = r.body() if r.ok else None
+        return data if data and data.startswith(b"%PDF") else None
+
     def download(self, url: str) -> bytes | None:
+        """PDF bytes, or None. A plain request through the browser's cookie jar first; when the site answers
+        with a challenge page (Goldman Sachs), the URL is opened in a tab so the challenge script can run and
+        the download it triggers is captured, then the request is tried once more with the cookies it set."""
         ctx = self.open()
         if not ctx:
             return None
         try:
-            r = ctx.request.get(url, timeout=120000, headers={"Accept": "application/pdf,*/*"})
-            data = r.body() if r.ok else None
-            return data if data and data.startswith(b"%PDF") else None
+            data = self._get(url)
+            if data:
+                return data
         except Exception as exc:
             log.warning("browser: download %s -> %s", url, exc)
-            return None
+        page = ctx.new_page()
+        try:
+            try:
+                with page.expect_download(timeout=45000) as dl:
+                    try:
+                        page.goto(url, wait_until="commit", timeout=45000)
+                    except Exception as exc:                # "Download is starting" is the happy path here
+                        if "download" not in str(exc).lower():
+                            raise
+                path = dl.value.path()
+                data = Path(path).read_bytes() if path else None
+                if data and data.startswith(b"%PDF"):
+                    return data
+            except Exception:
+                pass                                        # no download: the tab holds a challenge or a viewer
+            page.wait_for_timeout(8000)                     # let the challenge script settle its cookie
+            try:
+                return self._get(url)
+            except Exception as exc:
+                log.warning("browser: download after challenge %s -> %s", url, exc)
+                return None
+        finally:
+            page.close()
+
+    def render(self, url: str) -> str:
+        """Rendered HTML of a page after its scripts have run; empty when the browser is unavailable."""
+        st, body, _links = self.listing(url)
+        return "" if looks_blocked(st, body) else body
 
     def close(self):
         try:
@@ -195,6 +230,56 @@ class Browser:
                 self.pw.stop()
         except Exception:
             pass
+
+
+HTML_STRIP = re.compile(r"<(script|style|nav|header|footer|svg|noscript|iframe)\b.*?</\1\s*>|<img\b[^>]*>|<!--.*?-->", re.I | re.S)
+REPORT_TEXT = re.compile(r"pillar\s*(?:3|iii)", re.I)
+KM1_TEXT = re.compile(r"common equity tier ?1|cet ?1", re.I)
+
+
+def html_to_pdf(html: str) -> bytes | None:
+    """A PDF laid out from a report published as a web page (UBS's digital reports), so the same
+    extractor reads it. Scripts, navigation and images are dropped first; the result must still read
+    as a Pillar 3 document that carries a capital table."""
+    try:
+        import pymupdf
+    except ImportError:
+        import fitz as pymupdf
+    clean = HTML_STRIP.sub(" ", html)
+    try:
+        doc = pymupdf.open(stream=clean.encode("utf-8", "ignore"), filetype="html")
+        text = "".join(doc[i].get_text("text") for i in range(min(doc.page_count, 60)))
+        if not (REPORT_TEXT.search(text) and KM1_TEXT.search(text)):
+            return None
+        return doc.convert_to_pdf()
+    except Exception as exc:
+        log.warning("browser: html report could not be laid out (%s)", exc)
+        return None
+
+
+def fetch_document(url: str, session: requests.Session, browser: "Browser | None") -> tuple[bytes | None, str]:
+    """(PDF bytes, how) for a candidate link: a plain download, the browser's download, or a web-page
+    report rendered and laid out as a PDF. how is 'pdf', 'browser', 'html' or ''."""
+    html = ""
+    try:
+        rr = session.get(url, timeout=120)
+        if rr.status_code == 200 and rr.content.startswith(b"%PDF"):
+            return rr.content, "pdf"
+        if rr.status_code == 200 and "html" in rr.headers.get("content-type", "") and not looks_blocked(rr.status_code, rr.text):
+            html = rr.text
+    except requests.RequestException:
+        pass
+    if browser:
+        data = browser.download(url)
+        if data:
+            return data, "browser"
+        if re.search(r"\.html?(?:\?|$)", url, re.I) or html:
+            html = browser.render(url) or html            # the page after its scripts ran, which is what a reader sees
+    if html:
+        data = html_to_pdf(html)
+        if data:
+            return data, "html"
+    return None, ""
 
 
 def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTITY) -> dict:
@@ -270,18 +355,12 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
             continue
         n = 0
         for url, _hint, title in cands:
-            data = None
-            try:
-                rr = session.get(url, timeout=120)
-                if rr.status_code == 200 and rr.content.startswith(b"%PDF"):
-                    data = rr.content
-            except requests.RequestException:
-                pass
-            if data is None and via == "playwright":
-                data = browser.download(url)
+            data, fetched = fetch_document(url, session, browser if use_pw else None)
             if data is None:
                 log.warning("browser: %s could not fetch %s", ent, url)
                 continue
+            if fetched == "html":
+                log.info("browser: %s read %s as a web-page report", ent, url)
             with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False, prefix=title[:40].replace("/", "_") + "_") as tmp:
                 tmp.write(data)
             try:

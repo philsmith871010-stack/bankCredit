@@ -217,8 +217,9 @@ LOCATORS += [
     dict(entity="goldman-sachs", kind="browser", template="us_capital", currency="USD",
          page="https://www.goldmansachs.com/investor-relations/financials/other-information", match=P3 + r".*\.pdf", note="CET1 and SLR also come from EDGAR XBRL"),
     dict(entity="ubs", kind="browser", currency="USD",
-         page="https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html", match=P3 + r".*\.pdf",
-         exclude=r"gsib|g-sib|indicator|tlac|resolution|remuneration", note="UBS KM1 in the quarterly Pillar 3 report; the G-SIB indicators file is not it"),
+         page="https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html", match=P3 + r".*\.(?:pdf|html?)(?:\?|$)",
+         exclude=r"gsib|g-sib|indicator|tlac|resolution|remuneration|pillar-3-disclosures\.html",
+         note="UBS KM1 in the quarterly Pillar 3 report, lately published as a web page; the G-SIB indicators file is not it"),
 ]
 
 COUNTRY_CCY = {"GB": "GBP", "US": "USD", "AU": "AUD", "CA": "CAD", "SG": "SGD", "HK": "HKD", "JP": "JPY",

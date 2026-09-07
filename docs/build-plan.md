@@ -309,3 +309,8 @@ a locator can now name the link text it wants (`text=`), and the generic sweep s
 Reference dates: six of the 115 answers moved the date, all on documents the extractor had already flagged (split
 month and year headers at NAB, no date in the header at Standard Chartered), so the warning is doing its job and the
 answer is recorded as a verified point.
+Two download failures the Mac reported are handled in the collector: a PDF address that answers scripts with a
+challenge page (Goldman Sachs) is now opened in a browser tab so the challenge can run and the download it starts is
+captured, with one more plain request on the cookie it sets; and a report published as a web page (UBS's digital
+Pillar 3 reports) is rendered after its scripts run, stripped of navigation and images, laid out as a PDF by PyMuPDF
+and read by the same extractor. Both are untested against the live sites from here and will show in the next Mac run.
