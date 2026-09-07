@@ -204,8 +204,9 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
     browser = Browser()
     out: dict[str, str] = {}
     locs = [l for l in LOCATORS if l.get("kind") == "browser" and (not entity_ids or l["entity"] in entity_ids)]
-    for loc in locs:
+    for n, loc in enumerate(locs, start=1):
         ent = loc["entity"]
+        print(f"  [{n}/{len(locs)}] {ent} ...", flush=True)
         body, links, via = "", [], "request"
         try:
             r = session.get(loc["page"], timeout=60)
@@ -220,6 +221,7 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
                 body, links, via = rbody, rlinks, "playwright"
         if not body:
             out[ent] = "blocked" if (use_pw and not browser.error) else "blocked (no Playwright)"
+            print(f"      {out[ent]}", flush=True)
             continue
         remember_links(ent, body, links, ad, loc["page"])
         allc = candidates(loc, body, links, ad)
@@ -257,6 +259,7 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
         cands = [c for c in allc if c[0] not in ad.seen][:max_new]
         if not cands:
             out[ent] = "nothing new" if allc else "no matching links (see data/review/browser-links.json)"
+            print(f"      {out[ent]}", flush=True)
             continue
         n = 0
         for url, _hint, title in cands:
@@ -281,5 +284,6 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
             finally:
                 Path(tmp.name).unlink(missing_ok=True)
         out[ent] = (f"collected {n}" + (" (generic match)" if how == "generic" else "")) if n else "download failed"
+        print(f"      {out[ent]}", flush=True)
     browser.close()
     return out
