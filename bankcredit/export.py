@@ -314,6 +314,45 @@ def _overlay(market: dict, ratings: list[dict]) -> float:
     return round(max(-cap, min(cap, adj)), 1)
 
 
+PREF_TYPE = {"idr": 0, "issuer": 1, "deposit": 2, "counterparty": 3, "resolution_counterparty": 4}
+
+
+def ratings_summary(active, ratings: pd.DataFrame, events: pd.DataFrame) -> dict:
+    """The ratings page: every entity's latest long and short-term rating by agency with outlook and the date of the
+    last action, a composite grade, and the rating actions of the last 90 days that were not affirmations."""
+    rows = []
+    for e in active:
+        r = ratings[ratings.entity_id == e.id] if not ratings.empty else ratings
+        agencies = {}
+        if not r.empty:
+            rr = r.assign(_pref=r.rating_type.map(PREF_TYPE).fillna(9)).sort_values(["_pref", "action_date"], ascending=[True, False])
+            for ag in AGENCY_ORDER:
+                g = rr[rr.agency == ag]
+                if g.empty:
+                    continue
+                lt = g[g.horizon == "long"]
+                st = g[g.horizon == "short"]
+                l0 = lt.iloc[0] if not lt.empty else None
+                agencies[ag] = {"lt": l0.value if l0 is not None else None, "lt_type": l0.rating_type if l0 is not None else None,
+                                "outlook": (l0.outlook or "") if l0 is not None else "", "st": st.iloc[0].value if not st.empty else None,
+                                "date": str(g.action_date.max())[:10], "action": (l0.action or "") if l0 is not None else ""}
+        grades = [gr for gr in (rating_grade(a["lt"]) for a in agencies.values()) if gr is not None]
+        grade = round(float(pd.Series(grades).median()), 1) if grades else None
+        rows.append({"id": e.id, "short": e.short_name, "name": e.name, "country": e.country, "region": e.region, "type": e.type,
+                     "grade": grade, "composite": grade_letter(grade), "agencies": agencies,
+                     "last_action": max((a["date"] for a in agencies.values()), default=None)})
+    actions = []
+    if not events.empty:
+        cutoff = (date.today() - timedelta(days=90)).isoformat()
+        ev = events[(events.type == "rating") & (events.date.astype(str) >= cutoff)]
+        ev = ev[~ev.title.str.contains("affirm|maintained under stable|placed under stable|removed under stable|initial reporting|new:", case=False, na=False)]
+        short = {e.id: e.short_name for e in active}
+        for x in ev.sort_values("date", ascending=False).drop_duplicates(["entity_id", "title"]).head(80).itertuples():
+            if x.entity_id in short:
+                actions.append({"date": str(x.date)[:10], "id": x.entity_id, "short": short[x.entity_id], "title": str(x.title)[:160], "severity": x.severity})
+    return {"rows": rows, "actions": actions}
+
+
 def data_audit(active, facts, ratings, prices, cds, bonds) -> list[dict]:
     """What we hold for each entity: regulatory history (periods, first, last, sources), ratings, prices, CDS, bonds."""
     rows = []
@@ -468,6 +507,7 @@ def export_json() -> None:
     store.write_json("board", {"generated": generated, "rows": board, "benchmarks": benchmarks})
     store.write_json("policy", {"generated": generated, "rows": policy_rows})
     store.write_json("audit", {"generated": generated, "rows": data_audit(active, facts, ratings, prices, cds, store.read("bonds"))})
+    store.write_json("ratings", {"generated": generated, **ratings_summary(active, ratings, events)})
     status = []
     if not runs.empty:
         for src, g in runs.sort_values("finished").groupby("source"):

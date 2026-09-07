@@ -303,6 +303,7 @@ def page_method(generated):
 <h3>Thresholds (value → sub-score)</h3><table class="plain"><tbody>{thr}</tbody></table>
 <h3>Bands</h3><p>{bands}. Bands carry hysteresis in later versions so they do not flicker at boundaries.</p>
 <h2>My policy</h2><p>A page for the treasurer's own approved list. You enter the counterparties you accept and the longest tenor for each; the page keeps the list in your browser (and in a link you can share with colleagues) and checks it on every visit against the current score, band, ratings, market signal, news and data age, flagging what has changed since the day each name was approved. Like-for-like shows the other covered names whose public standing is at least as strong as the weakest counterparty you already accept at each tenor. It compares public information; it does not suggest a tenor, a limit or a list, which remain the treasurer's policy and the adviser's advice.</p>
+<h2>Ratings</h2><p>The Ratings page shows each entity's latest long-term rating by agency (issuer or issuer default rating where it exists, otherwise deposit or counterparty), its outlook, the short-term rating, and a composite: the median of the agencies' long-term ratings on a common scale from AAA to CCC. Ratings come from the ESMA European Rating Platform and are shown with agency attribution, refreshed daily; rating histories are not redistributed.</p>
 <h2>Market overlay</h2><p>A layer built from agency ratings, five-year CDS levels and 30-day changes where a CDS market exists (otherwise the 30-day change in the bank's own bond yields against peers), 30-day equity volatility and drawdown from the 52-week high. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points. Provisional weighting (September 2026): the four signals count equally, each worth at most 2.5 points either way; ratings use the grade averaged across the agencies that rate the bank. A CDS move is measured within one source (settlement against settlement, or trade medians on days with three or more trades) and split into the part shared with iTraxx Senior Financials and the part that is the bank's own; the label says which. The direction and size of the adjustment are shown; CDS levels themselves are not redistributed.</p>
 <h2>Limitations</h2><ul><li>US banking groups appear twice, as in the UK: the operating bank a depositor faces (Call Report figures from the FDIC, with the US Tier 1 leverage ratio scored on its own scale, and the group's LCR shown as a group figure because banks do not publish their own) and the holding company (binding Basel ratios, the lower of the standardised and advanced approaches, from its Pillar 3 report or XBRL filings, the supplementary leverage ratio, the public LCR disclosure, and asset quality and profitability inherited from its lead bank, labelled).</li><li>UK and other-region figures depend on PDF extraction; failed validations are shown as unverified rather than hidden.</li><li>Peer percentiles are computed only among entities with a score, so they are unstable while coverage is low.</li><li>Back-tests against past failures are planned for version 2.</li></ul>
 </div>'''
@@ -339,6 +340,72 @@ def documents_card(status):
 <p class="small">Figures marked <em>unverified</em> passed the template checks with warnings. Items in the review queue are resolved on the maintainer's machine by the local review skill (no AI service is called from the pipeline).</p>
 <h4>Review queue ({len(queue)})</h4><ul class="small">{q}</ul>
 <h4>Latest collected</h4><div class="table-wrap"><table class="plain"><thead><tr><th>Entity</th><th>Outcome</th><th>Reference</th><th>Confidence</th><th>Document</th><th>Fetched</th></tr></thead><tbody>{rows}</tbody></table></div></div>'''
+
+
+GRADE_COLOURS = [(4, "#0a2540"), (7, "#3f5f85"), (10, "#7d93ad"), (13, "#c77d1a"), (99, "#b04632")]     # upper grade -> colour
+
+
+def grade_colour(grade):
+    if grade is None:
+        return "#dfe5eb"
+    for upper, col in GRADE_COLOURS:
+        if grade <= upper:
+            return col
+    return "#b04632"
+
+
+def outlook_glyph(o: str) -> str:
+    o = (o or "").lower()
+    if "pos" in o:
+        return '<span title="positive outlook" style="color:#1e7a3a">▲</span>'
+    if "neg" in o:
+        return '<span title="negative outlook" style="color:#b04632">▼</span>'
+    if "watch" in o or "review" in o or "developing" in o:
+        return '<span title="on watch" style="color:#c77d1a">◆</span>'
+    if "stab" in o:
+        return '<span title="stable outlook" class="muted">▶</span>'
+    return ""
+
+
+def page_ratings(generated):
+    R = load("ratings")
+    rows = R["rows"]
+    rated = [r for r in rows if r["grade"] is not None]
+    bands = {"AA- and above": sum(1 for r in rated if r["grade"] <= 4), "A range": sum(1 for r in rated if 4 < r["grade"] <= 7),
+             "BBB range": sum(1 for r in rated if 7 < r["grade"] <= 10), "Below BBB-": sum(1 for r in rated if r["grade"] > 10)}
+    unrated = len(rows) - len(rated)
+    recent30 = [a for a in R["actions"] if a["date"] >= (datetime.utcnow() - timedelta(days=30)).date().isoformat()]
+    ups = sum(1 for a in recent30 if a["severity"] == "good")
+    downs = sum(1 for a in recent30 if a["severity"] in ("warn", "bad"))
+    tiles = "".join(f'<div class="rtile"><div class="rtile-n mono" style="color:{col}">{n}</div><div class="rtile-l">{c.esc(k)}</div></div>'
+                    for (k, n), col in zip(bands.items(), ["#0a2540", "#3f5f85", "#7d93ad", "#b04632"]))
+    tiles += f'<div class="rtile"><div class="rtile-n mono muted">{unrated}</div><div class="rtile-l">Unrated</div></div>'
+    tiles += f'<div class="rtile"><div class="rtile-n mono"><span style="color:#1e7a3a">{ups}▲</span> <span style="color:#b04632">{downs}▼</span></div><div class="rtile-l">Actions, 30 days</div></div>'
+    tone = {"bad": "bad", "warn": "warn", "good": "good", "info": "muted"}
+    acts = "".join(f'<div class="ract"><span class="mono muted">{a["date"]}</span><a class="b" href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><span>{c.esc(a["title"])}</span>{c.chip(c.esc(a["severity"]), tone.get(a["severity"], "muted"))}</div>' for a in R["actions"][:40]) or '<div class="empty">No rating actions other than affirmations in the last 90 days.</div>'
+    AG = [("fitch", "Fitch"), ("sp", "S&amp;P"), ("moodys", "Moody's"), ("dbrs", "DBRS"), ("kbra", "KBRA"), ("scope", "Scope")]
+    def cell(a):
+        if not a or not a.get("lt"):
+            return '<td class="na">—</td>'
+        st = f'<span class="small muted">{c.esc(a["st"])}</span>' if a.get("st") else ""
+        typ = "" if a.get("lt_type") in ("idr", "issuer") else f'<span class="small muted" title="rating type">{c.esc(str(a.get("lt_type") or "").replace("_", " "))}</span>'
+        return f'<td><span class="mono b">{c.esc(a["lt"])}</span> {outlook_glyph(a.get("outlook"))} {st} {typ}<div class="small muted mono">{c.esc(a["date"])}</div></td>'
+    trs = "".join(
+        f'<tr data-id="{c.esc(r["id"])}" data-region="{c.esc(r["region"])}" data-name="{c.esc(r["short"].lower())}" data-score="{100 - (r["grade"] or 99)}">'
+        f'<td><a class="b" href="../banks/{c.esc(r["id"])}.html">{c.esc(r["short"])}</a><div class="small muted">{c.esc(r["country"])} · {c.esc(r["type"].replace("_", " "))}</div></td>'
+        f'<td><span class="band mono" style="background:{grade_colour(r["grade"])};color:{"#fff" if r["grade"] is not None and r["grade"] <= 10 else "#243240"}">{c.esc(r["composite"] or "NR")}</span></td>'
+        + "".join(cell(r["agencies"].get(ag)) for ag, _ in AG)
+        + f'<td class="mono small muted">{c.esc(r["last_action"] or "—")}</td></tr>'
+        for r in sorted(rows, key=lambda r: (r["grade"] is None, r["grade"] or 99, r["short"])))
+    regions = [("all", "All"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
+    filters = "".join(f'<button class="filter{" active" if k == "all" else ""}" data-region="{k}">{c.esc(l)}</button>' for k, l in regions)
+    content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">Every entity's latest long-term rating by agency with its outlook, the short-term rating beneath, and a composite grade across agencies. From the ESMA European Rating Platform, refreshed daily, shown with agency attribution.</div></div></div>
+<div class="rtiles">{tiles}</div>
+<div class="card pad"><h3>Latest rating actions <span class="muted small">· 90 days, affirmations excluded</span></h3><div class="racts">{acts}</div></div>
+<div class="card" style="margin-top:16px"><div class="toolbar"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>
+<div class="table-wrap"><table id="board" class="plain ratings"><thead><tr><th data-sort="name">Entity</th><th data-sort="score" title="Median grade across agencies, on a common scale">Composite</th>{"".join(f"<th>{n}</th>" for _, n in AG)}<th>Last action</th></tr></thead><tbody>{trs}</tbody></table></div>
+<div class="table-foot"><span>▲ positive outlook · ▼ negative · ◆ on watch · ▶ stable · the small figure is the short-term rating · composite is the median of the agencies' long-term ratings on a common scale, AAA to CCC · symbols are the agencies' and are shown with attribution; histories are not redistributed</span></div></div>'''
+    return c.shell("Ratings", content, "ratings", "../", generated)
 
 
 def page_policy(generated):
@@ -399,6 +466,8 @@ def build():
         (OUT / "banks" / f"{r['id']}.html").write_text(page_bank(load(f"banks/{r['id']}"), generated))
     (OUT / "events" / "index.html").write_text(page_events(board, generated))
     (OUT / "method" / "index.html").write_text(page_method(generated))
+    (OUT / "ratings").mkdir(exist_ok=True)
+    (OUT / "ratings" / "index.html").write_text(page_ratings(generated))
     (OUT / "policy").mkdir(exist_ok=True)
     (OUT / "policy" / "index.html").write_text(page_policy(generated))
     (OUT / "data").mkdir(exist_ok=True)
