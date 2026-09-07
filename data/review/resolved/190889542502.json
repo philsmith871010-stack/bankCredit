@@ -1,0 +1,22 @@
+{
+ "id": "190889542502",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2022-half-year-pillar-3-report.pdf",
+ "page": 8,
+ "reference_date": "2022-03-31",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 53924.0,
+  "tier1_capital": 60759.0,
+  "total_capital": 80110.0,
+  "rwa": 431940.0,
+  "cet1_ratio": 12.48,
+  "tier1_ratio": 14.07,
+  "total_capital_ratio": 18.55,
+  "leverage_exposure": 1103622.0,
+  "leverage_ratio": 5.51,
+  "lcr": 134.0,
+  "nsfr": 123.0
+ },
+ "note": "NAB reports under APRA's APS 330, which has no KM1 template. Level 2 (consolidated group) basis throughout. Capital amounts from the detailed capital disclosures, ratios and leverage from the capital and leverage ratios table, LCR and NSFR from the APS 330 liquidity templates - taking the NSFR page headed 31 Mar 2022 rather than the 31 Dec 2021 page that follows. Check: 53,924/431,940 = 12.48% and 80,110/431,940 = 18.55%, matching the published ratios."
+}

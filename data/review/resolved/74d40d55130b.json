@@ -1,0 +1,20 @@
+{
+ "id": "74d40d55130b",
+ "entity_id": "skipton-bs",
+ "url": "https://www.skipton.co.uk/content/dam/sbs-sites/skipton-co-uk/documents/about-us/pillar-3-disclosures/pillar-3-2020.pdf",
+ "page": 5,
+ "reference_date": "2020-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1585.6,
+  "total_capital": 1630.5,
+  "rwa": 3996.7,
+  "cet1_ratio": 39.7,
+  "tier1_ratio": 40.1,
+  "total_capital_ratio": 40.8,
+  "leverage_exposure": 24438.4,
+  "leverage_ratio": 6.5,
+  "lcr": 194.0
+ },
+ "note": "Skipton's report predates KM1; the figures come from Table 1 'Key metrics' in the executive summary. The table has four columns - prudential consolidation group and individual consolidation group, each for the reporting year and the prior year. The prudential consolidation group column for the reporting year is taken, that being the Group basis. Tier 1 capital is deliberately left out: the ratio row implies CET1 plus the small AT1 balance, while the leverage block's 'Total Tier 1 capital' row shows the end-point figure equal to CET1, and the report prints no single transitional Tier 1 total. Leverage is the UK leverage ratio excluding central bank exposures, the UK regime's headline measure; the CRR leverage ratio also shown in the same table is not recorded. Check: 1,585.6/3,996.7 = 39.67% and 1,630.5/3,996.7 = 40.80%, matching the published ratios. Note the 2021 report restates 2020 RWA to 4,123.2; the figure recorded here is the one this report publishes for its own reporting date."
+}

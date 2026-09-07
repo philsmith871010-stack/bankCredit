@@ -1,0 +1,23 @@
+{
+ "id": "bd4545eef3e4",
+ "entity_id": "leeds-bs",
+ "url": "https://www.leedsbuildingsociety.co.uk/_resources/pdfs/press-pdfs/financial-results-pdfs/interim-pillar-3-disclosures.pdf",
+ "page": 6,
+ "reference_date": "2024-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1539.4,
+  "tier1_capital": 1539.4,
+  "total_capital": 1550.6,
+  "rwa": 5991.3,
+  "cet1_ratio": 25.69,
+  "tier1_ratio": 25.69,
+  "total_capital_ratio": 25.88,
+  "overall_capital_requirement": 15.31,
+  "leverage_exposure": 26215.2,
+  "leverage_ratio": 5.87,
+  "lcr": 237.79,
+  "nsfr": 141.01
+ },
+ "note": "UK KM1 key metrics template, section 2.1 (p.6) of the interim disclosures. Five columns labelled T to T-4, headed Jun-24, Mar-24, Dec-23, Sep-23 and Jun-23; column a (Jun-24) is taken. The extractor warned the column headers split month and year across lines and the reference date needed a check - the header reads Jun-24 and the narrative confirms the four quarters to 30 June 2024. Sep-23 is shown as n/a throughout because the Society did not publish that quarter. Check: 1,539.4/5,991.3 = 25.69% and 1,550.6/5,991.3 = 25.88%, matching the published ratios, and 1,539.4/26,215.2 = 5.87%, matching the leverage ratio. LCR and NSFR are the averages the template requires."
+}

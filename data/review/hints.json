@@ -150,7 +150,8 @@
     "nsfr": 118.0
    },
    "method": "pdf_manual"
-  }
+  },
+  "trust_labels": true
  },
  "shawbrook": {
   "page": 9,
@@ -195,7 +196,7 @@
   }
  },
  "leeds-bs": {
-  "page": 4,
+  "page": 6,
   "currency": "GBP",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -241,7 +242,7 @@
   }
  },
  "nab": {
-  "page": 5,
+  "page": 4,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -263,7 +264,8 @@
     "leverage_ratio": 4.85
    },
    "method": "pdf_rules"
-  }
+  },
+  "trust_labels": true
  },
  "vanquis": {
   "page": 3,
@@ -877,7 +879,10 @@
     "nsfr": 136.9
    },
    "method": "pdf_rules"
-  }
+  },
+  "page": 5,
+  "currency": "GBP",
+  "trust_labels": true
  },
  "nottingham-bs": {
   "last_verified": {
@@ -1090,6 +1095,25 @@
     "total_capital_ratio": 14.5,
     "leverage_exposure": 306596.0,
     "leverage_ratio": 6.2
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "national-bank-of-canada": {
+  "page": 12,
+  "currency": "CAD",
+  "last_verified": {
+   "reference_date": "2023-07-31",
+   "values": {
+    "cet1_capital": 16259.0,
+    "tier1_capital": 19408.0,
+    "total_capital": 20409.0,
+    "rwa": 120562.0,
+    "cet1_ratio": 13.5,
+    "tier1_ratio": 16.1,
+    "total_capital_ratio": 16.9,
+    "leverage_exposure": 458293.0,
+    "leverage_ratio": 4.2
    },
    "method": "pdf_manual"
   }

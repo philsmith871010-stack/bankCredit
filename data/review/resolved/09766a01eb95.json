@@ -1,0 +1,20 @@
+{
+ "id": "09766a01eb95",
+ "entity_id": "national-bank-of-canada",
+ "url": "https://www.nbc.ca/content/dam/bnc/a-propos-de-nous/relations-investisseurs/resultats-trimestriels/2023/suppack-regulatory-capital-q3-2023.pdf",
+ "page": 12,
+ "reference_date": "2023-07-31",
+ "currency": "CAD",
+ "values": {
+  "cet1_capital": 16259.0,
+  "tier1_capital": 19408.0,
+  "total_capital": 20409.0,
+  "rwa": 120562.0,
+  "cet1_ratio": 13.5,
+  "tier1_ratio": 16.1,
+  "total_capital_ratio": 16.9,
+  "leverage_exposure": 458293.0,
+  "leverage_ratio": 4.2
+ },
+ "note": "National Bank of Canada reports under OSFI's guidelines, and this Supplementary Regulatory Capital and Pillar 3 Disclosure has no KM1 - only KM2 (TLAC). The PDF has no text layer, so the pages were read by OCR and the key rows confirmed by rendering them. Capital amounts come from CC1 'Composition of Regulatory Capital' (rows 29, 45, 59), total RWA and the capital ratios from CC1 row 60 onward, and the leverage figures from LR2 rows 21 and 22. The five columns run Q3, Q2, Q1 of fiscal 2023 then Q4, Q3 of fiscal 2022; the first column is taken. Amounts are millions of Canadian dollars. The reference date follows National Bank's 31 October fiscal year end, so the fiscal quarters close on 31 January, 30 April and 31 July; the documents label their columns by quarter rather than printing the date. This pack contains no LCR or NSFR - those are published in the separate Supplementary Financial Information. Check: 16,259/120,562 = 13.49%, 20,409/120,562 = 16.93% and 19,408/458,293 = 4.23%, matching the published 13.5%, 16.9% and 4.2%."
+}

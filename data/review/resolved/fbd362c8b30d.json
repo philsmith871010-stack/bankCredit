@@ -1,0 +1,20 @@
+{
+ "id": "fbd362c8b30d",
+ "entity_id": "skipton-bs",
+ "url": "https://www.skipton.co.uk/content/dam/sbs-sites/skipton-co-uk/documents/about-us/pillar-3-disclosures/pillar-3-2021.pdf",
+ "page": 5,
+ "reference_date": "2021-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1775.5,
+  "total_capital": 1815.5,
+  "rwa": 3984.7,
+  "cet1_ratio": 44.6,
+  "tier1_ratio": 44.8,
+  "total_capital_ratio": 45.6,
+  "leverage_exposure": 26314.5,
+  "leverage_ratio": 6.8,
+  "lcr": 173.3
+ },
+ "note": "Skipton's report predates KM1; the figures come from Table 1 'Key metrics' in the executive summary. The table has four columns - prudential consolidation group and individual consolidation group, each for the reporting year and the prior year. The prudential consolidation group column for the reporting year is taken, that being the Group basis. Tier 1 capital is deliberately left out: the ratio row implies CET1 plus the small AT1 balance, while the leverage block's 'Total Tier 1 capital' row shows the end-point figure equal to CET1, and the report prints no single transitional Tier 1 total. Leverage is the UK leverage ratio excluding central bank exposures, the UK regime's headline measure; the CRR leverage ratio also shown in the same table is not recorded. Check: 1,775.5/3,984.7 = 44.56% and 1,815.5/3,984.7 = 45.56%, matching the published 44.6% and 45.6%; 1,775.5/26,314.5 = 6.75%, matching the 6.8% UK leverage ratio."
+}

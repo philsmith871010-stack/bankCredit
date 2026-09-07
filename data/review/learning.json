@@ -1074,5 +1074,174 @@
   "page_reviewer": 6,
   "date_extractor": "2019-12-31",
   "date_reviewer": "2019-12-31"
+ },
+ {
+  "date": "2026-09-07T10:44:43",
+  "id": "09766a01eb95",
+  "entity_id": "national-bank-of-canada",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 12,
+  "date_extractor": null,
+  "date_reviewer": "2023-07-31"
+ },
+ {
+  "date": "2026-09-07T10:44:44",
+  "id": "190889542502",
+  "entity_id": "nab",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 8,
+  "date_extractor": null,
+  "date_reviewer": "2022-03-31"
+ },
+ {
+  "date": "2026-09-07T10:44:44",
+  "id": "1c04eb8e9336",
+  "entity_id": "national-bank-of-canada",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 12,
+  "date_extractor": null,
+  "date_reviewer": "2023-04-30"
+ },
+ {
+  "date": "2026-09-07T10:44:44",
+  "id": "2b9902f38c09",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2017-03-31"
+ },
+ {
+  "date": "2026-09-07T10:44:44",
+  "id": "639b5c61c402",
+  "entity_id": "nab",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 3,
+  "matched": 2,
+  "mismatches": {
+   "tier1_capital": [
+    13.6,
+    57905.0
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2021-09-30",
+  "date_reviewer": "2020-12-31"
+ },
+ {
+  "date": "2026-09-07T10:44:44",
+  "id": "686d1eab0f85",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2018-03-31"
+ },
+ {
+  "date": "2026-09-07T10:44:44",
+  "id": "74d40d55130b",
+  "entity_id": "skipton-bs",
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:no period",
+  "skip": false,
+  "compared": 5,
+  "matched": 4,
+  "mismatches": {
+   "leverage_ratio": [
+    5.7,
+    6.5
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2020-12-31",
+  "date_reviewer": "2020-12-31"
+ },
+ {
+  "date": "2026-09-07T10:44:44",
+  "id": "a45c5abed7f2",
+  "entity_id": "national-bank-of-canada",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 12,
+  "date_extractor": null,
+  "date_reviewer": "2023-01-31"
+ },
+ {
+  "date": "2026-09-07T10:44:44",
+  "id": "b152aba46811",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:header da",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "cet1_capital": [
+    8.61,
+    3243.9
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2017-12-31",
+  "date_reviewer": "2017-12-31"
+ },
+ {
+  "date": "2026-09-07T10:44:44",
+  "id": "bd4545eef3e4",
+  "entity_id": "leeds-bs",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 12,
+  "matched": 12,
+  "mismatches": {},
+  "page_extractor": 6,
+  "page_reviewer": 6,
+  "date_extractor": "2024-06-30",
+  "date_reviewer": "2024-06-30"
+ },
+ {
+  "date": "2026-09-07T10:44:44",
+  "id": "fbd362c8b30d",
+  "entity_id": "skipton-bs",
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:no period",
+  "skip": false,
+  "compared": 5,
+  "matched": 5,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2021-12-31",
+  "date_reviewer": "2021-12-31"
  }
 ]
