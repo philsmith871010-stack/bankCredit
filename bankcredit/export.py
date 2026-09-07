@@ -253,8 +253,8 @@ def _market(prices: pd.DataFrame, cds: pd.DataFrame, bond: dict | None = None, i
 
 
 OVERLAY_DEFAULT = {
-    # Provisional equal weights (decided 6 September 2026): four signals, each worth at most 2.5 points
-    # either way, so the overlay stays inside the ±10 cap. Ratings: grade value averaged across agencies.
+    # Provisional weights (6 September 2026, ratings removed 7 September when they became the public
+    # score's anchor): three market signals, each worth at most 2.5 points either way, inside the ±10 cap.
     # CDS: level band plus 30-day change. Volatility: 30-day realised. Drawdown: from the 52-week high.
     # A COUNTERPARTY_OVERLAY secret with the same keys replaces this dict at build time.
     "cds_bands": [[40, 1.5], [60, 0.5], [90, 0], [150, -0.5], [1e9, -1.5]],      # [upper bp, adjustment]
@@ -263,7 +263,6 @@ OVERLAY_DEFAULT = {
     "bond_change_widen_bp": 20, "bond_change_widen_adj": -1.0, "bond_change_tighten_bp": -15, "bond_change_tighten_adj": 1.0,
     "vol_high": 45, "vol_high_adj": -2.5, "vol_low": 25, "vol_low_adj": 2.5,
     "drawdown_adj_threshold": -25, "drawdown_adj": -2.5,
-    "rating_grades": {"AAA": 2.5, "AA": 2.0, "A": 1.0, "BBB": 0, "BB": -1.5, "B": -2.5},
     "cap": 10.0,
 }
 
@@ -305,13 +304,6 @@ def overlay_parts(market: dict, ratings: list[dict]) -> list[tuple[str, float]]:
         parts.append((f"30-day volatility {v:.0f}%", cfg["vol_high_adj"] if v > cfg["vol_high"] else (cfg["vol_low_adj"] if v < cfg["vol_low"] else 0)))
     if market.get("drawdown52") is not None and market["drawdown52"] < cfg["drawdown_adj_threshold"]:
         parts.append((f"drawdown {market['drawdown52']:.0f}% from 52-week high", cfg["drawdown_adj"]))
-    grades = cfg["rating_grades"]
-    for r in ratings:
-        v = r["value"].replace("(H)", "").replace("(L)", "").replace("(high)", "").replace("(low)", "").strip()
-        key = v.rstrip("+-").rstrip("1234").upper()
-        key = {"AA": "AA", "AAA": "AAA", "A": "A", "BAA": "BBB", "BBB": "BBB", "BA": "BB", "BB": "BB", "B": "B"}.get(key, key)
-        if key in grades:
-            parts.append((f"{r['agency']} {r['value']} (grade {key}, shared by {len(ratings)})", grades[key] / max(1, len(ratings))))
     return parts
 
 
@@ -341,13 +333,6 @@ def _overlay(market: dict, ratings: list[dict]) -> float:
         adj += cfg["vol_high_adj"] if market["vol30"] > cfg["vol_high"] else (cfg["vol_low_adj"] if market["vol30"] < cfg["vol_low"] else 0)
     if market.get("drawdown52") is not None and market["drawdown52"] < cfg["drawdown_adj_threshold"]:
         adj += cfg["drawdown_adj"]
-    grades = cfg["rating_grades"]
-    for r in ratings:
-        v = r["value"].replace("(H)", "").replace("(L)", "").replace("(high)", "").replace("(low)", "").strip()
-        key = v.rstrip("+-").rstrip("1234").upper()
-        key = {"AA": "AA", "AAA": "AAA", "A": "A", "BAA": "BBB", "BBB": "BBB", "BA": "BB", "BB": "BB", "B": "B"}.get(key, key)
-        if key in grades:
-            adj += grades[key] / max(1, len(ratings))
     cap = float(cfg.get("cap", 10.0))
     return round(max(-cap, min(cap, adj)), 1)
 
@@ -484,7 +469,9 @@ def export_json() -> None:
             market = dict(market_all[e.group], label=market_all[e.group]["label"] + " (group)")
             inherited.append("market")
         overlay = _overlay(market, rsum)
-        sc = compute(latest, overlay)
+        grades = [g for g in (rating_grade(x["value"]) for x in rsum) if g is not None]
+        composite = round(float(pd.Series(grades).median()), 1) if grades else None
+        sc = compute(latest, overlay, composite)
         asof = max((pts[-1]["d"] for pts in series.values() if pts), default=None)
         age = (today - date.fromisoformat(asof)).days if asof else None
         row = {
@@ -501,9 +488,9 @@ def export_json() -> None:
             "basis": (f.sort_values("reference_date").basis.iloc[-1] if not f.empty else ""),
             "inherited": inherited,
         }
-        grades = [g for g in (rating_grade(x["value"]) for x in rsum) if g is not None]
-        row["rating_grade"] = round(float(pd.Series(grades).median()), 1) if grades else None
-        row["rating_composite"] = grade_letter(row["rating_grade"])
+        row["rating_grade"] = composite
+        row["rating_composite"] = grade_letter(composite)
+        row["unrated"] = sc.unrated
         board.append(row)
         # the policy page carries everything a treasurer checks on an approved name, in one record
         short_ratings = []

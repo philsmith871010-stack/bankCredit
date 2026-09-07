@@ -80,7 +80,7 @@ def band_chip(b: str) -> str:
 
 def agency_chips(ratings: list[dict]) -> str:
     if not ratings:
-        return '<span class="na">—</span>'
+        return '<span class="na" title="No agency rates this bank; its score is capped below band A">unrated</span>'
     return '<div class="agencies">' + "".join(
         f'<span class="agency" title="{esc(r["agency"])} {esc(r["type"])} {esc(r["outlook"])} {esc(r["date"])}">'
         f'<span class="agency-letter">{esc(r["letter"])}</span><span class="mono">{esc(r["value"])}</span></span>' for r in ratings) + "</div>"

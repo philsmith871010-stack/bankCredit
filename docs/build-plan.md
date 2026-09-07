@@ -85,21 +85,26 @@ What makes it distinctive rather than a generic dashboard:
 
 Charts follow one system (area for price, line for ratios, bar for flows, dots for events), one grid style, one label style, built as inline SVG components so they render identically in the page and the PDF export.
 
-## 6. Scoring method, version one
+## 6. Scoring method, version two (7 September 2026)
 
-Public component (published, weights visible), each metric converted to a 0 to 100 percentile within the bank's peer group and against absolute thresholds:
+Public component, published in full on the Method page. Two parts:
 
-| Pillar | Inputs | Weight |
+| Component | Inputs | Weight |
 |---|---|---|
-| Capital | CET1 ratio and headroom over stated requirement; Tier 1 leverage ratio | 30 |
-| Liquidity and funding | LCR, NSFR, loan-to-deposit where available | 20 |
-| Asset quality | Non-performing or Stage 3 ratio, cost of risk, coverage | 20 |
-| Profitability | Return on equity, cost-to-income, net interest margin trend | 15 |
-| Stability and support | Size and systemic status, MREL headroom, sovereign context, disclosure timeliness | 15 |
+| Rating anchor | Composite long-term agency rating (median across agencies, AAA to CCC on a common scale) mapped to a sub-score; 40 when unrated | 40 |
+| Capital | CET1 ratio, leverage ratio, total capital ratio | 25 |
+| Liquidity and funding | LCR, NSFR | 15 |
+| Stability | CET1 headroom over the stated requirement | 10 |
+| Asset quality | Non-performing loan ratio | 5 |
+| Profitability | Return on equity, return on assets, cost-to-income | 5 |
 
-Market overlay (private weights, raw values never displayed): agency rating composite, five-year CDS level and 30-day change where it exists (ICE settlement and DTCC prints), bond spread proxy otherwise, equity realised vol and drawdown. The overlay moves the public score within a bounded range (for example plus or minus 10 points) and the profile shows only the direction and size of the adjustment, labelled "market overlay".
+Ratio metrics are converted to 0 to 100 sub-scores against absolute thresholds; missing ratio pillars are re-scaled over what is available and the coverage percentage is shown. Caps: an unrated bank, and a bank rated in the BBB range, cannot exceed 74.9 (band B); a bank rated below investment grade cannot exceed 64.9 (band C). Strong ratios lift a bank at most one band above what its rating says, and no rating at all is treated as information rather than as missing data.
 
-Bands: A (80 to 100), B (65 to 79), C (50 to 64), D (35 to 49), E (below 35), with hysteresis so bands do not flicker. A back-test against Silicon Valley Bank, Credit Suisse, First Republic, Metro Bank 2023 and the 2020 dip is published on the Method page with the dates on which the score would have moved.
+Version one (6 September) scored ratios alone and kept ratings in the private overlay. It put Monzo, unrated, at 98.8 and band A on the strength of a 27 percent CET1 ratio and a 1,039 percent LCR, Starling (BBB) at 99.9, and HSBC UK and Lloyds Bank (A+) in band C. Under version two Monzo is 74.9 B, Starling 74.9 B, HSBC UK 71.2 B, Lloyds Bank 67.8 B, Skipton 86.7 A, NWB Bank 99.4 A; 17 entities are in band A, 74 in B, 12 in C, 1 in D. Scoring ratios relative to each peer group rather than to absolute thresholds is the next candidate change, since the ratio part still favours small balance sheets.
+
+Market overlay (private weights, raw values never displayed): five-year CDS level and 30-day change where it exists (ICE settlement and DTCC prints), bond spread proxy otherwise, equity realised vol and drawdown. Ratings left the overlay when they became the anchor, so they are not counted twice. The overlay moves the public score within plus or minus 10 points and the profile shows only the direction and size of the adjustment.
+
+Bands: A (80 to 100), B (65 to 79), C (50 to 64), D (35 to 49), E (below 35). Hysteresis and a back-test against Silicon Valley Bank, Credit Suisse, First Republic, Metro Bank 2023 and the 2020 dip remain planned.
 
 ## 7. Data model
 
