@@ -1,0 +1,21 @@
+{
+ "id": "62df79463894",
+ "entity_id": "standard-chartered",
+ "url": "https://www.sc.com/en/uploads/sites/66/content/docs/Standard_Chartered_PLC_Q1_2019_Pillar_3_disclosure.pdf",
+ "page": 3,
+ "reference_date": "2019-03-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 37184.0,
+  "tier1_capital": 43796.0,
+  "total_capital": 55862.0,
+  "rwa": 268206.0,
+  "cet1_ratio": 13.9,
+  "tier1_ratio": 16.3,
+  "total_capital_ratio": 20.8,
+  "leverage_exposure": 780957.0,
+  "leverage_ratio": 5.4,
+  "lcr": 156.3
+ },
+ "note": "Table 1 'Key metrics for the Group (KM1)'. This PDF has no text layer, so the page was rendered and read visually. Where the template shows both transitional and fully loaded IFRS 9 rows, the transitional row is recorded. Leverage is the UK leverage ratio and its exposure measure, Standard Chartered's headline basis. Amounts are US dollar millions. Columns run 31.03.2019 back to 31.03.2018; the first is taken. The core row the extractor reported missing is total RWA at 268,206. Check: 37,184/268,206 = 13.86% and 55,862/268,206 = 20.83%, matching the published 13.9% and 20.8%."
+}

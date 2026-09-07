@@ -1,0 +1,22 @@
+{
+ "id": "4033597afe9d",
+ "entity_id": "gatehouse-bank",
+ "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Pillar-III-Disclosure-2023-FINAL.pdf?dm=1728308645",
+ "page": 33,
+ "reference_date": "2023-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 108.2,
+  "tier1_capital": 108.2,
+  "total_capital": 126.7,
+  "rwa": 644.8,
+  "cet1_ratio": 16.8,
+  "tier1_ratio": 16.8,
+  "total_capital_ratio": 19.6,
+  "overall_capital_requirement": 16.9,
+  "leverage_exposure": 1487.9,
+  "leverage_ratio": 7.3,
+  "lcr": 691.6
+ },
+ "note": "Section 14 'Key Metrics' (p.33), the Article 447 template. Five columns labelled T to T-4, headed Dec-23, Sep-23, Jun-23, Mar-23 and Dec-22; column T is taken. The extractor warned the column headers split month and year across lines and the reference date needed a check - the header reads Dec-23. Leverage is the excluding-central-bank-claims basis, the only one disclosed. Check: 108.2/644.8 = 16.78%, 126.7/644.8 = 19.65% and 108.2/1,487.9 = 7.27%, matching the published 16.8%, 19.6% and 7.3%."
+}

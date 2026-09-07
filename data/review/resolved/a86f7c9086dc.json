@@ -1,0 +1,21 @@
+{
+ "id": "a86f7c9086dc",
+ "entity_id": "santander-uk",
+ "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:6fae1e95-3000-4335-bcce-27bedbc93906/original/as/additional_capital_and_risk_management_disclosures_pdf.pdf",
+ "page": 3,
+ "reference_date": "2019-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 10415.0,
+  "tier1_capital": 12849.0,
+  "total_capital": 15713.0,
+  "rwa": 75293.0,
+  "cet1_ratio": 13.8,
+  "tier1_ratio": 17.1,
+  "total_capital_ratio": 20.9,
+  "leverage_exposure": 301800.0,
+  "leverage_ratio": 4.1,
+  "lcr": 155.4
+ },
+ "note": "Santander UK's 'Additional Capital and Risk Management Disclosures' carries its own key metrics table rather than the KM1 template, with quarter-end columns running backwards from the reporting date; the first is taken. Transitional figures are recorded, matching the headline ratios. The leverage exposure measure is printed in GBP billions and converted to millions here, and the leverage ratio is struck on end-point Tier 1, so Tier 1 over exposure lands slightly above the printed ratio. The extractor flagged a cet1_ratio error and no leverage row; the 13.8% ratio is correct (10,415/75,293 = 13.83%) and the leverage rows are there, labelled 'Basel III leverage ratio'. Check also 15,713/75,293 = 20.87%, matching the published 20.9%."
+}

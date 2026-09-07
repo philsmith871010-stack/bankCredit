@@ -25,8 +25,9 @@
    },
    "method": "pdf_rules"
   },
-  "page": 4,
-  "currency": "USD"
+  "page": 3,
+  "currency": "USD",
+  "trust_labels": true
  },
  "coventry-bs": {
   "last_verified": {
@@ -561,7 +562,7 @@
   }
  },
  "santander-uk": {
-  "page": 3,
+  "page": 2,
   "currency": "GBP",
   "last_verified": {
    "reference_date": "2024-03-31",
@@ -614,7 +615,9 @@
     "nsfr": 135.8
    },
    "method": "pdf_rules"
-  }
+  },
+  "page": 19,
+  "currency": "GBP"
  },
  "barclays-bank-uk": {
   "last_verified": {
@@ -1144,6 +1147,59 @@
     "nsfr": 108.0
    },
    "method": "pdf_rules"
+  }
+ },
+ "first-abu-dhabi-bank": {
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 107438.0,
+    "tier1_capital": 119111.0,
+    "total_capital": 134638.0,
+    "rwa": 785817.0,
+    "cet1_ratio": 13.67,
+    "tier1_ratio": 15.16,
+    "total_capital_ratio": 17.13,
+    "combined_buffer": 4.72,
+    "cet1_headroom": 6.63,
+    "leverage_ratio": 7.47,
+    "hqla": 383987.0,
+    "net_cash_outflows": 275172.0,
+    "lcr": 139.54,
+    "available_stable_funding": 794553.0,
+    "required_stable_funding": 700879.0,
+    "nsfr": 113.37
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "jpmorgan-chase": {
+  "skip_patterns": [
+   "\\d+f\\d+f\\-\\d+\\-\\d+\\-\\d+df\\-\\d+f\\d+b\\d+",
+   "\\d+e\\d+b\\d+\\-\\d+da\\d+\\-\\d+\\-a\\d+\\-bfa\\d+adf\\d+b\\d+",
+   "c\\d+bc\\d+\\-\\d+c\\d+\\-\\d+\\-\\d+d\\d+\\-\\d+b\\d+cc\\d+b\\d+d"
+  ]
+ },
+ "gatehouse-bank": {
+  "page": 33,
+  "currency": "GBP",
+  "trust_labels": true,
+  "last_verified": {
+   "reference_date": "2023-12-31",
+   "values": {
+    "cet1_capital": 108.2,
+    "tier1_capital": 108.2,
+    "total_capital": 126.7,
+    "rwa": 644.8,
+    "cet1_ratio": 16.8,
+    "tier1_ratio": 16.8,
+    "total_capital_ratio": 19.6,
+    "overall_capital_requirement": 16.9,
+    "leverage_exposure": 1487.9,
+    "leverage_ratio": 7.3,
+    "lcr": 691.6
+   },
+   "method": "pdf_manual"
   }
  }
 }

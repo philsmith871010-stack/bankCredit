@@ -1,0 +1,22 @@
+{
+ "id": "4d4be8abe8bb",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2020-half-year-pillar-3-report.pdf",
+ "page": 6,
+ "reference_date": "2020-03-31",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 44960.0,
+  "tier1_capital": 51761.0,
+  "total_capital": 63203.0,
+  "rwa": 432666.0,
+  "cet1_ratio": 10.39,
+  "tier1_ratio": 11.96,
+  "total_capital_ratio": 14.61,
+  "leverage_exposure": 988245.0,
+  "leverage_ratio": 5.24,
+  "lcr": 136.0,
+  "nsfr": 116.0
+ },
+ "note": "NAB half-year report under APS 330, Level 2 basis - the table also prints Level 1 ratios, which are not recorded. Capital amounts from the detailed capital disclosures, ratios and leverage from the capital and leverage ratios table, LCR and NSFR from the APS 330 liquidity templates, taking the NSFR page headed 31 Mar 2020 rather than the 31 Dec 2019 page after it. The core rows the extractor reported missing (total RWA and the CET1 ratio) are in the capital adequacy table on p.5 and the ratios table on p.6. Check: 44,960/432,666 = 10.39% and 63,203/432,666 = 14.61%, matching the published ratios."
+}

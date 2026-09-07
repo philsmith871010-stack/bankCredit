@@ -1,0 +1,19 @@
+{
+ "id": "a3edb51b7b4d",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/june-2020-pillar-3-report.pdf",
+ "page": 4,
+ "reference_date": "2020-06-30",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 56189.0,
+  "rwa": 427252.0,
+  "cet1_ratio": 11.6,
+  "tier1_ratio": 13.2,
+  "total_capital_ratio": 15.8,
+  "leverage_exposure": 964854.0,
+  "leverage_ratio": 5.8,
+  "lcr": 132.0
+ },
+ "note": "NAB APS 330 quarterly report, Level 2 (consolidated group) basis. APS 330 has no KM1 template. Ratios and the leverage block from the capital ratios and leverage ratio tables, total RWA from the capital adequacy table, LCR from the APS 330 template, current-quarter column. Quarterly reports give no CET1 or total capital amount, so neither is recorded. The capital ratios table is headed 'As at 30 Jun 20 / 31 Mar 20'. Check: 56,189/427,252 = 13.15%, matching the published 13.2% Tier 1 ratio."
+}

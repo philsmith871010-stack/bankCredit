@@ -1,0 +1,15 @@
+{
+ "id": "623eeccf345b",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2015/31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 2,
+ "reference_date": "2015-03-31",
+ "currency": "AUD",
+ "values": {
+  "rwa": 35090.9,
+  "cet1_ratio": 7.92,
+  "tier1_ratio": 9.77,
+  "total_capital_ratio": 11.73
+ },
+ "note": "Bendigo and Adelaide Bank reports under APRA's APS 330, which has no KM1 template. Ratios come from the capital adequacy table, stated for the consolidated group, first column = the reporting date. APS 330 required no leverage ratio, and neither LCR nor NSFR was reported in Australia at these dates. A four-page quarterly report carrying Table 3 and the credit and securitisation tables only, so no capital amounts. The ASX announcement is dated 28 May 2015 and Table 3's columns are 31 March 2015 and 31 December 2014; the second column reproduces the December 2014 report's figures exactly."
+}

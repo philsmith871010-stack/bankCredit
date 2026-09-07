@@ -1,0 +1,20 @@
+{
+ "id": "3fd4687291e8",
+ "entity_id": "gatehouse-bank",
+ "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Pillar-III-Disclosure-2021-FINAL_2022-08-23-154942_nofu.pdf?dm=1710181850",
+ "page": 32,
+ "reference_date": "2021-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 94.5,
+  "tier1_capital": 94.5,
+  "total_capital": 103.5,
+  "rwa": 523.0,
+  "cet1_ratio": 18.1,
+  "tier1_ratio": 18.1,
+  "total_capital_ratio": 19.8,
+  "leverage_ratio": 9.2,
+  "lcr": 365.0
+ },
+ "note": "Gatehouse Bank's 2021 report has a short 'Key Metrics' summary on p.4 (ratios, leverage and LCR) and the own funds template in Appendix 1 on p.32, which carries the amounts the extractor reported missing: row 29 CET1 94.5, row 45 Tier 1 94.5, row 59 total capital 103.5 and row 60 total RWA 523.0. Single-entity basis - the Bank is not part of a UK consolidation sub-group. No leverage exposure measure is printed, so only the 9.2% ratio is recorded. Note the report's own typo: the paragraph introducing the key metrics table says 'as at 31/12/2020' while the table header, and the rest of the document, say 31 December 2021. Check: 94.5/523.0 = 18.07% and 103.5/523.0 = 19.79%, matching the published 18.1% and 19.8%."
+}

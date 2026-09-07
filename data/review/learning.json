@@ -1430,5 +1430,285 @@
   "page_reviewer": 3,
   "date_extractor": "2018-06-30",
   "date_reviewer": "2018-06-30"
+ },
+ {
+  "date": "2026-09-07T13:34:20",
+  "id": "049bd830084c",
+  "entity_id": "jpmorgan-chase",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-07T13:34:20",
+  "id": "064bee070396",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2014-12-31"
+ },
+ {
+  "date": "2026-09-07T13:34:20",
+  "id": "1023b7cfd480",
+  "entity_id": "national-bank-of-canada",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 11,
+  "date_extractor": null,
+  "date_reviewer": "2022-01-31"
+ },
+ {
+  "date": "2026-09-07T13:34:21",
+  "id": "3fd4687291e8",
+  "entity_id": "gatehouse-bank",
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing ",
+  "skip": false,
+  "compared": 4,
+  "matched": 4,
+  "mismatches": {},
+  "page_extractor": 4,
+  "page_reviewer": 32,
+  "date_extractor": "2021-12-31",
+  "date_reviewer": "2021-12-31"
+ },
+ {
+  "date": "2026-09-07T13:34:21",
+  "id": "4033597afe9d",
+  "entity_id": "gatehouse-bank",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 11,
+  "matched": 11,
+  "mismatches": {},
+  "page_extractor": 33,
+  "page_reviewer": 33,
+  "date_extractor": null,
+  "date_reviewer": "2023-12-31"
+ },
+ {
+  "date": "2026-09-07T13:34:21",
+  "id": "4d4be8abe8bb",
+  "entity_id": "nab",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; warn:no LCR row (",
+  "skip": false,
+  "compared": 4,
+  "matched": 4,
+  "mismatches": {},
+  "page_extractor": 6,
+  "page_reviewer": 6,
+  "date_extractor": "2020-03-31",
+  "date_reviewer": "2020-03-31"
+ },
+ {
+  "date": "2026-09-07T13:34:21",
+  "id": "5026d75fe0c0",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2014-03-31"
+ },
+ {
+  "date": "2026-09-07T13:34:22",
+  "id": "5f3fc350e332",
+  "entity_id": "barclays",
+  "reason": "warn:leverage_ratio 4.30 vs implied 0.00; error:tier1_capital below cet1_capital",
+  "skip": false,
+  "compared": 10,
+  "matched": 7,
+  "mismatches": {
+   "tier1_capital": [
+    17.0,
+    52998.0
+   ],
+   "leverage_exposure": [
+    1142520.0,
+    998556.0
+   ],
+   "leverage_ratio": [
+    4.3,
+    5.1
+   ]
+  },
+  "page_extractor": 19,
+  "page_reviewer": 19,
+  "date_extractor": "2018-12-31",
+  "date_reviewer": "2018-12-31"
+ },
+ {
+  "date": "2026-09-07T13:34:22",
+  "id": "623eeccf345b",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2015-03-31"
+ },
+ {
+  "date": "2026-09-07T13:34:22",
+  "id": "62df79463894",
+  "entity_id": "standard-chartered",
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing ",
+  "skip": false,
+  "compared": 6,
+  "matched": 3,
+  "mismatches": {
+   "cet1_capital": [
+    13.9,
+    37184.0
+   ],
+   "tier1_capital": [
+    16.3,
+    43796.0
+   ],
+   "total_capital": [
+    20.8,
+    55862.0
+   ]
+  },
+  "page_extractor": 3,
+  "page_reviewer": 3,
+  "date_extractor": "2019-03-31",
+  "date_reviewer": "2019-03-31"
+ },
+ {
+  "date": "2026-09-07T13:34:22",
+  "id": "7df19da955db",
+  "entity_id": "nab",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 3,
+  "matched": 2,
+  "mismatches": {
+   "tier1_capital": [
+    12.7,
+    52761.0
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2020-09-30",
+  "date_reviewer": "2019-12-31"
+ },
+ {
+  "date": "2026-09-07T13:34:23",
+  "id": "a3e708244e97",
+  "entity_id": "standard-chartered",
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:header da",
+  "skip": false,
+  "compared": 7,
+  "matched": 6,
+  "mismatches": {
+   "cet1_capital": [
+    14.5,
+    38340.0
+   ]
+  },
+  "page_extractor": 3,
+  "page_reviewer": 3,
+  "date_extractor": "2018-06-30",
+  "date_reviewer": "2018-09-30"
+ },
+ {
+  "date": "2026-09-07T13:34:23",
+  "id": "a3edb51b7b4d",
+  "entity_id": "nab",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 3,
+  "matched": 2,
+  "mismatches": {
+   "tier1_capital": [
+    13.2,
+    56189.0
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2020-06-30",
+  "date_reviewer": "2020-06-30"
+ },
+ {
+  "date": "2026-09-07T13:34:23",
+  "id": "a86f7c9086dc",
+  "entity_id": "santander-uk",
+  "reason": "warn:no leverage ratio row (not all Basel KM1 filers disclose one); error:cet1_r",
+  "skip": false,
+  "compared": 9,
+  "matched": 5,
+  "mismatches": {
+   "tier1_capital": [
+    12849000.0,
+    12849.0
+   ],
+   "total_capital": [
+    15713000.0,
+    15713.0
+   ],
+   "rwa": [
+    75293000.0,
+    75293.0
+   ],
+   "leverage_exposure": [
+    303000.0,
+    301800.0
+   ]
+  },
+  "page_extractor": 3,
+  "page_reviewer": 3,
+  "date_extractor": "2019-06-30",
+  "date_reviewer": "2019-06-30"
+ },
+ {
+  "date": "2026-09-07T13:34:23",
+  "id": "b845b605e735",
+  "entity_id": "jpmorgan-chase",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-07T13:34:24",
+  "id": "df589eb0f5c3",
+  "entity_id": "jpmorgan-chase",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-07T13:34:24",
+  "id": "e4aa2521b3c4",
+  "entity_id": "santander-uk",
+  "reason": "error:missing core row rwa; warn:no leverage ratio row (not all Basel KM1 filers",
+  "skip": false,
+  "compared": 7,
+  "matched": 6,
+  "mismatches": {
+   "leverage_exposure": [
+    306.8,
+    289700.0
+   ]
+  },
+  "page_extractor": 2,
+  "page_reviewer": 2,
+  "date_extractor": "2016-12-31",
+  "date_reviewer": "2016-12-31"
  }
 ]

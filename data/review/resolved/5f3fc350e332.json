@@ -1,0 +1,21 @@
+{
+ "id": "5f3fc350e332",
+ "entity_id": "barclays",
+ "url": "https://home.barclays/content/dam/home-barclays/documents/investor-relations/reports-and-events/annual-reports/2018/Barclays%20PLC%20Pillar%203%20Report%202018.pdf",
+ "page": 19,
+ "reference_date": "2018-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 41100.0,
+  "tier1_capital": 52998.0,
+  "total_capital": 64594.0,
+  "rwa": 311926.0,
+  "cet1_ratio": 13.2,
+  "tier1_ratio": 17.0,
+  "total_capital_ratio": 20.7,
+  "leverage_exposure": 998556.0,
+  "leverage_ratio": 5.1,
+  "lcr": 169.0
+ },
+ "note": "Table 7 'KM1 - Key metrics and movements', p.19, columns 31.12.18 back to 31.12.17; the first is taken. The extractor's two errors both come from the template interleaving transitional and fully loaded rows: it picked row 2a (fully loaded Tier 1) against row 1 (transitional CET1), which is why Tier 1 appeared to sit below CET1, and it paired the fully loaded CRR leverage ratio of 4.3% with no exposure measure. The transitional rows are recorded throughout: CET1 41,100 (row 1), Tier 1 52,998 (row 2), total capital 64,594 (row 3), RWA 311,926 (row 4). Leverage is the transitional UK leverage ratio of 5.1% (row 14b) with its exposure measure of 998,556 (row 13b), Barclays' headline basis; the fully loaded CRR ratio of 4.3% and the average UK ratio of 4.5% are not recorded. Check: 41,100/311,926 = 13.18% and 64,594/311,926 = 20.71%, matching the published 13.2% and 20.7%."
+}

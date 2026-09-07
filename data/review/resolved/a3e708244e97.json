@@ -1,0 +1,21 @@
+{
+ "id": "a3e708244e97",
+ "entity_id": "standard-chartered",
+ "url": "https://www.sc.com/en/uploads/sites/66/content/docs/Standard_Chartered_PLC_Q3_2018_Pillar_3_disclosure.pdf",
+ "page": 3,
+ "reference_date": "2018-09-30",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 38340.0,
+  "tier1_capital": 45029.0,
+  "total_capital": 57576.0,
+  "rwa": 265245.0,
+  "cet1_ratio": 14.5,
+  "tier1_ratio": 17.0,
+  "total_capital_ratio": 21.7,
+  "leverage_exposure": 742828.0,
+  "leverage_ratio": 5.8,
+  "lcr": 153.5
+ },
+ "note": "Table 1 'Key metrics for the Group (KM1)'. This PDF has no text layer, so the page was rendered and read visually. Where the template shows both transitional and fully loaded IFRS 9 rows, the transitional row is recorded. Leverage is the UK leverage ratio and its exposure measure, Standard Chartered's headline basis. Amounts are US dollar millions. The reference date needed correcting: the queue had 2018-06-30, but this is the Q3 2018 report and the KM1 columns run 30.09.2018, 30.06.2018, 31.03.2018, 31.12.2017. Every figure reappears as the second column of the Q1 2019 report, which agrees. Check: 38,340/265,245 = 14.46% and 57,576/265,245 = 21.71%, matching the published 14.5% and 21.7%."
+}

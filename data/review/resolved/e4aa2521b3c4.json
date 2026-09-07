@@ -1,0 +1,20 @@
+{
+ "id": "e4aa2521b3c4",
+ "entity_id": "santander-uk",
+ "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:8c9486e6-0ef0-40d1-a50f-a6203ff1ade4/original/as/2016_additional_capital_and_risk_management_disclosures.pdf",
+ "page": 2,
+ "reference_date": "2016-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 10206.0,
+  "tier1_capital": 12239.0,
+  "total_capital": 15194.0,
+  "rwa": 87632.0,
+  "cet1_ratio": 11.6,
+  "tier1_ratio": 14.0,
+  "total_capital_ratio": 17.3,
+  "leverage_exposure": 289700.0,
+  "leverage_ratio": 4.1
+ },
+ "note": "Santander UK's 'Additional Capital and Risk Management Disclosures' carries its own key metrics table rather than the KM1 template, with quarter-end columns running backwards from the reporting date; the first is taken. Transitional figures are recorded, matching the headline ratios. The leverage exposure measure is printed in GBP billions and converted to millions here, and the leverage ratio is struck on end-point Tier 1, so Tier 1 over exposure lands slightly above the printed ratio. The core row the extractor reported missing is total RWA: this 2016 vintage labels it 'Risk Weighted Assessment' rather than 'Total risk-weighted assets', at 87,632. Leverage is the UK Leverage Ratio, which Santander applies from 30 September 2016 and which deducts matched central bank claims from the exposure measure; the end-point CRD IV ratio of 3.8% in the same table is not recorded. No LCR is disclosed at this date. Check: 10,206/87,632 = 11.65% and 15,194/87,632 = 17.34%, matching the published 11.6% and 17.3%."
+}

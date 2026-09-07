@@ -1,0 +1,20 @@
+{
+ "id": "1023b7cfd480",
+ "entity_id": "national-bank-of-canada",
+ "url": "https://www.nbc.ca/content/dam/bnc/a-propos-de-nous/relations-investisseurs/resultats-trimestriels/2022/suppack-regulatory-capital-q1-2022.pdf",
+ "page": 11,
+ "reference_date": "2022-01-31",
+ "currency": "CAD",
+ "values": {
+  "cet1_capital": 13515.0,
+  "tier1_capital": 16164.0,
+  "total_capital": 17123.0,
+  "rwa": 106168.0,
+  "cet1_ratio": 12.7,
+  "tier1_ratio": 15.2,
+  "total_capital_ratio": 16.1,
+  "leverage_exposure": 367775.0,
+  "leverage_ratio": 4.4
+ },
+ "note": "National Bank of Canada reports under OSFI's guidelines; this Supplementary Regulatory Capital and Pillar 3 Disclosure has no KM1, only KM2 (TLAC). The PDF has no text layer and OCR is unreliable on the first column of these packs, so the rows were read from rendered images. Capital amounts from CC1 rows 29, 44, 45 and 58, total RWA and ratios from CC1 rows 60-63, leverage from LR2. Amounts are millions of Canadian dollars. The reference date follows National Bank's 31 October fiscal year end, so fiscal Q1 2022 closes 31 January 2022; the pack labels its columns by quarter rather than printing a date. Total capital 17,123 is Tier 1 16,164 plus Tier 2 959, and is confirmed by the Q4 2022 pack's fourth column, which also gives the 16.1% total capital ratio and the leverage figures. Check: 13,515/106,168 = 12.73% and 17,123/106,168 = 16.13%, matching the published 12.7% and 16.1%. This pack carries no LCR or NSFR."
+}

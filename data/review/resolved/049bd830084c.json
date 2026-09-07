@@ -1,0 +1,5 @@
+{
+ "id": "049bd830084c",
+ "skip": true,
+ "note": "This file is not a Pillar 3 disclosure and does not belong to this entity. The browser collector followed the 'static-files' pattern on JPMorgan's Basel Pillar 3 / US LCR listing page and picked up subsidiary financial statements instead. The queue entity jpmorgan-chase is JPMorgan Chase & Co., the holding company, whereas these documents are for subsidiaries, and they are consolidated financial statements rather than Pillar 3 reports - no KM1, no Basel capital template. Recording anything from them against the holding company would be wrong on both counts. The jpmorgan-chase locator needs a narrower match; this is a locator fix, not a re-read. This one is JPMorgan Chase Bank, National Association's consolidated financial statements for the three years ended December 31, 2025."
+}

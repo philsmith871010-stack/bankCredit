@@ -147,7 +147,48 @@
  "suffolk-bs": {
   "page": "https://www.suffolkbuildingsociety.co.uk/about/governance/",
   "checked": "2026-09-07",
-  "links": []
+  "links": [
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/Voluntary-modern-slavery-and-human-trafficking-statement.pdf",
+    "text": "Read our Modern Slavery Statement"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Review-of-the-Year-2025.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Report-and-Accounts-2025.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2021/11/SBS13-Rules-Memorandum.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2025/03/6c.-SuBS-Internal-Audit-Charter-202425-issued-2111.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2025/04/TERMS-OF-REFERENCE-FOR-REMUNERATION-COMMITTEE-MARCH-2025.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2025/04/TERMS-OF-REFERENCE-FOR-THE-NOMINATIONS-COMMITTEE-MARCH-2025.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/06/TERMS-OF-REFERENCE-FOR-THE-AUDIT-COMMITTEE-MAY-2026.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2025/04/TERMS-OF-REFERENCE-FOR-THE-BOARD-RISK-AND-COMPLIANCE-COMMITTEE-MARCH-2025.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/INVL107-01-26-FSCS-Information-Sheet.pdf",
+    "text": ""
+   }
+  ]
  },
  "progressive-bs": {
   "page": "https://theprogressive.com/about-us/your-society",
@@ -178,12 +219,42 @@
  "leek-bs": {
   "page": "https://www.leekbs.co.uk/about-us/",
   "checked": "2026-09-07",
-  "links": []
+  "links": [
+   {
+    "url": "https://www.leekbs.co.uk/content/images/page/files/Mortgage%20Fees%20and%20Charges%202026%20-%20MortFeeCharg-REV04-26.pdf",
+    "text": "Mortgage Fees and Charges"
+   },
+   {
+    "url": "https://www.leekbs.co.uk/content/images/page/files/Guiding%20You%20Through%20Home%20Buying%20Process%20V005%20Oct%202023.pdf",
+    "text": "Homebuyers Guide"
+   },
+   {
+    "url": "https://www.leekbs.co.uk/content/images/page/files/Ultimate%20Guide%20For%20First%20Time%20Buyers%202025%20-%20V009.pdf",
+    "text": "Our Ultimate First Time Buyers Guide"
+   },
+   {
+    "url": "https://www.leekbs.co.uk/content/images/page/files/Rules%20of%20the%20Society%202021%20Edition%20L000944-006.pdf",
+    "text": "Rules of the Society"
+   },
+   {
+    "url": "https://www.leekbs.co.uk/content/images/page/files/Visiting%20our%20Head%20Office%20v002%202025.pdf",
+    "text": "Visiting our Head Office"
+   }
+  ]
  },
  "hinckley-and-rugby-bs": {
   "page": "https://www.hrbs.co.uk/the-society/governance/",
   "checked": "2026-09-07",
-  "links": []
+  "links": [
+   {
+    "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
+    "text": "Annual report and accounts summary"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2024/11/Whistleblowing-Policy-Public-2024.pdf",
+    "text": "Public Whistleblowing Policy"
+   }
+  ]
  },
  "furness-bs": {
   "page": "https://www.furnessbs.co.uk/about-us/",
@@ -206,7 +277,16 @@
  "al-rayan-bank": {
   "page": "https://www.alrayanbank.co.uk/about-us/",
   "checked": "2026-09-07",
-  "links": []
+  "links": [
+   {
+    "url": "https://apps.apple.com/gb/app/al-rayan-bank-uk/id1061102013",
+    "text": "Download on the\n\t\t\t\t\t\tApp Store"
+   },
+   {
+    "url": "https://www.alrayanbank.co.uk/mobile-banking",
+    "text": "Download the app"
+   }
+  ]
  },
  "gatehouse-bank": {
   "page": "https://www.gatehousebank.com/about-us",
@@ -788,11 +868,83 @@
   "links": [
    {
     "url": "https://www.goldmansachs.com/insights/reports",
-    "text": ""
+    "text": "Reports"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2026/1q-2q-nsfr-2026.pdf",
+    "text": "First and Second Quarters 2026 Net Stable Funding Ratio Disclosure"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2026/2q-2026-liquidity-coverage-ratio.pdf",
+    "text": "Second Quarter 2026 Liquidity Coverage Ratio Disclosure"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2026/2Q26-pillar-3.pdf",
+    "text": "Second Quarter 2026 Pillar 3 Disclosures"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2026/2026-annual-dodd-frank-stress-test-disclosure.pdf",
+    "text": "2026 Annual Dodd-Frank Act Stress Test Disclosure"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2026/1q-pillar-3-2026.pdf",
+    "text": "First Quarter 2026 Pillar 3 Disclosures"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2026/1q-2026-liquidity-coverage-ratio.pdf",
+    "text": "First Quarter 2026 Liquidity Coverage Ratio Disclosure"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/4q-2025-liquidity-coverage-ratio.pdf",
+    "text": "Fourth Quarter 2025 Liquidity Coverage Ratio Disclosure"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/3q-4q-nsfr-2025.pdf",
+    "text": "Third and Fourth Quarters 2025 Net Stable Funding Ratio Disclosure"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/4q-pillar-3-2025.pdf",
+    "text": "Fourth Quarter 2025 Pillar 3 Disclosures"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/3q-2025-liquidity-coverage-ratio.pdf",
+    "text": "Third Quarter 2025 Liquidity Coverage Ratio Disclosure"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/3q-pillar-3-2025.pdf",
+    "text": "Third Quarter 2025 Pillar 3 Disclosures"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/2q-pillar-3-2025.pdf",
+    "text": "Second Quarter 2025 Pillar 3 Disclosures"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/2q-2025-liquidity-coverage-ratio.pdf",
+    "text": "Second Quarter 2025 Liquidity Coverage Ratio Disclosure"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/1q-2q-nsfr-2025.pdf",
+    "text": "First and Second Quarters 2025 Net Stable Funding Ratio Disclosure"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/2025-annual-dodd-frank-stress-test-disclosure.pdf",
+    "text": "2025 Annual Dodd-Frank Act Stress Test Disclosure"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/1q-pillar-3-2025.pdf",
+    "text": "First Quarter 2025 Pillar 3 Disclosures"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/1q-2025-liquidity-coverage-ratio.pdf",
+    "text": "First Quarter 2025 Liquidity Coverage Ratio Disclosure"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/financials/annual-reports",
-    "text": ""
+    "text": "Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": "Regulatory Disclosures"
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
@@ -807,7 +959,7 @@
     "text": ""
    },
    {
-    "url": "https://www.goldmansachs.com/disclosures",
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
     "text": ""
    }
   ]
@@ -1524,6 +1676,3370 @@
    },
    {
     "url": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures/_jcr_content/root/contentarea/mainpar/toplevelgrid_1828724384/col_1/textimage/image.580.jpg/1616145105001.jpg",
+    "text": ""
+   }
+  ]
+ },
+ "lloyds-banking-group > rb_bf10006sbr|rid=RID_-1289205583|rpid=-": {
+  "page": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
+    "text": ""
+   }
+  ]
+ },
+ "lloyds-bank > rb_bf10006sbr|rid=RID_-1289205583|rpid=-": {
+  "page": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
+    "text": ""
+   }
+  ]
+ },
+ "bank-of-scotland > rb_bf10006sbr|rid=RID_-1289205583|rpid=-": {
+  "page": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
+    "text": ""
+   }
+  ]
+ },
+ "investec > equity-capital-markets.html?link=Equity%": {
+  "page": "https://www.investec.com/en_gb/business/public-companies/investment-banking-and-equities/equity-capital-markets.html?link=Equity%20capital%20markets&section=Business&category=Investment%20banking",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
+    "text": "PE Trends 2025 report"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/secondaries-reports/2024-key-findings.html?section=Business&category=Secondaries%20Report%202024",
+    "text": "Secondaries Report 2024"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/future-property/2024-report.html?section=Business&category=Future%20Property%20report%202024",
+    "text": "Future Property report 2024"
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-34680b89d8c2dcc908016ab727144a60-lc.min.css",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-e52a295dc26c9a18e5640da6b2e5e1fe-lc.min.js",
+    "text": ""
+   }
+  ]
+ },
+ "investec > foreign-exchange-for-funds.html?link=For": {
+  "page": "https://www.investec.com/en_gb/business/popular-solutions/treasury-and-risk-management/foreign-exchange-for-funds.html?link=Foreign%20exchange%20for%20private%20capital%20markets&section=Business&category=Risk%20management",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
+    "text": "PE Trends 2025 report"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/secondaries-reports/2024-key-findings.html?section=Business&category=Secondaries%20Report%202024",
+    "text": "Secondaries Report 2024"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/future-property/2024-report.html?section=Business&category=Future%20Property%20report%202024",
+    "text": "Future Property report 2024"
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-34680b89d8c2dcc908016ab727144a60-lc.min.css",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-e52a295dc26c9a18e5640da6b2e5e1fe-lc.min.js",
+    "text": ""
+   }
+  ]
+ },
+ "investec > working-capital.html?link=Working%20capi": {
+  "page": "https://www.investec.com/en_gb/business/private-companies/lending-and-finance/working-capital.html?link=Working%20capital&section=Business&category=Business%20financing",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
+    "text": "PE Trends 2025 report"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/secondaries-reports/2024-key-findings.html?section=Business&category=Secondaries%20Report%202024",
+    "text": "Secondaries Report 2024"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/future-property/2024-report.html?section=Business&category=Future%20Property%20report%202024",
+    "text": "Future Property report 2024"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/united-kingdom/business/bank/The_Coconut_Collaborative_CaseStudy.pdf",
+    "text": "Read full testimonial"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/testimonials/required-IT-case-study.pdf",
+    "text": "Read full testimonial"
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=583/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=523/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=464/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=710/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=518/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=583/content/dam/united-kingdom/downloads-and-documents/cib/required_it_card_image.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=523/content/dam/united-kingdom/downloads-and-documents/cib/required_it_card_image.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=464/content/dam/united-kingdom/downloads-and-documents/cib/required_it_card_image.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=710/content/dam/united-kingdom/downloads-and-documents/cib/required_it_card_image.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=518/content/dam/united-kingdom/downloads-and-documents/cib/required_it_card_image.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=387/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=347/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=387/content/dam/united-kingdom/downloads-and-documents/cib/required_it_card_image.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=347/content/dam/united-kingdom/downloads-and-documents/cib/required_it_card_image.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-34680b89d8c2dcc908016ab727144a60-lc.min.css",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-e52a295dc26c9a18e5640da6b2e5e1fe-lc.min.js",
+    "text": ""
+   }
+  ]
+ },
+ "investec > private-capital.html?link=Private%20capi": {
+  "page": "https://www.investec.com/en_gb/business/private-companies/lending-and-finance/private-capital.html?link=Private%20capital%20&section=Business&category=Business%20financing",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
+    "text": "PE Trends 2025 report"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/secondaries-reports/2024-key-findings.html?section=Business&category=Secondaries%20Report%202024",
+    "text": "Secondaries Report 2024"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/future-property/2024-report.html?section=Business&category=Future%20Property%20report%202024",
+    "text": "Future Property report 2024"
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-34680b89d8c2dcc908016ab727144a60-lc.min.css",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-e52a295dc26c9a18e5640da6b2e5e1fe-lc.min.js",
+    "text": ""
+   }
+  ]
+ },
+ "investec > institutions.html?section=Business&categ": {
+  "page": "https://www.investec.com/en_gb/business/institutions.html?section=Business&category=Financial%20institutions",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
+    "text": "PE Trends 2025 report"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/secondaries-reports/2024-key-findings.html?section=Business&category=Secondaries%20Report%202024",
+    "text": "Secondaries Report 2024"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/future-property/2024-report.html?section=Business&category=Future%20Property%20report%202024",
+    "text": "Future Property report 2024"
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-34680b89d8c2dcc908016ab727144a60-lc.min.css",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-e52a295dc26c9a18e5640da6b2e5e1fe-lc.min.js",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/content/dam/united-kingdom/focus/business-growth/Listing%20Image_Investec%20Monthly%20FX%20Report_September.jpg",
+    "text": ""
+   }
+  ]
+ },
+ "investec > 2025.html?section=Business&category=PE%2": {
+  "page": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
+    "text": "Skip to main content"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/secondaries-reports/2024-key-findings.html?section=Business&category=Secondaries%20Report%202024",
+    "text": "Secondaries Report 2024"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/future-property/2024-report.html?section=Business&category=Future%20Property%20report%202024",
+    "text": "Future Property report 2024"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/private-equity-trends.html",
+    "text": "PE trends report"
+   },
+   {
+    "url": "https://media.privateequityinternational.com/uploads/2025/01/full-year-2024-fundraising-report-pei.pdf",
+    "text": "https://media.privateequityinternational.com/uploads/2025/01/full-year-2024-fundraising-report-pei.pdf"
+   },
+   {
+    "url": "https://www.mckinsey.com/industries/private-capital/our-insights/global-private-markets-report.",
+    "text": "https://www.mckinsey.com/industries/private-capital/our-insights/global-private-markets-report"
+   },
+   {
+    "url": "https://www.investec.com/en_gb/focus/investing/direct-lending-annual-report-2025.html",
+    "text": ""
+   },
+   {
+    "url": "https://www.mckinsey.com/industries/private-capital/our-insights/global-private-markets-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/newsletter/pe-trends-report,dotcom:content-hub-tags/uk-content-hub-tracking-tags/topic/ct7-16-direct-lending",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/content/dam/united-kingdom/focus/direct-lending-annual-letter/iaim-direct-lending-annual-report-2025-stone-background-article-listing.jpg",
+    "text": ""
+   }
+  ]
+ },
+ "goldman-sachs-international-bank > reports": {
+  "page": "https://www.goldmansachs.com/insights/reports",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.goldmansachs.com/insights/reports",
+    "text": "Reports"
+   },
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": "Regulatory Disclosures"
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/report",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
+    "text": ""
+   }
+  ]
+ },
+ "goldman-sachs-international-bank > investor-relations": {
+  "page": "https://www.goldmansachs.com/investor-relations",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.goldmansachs.com/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/proxy-statements/2026/proxy-statement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2025-annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/10k/2025/2025-10-k.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2024-annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/Fixed-Income-Fact-Sheet.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/goldman-sachs-bank-usa-fixed-income-factsheet.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/credit-ratings.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/LIBOR-transition.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/corporate-governance/sustainability-reporting",
+    "text": ""
+   },
+   {
+    "url": "https://goldmansachs-my.sharepoint.com/personal/higgsh_firmwide_corp_gs_com/Documents/FulfillmentNY/JC@gs.com",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/docs/FultonCountyEmployeesRetirementSystem-StipulationandAgreement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/docs/FultonCountyEmployeesRetirementSystem-NoticeofSettlement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/financials/proxy-statements/2026/proxy-statement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/investor-relations/financials/current/annual-reports/2025-annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/financials/10k/2025/2025-10-k.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/annual-reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/financials/current/annual-reports/2025/1x1.png",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2025/1x1.png",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/investor-relations/financials/current/annual-reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/financials/current/annual-reports/2025/3x2.png",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2025/3x2.png",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/investor-relations/financials/current/annual-reports/2024-annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/Fixed-Income-Fact-Sheet.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/goldman-sachs-bank-usa-fixed-income-factsheet.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/credit-ratings.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/LIBOR-transition.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/investor-relations/corporate-governance/sustainability-reporting",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/docs/FultonCountyEmployeesRetirementSystem-StipulationandAgreement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/docs/FultonCountyEmployeesRetirementSystem-NoticeofSettlement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": ""
+   }
+  ]
+ },
+ "goldman-sachs-international-bank > 2026-07-14-q2-results": {
+  "page": "https://www.goldmansachs.com/pressroom/press-releases/2026/2026-07-14-q2-results",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.goldmansachs.com/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": ""
+   }
+  ]
+ },
+ "goldman-sachs-international-bank > broadcast-second-quarter-2026": {
+  "page": "https://www.goldmansachs.com/investor-relations/presentations/2026/broadcast-second-quarter-2026",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.goldmansachs.com/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://preview.gscom.gspublish.site.gs.com/api/public/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://preview.gscom.gspublish.site.gs.com/api/public/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": ""
+   }
+  ]
+ },
+ "goldman-sachs-international-bank > corporate-governance": {
+  "page": "https://www.goldmansachs.com/investor-relations/corporate-governance",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.goldmansachs.com/insights/reports",
+    "text": "Reports"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/corporate-governance/sustainability-reporting",
+    "text": "Sustainability and Other ReportingRead More"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/annual-reports",
+    "text": "Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": "Regulatory Disclosures"
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/investor-relations/corporate-governance/sustainability-reporting",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/investor-relations/financials/annual-reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
+    "text": ""
+   }
+  ]
+ },
+ "goldman-sachs-international-bank > creditor-information": {
+  "page": "https://www.goldmansachs.com/investor-relations/creditor-information",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.goldmansachs.com/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/Fixed-Income-Fact-Sheet.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/goldman-sachs-bank-usa-fixed-income-factsheet.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/credit-ratings.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/LIBOR-transition.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/2025-global-resolution-plan.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/sustainability-issuance-report-2023.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/pdfs/migrated/our-commitments/sustainability/2022-sustainability-report/multimedia/report.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/sustainability-issuance-report-2021.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/gs-sustainability-issuance-framework.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/creditor-information/GS-Sustainability-Issuance-Framework-Presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/Fixed-Income-Fact-Sheet.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/goldman-sachs-bank-usa-fixed-income-factsheet.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/credit-ratings.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/LIBOR-transition.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/2025-global-resolution-plan.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/sustainability-issuance-report-2023.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pdfs/migrated/our-commitments/sustainability/2022-sustainability-report/multimedia/report.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/sustainability-issuance-report-2021.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/gs-sustainability-issuance-framework.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/GS-Sustainability-Issuance-Framework-Presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": ""
+   }
+  ]
+ },
+ "west-brom-bs > financial-information": {
+  "page": "https://www.westbrom.co.uk/about-us/financial-information",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.westbrom.co.uk/about-us/financial-information/financial-reports-and-results",
+    "text": "Financial reports and results"
+   }
+  ]
+ },
+ "west-brom-bs > corporate-governance": {
+  "page": "https://www.westbrom.co.uk/about-us/corporate-governance",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.westbrom.co.uk/-/media/wbbs/images/about-us/rules-and-memorandum-document.jpg?h=193&iar=0&w=298&hash=1AEB436140F3B85D0C9FE29DEC23B148",
+    "text": ""
+   },
+   {
+    "url": "https://www.westbrom.co.uk/about-us/corporate-governance/gender-pay-reporting",
+    "text": ""
+   }
+  ]
+ },
+ "west-brom-bs > modern-slavery-and-human-trafficking-sta": {
+  "page": "https://www.westbrom.co.uk/about-us/corporate-governance/modern-slavery-and-human-trafficking-statement",
+  "checked": "2026-09-07",
+  "links": []
+ },
+ "saffron-bs > financial-results": {
+  "page": "https://www.saffronbs.co.uk/financial-results",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/savings/manage-my-account/forms-downloads",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/useful-mortgage-documents",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2026-03/Report%20and%20Accounts_FINAL%20no%20signatures.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2026-03/Annual%20Members%20Review%20FINAL.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2025-03/Annual%20Members%20Review%20v11.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2025-03/Report%20and%20Accounts_v23_web.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2024-03/Report%20and%20Accounts_v21_highres.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2023-03/Annual-Members-Review-2022_0.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2023-03/Report-and-Accounts-2022.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2022-03/Annual%20Members%20Review%20v17%20website%20compressed.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2022-03/Report%20and%20Accounts%20v33%20web%20compressed.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2021-03/Annual%20Members%20Review%202020_0.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2021-03/Annual%20Report%20and%20Accounts%202020.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2020-08/annual-members-review-2019.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2020-08/annual-report-and-accounts-2019_0.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2020-07/Annual%20members%20review%202018.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2020-07/Annual%20reports%20and%20accounts%202018.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2020-07/Annual%20reports%20and%20accounts%202017.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "saffron-bs > financial-wellbeing-reviews": {
+  "page": "https://www.saffronbs.co.uk/savings/tips-tools-support/financial-wellbeing-reviews",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/savings/manage-my-account/forms-downloads",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/useful-mortgage-documents",
+    "text": ""
+   }
+  ]
+ },
+ "saffron-bs > useful-mortgage-documents": {
+  "page": "https://www.saffronbs.co.uk/useful-mortgage-documents",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.saffronbs.co.uk/useful-mortgage-documents",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/savings/manage-my-account/forms-downloads",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2026-03/Identifying%20you%20and%20Preventing%20Fraud%20Leaflet.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2020-07/Residential%20mortgage%20conditions.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2020-07/General%20information%20for%20regulated%20mortgages.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2020-07/Affordability%20assessment.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2020-07/Egress%20FAQs_0.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2023-12/Retention%20Release%20Request%20Form%20SBS%20-%20V1.0.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2023-12/Retention%20Release%20Request%20Form%20-%20Printable%20Version%20-%20V1.0.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2023-09/ProgressReportforSelfBuild.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2024-10/ConfirmationofPayee.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "saffron-bs > independent-financial-advice": {
+  "page": "https://www.saffronbs.co.uk/its-more-money/services/independent-financial-advice",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/savings/manage-my-account/forms-downloads",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/useful-mortgage-documents",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2023-11/WrenSterling.pdf?_ga=2.223992093.727789303.1761662828-1173748341.1761662828",
+    "text": ""
+   }
+  ]
+ },
+ "suffolk-bs > financial-education": {
+  "page": "https://www.suffolkbuildingsociety.co.uk/financial-education/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/INVL107-01-26-FSCS-Information-Sheet.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "suffolk-bs > annual-general-meeting": {
+  "page": "https://www.suffolkbuildingsociety.co.uk/about/governance/annual-general-meeting/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Review-of-the-Year-2025.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Report-and-Accounts-2025.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/04/Richard-Norrington-speech-2026.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/04/Peter-Elcock-speech-2026.pdf",
+    "text": "Download"
+   },
+   {
+    "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/INVL107-01-26-FSCS-Information-Sheet.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "suffolk-bs > embed?url=https%3A%2F%2Fwww.suffolkbuild": {
+  "page": "https://www.suffolkbuildingsociety.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.suffolkbuildingsociety.co.uk%2Fabout%2Fgovernance%2F&format=xml",
+  "checked": "2026-09-07",
+  "links": []
+ },
+ "progressive-bs > search-results": {
+  "page": "https://theprogressive.com/search-results",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/document-hub",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/wifd1kdz/privacy-policy.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "progressive-bs > document-hub": {
+  "page": "https://theprogressive.com/document-hub",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://theprogressive.com/document-hub",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/a3dmj2wy/existing-rules.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/e5eoqiwe/society-rules-july-2026-pdf.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/0oig15tg/progressive-building-society-rule-change.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/025gvmtp/021372-pbs-agm-2026-annual-report-web.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/1ykh45ap/021372-pbs-agm-2026-financial-summary_digital.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/sk2ja5vq/021372-pbs-agm-2026-voting-guide-digital_updated.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/kw2n5vf4/external-cash-isa-transfer-request-form-060425.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/idcpppdo/internal-cash-isa-transfer-request-form-060425.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/5uabwq2u/junior-cash-isa-application-form-01-01-25.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/lwpfn4bc/progressive-cash-isa-application-form-06-04-25.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/gv4lnqmv/savings-application-form-01-25.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/ejndg0s3/standing-order-form.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/mtvbrpl4/progressive-savings-general-terms-and-conditions-may-26.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/s2gjohsf/bereavement-request-to-close-account-form.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/zq0djt3k/trust-savings-application-form.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/rvedbluh/business-savings-amendment-form-1024.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/2t0l4khj/business-savings-general-terms-and-conditions-0526.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/vryfotrs/business-savings-application-form-0125.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/fexnu1dp/proving-your-identity-leaflet_may25_final.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/mzwosyhy/online-business-accounts-portal-registration-and-user-guide.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/vmjkghcg/online-business-accounts-application-form-guidelines.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/b25isupu/subsequent-online-business-savings-account-form-for-solicitors.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/i5mesdzt/cant-pay-your-mortgage-web-2020.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/jsqlv2da/what-to-do-if-you-cant-pay-your-mortgage.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/swyg2a35/uk_finance_-_its_your_money_-_final_online.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/301nrhkp/important-information-regarding-your-execution-only-non-advised-product-switch.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/wt2jsel2/moneyhelper-problems-paying-your-mortgage.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/22thhbso/jmsp-affordability-booster-mortgage-terms-and-conditions.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/250l1t0w/pbs-mortgage-statement-guide.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/oszovyn4/mortgage-terms-and-conditions-ni-and-england-january-2026-pdf.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/tsbj0ay4/progressive-data-protection-leaflet.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/y1jpqhyk/a5_supportmembers_leaflet-3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/3wdiu0n1/pbs-internal-audit-charter-fy24.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/l4qh5yr2/little-book-of-big-scamspdf-5th-edition.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/enqhmht0/uk_finance_-_its_your_money_-_final_online.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/hvbbfayp/internal-complaints-procedure.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/xnzls0lv/progressive-tariff-of-charges.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/wifd1kdz/privacy-policy.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/as5jjtr5/terms-and-conditions-of-use-for-progressive-online.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/z5lotcng/progressive-jargon-buster.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "progressive-bs > governance-and-finance": {
+  "page": "https://theprogressive.com/about-us/governance-and-finance",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/document-hub",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/vjvf3yde/audit-committee-tor-sep-25.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/qqepbvcx/board-risk-committee-tor-feb-25.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/vginglug/terms-of-reference-nominations-committee-january-2025.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/ph5n05ds/terms-of-reference-personnel-remuneration-committee-february-2025.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/025gvmtp/021372-pbs-agm-2026-annual-report-web.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/1ykh45ap/021372-pbs-agm-2026-financial-summary_digital.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/y2uj2eud/progressive-building-society-ia-charter-february-2025.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/smlp2ucd/2026-annual-general-meeting-results.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/wifd1kdz/privacy-policy.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "leek-bs > wren-sterling": {
+  "page": "https://www.leekbs.co.uk/financial-planning/wren-sterling/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.leekbs.co.uk/content/images/page/files/Mortgage%20Fees%20and%20Charges%202026%20-%20MortFeeCharg-REV04-26.pdf",
+    "text": "Mortgage Fees and Charges"
+   },
+   {
+    "url": "https://www.leekbs.co.uk/content/images/page/files/Guiding%20You%20Through%20Home%20Buying%20Process%20V005%20Oct%202023.pdf",
+    "text": "Homebuyers Guide"
+   },
+   {
+    "url": "https://www.leekbs.co.uk/content/images/page/files/Ultimate%20Guide%20For%20First%20Time%20Buyers%202025%20-%20V009.pdf",
+    "text": "Our Ultimate First Time Buyers Guide"
+   },
+   {
+    "url": "https://www.leekbs.co.uk/content/images/page/files/Visiting%20our%20Head%20Office%20v002%202025.pdf",
+    "text": "Visiting our Head Office"
+   }
+  ]
+ },
+ "hinckley-and-rugby-bs > financial-services-compensation-scheme": {
+  "page": "https://www.hrbs.co.uk/savings/existing-customers/important-account-information/financial-services-compensation-scheme/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
+    "text": "Annual report and accounts summary"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2025/12/fscs_protected-website-leaflet-nov-2025-1.pdf",
+    "text": "Financial Services Compensation Scheme (FSCS)"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2025/12/2-70-Financial-Service-Compensation-Scheme-Info-leaflet-12-25.pdf",
+    "text": "Financial Service Compensation Scheme Information leaflet"
+   }
+  ]
+ },
+ "hinckley-and-rugby-bs > directors-people": {
+  "page": "https://www.hrbs.co.uk/the-society/governance/directors-people/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
+    "text": "Annual report and accounts summary"
+   }
+  ]
+ },
+ "hinckley-and-rugby-bs > committees": {
+  "page": "https://www.hrbs.co.uk/the-society/governance/committees/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
+    "text": "Annual report and accounts summary"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/08/Audit-and-Compliance-Terms-of-Reference-2026.pdf",
+    "text": "Learn more"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/08/Nominations-and-Governance-Committee-Terms-of-Reference-2026.pdf",
+    "text": "Learn more"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/08/Remuneration-Committee-Terms-of-Reference-2026.pdf",
+    "text": "Learn more"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/08/Risk-Committee-Terms-of-Reference-2026.pdf",
+    "text": "Learn more"
+   }
+  ]
+ },
+ "hinckley-and-rugby-bs > agm": {
+  "page": "https://www.hrbs.co.uk/the-society/governance/agm/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
+    "text": "Annual report and accounts summary"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/02/Hinckley_and_Rugby_Building_Society_Chairs_Letter_2026.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "hinckley-and-rugby-bs > internal-audit-charter": {
+  "page": "https://www.hrbs.co.uk/the-society/governance/internal-audit-charter/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
+    "text": "Annual report and accounts summary"
+   }
+  ]
+ },
+ "hinckley-and-rugby-bs > annual-report-account-summary": {
+  "page": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
+    "text": "Skip to content"
+   },
+   {
+    "url": "https://www.www.hrbs.co.uk/wp-content/uploads/2022/03/Hinckley-and-Rugby-Annual-Report-and-Accounts-2021.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/02/Hinckley-and-Rugby-Building-Society-Annual-Report-and-Accounts-2025.pdf",
+    "text": "Annual Report and Accounts 2025"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/02/Hinckley-and-Rugby-Building-Society-Summary-Financial-Statement-2025.pdf",
+    "text": "Annual Review and Summary Financial Statement 2025"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2025/02/Annual-Accounts-and-Reports-2024-Final.pdf",
+    "text": "Annual Report and Accounts 2024"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2025/03/Summary-Financial-Statement-v17-v2.pdf",
+    "text": "Annual Review and Summary Financial Statement 2024"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2024/03/Annual-Report-and-Accounts-2023.pdf",
+    "text": "Annual Report and Accounts 2023"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-content/uploads/2024/02/Summary-Financial-Statement-2023.pdf",
+    "text": "Annual Review and Summary Financial Statement 2023"
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2Fthe-society%2Fgovernance%2Fannual-report-account-summary%2F",
+    "text": ""
+   },
+   {
+    "url": "https://www.hrbs.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2Fthe-society%2Fgovernance%2Fannual-report-account-summary%2F&format=xml",
+    "text": ""
+   }
+  ]
+ },
+ "furness-bs > helping-you-through-financial-uncertaint": {
+  "page": "https://www.furnessbs.co.uk/about-us/helping-you-through-financial-uncertainty/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.furnessbs.co.uk/financial-reports/",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk/media/ds5pualj/31072026anla.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk/media/5asjbt4c/fe2370-general-savings-tcs-update_digital_aw.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "furness-bs > financial-reports": {
+  "page": "https://www.furnessbs.co.uk/financial-reports/",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.furnessbs.co.uk/financial-reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk/financial-reports/",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/i0zp2btz/furness-annual-report-accounts-2020.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/2xvdfazj/furness-members-review-2020.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/yqilyc14/annual_report.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/ligloryv/summary_financial_statement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/3u3j2cuk/notice-of-agm.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/5qxdt4ox/4-2-final-furness-annual-report-2022-a4.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/grddq0eq/4-3-final-48405-summary-financial-statement-2023.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/eyfhr5t1/4-4-2022-pillar-3-for-board-pack-07-03-23.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk/media/ds5pualj/31072026anla.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk/media/5asjbt4c/fe2370-general-savings-tcs-update_digital_aw.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "al-rayan-bank > results": {
+  "page": "https://www.alrayanbank.co.uk/search/results",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://play.google.com/store/apps/details?id=com.alrayanbankuk.mobile",
+    "text": "Download the app"
+   },
+   {
+    "url": "https://www.alrayanbank.co.uk/mobile-banking",
+    "text": "Download the app"
+   }
+  ]
+ },
+ "al-rayan-bank > investor-relations": {
+  "page": "https://www.alrayanbank.co.uk/investor-relations",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.alrayanbank.co.uk/sites/default/files/media/file-uploads/2026-06/al_rayan_annual_report_accounts_2025.pdf",
+    "text": "click here."
+   },
+   {
+    "url": "https://play.google.com/store/apps/details?id=com.alrayanbankuk.mobile",
+    "text": "Download the app"
+   },
+   {
+    "url": "https://www.alrayanbank.co.uk/mobile-banking",
+    "text": "Download the app"
+   }
+  ]
+ },
+ "gatehouse-bank > documents-for-download": {
+  "page": "https://gatehousebank.com/intermediaries/documents-for-download",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://gatehousebank.com/intermediaries/documents-for-download",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/packaging-guidelines-btl-uk",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/packaging-guidelines-btl-uk-top-slicing",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/packaging-guidelines-btl-expat",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/packaging-guidelines-btl-expat-top-slicing",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/packaging-guidelines-btl-international",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/packaging-guidelines-btl-international-top-slicing",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/packaging-guidelines-hpp-uk",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/packaging-guidelines-hpp-expat-and-international",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/2024-09-11-Requirements-for-a-Certifier.pdf?dm=1725963849",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/solicitors-with-shariah-experience",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/intermediary-fee-payment-guide",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/intermediary-fees-for-hpp-btl-products",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-employer-reference-request-form",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/accountants-certificate",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/broker-customer-information-request-form",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/eidv-guide",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/2026-05-01-Gatehouse-ID-Requirements-V17.pdf?dm=1777615878",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/direct-debit-mandate-form",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-portfolio-template",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gifted-deposit-guidance",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gifted-deposit-declaration-source-of-funds",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/directors-loans-guidance",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/requirements-for-uk-limited-companies",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/guidance-for-translation-of-foreign-documents",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/home-finance-property-types-guidance-notes",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/home-finance-country-checklist",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/site-terms-of-business",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/intermediary-terms-of-business",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/algbra-intermediary-information-guide",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/uk-btl-criteria-guide",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/btl-expat-and-international-criteria-guide",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/btl-product-guide-uk-residents",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/retention-btl-product-transfer-guide-uk-residents",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/btl-expat-and-international-product-guide",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/retention-btl-product-transfer-guide-uk-expats-and-international",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/home-purchase-plan-criteria-up-to-80-ftv",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/home-purchase-plan-criteria-above-80-ftv",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/hpp-product-guide",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/retention-hpp-product-transfer-guide",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/tariff-of-charges",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/savings-jargon-buster",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/108030_Property-Finance-Jargon-Buster_V06.pdf?dm=1752845325",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/intermediaries/news/acceptable-bank-accounts-and-guidance-on-certified-documents",
+    "text": ""
+   }
+  ]
+ },
+ "gatehouse-bank > corporate-governance": {
+  "page": "https://gatehousebank.com/about-us/corporate-governance",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://gatehousebank.com/intermediaries/documents-for-download",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2025",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2024",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/GFGL-Annual-Report-2024-FINAL.pdf?dm=1753107440",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2023",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/GFGL-Annual-Report-2023-FINAL.pdf?dm=1723131669",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2022",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/GFGL-Annual-Report-2022-FINAL.pdf?dm=1710181852",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Annual-Report-2021-FINAL-web.pdf?dm=1710181849",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/GFGL-Annual-Report-2021-FINAL.pdf?dm=1710181852",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2020",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2020",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2019",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2019",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2018",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2018",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2017",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2017",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2016",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2016",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2015",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2015",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2014",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2013",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/streamlined-energy-and-carbon-report-2025",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-responsible-banking-progress-statement-2025",
+    "text": ""
+   },
+   {
+    "url": "http://gatehousebank.com/downloads/sustainability-report-2025",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/UN-Principles-for-Responsible-Banking-Report-2024.pdf?dm=1753365816",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Sustainability-Report-2024.pdf?dm=1752074397",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Streamlined-Energy-and-Carbon-Report-2024.pdf?dm=1752074896",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/sustainability-report-2023",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gri-reporting-standards-content-index-2023",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/UN-Principles-of-Responsible-Banking-Report-2023-V2.pdf?dm=1720102035",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/streamlined-energy-and-carbon-report-2023",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/2022-sustainability-report",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/streamlined-energy-and-carbon-reporting-secr-report-2022",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/2021-sustainability-report",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/greenhouse-gas-report-2021",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/2020-self-assessment-report",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/csr-impact-report",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/greenhouse-gas-report-2020",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/greenhouse-gas-report-2019",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Pillar-III-Disclosure-2024-FINAL.pdf?dm=1754928802",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Pillar-III-Disclosure-2023-FINAL.pdf?dm=1728308645",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-pillar-3-disclosure-2022",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Pillar-III-Disclosure-2021-FINAL_2022-08-23-154942_nofu.pdf?dm=1710181850",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-pillar-3-disclosure-2020",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-pillar-3-disclosure-2019",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-pillar-3-disclosure-2018",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-pillar-3-disclosure-2017",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/esg-policy",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/modern-slavery-statement",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/sustainable-procurement-policy",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/savings-jargon-buster",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/108030_Property-Finance-Jargon-Buster_V06.pdf?dm=1752845325",
+    "text": ""
+   }
+  ]
+ },
+ "bank-of-china-uk > investor": {
+  "page": "https://www.bankofchina.com/investor/",
+  "checked": "2026-09-07",
+  "links": []
+ },
+ "bank-of-china-uk > ir1": {
+  "page": "https://www.bankofchina.com/investor/ir1/",
+  "checked": "2026-09-07",
+  "links": []
+ },
+ "bank-of-china-uk > ir2": {
+  "page": "https://www.bankofchina.com/investor/ir2/",
+  "checked": "2026-09-07",
+  "links": []
+ },
+ "bank-of-china-uk > ir5": {
+  "page": "https://www.bankofchina.com/investor/ir5/",
+  "checked": "2026-09-07",
+  "links": []
+ },
+ "bank-of-china-uk > ir3": {
+  "page": "https://www.bankofchina.com/investor/ir3/",
+  "checked": "2026-09-07",
+  "links": []
+ },
+ "bank-of-china-uk > ir9": {
+  "page": "https://www.bankofchina.com/investor/ir9/",
+  "checked": "2026-09-07",
+  "links": []
+ },
+ "first-abu-dhabi-bank > investor-relations": {
+  "page": "https://www.bankfab.com/ar-ae/about-fab/investor-relations",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.bankfab.com/ar-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/sustainability/reports-policy-frameworks/documents/esg-update-june-2026.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/common-images/icons/filetype-download.svg?iar=0&hash=E21B4FDE0129ED897E12731B2A9D3EB2",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/fab-investment-case/pdfs/fab-at-a-glance-q2-2026.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/fab-annual-report-2025-ar.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/presentations/pdfs/2026/june-2026-investor-presentation.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/ar-ae/about-fab/sustainability/reports-policy-frameworks",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/overview/reports-and-presentations-ar.jpg?h=900&iar=0&w=1536&hash=5CBC22106995AF1DF55AAF245BF9E0B0",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/ar-ae/about-fab/investor-relations/reports-and-presentations",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/personal/charges-and-fees/fees-and-charges-first-abu-dhabi-bank.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/common-documents/20200831-customercharter-ar.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/islamic-banking/overview/pdfs/fab_islamic_charter_v3_arb.pdf?view=1",
+    "text": ""
+   }
+  ]
+ },
+ "first-abu-dhabi-bank > quarterly-and-annual-reports": {
+  "page": "https://www.bankfab.com/en-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.bankfab.com/en-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/ar-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/en-ae/about-fab/investor-relations/reports-and-presentations",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/images/banner-financial-reports-en.png?h=433&iar=0&w=1316&hash=20E02378DAE12736155281E3BAB55987",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/fab-fs-q1-2026-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/common-images/icons/filetype-download.svg?iar=0&hash=E21B4FDE0129ED897E12731B2A9D3EB2",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/fab-fs-q2-2026-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/fab-mda-q1-2026-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/fab-mda-q2-2026-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/fab-earnings-presentation-q1-2026.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/fab-earnings-presentation-q2-2026.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/fab-quarterly-series-q1-2026.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/fab-quarterly-series-q2-2026.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/fab-q1-2026-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/fab-q2-2026-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/final-q1-pillar3-report-q1-2026.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/final-q2-pillar3-report-q2-2026.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/fab-annual-report-2025-en.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-fs-q1-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-fs-q2-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-fs-q3-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-fs-q4-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-mda-q1-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-mda-q2-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-mda-q3-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-mda-q4-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-earnings-presentation-q1-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-earnings-presentation-q2-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-earnings-presentation-q3-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-earnings-presentation-q4-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-quarterly-series-q1-2025.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-quarterly-series-q2-2025.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-quarterly-series-q3-2025.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-quarterly-series-q4-2025.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-q1-2025-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-q2-2025-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-q3-2025-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-q4-2025-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-pillar-3-report-q1-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-pillar-3-report-q2-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-pillar-3-report-q3-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-pillar-3-report-q4-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://fabannualreport2024.com",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/fab-annual-report-2024-en.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q1/fab-fs-q1-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q2/fab-fs-q2-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q3/fab-fs-q3-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q4/fab-fs-q4-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q1/fab-mda-q1-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q2/fab-mda-q2-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q3/fab-mda-q3-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q4/fab-mda-q4-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q1/fab-q124-earnings-presentation.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q2/fab-q224-earnings-presentation.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q3/fab-q324-earnings-presentation.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q4/fab-q4-2024-earnings-presentation.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q1/fab-quarterly-series-q1-2024.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q2/fab-quarterly-series-q2-2024.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q3/fab-quarterly-series-q3-2024.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q4/fab-quarterly-series-q4-2024.zip?view=1",
+    "text": ""
+   }
+  ]
+ },
+ "jpmorgan-chase > financial-statements": {
+  "page": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/financial-statements",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report/2023/ar-ceo-letters",
+    "text": "CEO Letters"
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report",
+    "text": "Annual Report"
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/overview",
+    "text": "SEC Filings & Other Disclosures"
+   },
+   {
+    "url": "https://www.jpmorganchase.com/corporate/investor-relations/annual-report-proxy.htm",
+    "text": "Annual Report & Proxy"
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports",
+    "text": "CFTC Financial Reporting"
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
+    "text": "Basel Pillar 3, U.S. LCR Disclosures & U.S. NSFR Disclosures"
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/european-union-eu-disclosures-country",
+    "text": "European Union (E.U.) Disclosures by Country"
+   },
+   {
+    "url": "https://www.chase.com/apps/chase/clientlibs/foundation/scripts/Reporting.js",
+    "text": ""
+   }
+  ]
+ },
+ "citigroup > quarterly-earnings": {
+  "page": "https://www.citigroup.com/global/investors/quarterly-earnings",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.citigroup.com/v1/content/citigpa/IRFile?content_json.documentType=Quarterly%20Earnings%20Releases%20and%20Supplements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q22026/2026prqtr2rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q22026/2026fsqtr2rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q22026/2026presoqtr2rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2026psqtr2-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12026/2026prqtr1rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12026/2026fsqtr1rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12026/2026psqtr1rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2026psqtr1-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/4Q25-supp-web.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q42025/2025prqtr4rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q42025/2025fsqtr4rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q42025/2025psqtr4rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2025psqtr4-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q32025/2025prqtr3rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q32025/2025fsqtr3rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q32025/2025psqtr3rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q32025/2025psqtr3-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2025prqtr2rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2025fsqtr2rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2025psqtr2rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q22025/transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12025/2025prqtr1rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12025/2025fsqtr1rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12025/2025psqtr1rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12025/transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q42024/4Q24-earnings-press-release.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q42024/Q42024-Financial-Supplement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q42024/4Q24-earnings-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q42024/4Q24-Earnings-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q32024/2024pr-qtr3rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q32024/3Q24-SUPP-ForWeb.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q32024/2024psqtr3rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/3Q24-Earnings-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q22024/2024prqtr2rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q22024/2Q24-SUPP-ForWeb.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q22024/2024psqtr2rslt.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/transcript07122024.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12024/2024prq1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12024/2024fnq1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12024/2024pstq1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2024q1tr.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2023prqtr4fn.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2023fsqtr4fn.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2023ptqtr4fn.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/4Q23-Earnings-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/3Q23-supp-web.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q32023/Citi-3Q23-Press-Release.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q32023/3Q23-SUPP-For-WEB.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/3Q23-earnings-presentation_vF.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/3Q23-Earnings-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/citi-2Q23-press-release.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2Q23-supp-web.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2Q23-earnings-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2023prqtr1kman.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2023fsqtr1fsa.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2023ptqtr1es.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/2023trptqtr1scr.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/qer422.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/qer422s.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "citigroup > investor-contacts": {
+  "page": "https://www.citigroup.com/global/investors/investor-contacts",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/business-document-and-information",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/regulatory-disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/india/regulatory-disclosures-investment-banking",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/letter-to-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/a-year-of-progress",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/confronting-society-toughest-challenges",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2024/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2024/annual-report/letter-to-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/fixed-income-investor-relations/credit-card-securitization/operative-documents",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/markets",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Markets",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/banking-and-international",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Banking",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/issuer-services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Issuer",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/investor-services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Investor",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/treasury-and-trade-solutions-privacy-statements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Treasury",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/treasury-and-trade-solutions-deposit-guarantee",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/foundation/knowledge-center/reports-and-resources",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/News/Reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/suppliers/supplier-diversity-program/reporting-forms",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Reporting",
+    "text": ""
+   }
+  ]
+ },
+ "citigroup > investor-day-2026": {
+  "page": "https://www.citigroup.com/global/investors/events-and-presentations/investor-day-2026",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-ceo-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-services-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-markets-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-banking-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-wealth-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-us-consumer-cards-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-financial-overview-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-full-event-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-opening-remarks-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-ceo-presentation-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-services-presentation-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-markets-presentation-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-banking-presentation-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-wealth-presentation-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-us-consumer-cards-presentation-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-financial-overview-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-closing-remarks-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-q-and-a-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-discussion-guide.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/business-document-and-information",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/regulatory-disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/india/regulatory-disclosures-investment-banking",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/letter-to-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/a-year-of-progress",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/confronting-society-toughest-challenges",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2024/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2024/annual-report/letter-to-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/fixed-income-investor-relations/credit-card-securitization/operative-documents",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/markets",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Markets",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/banking-and-international",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Banking",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/issuer-services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Issuer",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/investor-services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Investor",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/treasury-and-trade-solutions-privacy-statements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Treasury",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/treasury-and-trade-solutions-deposit-guarantee",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/foundation/knowledge-center/reports-and-resources",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/News/Reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/suppliers/supplier-diversity-program/reporting-forms",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Reporting",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Icon/ShareIcon/NewDocument.svg",
+    "text": ""
+   },
+   {
+    "url": "https://stuk.github.io/jszip/documentation/howto/read_zip.html",
+    "text": ""
+   }
+  ]
+ },
+ "citigroup > services-investor-day": {
+  "page": "https://www.citigroup.com/global/investors/events-and-presentations/services-investor-day",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day-agenda.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day-full-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/CEO-Opening-Remarks-Services-ID.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/financial-update-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/financial-update-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/services-execution-update-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/services-execution-update-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/liquidity-management-services-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/liquidity-management-services-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/payments-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/payments-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/trade-working-capital-solutions-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/trade-working-capital-solutions-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/platforms-data-services-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/platforms-data-services-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/securities-services-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/securities-services-transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/Closing-Remarks-presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day-closing-remarks.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day-q-and-a.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/business-document-and-information",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/regulatory-disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/india/regulatory-disclosures-investment-banking",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/letter-to-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/a-year-of-progress",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/confronting-society-toughest-challenges",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2024/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2024/annual-report/letter-to-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/fixed-income-investor-relations/credit-card-securitization/operative-documents",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/markets",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Markets",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/banking-and-international",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Banking",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/issuer-services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Issuer",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/investor-services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Investor",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/treasury-and-trade-solutions-privacy-statements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Treasury",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/treasury-and-trade-solutions-deposit-guarantee",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/foundation/knowledge-center/reports-and-resources",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/News/Reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/suppliers/supplier-diversity-program/reporting-forms",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Reporting",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Icon/ShareIcon/NewDocument.svg",
+    "text": ""
+   },
+   {
+    "url": "https://stuk.github.io/jszip/documentation/howto/read_zip.html",
+    "text": ""
+   }
+  ]
+ },
+ "citigroup > investor-day-2022": {
+  "page": "https://www.citigroup.com/global/investors/events-and-presentations/investor-day-2022",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/akpublic/storage/public/ID22-CEO-Presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-CEO-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/akpublic/storage/public/ID22-ICG-Presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-ICG-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/akpublic/storage/public/ID22-ICG-Presentation.pdf?ieNocache=699",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-TTS-as-the-Core-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-Commercial-Bank-as-a-Growth-Engine-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-Banking-and-Markets-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-PBWM-Presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-PBWM-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-PBWM-Presentation.pdf?ieNocache=699",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-Global-Wealth-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-Consumer-Payments-and-Lending-Transcrip.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/akpublic/storage/public/ID22-Transformation-Presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-Transformation-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/akpublic/storage/public/ID22-Financial-Presentation.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/ID22-Financial-Transcript.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/business-document-and-information",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/regulatory-disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/india/regulatory-disclosures-investment-banking",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/letter-to-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/a-year-of-progress",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/confronting-society-toughest-challenges",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2024/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2024/annual-report/letter-to-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/fixed-income-investor-relations/credit-card-securitization/operative-documents",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/markets",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Markets",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/banking-and-international",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Banking",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/issuer-services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Issuer",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/investor-services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Investor",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/treasury-and-trade-solutions-privacy-statements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Treasury",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/treasury-and-trade-solutions-deposit-guarantee",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/foundation/knowledge-center/reports-and-resources",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/News/Reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/suppliers/supplier-diversity-program/reporting-forms",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Reporting",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Icon/ShareIcon/NewDocument.svg",
+    "text": ""
+   }
+  ]
+ },
+ "citigroup > citi-2026-barclays-global-financial-serv": {
+  "page": "https://www.citigroup.com/global/news/press-release/2026/citi-2026-barclays-global-financial-services-conference-gonzalo-luchetti",
+  "checked": "2026-09-07",
+  "links": [
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/business-document-and-information",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/regulatory-disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/about-us/global-presence/india/regulatory-disclosures-investment-banking",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/letter-to-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/a-year-of-progress",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2023/annual-report/confronting-society-toughest-challenges",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2024/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/annual-reports-and-proxy-statements/2024/annual-report/letter-to-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/investors/fixed-income-investor-relations/credit-card-securitization/operative-documents",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/markets",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Markets",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/banking-and-international",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Banking",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/issuer-services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Issuer",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/investor-services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Investor",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/treasury-and-trade-solutions-privacy-statements",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services/Treasury",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/disclosures/services/treasury-and-trade-solutions-deposit-guarantee",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures/Services",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Hidden/Disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/foundation/knowledge-center/reports-and-resources",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/News/Reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/global/suppliers/supplier-diversity-program/reporting-forms",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/Reporting",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/global-privacy-policy-institutional-clients.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Icon/ShareIcon/NewDocument.svg",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Icon/Download-white.svg",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Icon/Download-blue.svg",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/^(download",
     "text": ""
    }
   ]
