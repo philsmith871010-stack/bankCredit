@@ -122,7 +122,8 @@ class Result:
     checks: list = field(default_factory=list)         # (severity, message); severity error|warn
     template: str = ""                                 # UK KM1 | EU KM1 | KM1 | US Pillar 3 | US LCR
     fixed_confidence: float | None = None              # set by extractors with their own scale (US documents)
-    history: dict = field(default_factory=dict)        # prior-period columns: iso date -> {metric: value}
+    history: dict = field(default_factory=dict)
+    derived: set = field(default_factory=set)          # metrics computed from others rather than read        # prior-period columns: iso date -> {metric: value}
     confidence_bonus: float = 0.0                      # continuity with the last verified disclosure
 
     @property
@@ -703,6 +704,15 @@ def prior_columns(picked: list, period_dates: list, descending: bool, scale: flo
 
 def validate(res: Result) -> None:
     v = res.values
+    # a table stating capital and RWA but omitting the ratio row (SMFG's single-table KM1) gives the
+    # ratio exactly; it is recorded as derived so a profile can say where the figure came from
+    for cap, ratio in (("cet1_capital", "cet1_ratio"), ("tier1_capital", "tier1_ratio"), ("total_capital", "total_capital_ratio")):
+        if ratio not in v and cap in v and v.get("rwa"):
+            implied = v[cap] / v["rwa"] * 100
+            if 0 < implied < 80:
+                v[ratio] = round(implied, 2)
+                res.derived.add(ratio)
+                res.checks.append(("info", f"{ratio} derived from {cap} over RWA"))
     for m in CORE:
         if m not in v:
             if m == "leverage_ratio" and res.template == "KM1":

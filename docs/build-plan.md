@@ -424,3 +424,17 @@ A React or Next rewrite was considered and rejected. The data is a daily snapsho
 a static site is the right shape; a framework would ship 40 to 130 KB of JavaScript before any content, add a Node
 build to a Python pipeline, and buy nothing the four measures above did not. The one thing a single-page app gives
 free, instant navigation, the speculation rules give without it.
+
+### Filling the capital gap, 7 September 2026 (night)
+
+Making a rating and current capital ratios a condition of the score left 52 entities unscored, and 40 of them for one
+reason: no capital ratio held. Fifteen of those had no locator at all, so nobody had ever told the collector where to
+look. Their own disclosure indexes were read from here and six locators written and verified: MUFG, SMFG, Mizuho and
+Sumitomo Mitsui Trust in Japan, HSBC Hong Kong and BOCHK, with OCBC repointed at the page that actually lists its
+files. Two faults surfaced and both were general rather than site-specific. Links whose file names contain spaces
+were truncated at the first space, so OCBC's "Pillar 3 Disclosures.pdf" was fetched as "Pillar" and rejected as not a
+PDF; href attributes are now percent-encoded rather than split. And a table that states capital and risk-weighted
+assets but omits the ratio row, as SMFG's single-table KM1 does, now yields the ratio by arithmetic, recorded as
+derived and checked against the same bounds as a read one. Scored rose from 100 to 103 with OCBC, HSBC Hong Kong and
+SMFG recovered; the remaining 37 need their locators found the same way, and MUFG needs the collector to follow a
+listing that links a page per quarter rather than the files themselves.

@@ -23,7 +23,7 @@ import re
 import time
 from datetime import date, datetime, timedelta
 from pathlib import Path
-from urllib.parse import unquote, urljoin, urlsplit
+from urllib.parse import unquote, urljoin, urlsplit, quote
 
 from .. import learn, review, store
 from ..extract import km1, us
@@ -39,6 +39,9 @@ NSM_API = "https://api.data.fca.org.uk/search?index=nsm-search"
 NSM_ARTEFACTS = "https://data.fca.org.uk/artefacts/"
 MAX_NEW_PER_ENTITY = int(os.environ.get("BANKCREDIT_MAX_NEW", "3"))    # newest unseen PDFs fetched per run (raise for a one-off deep pass)
 LINK_RE = re.compile(r"""(?:https?:)?//[^\s"'<>\\)]+|/[^\s"'<>\\)]+""")
+# an href attribute keeps its literal spaces (OCBC names files "Pillar 3 Disclosures.pdf"); those are
+# percent-encoded rather than truncated at the first space
+HREF_RE = re.compile(r"(?:href|src|data-href)\s*=\s*[\"']([^\"']+)[\"']", re.I)
 SLEEP = 1.0
 
 
@@ -166,8 +169,9 @@ class Pillar3Adapter(Adapter):
     def _links(self, page_url: str, body: str) -> list[str]:
         raw = html.unescape(body).replace("\\/", "/")
         out, seen = [], set()
-        for m in LINK_RE.finditer(raw):
-            u = m.group(0)
+        cands = [quote(m.group(1), safe=":/?&=%#+,;@$!*'()~") for m in HREF_RE.finditer(raw)]
+        cands += [m.group(0) for m in LINK_RE.finditer(raw)]
+        for u in cands:
             if u.startswith("//"):
                 u = "https:" + u
             try:

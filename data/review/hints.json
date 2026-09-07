@@ -1409,5 +1409,51 @@
    },
    "method": "pdf_rules"
   }
+ },
+ "hsbc-hong-kong": {
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "rwa": 3134033.0,
+    "combined_buffer": 5.37,
+    "cet1_headroom": 12.5,
+    "leverage_exposure": 11807963.0,
+    "hqla": 2241038.0,
+    "net_cash_outflows": 1619280.0,
+    "lcr": 138.5,
+    "available_stable_funding": 6623362.0,
+    "required_stable_funding": 4682612.0,
+    "nsfr": 141.5,
+    "cet1_capital": 531812.0,
+    "tier1_capital": 632295.0,
+    "total_capital": 689523.0,
+    "cet1_ratio": 17.0,
+    "tier1_ratio": 20.2,
+    "total_capital_ratio": 22.0,
+    "leverage_ratio": 5.4
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "ocbc": {
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 42326.0,
+    "tier1_capital": 44064.0,
+    "total_capital": 49321.0,
+    "rwa": 270267.0,
+    "cet1_ratio": 15.7,
+    "tier1_ratio": 16.3,
+    "total_capital_ratio": 18.2,
+    "cet1_headroom": 8.2,
+    "leverage_exposure": 673772.0,
+    "leverage_ratio": 6.5,
+    "hqla": 105555.0,
+    "lcr": 131.0,
+    "nsfr": 109.0
+   },
+   "method": "pdf_rules"
+  }
  }
 }
