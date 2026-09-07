@@ -24,8 +24,12 @@
 })();
 
 // Events page: type filter
-(function(){var f=document.getElementById('event-filters');if(!f)return;f.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;f.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b)});var t=b.dataset.type;document.querySelectorAll('#events .event').forEach(function(e){e.hidden=!(t==='all'||e.dataset.type===t)});dayHeads()});var q=document.getElementById('evq');if(q)q.addEventListener('input',function(){var t=q.value.trim().toLowerCase(),a=(f.querySelector('.filter.active')||{}).dataset||{};document.querySelectorAll('#events .event').forEach(function(e){var ok=(!a.type||a.type==='all'||e.dataset.type===a.type)&&(!t||e.textContent.toLowerCase().indexOf(t)>=0);e.hidden=!ok});dayHeads()});
-  function dayHeads(){document.querySelectorAll('#events .ev-day').forEach(function(h){var n=h.nextElementSibling,any=false;while(n&&!n.classList.contains('ev-day')){if(!n.hidden)any=true;n=n.nextElementSibling}h.hidden=!any})}})();
+(function(){var f=document.getElementById('event-filters');if(!f)return;var q=document.getElementById('evq');
+  function apply(){var a=(f.querySelector('.filter.active')||{}).dataset||{},t=(q&&q.value||'').trim().toLowerCase();
+    document.querySelectorAll('#events .event').forEach(function(e){e.hidden=!((!a.type||a.type==='all'||e.dataset.type===a.type)&&(!t||e.textContent.toLowerCase().indexOf(t)>=0))});
+    document.querySelectorAll('#events .ev-day').forEach(function(h){var n=h.nextElementSibling,any=false;while(n&&!n.classList.contains('ev-day')){if(!n.hidden)any=true;n=n.nextElementSibling}h.hidden=!any})}
+  f.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;f.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b)});apply()});
+  if(q)q.addEventListener('input',apply);})();
 
 // Profile trends: a small multiple opens its full-size chart in a dialog
 (function(){var d=document.createElement('dialog');d.className='chart-dialog';d.innerHTML='<div class="cd-head"><div><h3></h3><div class="small muted"></div></div><button class="cd-close" aria-label="Close">×</button></div><div class="cd-body"></div>';
