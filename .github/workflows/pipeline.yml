@@ -37,7 +37,7 @@ jobs:
       - name: Quarterly adapters on the 1st, 15th and 25th
         if: ${{ github.event_name == 'schedule' }}
         run: |
-          d=$(date -u +%d); case "$d" in 01|15|25) python -m bankcredit.cli run fdic eba edgar te esef fundamentals ;; *) echo "skip";; esac
+          d=$(date -u +%d); case "$d" in 01|15|25) python -m bankcredit.cli run fdic eba edgar te esef fundamentals nsm_release ;; *) echo "skip";; esac
         continue-on-error: true
       # Bond quotes are fetched afresh for every build (45 days of history per bond) and never committed:
       # the exchange's terms allow private use, not redistribution. Only the change against peers is published.
