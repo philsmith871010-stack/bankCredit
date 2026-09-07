@@ -378,3 +378,19 @@ total assets. Names the user watches or holds are picked out in orange throughou
 from one compact JSON of the last 32 periods per measure, so the page carries no chart library. The score itself has
 no stored history yet, so rank over time works on the ratios; storing a score snapshot per build is the next step
 for a score-rank history.
+
+### Sources for the names outside ESEF, 7 September 2026 (late)
+
+Yahoo Finance's fundamentals feed (the endpoint its quote page reads; four annual and five quarterly points) now
+supplies accounts for the 78 names with a configured ticker: Asia, the Gulf, Australia, Canada, the listed Germans
+and Italians, the US holdings. Only configured tickers are used: a name search returned Permanent TSB for TSB, the
+parent for Lloyds Bank and Citibank, and bond lines for the building societies, and a parent's accounts must never
+stand for a subsidiary's. The EDGAR adapter now also reads the 10-K balance sheet and income statement tags for the
+nine US holdings, back to 2012. Every source computes the same ratios through one function, so a Singapore bank, a
+building society and a US holding read alike, and ESEF and regulator data outrank Yahoo where both exist.
+
+Entities with a profitability figure: 9 this morning, 108 now. The 44 without are unlisted and file nowhere
+machine-readable: the German public and cooperative banks (Bundesanzeiger, HTML), nine UK banks and seven
+overseas-owned UK subsidiaries (Companies House serves their full accounts as PDF without a key, so a single locator
+pattern and a statement reader would cover all sixteen), twelve small building societies (their own sites and the
+FCA Mutuals Register, PDF), and FAB and ADCB (the Abu Dhabi exchange). Those are the PDF work that remains.

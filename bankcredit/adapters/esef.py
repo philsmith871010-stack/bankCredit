@@ -124,6 +124,8 @@ def ratios(by_end: dict) -> dict:
         income = None
         if "pretax" in v and opex is not None:
             income = v["pretax"] + abs(opex) + abs(v.get("impairment", 0) or 0)
+        elif "revenue" in v:
+            income = v["revenue"]
         elif nii is not None:
             income = nii + abs(v.get("fee_income", 0)) - abs(v.get("fee_expense", 0)) + (v.get("other_income", 0) or 0)
 
