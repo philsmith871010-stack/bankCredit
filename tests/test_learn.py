@@ -46,3 +46,11 @@ def test_continuity_verdicts(tmp_path, monkeypatch):
     # an older verified answer never overwrites a newer baseline
     learn.remember_verified("aib", date(2025, 12, 31), {"cet1_ratio": 14.0})
     assert learn.hint_for("aib")["last_verified"]["reference_date"] == "2026-03-31"
+
+
+def test_answer_is_learned_once(tmp_path, monkeypatch):
+    _iso(tmp_path, monkeypatch)
+    ans = {"id": "z9", "entity_id": "tsb", "url": "https://x/p3.pdf", "page": 3, "reference_date": "2026-06-30", "values": {"cet1_ratio": 16.0}}
+    assert learn.record_answer({"id": "z9", "entity_id": "tsb", "values": {"cet1_ratio": 16.0}}, ans)["matched"] == 1
+    assert learn.record_answer(None, ans) == {}
+    assert learn.summary()["answers"] == 1

@@ -77,13 +77,29 @@ def _agree(metric: str, a, b) -> bool:
 
 def record_answer(item: dict | None, ans: dict) -> dict:
     """Update the hints from a resolved answer and log how the extractor did against it."""
-    item = item or {}
+    item = dict(item or {})
     ent = ans.get("entity_id") or item.get("entity_id")
     if not ent:
         return {}
+    log = _read(LEARNING, [])
+    aid = ans.get("id") or item.get("id")
+    if aid and any(r.get("id") == aid for r in log):
+        return {}                                  # already learned from (the runner re-reads resolved files daily)
+    url = ans.get("url") or item.get("url", "")
+    if not item.get("values") and url:
+        # the queue item may be gone (ingested elsewhere); the documents table kept what the rules read
+        docs = store.read("documents")
+        if not docs.empty and (docs.url == url).any():
+            d = docs[docs.url == url].iloc[-1]
+            try:
+                item.setdefault("values", json.loads(d.get("values") or "{}"))
+            except Exception:
+                pass
+            item.setdefault("page", d.get("page"))
+            item.setdefault("reference_date", d.get("reference_date"))
+            item.setdefault("reason", d.get("message") or "")
     hints = load_hints()
     h = hints.setdefault(ent, {})
-    url = ans.get("url") or item.get("url", "")
     rec = {"date": datetime.utcnow().isoformat(timespec="seconds"), "id": ans.get("id") or item.get("id"), "entity_id": ent,
            "reason": (item.get("reason") or "")[:80], "skip": bool(ans.get("skip"))}
     if ans.get("skip"):
@@ -114,7 +130,6 @@ def record_answer(item: dict | None, ans: dict) -> dict:
                     "page_extractor": item.get("page"), "page_reviewer": ans.get("page"),
                     "date_extractor": item.get("reference_date"), "date_reviewer": str(ans.get("reference_date"))[:10] if ans.get("reference_date") else None})
     _write(HINTS, hints)
-    log = _read(LEARNING, [])
     log.append(rec)
     _write(LEARNING, log)
     return rec
