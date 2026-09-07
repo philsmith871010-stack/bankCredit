@@ -337,42 +337,129 @@
   "created": "2026-09-07T11:29:47"
  },
  {
-  "id": "5f3fc350e332",
-  "entity_id": "barclays",
-  "url": "https://home.barclays/content/dam/home-barclays/documents/investor-relations/reports-and-events/annual-reports/2018/Barclays%20PLC%20Pillar%203%20Report%202018.pdf",
-  "local": "cache/pdf/barclays/5f3fc350e332f6c6.pdf",
-  "title": "Barclays PLC Pillar 3 Report 2018.pdf",
-  "page": 19,
-  "reference_date": "2018-12-31",
-  "currency": "GBP",
+  "id": "18777ea821cf",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2019-third-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/18777ea821cf9697.pdf",
+  "title": "2019-third-quarter-pillar-3-report.pdf",
+  "page": 4,
+  "reference_date": "2019-09-30",
+  "currency": "AUD",
   "values": {
-   "cet1_capital": 41100.0,
-   "total_capital": 64594.0,
-   "rwa": 311926.0,
-   "cet1_ratio": 13.2,
-   "tier1_ratio": 17.0,
-   "total_capital_ratio": 20.7,
-   "combined_buffer": 3.5,
-   "cet1_headroom": 8.7,
-   "leverage_exposure": 1142520.0,
-   "leverage_ratio": 4.3,
-   "hqla": 218766.0,
-   "net_cash_outflows": 129172.0,
-   "lcr": 169.0,
-   "tier1_capital": 17.0
+   "rwa": 404635000.0,
+   "cet1_capital": 10400.0,
+   "tier1_capital": 12500.0,
+   "leverage_ratio": 5.4
   },
   "checks": [
    [
     "warn",
-    "leverage_ratio 4.30 vs implied 0.00"
+    "column headers split month and year across lines; reference date needs a check"
    ],
    [
     "error",
-    "tier1_capital below cet1_capital"
+    "missing core row cet1_ratio"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
    ]
   ],
-  "reason": "warn:leverage_ratio 4.30 vs implied 0.00; error:tier1_capital below cet1_capital",
+  "reason": "warn:column headers split month and year across lines; reference date needs a check; error:missing core row cet1_ratio; warn:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
-  "created": "2026-09-07T12:39:19"
+  "created": "2026-09-07T12:41:43"
+ },
+ {
+  "id": "e251d139d611",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/corporate/march-2019-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/e251d139d611dd61.pdf",
+  "title": "march-2019-pillar-3-report.pdf",
+  "page": 6,
+  "reference_date": "2019-03-31",
+  "currency": "AUD",
+  "values": {
+   "tier1_capital": 50185.0,
+   "leverage_ratio": 5.48,
+   "cet1_capital": 41935.0,
+   "total_capital": 56445.0
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T12:41:43"
+ },
+ {
+  "id": "b61bb35cc48f",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2013/31-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/b61bb35cc48fa3e1.pdf",
+  "title": "31-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T12:41:54"
+ },
+ {
+  "id": "09ef68728097",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2013/31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/09ef68728097d3fc.pdf",
+  "title": "31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T12:41:54"
+ },
+ {
+  "id": "475bfbc621a5",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2012/31-december---basel-ii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/475bfbc621a5e19f.pdf",
+  "title": "31-december---basel-ii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T12:41:54"
  }
 ]
