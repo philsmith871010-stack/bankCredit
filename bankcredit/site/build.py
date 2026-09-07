@@ -318,7 +318,9 @@ def learning_card(status):
     if not L.get("answers") and not L.get("entities_with_hints"):
         return ""
     agree = f'{L["agreement"] * 100:.0f}%' if L.get("agreement") is not None else "—"
-    metric_rows = "".join(f'<tr><td class="b">{c.esc(m)}</td><td class="mono">{d["mismatches"]}</td><td class="small muted">{c.esc("; ".join(f"{x["entity"]}: rules {x["extractor"]} vs reviewer {x["reviewer"]}" for x in d["examples"]))}</td></tr>' for m, d in (L.get("by_metric") or {}).items())
+    def _examples(d):
+        return "; ".join(f"{x['entity']}: rules {x['extractor']} vs reviewer {x['reviewer']}" for x in d["examples"])
+    metric_rows = "".join(f'<tr><td class="b">{c.esc(m)}</td><td class="mono">{d["mismatches"]}</td><td class="small muted">{c.esc(_examples(d))}</td></tr>' for m, d in (L.get("by_metric") or {}).items())
     reason_rows = "".join(f'<li><span class="mono">{n}</span> · {c.esc(r)}</li>' for r, n in list((L.get("by_reason") or {}).items())[:8])
     return f'''<div class="card pad"><h3>What the review taught the extractor</h3>
 <p class="small">Every answer from the review queue is compared with what the rules read from the same page, and becomes a hint for that bank's next document: the page, the currency, whether the table carries row numbers, filenames that never hold a KM1 table, and the last verified figures for a continuity check. No AI service is involved; the loop is the reviewer's answers and the rules.</p>
