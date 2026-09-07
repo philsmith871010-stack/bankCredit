@@ -117,9 +117,31 @@ def tile(metric, label, unit, dp, series, peer_median=None):
 <div class="tile-foot"><span>{c.chg(delta, 1, "%" if unit == "m" else "") if delta is not None else "<span class=na>first period</span>"}{" vs prior" if delta is not None else ""}</span><span class="mono">{c.esc(last["d"])}</span></div></div>'''
 
 
+def ratings_tile(b) -> str:
+    """Agency ratings as the first tile of the profile: long-term rating, outlook, short-term rating, date, per agency,
+    with the composite grade and the market direction alongside the regulatory KPIs."""
+    rs = b.get("ratings") or []
+    if not rs:
+        return '<div class="tile tile-ratings tile-empty"><span class="tile-label">Agency ratings</span><span class="na big">NR</span><span class="tile-foot">no public issuer rating in the ESMA register</span></div>'
+    short = {}
+    for x in b.get("ratings_all") or []:
+        if x.get("horizon") == "short" and x["agency"] not in short:
+            short[x["agency"]] = x["value"]
+    names = {"fitch": "Fitch", "sp": "S&P", "moodys": "Moody's", "dbrs": "DBRS", "kbra": "KBRA", "scope": "Scope", "jcr": "JCR"}
+    cells = "".join(
+        f'<div class="rcell"><div class="ragency">{c.esc(names.get(r["agency"], r["agency"]))}</div>'
+        f'<div class="rlt"><span class="mono big">{c.esc(r["value"])}</span> {outlook_glyph(r.get("outlook"))}</div>'
+        f'<div class="rst small muted">{("ST " + c.esc(short[r["agency"]])) if r["agency"] in short else ""}{(" · " if r["agency"] in short else "") + c.esc(str(r.get("type") or "").replace("_", " ")) if r.get("type") not in ("idr", "issuer") else ""}</div>'
+        f'<div class="rdate mono small muted">{c.esc(r.get("date") or "")}</div></div>' for r in rs)
+    grade = b.get("rating_grade")
+    comp = f'<span class="band mono" style="background:{grade_colour(grade)};color:{"#fff" if grade is not None and grade <= 10 else "#243240"}">{c.esc(b.get("rating_composite") or "NR")}</span>'
+    return (f'<div class="tile tile-ratings"><div class="tile-head"><span class="tile-label">Agency ratings</span><span class="tile-flags">composite {comp} {c.market_glyph(b.get("market") or {})} <span class="small muted">{c.esc((b.get("market") or {}).get("label") or "")}</span></span></div>'
+            f'<div class="rcells">{cells}</div><div class="tile-foot"><span>ESMA European Rating Platform, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span><span><a href="../ratings/index.html">All ratings</a></span></div></div>')
+
+
 def page_bank(b, generated):
     series = b["series"]
-    tiles = "".join(tile(m, l, u, dp, series) for m, l, u, dp in TILE_METRICS)
+    tiles = ratings_tile(b) + "".join(tile(m, l, u, dp, series) for m, l, u, dp in TILE_METRICS)
     peer = b.get("peer") or {}
     score = b["score"]
     score_html = f'<span class="mono huge">{score:.0f}</span>' if score is not None else '<span class="mono huge muted">—</span>'
