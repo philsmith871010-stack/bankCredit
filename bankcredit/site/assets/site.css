@@ -139,3 +139,4 @@ table.board thead th,table.coverage thead th,table.ratings thead th{position:sti
 .ev-day{padding:14px 0 4px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.ev-day[hidden]{display:none}.ev-toolbar .search{width:240px}
 
 .ev-toolbar{flex-wrap:wrap;gap:10px}.ev-toolbar .small{flex-basis:100%;margin-left:0}.wbar span{font-size:11px}
+.event[hidden],.doc[hidden],.nv-row[hidden],.pol-row[hidden]{display:none!important}.ev-toolbar .small{width:100%}
