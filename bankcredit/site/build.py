@@ -201,13 +201,37 @@ def page_events(board, generated):
         return (f'<div class="event" data-type="{c.esc(e.get("type") or "")}"><span class="mono muted">{d}</span><div><a class="b" href="../banks/{r["id"]}.html">{c.esc(r["name"])}</a>'
                 f'<div>{title}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("type") or ""), "navy")} {c.chip(c.esc(e.get("severity") or "info"), tone.get(e.get("severity"), "muted"))}</div>')
     rows = "".join(row(d, r, e) for d, r, e in items[:400])
+    flagged = [(d, r, e) for d, r, e in items if e.get("severity") in ("bad", "warn", "good") or (e.get("type") == "rating" and "affirm" not in str(e.get("title", "")).lower())][:100]
+    (OUT / "events").mkdir(exist_ok=True)
+    (OUT / "events" / "feed.xml").write_text(events_feed(flagged, generated))
     counts = {}
     for _, _, e in items:
         counts[e.get("type")] = counts.get(e.get("type"), 0) + 1
     filters = f'<button class="filter active" data-type="all">All · {len(items)}</button>' + "".join(f'<button class="filter" data-type="{c.esc(t)}">{c.esc(t.title())} · {n}</button>' for t, n in sorted(counts.items()))
     content = (f'<div class="page-head"><div><h1>Events</h1><div class="lede">Rating actions from the ESMA register, Pillar 3 documents as they are collected, and headlines that pass a credit-vocabulary filter. Severity is rules-based; read the source before acting.</div></div></div>'
-               f'<div class="filters" id="event-filters">{filters}</div><div class="card pad" id="events">{rows or "<div class=empty>Nothing collected yet.</div>"}</div>')
+               f'<div class="filters" id="event-filters">{filters}<a class="filter" href="feed.xml" title="RSS feed of flagged events">RSS feed</a></div><div class="card pad" id="events">{rows or "<div class=empty>Nothing collected yet.</div>"}</div>'
+               f'<p class="note">Headlines are refreshed every two hours on weekdays between 07:00 and 19:00 UK; rating actions from the register and new documents arrive with the morning run. The RSS feed carries the last 100 flagged events for a reader or an alerting tool.</p>')
     return c.shell("Events", content, "events", "../", generated)
+
+
+def events_feed(flagged, generated) -> str:
+    from email.utils import format_datetime
+    from datetime import timezone
+    def rfc(d):
+        try:
+            return format_datetime(datetime.fromisoformat(d).replace(tzinfo=timezone.utc))
+        except Exception:
+            return ""
+    items = "".join(
+        f'<item><title>{c.esc(r["short"])}: {c.esc(e.get("title"))}</title><link>{c.esc(e.get("url") or "")}</link>'
+        f'<guid isPermaLink="false">{c.esc(e.get("event_id") or "")}</guid><pubDate>{rfc(d)}</pubDate>'
+        f'<category>{c.esc(e.get("type") or "")}</category><category>{c.esc(e.get("severity") or "")}</category>'
+        f'<description>{c.esc(r["name"])} · {c.esc(e.get("source") or "")} · {c.esc(e.get("severity") or "")}</description></item>'
+        for d, r, e in flagged)
+    return (f'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Counterparty · flagged events</title>'
+            f'<link>https://philsmith871010-stack.github.io/bankCredit/events/index.html</link>'
+            f'<description>Rating actions and credit-relevant headlines for the covered banks, rules-based severity. Information, not advice.</description>'
+            f'<lastBuildDate>{rfc(generated[:19])}</lastBuildDate>{items}</channel></rss>')
 
 
 def page_brief(board, status, generated):

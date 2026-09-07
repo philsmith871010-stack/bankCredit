@@ -275,3 +275,13 @@ Result on 7 September after the exercise load and the deep UK pass: EU banks wen
 34 (about ten years); HSBC, Lloyds, NatWest, Santander UK, Standard Chartered and Nationwide now run 25 to 39
 periods back to 2014-2016; Skipton, OSB and Coventry 19 to 22. The UK median is still 3 because the small societies
 publish one annual document, so their depth grows one year at a time. 118 of 153 entities are scored.
+
+### Intraday headlines and Barclays, 7 September 2026 (afternoon)
+
+A second workflow (`news.yml`) runs every two hours on weekdays between about 07:00 and 19:00 UK: headlines only
+(`BANKCREDIT_NEWS_ONLY=1`, no register or document work), plus a universe-wide Google News sweep for agency rating
+actions attributed to every entity named in the headline, then a rebuild and deploy. An RSS feed of the last 100
+flagged events sits at events/feed.xml for readers and alerting tools. Attribution was tightened on the way: a bank
+acting as an equity analyst is not news about the bank, and generic first words (Bank of ..., Credit ...) require the
+full name. Barclays' locators now read the annual-reports page as well as the results page and accept the older
+filename styles: Barclays PLC 6 -> 35 periods (2017), Barclays Bank PLC 30 (2015), Barclays Bank UK 21 (2019).

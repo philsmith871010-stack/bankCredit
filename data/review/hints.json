@@ -1118,5 +1118,32 @@
    },
    "method": "pdf_manual"
   }
+ },
+ "barclays-bank": {
+  "last_verified": {
+   "reference_date": "2022-12-31",
+   "values": {
+    "cet1_capital": 25907.0,
+    "tier1_capital": 34139.0,
+    "total_capital": 42321.0,
+    "rwa": 203833.0,
+    "cet1_ratio": 12.7,
+    "tier1_ratio": 16.7,
+    "total_capital_ratio": 20.8,
+    "total_srep_requirement": 12.5,
+    "combined_buffer": 2.8,
+    "overall_capital_requirement": 15.3,
+    "cet1_headroom": 5.7,
+    "leverage_exposure": 742730.0,
+    "leverage_ratio": 4.6,
+    "hqla": 205518.0,
+    "net_cash_outflows": 153542.0,
+    "lcr": 134.0,
+    "available_stable_funding": 309676.0,
+    "required_stable_funding": 288035.0,
+    "nsfr": 108.0
+   },
+   "method": "pdf_rules"
+  }
  }
 }

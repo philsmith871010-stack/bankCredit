@@ -31,6 +31,8 @@ log = logging.getLogger("bankcredit.events")
 
 GNEWS = "https://news.google.com/rss/search"
 SLEEP = 1.0
+NEWS_ONLY = bool(os.environ.get("BANKCREDIT_NEWS_ONLY"))      # the intraday run: headlines only, no register or documents
+AGENCY_QUERY = '(Moody\'s OR Fitch OR "S&P" OR DBRS) (downgrade OR downgrades OR upgrade OR upgrades OR outlook OR "rating action" OR "placed on") (bank OR "building society" OR lender)'
 SINCE_DAYS = 400
 NEWS_DAYS = 120
 EDITION = {"GB": ("en-GB", "GB", "GB:en"), "US": ("en-US", "US", "US:en"), "AU": ("en-AU", "AU", "AU:en"),
@@ -115,18 +117,32 @@ class EventsAdapter(Adapter):
         for e in self.entities:
             if not only or e.id in only:
                 yield e
-        yield "documents"
+        yield "agency-sweep"                      # one query per edition for rating actions across the whole universe
+        if not NEWS_ONLY:
+            yield "documents"
 
     # ---- fetch ----
     def fetch(self, item):
         if item == "documents":
             return {"documents": store.read("documents")}
+        if item == "agency-sweep":
+            items = []
+            for hl, gl, ceid in (EDITION["GB"], EDITION["US"]):
+                try:
+                    r = self.session.get(GNEWS, params={"q": AGENCY_QUERY, "hl": hl, "gl": gl, "ceid": ceid}, timeout=60)
+                    time.sleep(SLEEP)
+                    if r.status_code == 200:
+                        items += ET.fromstring(r.content).findall(".//item")
+                except Exception as exc:
+                    log.warning("events: agency sweep failed: %s", exc)
+            return {"sweep": items}
         e: Entity = item
         out = {"actions": [], "news": []}
-        try:
-            out["actions"] = self.esma.actions(e, date.today() - timedelta(days=SINCE_DAYS))
-        except Exception as exc:
-            log.warning("events %s: esma actions failed: %s", e.id, exc)
+        if not NEWS_ONLY:
+            try:
+                out["actions"] = self.esma.actions(e, date.today() - timedelta(days=SINCE_DAYS))
+            except Exception as exc:
+                log.warning("events %s: esma actions failed: %s", e.id, exc)
         try:
             hl, gl, ceid = EDITION.get(e.country, ("en-GB", "GB", "GB:en"))
             q = f'"{e.name}"' if (len(e.short_name) <= 3 or e.short_name.lower() in AMBIGUOUS) else f'"{e.short_name}"'
@@ -154,6 +170,8 @@ class EventsAdapter(Adapter):
                              "source": "FCA NSM" if d.origin == "nsm" else "firm website", "url": d.url,
                              "severity": "info", "detail": d.status})
             return rows
+        if item == "agency-sweep":
+            return sweep_rows(self.entities, raw["sweep"])
         e: Entity = item
         for a in raw["actions"]:
             if not a.get("date"):
@@ -180,15 +198,8 @@ class EventsAdapter(Adapter):
             if source.lower() in BLOCKED_SOURCES or STOCKSPAM.search(title) or ANALYST.search(title) or ECON.search(title):
                 continue
             # the entity must actually be named in the headline (Google widens queries)
-            short = e.short_name.lower()
-            low = title.lower()
-            if short in AMBIGUOUS:
-                if not re.search(rf"\b{re.escape(short)}\b[^.]{{0,30}}{BANKWORD}|{BANKWORD}[^.]{{0,20}}\b{re.escape(short)}\b", low):
-                    continue
-            else:
-                probe = short.split()[0] if len(short.split()[0]) > 3 else short
-                if probe not in low:
-                    continue
+            if not keep_headline(e, title, source):
+                continue
             rows.append({"entity_id": e.id, "event_id": "news:" + hashlib.sha1(link.encode()).hexdigest()[:16],
                          "date": when.date().isoformat(), "type": "news", "title": title[:240], "source": source[:60],
                          "url": link, "severity": severity(title), "detail": ""})
@@ -206,6 +217,37 @@ class EventsAdapter(Adapter):
         return result
 
 
+# first words that identify nothing on their own: the whole short name must appear
+GENERIC_FIRST = {"bank", "banco", "banque", "credit", "crédit", "national", "first", "royal", "standard", "united", "state",
+                 "commonwealth", "northern", "western", "society", "the", "goldman", "morgan", "bank-of", "co-operative"}
+
+
+def _news_row(entity_id: str, title: str, link: str, source: str, when) -> dict:
+    return {"entity_id": entity_id, "event_id": "news:" + hashlib.sha1(link.encode()).hexdigest()[:16],
+            "date": when.date().isoformat(), "type": "news", "title": title[:240], "source": source[:60],
+            "url": link, "severity": severity(title), "detail": ""}
+
+
+def sweep_rows(entities, items) -> list[dict]:
+    """Rating-action headlines for the whole universe, attributed to every entity actually named in them."""
+    rows, cutoff = [], datetime.utcnow() - timedelta(days=NEWS_DAYS)
+    for it in items:
+        title = (it.findtext("title") or "").strip()
+        link = (it.findtext("link") or "").strip()
+        src = it.find("source")
+        source = src.text.strip() if src is not None and src.text else "news"
+        try:
+            when = parsedate_to_datetime(it.findtext("pubDate") or "").replace(tzinfo=None)
+        except Exception:
+            continue
+        if when < cutoff or not title or not link:
+            continue
+        for e in entities:
+            if keep_headline(e, title, source):
+                rows.append(_news_row(e.id, title, link, source, when))
+    return rows
+
+
 def keep_headline(entity: Entity, title: str, source: str) -> bool:
     """The full news filter, applied to a stored row as well as to a fresh one."""
     if NOISE.search(title) or not CREDIT.search(title):
@@ -213,10 +255,15 @@ def keep_headline(entity: Entity, title: str, source: str) -> bool:
     if (source or "").lower() in BLOCKED_SOURCES or STOCKSPAM.search(title) or ANALYST.search(title) or ECON.search(title):
         return False
     short, low = entity.short_name.lower(), title.lower()
+    # the bank as an equity analyst ("Barclays upgrades AutoStore") is not news about the bank
+    if re.search(rf"\b{re.escape(short)}\b\s+(upgrades?|downgrades?|initiates|reiterates|raises|cuts|lifts|trims|lowers|sees|expects|says|names|picks)\b", low) \
+            or re.search(rf"\b(upgraded|downgraded|initiated|reiterated|raised|cut|lowered)\b[^.]{{0,80}}\bby {re.escape(short)}\b", low):
+        return False
     if short in AMBIGUOUS:
         return bool(re.search(rf"\b{re.escape(short)}\b[^.]{{0,30}}{BANKWORD}|{BANKWORD}[^.]{{0,20}}\b{re.escape(short)}\b", low))
-    probe = short.split()[0] if len(short.split()[0]) > 3 else short
-    return probe in low
+    first = short.split()[0]
+    probe = first if (len(first) > 3 and first not in GENERIC_FIRST) else short
+    return bool(re.search(rf"\b{re.escape(probe)}", low))
 
 
 def prune_news() -> int:

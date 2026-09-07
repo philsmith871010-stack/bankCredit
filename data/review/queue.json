@@ -335,5 +335,44 @@
   "reason": "warn:no leverage ratio row (not all Basel KM1 filers disclose one); error:cet1_ratio 13.80 vs implied 0.01 from capital/RWA",
   "status": "open",
   "created": "2026-09-07T11:29:47"
+ },
+ {
+  "id": "5f3fc350e332",
+  "entity_id": "barclays",
+  "url": "https://home.barclays/content/dam/home-barclays/documents/investor-relations/reports-and-events/annual-reports/2018/Barclays%20PLC%20Pillar%203%20Report%202018.pdf",
+  "local": "cache/pdf/barclays/5f3fc350e332f6c6.pdf",
+  "title": "Barclays PLC Pillar 3 Report 2018.pdf",
+  "page": 19,
+  "reference_date": "2018-12-31",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 41100.0,
+   "total_capital": 64594.0,
+   "rwa": 311926.0,
+   "cet1_ratio": 13.2,
+   "tier1_ratio": 17.0,
+   "total_capital_ratio": 20.7,
+   "combined_buffer": 3.5,
+   "cet1_headroom": 8.7,
+   "leverage_exposure": 1142520.0,
+   "leverage_ratio": 4.3,
+   "hqla": 218766.0,
+   "net_cash_outflows": 129172.0,
+   "lcr": 169.0,
+   "tier1_capital": 17.0
+  },
+  "checks": [
+   [
+    "warn",
+    "leverage_ratio 4.30 vs implied 0.00"
+   ],
+   [
+    "error",
+    "tier1_capital below cet1_capital"
+   ]
+  ],
+  "reason": "warn:leverage_ratio 4.30 vs implied 0.00; error:tier1_capital below cet1_capital",
+  "status": "open",
+  "created": "2026-09-07T12:39:19"
  }
 ]
