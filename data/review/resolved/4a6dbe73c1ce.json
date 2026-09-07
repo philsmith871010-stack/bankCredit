@@ -1,0 +1,22 @@
+{
+ "id": "4a6dbe73c1ce",
+ "entity_id": "commonwealth-bank",
+ "url": "https://www.commbank.com.au/content/dam/commbank-assets/investors/docs/results/1h25/CBA-2025-Half-Year-Basel-III-Pillar-3-Disclosure.pdf",
+ "page": 8,
+ "reference_date": "2024-12-31",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 58871.0,
+  "tier1_capital": 68143.0,
+  "total_capital": 99705.0,
+  "rwa": 482369.0,
+  "cet1_ratio": 12.2,
+  "tier1_ratio": 14.1,
+  "total_capital_ratio": 20.7,
+  "leverage_exposure": 1393974.0,
+  "leverage_ratio": 4.9,
+  "lcr": 127.0,
+  "nsfr": 116.0
+ },
+ "note": "CBA reports under APRA's APS 330, which has no KM1 template. All figures are the Level 2 consolidated banking group basis that APRA requires. Ratios come from the 'Summary Group Capital Adequacy Ratios (Level 2)' table and the Group Capital Ratios narrative; amounts from the 'Group Regulatory Capital Position' table; leverage from 'Summary Group Leverage Ratio'; LCR is the quarterly average and NSFR the point-in-time figure, both as stated in the Group in Review section. First column in each table is the reporting date. Cross-check: CET1 capital over RWA reproduces the published CET1 ratio, and total capital over RWA the published total capital ratio."
+}

@@ -1,0 +1,19 @@
+{
+ "id": "d4c4abc82768",
+ "entity_id": "westpac",
+ "url": "https://www.westpac.com.au/content/dam/public/wbc/documents/pdf/aw/ic/wbc-december-pillar-3-report-2024.pdf",
+ "page": 4,
+ "reference_date": "2024-12-31",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 64000.0,
+  "rwa": 451401.0,
+  "cet1_ratio": 11.87,
+  "tier1_ratio": 14.17,
+  "total_capital_ratio": 21.55,
+  "leverage_exposure": 1252500.0,
+  "leverage_ratio": 5.11,
+  "lcr": 131.0
+ },
+ "note": "Westpac reports under APRA's APS 330, which has no KM1 template. Level 2 basis. Ratios from the Executive Summary 'Key capital ratios' table (p.4) and total RWA 451,401 from the risk-weighted assets table on the same page, first column 31 December 2024. LCR 131% is the quarterly average from the APS 330 template (p.22), current-quarter column. This first-quarter report discloses no CET1 or total capital amount, so neither is recorded. Caution on precision: the leverage table (p.12) is stated in $ billion, so Tier 1 capital 64.0bn and total exposures 1,252.5bn are recorded as 64,000 and 1,252,500 $m and carry only the source's three or four significant figures - unlike the September report, this one has no exact $m leverage disclosure. Consistency check: 14.17% of 451,401 = 63,963, agreeing with the 64.0bn shown."
+}

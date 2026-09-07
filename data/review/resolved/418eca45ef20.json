@@ -1,0 +1,21 @@
+{
+ "id": "418eca45ef20",
+ "entity_id": "vanquis",
+ "url": "https://www.vanquis.com/wp-content/uploads/2025/05/10-05-21_Pillar-3-regulatory-capital-disclosures.pdf",
+ "page": 4,
+ "reference_date": "2020-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 674.8,
+  "tier1_capital": 674.8,
+  "total_capital": 674.8,
+  "rwa": 1973.5,
+  "cet1_ratio": 34.2,
+  "tier1_ratio": 34.2,
+  "total_capital_ratio": 34.2,
+  "leverage_exposure": 3236.7,
+  "leverage_ratio": 20.8,
+  "lcr": 1756.0
+ },
+ "note": "Section 1.5 'Summary of key capital ratios' (p.4) of the Provident Financial plc 2020 disclosure - the group that later renamed to Vanquis Banking Group. Columns 31 December 2020 and 2019 - took 2020, which the header confirms. IFRS 9 transitional basis, matching the headline ratios; the fully loaded alternates in the same table are not recorded. Check: 674.8/1973.5 = 34.19% against the stated 34.2%. LCR is the Q4 2020 12-month average of 1,756% from section 7.2.1 (p.20), chosen to match the KM1 averaging convention used elsewhere in this dataset; the same section also quotes a point-in-time 31 December 2020 LCR of 2,830%. NSFR was not required at this date and is not disclosed."
+}

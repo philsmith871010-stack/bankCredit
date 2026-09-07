@@ -1,0 +1,21 @@
+{
+ "id": "95227de6c7e3",
+ "entity_id": "northern-trust",
+ "url": "https://www.northerntrust.com/content/dam/northerntrust/pws/nt/documents/earnings/pillar-3/northern-trust-pillar3-northern-trust-corporation-2025Q3.pdf",
+ "page": 7,
+ "reference_date": "2025-09-30",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 11199.0,
+  "tier1_capital": 12028.0,
+  "total_capital": 13582.0,
+  "rwa": 90034.0,
+  "cet1_ratio": 12.4,
+  "tier1_ratio": 13.4,
+  "total_capital_ratio": 15.1,
+  "leverage_exposure": 135905.0,
+  "leverage_ratio": 8.9,
+  "tier1_leverage": 8.0
+ },
+ "note": "Northern Trust reports under the U.S. Basel III framework, which has no KM1 template, and this PDF has no text layer at all - the extractor could read nothing - so Table 1 'Northern Trust Corporation Capital Ratios' (p.7) was rendered and read visually. The table has two columns, Basel Standardized and Basel Advanced; the Standardized figures are recorded because the document states the Corporation 'is subject to the more stringent of' the two, and Standardized gives the lower ratios at this date (CET1 12.4% against 15.1%). Amounts are US dollar millions. leverage_ratio is the Supplementary Leverage Ratio with its supplementary leverage exposure, both disclosed only on the Advanced side; tier1_leverage 8.0% is the separate U.S. Tier 1 leverage ratio, identical under both approaches. This report contains no LCR or NSFR. Check: 11,199/90,034 = 12.4% and 13,582/90,034 = 15.1%, matching the published ratios."
+}

@@ -1,0 +1,22 @@
+{
+ "id": "9330e2ecd848",
+ "entity_id": "vanquis",
+ "url": "https://www.vanquis.com/wp-content/uploads/2025/08/JUN25_VANQ_Pillar-3-disclosures_SemiAnnual.pdf",
+ "page": 3,
+ "reference_date": "2025-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 348.0,
+  "tier1_capital": 348.0,
+  "total_capital": 548.0,
+  "rwa": 1882.7,
+  "cet1_ratio": 18.5,
+  "tier1_ratio": 18.5,
+  "total_capital_ratio": 29.1,
+  "overall_capital_requirement": 16.4,
+  "leverage_exposure": 2779.1,
+  "leverage_ratio": 12.5,
+  "lcr": 563.8
+ },
+ "note": "UK KM1 key metrics template on p.3. The PDF has no text layer, so the page was rendered and read visually - that is why the extractor found no template. Columns a/c/e are 30 Jun 25, 31 Dec 24, 30 Jun 24; took column a. Already GBP millions. Check: 348.0/1882.7 = 18.48% against the stated 18.5%, and 548.0/1882.7 = 29.1% against the stated total capital ratio. LCR 563.8% is the 12-month rolling average per the template. NSFR is shown as n/a: the group became a Small Domestic Deposit Taker in March 2024 and no longer reports it."
+}

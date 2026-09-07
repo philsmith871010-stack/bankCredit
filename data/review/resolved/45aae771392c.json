@@ -1,0 +1,23 @@
+{
+ "id": "45aae771392c",
+ "entity_id": "coventry-bs",
+ "url": "https://www.coventrybuildingsociety.co.uk/content/dam/cbs/member/pdfs/financial-results/2026/Pillar-3-Disclosures-31-March-2026.pdf",
+ "page": 4,
+ "reference_date": "2026-03-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 2911.0,
+  "tier1_capital": 3576.0,
+  "total_capital": 3854.0,
+  "rwa": 14873.0,
+  "cet1_ratio": 19.6,
+  "tier1_ratio": 24.0,
+  "total_capital_ratio": 25.9,
+  "overall_capital_requirement": 16.0,
+  "leverage_exposure": 75880.0,
+  "leverage_ratio": 4.7,
+  "lcr": 232.6,
+  "nsfr": 147.4
+ },
+ "note": "Template UK KM1 'Key metrics', p.4 (the liquidity half of the template continues on p.5 in the longer reports). These Coventry PDFs have a broken font encoding - extracted text comes out as mojibake, which is why the rules-based extractor found no template - so the pages were rendered and read visually. Five columns run from the reporting date backwards; the first column is taken. Already GBP millions. Reported on a UK Consolidation Group basis including The Co-operative Bank, acquired on 1 January 2025. Profits for 1 January to 31 March 2026 are excluded from all key metrics as unverified, as the table states. Check: 2,911/14,873 = 19.6% and 3,854/14,873 = 25.9%, matching the published ratios."
+}

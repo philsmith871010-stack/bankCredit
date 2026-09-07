@@ -1,0 +1,23 @@
+{
+ "id": "b0a663318342",
+ "entity_id": "coventry-bs",
+ "url": "https://www.coventrybuildingsociety.co.uk/content/dam/cbs/member/pdfs/financial-results/2024/Pillar-3-Disclosures-31-December-2024.pdf",
+ "page": 4,
+ "reference_date": "2024-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 2615.0,
+  "tier1_capital": 3280.0,
+  "total_capital": 3320.0,
+  "rwa": 9341.0,
+  "cet1_ratio": 28.0,
+  "tier1_ratio": 35.1,
+  "total_capital_ratio": 35.5,
+  "overall_capital_requirement": 15.1,
+  "leverage_exposure": 53662.0,
+  "leverage_ratio": 5.7,
+  "lcr": 258.2,
+  "nsfr": 151.3
+ },
+ "note": "Template UK KM1 'Key metrics', p.4 (the liquidity half of the template continues on p.5 in the longer reports). These Coventry PDFs have a broken font encoding - extracted text comes out as mojibake, which is why the rules-based extractor found no template - so the pages were rendered and read visually. Five columns run from the reporting date backwards; the first column is taken. Already GBP millions. Society-only basis, before the Co-operative Bank acquisition completed on 1 January 2025. Cross-checked against the same date's comparative column in the neighbouring quarterly report, which agrees on every figure. The later reports restate CET1 as 2,616 and RWA as 9,340 in their comparative columns, a rounding-level difference; the figures recorded here are the ones this report publishes for its own reporting date. Check: 2,615/9,341 = 28.0% and 3,320/9,341 = 35.5%, matching the published ratios. One consistency note: Tier 1 capital 3,280 over the leverage exposure 53,662 gives 6.1%, not the 5.7% in row 14. That is not a transcription error - footnote 4 to this table states the 5.7% is calculated on a restricted Tier 1 capital basis, whereas 'the 6.1% ratio reported to the Regulator was based on the Total Tier 1 capital amount'. The 5.7% published KM1 figure is the one recorded. The restriction applies only in this report; in the surrounding quarters Tier 1 over leverage exposure reproduces the published leverage ratio directly."
+}

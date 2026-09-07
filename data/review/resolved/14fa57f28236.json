@@ -1,0 +1,13 @@
+{
+ "id": "14fa57f28236",
+ "entity_id": "tsb",
+ "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/q1-2025-pillar-3-quarterly-disclosure-final.pdf",
+ "page": 2,
+ "reference_date": "2025-03-31",
+ "currency": "GBP",
+ "values": {
+  "rwa": 11343.468,
+  "lcr": 185.0
+ },
+ "note": "TSB 'Large Subsidiary Disclosure' has no KM1 key-metrics template: it carries OV1 (RWA), CR8 and LIQ1 only, so no capital figures are disclosed. Recorded total RWA from OV1 (current-period column, GBP thousands converted to millions) and the LCR from LIQ1 (12-month average, current quarter column)."
+}

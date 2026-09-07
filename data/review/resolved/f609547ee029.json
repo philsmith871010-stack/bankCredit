@@ -1,0 +1,12 @@
+{
+ "id": "f609547ee029",
+ "entity_id": "citigroup",
+ "url": "https://www.citigroup.com/rcs/citigpa/storage/public/lcr240331.pdf",
+ "page": 4,
+ "reference_date": "2024-03-31",
+ "currency": "USD",
+ "values": {
+  "lcr": 116.7
+ },
+ "note": "Citigroup's file at this URL is the U.S. Liquidity Coverage Ratio Disclosure, not a Pillar 3 capital report: it contains the LCR template and its liquidity narrative only, with no capital ratios, no RWA and no leverage measure, so the LCR is the one metric available. The PDF has no text layer, so the page was rendered and read visually. The figure is row 35 of the disclosure template, the average LCR for the quarter, calculated on the U.S. LCR rule rather than the Basel/UK basis used elsewhere in this dataset. The extractor reported no reference date; the cover reads 'For the quarterly period ended 3/31/2024'. Total adjusted net cash outflow 472,992 gives an LCR of 116.7%. The identical 116.7% in the following quarter is not a transcription error - the June 2024 disclosure states the average LCR was unchanged sequentially."
+}

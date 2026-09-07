@@ -1,0 +1,23 @@
+{
+ "id": "dd511bebaed1",
+ "entity_id": "starling",
+ "url": "https://www.starlingbank.com/docs/reports/Pillar3-2022.pdf",
+ "page": 20,
+ "reference_date": "2022-03-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 397.502,
+  "tier1_capital": 397.502,
+  "total_capital": 397.502,
+  "rwa": 994.828,
+  "cet1_ratio": 39.96,
+  "tier1_ratio": 39.96,
+  "total_capital_ratio": 39.96,
+  "overall_capital_requirement": 10.5,
+  "leverage_exposure": 5063.481,
+  "leverage_ratio": 7.85,
+  "lcr": 515.0,
+  "nsfr": 261.0
+ },
+ "note": "Section 4.1 Key Metrics, p.20. Two columns, 31 Mar 2022 and 31 Mar 2021 - took 31 Mar 2022. Amounts are GBP thousands in the source, converted to millions. Check: 397.502/994.828 = 39.96% against the stated CET1 ratio. The extractor's cet1_headroom error came from the 'CET1 available after meeting the total SREP own funds requirements (%)' row, which Starling fills with an amount (293,045) rather than a percentage; that row is not published so it is left out. Leverage is the excluding-central-bank-claims basis. All three capital tiers are equal - Starling had no AT1 or T2 at the date."
+}

@@ -1,0 +1,20 @@
+{
+ "id": "7998745c1783",
+ "entity_id": "cumberland-bs",
+ "url": "https://www.cumberland.co.uk/neon/download/file/PDFs/Cumberland-Pillar-3.pdf",
+ "page": 20,
+ "reference_date": "2017-03-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 152.234,
+  "tier1_capital": 152.234,
+  "total_capital": 153.831,
+  "rwa": 883.252,
+  "cet1_ratio": 17.24,
+  "leverage_exposure": 2666.831,
+  "leverage_ratio": 5.71,
+  "lcr": 216.0,
+  "nsfr": 138.0
+ },
+ "note": "The Cumberland's 2017 disclosure predates KM1 and presents its figures in narrative form rather than a template, which is why the extractor found nothing. Section 4(h) 'Own Funds' (p.20) states capital resources of GBP 153.831m, of which CET1 GBP 152.234m, total RWA GBP 883.252m and a CET1 ratio of 17.24% at 31 March 2017; Tier 1 equals CET1 as the Society has no subordinated debt or PIBS, and the only other capital is GBP 1.597m of upper Tier 2. Leverage from section 7 (p.36), where the table is in GBP thousands: exposure 2,666,831 and Tier 1 152,234, converted to millions, giving the stated 5.71%. LCR 216% and NSFR 138% are stated in section 8. A total capital ratio is not published and is not recorded. Check: 152.234/883.252 = 17.24%, matching the stated ratio."
+}

@@ -1,0 +1,21 @@
+{
+ "id": "98a65695bda8",
+ "entity_id": "metro-bank",
+ "url": "https://www.metrobankonline.co.uk/globalassets/documents/investor_documents/pillar-3-disclosure-2018.pdf",
+ "page": 21,
+ "reference_date": "2018-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1171.0,
+  "tier1_capital": 1171.0,
+  "total_capital": 1420.0,
+  "rwa": 8936.0,
+  "cet1_ratio": 13.1,
+  "tier1_ratio": 13.1,
+  "total_capital_ratio": 15.9,
+  "leverage_exposure": 21704.0,
+  "leverage_ratio": 5.4,
+  "lcr": 139.2
+ },
+ "note": "The 2018 report predates the KM1 template. Ratios come from Table 1 'Key Ratios' (p.6): CET1 13.1%, Tier 1 13.1%, total capital 15.9%, leverage 5.4%, LCR 139.2%, RWA GBP 8,936m. The capital amounts the extractor reported missing are in Table 9 (p.21, IFRS 9-FL): CET1 and Tier 1 GBP 1,171m, total capital GBP 1,420m, on the transitional basis that matches the published ratios. Leverage exposure GBP 21,704m from the leverage table on p.20. Check: 1171/8936 = 13.10% and 1420/8936 = 15.89%, both matching the published ratios. NSFR is not disclosed in the 2018 report."
+}

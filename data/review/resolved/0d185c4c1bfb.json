@@ -1,0 +1,21 @@
+{
+ "id": "0d185c4c1bfb",
+ "entity_id": "morgan-stanley",
+ "url": "https://www.morganstanley.com/content/dam/msdotcom/en/about-us-ir/pdf/1Q26_Basel_III_Pillar_3_Disclosures_Report.pdf",
+ "page": 5,
+ "reference_date": "2026-03-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 84546.0,
+  "tier1_capital": 94235.0,
+  "total_capital": 106481.0,
+  "rwa": 559080.0,
+  "cet1_ratio": 15.1,
+  "tier1_ratio": 16.9,
+  "total_capital_ratio": 19.0,
+  "leverage_exposure": 1876478.0,
+  "leverage_ratio": 5.0,
+  "tier1_leverage": 6.1
+ },
+ "note": "Morgan Stanley reports under the U.S. Basel III framework, which has no KM1 template. The extractor reported 'no CET1 ratio found' and 'SLR not found', but both are in the report: the 'Regulatory Capital' table on p.5 carries CET1, Tier 1 and total capital, total RWA and the three capital ratios, and section 11 (p.27) carries the supplementary leverage disclosure. The table gives two columns, Standardized Approach and Advanced Approach; the figures recorded here are the Standardized Approach, which produces the lower - and therefore binding - ratios and is the basis Morgan Stanley reports as its headline capital position. leverage_ratio is the Supplementary Leverage Ratio, with the supplementary leverage exposure as leverage_exposure; tier1_leverage is the separate U.S. Tier 1 leverage ratio (Tier 1 capital over adjusted average assets). Check: 84,546/559,080 = 15.12%, matching the published 15.1%."
+}

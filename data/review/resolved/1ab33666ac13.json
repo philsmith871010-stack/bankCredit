@@ -1,0 +1,21 @@
+{
+ "id": "1ab33666ac13",
+ "entity_id": "leeds-bs",
+ "url": "https://www.leedsbuildingsociety.co.uk/_resources/pdfs/press-pdfs/financial-results-pdfs/pillar-3-disclosures-2021.pdf",
+ "page": 4,
+ "reference_date": "2021-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1228.7,
+  "tier1_capital": 1231.2,
+  "total_capital": 1458.7,
+  "rwa": 3231.2,
+  "cet1_ratio": 38.0,
+  "tier1_ratio": 38.1,
+  "total_capital_ratio": 45.1,
+  "leverage_exposure": 20317.4,
+  "leverage_ratio": 6.1,
+  "lcr": 187.2
+ },
+ "note": "Leeds Building Society's 2021 report predates KM1. Table 1 'Capital Adequacy' (p.4) gives capital amounts, RWA and the three capital ratios; the table has four columns - Transitional 2021, End Point 2021, Transitional 2020, End Point 2020 - and the transitional 2021 column is taken, being the basis of the Society's headline ratios. The extractor found no period date in the header; the document states throughout that it is the position as at 31 December 2021. Tier 1 capital 1,231.2 and the leverage figures come from Table 3 'UK Leverage Ratio' (p.5), which is the UK basis excluding central bank exposures - the only leverage basis disclosed. The LCR row the extractor could not find is Table 29 (p.59): 187.2% is the 12-month average to 31 December 2021, chosen to match the KM1 averaging convention; the same section quotes a year-end point-in-time LCR of 195%. NSFR is not disclosed in this report. Check: 1,228.7/3,231.2 = 38.0% and 1,458.7/3,231.2 = 45.1%, both matching the published ratios."
+}

@@ -1,0 +1,23 @@
+{
+ "id": "07be48bcdc6e",
+ "entity_id": "aldermore",
+ "url": "https://www.investors.aldermore.co.uk/sites/aldermore-corp/files/aldermore/pillar-3-2022_0.pdf",
+ "page": 4,
+ "reference_date": "2022-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1342.1,
+  "tier1_capital": 1450.1,
+  "total_capital": 1602.1,
+  "rwa": 9580.8,
+  "cet1_ratio": 14.0,
+  "tier1_ratio": 15.1,
+  "total_capital_ratio": 16.7,
+  "overall_capital_requirement": 12.1,
+  "leverage_exposure": 18082.7,
+  "leverage_ratio": 8.0,
+  "lcr": 399.7,
+  "nsfr": 130.0
+ },
+ "note": "Key Metrics table, p.4. Four columns: Group 30 Jun 2022 / Group 30 Jun 2021 / Bank 30 Jun 2022 / Bank 30 Jun 2021 - took the Group current-period column. Header date confirmed as 30 June 2022 in the table caption. Already in GBP millions. Check: 1342.1/9580.8 = 14.01% against the stated CET1 ratio of 14.0%. Leverage ratio and exposure are the 'excluding claims on central banks' basis, the only one disclosed. LCR/NSFR are 12-month averages."
+}

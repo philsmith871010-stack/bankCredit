@@ -1,0 +1,23 @@
+{
+ "id": "6773b440bedd",
+ "entity_id": "metro-bank",
+ "url": "https://www.metrobankonline.co.uk/globalassets/documents/customer_documents/personal/pillar-3-disclosure-h1-2023.pdf",
+ "page": 2,
+ "reference_date": "2023-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 813.0,
+  "tier1_capital": 813.0,
+  "total_capital": 1030.0,
+  "rwa": 7802.0,
+  "cet1_ratio": 10.4,
+  "tier1_ratio": 10.4,
+  "total_capital_ratio": 13.2,
+  "overall_capital_requirement": 11.9,
+  "leverage_exposure": 18550.0,
+  "leverage_ratio": 4.4,
+  "lcr": 219.0,
+  "nsfr": 135.0
+ },
+ "note": "UK KM1 - Key Metrics, p.2. This PDF has no extractable text layer (the page is a set of images), so the page was rendered and read visually. Three columns: 30 June 2023 / 31 December 2022 / 30 June 2022 - took 30 June 2023, which the document header confirms as the reporting date. Already GBP millions. Check: 813/7802 = 10.42% against the stated 10.4%; total capital 1030/7802 = 13.2% as stated. Entity is Metro Bank Holdings PLC, the holding company inserted on 19 May 2023."
+}

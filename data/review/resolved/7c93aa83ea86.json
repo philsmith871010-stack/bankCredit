@@ -1,0 +1,23 @@
+{
+ "id": "7c93aa83ea86",
+ "entity_id": "coventry-bs",
+ "url": "https://www.coventrybuildingsociety.co.uk/content/dam/cbs/member/pdfs/financial-results/2025/Pillar-3-Disclosures-30-September%202025.pdf",
+ "page": 4,
+ "reference_date": "2025-09-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 2231.0,
+  "tier1_capital": 2896.0,
+  "total_capital": 2937.0,
+  "rwa": 10771.0,
+  "cet1_ratio": 20.7,
+  "tier1_ratio": 26.9,
+  "total_capital_ratio": 27.3,
+  "overall_capital_requirement": 15.1,
+  "leverage_exposure": 55415.0,
+  "leverage_ratio": 5.2,
+  "lcr": 254.1,
+  "nsfr": 150.6
+ },
+ "note": "Template UK KM1 'Key metrics', p.4 (the liquidity half of the template continues on p.5 in the longer reports). These Coventry PDFs have a broken font encoding - extracted text comes out as mojibake, which is why the rules-based extractor found no template - so the pages were rendered and read visually. Five columns run from the reporting date backwards; the first column is taken. Already GBP millions. Cross-checked against the same date's comparative column in the neighbouring quarterly report, which agrees on every figure. Check: 2,231/10,771 = 20.7% and 2,937/10,771 = 27.3%, matching the published ratios."
+}

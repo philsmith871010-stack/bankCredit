@@ -1,0 +1,23 @@
+{
+ "id": "7a8ffce0c8cc",
+ "entity_id": "bank-of-baroda-uk",
+ "url": "https://www.bankofbarodauk.com/-/media/project/bob/countrywebsites/ukretail/pdf/disclosures-as-on-31-03-2025-final-20-03.pdf",
+ "page": 8,
+ "reference_date": "2025-03-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 164.58,
+  "tier1_capital": 164.58,
+  "total_capital": 164.58,
+  "rwa": 74.71,
+  "cet1_ratio": 220.3,
+  "tier1_ratio": 220.3,
+  "total_capital_ratio": 220.3,
+  "overall_capital_requirement": 20.28,
+  "leverage_exposure": 193.58,
+  "leverage_ratio": 85.02,
+  "lcr": 1292.22,
+  "nsfr": 641.08
+ },
+ "note": "KM1 'Key Metrics Template' (Table 2), p.8, continuing on p.9. Columns 31.03.2025 and 31.03.2024 - took 31.03.2025. Already GBP millions. The extractor's 'ratio outside 3..80' errors are not extraction faults: the ratios really are that high. Bank of Baroda (UK) Ltd is in solvent wind-down, with GBP 164.58m of CET1 against only GBP 74.71m of RWA, so 164.58/74.71 = 220.3% exactly as printed. Leverage 85.02% and LCR 1292.22% are consistent with the same wind-down balance sheet. Total RWA cross-checks against OV1 row 9 on the same page."
+}

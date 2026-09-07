@@ -1,0 +1,22 @@
+{
+ "id": "d7d21c6f3523",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2024-half-year-pillar-3-report.pdf",
+ "page": 8,
+ "reference_date": "2024-03-31",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 52543.0,
+  "tier1_capital": 61133.0,
+  "total_capital": 87667.0,
+  "rwa": 432553.0,
+  "cet1_ratio": 12.15,
+  "tier1_ratio": 14.13,
+  "total_capital_ratio": 20.27,
+  "leverage_exposure": 1198406.0,
+  "leverage_ratio": 5.1,
+  "lcr": 139.0,
+  "nsfr": 118.0
+ },
+ "note": "NAB reports under APRA's APS 330, which has no KM1 template. Figures are the Level 2 (consolidated group) basis throughout. Capital amounts come from the detailed capital disclosures (APS 330 common disclosure template), ratios and leverage from the capital and leverage ratios table, LCR and NSFR from the APS 330 liquidity templates - the NSFR page whose 'As at' header matches the reporting date, not the prior-period page that follows it. Cross-check: CET1 capital over total RWA reproduces the published CET1 ratio, and total capital over total RWA the published total capital ratio."
+}

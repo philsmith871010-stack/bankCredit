@@ -1,0 +1,23 @@
+{
+ "id": "b2843612c6b0",
+ "entity_id": "co-operative-bank",
+ "url": "https://www.co-operativebank.co.uk/pdfs/bank/investorrelations/2025-h2-pillar-3-disclosures.pdf",
+ "page": 4,
+ "reference_date": "2025-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 968.0,
+  "tier1_capital": 968.0,
+  "total_capital": 1169.0,
+  "rwa": 5112.0,
+  "cet1_ratio": 18.9,
+  "tier1_ratio": 18.9,
+  "total_capital_ratio": 22.9,
+  "overall_capital_requirement": 16.5,
+  "leverage_exposure": 22035.0,
+  "leverage_ratio": 4.4,
+  "lcr": 179.8,
+  "nsfr": 134.7
+ },
+ "note": "Template UK KM1 on p.4, liquidity half on p.5. This PDF has a broken font encoding - extracted text is mojibake, which is why the extractor found no template - so the pages were rendered and read visually. Two columns, 31 December 2025 and 31 December 2024; took the first. Already GBP millions. These are the Bank's own large-subsidiary disclosures: The Co-operative Bank p.l.c. has been a subsidiary of Coventry Building Society since 1 January 2025, and its data is also consolidated into the Society's Pillar 3, so these figures are the Bank standalone, not the Coventry group. Every figure is confirmed twice in the document: the KM1 amounts and ratios reappear in Templates UK CC1 and UK OV1 (total capital 1,169, total risk exposure 5,112, ratios 18.9/18.9/22.9, overall capital requirement 16.5%), and the narrative on p.5 repeats the 4.4% leverage ratio, the 179.8% 12-month average LCR and the 134.7% NSFR. Check: 968/5,112 = 18.9% and 1,169/5,112 = 22.9%."
+}

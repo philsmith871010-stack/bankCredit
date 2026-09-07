@@ -1,0 +1,5 @@
+{
+ "id": "77f16bb2ed54",
+ "skip": true,
+ "note": "The Bank of Nova Scotia's Q3 2026 Regulatory Disclosures PDF contains no KM1 or capital-metrics table of any kind. All 133 pages are the 'Main features of regulatory capital instruments' template - every page begins with row 1 'Issuer' and describes one set of instruments. There are no capital ratios, no RWA and no liquidity figures anywhere in the file, so there is nothing to extract. Scotiabank's key metrics are published in a separate supplementary regulatory capital disclosure; this locator points at the instruments file."
+}

@@ -1,0 +1,23 @@
+{
+ "id": "c603ab8a98c9",
+ "entity_id": "standard-chartered",
+ "url": "https://www.sc.com/en/uploads/sites/66/content/docs/standard-chartered-plc-1q-2023-pillar-3-disclosure.pdf",
+ "page": 4,
+ "reference_date": "2023-03-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 34402.0,
+  "tier1_capital": 39894.0,
+  "total_capital": 52318.0,
+  "rwa": 250893.0,
+  "cet1_ratio": 13.7,
+  "tier1_ratio": 15.9,
+  "total_capital_ratio": 20.9,
+  "overall_capital_requirement": 10.38,
+  "leverage_exposure": 857214.0,
+  "leverage_ratio": 4.7,
+  "lcr": 151.2,
+  "nsfr": 131.3
+ },
+ "note": "Table 1 'Key metrics template (UK KM1)', p.4. This PDF has no text layer, so the page was rendered and read visually. The reference date needed correcting: the extractor found no period date in the header and fell back to an expected 31 December 2023, but this is the 1Q 2023 report - the cover reads 'Pillar 3 Disclosures 31 March 2023' and the KM1 columns run 31.03.23, 31.12.22, 30.09.22, 30.06.22, 31.03.22. Took the 31.03.23 column. Amounts are US dollar millions. Where the template shows both transitional and fully loaded IFRS 9 rows they are identical at this date; the transitional row is recorded. Leverage is the excluding-central-bank-claims basis (rows 13 and 14), Standard Chartered's headline measure; the including-claims ratio of 4.2% is not recorded. Check: 34,402/250,893 = 13.7% and 52,318/250,893 = 20.9%, matching the published ratios."
+}

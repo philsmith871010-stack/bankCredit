@@ -1,0 +1,23 @@
+{
+ "id": "8657d981626d",
+ "entity_id": "coventry-bs",
+ "url": "https://www.coventrybuildingsociety.co.uk/content/dam/cbs/member/pdfs/financial-results/2025/Pillar-3-Document-June-2025-Final.pdf",
+ "page": 4,
+ "reference_date": "2025-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 2229.0,
+  "tier1_capital": 2894.0,
+  "total_capital": 2935.0,
+  "rwa": 10498.0,
+  "cet1_ratio": 21.2,
+  "tier1_ratio": 27.6,
+  "total_capital_ratio": 28.0,
+  "overall_capital_requirement": 15.1,
+  "leverage_exposure": 54609.0,
+  "leverage_ratio": 5.3,
+  "lcr": 250.7,
+  "nsfr": 150.2
+ },
+ "note": "Template UK KM1 'Key metrics', p.4 (the liquidity half of the template continues on p.5 in the longer reports). These Coventry PDFs have a broken font encoding - extracted text comes out as mojibake, which is why the rules-based extractor found no template - so the pages were rendered and read visually. Five columns run from the reporting date backwards; the first column is taken. Already GBP millions. Half-year report. Cross-checked against the same date's comparative column in the neighbouring quarterly report, which agrees on every figure. Check: 2,229/10,498 = 21.2% and 2,935/10,498 = 28.0%, matching the published ratios. Note the report's own caveat that the 4.5% leverage ratio quoted in the Interim Financial Report is on a different regulatory scope; 5.3% is the KM1 figure."
+}

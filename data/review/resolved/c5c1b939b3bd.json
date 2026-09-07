@@ -1,0 +1,22 @@
+{
+ "id": "c5c1b939b3bd",
+ "entity_id": "westpac",
+ "url": "https://www.westpac.com.au/content/dam/public/wbc/documents/pdf/aw/ic/wbc-pillar-3-report-september-2024.pdf",
+ "page": 4,
+ "reference_date": "2024-09-30",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 54648.0,
+  "tier1_capital": 64843.0,
+  "total_capital": 93538.0,
+  "rwa": 437430.0,
+  "cet1_ratio": 12.49,
+  "tier1_ratio": 14.82,
+  "total_capital_ratio": 21.38,
+  "leverage_exposure": 1222950.0,
+  "leverage_ratio": 5.3,
+  "lcr": 133.0,
+  "nsfr": 112.0
+ },
+ "note": "Westpac reports under APRA's APS 330, which has no KM1 template. Level 2 basis throughout, the basis APRA requires and the one the report's key capital ratios table uses. CET1 capital, RWA and the ratios come from the Executive Summary 'Key capital ratios' table (p.4), first column 30 September 2024. Total regulatory capital 93,538 from the capital overview table (p.16), confirmed by the common disclosure template row 'Total capital (TC=T1+T2)'. Tier 1 capital and total exposures are the exact $m figures from the leverage ratio common disclosure rather than the $bn summary. LCR 133% is the quarterly average; NSFR 112% from the page whose header is 30 September 2024, not the 30 June page that follows. Check: 54,648/437,430 = 12.49% and 93,538/437,430 = 21.38%, both matching the published ratios."
+}

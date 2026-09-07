@@ -1,0 +1,19 @@
+{
+ "id": "888ffddcd88d",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2023-first-quarter-pillar-3-report.pdf",
+ "page": 5,
+ "reference_date": "2022-12-31",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 58669.0,
+  "rwa": 455673.0,
+  "cet1_ratio": 11.3,
+  "tier1_ratio": 12.9,
+  "total_capital_ratio": 17.8,
+  "leverage_exposure": 1182429.0,
+  "leverage_ratio": 5.0,
+  "lcr": 134.0
+ },
+ "note": "NAB reports under APRA's APS 330, which has no KM1 template - that is why the rules-based extractor found none. Figures are the Level 2 (consolidated group) basis. Capital ratios and the leverage block come from the 'Capital ratios and leverage ratio' tables; total RWA from the capital adequacy table; LCR from the APS 330 LCR template, first (current-quarter) column. This quarterly report discloses Tier 1 capital only as part of the leverage table and gives no CET1 or total capital amount, so those are left out rather than derived. Cross-check: Tier 1 capital over total RWA reproduces the published Tier 1 ratio. This 2022 report labels the rows simply 'Common Equity Tier 1' / 'Tier 1' / 'Total' without the 'Level 2' prefix used from 2023 onwards; they are the same Level 2 Group ratios."
+}

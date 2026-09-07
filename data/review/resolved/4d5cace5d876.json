@@ -1,0 +1,23 @@
+{
+ "id": "4d5cace5d876",
+ "entity_id": "coventry-bs",
+ "url": "https://www.coventrybuildingsociety.co.uk/content/dam/cbs/member/pdfs/financial-results/2024/Pillar-3-Disclosures-September-2024.pdf",
+ "page": 4,
+ "reference_date": "2024-09-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 2530.0,
+  "tier1_capital": 3195.0,
+  "total_capital": 3235.0,
+  "rwa": 8917.0,
+  "cet1_ratio": 28.4,
+  "tier1_ratio": 35.8,
+  "total_capital_ratio": 36.3,
+  "overall_capital_requirement": 15.1,
+  "leverage_exposure": 53223.0,
+  "leverage_ratio": 6.0,
+  "lcr": 264.7,
+  "nsfr": 150.3
+ },
+ "note": "Template UK KM1 'Key metrics', p.4 (the liquidity half of the template continues on p.5 in the longer reports). These Coventry PDFs have a broken font encoding - extracted text comes out as mojibake, which is why the rules-based extractor found no template - so the pages were rendered and read visually. Five columns run from the reporting date backwards; the first column is taken. Already GBP millions. Society-only basis, before the Co-operative Bank acquisition. Cross-checked against the same date's comparative column in the neighbouring quarterly report, which agrees on every figure. Check: 2,530/8,917 = 28.4% and 3,235/8,917 = 36.3%, matching the published ratios."
+}

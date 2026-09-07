@@ -1,0 +1,20 @@
+{
+ "id": "a4960893a887",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2025/31-december---basel-iii-pillar-3-disclosures--prudential-standard-aps-330.pdf",
+ "page": 5,
+ "reference_date": "2024-12-31",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 4343.3,
+  "tier1_capital": 5145.7,
+  "total_capital": 6018.6,
+  "rwa": 38870.9,
+  "cet1_ratio": 11.17,
+  "tier1_ratio": 13.24,
+  "total_capital_ratio": 15.48,
+  "lcr": 135.0,
+  "nsfr": 118.0
+ },
+ "note": "Bendigo and Adelaide Bank reports under APRA's APS 330, which has no KM1 template - hence the extractor found none. Capital ratios and total RWA come from Table 3 'Capital Adequacy' (ratios stated 'for the consolidated group'), first column = the reporting date, second = the prior period. LCR from Table 20, current-period column. APS 330 does not require a leverage ratio, so none is recorded. Capital amounts come from Table 1 'Common Disclosure Template' (rows 29, 45, 59, 60) and NSFR from Table 21, taking the page whose header is the reporting date rather than the prior-period page that follows it. Check: 4343.3/38870.9 = 11.17% and 6018.6/38870.9 = 15.48%, both matching the published ratios."
+}

@@ -1,0 +1,22 @@
+{
+ "id": "0a15f4ad1fdb",
+ "entity_id": "shawbrook",
+ "url": "https://www.shawbrook.co.uk/media/vypjeoat/pillar-3-2018.pdf",
+ "page": 9,
+ "reference_date": "2018-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 516.4,
+  "tier1_capital": 640.4,
+  "total_capital": 714.8,
+  "rwa": 4206.8,
+  "cet1_ratio": 12.3,
+  "tier1_ratio": 15.2,
+  "total_capital_ratio": 17.0,
+  "leverage_exposure": 6986.6,
+  "leverage_ratio": 9.2,
+  "lcr": 244.9,
+  "nsfr": 128.5
+ },
+ "note": "The 2018 report predates KM1. Section 3 'Key regulatory metrics' (p.9) gives capital, RWA and the three capital ratios, columns 31 December 2018 and 2017 - took 2018. The leverage rows the extractor reported missing are in the leverage common disclosure (p.26): Tier 1 GBP 640.4m over a total exposure measure of GBP 6,986.6m, leverage ratio 9.2%. LCR 244.9% from section 13 (p.29) and NSFR 128.5% stated in the text on p.30. Check: 516.4/4206.8 = 12.28% against the stated 12.3%. All figures are the CRR transitional basis, the basis the report's headline ratios use; the fully loaded total capital ratio of 16.4% is not recorded."
+}
