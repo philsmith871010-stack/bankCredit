@@ -133,3 +133,9 @@ table.board thead th,table.coverage thead th,table.ratings thead th{position:sti
 .tbar{display:flex;height:8px;border-radius:4px;overflow:hidden;gap:1px;margin-top:4px}.tbar i{display:block}.tlegend{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted)}.tlegend b{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:middle}
 .score-prov{color:var(--muted);font-weight:500}
 @media(max-width:1100px){.today{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:700px){.today{display:flex;overflow-x:auto;gap:10px;scroll-snap-type:x mandatory}.tcard{flex:0 0 200px;scroll-snap-align:start}}
+
+.wbar{display:flex;height:34px;border-radius:8px;overflow:hidden;margin:10px 0 8px;font-size:12px;font-weight:600;color:#fff}.wbar span{display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;padding:0 4px}.w-rating{background:var(--orange)}.w-capital{background:#0a2540}.w-liquidity{background:#1a4775}.w-stability{background:#3f5f85}.w-asset_quality{background:#7d93ad}.w-profitability{background:#a9b8c9;color:#243240}
+.bandscale{display:flex;height:22px;border-radius:6px;overflow:hidden;margin:0 0 14px;font-size:11px;font-weight:600}.bandscale span{display:flex;align-items:center;justify-content:center;white-space:nowrap}
+.ev-day{padding:14px 0 4px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.ev-day[hidden]{display:none}.ev-toolbar .search{width:240px}
+
+.ev-toolbar{flex-wrap:wrap;gap:10px}.ev-toolbar .small{flex-basis:100%;margin-left:0}.wbar span{font-size:11px}

@@ -153,7 +153,8 @@ def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | 
         ymax = hi + span * 0.25 if ymax is None else ymax
     if step is None:
         step = max(round((ymax - ymin) / 4, 1), 0.1)
-    padl, padr, padt, padb = 44, 16, 14, 26
+    widest = max(len(f"{v:.{dp}f}{unit}") for v in (ymin, ymax))
+    padl, padr, padt, padb = max(44, 12 + widest * 7), 16, 14, 26
     n = len(pts_in)
     X = lambda i: padl + i * (w - padl - padr) / (n - 1)
     Y = lambda v: padt + (ymax - v) / (ymax - ymin) * (h - padt - padb)
@@ -203,7 +204,7 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <div class="crumb"><span class="crumb-app">Counterparty</span><span class="crumb-sep">/</span><span class="crumb-page">{esc(title)}</span></div>
 <div class="top-right"><span class="beta">Beta</span></div></header>
 <div class="frame"><aside class="side" id="side"><div class="side-label">Counterparty</div>{items}<div class="side-fill"></div>
-<div class="side-status">{ico("clock", 14, ORANGE)} Data built {esc(generated[:16].replace("T", " "))} UTC</div></aside>
+<div class="side-status">{ico("clock", 14, ORANGE)} Built {esc(generated[:16].replace("T", " "))} UTC</div></aside>
 <main class="main">{content}</main></div>
 <footer class="foot">Counterparty is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}method/index.html">Method</a> · <a href="{root}status/index.html">Data status</a></footer>
 <script src="{root}assets/app.js"></script></body></html>"""

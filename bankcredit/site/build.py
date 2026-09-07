@@ -193,7 +193,7 @@ def tile(metric, label, unit, dp, series, peer_median=None):
     if delta is not None and unit == "m":
         delta = (v / prev["v"] - 1) * 100 if prev["v"] else None
     src = f'{last["src"]} · {last["method"]}' + (f' · p.{int(last["page"])}' if last.get("page") else "")
-    unverified = c.chip("unverified", "warn") if (last.get("conf") or 1) < 0.9 else ""
+    unverified = c.chip("unverified", "warn") if (last.get("conf") or 1) < 0.9 and str(last.get("method", "")).startswith("pdf") else ""
     if last.get("basis") == "group":
         unverified += c.chip("group figure", "navy")
     return f'''<div class="tile"><div class="tile-head"><span class="tile-label">{label}</span><span class="tile-flags">{unverified}<span class="src-dot" title="{c.esc(src)}">{c.ico("info", 14, "#b8c2cc")}</span></span></div>
@@ -320,8 +320,20 @@ def page_bank(b, generated):
             key = (p["src"], p["doc"])
             docs.setdefault(key, {"metrics": set(), "dates": set(), "method": p["method"]})
             docs[key]["metrics"].add(m); docs[key]["dates"].add(p["d"])
-    src_rows = "".join(f'<div class="doc"><span class="doc-ico">{c.ico("doc", 18, c.NAVY)}</span><div><div class="b">{c.esc(k[0])} · {c.esc(v["method"])}</div><div class="muted small">{len(v["metrics"])} metrics · {min(v["dates"])} to {max(v["dates"])}</div></div><a class="muted small" href="{c.esc(k[1])}" target="_blank" rel="noopener">source</a></div>' for k, v in docs.items())
-    metric_rows = "".join(f'<tr><td>{c.esc(METRICS.get(m, m))}</td><td class="mono">{pts[-1]["v"]:,.2f}</td><td class="mono muted">{pts[-1]["d"]}</td><td class="muted">{c.esc(pts[-1]["src"])} · {c.esc(pts[-1]["method"])}</td><td class="mono muted">{pts[-1]["conf"]:.2f}{" " + c.chip("unverified", "warn") if (pts[-1]["conf"] or 1) < 0.9 else ""}{" " + c.chip("group figure", "navy") if pts[-1].get("basis") == "group" else ""}</td></tr>' for m, pts in series.items() if pts)
+    SOURCE_NAMES = {"pillar3": "Firm's Pillar 3 disclosures", "eba_te": "EBA Transparency Exercise", "eba": "EBA Pillar 3 Data Hub", "esef": "ESEF annual accounts (filings.xbrl.org)",
+                    "fundamentals": "Yahoo Finance fundamentals", "edgar": "SEC EDGAR XBRL filings", "fdic": "FDIC Call Reports", "us_capital": "US Pillar 3 report", "us_lcr": "US LCR disclosure"}
+    by_src: dict[str, dict] = {}
+    for (src, doc), v in docs.items():
+        g = by_src.setdefault(src, {"docs": [], "metrics": set(), "dates": set(), "method": v["method"]})
+        g["docs"].append((max(v["dates"]), doc)); g["metrics"] |= v["metrics"]; g["dates"] |= v["dates"]
+    src_rows = ""
+    for src, g in sorted(by_src.items(), key=lambda kv: -len(kv[1]["dates"])):
+        latest = max(g["docs"])[1]
+        n = len(g["docs"])
+        src_rows += (f'<div class="doc"><span class="doc-ico">{c.ico("doc", 18, c.NAVY)}</span><div><div class="b">{c.esc(SOURCE_NAMES.get(src, src))} <span class="muted small">· {c.esc(g["method"])}</span></div>'
+                     f'<div class="muted small">{n} document{"s" if n != 1 else ""} · {len(g["metrics"])} metrics · {min(g["dates"])} to {max(g["dates"])}</div></div>'
+                     f'<a class="filter" href="{c.esc(latest)}" target="_blank" rel="noopener">Latest source</a></div>')
+    metric_rows = "".join(f'<tr><td>{c.esc(METRICS.get(m, m))}</td><td class="mono">{pts[-1]["v"]:,.2f}</td><td class="mono muted">{pts[-1]["d"]}</td><td class="muted">{c.esc(pts[-1]["src"])} · {c.esc(pts[-1]["method"])}</td><td class="mono muted">{pts[-1]["conf"]:.2f}{" " + c.chip("unverified", "warn") if (pts[-1]["conf"] or 1) < 0.9 and str(pts[-1]["method"]).startswith("pdf") else ""}{" " + c.chip("group figure", "navy") if pts[-1].get("basis") == "group" else ""}</td></tr>' for m, pts in series.items() if pts)
     events_rows = "".join(f'<div class="event"><span class="mono muted">{c.esc(str(e.get("date"))[:10])}</span><div><div class="b">{c.esc(e.get("title"))}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("severity") or "info"))}</div>' for e in b["events"]) or '<div class="empty">No events collected yet. Rating actions and disclosures will appear here once the events pipeline runs.</div>'
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
 <div class="lede">{TYPE_LABEL.get(b["type"], b["type"])} · {COUNTRY.get(b["country"], b["country"])}{" · " + c.chip("LEI " + c.esc(b["lei"])) if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
@@ -382,7 +394,12 @@ def page_events(board, generated):
             span = f' ({yrs[0]}–{yrs[-1]})' if len(yrs) > 1 else (f' ({yrs[0]})' if yrs else "")
             e = dict(e, title=f'{bt["n"]} Pillar 3 documents collected{span}')
         return row(d, r, e)
-    rows = "".join(row2(d, r, e) for d, r, e in merged[:300])
+    rows, last_day = "", None
+    for d, r, e in merged[:300]:
+        if d != last_day:
+            rows += f'<div class="ev-day"><span>{d}</span></div>'
+            last_day = d
+        rows += row2(d, r, e)
     flagged = [(d, r, e) for d, r, e in items if e.get("severity") in ("bad", "warn", "good") or (e.get("type") == "rating" and "affirm" not in str(e.get("title", "")).lower())][:100]
     (OUT / "events").mkdir(exist_ok=True)
     _write(OUT / "events" / "feed.xml", events_feed(flagged, generated))
@@ -392,7 +409,7 @@ def page_events(board, generated):
     filters = f'<button class="filter active" data-type="all">All · {len(items)}</button>' + "".join(f'<button class="filter" data-type="{c.esc(t)}">{c.esc(t.title())} · {n}</button>' for t, n in sorted(counts.items()))
     shown_note = f'<span class="small muted">Latest {min(300, len(merged))} shown; a bank\'s documents from one day are folded into a line. Each profile carries its full history.</span>'
     content = (f'<div class="page-head"><div><h1>Events</h1><div class="lede">Rating actions from the ESMA register, Pillar 3 documents as they are collected, and headlines that pass a credit-vocabulary filter. Severity is rules-based; read the source before acting.</div></div></div>'
-               f'<div class="toolbar ev-toolbar"><div class="filters" id="event-filters">{filters}<a class="filter" href="feed.xml" title="RSS feed of flagged events">RSS feed</a></div>{shown_note}</div><div class="card pad" id="events">{rows or "<div class=empty>Nothing collected yet.</div>"}</div>'
+               f'<div class="toolbar ev-toolbar"><div class="filters" id="event-filters">{filters}<a class="filter" href="feed.xml" title="RSS feed of flagged events">RSS feed</a></div><div class="search">{c.ico("search", 16, c.MUTED)}<input id="evq" placeholder="Bank or headline" autocomplete="off"></div>{shown_note}</div><div class="card pad" id="events">{rows or "<div class=empty>Nothing collected yet.</div>"}</div>'
                f'<p class="note">Headlines are refreshed every two hours on weekdays between 07:00 and 19:00 UK; rating actions from the register and new documents arrive with the morning run. The RSS feed carries the last 100 flagged events for a reader or an alerting tool.</p>')
     return c.shell("Events", content, "events", "../", generated)
 
@@ -485,6 +502,8 @@ def page_method(generated):
 <h2>Sources</h2><p>Regulatory figures come from the FDIC API (US banks, lead bank subsidiary), the EBA Pillar 3 Data Hub and Transparency Exercises (EU and EEA banks, consolidated), and each firm's own Pillar 3 disclosures (UK and other regions, read from PDF by a rules-based KM1 extractor with arithmetic validation; no AI service). Ratings and rating actions come from the ESMA European Rating Platform. Prices come from public market data. Bond quotes come from Börse Frankfurt's public price pages for each bank's senior fixed-rate bonds (two to eight years to run); they stay private and only the 30-day yield change against other bank bonds in the same currency is shown. CDS levels are medians of the day's reported trades in DTCC's public swap-data files (indicative, inferred from upfront payments) and iTraxx and CDX index prints from the same source; benchmark bond spreads are ICE BofA option-adjusted spread indices from FRED. Headlines are discovered through Google News and kept only when they pass a credit vocabulary and noise filter. Every figure on a profile carries its source, method and reference date.</p>
 <h2>Score</h2><p>Two parts. The <span class="b">rating anchor</span> is {RATING_WEIGHT} percent of the score: the composite agency rating (the median of the long-term ratings held by the agencies that rate the bank, on a common scale from AAA to CCC) converted to a sub-score by the table below. The <span class="b">ratio pillars</span> are the other {ratio_weight} percent: each regulatory metric is converted to a 0 to 100 sub-score by straight-line interpolation between the thresholds below, averaged within its pillar and weighted. Missing metrics do not score zero: the ratio weights are re-scaled over what is available and the coverage percentage is shown. A band is only assigned when coverage is at least 50 percent.</p>
 <p>A bank no agency rates takes a rating sub-score of {UNRATED_SCORE:.0f}, below neutral, and its score is capped at {UNRATED_CAP:.0f} so it cannot reach band A however strong its ratios: the absence of any independent assessment is itself information, and a young or small bank's ratios are often high because its balance sheet is small or immature rather than because it is safer. Such banks are marked "unrated" wherever the score appears. The same cap applies to a bank rated in the BBB range, and a bank rated below investment grade is capped at 64.9 (band C): strong ratios can lift a bank at most one band above what its rating says.</p>
+<div class="wbar" aria-hidden="true"><span style="flex:{RATING_WEIGHT}" class="w-rating">Rating {RATING_WEIGHT}</span>{"".join(f'<span style="flex:{w}" class="w-{k}" title="{k.replace("_", " ").title()} {w}">{ {"capital": "Capital", "liquidity": "Liquidity", "stability": "Stability", "asset_quality": "Assets", "profitability": "Profit"}[k]} {w}</span>' for k, (w, _) in PILLARS.items())}</div>
+<div class="bandscale" aria-hidden="true">{"".join(f'<span class="band-{b}" style="flex:{(100 if b == "A" else 80 if b == "B" else 65 if b == "C" else 50 if b == "D" else 35) - f}">{b} · {f}+</span>' for f, b in BANDS)}</div>
 <table class="plain"><thead><tr><th>Component</th><th>Weight</th><th>Inputs</th></tr></thead><tbody><tr><td class="b">Rating anchor</td><td class="mono">{RATING_WEIGHT}</td><td>Composite long-term agency rating; {UNRATED_SCORE:.0f} and a cap of {UNRATED_CAP:.0f} when unrated; caps of {UNRATED_CAP:.0f} for the BBB range and 64.9 below investment grade</td></tr>{pillar_rows}</tbody></table>
 <h3>Rating sub-scores</h3><div class="table-wrap"><table class="plain"><tbody><tr>{grade_cells}</tr></tbody></table></div>
 <h3>Thresholds (value → sub-score)</h3><table class="plain"><tbody>{thr}</tbody></table>
@@ -703,7 +722,7 @@ def page_coverage(generated):
     for a in sorted(A, key=lambda a: (-(a["score"] or -1), a["short"])):
         band = c.chip(c.esc(a["band"] or "—"), "muted") if a["band"] else ""
         letters = "".join(AGENCY_LETTER.get(x, x[:1].upper()) for x in a["agency_list"])
-        rating = f'<b>{c.esc(a["rating"])}</b> <span class="muted small">{c.esc(letters)}</span>' if a["agencies"] else '<span class="muted">unrated</span>'
+        rating = f'<b>{c.esc(a["rating"])}</b> <span class="muted small">· {c.esc(letters)}</span>' if a["agencies"] else '<span class="muted">unrated</span>'
         price = f'{a["price_days"]}<span class="muted small"> {c.esc(a["symbol"])}</span>' if a["price_days"] else ('<span class="muted">0</span>' if a["ticker"] else '<span class="muted">—</span>')
         cells = "".join(_depth_cell(a["metrics"][m]) for m, _ in AUDIT_COLS)
         score = a["score"] if a["score"] is not None else -1
