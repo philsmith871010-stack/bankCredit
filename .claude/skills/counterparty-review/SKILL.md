@@ -94,9 +94,29 @@ Status page shows them older than 150 days:
    `data/review/browser-links.json` (commit it with your push) so the pattern can
    be fixed in code. If one of those links is plainly the newest Pillar 3 PDF,
    download it and use step 3 rather than waiting.
-2. For the firms it reports as blocked, use the Chrome extension: open the
-   locator's `page`, find the newest Pillar 3 PDF and save it under
-   `data/cache/pdf/<entity_id>/`.
+2. For the firms it reports as blocked, use the Chrome extension. This only
+   works in an interactive Claude Code session with Claude in Chrome connected
+   (the daily `claude -p` job has no browser), so the maintainer starts one and
+   asks for the blocked list. For each site: open the locator's `page` in the
+   browser tab, let any challenge complete, find the newest Pillar 3 PDF (the
+   link text or file name carries "Pillar 3" and a date), download it, move
+   it under `data/cache/pdf/<entity_id>/`, note the URL, and go to step 3.
+   The eight sites that block everything else, with what to look for:
+
+   | entity_id | page | what to take |
+   |---|---|---|
+   | handelsbanken-plc | https://www.handelsbanken.co.uk/en/about-us/financial-information | "Pillar 3 disclosures" PDF, latest year end |
+   | newcastle-bs | https://newcastle.co.uk/about-us/financial-results/ | "Pillar 3" PDF alongside the annual report |
+   | sbi-uk | https://www.sbiuk.com/about-us/financial-information | "Pillar 3 disclosure" PDF (the site's certificate is bad; accept the warning) |
+   | icbc-london | https://www.icbclondon.com/en/about-us/ | follow "Financial information" or "Disclosures"; the page moved |
+   | qib-uk | https://www.qib-uk.com/about-us/financial-information/ | "Pillar 3" PDF |
+   | uob | https://www.uobgroup.com/investor-relations/financial/index.page | "Pillar 3 Disclosure" quarterly PDF under Financial reports |
+   | adcb | https://www.adcb.com/en/about-us/investor-relations/basel-iii/ | "Basel III Pillar 3" quarterly PDF |
+   | qnb | https://www.qnb.com/sites/qnb/qnbglobal/page/en/eninvestorrelations.html | "Pillar III Disclosures" PDF under Financial Results |
+
+   If a site has moved its documents, save the page you found them on: run
+   `python3 -c "from bankcredit import learn; learn.remember_browser_page('<entity_id>', '<url>')"`
+   so the collector tries there next time.
 3. Run `python3 -m bankcredit.cli pdf <entity_id> <file> <source-url>`. It
    extracts, validates and loads exactly as the pipeline would; a failure goes
    to the queue and you resolve it as in section 1.

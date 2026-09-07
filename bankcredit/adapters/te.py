@@ -54,7 +54,11 @@ LABELS = [
     ("leverage_exposure", r"^leverage ratio total exposure measure\s*-\s*using a transitional definition of tier 1 capital$|^total leverage ratio exposures\s*-\s*using a transitional definition of tier 1 capital$"),
     ("leverage_ratio", r"^leverage ratio\s*-\s*using a transitional definition of tier 1 capital$"),
 ]
-PCT = {"cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio"}
+PCT = {"cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "npl_ratio"}
+# Assets sheet: gross carrying amount of loans and advances at amortised cost, by IFRS 9 stage.
+# Stage 3 over the total is the non-performing share a treasurer means by an NPL ratio.
+LOANS_AC = r"^gross carrying amount: financial assets at amortised cost, loans and advances$"
+TOTAL_ASSETS = r"^total assets$"
 
 
 def metric_for(label: str) -> str | None:
@@ -104,12 +108,14 @@ class TransparencyAdapter(Adapter):
         except UnicodeDecodeError:
             head = pd.read_csv(raw, nrows=2, encoding="cp1252")
             enc = "cp1252"
+        wanted["assets_stages"] = "ASSETS_Stages"
         cols = {c: wanted[c.strip().lower()] for c in head.columns if c.strip().lower() in wanted}
         df = pd.read_csv(raw, usecols=list(cols), low_memory=False, encoding=enc, encoding_errors="replace", thousands=",").rename(columns=cols)
         if "Sheet" in df:
-            df = df[df.Sheet.isin(["Key metrics", "Leverage", "Capital"])]
+            df = df[df.Sheet.isin(["Key metrics", "Leverage", "Capital", "Assets"])]
         df = df[df.LEI_Code.isin(by_lei)]
         out, seen = [], set()
+        out += self._assets(df, by_lei, item)
         for r in df.itertuples():
             m = metric_for(r.Label)
             if not m:
@@ -134,6 +140,41 @@ class TransparencyAdapter(Adapter):
                             currency="" if m in PCT else "EUR", basis="consolidated", source="eba_te",
                             document=FILES[item], page=None, method="csv", confidence=0.9))
         log.info("te: %s -> %d facts for %d entities", item, len(out), len({f.entity_id for f in out}))
+        return out
+
+    def _assets(self, df, by_lei, item) -> list[Fact]:
+        """Total assets and the stage 3 share of loans at amortised cost, from the Assets sheet."""
+        if "ASSETS_Stages" not in df:
+            return []
+        out = []
+        lab = df.Label.astype(str).str.strip().str.lower()
+        loans = df[lab.str.match(LOANS_AC)]
+        assets = df[lab.str.match(TOTAL_ASSETS) & (df.ASSETS_Stages.fillna(0).astype(int) == 0)]
+        for r in assets.itertuples():
+            d = period_date(r.Period)
+            try:
+                v = float(str(r.Amount).replace(",", ""))
+            except ValueError:
+                continue
+            if d and v > 0:
+                e = by_lei[r.LEI_Code]
+                out.append(Fact(entity_id=e.id, reference_date=d, metric="total_assets", value=round(v, 2), unit="ccy_m", currency="EUR",
+                                basis="consolidated", source="eba_te", document=FILES[item], method="csv", confidence=0.9))
+        if not loans.empty:
+            piv = loans.assign(_st=loans.ASSETS_Stages.fillna(0).astype(int), _v=pd.to_numeric(loans.Amount.astype(str).str.replace(",", ""), errors="coerce"))
+            piv = piv.pivot_table(index=["LEI_Code", "Period"], columns="_st", values="_v", aggfunc="first")
+            for (lei, period), row in piv.iterrows():
+                total = row.get(0)
+                if total is None or not total or 3 not in row or pd.isna(row[3]):
+                    total = sum(row.get(k, 0) or 0 for k in (1, 2, 3)) if 3 in row else None
+                if not total or pd.isna(row.get(3)):
+                    continue
+                d = period_date(period)
+                npl = row[3] / total * 100
+                if d and 0 <= npl < 40:
+                    e = by_lei[lei]
+                    out.append(Fact(entity_id=e.id, reference_date=d, metric="npl_ratio", value=round(npl, 3), unit="pct", currency="",
+                                    basis="consolidated", source="eba_te", document=FILES[item], method="csv", confidence=0.85))
         return out
 
     def validate(self, records):

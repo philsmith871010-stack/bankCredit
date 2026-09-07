@@ -351,3 +351,18 @@ more prior-quarter columns became readable. Two faults surfaced on the way and w
 now wins), and the header-date error added earlier was firing on correct headers because of those file names, so it
 is a warning again. Lesson recorded: a reprocess must be followed by `review ingest`, and its status counts must be
 compared with the previous run before the data is pushed.
+
+### Structured accounts, 7 September 2026 (evening)
+
+Asset quality and profitability were held only for the nine FDIC banks. Two open sources now carry them for most of
+the universe without reading a PDF. ESEF filings on filings.xbrl.org (every issuer with securities on an EU or UK
+regulated market, including the larger building societies through their listed debt) give annual accounts as
+xBRL-JSON for 69 entities, four to six year ends each plus the comparative year: total assets, deposits, return on
+equity and assets, net interest margin, cost to income (from pre-tax profit plus costs and impairments, so trading
+income is counted) and cost of risk, all on one definition. The EBA Transparency Exercise's Assets sheet gives
+total assets and the stage 3 share of loans at amortised cost, the non-performing ratio a treasurer means, for 40 EU
+banks back to 2016. Entities with a profitability figure went from 9 to 76, with an asset-quality figure from 9 to
+49, and 65 of 123 scored entities now cover 92 percent or more of the method. Yahoo's fundamentals feed (four
+annual and five quarterly points for listed names) is the remaining option for the listed banks outside ESEF, and
+PDF annual reports remain only for the small mutuals and overseas-owned subsidiaries that file nowhere structured.
+The Chrome runbook for the eight blocked sites is in the review skill and the local-run notes.

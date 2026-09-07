@@ -59,3 +59,12 @@ clears most of them from a home connection; the ones it reports as blocked are
 behind Cloudflare or Akamai challenges and need the Claude-in-Chrome extension,
 which the review skill drives. Everything else is collected by script; Paragon
 and Close Brothers come from the FCA NSM.
+
+## Blocked sites, by hand with Chrome
+
+Eight sites answer nothing to scripts or headless Chromium. They need a real browser, so once a
+quarter (their Pillar 3 cadence) start Claude Code interactively in `~/Counterparty` with the
+Claude in Chrome extension connected and say: "work the blocked list in the counterparty-review
+skill". It opens each site in Chrome, downloads the newest Pillar 3 PDF into the cache and loads
+it with `cli pdf`. Twenty to thirty minutes for all eight. The daily job cannot do this because
+it runs without a browser.

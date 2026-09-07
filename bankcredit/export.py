@@ -21,7 +21,7 @@ from .score import compute
 
 SITE_METRICS = ["cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "lcr", "nsfr", "rwa",
                 "overall_capital_requirement", "cet1_requirement", "npl_ratio", "roe", "roa", "efficiency_ratio",
-                "total_assets", "deposits", "uninsured_deposits", "htm_unrealised_loss", "nim", "tier1_leverage"]
+                "total_assets", "deposits", "uninsured_deposits", "htm_unrealised_loss", "nim", "tier1_leverage", "cost_of_risk"]
 AGENCY_ORDER = ["fitch", "sp", "moodys", "dbrs", "kbra", "scope", "jcr"]
 AGENCY_LETTER = {"fitch": "F", "sp": "S", "moodys": "M", "dbrs": "D", "kbra": "K", "scope": "Sc", "jcr": "J"}
 
