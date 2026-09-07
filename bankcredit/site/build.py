@@ -117,6 +117,28 @@ def tile(metric, label, unit, dp, series, peer_median=None):
 <div class="tile-foot"><span>{c.chg(delta, 1, "%" if unit == "m" else "") if delta is not None else "<span class=na>first period</span>"}{" vs prior" if delta is not None else ""}</span><span class="mono">{c.esc(last["d"])}</span></div></div>'''
 
 
+def debug_panel(b) -> str:
+    """Beta only: every input that drives this profile, raw. Switched on by BANKCREDIT_DEBUG_DATA at build time."""
+    D = b["debug"]
+    def tbl(cols, rows, fmt=None):
+        head = "".join(f"<th>{c.esc(h)}</th>" for h in cols)
+        body = "".join("<tr>" + "".join(f'<td class="mono small">{c.esc("" if r.get(k) is None else (fmt or {}).get(k, str)(r.get(k)))}</td>' for k in cols) + "</tr>" for r in rows)
+        return f'<div class="table-wrap"><table class="plain"><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>' if rows else '<div class="empty">none</div>'
+    m = D.get("market") or {}
+    mrows = [{"key": k, "value": v} for k, v in m.items()]
+    orows = [{"part": x["part"], "adj": f'{x["adj"]:+.2f}'} for x in D.get("overlay") or []]
+    scores = f'<p class="small">Public score <span class="mono b">{D.get("score_public")}</span> · overlay total <span class="mono b">{D.get("overlay_total")}</span> (capped) · final <span class="mono b">{D.get("score_final")}</span></p>'
+    cds = D.get("cds") or []
+    bonds = D.get("bonds") or []
+    facts = D.get("facts") or []
+    return (f'<section class="panel" data-panel="data"><div class="note" style="margin-bottom:10px">Beta view for building and checking: every raw input behind this profile. CDS and bond quotes are shown here under the sources\' private-use terms and this tab is removed for production.</div>'
+            f'<h3>Score</h3>{scores}<h4>Overlay components (before the ±cap)</h4>{tbl(["part", "adj"], orows)}'
+            f'<h3>Market signal internals</h3>{tbl(["key", "value"], mrows)}'
+            f'<h3>CDS ({len(cds)} rows, newest last)</h3>{tbl(["date", "tier", "source", "level_bp", "trades"], cds)}'
+            f'<h3>Bond quotes ({len(bonds)} rows)</h3>{tbl(["isin", "name", "currency", "date", "price", "yield"], bonds)}'
+            f'<h3>Facts ({len(facts)} rows)</h3>{tbl(["metric", "date", "value", "unit", "basis", "source", "method", "confidence", "page", "document"], facts)}</section>')
+
+
 def ratings_tile(b) -> str:
     """Agency ratings as the first tile of the profile: long-term rating, outlook, short-term rating, date, per agency,
     with the composite grade and the market direction alongside the regulatory KPIs."""
@@ -202,11 +224,12 @@ def page_bank(b, generated):
 <div class="pillars">{prow}</div>
 <div class="score-note">Public pillars with published weights (w). Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../method/index.html">Method</a></div></div>
 <div class="tiles">{tiles}</div></div>
-<div class="card tabs-card"><div class="tabs" role="tablist"><button class="tab active" data-tab="trends">Trends</button><button class="tab" data-tab="ratings">Ratings</button><button class="tab" data-tab="market">Market</button><button class="tab" data-tab="events">Events</button><button class="tab" data-tab="sources">Sources</button></div>
+<div class="card tabs-card"><div class="tabs" role="tablist"><button class="tab active" data-tab="trends">Trends</button><button class="tab" data-tab="ratings">Ratings</button><button class="tab" data-tab="market">Market</button><button class="tab" data-tab="events">Events</button><button class="tab" data-tab="sources">Sources</button>{'<button class="tab" data-tab="data">Data</button>' if b.get("debug") else ''}</div>
 <section class="panel active" data-panel="trends"><div class="grid-2">{"".join(charts) or '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</div></section>
 <section class="panel" data-panel="ratings">{ratings_html}</section>
 <section class="panel" data-panel="market">{market_html}</section>
 <section class="panel" data-panel="events">{events_rows}</section>
+{debug_panel(b) if b.get("debug") else ''}
 <section class="panel" data-panel="sources"><h3>Documents and feeds</h3>{src_rows or '<div class="empty">Nothing collected yet.</div>'}<h3>Latest value of every metric held</h3><div class="table-wrap"><table class="plain"><thead><tr><th>Metric</th><th>Value</th><th>Reference date</th><th>Source</th><th>Confidence</th></tr></thead><tbody>{metric_rows}</tbody></table></div></section></div>'''
     return c.shell(b["name"], content, "banks", "../", generated)
 

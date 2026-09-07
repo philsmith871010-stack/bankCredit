@@ -101,6 +101,8 @@ def grade_letter(grade: float | None) -> str:
     return _SP_SCALE[max(0, min(16, int(grade + 0.5) - 1))]
 
 
+import os
+DEBUG_DATA = bool(os.environ.get("BANKCREDIT_DEBUG_DATA"))   # beta: every driving input on a Data tab per profile
 CDS_MAX_AGE_DAYS = 10     # a CDS level older than this is not used in the signal or the overlay
 BOND_MAX_AGE_DAYS = 10    # a bond quote older than this says nothing about today either
 BOND_MIN_WINDOW_DAYS = 5  # the shortest history a bond change may be measured over while quotes accumulate
@@ -277,6 +279,42 @@ def overlay_config() -> dict:
         return OVERLAY_DEFAULT
 
 
+def overlay_parts(market: dict, ratings: list[dict]) -> list[tuple[str, float]]:
+    """The overlay's components, named, before capping (for the debug view and the Method page)."""
+    cfg = overlay_config()
+    parts = []
+    if market.get("cds5y") is not None:
+        c = market["cds5y"]
+        for upper, a in cfg["cds_bands"]:
+            if c < upper:
+                parts.append((f"CDS level {c:.0f} bp (band under {upper:.0f})", a)); break
+        chg = market.get("cds_change30")
+        if chg is not None:
+            if chg > cfg["cds_change_widen_bp"]:
+                parts.append((f"CDS 30-day change +{chg:.0f} bp", cfg["cds_change_widen_adj"]))
+            elif chg < cfg["cds_change_tighten_bp"]:
+                parts.append((f"CDS 30-day change {chg:.0f} bp", cfg["cds_change_tighten_adj"]))
+    elif market.get("bond_change30") is not None:
+        b = market["bond_change30"]
+        if b > cfg["bond_change_widen_bp"]:
+            parts.append((f"bond yields vs peers +{b:.0f} bp", cfg["bond_change_widen_adj"]))
+        elif b < cfg["bond_change_tighten_bp"]:
+            parts.append((f"bond yields vs peers {b:.0f} bp", cfg["bond_change_tighten_adj"]))
+    if market.get("vol30") is not None:
+        v = market["vol30"]
+        parts.append((f"30-day volatility {v:.0f}%", cfg["vol_high_adj"] if v > cfg["vol_high"] else (cfg["vol_low_adj"] if v < cfg["vol_low"] else 0)))
+    if market.get("drawdown52") is not None and market["drawdown52"] < cfg["drawdown_adj_threshold"]:
+        parts.append((f"drawdown {market['drawdown52']:.0f}% from 52-week high", cfg["drawdown_adj"]))
+    grades = cfg["rating_grades"]
+    for r in ratings:
+        v = r["value"].replace("(H)", "").replace("(L)", "").replace("(high)", "").replace("(low)", "").strip()
+        key = v.rstrip("+-").rstrip("1234").upper()
+        key = {"AA": "AA", "AAA": "AAA", "A": "A", "BAA": "BBB", "BBB": "BBB", "BA": "BB", "BB": "BB", "B": "B"}.get(key, key)
+        if key in grades:
+            parts.append((f"{r['agency']} {r['value']} (grade {key}, shared by {len(ratings)})", grades[key] / max(1, len(ratings))))
+    return parts
+
+
 def _overlay(market: dict, ratings: list[dict]) -> float:
     """Bounded market layer. Weights come from the COUNTERPARTY_OVERLAY secret when set; otherwise the
     published provisional equal weights in OVERLAY_DEFAULT."""
@@ -380,7 +418,9 @@ def data_audit(active, facts, ratings, prices, cds, bonds) -> list[dict]:
 def export_json() -> None:
     entities = load_entities()
     facts, ratings, prices, cds, events, runs = (store.read(t) for t in ["facts", "ratings", "prices", "cds", "events", "runs"])
-    bond_changes = _bond_changes(store.read("bonds"), store.read("bond_quotes"))
+    bonds_tbl, quotes_tbl = store.read("bonds"), store.read("bond_quotes")
+    bond_changes = _bond_changes(bonds_tbl, quotes_tbl)
+    bond_quotes_all = quotes_tbl.merge(bonds_tbl[["isin", "entity_id", "name", "currency"]], on="isin") if not quotes_tbl.empty and not bonds_tbl.empty else None
     series_tbl = store.read("series")
     snrfin = series_tbl[series_tbl.series_id == "ITRAXX_SNRFIN_5Y"] if not series_tbl.empty else None
     board, today, details, policy_rows = [], date.today(), {}, []
@@ -466,7 +506,24 @@ def export_json() -> None:
                                                     "rating_grade", "rating_composite", "inherited")},
                             "score": row["public_score"], "short_ratings": short_ratings, "recent": recent, "negative": negative[:6], "news30": news30,
                             "market_detail": {k: market.get(k) for k in ("vol30", "drawdown52", "bond_change30", "bond_count")}})
+        debug = {}
+        if DEBUG_DATA:
+            cd = cds[cds.entity_id == e.id].sort_values("date") if not cds.empty else cds
+            bq = bond_quotes_all[bond_quotes_all.entity_id == e.id].sort_values(["isin", "date"]) if bond_quotes_all is not None and not bond_quotes_all.empty else None
+            debug = {
+                "cds": [{"date": str(x.date)[:10], "tier": x.tier, "source": x.source, "level_bp": _clean(float(x.level_bp)),
+                         "trades": _clean(float(x.trades)) if hasattr(x, "trades") and x.trades == x.trades else None} for x in cd.tail(200).itertuples()] if not cd.empty else [],
+                "bonds": [{"isin": x.isin, "name": x.name, "currency": x.currency, "date": str(x.date)[:10], "price": _clean(float(x.price)), "yield": _clean(float(x["yield"]))}
+                          for _, x in bq.iterrows()] if bq is not None else [],
+                "market": {k: _clean(v) for k, v in market.items()},
+                "overlay": [{"part": k, "adj": v} for k, v in overlay_parts(market, rsum)],
+                "overlay_total": sc.overlay, "score_public": sc.public_score, "score_final": sc.final_score,
+                "facts": [{"metric": x.metric, "date": str(x.reference_date)[:10], "value": _clean(float(x.value)), "unit": x.unit, "basis": x.basis,
+                           "source": x.source, "method": x.method, "confidence": _clean(float(x.confidence)), "document": x.document, "page": _clean(x.page)}
+                          for x in f.sort_values(["metric", "reference_date"]).itertuples()] if not f.empty else [],
+            }
         details[e.id] = (row, {
+            "debug": debug,
             "series": {m: series[m] for m in series if m in SITE_METRICS},
             "metric_labels": {m: METRICS.get(m, m) for m in series},
             "score_detail": {"pillars": sc.pillars, "inputs": sc.inputs},
