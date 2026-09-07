@@ -1932,5 +1932,84 @@
   "page_reviewer": 2,
   "date_extractor": null,
   "date_reviewer": "2012-03-31"
+ },
+ {
+  "date": "2026-09-07T16:25:15",
+  "id": "640fb208fdeb",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2025-09-30 disagrees with expected 2030-06-30; error:missing co",
+  "skip": false,
+  "compared": 4,
+  "matched": 1,
+  "mismatches": {
+   "total_capital": [
+    4261.7,
+    5920.0
+   ],
+   "total_capital_ratio": [
+    10.93,
+    15.18
+   ],
+   "nsfr": [
+    76634.9,
+    117.7
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2025-09-30",
+  "date_reviewer": "2025-09-30"
+ },
+ {
+  "date": "2026-09-07T16:25:16",
+  "id": "6e56c1d93ff3",
+  "entity_id": "nab",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 6,
+  "matched": 6,
+  "mismatches": {},
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2018-06-30",
+  "date_reviewer": "2018-06-30"
+ },
+ {
+  "date": "2026-09-07T16:25:16",
+  "id": "7a37121931b1",
+  "entity_id": "nab",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; warn:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 0,
+  "mismatches": {
+   "tier1_capital": [
+    12.4,
+    48048.0
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 9,
+  "date_extractor": "2018-03-31",
+  "date_reviewer": "2018-03-31"
+ },
+ {
+  "date": "2026-09-07T16:25:17",
+  "id": "ac5444bdaca6",
+  "entity_id": "nab",
+  "reason": "warn:reference date taken from narrative text, not a column header; warn:header ",
+  "skip": false,
+  "compared": 1,
+  "matched": 0,
+  "mismatches": {
+   "tier1_capital": [
+    12.41,
+    47417.0
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 11,
+  "date_extractor": "2013-01-01",
+  "date_reviewer": "2017-09-30"
  }
 ]

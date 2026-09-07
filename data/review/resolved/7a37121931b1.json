@@ -1,0 +1,19 @@
+{
+ "id": "7a37121931b1",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/march-2018-pillar-3-report-final.pdf",
+ "page": 9,
+ "reference_date": "2018-03-31",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 48048.0,
+  "rwa": 387415.0,
+  "cet1_ratio": 10.21,
+  "tier1_ratio": 12.4,
+  "total_capital_ratio": 14.43,
+  "leverage_exposure": 864625.0,
+  "leverage_ratio": 5.56,
+  "lcr": 127.0
+ },
+ "note": "NAB under APRA's APS 330, which has no KM1 template. Level 2 basis - these vintages label the table 'Capital ratios (Level 2)' or print Level 2 and Level 1 rows side by side, and only Level 2 is recorded. Ratios and total RWA from the capital tables, Tier 1 capital and the leverage figures from the leverage ratio table. These reports carry no detailed capital disclosure, so no CET1 or total capital amount is recorded. The cover reads 'Half Year Update as at 31 March 2018'. The core rows the extractor reported missing are on separate pages: total RWA 387,415 in the capital adequacy table on p.8 and the Level 2 CET1 ratio of 10.21% in Table 4.1B on p.9. Check: 48,048/387,415 = 12.40% and 48,048/864,625 = 5.56%, both matching the published figures."
+}

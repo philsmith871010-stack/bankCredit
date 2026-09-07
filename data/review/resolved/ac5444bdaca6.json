@@ -1,0 +1,19 @@
+{
+ "id": "ac5444bdaca6",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2017-full-year-pillar-3-report.pdf",
+ "page": 11,
+ "reference_date": "2017-09-30",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 47417.0,
+  "rwa": 382114.0,
+  "cet1_ratio": 10.06,
+  "tier1_ratio": 12.41,
+  "total_capital_ratio": 14.58,
+  "leverage_exposure": 856241.0,
+  "leverage_ratio": 5.54,
+  "lcr": 123.0
+ },
+ "note": "NAB under APRA's APS 330, which has no KM1 template. Level 2 basis - these vintages label the table 'Capital ratios (Level 2)' or print Level 2 and Level 1 rows side by side, and only Level 2 is recorded. Ratios and total RWA from the capital tables, Tier 1 capital and the leverage figures from the leverage ratio table. These reports carry no detailed capital disclosure, so no CET1 or total capital amount is recorded. The reference date needed correcting, and by a wide margin: the queue had 2013-01-01, taken from narrative text rather than a column header. This is the 2017 full-year report and Table 4.1B is headed 'As at 30 Sep 17 / 31 Mar 17', so the position is 30 September 2017. NSFR is discussed in the text as a forthcoming requirement but no ratio is published, so none is recorded. Check: 47,417/382,114 = 12.41% and 47,417/856,241 = 5.54%, both matching the published figures."
+}

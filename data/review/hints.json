@@ -135,7 +135,7 @@
   }
  },
  "bendigo-and-adelaide-bank": {
-  "page": 2,
+  "page": 4,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2026-03-31",
@@ -252,7 +252,7 @@
   }
  },
  "nab": {
-  "page": 4,
+  "page": 11,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -1123,13 +1123,9 @@
     "rwa": 503923.0,
     "cet1_ratio": 14.38,
     "tier1_ratio": 19.05,
-    "total_capital_ratio": 19.05,
-    "leverage_exposure": 1649751.0,
-    "leverage_ratio": 5.82,
-    "lcr": 177.28,
-    "nsfr": 115.05
+    "total_capital_ratio": 19.05
    },
-   "method": "pdf_manual"
+   "method": "pdf_rules"
   }
  },
  "state-street": {

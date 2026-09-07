@@ -1,0 +1,18 @@
+{
+ "id": "6e56c1d93ff3",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/june-2018-pillar-3-report-final.pdf",
+ "page": 4,
+ "reference_date": "2018-06-30",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 46967.0,
+  "rwa": 395053.0,
+  "cet1_ratio": 9.7,
+  "tier1_ratio": 11.9,
+  "total_capital_ratio": 13.6,
+  "leverage_exposure": 887837.0,
+  "leverage_ratio": 5.3
+ },
+ "note": "NAB under APRA's APS 330, which has no KM1 template. Level 2 basis - these vintages label the table 'Capital ratios (Level 2)' or print Level 2 and Level 1 rows side by side, and only Level 2 is recorded. Ratios and total RWA from the capital tables, Tier 1 capital and the leverage figures from the leverage ratio table. These reports carry no detailed capital disclosure, so no CET1 or total capital amount is recorded. The cover reads 'Third Quarter Update as at 30 June 2018' and the table is headed 'As at 30 Jun 18 / 31 Mar 18', confirming the queued date. This quarterly update has no liquidity section, so no LCR is recorded. Check: 46,967/395,053 = 11.89%, matching the published 11.9% Tier 1 ratio, and 46,967/887,837 = 5.29%, matching the 5.3% leverage ratio."
+}

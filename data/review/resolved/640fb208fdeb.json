@@ -1,0 +1,20 @@
+{
+ "id": "640fb208fdeb",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2026/30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 4,
+ "reference_date": "2025-09-30",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 4261.7,
+  "tier1_capital": 5064.1,
+  "total_capital": 5920.0,
+  "rwa": 38999.5,
+  "cet1_ratio": 10.93,
+  "tier1_ratio": 12.99,
+  "total_capital_ratio": 15.18,
+  "lcr": 136.5,
+  "nsfr": 117.7
+ },
+ "note": "Bendigo has moved to a proper KM1 - 'DIS20 - KM1 Key metrics (at consolidated group level)' on p.4 - so this is the first of its reports in this dataset with a real template. Five columns: 30 Sep 25, 30 Jun 25, 31 Mar 25, 31 Dec 24 and 30 Sep 24; column a is taken. The column labels printed above the table run a, b, c, e, omitting d, but the fourth column's CET1 of 4,343.3 and RWA of 38,870.9 match the December 2024 report exactly, so the columns are in order and d is simply mislabelled. The text layer scrambles the liquidity rows into ASF/RSF/ratio triplets out of column order, so those rows were read from a rendered image: LCR 136.5% (a quarterly average, per the table's own footnote) and NSFR 117.7%, the latter confirmed by the narrative - 'NSFR increased to 117.7% in September 2025 from 115.9% in June 2025'. APS 330 still requires no leverage ratio and the template skips from row 12 to row 15, so none is recorded. The extractor's complaint that the header date disagrees with an expected 2030-06-30 is a bad expectation, not a bad header. Check: 4,261.7/38,999.5 = 10.93% and 5,920.0/38,999.5 = 15.18%, matching the published ratios."
+}
