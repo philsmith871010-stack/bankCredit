@@ -67,11 +67,16 @@ TAGS = {"q1": 1, "q2": 2, "q3": 3, "q4": 4, "h1": 2, "hy": 2, "half year": 2, "h
 def infer_period(text: str, year_end: str = "12-31") -> date | None:
     """Best-effort period end from a filename or headline; None if nothing recognisable."""
     t = unquote(text).lower().replace("%20", " ").replace("_", " ")
+    t = re.sub(r"\b(?:pillar|basel)\s?-?\s?(?:3|iii)\b|\btier\s?-?[12]\b", " ", t)   # "pillar-3-june-2024" is not 3 June
+    t = re.sub(r"\b(first|second|third|fourth)[ -]quarter\b", lambda m: "q" + str("first second third fourth".split().index(m.group(1)) + 1), t)
     ye_m, ye_d = (int(x) for x in year_end.split("-"))
     explicit = [d for d in km1.parse_dates(t.replace("-", " "), explicit_only=True)
                 if d.day >= 28 or (d.month, d.day) == (ye_m, ye_d)]
     if explicit:
         return max(explicit)
+    m = re.search(r"\b(20\d{2})[ -]+" + km1.MON + r"\b", t)                      # "2025-march"
+    if m:
+        return _month_end(int(m.group(1)), km1.MONTHS[m.group(2)[:3]])
     m = re.search(r"(20\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])", t)
     if m:
         return date(int(m.group(1)), int(m.group(2)), int(m.group(3)))

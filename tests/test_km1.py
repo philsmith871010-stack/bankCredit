@@ -193,3 +193,9 @@ def test_split_column_headers_are_joined_in_order():
     assert [d.isoformat() for d in dates] == ["2024-12-31", "2024-06-30", "2023-12-31"]
     dates, left = km1.join_split_headers("31 September\n30 June\n2022")                              # typo, and one year short
     assert dates == [km1.date(2022, 9, 30)] and left == 1
+
+
+def test_first_unit_statement_wins():
+    assert km1.detect_units("KM1 (Millions of Canadian dollars)\nTotal RWA increased by $29 billion")[1] == 1.0
+    assert km1.detect_units("Key metrics £bn\n1 CET1 capital 40.7")[1] == 1000.0
+    assert km1.detect_units("Key metrics £'000\n1 CET1 capital 40,700")[1] == 0.001

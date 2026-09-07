@@ -292,10 +292,14 @@ def detect_units(text: str) -> tuple[str, float]:
     head = text[:4000]
     low = head.lower()
     scale = 1.0
-    if re.search(r"[£$€]\s?'?\s?000s?\b|\bthousands?\b|\(000s?\)", low):
-        scale = 0.001
-    elif re.search(r"[£$€]\s?bn\b|\bbillions?\b", low):
-        scale = 1000.0
+    # the unit statement nearest the top of the table wins: RBC's "(Millions of Canadian dollars)" header
+    # must not lose to "RWA increased by $29 billion" in the commentary below it
+    hits = [(m.start(), sc) for pat, sc in ((r"[£$€]\s?'?\s?000s?\b|\bthousands?\b|\(000s?\)", 0.001),
+                                           (r"[£$€]\s?m\b|\bmillions?\b|\(m\)|\bmn\b", 1.0),
+                                           (r"[£$€]\s?bn\b|\bbillions?\b", 1000.0))
+            for m in [re.search(pat, low)] if m]
+    if hits:
+        scale = min(hits)[1]
     ccy = ""
     for sym, code in CURRENCY:
         if sym.lower() in low:
@@ -631,10 +635,8 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
     split_header = any("split month and year" in m for _, m in res.checks)
     if res.period_dates and not (split_header and hint_date):
         res.reference_date = res.period_dates[0] if descending else res.period_dates[-1]
-        if hint_date and abs((res.reference_date - hint_date).days) > 100:
-            # a whole quarter or more apart: one of the two is wrong, and a wrong period is worse than a gap
-            res.checks.append(("error", f"header date {res.reference_date} disagrees with expected {hint_date}; period needs a check"))
-        elif hint_date and abs((res.reference_date - hint_date).days) > 45:
+        if hint_date and abs((res.reference_date - hint_date).days) > 45:
+            # the file name is weak evidence and the header is direct; keep the header's date but say so
             res.checks.append(("warn", f"header date {res.reference_date} disagrees with expected {hint_date}"))
     elif split_header and hint_date:
         res.reference_date = hint_date

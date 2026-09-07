@@ -339,3 +339,15 @@ both quarters landed on 2025-12-31; the reviewer corrected them. A header date a
 date expected from the file name or link text is now an error, which sends the document to review with no facts
 published, rather than a warning that publishes them. The column choice on that layout still needs the rendered
 document to reproduce, which this environment cannot fetch (the site answers 403 to data-centre addresses).
+
+### Unverified backlog, 7 September 2026 (night)
+
+The 221 "unverified" documents were dominated by three causes, all now handled: column headers with the day-month
+and the year on separate lines (56 cached documents, now none), the absence of an optional LCR or leverage row
+counted as a doubt (now information), and file names like "pillar-3-june-2024" read as year ends. The cached
+documents were re-read and the reviewer's answers re-applied: loaded 356 to 414, unverified 221 to 163, and 267
+more prior-quarter columns became readable. Two faults surfaced on the way and were fixed: RBC's KM1 was scaled by
+"$29 billion" in the commentary rather than "(Millions of Canadian dollars)" in the header (the first unit statement
+now wins), and the header-date error added earlier was firing on correct headers because of those file names, so it
+is a warning again. Lesson recorded: a reprocess must be followed by `review ingest`, and its status counts must be
+compared with the previous run before the data is pushed.
