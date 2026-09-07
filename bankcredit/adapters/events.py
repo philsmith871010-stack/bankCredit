@@ -181,9 +181,16 @@ class EventsAdapter(Adapter):
             if docs.empty:
                 return rows
             for d in docs[docs.status.isin(["loaded", "unverified"])].itertuples():
+                pub = str(getattr(d, "published", "") or "")[:10]
+                ref = str(d.reference_date or "")[:10]
+                pub = pub if pub[:2] == "20" else ""                  # a missing stamp reads as "nan" or "None"
+                ref = ref if ref[:2] == "20" else ""
+                when = pub if pub and pub >= ref else ref            # the PDF's own stamp, else the period end; never our fetch time
+                if not when:
+                    continue
                 rows.append({"entity_id": d.entity_id, "event_id": f"doc:{(d.sha256 or d.url)[:16]}",
-                             "date": str(d.fetched_at)[:10], "type": "disclosure",
-                             "title": f"Pillar 3 disclosure collected" + (f" (period {d.reference_date})" if d.reference_date else "") + f": {d.title}",
+                             "date": when, "type": "disclosure",
+                             "title": f"Pillar 3 report" + (f" for the period to {ref}" if ref else "") + (" published" if pub else "") + f": {d.title}",
                              "source": "FCA NSM" if d.origin == "nsm" else "firm website", "url": d.url,
                              "severity": "info", "detail": d.status})
             return rows

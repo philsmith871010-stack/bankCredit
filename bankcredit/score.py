@@ -5,10 +5,10 @@ The composite agency rating (median long-term grade across the agencies that rat
 into a 0..100 sub-score by piecewise-linear interpolation against absolute thresholds (chosen from
 Basel minimums and typical ranges), averaged within pillars and weighted. Missing ratio metrics do
 not score zero: the ratio weight is re-scaled over what is available and the coverage fraction is
-reported so the site can show "insufficient data" honestly. An unrated bank takes a below-neutral
-rating sub-score and its final score is capped below band A: the absence of any agency assessment
-is itself information. Likewise strong ratios lift a bank at most one band above its rating: the
-BBB range stops below A and sub-investment grade below B. Bands: A 80+, B 65+, C 50+, D 35+, E below.
+reported so the site can show "insufficient data" honestly. A score is withheld, with the reason
+stated, when no agency rates the bank or no capital ratio is held: a rating alone or ratios alone
+say too little about a counterparty. Strong ratios lift a bank at most one band above its rating:
+the BBB range stops below A and sub-investment grade below B. Bands: A 80+, B 65+, C 50+, D 35+, E below.
 """
 from __future__ import annotations
 
@@ -74,6 +74,7 @@ class ScoreResult:
     band: str = ""
     inputs: dict = field(default_factory=dict)
     unrated: bool = False
+    reason: str = ""                                    # why no score: "unrated", "no capital ratios", "" when scored
 
 
 def band_for(score: float | None) -> str:
@@ -141,8 +142,11 @@ def compute(latest: dict[str, float], overlay: float = 0.0, rating_grade: float 
     coverage = weight_used / total_weight
     rs = rating_score(rating_grade)
     pillars["rating"] = (round(rs, 1), RATING_WEIGHT)
-    if weight_used == 0:
-        return ScoreResult(None, 0.0, pillars, 0.0, None, "", inputs, unrated=rating_grade is None)
+    if weight_used == 0 or pillars.get("capital", (None,))[0] is None:
+        return ScoreResult(None, round(coverage, 2), pillars, 0.0, None, "", inputs, unrated=rating_grade is None, reason="no capital ratios")
+    if rating_grade is None:
+        # a score needs an independent assessment as well as the ratios; strong ratios alone say too little
+        return ScoreResult(None, round(coverage, 2), pillars, 0.0, None, "", inputs, unrated=True, reason="unrated")
     ratios = weighted / weight_used
     public = (ratios * total_weight + rs * RATING_WEIGHT) / (total_weight + RATING_WEIGHT)
     ov = max(-OVERLAY_CAP, min(OVERLAY_CAP, overlay))

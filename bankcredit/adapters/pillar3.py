@@ -302,7 +302,7 @@ class Pillar3Adapter(Adapter):
         for ent, url, path, sha, title, origin, res in records:
             checks = "; ".join(f"{s}:{m}" for s, m in res.checks)
             if not res.values:
-                self._record(ent, url, sha, res.page, res.reference_date, "no_km1", 0.0, checks, title, origin, res.values)
+                self._record(ent, url, sha, res.page, res.reference_date, "no_km1", 0.0, checks, title, origin, res.values, self.published_on(path))
                 loc = next((l for l in LOCATORS if l["entity"] == ent), {})
                 hint = infer_period(title or url, loc.get("year_end", "12-31"))
                 if (hint is None or hint >= date(2022, 1, 1)) and not learn.skip_matches(ent, url):
@@ -324,7 +324,7 @@ class Pillar3Adapter(Adapter):
             else:
                 status = "review"
                 review.add(self._queue_item(ent, url, path, sha, res, title, checks))
-            self._record(ent, url, sha, res.page, res.reference_date, status, res.confidence, checks, title, origin, res.values)
+            self._record(ent, url, sha, res.page, res.reference_date, status, res.confidence, checks, title, origin, res.values, self.published_on(path))
         return n
 
     def process_file(self, entity_id: str, path: str, url: str = "", title: str = "", origin: str = "local") -> tuple[str, km1.Result]:
@@ -408,6 +408,21 @@ class Pillar3Adapter(Adapter):
         return res
 
     @staticmethod
+    def published_on(path) -> str | None:
+        """The date the document was produced, from the PDF's own creation stamp (the publication date, near
+        enough, and months after the period it reports); None when the file carries no stamp."""
+        try:
+            import fitz
+            m = fitz.open(str(path)).metadata or {}
+            stamp = m.get("creationDate") or m.get("modDate") or ""
+            mm = re.search(r"D:(\d{4})(\d{2})(\d{2})", stamp)
+            if mm and 2000 <= int(mm.group(1)) <= date.today().year + 1:
+                return f"{mm.group(1)}-{mm.group(2)}-{mm.group(3)}"
+        except Exception:
+            pass
+        return None
+
+    @staticmethod
     def _locator_for(entity_id: str, url: str = "") -> dict:
         """The locator that produced a document: match on URL when an entity has several."""
         cands = [l for l in LOCATORS if l["entity"] == entity_id]
@@ -451,10 +466,10 @@ class Pillar3Adapter(Adapter):
                 "page": res.page, "reference_date": res.reference_date.isoformat() if res.reference_date else None,
                 "currency": res.currency, "values": res.values, "checks": res.checks, "reason": reason}
 
-    def _record(self, ent, url, sha, page, ref, status, conf, message, title, origin, values) -> None:
+    def _record(self, ent, url, sha, page, ref, status, conf, message, title, origin, values, published: str | None = None) -> None:
         row = {"entity_id": ent, "url": url, "sha256": sha or "", "title": title, "origin": origin,
                "page": page, "reference_date": ref.isoformat() if ref else None, "status": status,
                "confidence": conf, "message": message[:500], "values": json.dumps(values, default=str),
-               "fetched_at": datetime.utcnow().isoformat(timespec="seconds")}
+               "fetched_at": datetime.utcnow().isoformat(timespec="seconds"), "published": published}
         store.upsert("documents", [row])
         self.seen.add(url)

@@ -417,6 +417,7 @@ def compare_rows(board: list[dict], series_all: dict) -> list[dict]:
 
 
 BACKCAST_QUARTERS = 24
+STALE_DAYS = 550              # capital ratios older than this cannot carry a score
 
 
 def _quarter_ends(n: int, today: date) -> list[date]:
@@ -554,10 +555,14 @@ def export_json() -> None:
         sc = compute(latest, overlay, composite)
         asof = max((pts[-1]["d"] for pts in series.values() if pts), default=None)
         age = (today - date.fromisoformat(asof)).days if asof else None
+        cap_pts = series.get("cet1_ratio") or []
+        cap_age = (today - date.fromisoformat(cap_pts[-1]["d"])).days if cap_pts else None
+        if sc.final_score is not None and cap_age is not None and cap_age > STALE_DAYS:
+            sc.final_score, sc.public_score, sc.band, sc.reason = None, None, "", f"capital ratios from {cap_pts[-1]['d'][:7]}"
         row = {
             "id": e.id, "name": e.name, "short": e.short_name, "country": e.country, "type": e.type,
             "region": e.region, "group": e.group, "peer_group": e.peer_group, "lei": e.lei,
-            "score": sc.final_score, "public_score": sc.public_score, "band": sc.band, "coverage": sc.coverage,
+            "score": sc.final_score, "public_score": sc.public_score, "band": sc.band, "coverage": sc.coverage, "unscored": sc.reason,
             "overlay": sc.overlay if sc.final_score is not None else None,
             "cet1": latest.get("cet1_ratio"), "leverage": latest.get("leverage_ratio", latest.get("tier1_leverage")),
             "leverage_basis": "basel" if "leverage_ratio" in latest else ("us_tier1" if "tier1_leverage" in latest else ""),

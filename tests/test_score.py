@@ -8,10 +8,9 @@ def test_rating_anchor_and_unrated_cap():
     aaa = S.compute(FULL, 0.0, 1.0)
     single_a = S.compute(FULL, 0.0, 6.0)
     none = S.compute(FULL, 0.0, None)
-    assert aaa.final_score > single_a.final_score > none.final_score
-    assert aaa.band == "A" and none.band == "B" and none.unrated
-    assert none.final_score <= S.UNRATED_CAP
-    assert none.pillars["rating"] == (S.UNRATED_SCORE, S.RATING_WEIGHT)
+    assert aaa.final_score > single_a.final_score
+    assert aaa.band == "A"
+    assert none.final_score is None and none.unrated and none.reason == "unrated"      # ratios alone earn no score
     assert aaa.coverage == single_a.coverage == none.coverage == 0.83   # ratio coverage, the rating is not "data"
 
 
@@ -19,11 +18,13 @@ def test_missing_ratios_rescale_and_no_ratios_means_no_score():
     part = S.compute({"cet1_ratio": 14.0, "leverage_ratio": 5.0}, 0.0, 5.0)
     assert part.public_score is not None and part.coverage == round(25 / 60, 2)
     assert S.compute({}, 0.0, 1.0).public_score is None
+    only_liq = S.compute({"lcr": 150.0, "nsfr": 120.0}, 0.0, 5.0)               # a rating and liquidity but no capital: no score
+    assert only_liq.public_score is None and only_liq.reason == "no capital ratios"
 
 
-def test_overlay_cannot_lift_unrated_into_band_a():
-    r = S.compute(FULL, 10.0, None)
-    assert r.final_score <= S.UNRATED_CAP and r.band == "B"
+def test_overlay_cannot_lift_bbb_into_band_a():
+    r = S.compute(FULL, 10.0, 9.0)
+    assert r.final_score <= 74.9 and r.band == "B"
 
 
 def test_rating_caps_the_band():
