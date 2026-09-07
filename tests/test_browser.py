@@ -22,3 +22,15 @@ def test_blocked_detection():
     assert B.looks_blocked(403, "x" * 5000)
     assert B.looks_blocked(200, "<html>Just a moment...</html>" + " " * 3000)
     assert not B.looks_blocked(200, "<html>" + "real content " * 500 + "</html>")
+
+
+def test_subpages_follow_report_hubs_on_the_same_host():
+    ad = Pillar3Adapter()
+    loc = {"entity": "furness-bs", "page": "https://www.furnessbs.co.uk/about-us/", "match": r"pillar.*\.pdf"}
+    links = [["https://www.furnessbs.co.uk/financial-reports/", "Financial reports"],
+             ["https://www.furnessbs.co.uk/media/x/savings-tcs.pdf", "Savings T&Cs"],
+             ["https://twitter.com/furnessbs", "Twitter"],
+             ["https://www.furnessbs.co.uk/about-us/", "About us"],
+             ["https://www.furnessbs.co.uk/careers/", "Careers"]]
+    assert B.subpages(loc, "", links, ad) == ["https://www.furnessbs.co.uk/financial-reports/"]
+    assert B.document_links("", links, ad, loc["page"]) == 1

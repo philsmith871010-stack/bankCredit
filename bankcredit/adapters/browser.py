@@ -92,6 +92,31 @@ def candidates(loc: dict, body: str, links: list, adapter: Pillar3Adapter, gener
     return found
 
 
+SUBPAGE = re.compile(r"financial|results|report|disclos|investor|document|pillar|regulatory|governance|basel|capital", re.I)
+SUBPAGE_EXCLUDE = re.compile(r"\.(pdf|jpg|png|svg|css|js|xlsx?|docx?|zip)(\?|$)|mailto:|tel:|login|careers|privacy|cookie|terms|sitemap|#", re.I)
+
+
+def subpages(loc: dict, body: str, links: list, adapter: Pillar3Adapter, limit: int = 6) -> list[str]:
+    """Same-host pages linked from the listing whose address or text says they hold reports or disclosures."""
+    from urllib.parse import urlparse
+    host = urlparse(loc["page"]).netloc.replace("www.", "")
+    out = []
+    for u, text in _pairs(body, links, adapter, loc["page"]):
+        if urlparse(u).netloc.replace("www.", "") != host or u.rstrip("/") == loc["page"].rstrip("/"):
+            continue
+        if SUBPAGE_EXCLUDE.search(u) or not (SUBPAGE.search(u) or SUBPAGE.search(text)):
+            continue
+        if u not in out:
+            out.append(u)
+        if len(out) >= limit:
+            break
+    return out
+
+
+def document_links(body: str, links: list, adapter: Pillar3Adapter, page_url: str) -> int:
+    return sum(1 for u, t in _pairs(body, links, adapter, page_url) if re.search(r"\.pdf|download|document", u + " " + t, re.I))
+
+
 def remember_links(entity: str, body: str, links: list, adapter: Pillar3Adapter, page_url: str) -> None:
     """Keep the document-looking links a page offered, so a locator pattern can be tuned without a browser."""
     try:
@@ -188,11 +213,11 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
                 body = r.text
         except requests.RequestException as exc:
             log.info("browser: %s plain request failed (%s)", ent, exc)
-        if not body and use_pw:
-            status, body, links = browser.listing(loc["page"])
-            via = "playwright"
-            if looks_blocked(status, body):
-                body = ""
+        # a page that answers but offers no documents at all is a script shell or a soft challenge: render it
+        if (not body or document_links(body, links, ad, loc["page"]) == 0) and use_pw:
+            status, rbody, rlinks = browser.listing(loc["page"])
+            if not looks_blocked(status, rbody) and (not body or document_links(rbody, rlinks, ad, loc["page"]) > 0):
+                body, links, via = rbody, rlinks, "playwright"
         if not body:
             out[ent] = "blocked" if (use_pw and not browser.error) else "blocked (no Playwright)"
             continue
@@ -202,6 +227,33 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
         if not allc:
             allc = candidates(loc, body, links, ad, generic=True)
             how = "generic"
+        if not allc:
+            # one level down: the listing may only link to the page that holds the documents
+            for sub in subpages(loc, body, links, ad):
+                sbody, slinks = "", []
+                if via == "playwright":
+                    st, sbody, slinks = browser.listing(sub)
+                    if looks_blocked(st, sbody):
+                        sbody = ""
+                else:
+                    try:
+                        rr = session.get(sub, timeout=60)
+                        if not looks_blocked(rr.status_code, rr.text):
+                            sbody = rr.text
+                    except requests.RequestException:
+                        pass
+                    if (not sbody or document_links(sbody, slinks, ad, sub) == 0) and use_pw:
+                        st, rb, rl = browser.listing(sub)
+                        if not looks_blocked(st, rb):
+                            sbody, slinks = rb, rl
+                if not sbody:
+                    continue
+                remember_links(ent + " > " + sub.rsplit("/", 2)[-2 if sub.endswith("/") else -1][:40], sbody, slinks, ad, sub)
+                sub_loc = dict(loc, page=sub)
+                allc = candidates(sub_loc, sbody, slinks, ad) or candidates(sub_loc, sbody, slinks, ad, generic=True)
+                if allc:
+                    how = "subpage " + sub
+                    break
         cands = [c for c in allc if c[0] not in ad.seen][:max_new]
         if not cands:
             out[ent] = "nothing new" if allc else "no matching links (see data/review/browser-links.json)"
