@@ -270,3 +270,8 @@ Equities: 71 entities have a ticker and 69 have prices; the two without are the 
 The other 82 are unlisted: ring-fenced and non-ring-fenced bank subsidiaries (which inherit the group equity signal,
 labelled), building societies, and private banks such as Monzo, Starling, Shawbrook and Aldermore. There is no equity
 to collect for them.
+
+Result on 7 September after the exercise load and the deep UK pass: EU banks went from a median of 4 periods to
+34 (about ten years); HSBC, Lloyds, NatWest, Santander UK, Standard Chartered and Nationwide now run 25 to 39
+periods back to 2014-2016; Skipton, OSB and Coventry 19 to 22. The UK median is still 3 because the small societies
+publish one annual document, so their depth grows one year at a time. 118 of 153 entities are scored.

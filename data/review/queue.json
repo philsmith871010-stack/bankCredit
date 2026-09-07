@@ -213,5 +213,127 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-09-07T12:13:22"
+ },
+ {
+  "id": "62df79463894",
+  "entity_id": "standard-chartered",
+  "url": "https://www.sc.com/en/uploads/sites/66/content/docs/Standard_Chartered_PLC_Q1_2019_Pillar_3_disclosure.pdf",
+  "local": "cache/pdf/standard-chartered/62df794638946625.pdf",
+  "title": "Standard_Chartered_PLC_Q1_2019_Pillar_3_disclosure.pdf",
+  "page": 3,
+  "reference_date": "2019-03-31",
+  "currency": "USD",
+  "values": {
+   "tier1_ratio": 16.3,
+   "total_capital_ratio": 20.8,
+   "cet1_headroom": 7.7,
+   "leverage_ratio": 5.4,
+   "net_cash_outflows": 95748.0,
+   "cet1_capital": 13.9,
+   "tier1_capital": 16.3,
+   "total_capital": 20.8
+  },
+  "checks": [
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing core row rwa; error:missing core row cet1_ratio; warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T11:29:16"
+ },
+ {
+  "id": "a3e708244e97",
+  "entity_id": "standard-chartered",
+  "url": "https://www.sc.com/en/uploads/sites/66/content/docs/Standard_Chartered_PLC_Q3_2018_Pillar_3_disclosure.pdf",
+  "local": "cache/pdf/standard-chartered/a3e708244e9755d9.pdf",
+  "title": "Standard_Chartered_PLC_Q3_2018_Pillar_3_disclosure.pdf",
+  "page": 3,
+  "reference_date": "2018-06-30",
+  "currency": "USD",
+  "values": {
+   "tier1_capital": 45029.0,
+   "total_capital": 57576.0,
+   "tier1_ratio": 17.0,
+   "total_capital_ratio": 21.7,
+   "leverage_exposure": 742828.0,
+   "leverage_ratio": 5.8,
+   "net_cash_outflows": 92887.0,
+   "cet1_capital": 14.5
+  },
+  "checks": [
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "warn",
+    "header date 2018-06-30 disagrees with expected 2018-09-30"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:header date 2018-06-30 disagrees with expected 2018-09-30; error:missing core row rwa; error:missing core row cet1_ratio; warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T11:29:16"
+ },
+ {
+  "id": "a86f7c9086dc",
+  "entity_id": "santander-uk",
+  "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:6fae1e95-3000-4335-bcce-27bedbc93906/original/as/additional_capital_and_risk_management_disclosures_pdf.pdf",
+  "local": "cache/pdf/santander-uk/a86f7c9086dcc9da.pdf",
+  "title": "additional_capital_and_risk_management_disclosures_pdf.pdf",
+  "page": 3,
+  "reference_date": "2019-06-30",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 10400.0,
+   "tier1_capital": 12849000.0,
+   "total_capital": 15713000.0,
+   "rwa": 75293000.0,
+   "cet1_ratio": 13.8,
+   "tier1_ratio": 17.1,
+   "total_capital_ratio": 20.9,
+   "hqla": 47707000.0,
+   "net_cash_outflows": 30702000.0,
+   "lcr": 155.4,
+   "leverage_exposure": 303000.0
+  },
+  "checks": [
+   [
+    "warn",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "error",
+    "cet1_ratio 13.80 vs implied 0.01 from capital/RWA"
+   ]
+  ],
+  "reason": "warn:no leverage ratio row (not all Basel KM1 filers disclose one); error:cet1_ratio 13.80 vs implied 0.01 from capital/RWA",
+  "status": "open",
+  "created": "2026-09-07T11:29:47"
  }
 ]
