@@ -49,7 +49,7 @@ NAMES = {
     "COMWLTH BK": "commonwealth-bank", "NATL AUST BK": "nab", "BCO BPM": "banco-bpm", "SOC GEN": "societe-generale",
     "BARCLAYS BK": "barclays-bank",
     "BARCLAYS": "barclays", "HSBC HOLDINGS": "hsbc-holdings", "HSBC BANK": "hsbc-bank", "LLOYDS BANKING": "lloyds-banking-group",
-    "LLOYDS BANK": "lloyds-bank", "NATWEST GROUP": "natwest-group", "NATIONAL WESTMINSTER": "natwest-bank",
+    "LLOYDS BANK": "lloyds-bank", "NATWEST MARKETS": "natwest-markets", "NATWEST GROUP": "natwest-group", "NATIONAL WESTMINSTER": "natwest-bank",
     "STANDARD CHARTERED": "standard-chartered", "NATIONWIDE": "nationwide", "SANTANDER UK": "santander-uk",
     "DEUTSCHE BANK": "deutsche-bank", "COMMERZBANK": "commerzbank", "BNP PARIBAS": "bnp-paribas", "SOCIETE GENERALE": "societe-generale",
     "CREDIT AGRICOLE": "credit-agricole", "BPCE": "bpce", "CREDIT MUTUEL": "credit-mutuel", "ING BANK": "ing", "ING GROEP": "ing",

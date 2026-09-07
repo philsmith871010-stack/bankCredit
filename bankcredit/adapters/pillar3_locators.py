@@ -41,6 +41,8 @@ LOCATORS: list[dict] = [
          match=r"results-center/.*/nwg-.*pillar-3.*\.pdf", exclude=r"appendix"),
     dict(entity="natwest-bank", page="https://investors.natwestgroup.com/results-centre",
          match=r"results-center/.*/nwb-.*pillar-?3.*\.pdf", exclude=r"appendix"),
+    dict(entity="natwest-markets", page="https://investors.natwestgroup.com/results-centre",
+         match=r"results-center/.*/nwm-.*pillar-?3.*\.pdf", exclude=r"appendix"),
     dict(entity="standard-chartered", page="https://www.sc.com/en/investors/financial-results/",
          match=r"sc\.com/.*" + P3 + r".*\.pdf", exclude=r"gsib|remuneration|g-sib"),
     dict(entity="santander-uk", page="https://www.santander.co.uk/about-santander/investor-relations/santander-uk-group-holdings-plc",

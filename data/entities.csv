@@ -10,6 +10,7 @@ lloyds-bank,Lloyds Bank plc,Lloyds Bank,GB,bank,uk,lloyds-banking-group,H7FNTJ48
 bank-of-scotland,Bank of Scotland plc,Bank of Scotland,GB,bank,uk,lloyds-banking-group,OQ3T05P7YR8P5YJEVI93,,,uk_large,true
 natwest-group,NatWest Group plc,NatWest Group,GB,holding,uk,,2138005O9XJIJN4JPN90,NWG.L,,uk_large,true
 natwest-bank,National Westminster Bank Plc,NatWest Bank,GB,bank,uk,natwest-group,213800IBT39XQ9C4CP71,,,uk_large,true
+natwest-markets,NatWest Markets Plc,NatWest Markets,GB,bank,uk,natwest-group,RR3QWICWWIPCS8A4S074,,,uk_large,true
 standard-chartered,Standard Chartered PLC,Standard Chartered,GB,holding,uk,,U4LOSYZ7YG4W3S5F2G91,STAN.L,,uk_large,true
 santander-uk,Santander UK plc,Santander UK,GB,bank,uk,banco-santander,PTCQB104N23FMNK2RZ28,,,uk_large,true
 virgin-money-uk,Virgin Money UK PLC,Virgin Money UK,GB,bank,uk,nationwide,213800ZK9VGCYYR6O495,,,uk_mid,true

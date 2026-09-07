@@ -43,7 +43,7 @@ ISSUERS = [
     ("barclays bank uk", "barclays-bank-uk"), ("barclays bank plc", "barclays-bank"), ("barclays plc", "barclays"), ("barclays", "barclays"),
     ("hsbc holdings", "hsbc-holdings"), ("hsbc uk bank", "hsbc-uk"), ("hsbc bank plc", "hsbc-bank"), ("hsbc bank", "hsbc-bank"),
     ("lloyds banking", "lloyds-banking-group"), ("lloyds bank", "lloyds-bank"), ("bank of scotland", "bank-of-scotland"),
-    ("natwest group", "natwest-group"), ("national westminster", "natwest-bank"), ("natwest markets", None),
+    ("natwest group", "natwest-group"), ("national westminster", "natwest-bank"), ("natwest markets", "natwest-markets"),
     ("standard chartered", "standard-chartered"), ("santander uk", "santander-uk"), ("nationwide building", "nationwide"), ("nationwide", "nationwide"),
     ("virgin money", "virgin-money-uk"), ("clydesdale", "clydesdale-bank"), ("tsb bank", "tsb"), ("co-operative bank", "co-operative-bank"),
     ("metro bank", "metro-bank"), ("osb group", "osb-group"), ("onesavings", "osb-group"), ("shawbrook", "shawbrook"), ("aldermore", "aldermore"),

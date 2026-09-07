@@ -10,7 +10,8 @@ def test_issuer_matching_prefers_longest_token():
     assert B.match_issuer("Barclays Bank PLC 3,25% 24/29") == "barclays-bank"
     assert B.match_issuer("Barclays PLC 4,375% 23/28") == "barclays"
     assert B.match_issuer("HSBC Holdings PLC 1,5% 21/27") == "hsbc-holdings"
-    assert B.match_issuer("NatWest Markets PLC 0,8% 20/25") is None
+    assert B.match_issuer("NatWest Markets PLC 0,8% 20/25") == "natwest-markets"
+    assert B.match_issuer("Banco Santander Totta S.A. 3,25% 24/31") is None
     assert B.match_issuer("Zypern, Republik 3,25% 26/36") is None
 
 
