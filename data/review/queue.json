@@ -1100,7 +1100,7 @@
   ],
   "reason": "warn:no period date found in the template header; using the expected date; error:missing core row rwa",
   "status": "open",
-  "created": "2026-09-06T23:21:58"
+  "created": "2026-09-07T00:00:22"
  },
  {
   "id": "1ab33666ac13",
@@ -1136,7 +1136,7 @@
   ],
   "reason": "warn:no period date found in the template header; using the expected date; warn:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 38.00 vs implied 60.80 from capital/RWA",
   "status": "open",
-  "created": "2026-09-06T23:23:45"
+  "created": "2026-09-07T00:02:19"
  },
  {
   "id": "7998745c1783",
@@ -1156,7 +1156,7 @@
   ],
   "reason": "no KM1 template found",
   "status": "open",
-  "created": "2026-09-06T23:23:59"
+  "created": "2026-09-07T00:02:33"
  },
  {
   "id": "8a385f61aaea",
@@ -1176,7 +1176,7 @@
   ],
   "reason": "no KM1 template found",
   "status": "open",
-  "created": "2026-09-06T23:24:21"
+  "created": "2026-09-07T00:02:57"
  },
  {
   "id": "888ffddcd88d",
@@ -1196,7 +1196,7 @@
   ],
   "reason": "no KM1 template found",
   "status": "open",
-  "created": "2026-09-06T23:24:21"
+  "created": "2026-09-07T00:02:57"
  },
  {
   "id": "ac3267311dd5",
@@ -1216,7 +1216,7 @@
   ],
   "reason": "no KM1 template found",
   "status": "open",
-  "created": "2026-09-06T23:24:22"
+  "created": "2026-09-07T00:02:57"
  },
  {
   "id": "c5c1b939b3bd",
@@ -1236,7 +1236,7 @@
   ],
   "reason": "no KM1 template found",
   "status": "open",
-  "created": "2026-09-06T23:24:30"
+  "created": "2026-09-07T00:03:02"
  },
  {
   "id": "48435cd3311a",
@@ -1256,7 +1256,7 @@
   ],
   "reason": "no KM1 template found",
   "status": "open",
-  "created": "2026-09-06T23:24:39"
+  "created": "2026-09-07T00:03:09"
  },
  {
   "id": "b91ac2b158b4",
@@ -1276,7 +1276,7 @@
   ],
   "reason": "no KM1 template found",
   "status": "open",
-  "created": "2026-09-06T23:24:39"
+  "created": "2026-09-07T00:03:09"
  },
  {
   "id": "bbd86215261d",
@@ -1296,6 +1296,6 @@
   ],
   "reason": "no KM1 template found",
   "status": "open",
-  "created": "2026-09-06T23:24:39"
+  "created": "2026-09-07T00:03:09"
  }
 ]
