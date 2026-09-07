@@ -1,98 +1,20 @@
 [
  {
-  "id": "11ef7755e705",
-  "entity_id": "co-operative-bank",
-  "url": "https://www.co-operativebank.co.uk/assets/pdf/bank/investorrelations/2021-pillar-3-disclosures.pdf",
-  "local": "cache/pdf/co-operative-bank/11ef7755e705b734.pdf",
-  "title": "2021-pillar-3-disclosures.pdf",
+  "id": "fbd362c8b30d",
+  "entity_id": "skipton-bs",
+  "url": "https://www.skipton.co.uk/content/dam/sbs-sites/skipton-co-uk/documents/about-us/pillar-3-disclosures/pillar-3-2021.pdf",
+  "local": "cache/pdf/skipton-bs/fbd362c8b30d7ef0.pdf",
+  "title": "pillar-3-2021.pdf",
   "page": 5,
   "reference_date": "2021-12-31",
   "currency": "GBP",
   "values": {
-   "cet1_ratio": 20.7,
-   "total_capital_ratio": 25.4,
-   "rwa": 4373.4,
-   "leverage_ratio": 3.1,
-   "tier1_ratio": 20.7
-  },
-  "checks": [
-   [
-    "warn",
-    "reference date taken from narrative text, not a column header"
-   ],
-   [
-    "warn",
-    "rows identified by label only (no row numbers in the table)"
-   ],
-   [
-    "error",
-    "missing core row cet1_capital"
-   ],
-   [
-    "warn",
-    "no LCR row (not disclosed at this level, or not read)"
-   ]
-  ],
-  "reason": "warn:reference date taken from narrative text, not a column header; warn:rows identified by label only (no row numbers in the table); error:missing core row cet1_capital; warn:no LCR row (not disclosed at this level, or not read)",
-  "status": "open",
-  "created": "2026-09-07T09:15:41"
- },
- {
-  "id": "c19fede1c70f",
-  "entity_id": "co-operative-bank",
-  "url": "https://www.co-operativebank.co.uk/assets/pdf/bank/investorrelations/2020-pillar-3-disclosures.pdf",
-  "local": "cache/pdf/co-operative-bank/c19fede1c70fd8ea.pdf",
-  "title": "2020-pillar-3-disclosures.pdf",
-  "page": 5,
-  "reference_date": "2020-12-31",
-  "currency": "GBP",
-  "values": {
-   "cet1_ratio": 2020.0,
-   "total_capital_ratio": 23.7,
-   "rwa": 4683.7,
-   "leverage_ratio": 3.4,
-   "tier1_ratio": 19.2
-  },
-  "checks": [
-   [
-    "warn",
-    "reference date taken from narrative text, not a column header"
-   ],
-   [
-    "error",
-    "missing core row cet1_capital"
-   ],
-   [
-    "warn",
-    "no LCR row (not disclosed at this level, or not read)"
-   ],
-   [
-    "error",
-    "cet1_ratio 2020 outside 3..80"
-   ],
-   [
-    "error",
-    "tier1_ratio below cet1_ratio"
-   ]
-  ],
-  "reason": "warn:reference date taken from narrative text, not a column header; error:missing core row cet1_capital; warn:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 2020 outside 3..80; error:tier1_ratio below cet1_ratio",
-  "status": "open",
-  "created": "2026-09-07T09:15:41"
- },
- {
-  "id": "e0495d04a09f",
-  "entity_id": "co-operative-bank",
-  "url": "https://www.co-operativebank.co.uk/assets/pdf/bank/investorrelations/2019-pillar-3-disclosures.pdf",
-  "local": "cache/pdf/co-operative-bank/e0495d04a09f4f4f.pdf",
-  "title": "2019-pillar-3-disclosures.pdf",
-  "page": 6,
-  "reference_date": "2019-12-31",
-  "currency": "GBP",
-  "values": {
-   "cet1_ratio": 19.6,
-   "total_capital_ratio": 23.8,
-   "rwa": 4803.7,
-   "leverage_ratio": 3.9
+   "cet1_capital": 1775.5,
+   "cet1_ratio": 44.6,
+   "tier1_ratio": 44.8,
+   "total_capital_ratio": 45.6,
+   "tier1_capital": 1775.5,
+   "leverage_ratio": 6.8
   },
   "checks": [
    [
@@ -105,15 +27,296 @@
    ],
    [
     "error",
-    "missing core row cet1_capital"
+    "missing core row rwa"
    ],
    [
     "warn",
     "no LCR row (not disclosed at this level, or not read)"
    ]
   ],
-  "reason": "warn:rows identified by label only (no row numbers in the table); warn:no period date found in the template header; using the expected date; error:missing core row cet1_capital; warn:no LCR row (not disclosed at this level, or not read)",
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:no period date found in the template header; using the expected date; error:missing core row rwa; warn:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
-  "created": "2026-09-07T09:15:41"
+  "created": "2026-09-07T09:16:21"
+ },
+ {
+  "id": "74d40d55130b",
+  "entity_id": "skipton-bs",
+  "url": "https://www.skipton.co.uk/content/dam/sbs-sites/skipton-co-uk/documents/about-us/pillar-3-disclosures/pillar-3-2020.pdf",
+  "local": "cache/pdf/skipton-bs/74d40d55130b3c7d.pdf",
+  "title": "pillar-3-2020.pdf",
+  "page": 5,
+  "reference_date": "2020-12-31",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 1585.6,
+   "cet1_ratio": 39.7,
+   "tier1_ratio": 40.1,
+   "total_capital_ratio": 40.8,
+   "tier1_capital": 1585.6,
+   "leverage_ratio": 5.7
+  },
+  "checks": [
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "warn",
+    "no period date found in the template header; using the expected date"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:no period date found in the template header; using the expected date; error:missing core row rwa; warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T09:16:21"
+ },
+ {
+  "id": "bd4545eef3e4",
+  "entity_id": "leeds-bs",
+  "url": "https://www.leedsbuildingsociety.co.uk/_resources/pdfs/press-pdfs/financial-results-pdfs/interim-pillar-3-disclosures.pdf",
+  "local": "cache/pdf/leeds-bs/bd4545eef3e40cfa.pdf",
+  "title": "interim-pillar-3-disclosures.pdf",
+  "page": 6,
+  "reference_date": "2024-06-30",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 1539.4,
+   "tier1_capital": 1539.4,
+   "total_capital": 1550.6,
+   "rwa": 5991.3,
+   "cet1_ratio": 25.69,
+   "tier1_ratio": 25.69,
+   "total_capital_ratio": 25.88,
+   "total_srep_requirement": 10.81,
+   "combined_buffer": 4.5,
+   "overall_capital_requirement": 15.31,
+   "cet1_headroom": 15.07,
+   "leverage_exposure": 26215.2,
+   "leverage_ratio": 5.87,
+   "hqla": 5144.7,
+   "net_cash_outflows": 2188.4,
+   "lcr": 237.79,
+   "available_stable_funding": 25293.3,
+   "required_stable_funding": 17948.6,
+   "nsfr": 141.01
+  },
+  "checks": [
+   [
+    "warn",
+    "column headers split month and year across lines; reference date needs a check"
+   ],
+   [
+    "error",
+    "disagrees with the last verified disclosure: CET1 ratio moved 12.3 points from 2021-12-31"
+   ]
+  ],
+  "reason": "warn:column headers split month and year across lines; reference date needs a check; error:disagrees with the last verified disclosure: CET1 ratio moved 12.3 points from 2021-12-31",
+  "status": "open",
+  "created": "2026-09-07T09:16:32"
+ },
+ {
+  "id": "190889542502",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2022-half-year-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/1908895425026643.pdf",
+  "title": "2022-half-year-pillar-3-report.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T09:16:59"
+ },
+ {
+  "id": "639b5c61c402",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2021-first-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/639b5c61c40241fd.pdf",
+  "title": "2021-first-quarter-pillar-3-report.pdf",
+  "page": 4,
+  "reference_date": "2021-09-30",
+  "currency": "AUD",
+  "values": {
+   "rwa": 425811.0,
+   "cet1_capital": 11.7,
+   "tier1_capital": 13.6,
+   "leverage_ratio": 5.93
+  },
+  "checks": [
+   [
+    "warn",
+    "column headers split month and year across lines; reference date needs a check"
+   ],
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:column headers split month and year across lines; reference date needs a check; warn:rows identified by label only (no row numbers in the table); error:missing core row cet1_ratio; warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T09:16:59"
+ },
+ {
+  "id": "686d1eab0f85",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2018/31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/686d1eab0f85f704.pdf",
+  "title": "31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T09:17:10"
+ },
+ {
+  "id": "b152aba46811",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2017/31-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/b152aba468111f7b.pdf",
+  "title": "31-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": 4,
+  "reference_date": "2017-12-31",
+  "currency": "AUD",
+  "values": {
+   "tier1_capital": 4139.8,
+   "total_capital": 4891.7,
+   "rwa": 37689.6,
+   "cet1_capital": 8.61
+  },
+  "checks": [
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "warn",
+    "header date 2017-12-31 disagrees with expected 2031-06-30"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "warn",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:header date 2017-12-31 disagrees with expected 2031-06-30; error:missing core row cet1_ratio; warn:no leverage ratio row (not all Basel KM1 filers disclose one); warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T09:17:10"
+ },
+ {
+  "id": "2b9902f38c09",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2017/31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/2b9902f38c0926fb.pdf",
+  "title": "31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T09:17:10"
+ },
+ {
+  "id": "09766a01eb95",
+  "entity_id": "national-bank-of-canada",
+  "url": "https://www.nbc.ca/content/dam/bnc/a-propos-de-nous/relations-investisseurs/resultats-trimestriels/2023/suppack-regulatory-capital-q3-2023.pdf",
+  "local": "cache/pdf/national-bank-of-canada/09766a01eb958f8b.pdf",
+  "title": "suppack-regulatory-capital-q3-2023.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T09:28:38"
+ },
+ {
+  "id": "1c04eb8e9336",
+  "entity_id": "national-bank-of-canada",
+  "url": "https://www.nbc.ca/content/dam/bnc/a-propos-de-nous/relations-investisseurs/resultats-trimestriels/2023/suppack-regulatory-capital-q2-2023.pdf",
+  "local": "cache/pdf/national-bank-of-canada/1c04eb8e933618ce.pdf",
+  "title": "suppack-regulatory-capital-q2-2023.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T09:28:38"
+ },
+ {
+  "id": "a45c5abed7f2",
+  "entity_id": "national-bank-of-canada",
+  "url": "https://www.nbc.ca/content/dam/bnc/a-propos-de-nous/relations-investisseurs/resultats-trimestriels/2023/suppack-regulatory-capital-q1-2023.pdf",
+  "local": "cache/pdf/national-bank-of-canada/a45c5abed7f2628e.pdf",
+  "title": "suppack-regulatory-capital-q1-2023.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T09:28:38"
  }
 ]
