@@ -347,7 +347,8 @@ def ratings_summary(active, ratings: pd.DataFrame, events: pd.DataFrame) -> dict
         ev = events[(events.type == "rating") & (events.date.astype(str) >= cutoff)]
         ev = ev[~ev.title.str.contains("affirm|maintained under stable|placed under stable|removed under stable|initial reporting|new:", case=False, na=False)]
         short = {e.id: e.short_name for e in active}
-        for x in ev.sort_values("date", ascending=False).drop_duplicates(["entity_id", "title"]).head(80).itertuples():
+        ev = ev.assign(_k=ev.title.str.split(":").str[0].str.strip())          # "DBRS upgrade" once per bank per day, not per rating type
+        for x in ev.sort_values("date", ascending=False).drop_duplicates(["entity_id", "date", "_k"]).head(80).itertuples():
             if x.entity_id in short:
                 actions.append({"date": str(x.date)[:10], "id": x.entity_id, "short": short[x.entity_id], "title": str(x.title)[:160], "severity": x.severity})
     return {"rows": rows, "actions": actions}
