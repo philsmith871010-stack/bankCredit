@@ -1859,5 +1859,78 @@
   "page_reviewer": 12,
   "date_extractor": null,
   "date_reviewer": "2026-06-30"
+ },
+ {
+  "date": "2026-09-07T15:02:44",
+  "id": "0b1d7f23c596",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2011-03-31"
+ },
+ {
+  "date": "2026-09-07T15:02:46",
+  "id": "6faf1d220a64",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-07T15:02:46",
+  "id": "83bdcf348f8d",
+  "entity_id": "nab",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 3,
+  "matched": 2,
+  "mismatches": {
+   "tier1_capital": [
+    12.6,
+    47396.0
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2018-09-30",
+  "date_reviewer": "2017-12-31"
+ },
+ {
+  "date": "2026-09-07T15:02:47",
+  "id": "b1230cc62305",
+  "entity_id": "nab",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 3,
+  "matched": 2,
+  "mismatches": {
+   "tier1_capital": [
+    12.0,
+    48408.0
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2018-12-31",
+  "date_reviewer": "2018-12-31"
+ },
+ {
+  "date": "2026-09-07T15:02:48",
+  "id": "fa5727a0b306",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2012-03-31"
  }
 ]

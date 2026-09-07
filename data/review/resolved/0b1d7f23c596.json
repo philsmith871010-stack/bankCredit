@@ -1,0 +1,13 @@
+{
+ "id": "0b1d7f23c596",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2011/31-march---basel-ii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 2,
+ "reference_date": "2011-03-31",
+ "currency": "AUD",
+ "values": {
+  "tier1_ratio": 7.72,
+  "total_capital_ratio": 10.68
+ },
+ "note": "Bendigo and Adelaide Bank under APRA's APS 330, from before the bank adopted the tabular Basel III layout. These reports list risk-weighted assets by portfolio but print no total RWA row, so RWA is left out rather than summed from the components, and they publish only the two ratios shown as 'Total and Tier 1 capital ratio for the consolidated group'. Being Basel II, there is no CET1 concept and no CET1 ratio to record. Neither LCR nor NSFR was reported in Australia at these dates, and APS 330 required no leverage ratio. A two-page release whose second page is a scan with no text layer, so it was read by OCR and then confirmed by rendering the table. The announcement is dated 31 May 2011 and the table is headed 'Capital Adequacy as at March 31st 2011'; the same page also carries a 'Capital Structure as at December 31st 2010 (Half-Yearly)' block, which is not the reporting date and is not used."
+}

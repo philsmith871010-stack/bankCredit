@@ -1,0 +1,18 @@
+{
+ "id": "83bdcf348f8d",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2018-first-quarter-pillar-3-report.pdf",
+ "page": 5,
+ "reference_date": "2017-12-31",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 47396.0,
+  "rwa": 376624.0,
+  "cet1_ratio": 10.2,
+  "tier1_ratio": 12.6,
+  "total_capital_ratio": 14.6,
+  "leverage_exposure": 870574.0,
+  "leverage_ratio": 5.4
+ },
+ "note": "NAB APS 330 quarterly report, Level 2 basis. APS 330 has no KM1 template. Ratios and the leverage block from the capital ratios and leverage ratio tables, total RWA from the capital adequacy table. Quarterly reports give no CET1 or total capital amount, so neither is recorded. The reference date needed correcting: the queue had 2018-09-30, but the title page carries no date and the table is headed 'Capital ratios (Level 2) / As at 31 Dec 17 / 30 Sep 17', so this first-quarter-2018 report is the position at 31 December 2017. This vintage has no liquidity section at all, so no LCR is recorded. Check: 47,396/376,624 = 12.58%, matching the published 12.6% Tier 1 ratio, and 47,396/870,574 = 5.44%, matching the 5.4% leverage ratio."
+}
