@@ -17,6 +17,7 @@ run; after that each run sees only the day's new headlines. Repeat the run until
 unjudged total reads 0.
 
 ```bash
+git checkout -- data/json 2>/dev/null   # built JSON is regenerated locally and committed by the runner; never merge it by hand
 git pull --ff-only
 python3 - <<'PY'
 import json, pandas as pd

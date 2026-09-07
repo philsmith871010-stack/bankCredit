@@ -14,6 +14,7 @@ cd "$REPO"
 mkdir -p data/cache
 exec >>"$LOG" 2>&1
 echo "==== $(date -u +%FT%TZ) start"
+git checkout -- data/json 2>/dev/null || true   # built JSON: the runner's copy wins
 git pull --ff-only
 source .venv/bin/activate
 # 1. collect from bank sites and the FCA NSM from this network (residential IP), extract, queue

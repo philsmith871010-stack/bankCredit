@@ -15,6 +15,7 @@ an AI API: you are the reviewer, using your own reading of the PDF.
 ## 0. Prepare
 
 ```bash
+git checkout -- data/json 2>/dev/null   # built JSON is regenerated locally and committed by the runner; never merge it by hand
 git pull --ff-only
 python3 -m bankcredit.cli review list
 ```
