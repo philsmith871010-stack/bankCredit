@@ -1,6 +1,6 @@
 ---
 name: counterparty-news
-description: Judge the last two weeks of collected headlines for the Counterparty site - keep what tells a treasurer something about a bank's credit standing, drop the rest, correct severities - and write the verdicts the pipeline applies. Runs on the maintainer's Claude Code subscription; no API key anywhere.
+description: Judge the collected headlines for the Counterparty site, the whole stored back book first and then each day's new ones - keep what tells a treasurer something about a bank's credit standing, drop the rest, correct severities - and write the verdicts the pipeline applies. Runs on the maintainer's Claude Code subscription; no API key anywhere.
 ---
 
 # Counterparty news review (local)
@@ -12,6 +12,10 @@ kept for good, so a headline is judged once.
 
 ## 1. What to judge
 
+The first runs work through the whole stored back book, newest first, 400 headlines a
+run; after that each run sees only the day's new headlines. Repeat the run until the
+unjudged total reads 0.
+
 ```bash
 git pull --ff-only
 python3 - <<'PY'
@@ -19,10 +23,9 @@ import json, pandas as pd
 from bankcredit import store
 from bankcredit.adapters.events import load_verdicts
 ev = store.read("events"); ev = ev[(ev.type == "news")].sort_values("date", ascending=False)
-ev = ev[ev.date.astype(str) >= str(pd.Timestamp.today().date() - pd.Timedelta(days=14))]
 seen = load_verdicts()
-todo = ev[~ev.event_id.isin(seen)]
-print(len(todo), "headlines to judge")
+todo = ev[~ev.event_id.isin(seen)].head(400)          # newest first; everything stored is judged once, 400 a run
+print(len(todo), "headlines to judge this run;", int((~ev.event_id.isin(seen)).sum()), "unjudged in total")
 todo[["event_id", "entity_id", "date", "severity", "source", "title"]].to_csv("data/cache/news_todo.csv", index=False)
 PY
 ```

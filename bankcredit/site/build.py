@@ -152,7 +152,10 @@ def page_bank(b, generated):
     prow = "".join(f'<div class="pillar"><span>{k.replace("_", " ").title()}</span><span class="mono">{"—" if v[0] is None else f"{v[0]:.0f}"}</span><span class="pw">w {PILLARS[k][0]}</span></div>' for k, v in pillars.items())
     # charts
     charts = []
-    for metric, label, unit, dp in TILE_METRICS[:2] + [TILE_METRICS[3]]:
+    extra = [("tier1_ratio", "Tier 1 ratio", "%", 1), ("npl_ratio", "Non-performing loans", "%", 2), ("roa", "Return on assets", "%", 2),
+             ("roe", "Return on equity", "%", 1), ("nim", "Net interest margin", "%", 2), ("efficiency_ratio", "Efficiency ratio", "%", 1),
+             ("deposits", "Deposits", "m", 0), ("total_assets", "Total assets", "m", 0), ("tier1_leverage", "Tier 1 leverage (US)", "%", 1)]
+    for metric, label, unit, dp in TILE_METRICS + extra:
         pts = series.get(metric, [])
         if len(pts) >= 2:
             req = None; req_label = "Requirement"
@@ -160,8 +163,11 @@ def page_bank(b, generated):
                 r = series.get("cet1_requirement") or series.get("overall_capital_requirement")
                 if r:
                     req = r[-1]["v"]; req_label = "CET1 requirement" if series.get("cet1_requirement") else "Overall requirement"
-            data = [(qlabel(p["d"]), p["v"]) for p in pts[-16:]]
-            charts.append(f'<div class="chart-block"><div class="chart-head"><span>{label}</span><span class="muted">{METRICS.get(metric, "")}</span></div>{c.chart(data, unit="" if unit == "m" else unit, req=req, req_label=req_label, dp=0 if unit != "%" or metric in ("lcr", "nsfr") else 1)}</div>')
+            shown = pts if len(pts) <= 48 else pts[-48:]                       # up to twelve years of quarters
+            data = [(qlabel(p["d"]), (p["v"] / 1000 if unit == "m" and p["v"] and abs(p["v"]) > 5000 else p["v"])) for p in shown]
+            if unit == "m":
+                unit = "bn" if any(p["v"] and abs(p["v"]) > 5000 for p in shown) else "m"
+            charts.append(f'<div class="chart-block"><div class="chart-head"><span>{label}</span><span class="muted">{METRICS.get(metric, "")}</span></div>{c.chart(data, unit="" if unit in ("m", "bn") else unit, req=req, req_label=req_label, dp=0 if unit != "%" or metric in ("lcr", "nsfr") else dp)}</div>')
     ratings_rows = "".join(f'<tr><td>{c.esc(r["agency"])}</td><td class="muted">{c.esc(r["type"].replace("_", " "))} · {c.esc(r["horizon"])}</td><td class="mono b">{c.esc(r["value"])}</td><td class="muted">{c.esc(r["outlook"])}</td><td class="mono muted">{c.esc(r["date"])}</td></tr>' for r in b["ratings_all"])
     ratings_html = f'<table class="plain"><thead><tr><th>Agency</th><th>Type</th><th>Rating</th><th>Outlook</th><th>Date</th></tr></thead><tbody>{ratings_rows}</tbody></table><div class="note">Source: ESMA European Rating Platform, checked daily. Symbols shown with agency attribution; histories are not redistributed.</div>' if ratings_rows else '<div class="empty">No issuer-level ratings found in the ESMA register for this entity.</div>'
     mp = b["market_public"]
