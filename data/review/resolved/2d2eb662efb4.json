@@ -1,0 +1,22 @@
+{
+ "id": "2d2eb662efb4",
+ "entity_id": "ubs",
+ "url": "https://secure.ubs.com/minisites/group-functions/investor-relations/quarterly-results/2026/1q26/pillar3/1q26-pillar3-digital-report/index.html",
+ "page": 13,
+ "reference_date": "2026-03-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 73313.0,
+  "tier1_capital": 96963.0,
+  "total_capital": 96973.0,
+  "rwa": 500355.0,
+  "cet1_ratio": 14.65,
+  "tier1_ratio": 19.38,
+  "total_capital_ratio": 19.38,
+  "leverage_exposure": 1653460.0,
+  "leverage_ratio": 5.86,
+  "lcr": 177.83,
+  "nsfr": 116.93
+ },
+ "note": "UBS publishes its quarterly Pillar 3 report as a web page rather than a PDF; the collector renders it and reads it as a document, which is why the page numbers here are of the rendered capture rather than a printed report. The KM1 table has four columns running backwards from the reporting date. This document was requeued deliberately: the rules-based extractor read the SECOND column and then labelled it with a third date, so both reports were loaded as 2025-12-31 carrying the 31.3.26 figures, and the two overwrote each other on the natural key. The seven stale facts were dropped and both reports re-read from column a. Amounts are US dollar millions. UBS's Tier 1 and total capital ratios are equal because its going-concern capital is almost entirely Tier 1, with only a few million of Tier 2; the gone-concern (bail-in) resources sit outside this template. leverage_ratio is the Basel III leverage ratio including the central-bank-reserve exemption impact (row 14), which at these dates equals the excluding-exemption figure. The 1Q26 report; KM1 columns are 31.3.26, 31.12.25, 30.9.25, 30.6.25. These are the values the extractor had loaded, but against the wrong date. Check: 73,313/500,355 = 14.65%, 96,973/500,355 = 19.38% and 96,963/1,653,460 = 5.86%, matching the published ratios. Every figure also appears as the second column of the 2Q26 report, which agrees."
+}

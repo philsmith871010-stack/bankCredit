@@ -1,0 +1,21 @@
+{
+ "id": "b9e5026562eb",
+ "entity_id": "goldman-sachs",
+ "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2026/1q-pillar-3-2026.pdf",
+ "page": 8,
+ "reference_date": "2026-03-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 101800.0,
+  "tier1_capital": 115189.0,
+  "total_capital": 126872.0,
+  "rwa": 763768.0,
+  "cet1_ratio": 13.3,
+  "tier1_ratio": 15.1,
+  "total_capital_ratio": 16.6,
+  "leverage_exposure": 2476612.0,
+  "leverage_ratio": 4.7,
+  "tier1_leverage": 5.9
+ },
+ "note": "The Goldman Sachs Group, Inc. reports under the U.S. Basel III framework, which has no KM1 template - hence 'no KM1 template found'. Figures come from Table 1 'Risk-Based Capital and Leverage Requirements' (p.7), Table 3 'Capital Structure' (p.8) and Table 4 'RWAs by Exposure Category' (p.9). Table 1 lists three blocks in sequence - minimum requirements, total requirements including buffers, then the actual ratios - so the ratios recorded here are the third pair, not the requirement rows the extractor would meet first. Two columns per table, the reporting quarter and December 2025; the first is taken. leverage_ratio is the Supplementary Leverage Ratio, with total leverage exposure as leverage_exposure; tier1_leverage is the separate U.S. Tier 1 leverage ratio. Amounts are US dollar millions. Basis note: this document presents capital 'in accordance with the Advanced Capital Rules' only, so these are the Advanced figures - unlike the Morgan Stanley, State Street and Northern Trust records in this dataset, where both approaches are published and the binding Standardized column was taken. Goldman's Standardized ratios are in the Form 10-Q, not here. Check: 101,800/763,768 = 13.33%, 126,872/763,768 = 16.61% and 115,189/2,476,612 = 4.65%, matching the published 13.3%, 16.6% and 4.7%."
+}

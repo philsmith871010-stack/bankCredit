@@ -1082,7 +1082,28 @@
   "skip_patterns": [
    "ubs\\-group\\-g\\-sibs\\-indicators\\-as\\-of\\-\\d+\\-dec\\-\\d+",
    "ar\\d+\\-ubs\\-group\\-ag\\-sib"
-  ]
+  ],
+  "browser_page": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html",
+  "browser_page_found": "2026-09-07",
+  "page": 12,
+  "currency": "USD",
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 72464.0,
+    "tier1_capital": 95977.0,
+    "total_capital": 95980.0,
+    "rwa": 503923.0,
+    "cet1_ratio": 14.38,
+    "tier1_ratio": 19.05,
+    "total_capital_ratio": 19.05,
+    "leverage_exposure": 1649751.0,
+    "leverage_ratio": 5.82,
+    "lcr": 177.28,
+    "nsfr": 115.05
+   },
+   "method": "pdf_manual"
+  }
  },
  "state-street": {
   "page": 10,
@@ -1198,6 +1219,28 @@
     "leverage_exposure": 1487.9,
     "leverage_ratio": 7.3,
     "lcr": 691.6
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "goldman-sachs": {
+  "browser_page": "https://www.goldmansachs.com/investor-relations/financials/other-information",
+  "browser_page_found": "2026-09-07",
+  "page": 8,
+  "currency": "USD",
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 101657.0,
+    "tier1_capital": 114382.0,
+    "total_capital": 128085.0,
+    "rwa": 747374.0,
+    "cet1_ratio": 13.6,
+    "tier1_ratio": 15.3,
+    "total_capital_ratio": 17.1,
+    "leverage_exposure": 2646205.0,
+    "leverage_ratio": 4.3,
+    "tier1_leverage": 5.4
    },
    "method": "pdf_manual"
   }
