@@ -31,7 +31,8 @@ jobs:
         run: |
           git config user.name "counterparty-bot"
           git config user.email "philsmith871010@gmail.com"
-          git add data/events.parquet data/runs.parquet data/json
+          git add data/events.parquet data/runs.parquet data/history.parquet data/json
+          git checkout -- . 2>/dev/null || true      # anything else the build touched must not block the rebase
           git diff --cached --quiet || git commit -m "Headlines $(date -u +%FT%H:%M)"
           git pull --rebase -X theirs origin main
           git push

@@ -55,6 +55,7 @@ jobs:
           git config user.name "counterparty-bot"
           git config user.email "philsmith871010@gmail.com"
           git add data/
+          git checkout -- . 2>/dev/null || true
           git diff --cached --quiet || git commit -m "Pipeline data $(date -u +%F)"
           git pull --rebase -X theirs origin main   # a code push in the meantime rebuilt the same JSON; the fresh data wins
           git push
