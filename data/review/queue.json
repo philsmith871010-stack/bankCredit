@@ -33,7 +33,7 @@
   ],
   "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
-  "created": "2026-09-07T16:30:39"
+  "created": "2026-09-07T17:02:30"
  },
  {
   "id": "5831bb0dbeba",
@@ -77,7 +77,7 @@
   ],
   "reason": "warn:text recovered by OCR from an image-only document; warn:header date 2024-09-30 disagrees with expected 2030-06-30; error:missing core row cet1_capital; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
-  "created": "2026-09-07T16:31:02"
+  "created": "2026-09-07T17:02:55"
  },
  {
   "id": "fb955040a03f",
@@ -114,7 +114,7 @@
   ],
   "reason": "warn:header date 2024-06-30 disagrees with expected 2030-06-30; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
-  "created": "2026-09-07T16:31:02"
+  "created": "2026-09-07T17:02:55"
  },
  {
   "id": "212c70f61c8d",
@@ -134,6 +134,6 @@
   ],
   "reason": "no KM1 template found",
   "status": "open",
-  "created": "2026-09-07T16:31:02"
+  "created": "2026-09-07T17:02:56"
  }
 ]
