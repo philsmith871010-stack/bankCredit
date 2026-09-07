@@ -1,0 +1,15 @@
+{
+ "id": "c46c0e6d9c7b",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2016/31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 2,
+ "reference_date": "2016-03-31",
+ "currency": "AUD",
+ "values": {
+  "rwa": 35465.8,
+  "cet1_ratio": 7.99,
+  "tier1_ratio": 10.37,
+  "total_capital_ratio": 12.22
+ },
+ "note": "Bendigo and Adelaide Bank reports under APRA's APS 330, which has no KM1 template. Ratios come from Table 3 'Capital Adequacy' (stated for the consolidated group), first column = the reporting date. APS 330 requires no leverage ratio, so none is recorded. NSFR was not reported in Australia until 2018. A short quarterly report carrying Tables 3, 4 and 5 only, so no capital amounts or LCR. This is the 'Revised' Basel III Pillar 3 disclosure issued 27 May 2016; Table 3's columns are 31 March 2016 and 31 December 2015, and the second column reproduces the December 2015 report's figures exactly."
+}

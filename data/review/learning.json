@@ -1243,5 +1243,192 @@
   "page_reviewer": 5,
   "date_extractor": "2021-12-31",
   "date_reviewer": "2021-12-31"
+ },
+ {
+  "date": "2026-09-07T11:51:32",
+  "id": "1076a748ecdb",
+  "entity_id": "national-bank-of-canada",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 11,
+  "date_extractor": null,
+  "date_reviewer": "2022-07-31"
+ },
+ {
+  "date": "2026-09-07T11:51:32",
+  "id": "12e9d14ba8e7",
+  "entity_id": "nab",
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing ",
+  "skip": false,
+  "compared": 4,
+  "matched": 4,
+  "mismatches": {},
+  "page_extractor": 7,
+  "page_reviewer": 7,
+  "date_extractor": "2021-03-31",
+  "date_reviewer": "2021-03-31"
+ },
+ {
+  "date": "2026-09-07T11:51:33",
+  "id": "170e08f54bef",
+  "entity_id": "national-bank-of-canada",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 11,
+  "date_extractor": null,
+  "date_reviewer": "2022-04-30"
+ },
+ {
+  "date": "2026-09-07T11:51:33",
+  "id": "2ce105795879",
+  "entity_id": "co-operative-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 7,
+  "date_extractor": null,
+  "date_reviewer": "2014-12-31"
+ },
+ {
+  "date": "2026-09-07T11:51:33",
+  "id": "4c9f1a8d7553",
+  "entity_id": "santander-uk",
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:header da",
+  "skip": false,
+  "compared": 6,
+  "matched": 5,
+  "mismatches": {
+   "cet1_capital": [
+    10305.0,
+    10327.0
+   ]
+  },
+  "page_extractor": 2,
+  "page_reviewer": 2,
+  "date_extractor": "2020-12-31",
+  "date_reviewer": "2018-09-30"
+ },
+ {
+  "date": "2026-09-07T11:51:33",
+  "id": "4ddaf1028ee0",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:header da",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "cet1_capital": [
+    7.97,
+    3052.1
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2016-12-31",
+  "date_reviewer": "2016-12-31"
+ },
+ {
+  "date": "2026-09-07T11:51:33",
+  "id": "5afe47bb4c63",
+  "entity_id": "nab",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 3,
+  "matched": 2,
+  "mismatches": {
+   "tier1_capital": [
+    14.3,
+    59687.0
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2021-06-30",
+  "date_reviewer": "2021-06-30"
+ },
+ {
+  "date": "2026-09-07T11:51:33",
+  "id": "5b2ff2c97afa",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:header da",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "cet1_capital": [
+    8.24,
+    2844.2
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2015-12-31",
+  "date_reviewer": "2015-12-31"
+ },
+ {
+  "date": "2026-09-07T11:51:33",
+  "id": "b9e9d897b6f0",
+  "entity_id": "national-bank-of-canada",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 11,
+  "date_extractor": null,
+  "date_reviewer": "2022-10-31"
+ },
+ {
+  "date": "2026-09-07T11:51:33",
+  "id": "c46c0e6d9c7b",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2016-03-31"
+ },
+ {
+  "date": "2026-09-07T11:51:34",
+  "id": "e72dbf9ddcbf",
+  "entity_id": "santander-uk",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 6,
+  "matched": 3,
+  "mismatches": {
+   "cet1_capital": [
+    10818000.0,
+    10818.0
+   ],
+   "total_capital": [
+    15427000.0,
+    15427.0
+   ],
+   "rwa": [
+    85203000.0,
+    85128.0
+   ]
+  },
+  "page_extractor": 3,
+  "page_reviewer": 3,
+  "date_extractor": "2018-06-30",
+  "date_reviewer": "2018-06-30"
  }
 ]

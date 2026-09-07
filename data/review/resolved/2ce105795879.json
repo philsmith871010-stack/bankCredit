@@ -1,0 +1,18 @@
+{
+ "id": "2ce105795879",
+ "entity_id": "co-operative-bank",
+ "url": "https://www.co-operativebank.co.uk/pdfs/bank/investorrelations/pillar3.pdf",
+ "page": 7,
+ "reference_date": "2014-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1606.9,
+  "tier1_capital": 1629.8,
+  "total_capital": 1879.2,
+  "rwa": 12632.2,
+  "cet1_ratio": 12.7,
+  "total_capital_ratio": 14.9,
+  "leverage_ratio": 4.3
+ },
+ "note": "The Co-operative Bank's 2014 report predates KM1. Table 1 'CRD IV key capital ratios' (p.7) gives the CET1 and total capital ratios, total RWA and the leverage ratio; capital amounts come from the capital resources table on pp.19-20. The table has four columns - transitional and fully loaded, for 2014 and 2013 - and the transitional 2014 column is taken, that being the basis of the headline ratios. No Tier 1 ratio is published in Table 1, so none is recorded. The leverage ratio of 4.3% is on a fully loaded basis, the only basis the Bank reported, per PRA guidance, and no leverage exposure measure is printed. The LCR had not been introduced at this date and only appears in the glossary. Check: 1,606.9/12,632.2 = 12.72% and 1,879.2/12,632.2 = 14.88%, matching the published 12.7% and 14.9%."
+}

@@ -134,7 +134,7 @@
   }
  },
  "bendigo-and-adelaide-bank": {
-  "page": 4,
+  "page": 2,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2024-12-31",
@@ -393,7 +393,7 @@
   }
  },
  "co-operative-bank": {
-  "page": 6,
+  "page": 7,
   "currency": "GBP",
   "last_verified": {
    "reference_date": "2026-03-31",
@@ -586,7 +586,8 @@
     "nsfr": 137.36
    },
    "method": "pdf_rules"
-  }
+  },
+  "trust_labels": true
  },
  "barclays": {
   "last_verified": {
@@ -1100,7 +1101,7 @@
   }
  },
  "national-bank-of-canada": {
-  "page": 12,
+  "page": 11,
   "currency": "CAD",
   "last_verified": {
    "reference_date": "2023-07-31",

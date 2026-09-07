@@ -1,0 +1,19 @@
+{
+ "id": "5afe47bb4c63",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nab/documents/reports/financial/june-2021-pillar-3-report.pdf",
+ "page": 4,
+ "reference_date": "2021-06-30",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 59687.0,
+  "rwa": 417860.0,
+  "cet1_ratio": 12.6,
+  "tier1_ratio": 14.3,
+  "total_capital_ratio": 18.4,
+  "leverage_exposure": 1027956.0,
+  "leverage_ratio": 5.8,
+  "lcr": 129.0
+ },
+ "note": "NAB APS 330 quarterly report, Level 2 basis. The title page carries no date; the capital ratios table is headed 'As at 30 Jun 21 / 31 Mar 21', so this is the position at 30 June 2021. Quarterly reports give no CET1 or total capital amount, so neither is recorded. Check: 59,687/417,860 = 14.28%, matching the published 14.3% Tier 1 ratio, and 59,687/1,027,956 = 5.81%, matching the 5.8% leverage ratio."
+}

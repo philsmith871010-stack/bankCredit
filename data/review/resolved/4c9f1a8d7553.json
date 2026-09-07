@@ -1,0 +1,21 @@
+{
+ "id": "4c9f1a8d7553",
+ "entity_id": "santander-uk",
+ "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:a34d9a8e-5a1a-4666-86e9-4e85313a13af/original/as/additional_capital_risk_management_disclosures_q318_0.pdf",
+ "page": 2,
+ "reference_date": "2018-09-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 10327.0,
+  "tier1_capital": 12696.0,
+  "total_capital": 14901.0,
+  "rwa": 78792.0,
+  "cet1_ratio": 13.1,
+  "tier1_ratio": 16.1,
+  "total_capital_ratio": 18.9,
+  "leverage_exposure": 306200.0,
+  "leverage_ratio": 4.0,
+  "lcr": 145.9
+ },
+ "note": "Santander UK's 'Additional Capital and Risk Management Disclosures' carries a Key metrics table rather than the KM1 template, with five quarter-end columns running backwards from the reporting date; the first is taken. Transitional figures are recorded, matching the headline ratios; the fully loaded ECL alternates in the same table are not. These PDFs have no usable text layer, so the pages were read by OCR. The leverage exposure measure is printed in GBP billions and converted to millions here, which is why Tier 1 over exposure lands slightly above the printed leverage ratio. The reference date needed correcting: the queue had 2020-12-31, but the file is additional_capital_risk_management_disclosures_q318 and the table's own preamble reads 'at 30 September 2018, together with the previously disclosed quarter end information at 30 June 2018, 31 March 2018, 31 December 2017 and 30 September 2017'. Check: 10,327/78,792 = 13.11% and 14,901/78,792 = 18.91%, matching the published 13.1% and 18.9%."
+}
