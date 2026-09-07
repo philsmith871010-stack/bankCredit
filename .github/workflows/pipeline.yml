@@ -5,6 +5,7 @@ on:
     paths-ignore: ["docs/**", "design/**", "research/**"]
   schedule:
     - cron: "10 5 * * *"     # daily 06:10 UK (BST) / 05:10 UTC
+    - cron: "40 11 * * 1-5"  # weekday midday backstop; GitHub's cron can skip a slot on a quiet repository
   workflow_dispatch:
     inputs:
       adapters:

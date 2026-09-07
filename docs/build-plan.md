@@ -218,3 +218,8 @@ rules extractions also refresh the baseline, so the check keeps working between 
 `data/review/learning.json` records, per answer, where the rules agreed with the reviewer and where they did not,
 by metric and by the reason the item was queued. `python -m bankcredit.cli learn` summarises it and the Status page
 shows it, which is the work order for extractor fixes: the failure modes that keep recurring are the ones to code.
+
+Note, 7 September: GitHub's 05:10 UTC schedule did not fire on its first day (no scheduled run has ever
+run; the default branch is main and the workflow is valid, so this is GitHub skipping a slot). Two
+backstops: a second weekday schedule at 11:40 UTC, and the Mac job's morning push now carries the
+[collect] marker, so a full collection runs whenever the Mac has been busy.
