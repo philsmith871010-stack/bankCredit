@@ -941,5 +941,138 @@
   "page_reviewer": 3,
   "date_extractor": "2019-12-31",
   "date_reviewer": "2019-12-31"
+ },
+ {
+  "date": "2026-09-07T10:09:28",
+  "id": "11ef7755e705",
+  "entity_id": "co-operative-bank",
+  "reason": "warn:reference date taken from narrative text, not a column header; warn:rows id",
+  "skip": false,
+  "compared": 5,
+  "matched": 5,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2021-12-31",
+  "date_reviewer": "2021-12-31"
+ },
+ {
+  "date": "2026-09-07T10:09:29",
+  "id": "2cacb8bf89dc",
+  "entity_id": "ubs",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-07T10:09:29",
+  "id": "2e4b1545cb3b",
+  "entity_id": "ubs",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-07T10:09:29",
+  "id": "56e8e28d4d42",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "total_capital_ratio": [
+    11.5,
+    16.1
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2025-12-31",
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-09-07T10:09:29",
+  "id": "641275e3ba8f",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 5,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    9.5,
+    13.1
+   ],
+   "total_capital_ratio": [
+    11.5,
+    14.5
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2026-03-31",
+  "date_reviewer": "2026-03-31"
+ },
+ {
+  "date": "2026-09-07T10:09:29",
+  "id": "9a0ce1253755",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 5,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    9.5,
+    13.2
+   ],
+   "total_capital_ratio": [
+    11.5,
+    14.5
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2026-06-30",
+  "date_reviewer": "2026-06-30"
+ },
+ {
+  "date": "2026-09-07T10:09:29",
+  "id": "c19fede1c70f",
+  "entity_id": "co-operative-bank",
+  "reason": "warn:reference date taken from narrative text, not a column header; error:missin",
+  "skip": false,
+  "compared": 5,
+  "matched": 4,
+  "mismatches": {
+   "cet1_ratio": [
+    2020.0,
+    19.2
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2020-12-31",
+  "date_reviewer": "2020-12-31"
+ },
+ {
+  "date": "2026-09-07T10:09:29",
+  "id": "de38dad11965",
+  "entity_id": "ubs",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-07T10:09:29",
+  "id": "e0495d04a09f",
+  "entity_id": "co-operative-bank",
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:no period",
+  "skip": false,
+  "compared": 4,
+  "matched": 4,
+  "mismatches": {},
+  "page_extractor": 6,
+  "page_reviewer": 6,
+  "date_extractor": "2019-12-31",
+  "date_reviewer": "2019-12-31"
  }
 ]

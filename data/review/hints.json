@@ -391,7 +391,7 @@
   }
  },
  "co-operative-bank": {
-  "page": 4,
+  "page": 6,
   "currency": "GBP",
   "last_verified": {
    "reference_date": "2026-03-31",
@@ -417,7 +417,8 @@
     "nsfr": 136.9
    },
    "method": "pdf_rules"
-  }
+  },
+  "trust_labels": true
  },
  "westpac": {
   "page": 4,
@@ -1066,6 +1067,31 @@
     "net_cash_outflows": 126135.0
    },
    "method": "pdf_rules"
+  }
+ },
+ "ubs": {
+  "skip_patterns": [
+   "ubs\\-group\\-g\\-sibs\\-indicators\\-as\\-of\\-\\d+\\-dec\\-\\d+",
+   "ar\\d+\\-ubs\\-group\\-ag\\-sib"
+  ]
+ },
+ "state-street": {
+  "page": 10,
+  "currency": "USD",
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 15425.0,
+    "tier1_capital": 18984.0,
+    "total_capital": 20850.0,
+    "rwa": 143406.0,
+    "cet1_ratio": 10.8,
+    "tier1_ratio": 13.2,
+    "total_capital_ratio": 14.5,
+    "leverage_exposure": 306596.0,
+    "leverage_ratio": 6.2
+   },
+   "method": "pdf_manual"
   }
  }
 }

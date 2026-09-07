@@ -1,0 +1,20 @@
+{
+ "id": "e0495d04a09f",
+ "entity_id": "co-operative-bank",
+ "url": "https://www.co-operativebank.co.uk/assets/pdf/bank/investorrelations/2019-pillar-3-disclosures.pdf",
+ "page": 6,
+ "reference_date": "2019-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 939.6,
+  "tier1_capital": 939.6,
+  "total_capital": 1144.9,
+  "rwa": 4803.7,
+  "cet1_ratio": 19.6,
+  "tier1_ratio": 19.6,
+  "total_capital_ratio": 23.8,
+  "leverage_exposure": 23799.2,
+  "leverage_ratio": 3.9
+ },
+ "note": "The Co-operative Bank's pre-2022 reports predate KM1, so the figures are spread across section 3 rather than in a template. Capital ratios and total RWA from Table 1 'CRD IV key capital ratios' and Table 3 'Capital ratios'; capital amounts from Table 5 'Total capital resources'; leverage ratio and exposure from the leverage section. All are Group figures - the Bank Company solo figures in Appendix 2 (a slightly lower Tier 1 and leverage ratio) are not recorded. The two columns are the reporting year and the prior year; the first is taken, and the chain is self-confirming because each report's second column reproduces the previous report's first. These reports do not disclose an LCR or NSFR at all, so neither is recorded. The extractor found no period date in the template header; Table 1's columns are headed 2019 and 2018 and the document is the 2019 Pillar 3 disclosure. Check: 939.6/4,803.7 = 19.6%, 1,144.9/4,803.7 = 23.8% and 939.6/23,799.2 = 3.95%."
+}

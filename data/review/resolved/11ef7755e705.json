@@ -1,0 +1,20 @@
+{
+ "id": "11ef7755e705",
+ "entity_id": "co-operative-bank",
+ "url": "https://www.co-operativebank.co.uk/assets/pdf/bank/investorrelations/2021-pillar-3-disclosures.pdf",
+ "page": 5,
+ "reference_date": "2021-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 906.8,
+  "tier1_capital": 906.8,
+  "total_capital": 1109.0,
+  "rwa": 4373.4,
+  "cet1_ratio": 20.7,
+  "tier1_ratio": 20.7,
+  "total_capital_ratio": 25.4,
+  "leverage_exposure": 29727.7,
+  "leverage_ratio": 3.1
+ },
+ "note": "The Co-operative Bank's pre-2022 reports predate KM1, so the figures are spread across section 3 rather than in a template. Capital ratios and total RWA from Table 1 'CRD IV key capital ratios' and Table 3 'Capital ratios'; capital amounts from Table 5 'Total capital resources'; leverage ratio and exposure from the leverage section. All are Group figures - the Bank Company solo figures in Appendix 2 (a slightly lower Tier 1 and leverage ratio) are not recorded. The two columns are the reporting year and the prior year; the first is taken, and the chain is self-confirming because each report's second column reproduces the previous report's first. These reports do not disclose an LCR or NSFR at all, so neither is recorded. Check: 906.8/4,373.4 = 20.7%, 1,109.0/4,373.4 = 25.4% and 906.8/29,727.7 = 3.05%, all matching the published ratios."
+}

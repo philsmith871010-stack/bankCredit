@@ -1,0 +1,5 @@
+{
+ "id": "2cacb8bf89dc",
+ "skip": true,
+ "note": "This file is not a Pillar 3 report. It is UBS Group AG's 'Global systemically important bank indicators' disclosure - the annual G-SIB assessment data - which contains no KM1 template, no capital ratios, no RWA and no liquidity metrics, so there is nothing to extract. The browser collector picked it up because the ubs locator's match pattern accepts any PDF whose name contains 'pillar 3'/'sib' on that listing page; UBS's actual KM1 is in the quarterly Pillar 3 report, which the locator is not yet finding. Worth a locator fix rather than a re-read. This one covers 31 December 2023."
+}
