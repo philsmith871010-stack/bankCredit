@@ -18,7 +18,7 @@ import sys
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
-ADAPTER_MODULES = ["fdic", "eba", "esma", "yahoo", "pillar3", "events", "fred", "dtcc", "ice", "bonds", "edgar", "te", "esef", "fundamentals"]
+ADAPTER_MODULES = ["fdic", "eba", "esma", "yahoo", "pillar3", "events", "fred", "dtcc", "ice", "bonds", "edgar", "te", "esef", "fundamentals", "nsm_release"]
 
 
 def _load_adapters():
@@ -77,6 +77,25 @@ def main(argv=None):
         from .adapters.pillar3 import Pillar3Adapter
         print(Pillar3Adapter().reprocess(args[0] if args else None))
         return 0
+    if cmd == "discover":
+        from .adapters.browser import discover
+        # each entity takes the URLs that follow it: discover a https://x https://y b https://z
+        pairs, cur = {}, None
+        for a in args:
+            if a.startswith("http"):
+                if cur:
+                    pairs[cur].append(a)
+            else:
+                cur = a
+                pairs.setdefault(cur, [])
+        if not pairs:
+            print("usage: discover <entity-id> [https://start-url ...] [more ids ...]")
+            return
+        for ent, urls in pairs.items():
+            discover([ent], urls or None)
+        print("\n  full link lists written to data/review/discovered.json")
+        return
+
     if cmd == "browser":
         from .adapters.browser import collect
         res = collect(args or None)

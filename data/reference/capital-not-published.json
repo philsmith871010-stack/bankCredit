@@ -1,0 +1,24 @@
+{
+  "_note": "Entities whose Basel capital ratios are not published at the level we assess, with the last disclosure we hold and why. The score stays withheld because capital cannot be assessed at this entity, but the reason is stated plainly rather than implying we are behind on collection. Checked 7 September 2026.",
+  "rentenbank": {
+    "reason": "German promotional bank, exempt from CRR since 2021; last disclosure report September 2020",
+    "last_report": "2020-09-30",
+    "source": "https://www.rentenbank.de/en/investor-relations/business-development/",
+    "standing": "Explicitly guaranteed by the Federal Republic of Germany",
+    "short": "does not publish Basel ratios"
+  },
+  "nrw-bank": {
+    "reason": "German promotional bank, exempt from CRR since 2021; no disclosure report published since",
+    "last_report": "2018-06-30",
+    "source": "https://www.nrwbank.com/en/investor-relations/",
+    "standing": "Explicitly guaranteed by the State of North Rhine-Westphalia",
+    "short": "does not publish Basel ratios"
+  },
+  "santander-financial-services": {
+    "short": "capital reported at group level",
+    "reason": "capital and leverage are measured for the Santander UK group, of which SFS is part under the Non-RFB Capital Support Deed; the company publishes no solo Basel ratios",
+    "last_report": "2023-12-31",
+    "source": "https://www.santander.co.uk/about-santander/investor-relations/santander-financial-services-plc/",
+    "standing": "Santander UK Group Holdings plc is the head of the group for regulatory capital and leverage purposes, and members of the core UK group support each other's capital resources"
+  }
+}

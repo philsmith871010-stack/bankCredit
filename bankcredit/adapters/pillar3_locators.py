@@ -44,6 +44,9 @@ LOCATORS: list[dict] = [
          match=r"lloyds-bank-plc.*" + P3, kind="browser"),
     dict(entity="bank-of-scotland", page="https://www.lloydsbankinggroup.com/investors/financial-performance/",
          match=r"bank-of-scotland.*" + P3, kind="browser"),
+    dict(entity="lloyds-bank-corporate-markets", page="https://www.lloydsbankinggroup.com/investors/financial-performance/",
+         match=r"(?:lbcm|corporate-markets).*" + P3, kind="browser",
+         note="same Akamai block as the rest of the group site"),
     dict(entity="natwest-group", page="https://investors.natwestgroup.com/results-centre",
          match=r"results-center/.*/nwg-.*pillar-3.*\.pdf", exclude=r"appendix"),
     dict(entity="natwest-bank", page="https://investors.natwestgroup.com/results-centre",
@@ -89,6 +92,16 @@ LOCATORS: list[dict] = [
          match=P3, kind="browser", note="extension-less document ids; check by hand"),
     dict(entity="goldman-sachs-international-bank", page="https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/",
          match=P3 + r".*\.pdf", kind="browser", note="Pillar 3 PDFs not linked in the page HTML"),
+    dict(entity="smbc-bank-international", page="https://www.smbcgroup.com/emea/about/Notices-and-reporting",
+         match=r"getmedia/[0-9a-f-]+/(?:SMBC[ _-]?BI[^/]*Pillar[ _-]?3|Pillar[ _-]?3[^/]*SMBC[ _-]?BI)[^/]*\.pdf",
+         exclude=r"SMBCE|Nikko|SMBC[ _-]?EU|SMBCDP", year_end="03-31",
+         note="one EMEA notices page carries every SMBC entity; SMBC-BI marks the UK plc"),
+    dict(entity="credit-agricole-cib", page="https://www.ca-cib.com/en/document-search",
+         match=r"sites/default/files/[0-9-]+/(?:EN_)?Pil(?:ier|lar)[ _]3[ _]CACIB[^/]*\.pdf", kind="browser",
+         note="document list is rendered client side; the PDFs themselves are plain static files"),
+    dict(entity="nbk-international", page="https://www.nbk.com/london/disclosures.html",
+         match=r"dam/jcr:[0-9a-f-]+/Pillar_III_Disclosures\.pdf",
+         note="single stable URL replaced in place each year; the group's Basel III files on the Kuwait investor page are a different entity"),
     # ---- building societies ---------------------------------------------
     dict(entity="nationwide", page="https://www.nationwide.co.uk/about-us/governance-reports-and-results/results-and-accounts",
          match=r"results-and-accounts/.*pillar-3-disclosures.*\.pdf", year_end="04-04"),
@@ -165,6 +178,10 @@ LOCATORS: list[dict] = [
     dict(entity="national-bank-of-canada", page="https://www.nbc.ca/about-us/investors/quarterly-results.html",
          match=r"suppack-regulatory-capital-q\d-20\d\d\.pdf", year_end="10-31", currency="CAD"),
     # ---- Asia and Gulf ----------------------------------------------------
+    # ---- German promotional banks: they file an Offenlegungsbericht, published in English as a Disclosure Report
+    dict(entity="rentenbank", page="https://www.rentenbank.de/en/investor-relations/business-development/",
+         match=r"documents/(?:publications/)?(?:Disclosure-Report|Offenlegung|EN_Offenlegung|FINAL_EN_Offenlegung)[^/]*\.pdf",
+         currency="EUR", note="verified 7 Sep 2026; the group left the EBA Transparency Exercise after 2018"),
     # ---- Japan, Hong Kong: verified 7 September 2026 by following each group's own disclosure index
     dict(entity="mufg", page="https://www.mufg.jp/english/ir/report/basel3/index.html", kind="browser",
          match=r"/basel3/[\w-]+/pdf/mufg\d+_09_en\.pdf", year_end="03-31", currency="JPY",

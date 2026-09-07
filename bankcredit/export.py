@@ -8,6 +8,7 @@ Outputs (data/json/):
 from __future__ import annotations
 
 import calendar
+import json
 import math
 import re
 from collections import defaultdict
@@ -420,6 +421,16 @@ BACKCAST_QUARTERS = 24
 STALE_DAYS = 550              # capital ratios older than this cannot carry a score
 
 
+def capital_not_published() -> dict:
+    """Entities that no longer publish Basel ratios at all, so a stale figure is the truth rather
+    than a collection failure. Keyed by entity id; see data/reference/capital-not-published.json."""
+    p = store.DATA / "reference" / "capital-not-published.json"
+    try:
+        return {k: v for k, v in json.loads(p.read_text()).items() if not k.startswith("_")}
+    except Exception:
+        return {}
+
+
 def _quarter_ends(n: int, today: date) -> list[date]:
     out, y, m = [], today.year, ((today.month - 1) // 3) * 3 + 3
     d = date(y, m, calendar.monthrange(y, m)[1])
@@ -507,6 +518,7 @@ def export_json() -> None:
     series_tbl = store.read("series")
     snrfin = series_tbl[series_tbl.series_id == "ITRAXX_SNRFIN_5Y"] if not series_tbl.empty else None
     board, today, details, policy_rows = [], date.today(), {}, []
+    NOT_PUBLISHED = capital_not_published()
     hist_tbl = store.read("history")
     hist_all: dict[str, list] = {}
     if not hist_tbl.empty:
@@ -559,10 +571,14 @@ def export_json() -> None:
         cap_age = (today - date.fromisoformat(cap_pts[-1]["d"])).days if cap_pts else None
         if sc.final_score is not None and cap_age is not None and cap_age > STALE_DAYS:
             sc.final_score, sc.public_score, sc.band, sc.reason = None, None, "", f"capital ratios from {cap_pts[-1]['d'][:7]}"
+        npub = NOT_PUBLISHED.get(e.id)
+        if npub and sc.final_score is None:
+            sc.reason = npub.get("short") or "does not publish Basel ratios"
         row = {
             "id": e.id, "name": e.name, "short": e.short_name, "country": e.country, "type": e.type,
             "region": e.region, "group": e.group, "peer_group": e.peer_group, "lei": e.lei,
             "score": sc.final_score, "public_score": sc.public_score, "band": sc.band, "coverage": sc.coverage, "unscored": sc.reason,
+            "not_published": NOT_PUBLISHED.get(e.id),
             "overlay": sc.overlay if sc.final_score is not None else None,
             "cet1": latest.get("cet1_ratio"), "leverage": latest.get("leverage_ratio", latest.get("tier1_leverage")),
             "leverage_basis": "basel" if "leverage_ratio" in latest else ("us_tier1" if "tier1_leverage" in latest else ""),

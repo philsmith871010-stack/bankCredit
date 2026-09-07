@@ -1455,5 +1455,53 @@
    },
    "method": "pdf_rules"
   }
+ },
+ "smbc-bank-international": {
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 5761.0,
+    "tier1_capital": 5761.0,
+    "total_capital": 5761.0,
+    "rwa": 34723.0,
+    "cet1_ratio": 16.6,
+    "tier1_ratio": 16.6,
+    "total_capital_ratio": 16.6,
+    "total_srep_requirement": 10.9,
+    "combined_buffer": 3.6,
+    "overall_capital_requirement": 14.4,
+    "cet1_headroom": 5.7,
+    "leverage_exposure": 74964.0,
+    "leverage_ratio": 7.7,
+    "hqla": 28993.0,
+    "net_cash_outflows": 19099.0,
+    "lcr": 151.8,
+    "available_stable_funding": 26054.0,
+    "required_stable_funding": 20317.0,
+    "nsfr": 128.2
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "nbk-international": {
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 536637.0,
+    "tier1_capital": 536637.0,
+    "total_capital": 536637.0,
+    "rwa": 2624404.0,
+    "cet1_ratio": 20.45,
+    "total_capital_ratio": 20.45,
+    "leverage_exposure": 4062395.0,
+    "leverage_ratio": 13.21,
+    "hqla": 731707.0,
+    "net_cash_outflows": 147299.0,
+    "lcr": 497.0,
+    "nsfr": 120.0,
+    "tier1_ratio": 20.45
+   },
+   "method": "pdf_rules"
+  }
  }
 }

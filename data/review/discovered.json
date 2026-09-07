@@ -1,0 +1,914 @@
+{
+ "rentenbank": {
+  "pages_read": [
+   "https://www.rentenbank.de/en/",
+   "https://www.rentenbank.de/en/investor-relations/",
+   "https://www.rentenbank.de/en/investor-relations/business-development/",
+   "https://www.rentenbank.de/en/investor-relations/rating/",
+   "https://www.rentenbank.de/en/investor-relations/risk-weighting/",
+   "https://www.rentenbank.de/en/investor-relations/presentation/",
+   "https://www.rentenbank.de/en/investor-relations/ad-hoc-announcements/"
+  ],
+  "found": [
+   {
+    "url": "https://www.rentenbank.de/en/documents/Offenlegungsbericht-2016-englisch.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/Offenlegungsbericht-Juni-2018_EN.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/Annual-Report-2011.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/Annual-Report-2012.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/Annual-Report-2013.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/Annual-Report-2014.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/Annual-Report-2015.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/Annual-Report-2016.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/Annual-Report-2018.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/Annual-Report-2019.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/Annual-Report-2020.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/Annual-Report-2021.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/annual-report-2017.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/annual-report-2022.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/company-reports/annual-report-2023.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-31-March-2018.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-Q3-2019.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-as-of-30-June-2020.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-as-of-30-September-2020.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-as-of-31-March-2020.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-as-of-December-31-2018.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-as-of-December-31-2019.pdf.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-as-of-June-30-2019.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-as-of-March-31-2019.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-as-of-September-30-2018.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-pursuant-to-Part-8-CRR-in-particular-Articles-431-to-455-CRR-and-Section-26a-KWG-in-conjunction-with-Section-64r-15-KWG-as-of-December-31-2014.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-pursuant-to-Section-26a-KWG-as-of-December-31-2012.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-pursuant-to-Section-26a-KWG-as-of-December-31-2013.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/EN_Offenlegung_2017.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://www.rentenbank.de/en/documents/publications/FINAL_EN_Offenlegung_2015.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://publikationen.rentenbank.de/en/annual-report/annual-report-2024/",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   },
+   {
+    "url": "https://publikationen.rentenbank.de/en/annual-report/annual-report-2025/",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.rentenbank.de/en/investor-relations/business-development/"
+   }
+  ]
+ },
+ "nrw-bank": {
+  "pages_read": [
+   "https://www.nrwbank.de/en/",
+   "https://www.nrwbank.de/de/",
+   "https://www.nrwbank.de/en/about-us/investor-relations/",
+   "https://www.nrwbank.de/en/about-us/investor-relations/disclaimer.html",
+   "https://www.nrwbank.de/en/about-us/investor-relations/green-bonds/",
+   "https://www.nrwbank.de/en/about-us/investor-relations/social-bonds/",
+   "https://www.nrwbank.de/en/about-us/investor-relations/ratings/",
+   "https://www.nrwbank.de/en/about-us/investor-relations/issuance-programs/",
+   "https://www.nrwbank.de/de/die-nrw-bank/investor-relations/",
+   "https://www.nrwbank.de/de/die-nrw-bank/investor-relations/green-bonds/",
+   "https://www.nrwbank.de/de/die-nrw-bank/investor-relations/social-bonds/",
+   "https://www.nrwbank.de/de/die-nrw-bank/investor-relations/ratings/",
+   "https://www.nrwbank.de/de/die-nrw-bank/investor-relations/emissions-programme/"
+  ],
+  "found": []
+ },
+ "op-corporate-bank": {
+  "pages_read": [
+   "https://www.op.fi/op-financial-group/debt-investors",
+   "https://www.op.fi/op-financial-group/images/favicon.ico"
+  ],
+  "found": []
+ },
+ "credit-agricole-cib": {
+  "pages_read": [
+   "https://www.ca-cib.com/",
+   "https://www.ca-cib.com/en/about-us/discover-credit-agricole-cib/governance-and-organisation-credit-agricole-cib",
+   "https://www.ca-cib.com/en/about-us/compliance-rules/financial-security-system",
+   "https://www.ca-cib.com/en/about-us/compliance-rules/dodd-frank-disclosures-and-notices",
+   "https://www.ca-cib.com/en/expertise/offering-investment-banking-advisory-expertise/equity-capital-markets",
+   "https://www.ca-cib.com/en/expertise/offering-investment-banking-advisory-expertise/structured-financial-solutions",
+   "https://www.ca-cib.com/en/expertise/providing-capital-markets-solutions"
+  ],
+  "found": []
+ },
+ "lloyds-bank-corporate-markets": {
+  "pages_read": [
+   "https://www.lloydsbankinggroup.com/investors/financial-downloads.html",
+   "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734"
+  ],
+  "found": []
+ },
+ "santander-financial-services": {
+  "pages_read": [
+   "https://www.santander.co.uk/about-santander/investor-relations",
+   "https://www.santander.co.uk/about-santander/investor-relations/santander-uk-group-holdings-plc/",
+   "https://www.santander.co.uk/about-santander/investor-relations/santander-uk-plc/",
+   "https://www.santander.co.uk/about-santander/investor-relations/santander-financial-services-plc/",
+   "https://www.santander.co.uk/about-santander/investor-relations/other-subsidiaries/",
+   "https://www.santander.co.uk/about-santander/investor-relations/banco-santander-uk/",
+   "https://www.santander.co.uk/about-santander/investor-relations/events-calendar/"
+  ],
+  "found": [
+   {
+    "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:575ed7e1-80cd-40e2-b235-c811f6a9703c/original/as/santander_uk_plc_annual_report_2023.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.santander.co.uk/about-santander/investor-relations/santander-uk-plc/"
+   },
+   {
+    "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:74631556-b0d2-452c-9e7c-e64c6640ecbc/original/as/santander_uk_group_holdings_plc_annual_report_2023.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.santander.co.uk/about-santander/investor-relations/santander-uk-group-holdings-plc/"
+   },
+   {
+    "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:8da5f087-d631-4188-9c9c-9671410070c5/original/as/sfs_annual_report_2023.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.santander.co.uk/about-santander/investor-relations/santander-financial-services-plc/"
+   },
+   {
+    "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:daf92488-d104-4628-ad9b-c3ad032c6466/original/as/renumeration_report_pillar_3.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.santander.co.uk/about-santander/investor-relations/santander-uk-plc/"
+   },
+   {
+    "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:dc95a81a-fdac-4e1e-a15f-d50f60793f7e/original/as/santander_uk_plc_annual_report_2022.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.santander.co.uk/about-santander/investor-relations/santander-uk-plc/"
+   },
+   {
+    "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:df2f424b-0391-488b-b471-09c033200a47/original/as/pillar_3_appendix_1_qualitative_and_quantitative_disclosures.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.santander.co.uk/about-santander/investor-relations/santander-uk-plc/"
+   }
+  ]
+ },
+ "nbk-international": {
+  "pages_read": [
+   "https://www.nbkinternational.com/",
+   "https://www.nbk.com/",
+   "https://www.nbk.com/about-nbk-group/corporate-governance.html",
+   "https://www.nbk.com/sustainability-approach/group-esg-strategy/governance-for-resilience.html",
+   "https://www.nbk.com/sustainability-approach/group-esg-strategy/capitalizing-on-our-capabilities.html",
+   "https://www.nbk.com/investor-relations.html",
+   "https://www.nbk.com/news-and-insights/economic-reports.html",
+   "https://www.nbk.com/news-and-insights/economic-reports/economic-research.html"
+  ],
+  "found": [
+   {
+    "url": "https://www.nbk.com/dam/jcr:0049a0e9-46b2-4e55-b66c-fd56e98316e1/NBK-Annual-Report-2022-E.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:04a2ee6d-77c8-4425-a97e-494ea20b2c64/NBK_Annual_Report_2021_EN.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:06fa3197-b154-4541-9bff-7e6731d93a5c/nbk-basel-iii-capital-disclosure-3q-2024.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:0cb90d46-227a-4dca-90c8-6b2524ee97a6/Basel%20III%20-%20Capital%20Disclosure%203Q%202021.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:0d57c644-79ba-4da0-9ec6-2d0dac54c6a4/Basel%20III%20-%20Capital%20Disclosure%203Q%202018.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:1906b75d-28f6-42be-b89d-e13da33bca48/Basel%20III%20-%20Capital%20Disclosure%202Q%202023.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:1aeefdaa-6d0d-48b3-bb82-9114c12ab120/Basel%20III%20-%20Capital%20Disclosure%202Q2025.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:20ca4040-1287-4e87-9573-958dfc6d5995/Basel%20III%20-%20Capital%20Disclosure%202Q%202018.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:2db8abcf-42dc-4307-a9cf-791e0e22540a/Annual_Report_2023_EN.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:32bfa80d-4270-4ed6-9849-ca6a8e3a1611/Basel-III-Capital-Disclosure-1Q-2017.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:374076fd-2bb1-4b60-ad6a-df7fae2d25ae/nbk-annual-report-2024-e.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:3e53ae56-94cc-4c88-87bd-a983c43a8ae9/Basel-III-Capital-Disclosure-1Q-2018.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:45994528-c062-415a-a551-1f32d52e3fbb/Basel%20III%20-%20Capital%20Disclosure-3Q%202022.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:4a5c594f-9734-4de8-976c-7d4d1fa1fda9/Basel%20III%20-%20Capital%20Disclosure%201Q%202018.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:536115cd-0725-4f0a-8678-be3e850b1694/Basel%20III%20-%20Capital%20Disclosure%202Q%202017.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:53b2ccd6-0e10-4e82-a1bf-7121e3db2697/Basel%20III%20-%20Capital%20Disclosure%201Q%202021.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:61dc171f-bd91-4c64-a428-8d1b8ff6178d/Basel%20III%20-%20Capital%20Disclosure%202Q%202021.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:73b1509e-5280-4ef3-a29a-392c1b565299/nbk-annual-report-2025-e.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:74064924-1f85-42a7-9946-765d583356cf/NBK-Annual-Report-2019-English.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:74803814-9efa-499f-8d32-a7bece166f93/NBK%20Basel%20III%20Capital%20Disclosure%203Q%202023.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:7f831122-534a-4429-981c-1d53eca48037/NBK%20Basel%20III%20Capital%20Disclosure%201Q%202024.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:7f99b0f1-33ac-4d9b-9019-fd2b7ca0544a/Basel%20III%20-%20Capital%20Disclosure%202Q%202024.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:80c83888-6fd2-4553-b4b9-eb37b8af5c91/Basel%20III%20-%20Capital%20Disclosure%201Q%202023.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:87620ec5-afe4-49f1-8af4-a457bec45239/NBK-Basel-III-Capital-Disclosure-2Q-2016.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:8f570451-466b-421d-ac10-1764dab374ae/Annual-Report-2018-English.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:8ff068b7-078d-4ddb-bc2f-1c0b99f06f9c/NBK-Basel-III-Capital-Disclosure-3Q-2016.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:95d650f4-02ca-4e9e-99f0-474d92b26b63/Annual%20Report%202020%20-%20EN.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:960b88b7-74c3-4d92-a110-512cb8902bba/Basel-III-Capital-Disclosure-3Q-2019.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:9ec39137-146b-4f85-b04e-8d24d74d9399/basel-iii-capital-disclosure-2q-2026.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:a00ed21f-7439-433a-a8e3-46fb7f495fa9/NBK-(International)-PLC-Pillar-3-Disclosures-2014.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:a1ceccf3-375c-4056-80d8-eb6ca6a50698/basel-iii-capital-disclosure-1q-2026.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:a54568aa-4248-4d57-a8ce-5a2339ecbab5/Basel%20III%20-%20Capital%20Disclosure%202Q%202020.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:b5771e3e-205a-43bd-b998-b1b065bee6ae/BaselIII-CapitalDisclosure2Q2019.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:c32dd143-e2dd-401c-9429-787e2b528018/Basel%20III%20-%20Capital%20Disclosure%201Q%202025.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:ca7ebb2a-d95d-4e59-8598-f492053770fc/NBK-Annual-Report-2012-EN.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:cb4cbd4b-8e3c-4b11-b5c5-5d7417b357c9/Basel-III-Capital-Disclosure-3Q-2017.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:cd0bf17f-e40b-42ce-86b0-c43ee1de5838/Basel%20III%20-%20Capital%20Disclosure%201Q%202020.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:e4ad8fbc-4e7d-40fb-b254-abdb88c4c14b/Basel%20III%20-%20Capital%20Disclosure%201Q%202022.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:e4e2bce8-b872-403d-babb-11e62d62b9ce/NBK-Annual-Report-2014-EN.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:e947e439-44b9-4120-a35f-a6d1d9f7215c/NBK-Annual-Report-2013-EN.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:eb5a2c86-bf5c-4d5e-9b3d-cdfaa716d3a5/Basel%20III%20-%20Capital%20Disclosure%203Q%202020.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:f1bf73de-bf69-4030-979f-67b85dbdd676/NBK-Basel_III_Capital_Disclosure_1Q_2016.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:f2af6b60-d215-481e-b690-3aebe3aea334/nbk-basel-iii-capital-disclosure-3q-2025.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   },
+   {
+    "url": "https://www.nbk.com/dam/jcr:fa2b00a8-ecc1-466d-90e2-9c677e29d230/Basel%20III%20-%20Capital%20Disclosure%202Q%202022.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.nbk.com/investor-relations.html"
+   }
+  ]
+ },
+ "smbc-bank-international": {
+  "pages_read": [
+   "https://www.smbcgroup.com/emea/about-us",
+   "https://www.smbcgroup.com/emea/about/Notices-and-reporting",
+   "https://www.smbcgroup.com/emea/What-We-Do/corporate-and-investment-banking/financial-institutions",
+   "https://www.smbcgroup.com/emea/What-We-Do/corporate-and-investment-banking/financial-sponsors",
+   "https://www.smbcgroup.com/emea/What-We-Do/corporate-and-investment-banking/Capital-markets",
+   "https://www.smbcgroup.com/emea/about/Notices-and-reporting/Fraud-Awareness-and-Prevention"
+  ],
+  "found": [
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/09eca300-9b3c-4ee2-9989-d683323bd9f8/annual-report-2025-smbc-eu-ggaap.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/0d5f0926-6436-48ef-a708-377fa7898591/SMBC-BI-Pillar-3-Dec-25-v3.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/1cd26cee-ce11-4484-a91a-1f674d7568aa/annual-report-2025-smbc-eu.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/2418d0a0-de22-497a-9a9a-4ca69ade9f94/Pillar-3-annual-disclosure-(SMBC-BI-%e2%80%93-31-March-2025).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/28eec268-62ab-4d64-b597-02b7f918c767/smbcbi-annual-report-2025.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/2b581ec9-8385-4aa3-98f2-7ff2ffa9ab7f/smbc-nikko-annual-report-2025.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/352315cf-7a34-42d7-9cb1-3082d16539f3/Pillar-3-Interim-Disclosure-March-2023-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/3d5166bd-4859-44f9-8e47-2dcdea1d48e6/Annual-Report-2024-(SMBC-EU).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/43b64ed9-5e45-46a2-b2bf-9b625dcd704b/smbcdp-annual-report-2026.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/4490ceb5-1ff3-4cfb-84ac-93a8049d8cb5/Pillar-3-Interim-Disclosure-June-2022-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/478b7c2d-76e0-4c07-b727-b00757a4636d/Pillar-3-Interim-Disclosure-December-2024-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/5808b03a-874f-4d90-a062-10d94d98c9d8/Pillar-3-Interim-Disclosure-June-2024-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/6308c91f-7b8c-4b1a-9738-fe4642bf85af/Pillar-3-Interim-Disclosure-March-2020-(SMBCE).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/63e089ea-16c4-49bd-b16f-f2185f5c80d7/Pillar-3-Interim-Disclosure-March-2021-(SMBC-Nikko).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/64e5ef59-5a2e-4806-a4d3-5a1fb6db48c4/smbc-nikko-annual-report-2026.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/70b97df4-9ecb-4865-b410-dbbaa7ce606d/Pillar-3-Interim-Disclosure-March-2020-(SMBC-Nikko).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/7690b9ee-bae2-4fc1-bba5-0422a250f84c/Pillar-3-Interim-Disclosure-March-2024-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/7c046ae7-c39b-4e3a-83b6-789e9c0d305e/Pillar-3-Interim-Disclosure-September-2024-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/87b1eaef-5ccc-432d-bfff-2890f930e770/smbcdp-annual-report-2025.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/8c626609-cec1-44a5-b08b-227189f7e287/Pillar-3-Interim-Disclosure-December-2023-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/97fab1b7-9060-4cfe-93c7-09d3172181ac/SMBC-BI-Pillar-3-June-25.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/ac038048-e9b0-4921-b5a9-b977ec2b6aff/smbcdp-annual-report-2023-(1).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/bd6c0013-d139-4ba1-913c-96bbd44efe1f/SMBC-BI-Pillar-3-Sept-25.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/c4a51e80-68f3-4805-8db3-5fdadd5018e9/Pillar-3-Interim-Disclosure-March-2022-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/c5ffac49-6d73-428a-b076-946346a4b6c2/Annual-Report-2024-(SMBC-Nikko).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/c956424b-468e-4f29-9650-a4c792a720c3/Pillar-3-Interim-Disclosure-March-2021-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/cd804340-56b8-4410-8bab-2b2f733729cd/Pillar-3-Interim-Disclosure-September-2022-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/db3289f7-2020-4cfe-835c-4b0ef5eac4aa/Pillar-3-Interim-Disclosure-June-2023-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/e2329270-9c6b-4707-be71-48a96b030b7b/Pillar-3-Interim-Disclosure-September-2023-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/e295174c-0af6-4d1d-b86d-0d38729ae188/Annual-Report-2024-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/ee8d7d6b-5d17-4d82-9bd8-d52369fa4e45/Pillar-3-Interim-Disclosure-December-2022-(SMBC-BI).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/f9e20725-f457-4ab4-a50d-7f7eb9111ea1/Pillar-3-Interim-Disclosure-March-2019-(SMBCE).pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/2418d0a0-de22-497a-9a9a-4ca69ade9f94/Pillar-3-annual-disclosure-(SMBC-BI-%e2%80%93-31-March-2025",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/352315cf-7a34-42d7-9cb1-3082d16539f3/Pillar-3-Interim-Disclosure-March-2023-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/3d5166bd-4859-44f9-8e47-2dcdea1d48e6/Annual-Report-2024-(SMBC-EU",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/4490ceb5-1ff3-4cfb-84ac-93a8049d8cb5/Pillar-3-Interim-Disclosure-June-2022-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/478b7c2d-76e0-4c07-b727-b00757a4636d/Pillar-3-Interim-Disclosure-December-2024-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/5808b03a-874f-4d90-a062-10d94d98c9d8/Pillar-3-Interim-Disclosure-June-2024-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/6308c91f-7b8c-4b1a-9738-fe4642bf85af/Pillar-3-Interim-Disclosure-March-2020-(SMBCE",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/63e089ea-16c4-49bd-b16f-f2185f5c80d7/Pillar-3-Interim-Disclosure-March-2021-(SMBC-Nikko",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/70b97df4-9ecb-4865-b410-dbbaa7ce606d/Pillar-3-Interim-Disclosure-March-2020-(SMBC-Nikko",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/7690b9ee-bae2-4fc1-bba5-0422a250f84c/Pillar-3-Interim-Disclosure-March-2024-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/7c046ae7-c39b-4e3a-83b6-789e9c0d305e/Pillar-3-Interim-Disclosure-September-2024-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/8c626609-cec1-44a5-b08b-227189f7e287/Pillar-3-Interim-Disclosure-December-2023-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/ac038048-e9b0-4921-b5a9-b977ec2b6aff/smbcdp-annual-report-2023-(1",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/c4a51e80-68f3-4805-8db3-5fdadd5018e9/Pillar-3-Interim-Disclosure-March-2022-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/c5ffac49-6d73-428a-b076-946346a4b6c2/Annual-Report-2024-(SMBC-Nikko",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/c956424b-468e-4f29-9650-a4c792a720c3/Pillar-3-Interim-Disclosure-March-2021-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/cd804340-56b8-4410-8bab-2b2f733729cd/Pillar-3-Interim-Disclosure-September-2022-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/db3289f7-2020-4cfe-835c-4b0ef5eac4aa/Pillar-3-Interim-Disclosure-June-2023-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/e2329270-9c6b-4707-be71-48a96b030b7b/Pillar-3-Interim-Disclosure-September-2023-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/e295174c-0af6-4d1d-b86d-0d38729ae188/Annual-Report-2024-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/ee8d7d6b-5d17-4d82-9bd8-d52369fa4e45/Pillar-3-Interim-Disclosure-December-2022-(SMBC-BI",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   },
+   {
+    "url": "https://www.smbcgroup.com/emea/getmedia/f9e20725-f457-4ab4-a50d-7f7eb9111ea1/Pillar-3-Interim-Disclosure-March-2019-(SMBCE",
+    "text": "",
+    "pdf": false,
+    "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
+   }
+  ]
+ }
+}

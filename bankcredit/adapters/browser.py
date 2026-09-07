@@ -282,6 +282,84 @@ def fetch_document(url: str, session: requests.Session, browser: "Browser | None
     return None, ""
 
 
+# Discovery casts wider than collection: a bank may file under "Offenlegungsbericht", "capital adequacy"
+# or simply inside its annual report, and the point is to see what is there, not to load it.
+DISCOVER = re.compile(r"pillar[-_ %]?(?:3|iii)|basel[-_ %]?(?:3|iii)|capital[-_ ]?adequacy|regulatory[-_ ]?disclosur|"
+                      r"offenlegung|vakavaraisuus|pilier[-_ ]?3|disclosure[-_ ]?report|risk[-_ ]?report|"
+                      r"key[-_ ]?metrics|\bkm1\b|own[-_ ]?funds|annual[-_ ]?report[-_ ]?20\d\d", re.I)
+DISCOVER_EXCLUDE = re.compile(r"remuneration|glossary|cookie|privacy|careers|sitemap|accessibility|"
+                              r"gsib|g-sib|tlac|indicator|proxy[- ]statement", re.I)
+
+
+def discover(entity_ids: list[str], starts: list[str] | None = None, depth: int = 1) -> dict:
+    """Look for a firm's capital disclosures and report what is there, loading nothing.
+
+    Starts from the entity's locator page (or the URLs given), renders each with the browser so
+    script-built listings resolve, follows same-host pages that look like report hubs, and ranks
+    what it finds: PDFs whose address or link text names a capital disclosure first. Writes the
+    full link list to data/review/discovered.json so a pattern can be written from evidence.
+    """
+    ad = Pillar3Adapter()
+    browser = Browser()
+    by_ent = {}
+    for ent in entity_ids:
+        loc = next((l for l in LOCATORS if l["entity"] == ent), None)
+        seeds = list(starts or []) or ([loc["page"]] if loc else [])
+        if not seeds:
+            by_ent[ent] = {"error": "no locator page and no start URL given"}
+            print(f"  {ent:32s} no locator page; pass a URL with --from")
+            continue
+        seen_pages, found, pages_read = set(), [], []
+        queue = [(u, 0) for u in seeds]
+        while queue:
+            url, d = queue.pop(0)
+            if url in seen_pages or len(seen_pages) > 12:
+                continue
+            seen_pages.add(url)
+            body, lks = "", []
+            try:
+                r = ad.session.get(url, timeout=45, headers=HEADERS)
+                if not looks_blocked(r.status_code, r.text):
+                    body = r.text
+            except requests.RequestException:
+                pass
+            if not body or document_links(body, lks, ad, url) == 0:
+                st, rb, rl = browser.listing(url)          # script-built listings need the real thing
+                if not looks_blocked(st, rb):
+                    body, lks = rb, rl
+            if not body:
+                continue
+            pages_read.append(url)
+            for u, text in _pairs(body, lks, ad, url):
+                blob = unquote(u) + " " + text
+                if DISCOVER.search(blob) and not DISCOVER_EXCLUDE.search(blob):
+                    found.append({"url": u, "text": text[:90], "pdf": ".pdf" in u.lower(), "from": url})
+            if d < depth:
+                for sub in subpages(dict(loc or {}, page=url), body, lks, ad, limit=6):
+                    queue.append((sub, d + 1))
+        uniq, seen_u = [], set()
+        for f in sorted(found, key=lambda f: (not f["pdf"], f["url"])):
+            if f["url"] in seen_u:
+                continue
+            seen_u.add(f["url"])
+            uniq.append(f)
+        by_ent[ent] = {"pages_read": pages_read, "found": uniq}
+        print(f"\n  {ent}  ({len(uniq)} candidates from {len(pages_read)} page{'s' if len(pages_read) != 1 else ''})")
+        for f in uniq[:10]:
+            print(f"     {'PDF ' if f['pdf'] else 'page'}  {f['url'][:118]}")
+            if f["text"]:
+                print(f"            {f['text']}")
+        if not uniq:
+            print("     nothing that names a capital disclosure; the listing may need the Chrome extension")
+    browser.close()
+    out = store.DATA / "review" / "discovered.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    prev = json.loads(out.read_text()) if out.exists() else {}
+    prev.update(by_ent)
+    out.write_text(json.dumps(prev, indent=1))
+    return by_ent
+
+
 def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTITY) -> dict:
     """Try every browser-kind locator. Returns {entity_id: outcome} where outcome is 'collected n',
     'nothing new', 'no matching links', or 'blocked' (needs the Chrome extension)."""
