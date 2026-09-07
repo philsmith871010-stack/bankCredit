@@ -1297,5 +1297,222 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-09-07T00:03:09"
+ },
+ {
+  "id": "3927a4f58743",
+  "entity_id": "santander-uk",
+  "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:6d220131-7e1c-4597-b8b8-bfdb6d190965/original/as/additional_capital_risk_management_disclosures_jun-20.pdf",
+  "local": "cache/pdf/santander-uk/3927a4f58743492a.pdf",
+  "title": "additional_capital_risk_management_disclosures_jun-20.pdf",
+  "page": 3,
+  "reference_date": "2020-06-30",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 10600.0,
+   "tier1_capital": 13056000.0,
+   "total_capital": 15514000.0,
+   "rwa": 72718000.0,
+   "cet1_ratio": 14.5,
+   "tier1_ratio": 18.0,
+   "total_capital_ratio": 21.3,
+   "hqla": 47425000.0,
+   "net_cash_outflows": 32274000.0,
+   "lcr": 146.9,
+   "leverage_exposure": 308000.0
+  },
+  "checks": [
+   [
+    "warn",
+    "column headers split month and year across lines; reference date needs a check"
+   ],
+   [
+    "warn",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "error",
+    "cet1_ratio 14.50 vs implied 0.01 from capital/RWA"
+   ]
+  ],
+  "reason": "warn:column headers split month and year across lines; reference date needs a check; warn:no leverage ratio row (not all Basel KM1 filers disclose one); error:cet1_ratio 14.50 vs implied 0.01 from capital/RWA",
+  "status": "open",
+  "created": "2026-09-07T08:11:13"
+ },
+ {
+  "id": "e25dc29b525b",
+  "entity_id": "santander-uk",
+  "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:4844b5bc-6c6b-407a-815e-def749f23d4b/original/as/2019_acrmd.pdf",
+  "local": "cache/pdf/santander-uk/e25dc29b525b04f3.pdf",
+  "title": "2019_acrmd.pdf",
+  "page": 3,
+  "reference_date": "2019-12-31",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 10400.0,
+   "tier1_capital": 13083000.0,
+   "total_capital": 15778000.0,
+   "rwa": 73202000.0,
+   "cet1_ratio": 14.3,
+   "tier1_ratio": 17.9,
+   "total_capital_ratio": 21.6,
+   "cet1_headroom": 6.28,
+   "hqla": 41604000.0,
+   "net_cash_outflows": 29266000.0,
+   "lcr": 142.2,
+   "leverage_exposure": 295600.0
+  },
+  "checks": [
+   [
+    "warn",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "error",
+    "cet1_ratio 14.30 vs implied 0.01 from capital/RWA"
+   ]
+  ],
+  "reason": "warn:no leverage ratio row (not all Basel KM1 filers disclose one); error:cet1_ratio 14.30 vs implied 0.01 from capital/RWA",
+  "status": "open",
+  "created": "2026-09-07T08:11:13"
+ },
+ {
+  "id": "d714206ac60f",
+  "entity_id": "aldermore",
+  "url": "https://www.aldermore.co.uk/media/y3dlmgpz/pillar_3_disclosures.pdf",
+  "local": "cache/pdf/aldermore/d714206ac60f7893.pdf",
+  "title": "pillar_3_disclosures.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T08:11:55"
+ },
+ {
+  "id": "0ae7970ce89a",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2022-full-year-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/0ae7970ce89aad98.pdf",
+  "title": "2022-full-year-pillar-3-report.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T08:13:27"
+ },
+ {
+  "id": "02803d7c2f28",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2022-third-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/02803d7c2f287b6a.pdf",
+  "title": "2022-third-quarter-pillar-3-report.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T08:13:27"
+ },
+ {
+  "id": "a6777dd81753",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/2022-first-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/a6777dd817533bbf.pdf",
+  "title": "2022-first-quarter-pillar-3-report.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T08:13:27"
+ },
+ {
+  "id": "3f82153ade49",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2019/31-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/3f82153ade49f747.pdf",
+  "title": "31-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T08:13:36"
+ },
+ {
+  "id": "648781e0c129",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2019/31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/648781e0c1291da4.pdf",
+  "title": "31-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T08:13:36"
+ },
+ {
+  "id": "a8676ae4b7bd",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2018/31-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/a8676ae4b7bd0e7f.pdf",
+  "title": "31-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-07T08:13:36"
  }
 ]

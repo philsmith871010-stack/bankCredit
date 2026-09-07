@@ -1,0 +1,93 @@
+{
+ "standard-chartered": {
+  "last_verified": {
+   "reference_date": "2023-12-31",
+   "values": {
+    "cet1_capital": 34314.0,
+    "tier1_capital": 39806.0,
+    "total_capital": 51741.0,
+    "rwa": 244151.0,
+    "cet1_ratio": 14.1,
+    "tier1_ratio": 16.3,
+    "total_capital_ratio": 21.2,
+    "combined_buffer": 3.89,
+    "overall_capital_requirement": 10.51,
+    "cet1_headroom": 7.43,
+    "leverage_exposure": 847142.0,
+    "leverage_ratio": 4.7,
+    "hqla": 185986.0,
+    "net_cash_outflows": 116064.0,
+    "lcr": 160.4,
+    "available_stable_funding": 403238.0,
+    "required_stable_funding": 296467.0,
+    "nsfr": 136.0
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "coventry-bs": {
+  "last_verified": {
+   "reference_date": "2022-06-30",
+   "values": {
+    "cet1_capital": 2002.0,
+    "tier1_capital": 2417.0,
+    "total_capital": 2417.0,
+    "rwa": 6682.0,
+    "cet1_ratio": 30.0,
+    "tier1_ratio": 36.2,
+    "total_capital_ratio": 36.2,
+    "total_srep_requirement": 10.8,
+    "combined_buffer": 2.5,
+    "overall_capital_requirement": 13.3,
+    "cet1_headroom": 19.2,
+    "leverage_exposure": 48307.0,
+    "leverage_ratio": 5.0,
+    "hqla": 7150.0,
+    "net_cash_outflows": 3596.0,
+    "lcr": 200.2
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "wells-fargo": {
+  "last_verified": {
+   "reference_date": "2024-12-31",
+   "values": {
+    "lcr": 125.0,
+    "hqla": 370101.0,
+    "net_cash_outflows": 295537.0
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "bank-of-america": {
+  "last_verified": {
+   "reference_date": "2024-12-31",
+   "values": {
+    "lcr": 113.0,
+    "hqla": 622720.0,
+    "net_cash_outflows": 539605.0
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "morgan-stanley": {
+  "last_verified": {
+   "reference_date": "2024-12-31",
+   "values": {
+    "lcr": 130.0,
+    "net_cash_outflows": 201835.0
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "northern-trust": {
+  "last_verified": {
+   "reference_date": "2024-12-31",
+   "values": {
+    "lcr": 108.0
+   },
+   "method": "pdf_rules"
+  }
+ }
+}
