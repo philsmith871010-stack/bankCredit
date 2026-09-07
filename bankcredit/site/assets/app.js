@@ -25,3 +25,9 @@
 
 // Events page: type filter
 (function(){var f=document.getElementById('event-filters');if(!f)return;f.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;f.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b)});var t=b.dataset.type;document.querySelectorAll('#events .event').forEach(function(e){e.hidden=!(t==='all'||e.dataset.type===t)})})})();
+
+// Profile trends: a small multiple opens its full-size chart in a dialog
+(function(){var d=document.createElement('dialog');d.className='chart-dialog';d.innerHTML='<div class="cd-head"><div><h3></h3><div class="small muted"></div></div><button class="cd-close" aria-label="Close">×</button></div><div class="cd-body"></div>';
+  document.addEventListener('click',function(e){var b=e.target.closest('.sm');if(b){if(!d.isConnected)document.body.appendChild(d);var t=b.querySelector('template');d.querySelector('h3').textContent=b.dataset.title||'';d.querySelector('.cd-head .small').textContent=b.dataset.sub||'';d.querySelector('.cd-body').innerHTML=t?t.innerHTML:'';d.showModal();return}
+    if(e.target.closest('.cd-close')||(e.target===d))d.close()});
+})();

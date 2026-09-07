@@ -54,6 +54,40 @@ def benchmark_strip(board):
     return f'<div class="card pad bm-strip"><div class="bm-head"><h3>Credit benchmarks</h3><span class="muted small">ICE BofA option-adjusted spreads via FRED · 30-day change</span></div><div class="bm-grid">{cells}</div></div>'
 
 
+def today_strip(board) -> str:
+    """The board's opening row: what the universe looks like today and what moved this week."""
+    rows = board["rows"]
+    today = datetime.utcnow().date()
+    since7 = (today - timedelta(days=7)).isoformat()
+    bands = {b: sum(1 for r in rows if r["band"] == b) for b in "ABCDE"}
+    bands["?"] = sum(1 for r in rows if r["score"] is not None and r["band"] in ("?", ""))
+    scored = sum(bands.values())
+    bar = "".join(f'<i class="band-{b if b != "?" else "x"}" style="flex:{n}" title="{"Band " + b if b != "?" else "Provisional, no band"}: {n}"></i>' for b, n in bands.items() if n)
+    legend = " ".join(f'<span><b class="band-{b if b != "?" else "x"}"></b>{b if b != "?" else "no band"} {n}</span>' for b, n in bands.items() if n)
+    try:
+        acts = [a for a in load("ratings").get("actions", []) if str(a.get("date", ""))[:10] >= since7]
+    except Exception:
+        acts = []
+    up = sum(1 for a in acts if a.get("severity") == "good")
+    down = sum(1 for a in acts if a.get("severity") == "bad")
+    flagged = {"bad": 0, "warn": 0, "good": 0}
+    for r in rows:
+        for e in (load(f"banks/{r['id']}").get("events") or []):
+            if e.get("type") == "news" and str(e.get("date"))[:10] >= since7 and e.get("severity") in flagged:
+                flagged[e["severity"]] += 1
+    ages = sorted(r["age_days"] for r in rows if r.get("age_days") is not None)
+    med_age = ages[len(ages) // 2] if ages else None
+    stale = sum(1 for a in ages if a > 150)
+    widening = sum(1 for r in rows if (r.get("market") or {}).get("direction") == "down")
+    return f'''<div class="today">
+<a class="tcard" href="#board"><span class="tl">Scored</span><span class="tv mono">{scored}<small> of {len(rows)}</small></span><span class="tbar">{bar}</span><span class="tlegend small">{legend}</span></a>
+<a class="tcard" href="ratings/index.html"><span class="tl">Rating actions, 7 days</span><span class="tv mono">{len(acts)}</span><span class="small"><span class="good">▲ {up} up or positive</span> · <span class="bad">▼ {down} down or negative</span></span></a>
+<a class="tcard" href="events/index.html"><span class="tl">Flagged headlines, 7 days</span><span class="tv mono">{sum(flagged.values())}</span><span class="small"><span class="bad">{flagged["bad"]} adverse</span> · <span style="color:#b35900">{flagged["warn"]} watch</span> · <span class="good">{flagged["good"]} positive</span></span></a>
+<a class="tcard" href="compare/index.html"><span class="tl">Market signal widening</span><span class="tv mono">{widening}</span><span class="small muted">names whose CDS, bonds or equity moved the wrong way in 30 days</span></a>
+<a class="tcard" href="coverage/index.html"><span class="tl">Figures as of</span><span class="tv mono">{med_age if med_age is not None else "—"}<small> days, median</small></span><span class="small {"bad" if stale > 20 else "muted"}">{stale} names older than 150 days</span></a>
+</div>'''
+
+
 def page_board(board, generated):
     rows = sorted(board["rows"], key=lambda r: (r["score"] is None, -(r["score"] or 0), r["name"]))
     counts = {}
@@ -68,7 +102,7 @@ def page_board(board, generated):
         sub = f'{TYPE_LABEL.get(r["type"], r["type"])} · {COUNTRY.get(r["country"], r["country"])}'
         trs.append(f'''<tr data-id="{r["id"]}" data-region="{r["region"]}" data-score="{r["score"] if r["score"] is not None else -1}" data-name="{c.esc(r["name"])}">
 <td class="col-name"><button class="watch" data-id="{r["id"]}" aria-label="Watch">{c.use_icon("star", 15, "#cbd3dc")}</button><a href="banks/{r["id"]}.html"><span class="nm">{c.esc(r["name"])}</span><span class="sub">{sub}</span></a></td>
-<td class="col-score"><span class="mono score">{sc(r)}</span>{c.ribbon(r["score"], peer.get("p25"), peer.get("p50"), peer.get("p75"))}</td>
+<td class="col-score"><span class="mono score{" score-prov" if r["band"] in ("?", "") and r["score"] is not None else ""}"{' title="Provisional: too little ratio data for a band"' if r["band"] in ("?", "") and r["score"] is not None else ""}>{sc(r)}</span>{c.ribbon(r["score"], peer.get("p25"), peer.get("p50"), peer.get("p75"))}</td>
 <td class="col-band">{c.band_chip(r["band"])}</td>
 <td class="num">{c.fmt(r["cet1"], 1, "%")}</td><td class="num">{c.fmt(r["leverage"], 1, "%")}{'<sup class="muted" title="US Tier 1 leverage ratio on average assets, not the Basel leverage ratio">T1</sup>' if r.get("leverage_basis") == "us_tier1" else ""}</td><td class="num">{c.fmt(r["lcr"], 0, "%")}</td>
 <td>{c.agency_chips(r["ratings"])}</td><td class="col-mkt">{c.market_glyph(r["market"])}</td>
@@ -76,6 +110,7 @@ def page_board(board, generated):
     n_scored = sum(1 for r in rows if r["score"] is not None)
     content = f'''<div class="page-head"><div><h1>Board</h1><div class="lede">{len(rows)} banks and building societies · {n_scored} with enough data to score · figures as of the date on each row</div></div>
 <div class="actions"><label class="search">{c.ico("search", 16, c.MUTED)}<input id="q" type="search" placeholder="Search bank or country" aria-label="Search"></label></div></div>
+{today_strip(board)}
 {benchmark_strip(board)}
 <div class="filters" id="filters">{filters}</div>
 <div class="card table-card"><div class="table-wrap"><table class="board" id="board"><thead><tr>
@@ -220,25 +255,49 @@ def page_bank(b, generated):
     cov = b.get("coverage") or 0
     overlay = b.get("overlay")
     pillars = b["score_detail"]["pillars"]
-    prow = "".join(f'<div class="pillar"><span>{k.replace("_", " ").title()}</span><span class="mono">{"—" if v[0] is None else f"{v[0]:.0f}"}</span><span class="pw">w {v[1] if v[0] is not None else PILLARS.get(k, (0,))[0]}</span></div>' for k, v in pillars.items())
-    # charts
-    charts = []
-    extra = [("tier1_ratio", "Tier 1 ratio", "%", 1), ("npl_ratio", "Non-performing loans", "%", 2), ("roa", "Return on assets", "%", 2),
-             ("roe", "Return on equity", "%", 1), ("nim", "Net interest margin", "%", 2), ("efficiency_ratio", "Efficiency ratio", "%", 1),
-             ("deposits", "Deposits", "m", 0), ("total_assets", "Total assets", "m", 0), ("tier1_leverage", "Tier 1 leverage (US)", "%", 1)]
-    for metric, label, unit, dp in TILE_METRICS + extra:
-        pts = series.get(metric, [])
-        if len(pts) >= 2:
+    order = ["rating", "capital", "liquidity", "stability", "asset_quality", "profitability"]
+    prow = "".join(f'<div class="pillar{" pillar-na" if pillars[k][0] is None else ""}"><span class="pl">{ {"rating": "Rating", "capital": "Capital", "liquidity": "Liquidity", "stability": "Stability", "asset_quality": "Assets", "profitability": "Profit"}[k]}</span>'
+                   f'<span class="mono">{"—" if pillars[k][0] is None else f"{pillars[k][0]:.0f}"}</span><i><b style="width:{0 if pillars[k][0] is None else pillars[k][0]:.0f}%"></b></i>'
+                   f'<span class="pw">w {pillars[k][1] if pillars[k][0] is not None else PILLARS.get(k, (0,))[0]}</span></div>' for k in order if k in pillars)
+    # trends: small multiples grouped by theme, each opening a full-size chart
+    TREND_GROUPS = [("Capital", [("cet1_ratio", "CET1 ratio", "%", 1), ("tier1_ratio", "Tier 1 ratio", "%", 1), ("total_capital_ratio", "Total capital ratio", "%", 1),
+                                 ("leverage_ratio", "Leverage ratio", "%", 1), ("tier1_leverage", "Tier 1 leverage (US)", "%", 1), ("rwa", "Risk-weighted assets", "m", 0)]),
+                    ("Liquidity and funding", [("lcr", "LCR", "%", 0), ("nsfr", "NSFR", "%", 0), ("deposits", "Deposits", "m", 0)]),
+                    ("Profitability and efficiency", [("roe", "Return on equity", "%", 1), ("roa", "Return on assets", "%", 2), ("nim", "Net interest margin", "%", 2), ("efficiency_ratio", "Cost to income", "%", 0)]),
+                    ("Asset quality", [("npl_ratio", "Non-performing loans", "%", 2), ("cost_of_risk", "Cost of risk", "%", 2)]),
+                    ("Balance sheet", [("total_assets", "Total assets", "m", 0)])]
+    LOWER_BETTER = {"efficiency_ratio", "npl_ratio", "cost_of_risk"}
+    charts, n_charts = [], 0
+    for group, metrics in TREND_GROUPS:
+        cards = []
+        for metric, label, unit, dp in metrics:
+            pts = series.get(metric, [])
+            if len(pts) < 2:
+                continue
             req = None; req_label = "Requirement"
             if metric == "cet1_ratio":
                 r = series.get("cet1_requirement") or series.get("overall_capital_requirement")
                 if r:
                     req = r[-1]["v"]; req_label = "CET1 requirement" if series.get("cet1_requirement") else "Overall requirement"
             shown = pts if len(pts) <= 48 else pts[-48:]                       # up to twelve years of quarters
-            data = [(qlabel(p["d"]), (p["v"] / 1000 if unit == "m" and p["v"] and abs(p["v"]) > 5000 else p["v"])) for p in shown]
-            if unit == "m":
-                unit = "bn" if any(p["v"] and abs(p["v"]) > 5000 for p in shown) else "m"
-            charts.append(f'<div class="chart-block"><div class="chart-head"><span>{label}</span><span class="muted">{METRICS.get(metric, "")}</span></div>{c.chart(data, unit="" if unit in ("m", "bn") else unit, req=req, req_label=req_label, dp=0 if unit != "%" or metric in ("lcr", "nsfr") else dp)}</div>')
+            u = unit
+            if u == "m":
+                u = "bn" if any(p["v"] and abs(p["v"]) > 5000 for p in shown) else "m"
+            data = [(qlabel(p["d"]), (p["v"] / 1000 if u == "bn" else p["v"])) for p in shown]
+            cdp = 0 if u != "%" or metric in ("lcr", "nsfr") else dp
+            last, prev = data[-1][1], data[-2][1]
+            delta = last - prev
+            good = (delta >= 0) != (metric in LOWER_BETTER)
+            dchip = f'<span class="delta {"up" if good else "down"}">{"+" if delta > 0 else ("−" if delta < 0 else "")}{abs(delta):.{cdp}f}{u if u == "%" else ""}</span>' if abs(delta) > 0 else '<span class="delta flat">no change</span>'
+            big = c.chart(data, unit="" if u in ("m", "bn") else u, req=req, req_label=req_label, dp=cdp, w=720, h=300)
+            small = c.chart(data, unit="" if u in ("m", "bn") else u, req=req, dp=cdp, w=300, h=96, compact=True)
+            src = pts[-1].get("src", "")
+            cards.append(f'<button class="sm" type="button" data-title="{c.esc(label)}" data-sub="{c.esc(METRICS.get(metric, ""))} · {len(data)} periods · {c.esc(src)}" aria-label="Expand {c.esc(label)}">'
+                         f'<div class="sm-head"><span class="sm-label">{c.esc(label)}</span><span class="sm-val mono">{last:,.{cdp}f}<small>{u if u != "m" else "m"}</small></span></div>'
+                         f'<div class="sm-sub">{dchip}<span class="muted">vs {c.esc(data[-2][0])}</span></div>{small}<template>{big}</template></button>')
+            n_charts += 1
+        if cards:
+            charts.append(f'<div class="sm-group"><h4>{group}</h4><div class="sm-grid">{"".join(cards)}</div></div>')
     ratings_rows = "".join(f'<tr><td>{c.esc(r["agency"])}</td><td class="muted">{c.esc(r["type"].replace("_", " "))} · {c.esc(r["horizon"])}</td><td class="mono b">{c.esc(r["value"])}</td><td class="muted">{c.esc(r["outlook"])}</td><td class="mono muted">{c.esc(r["date"])}</td></tr>' for r in b["ratings_all"])
     ratings_html = f'<table class="plain"><thead><tr><th>Agency</th><th>Type</th><th>Rating</th><th>Outlook</th><th>Date</th></tr></thead><tbody>{ratings_rows}</tbody></table><div class="note">Source: ESMA European Rating Platform, checked daily. Symbols shown with agency attribution; histories are not redistributed.</div>' if ratings_rows else '<div class="empty">No issuer-level ratings found in the ESMA register for this entity.</div>'
     mp = b["market_public"]
@@ -274,7 +333,7 @@ def page_bank(b, generated):
 <div class="score-note">Rating anchor and public pillars with published weights (w).{' <span class="b" style="color:#ffd9b3">Unrated: capped at ' + f"{UNRATED_CAP:.0f}" + '.</span>' if b.get("unrated") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../method/index.html">Method</a></div></div>
 <div class="tiles">{tiles}</div></div>
 <div class="card tabs-card"><div class="tabs" role="tablist"><button class="tab active" data-tab="trends">Trends</button><button class="tab" data-tab="ratings">Ratings</button><button class="tab" data-tab="market">Market</button><button class="tab" data-tab="events">Events</button><button class="tab" data-tab="sources">Sources</button>{'<button class="tab" data-tab="data">Data</button>' if b.get("debug") else ''}</div>
-<section class="panel active" data-panel="trends"><div class="grid-2">{"".join(charts) or '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</div></section>
+<section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.</div>' if n_charts else ''}{"".join(charts) or '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
 <section class="panel" data-panel="ratings">{ratings_html}</section>
 <section class="panel" data-panel="market">{market_html}</section>
 <section class="panel" data-panel="events">{events_rows}</section>
@@ -300,7 +359,30 @@ def page_events(board, generated):
         title = f'<a href="{c.esc(url)}" target="_blank" rel="noopener">{c.esc(e.get("title"))}</a>' if url and str(url).startswith("http") else c.esc(e.get("title"))
         return (f'<div class="event" data-type="{c.esc(e.get("type") or "")}"><span class="mono muted">{d}</span><div><a class="b" href="../banks/{r["id"]}.html">{c.esc(r["name"])}</a>'
                 f'<div>{title}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("type") or ""), "navy")} {c.chip(c.esc(e.get("severity") or "info"), tone.get(e.get("severity"), "muted"))}</div>')
-    rows = "".join(row(d, r, e) for d, r, e in items[:400])
+    # a bank's documents collected on one day collapse into a single line
+    merged, seen_batch = [], {}
+    for d, r, e in items:
+        if e.get("type") == "disclosure":
+            key = (d, r["id"])
+            if key in seen_batch:
+                seen_batch[key]["n"] += 1
+                m = re.search(r"period (\d{4})", str(e.get("title", "")))
+                if m:
+                    seen_batch[key]["years"].add(m.group(1))
+                continue
+            m = re.search(r"period (\d{4})", str(e.get("title", "")))
+            seen_batch[key] = {"n": 1, "years": {m.group(1)} if m else set()}
+            merged.append((d, r, dict(e, _batch=seen_batch[key])))
+        else:
+            merged.append((d, r, e))
+    def row2(d, r, e):
+        bt = e.get("_batch")
+        if bt and bt["n"] > 1:
+            yrs = sorted(bt["years"])
+            span = f' ({yrs[0]}–{yrs[-1]})' if len(yrs) > 1 else (f' ({yrs[0]})' if yrs else "")
+            e = dict(e, title=f'{bt["n"]} Pillar 3 documents collected{span}')
+        return row(d, r, e)
+    rows = "".join(row2(d, r, e) for d, r, e in merged[:300])
     flagged = [(d, r, e) for d, r, e in items if e.get("severity") in ("bad", "warn", "good") or (e.get("type") == "rating" and "affirm" not in str(e.get("title", "")).lower())][:100]
     (OUT / "events").mkdir(exist_ok=True)
     _write(OUT / "events" / "feed.xml", events_feed(flagged, generated))
@@ -308,8 +390,9 @@ def page_events(board, generated):
     for _, _, e in items:
         counts[e.get("type")] = counts.get(e.get("type"), 0) + 1
     filters = f'<button class="filter active" data-type="all">All · {len(items)}</button>' + "".join(f'<button class="filter" data-type="{c.esc(t)}">{c.esc(t.title())} · {n}</button>' for t, n in sorted(counts.items()))
+    shown_note = f'<span class="small muted">Latest {min(300, len(merged))} shown; a bank\'s documents from one day are folded into a line. Each profile carries its full history.</span>'
     content = (f'<div class="page-head"><div><h1>Events</h1><div class="lede">Rating actions from the ESMA register, Pillar 3 documents as they are collected, and headlines that pass a credit-vocabulary filter. Severity is rules-based; read the source before acting.</div></div></div>'
-               f'<div class="filters" id="event-filters">{filters}<a class="filter" href="feed.xml" title="RSS feed of flagged events">RSS feed</a></div><div class="card pad" id="events">{rows or "<div class=empty>Nothing collected yet.</div>"}</div>'
+               f'<div class="toolbar ev-toolbar"><div class="filters" id="event-filters">{filters}<a class="filter" href="feed.xml" title="RSS feed of flagged events">RSS feed</a></div>{shown_note}</div><div class="card pad" id="events">{rows or "<div class=empty>Nothing collected yet.</div>"}</div>'
                f'<p class="note">Headlines are refreshed every two hours on weekdays between 07:00 and 19:00 UK; rating actions from the register and new documents arrive with the morning run. The RSS feed carries the last 100 flagged events for a reader or an alerting tool.</p>')
     return c.shell("Events", content, "events", "../", generated)
 
@@ -362,15 +445,18 @@ def page_brief(board, status, generated):
     unverified = [d for d in (status.get("documents") or []) if d["status"] == "unverified" and d["fetched_at"][:10] >= since7]
     queue = status.get("review") or []
 
+    tone = {"bad": "bad", "warn": "warn", "good": "good"}
     def ev_line(d, r, e):
         url = e.get("url") or ""
         t = f'<a href="{c.esc(url)}" target="_blank" rel="noopener">{c.esc(e.get("title"))}</a>' if str(url).startswith("http") else c.esc(e.get("title"))
-        return f'<li><span class="mono muted">{d}</span> <a class="b" href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a> · {t} <span class="muted small">{c.esc(e.get("source"))}</span></li>'
+        sev = e.get("severity")
+        return (f'<div class="event"><span class="mono muted">{d}</span><div><a class="b" href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a>'
+                f'<div>{t}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(sev), tone[sev]) if sev in tone else ""}</div>')
 
     def bank_links(xs):
         return ", ".join(f'<a href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a>' for r in xs) or "none"
 
-    market_line = ("Credit benchmarks: " + "; ".join(f'{c.esc(b["label"])} {b["value"]:.0f}bp ({"+" if b["change30"] > 0 else ""}{b["change30"]:.0f}bp over 30 days)' for b in bm if b.get("change30") is not None)) if bm else "Credit benchmark series not yet collected."
+    market_line = ('<div class="rtiles brief-bm">' + "".join(f'<div class="rtile"><div class="rtile-n mono">{b["value"]:.0f}<small>bp</small></div><div class="rtile-l">{c.esc(b["label"])}</div><div class="small {"bad" if b["change30"] > 4 else "good" if b["change30"] < -4 else "muted"}">{"+" if b["change30"] > 0 else ""}{b["change30"]:.0f} bp, 30 days</div></div>' for b in bm if b.get("change30") is not None) + "</div>") if bm else "<p>Credit benchmark series not yet collected.</p>"
     lead = []
     if widen:
         lead.append(f'Spreads are wider on the month in {", ".join(c.esc(b["label"]) for b in widen)}.')
@@ -380,14 +466,11 @@ def page_brief(board, status, generated):
         lead.append("Benchmark spreads are little changed on the month.")
     lead.append(f'{len(ratings)} rating action{"s" if len(ratings) != 1 else ""} and {len(news)} flagged headline{"s" if len(news) != 1 else ""} in the last seven days across {len(rows)} entities.')
     content = f'''<div class="page-head"><div><h1>Brief</h1><div class="lede">Machine-drafted from the day's tables by fixed rules, not by a language model. {c.esc(today.isoformat())}. Read the linked sources before acting.</div></div></div>
-<div class="card pad prose">
-<p class="b">{" ".join(lead)}</p>
-<p>{market_line}</p>
-<h3>Rating actions, seven days</h3><ul class="small">{"".join(ev_line(*x) for x in ratings[:40]) or "<li class=muted>No rating changes, watch placements or outlook changes recorded.</li>"}</ul>
-<h3>Headlines that passed the credit filter and carry a flag</h3><ul class="small">{"".join(ev_line(*x) for x in news[:40]) or "<li class=muted>Nothing flagged.</li>"}</ul>
-<h3>New Pillar 3 documents</h3><p class="small">{len(docs)} collected in the last seven days. {len(unverified)} loaded with warnings and shown as unverified; {len(queue)} waiting in the review queue. <a href="../status/index.html">Status</a></p>
-<h3>Watch points</h3><ul class="small"><li>Band D (weakest public score): {bank_links(band_d)}</li><li>Market signal widening or equity weak: {bank_links(weak_mkt)}</li><li>Regulatory figures older than 150 days: {bank_links([r for r in rows if r["age_days"] and r["age_days"] > 150][:25])}</li></ul>
-</div>'''
+<div class="card pad"><p class="lead">{" ".join(lead)}</p>{market_line}</div>
+<div class="grid-2 brief-grid"><div class="card pad"><h3>Rating actions <span class="muted small">· seven days</span></h3>{"".join(ev_line(*x) for x in ratings[:30]) or "<div class=empty>No rating changes, watch placements or outlook changes recorded.</div>"}</div>
+<div class="card pad"><h3>Flagged headlines <span class="muted small">· passed the credit filter</span></h3>{"".join(ev_line(*x) for x in news[:30]) or "<div class=empty>Nothing flagged.</div>"}</div></div>
+<div class="grid-2 brief-grid"><div class="card pad"><h3>Watch points</h3><div class="kv"><div><span>Band D, weakest public score</span><span>{bank_links(band_d)}</span></div><div><span>Market signal widening or equity weak</span><span>{bank_links(weak_mkt)}</span></div><div><span>Regulatory figures older than 150 days</span><span>{bank_links([r for r in rows if r["age_days"] and r["age_days"] > 150][:25])}</span></div></div></div>
+<div class="card pad"><h3>New Pillar 3 documents</h3><p>{len(docs)} collected in the last seven days. {len(unverified)} loaded with warnings and shown as unverified; {len(queue)} waiting in the review queue.</p><a class="filter" href="../status/index.html">Status</a></div></div>'''
     return c.shell("Brief", content, "brief", "../", generated)
 
 

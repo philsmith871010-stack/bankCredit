@@ -47,19 +47,21 @@
       var n_flag=0;
       var rows=p.slice().sort(function(a,b){return b.tenor-a.tenor||(byId[a.id]&&byId[a.id].short||'').localeCompare(byId[b.id]&&byId[b.id].short||'')}).map(function(it){
         var e=byId[it.id]; var fl=flags(it,e); if(fl.some(function(x){return x[0]!=='muted'}))n_flag++;
-        if(!e)return '<tr><td class="b">'+esc(it.id)+'</td><td colspan="9">'+chip('No longer covered','bad')+'</td><td><button class="filter pol-rm" data-id="'+esc(it.id)+'">Remove</button></td></tr>';
-        var recent=(e.recent||[]).slice(0,3).map(function(x){var t=x.title.length>90?x.title.slice(0,88)+'…':x.title;return '<div class="small"><span class="mono muted">'+x.date+'</span> '+chip(x.severity==='bad'?'adverse':x.severity==='warn'?'watch':'positive',x.severity==='bad'?'bad':x.severity==='warn'?'warn':'good')+' '+(x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">':'')+esc(t)+(x.url?'</a>':'')+'</div>'}).join('')||'<span class="muted small">nothing notable in 90 days</span>';
-        var fh=fl.map(function(x){return chip(x[1],x[0]==='muted'?'muted':x[0])}).join(' ')||chip('No change','good');
-        return '<tr data-id="'+esc(e.id)+'"><td><a class="b" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a><div class="small muted">'+esc(e.name)+' · '+esc(e.country)+'</div></td>'+
-          '<td class="mono">'+esc(tenorLabel(it.tenor))+'<div class="small muted">since '+esc(it.added||'?')+'</div></td>'+
-          '<td>'+(e.score==null?'<span class="na">—</span>':'<span class="mono b">'+e.score.toFixed(1)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>')+'<div class="small muted">'+(e.coverage!=null?Math.round(e.coverage*100)+'% of inputs':'')+'</div></td>'+
-          '<td>'+ratings(e.ratings)+'<div class="small muted">ST: '+shortR(e.short_ratings)+'</div></td>'+
-          '<td>'+fmt(e.cet1)+'<div class="small muted">CET1</div></td><td>'+fmt(e.leverage)+(e.leverage_basis==='us_tier1'?'<sup>T1</sup>':'')+'<div class="small muted">Lev.</div></td><td>'+fmt(e.lcr,0,'%')+'<div class="small muted">LCR · '+esc(e.asof||'')+'</div></td>'+
-          '<td>'+mkt(e.market)+(e.market_detail&&e.market_detail.bond_change30!=null?'<div class="small muted">bonds vs peers '+(e.market_detail.bond_change30>0?'+':'')+Math.round(e.market_detail.bond_change30)+' bp</div>':'')+'</td>'+
-          '<td>'+recent+'</td><td>'+fh+'</td><td><button class="filter pol-rm" data-id="'+esc(e.id)+'" title="Remove">×</button></td></tr>';
+        if(!e)return '<div class="pol-row"><div class="pr-name"><span class="b">'+esc(it.id)+'</span></div><div class="pr-flags">'+chip('No longer covered','bad')+'</div><button class="pol-rm" data-id="'+esc(it.id)+'" title="Remove">×</button></div>';
+        var recent=(e.recent||[]).slice(0,2).map(function(x){var t=x.title.length>80?x.title.slice(0,78)+'…':x.title;return '<div><span class="mono muted">'+x.date+'</span> '+chip(x.severity==='bad'?'adverse':x.severity==='warn'?'watch':'positive',x.severity==='bad'?'bad':x.severity==='warn'?'warn':'good')+' '+(x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">':'')+esc(t)+(x.url?'</a>':'')+'</div>'}).join('')||'<div class="muted">nothing notable in 90 days</div>';
+        var fh=fl.map(function(x){return chip(x[1],x[0]==='muted'?'muted':x[0])}).join(' ')||chip('Unchanged since approval','good');
+        return '<div class="pol-row" data-id="'+esc(e.id)+'">'+
+          '<div class="pr-name"><a class="b" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a><div class="small muted">'+esc(e.name)+' · '+esc(e.country)+'</div></div>'+
+          '<div class="pr-tenor"><span class="mono">'+esc(tenorLabel(it.tenor))+'</span><div class="small muted">since '+esc(it.added||'?')+'</div></div>'+
+          '<div class="pr-score">'+(e.score==null?'<span class="na">—</span>':'<span class="mono b">'+e.score.toFixed(0)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>')+'<div class="small muted">'+(e.coverage!=null?Math.round(e.coverage*100)+'% of inputs':'')+'</div></div>'+
+          '<div class="pr-ratings">'+ratings(e.ratings)+'<div class="small muted">ST '+shortR(e.short_ratings)+'</div></div>'+
+          '<div class="pr-kpi"><span>'+fmt(e.cet1)+'<i>CET1</i></span><span>'+fmt(e.leverage)+(e.leverage_basis==='us_tier1'?'<sup>T1</sup>':'')+'<i>Lev.</i></span><span>'+fmt(e.lcr,0,'%')+'<i>LCR</i></span><div class="small muted">as of '+esc(e.asof||'—')+'</div></div>'+
+          '<div class="pr-mkt">'+mkt(e.market)+(e.market_detail&&e.market_detail.bond_change30!=null?'<div class="small muted">bonds vs peers '+(e.market_detail.bond_change30>0?'+':'')+Math.round(e.market_detail.bond_change30)+' bp</div>':'')+'</div>'+
+          '<div class="pr-flags">'+fh+'</div><button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove">×</button>'+
+          '<div class="pr-recent small">'+recent+'</div></div>';
       }).join('');
       html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Data built '+esc(data.generated.slice(0,16).replace('T',' '))+' UTC. Flags compare today with the day each name was approved.</span></div>';
-      html+='<div class="table-wrap"><table class="plain pol"><thead><tr><th>Counterparty</th><th>Your max tenor</th><th>Score</th><th>Ratings (long / short)</th><th>CET1</th><th>Leverage</th><th>LCR</th><th>Market</th><th>Recent events</th><th>Since approved</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+      html+='<div class="pol-head"><span>Counterparty</span><span>Your tenor</span><span>Score</span><span>Ratings</span><span>Key ratios</span><span>Market</span><span>Since approved</span><span></span></div><div class="pol-list">'+rows+'</div>';
       // like-for-like: names at least as strong as the weakest you already accept at each tenor
       var tenors=[];p.forEach(function(it){if(tenors.indexOf(it.tenor)<0)tenors.push(it.tenor)});tenors.sort(function(a,b){return b-a});
       var ll='', shown={};

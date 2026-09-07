@@ -71,6 +71,28 @@ def spark(series: list[float], w=92, h=28, color=NAVY) -> str:
             f'<circle cx="{ex:.0f}" cy="{ey:.0f}" r="2.6" fill="{ORANGE}"/></svg>')
 
 
+def _chart_compact(pts_in, w, h, unit, req, dp) -> str:
+    vals = [v for _, v in pts_in]
+    lo, hi = min(vals + ([req] if req else [])), max(vals + ([req] if req else []))
+    span = (hi - lo) or 1
+    ymin, ymax = lo - span * 0.18, hi + span * 0.22
+    padl, padr, padt, padb = 6, 6, 6, 16
+    n = len(pts_in)
+    X = lambda i: padl + i * (w - padl - padr) / (n - 1)
+    Y = lambda v: padt + (ymax - v) / (ymax - ymin) * (h - padt - padb)
+    path = "M" + "L".join(f"{X(i):.0f} {Y(v):.0f}" for i, (_, v) in enumerate(pts_in))
+    reqline = f'<line x1="{padl}" x2="{w-padr}" y1="{Y(req):.0f}" y2="{Y(req):.0f}" stroke="{ORANGE}" stroke-width="1.2" stroke-dasharray="3 3"/>' if req else ""
+    last = pts_in[-1][1]
+    imin, imax = vals.index(min(vals)), vals.index(max(vals))
+    marks = "".join(f'<text x="{min(max(X(i), 18), w - 18):.0f}" y="{(Y(v) - 5) if k == "max" else (Y(v) + 11):.0f}" text-anchor="middle" class="axis">{v:.{dp}f}{unit}</text>'
+                    for k, i, v in (("max", imax, vals[imax]), ("min", imin, vals[imin])) if i not in (0, n - 1))
+    return (f'<svg viewBox="0 0 {w} {h}" width="100%" class="chart chart-sm" preserveAspectRatio="none" aria-hidden="true">'
+            f'<path d="{path}V{Y(ymin):.0f}H{padl}Z" fill="{NAVY}" fill-opacity="0.07"/>{reqline}'
+            f'<path d="{path}" fill="none" stroke="{NAVY}" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'
+            f'<circle cx="{X(n-1):.0f}" cy="{Y(last):.0f}" r="3.2" fill="{ORANGE}"/>{marks}'
+            f'<text x="{padl}" y="{h-4}" class="axis">{esc(pts_in[0][0])}</text><text x="{w-padr}" y="{h-4}" text-anchor="end" class="axis">{esc(pts_in[-1][0])}</text></svg>')
+
+
 def ribbon(score, p25=None, p50=None, p75=None, w=96, h=10) -> str:
     """Band scale as a CSS gradient on the element; only the peer band, median and marker are drawn."""
     x = lambda v: v / 100 * w
@@ -115,11 +137,14 @@ def chg(v: float | None, dp=1, suffix="") -> str:
 
 
 def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | None = None, req_label="Requirement",
-          band: tuple[float, float] | None = None, ymin=None, ymax=None, step=None, dp=1) -> str:
-    """Line chart with dots, optional requirement line and peer band. series: [(label, value)] oldest first."""
+          band: tuple[float, float] | None = None, ymin=None, ymax=None, step=None, dp=1, compact: bool = False) -> str:
+    """Line chart with dots, optional requirement line and peer band. series: [(label, value)] oldest first.
+    compact draws a small multiple: area and line, the requirement, first and last x labels, no dots or grid."""
     pts_in = [(l, v) for l, v in series if v is not None]
     if len(pts_in) < 2:
         return '<div class="empty">Not enough history yet</div>'
+    if compact:
+        return _chart_compact(pts_in, w, h, unit, req, dp)
     vals = [v for _, v in pts_in]
     lo, hi = min(vals + ([req] if req else []) + ([band[0]] if band else [])), max(vals + ([req] if req else []) + ([band[1]] if band else []))
     if ymin is None or ymax is None:
