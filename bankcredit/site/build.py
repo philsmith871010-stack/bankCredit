@@ -663,6 +663,23 @@ def _write(path, html: str) -> None:
     path.write_text(_WS.sub("><", html))
 
 
+def page_compare(generated):
+    sets = [("all", "Everyone"), ("uk_large", "UK majors"), ("uk_mid", "UK mid-sized"), ("uk_small", "UK small banks"), ("uk_bs", "Building societies"),
+            ("eu_large", "EU and Nordic"), ("us", "US"), ("ch", "Switzerland"), ("aus", "Australia"), ("can", "Canada"), ("asia", "Asia"), ("gulf", "Gulf"),
+            ("watch", "Watching"), ("policy", "My policy")]
+    chips = "".join(f'<button class="filter cp-set" data-set="{k}">{c.esc(l)}<span class="cnt"></span></button>' for k, l in sets)
+    content = f'''<div class="page-head"><div><h1>Compare</h1><div class="lede">Any peer set against any measure: where each name stands today, how it has moved, how its rank among the set has changed, and two measures against each other. Names you watch or hold in My policy are picked out.</div></div></div>
+<div class="card cp-card"><div class="cp-tools">
+<div class="filters" id="cp-sets">{chips}</div>
+<div class="cp-row"><label class="small muted">Measure <select id="cp-metric"></select></label>
+<label class="small muted cp-y" hidden>against <select id="cp-metric2"></select></label>
+<div class="tabs cp-views"><button class="tab active" data-view="rank">Ranking</button><button class="tab" data-view="trend">Trends</button><button class="tab" data-view="bump">Rank over time</button><button class="tab" data-view="scatter">Two measures</button></div>
+<div class="search cp-add">{c.ico("search", 16, c.MUTED)}<input id="cp-q" placeholder="Add a name to the set" autocomplete="off"><div class="cp-sugg" id="cp-sugg" hidden></div></div>
+<span class="small muted" id="cp-count"></span></div></div>
+<div class="cp-body"><div class="cp-chart" id="cp-chart"><div class="empty">Loading…</div></div><div class="cp-side" id="cp-side"></div></div>
+<div class="table-foot"><span id="cp-foot">Ratios are the latest reported by each name; the peer line is the set's median. Sources and dates are on each profile. Ranks count only names with a figure at that date.</span></div></div>'''
+    return c.shell("Compare", content, "compare", "../", generated).replace("</body>", '<script src="../assets/compare.js"></script></body>')
+
 def build():
     board = load("board"); status = load("status"); generated = board["generated"]
     if OUT.exists():
@@ -677,6 +694,9 @@ def build():
     _write(OUT / "method" / "index.html", page_method(generated))
     (OUT / "ratings").mkdir(exist_ok=True)
     _write(OUT / "ratings" / "index.html", page_ratings(generated))
+    (OUT / "compare").mkdir(exist_ok=True); (OUT / "data").mkdir(exist_ok=True)
+    _write(OUT / "compare" / "index.html", page_compare(generated))
+    shutil.copy(store.DATA / "json" / "compare.json", OUT / "data" / "compare.json")
     (OUT / "coverage").mkdir(exist_ok=True)
     _write(OUT / "coverage" / "index.html", page_coverage(generated))
     (OUT / "policy").mkdir(exist_ok=True)

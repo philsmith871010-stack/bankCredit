@@ -381,6 +381,31 @@ AUDIT_METRICS = ["cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_r
                  "overall_capital_requirement", "npl_ratio", "roe", "roa", "efficiency_ratio", "total_assets"]
 
 
+COMPARE_METRICS = [("score", "Counterparty score", "", 1, True), ("cet1_ratio", "CET1 ratio", "%", 1, True), ("leverage_ratio", "Leverage ratio", "%", 1, True),
+                   ("total_capital_ratio", "Total capital ratio", "%", 1, True), ("lcr", "LCR", "%", 0, True), ("nsfr", "NSFR", "%", 0, True),
+                   ("roe", "Return on equity", "%", 1, True), ("roa", "Return on assets", "%", 2, True), ("nim", "Net interest margin", "%", 2, True),
+                   ("efficiency_ratio", "Cost to income", "%", 0, False), ("npl_ratio", "Non-performing loans", "%", 2, False),
+                   ("cost_of_risk", "Cost of risk", "%", 2, False), ("total_assets", "Total assets", "m", 0, True)]
+COMPARE_POINTS = 32
+
+
+def compare_rows(board: list[dict], series_all: dict) -> list[dict]:
+    """Compact per-entity series for the Compare page: the last COMPARE_POINTS periods of each metric."""
+    rows = []
+    for r in board:
+        ser = {}
+        for m, *_ in COMPARE_METRICS:
+            if m == "score":
+                continue
+            pts = series_all.get(r["id"], {}).get(m) or []
+            if pts:
+                ser[m] = [[p["d"], p["v"]] for p in pts[-COMPARE_POINTS:] if p["v"] is not None]
+        rows.append({"id": r["id"], "short": r["short"], "name": r["name"], "region": r["region"], "type": r["type"], "country": r["country"],
+                     "peer_group": r["peer_group"], "band": r["band"], "score": r["score"], "grade": r["rating_grade"], "rating": r["rating_composite"],
+                     "assets": (series_all.get(r["id"], {}).get("total_assets") or [{}])[-1].get("v"), "series": ser})
+    return rows
+
+
 def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=None) -> list[dict]:
     """What we hold for each entity: regulatory history (periods, first, last, sources) overall and per
     metric, ratings by agency, prices, CDS, bonds and news, with the score the board gives it."""
@@ -575,6 +600,7 @@ def export_json() -> None:
     store.write_json("board", {"generated": generated, "rows": board, "benchmarks": benchmarks})
     store.write_json("policy", {"generated": generated, "rows": policy_rows})
     store.write_json("audit", {"generated": generated, "rows": data_audit(active, facts, ratings, prices, cds, store.read("bonds"), events, board)})
+    store.write_json("compare", {"generated": generated, "metrics": COMPARE_METRICS, "rows": compare_rows(board, series_all)})
     store.write_json("ratings", {"generated": generated, **ratings_summary(active, ratings, events)})
     status = []
     if not runs.empty:

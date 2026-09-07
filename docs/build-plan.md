@@ -366,3 +366,15 @@ banks back to 2016. Entities with a profitability figure went from 9 to 76, with
 annual and five quarterly points for listed names) is the remaining option for the listed banks outside ESEF, and
 PDF annual reports remain only for the small mutuals and overseas-owned subsidiaries that file nowhere structured.
 The Chrome runbook for the eight blocked sites is in the review skill and the local-run notes.
+
+### Navigator and Compare, 7 September 2026 (night)
+
+The regional card list became a navigator: one dense list with instant search, combinable facets whose counts show
+what each choice would leave, five sort orders and families kept together. A Compare page puts any peer set (the
+peer groups, the watchlist, the My policy list, plus any name added by search) against any measure four ways: a
+ranking with the set median, trends with the median line and the change since the start of the window, rank over
+time as a bump chart with the biggest movers listed, and two measures against each other with bubbles sized by
+total assets. Names the user watches or holds are picked out in orange throughout. Everything is drawn client-side
+from one compact JSON of the last 32 periods per measure, so the page carries no chart library. The score itself has
+no stored history yet, so rank over time works on the ratios; storing a score snapshot per build is the next step
+for a score-rank history.
