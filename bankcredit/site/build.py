@@ -367,6 +367,11 @@ def outlook_glyph(o: str) -> str:
     return ""
 
 
+def rating_grade_site(value):
+    from ..export import rating_grade
+    return rating_grade(value)
+
+
 def page_ratings(generated):
     R = load("ratings")
     rows = R["rows"]
@@ -381,6 +386,31 @@ def page_ratings(generated):
                     for (k, n), col in zip(bands.items(), ["#0a2540", "#3f5f85", "#7d93ad", "#b04632"]))
     tiles += f'<div class="rtile"><div class="rtile-n mono muted">{unrated}</div><div class="rtile-l">Unrated</div></div>'
     tiles += f'<div class="rtile"><div class="rtile-n mono"><span style="color:#1e7a3a">{ups}▲</span> <span style="color:#b04632">{downs}▼</span></div><div class="rtile-l">Actions, 30 days</div></div>'
+    # the ladder: every rated entity placed on one AAA-to-B scale by composite grade, chips coloured by band
+    GR = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-", "B+", "B", "B-"]
+    by_grade = {}
+    for r in rated:
+        by_grade.setdefault(int(r["grade"] + 0.5), []).append(r)
+    ladder = ""
+    for i, g in enumerate(GR, start=1):
+        ents = sorted(by_grade.get(i, []), key=lambda r: r["short"])
+        if not ents and i > 10:
+            continue
+        col = grade_colour(i)
+        chips = "".join(f'<a class="lchip" style="border-color:{col};color:{col}" href="../banks/{c.esc(r["id"])}.html" title="{c.esc(r["name"])} · {c.esc(r["country"])}">{c.esc(r["short"])}</a>' for r in ents)
+        ladder += f'<div class="lrow"><div class="lgrade mono" style="background:{col}">{g}</div><div class="lbar" style="width:{min(90, max(4, len(ents) * 3))}px;background:{col}"></div><div class="lcount mono muted">{len(ents) or ""}</div><div class="lchips">{chips}</div></div>'
+    # per-agency distribution: how each agency spreads the universe across bands
+    AGN = [("fitch", "Fitch"), ("sp", "S&amp;P"), ("moodys", "Moody's"), ("dbrs", "DBRS")]
+    dist = ""
+    for ag, label in AGN:
+        gs = [rating_grade_site(r["agencies"].get(ag, {}).get("lt")) for r in rows]
+        gs = [g for g in gs if g is not None]
+        if not gs:
+            continue
+        counts = [sum(1 for g in gs if g <= 4), sum(1 for g in gs if 4 < g <= 7), sum(1 for g in gs if 7 < g <= 10), sum(1 for g in gs if g > 10)]
+        total = sum(counts)
+        segs = "".join(f'<div class="dseg" style="flex:{n};background:{col}" title="{lab}: {n}"></div>' for n, col, lab in zip(counts, ["#0a2540", "#3f5f85", "#7d93ad", "#b04632"], ["AA- and above", "A range", "BBB range", "below BBB-"]) if n)
+        dist += f'<div class="drow"><div class="dlabel">{label} <span class="muted small">{total} rated</span></div><div class="dbar">{segs}</div></div>'
     tone = {"bad": "bad", "warn": "warn", "good": "good", "info": "muted"}
     acts = "".join(f'<div class="ract"><span class="mono muted">{a["date"]}</span><a class="b" href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><span>{c.esc(a["title"])}</span>{c.chip(c.esc(a["severity"]), tone.get(a["severity"], "muted"))}</div>' for a in R["actions"][:40]) or '<div class="empty">No rating actions other than affirmations in the last 90 days.</div>'
     AG = [("fitch", "Fitch"), ("sp", "S&amp;P"), ("moodys", "Moody's"), ("dbrs", "DBRS"), ("kbra", "KBRA"), ("scope", "Scope")]
@@ -401,6 +431,9 @@ def page_ratings(generated):
     filters = "".join(f'<button class="filter{" active" if k == "all" else ""}" data-region="{k}">{c.esc(l)}</button>' for k, l in regions)
     content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">Every entity's latest long-term rating by agency with its outlook, the short-term rating beneath, and a composite grade across agencies. From the ESMA European Rating Platform, refreshed daily, shown with agency attribution.</div></div></div>
 <div class="rtiles">{tiles}</div>
+<div class="grid-2 rgrid"><div class="card pad"><h3>Rating ladder <span class="muted small">· composite grade, one chip per entity</span></h3><div class="ladder">{ladder}</div></div>
+<div class="card pad"><h3>How each agency sees the universe</h3><div class="dist">{dist}</div><div class="dlegend"><span><i style="background:#0a2540"></i>AA- and above</span><span><i style="background:#3f5f85"></i>A range</span><span><i style="background:#7d93ad"></i>BBB range</span><span><i style="background:#b04632"></i>below BBB-</span></div>
+<p class="note">Long-term issuer ratings only, one per agency per entity. Differences between the bars are mostly which banks each agency rates, not disagreement about the same bank.</p></div></div>
 <div class="card pad"><h3>Latest rating actions <span class="muted small">· 90 days, affirmations excluded</span></h3><div class="racts">{acts}</div></div>
 <div class="card" style="margin-top:16px"><div class="toolbar"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>
 <div class="table-wrap"><table id="board" class="plain ratings"><thead><tr><th data-sort="name">Entity</th><th data-sort="score" title="Median grade across agencies, on a common scale">Composite</th>{"".join(f"<th>{n}</th>" for _, n in AG)}<th>Last action</th></tr></thead><tbody>{trs}</tbody></table></div>
