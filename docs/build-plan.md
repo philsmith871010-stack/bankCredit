@@ -236,3 +236,20 @@ covered names whose standing is at least as strong as the weakest counterparty a
 composite grade, score, no widening), so the user can see comparable names without the platform suggesting any
 tenor or limit. The comparison needs a common rating scale, so the export now carries a numeric composite grade
 (1 = AAA ... 17 = CCC, median across agencies) per entity. Data: site/data/policy.json, one record per entity.
+
+### Filling the gaps, 7 September 2026 (afternoon)
+
+- **Browser-only sites.** `bankcredit/adapters/browser.py` collects from the 33 locators marked `kind="browser"`
+  in three steps: a plain request with a full browser header set, then headless Chromium (Playwright, persistent
+  profile), then a report of what is still blocked for the Chrome extension the review skill drives. Everything
+  found goes through `process_file`, so extraction, validation and the queue behave as for the pipeline. Runs in
+  the Mac job after the pipeline collector. Tested end to end against a local script-built listing; the real sites
+  cannot be reached from a data-centre address, which is the point.
+- **Image-only PDFs.** The extractors read text through `page_texts`, which OCRs a document with Tesseract when
+  nearly every page has no text layer (the runner installs tesseract-ocr; the Mac uses brew). Marked with a warning
+  so the figures show as unverified. Vanquis June 2025 reads correctly this way.
+- **Scotiabank** extracts fine from the current Supplementary Regulatory Capital Disclosures (KM1 on page 8, four
+  prior quarters); the queue item was an older file. **HSBC** locator already excludes the Chinese edition.
+- **Bank of Baroda UK** marked inactive: in solvent wind-down, so not a counterparty.
+- Reviewer answers on old documents no longer set the continuity baseline for new ones (six-quarter window), and
+  curly-apostrophe thousands are scaled.

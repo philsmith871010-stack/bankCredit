@@ -18,6 +18,8 @@ git pull --ff-only
 source .venv/bin/activate
 # 1. collect from bank sites and the FCA NSM from this network (residential IP), extract, queue
 python -m bankcredit.cli run pillar3 || true
+# 1b. the sites that block scripts: browser headers first, then headless Chromium (playwright) if installed
+python -m bankcredit.cli browser || true
 # 2. work the review queue with Claude Code (subscription login, no API key)
 if command -v claude >/dev/null 2>&1; then
   claude -p "/counterparty-review" --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --max-turns 80 || echo "claude review step failed"

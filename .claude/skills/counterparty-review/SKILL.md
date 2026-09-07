@@ -84,9 +84,14 @@ and confirm the figures and reference dates look right.
 societies). Their sites block scripts. About once a quarter, or when the
 Status page shows them older than 150 days:
 
-1. Open the locator's `page` in the browser, find the newest Pillar 3 PDF and
-   save it under `data/cache/pdf/<entity_id>/`.
-2. Run `python3 -m bankcredit.cli pdf <entity_id> <file> <source-url>`. It
+1. Run `python3 -m bankcredit.cli browser` first. It tries each site with
+   browser headers, then with headless Chromium, loads whatever it finds and
+   prints the firms that are still blocked. Nothing else is needed for the
+   firms it collected.
+2. For the firms it reports as blocked, use the Chrome extension: open the
+   locator's `page`, find the newest Pillar 3 PDF and save it under
+   `data/cache/pdf/<entity_id>/`.
+3. Run `python3 -m bankcredit.cli pdf <entity_id> <file> <source-url>`. It
    extracts, validates and loads exactly as the pipeline would; a failure goes
    to the queue and you resolve it as in section 1.
 

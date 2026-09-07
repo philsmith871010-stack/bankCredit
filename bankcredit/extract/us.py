@@ -19,7 +19,7 @@ from datetime import date
 
 import fitz
 
-from .km1 import Result, _norm_text, parse_dates, _tokens, _is_num_tok, _num
+from .km1 import page_texts, Result, _norm_text, parse_dates, _tokens, _is_num_tok, _num
 
 PCT = r"(\d{1,2}\.\d{1,2})\s?%?"
 RATIO_ROWS = [
@@ -45,15 +45,16 @@ AMOUNT_ROWS = [
 ]
 
 
-def _lines(doc, pages):
+def _lines(texts, pages):
     out = []
     for p in pages:
-        out += [(p, l.strip()) for l in _norm_text(doc[p].get_text()).splitlines() if l.strip()]
+        if p < len(texts):
+            out += [(p, l.strip()) for l in _norm_text(texts[p]).splitlines() if l.strip()]
     return out
 
 
-def _period(doc, max_pages=4) -> date | None:
-    text = "\n".join(_norm_text(doc[i].get_text()) for i in range(min(doc.page_count, max_pages)))
+def _period(texts, max_pages=4) -> date | None:
+    text = "\n".join(_norm_text(t) for t in texts[:max_pages])
     m = re.search(r"(?:as of|as at|quarter ended|period ended|at)\s+((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2},?\s+\d{4}|\d{1,2}\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{4})", text, re.I)
     if m:
         d = parse_dates(m.group(1), explicit_only=True)
@@ -153,8 +154,11 @@ def extract_capital(pdf_path: str, hint_date: date | None = None) -> Result:
     res = Result()
     doc = fitz.open(pdf_path)
     res.currency, res.template = "USD", "US Pillar 3"
-    pages = list(range(min(doc.page_count, 20)))
-    lines = _lines(doc, pages)
+    texts, ocr = page_texts(doc, 20)
+    if ocr:
+        res.checks.append(("warn", "text recovered by OCR from an image-only document"))
+    pages = list(range(len(texts)))
+    lines = _lines(texts, pages)
     block, page = _capital_block(lines)
     if block:
         res.values.update(block); res.page = page
@@ -200,7 +204,7 @@ def extract_capital(pdf_path: str, hint_date: date | None = None) -> Result:
                 vals = [v for v in _nums_after(lines, i) if v > 1000]
                 if vals:
                     res.values[metric] = vals[0]; break
-    res.reference_date = _period(doc) or hint_date
+    res.reference_date = _period(texts) or hint_date
     if not res.reference_date:
         res.checks.append(("error", "no reference date"))
     if "cet1_ratio" not in res.values:
@@ -226,7 +230,10 @@ def extract_lcr(pdf_path: str, hint_date: date | None = None) -> Result:
     res = Result()
     doc = fitz.open(pdf_path)
     res.currency, res.template = "USD", "US LCR"
-    lines = _lines(doc, range(min(doc.page_count, 12)))
+    texts, ocr = page_texts(doc, 12)
+    if ocr:
+        res.checks.append(("warn", "text recovered by OCR from an image-only document"))
+    lines = _lines(texts, range(len(texts)))
     for i, (p, l) in enumerate(lines):
         low = l.lower().rstrip(":")
         if re.fullmatch(r"(?:average )?(?:u\.?s\.? )?(?:lcr|liquidity coverage ratio)(?: \(%\))?\s*\d*", low) or re.match(r"^(?:lcr|liquidity coverage ratio)\s+\d{2,3}\s?%", low):
@@ -247,7 +254,7 @@ def extract_lcr(pdf_path: str, hint_date: date | None = None) -> Result:
                 vals = [v for v in _nums_after(lines, i) if v > 1000]
                 if vals:
                     res.values[metric] = vals[0]; break
-    res.reference_date = _period(doc) or hint_date
+    res.reference_date = _period(texts) or hint_date
     if "lcr" not in res.values:
         res.checks.append(("error", "no LCR found"))
     if not res.reference_date:

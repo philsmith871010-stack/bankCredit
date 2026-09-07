@@ -436,11 +436,41 @@ def page_score(text: str) -> int:
 
 
 # ---- main entry ----------------------------------------------------------
+OCR_MIN_CHARS = 80      # a page with less text than this, in a document that is mostly like that, is an image
+
+
+def page_texts(doc, max_pages: int) -> tuple[list[str], bool]:
+    """Text of the first pages; image-only documents are read with Tesseract when it is installed.
+    Returns (texts, ocr_used)."""
+    n = min(doc.page_count, max_pages)
+    texts = [doc[i].get_text("text") for i in range(n)]
+    thin = sum(1 for t in texts if len(t.strip()) < OCR_MIN_CHARS)
+    if n and thin >= max(1, n - 2):                # nearly every page has no text layer: scanned or outlined fonts
+        try:
+            for i in range(n):
+                if len(texts[i].strip()) < OCR_MIN_CHARS:
+                    page = doc[i]
+                    tp = page.get_textpage_ocr(language="eng", dpi=220, full=True)
+                    texts[i] = page.get_text(textpage=tp)
+            return texts, True
+        except Exception as exc:                    # no Tesseract on this machine: the document stays unread
+            log_ocr(exc)
+    return texts, False
+
+
+def log_ocr(exc) -> None:
+    import logging
+    logging.getLogger("bankcredit.extract").warning("OCR unavailable or failed (%s); install tesseract-ocr to read image-only PDFs", exc)
+
+
 def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, currency_hint: str = "",
             year_end: str = "12-31", page_hint: int | None = None) -> Result:
     res = Result()
     doc = fitz.open(pdf_path)
-    texts = [_norm_text(doc[i].get_text("text")) for i in range(min(doc.page_count, max_pages))]
+    raw_texts, ocr = page_texts(doc, max_pages)
+    texts = [_norm_text(t) for t in raw_texts]
+    if ocr:
+        res.checks.append(("warn", "text recovered by OCR from an image-only document"))
     scores = [page_score(t) for t in texts]
     # best page: KM1 wording plus parsable rows; a table without wording needs a high score
     scored = []

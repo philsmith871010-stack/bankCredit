@@ -56,7 +56,7 @@ sbi-uk,State Bank of India (UK) Limited,SBI UK,GB,subsidiary,uk,,213800LOV39TJH6
 icici-bank-uk,ICICI Bank UK PLC,ICICI Bank UK,GB,subsidiary,uk,,2138002XB6T14IGKGU43,,,uk_small,true
 bank-of-china-uk,Bank of China (UK) Limited,Bank of China UK,GB,subsidiary,uk,,213800SVCJUHY6VX7884,,,uk_small,true
 icbc-london,Industrial and Commercial Bank of China (London) plc,ICBC London,GB,subsidiary,uk,,2138003HW6485HGVSH88,,,uk_small,true
-bank-of-baroda-uk,Bank of Baroda (UK) Limited,Bank of Baroda UK,GB,subsidiary,uk,,2549006RZET62B51UR82,,,uk_small,true
+bank-of-baroda-uk,Bank of Baroda (UK) Limited,Bank of Baroda UK,GB,subsidiary,uk,,2549006RZET62B51UR82,,,uk_smallfalse
 qib-uk,Qatar Islamic Bank (UK) plc,QIB UK,GB,subsidiary,uk,,213800S4QPWSX1GXY767,,,uk_small,true
 nordea,Nordea Bank Abp,Nordea,FI,bank,eu,,529900ODI3047E2LIV03,NDA-FI.HE,,eu_large,true
 seb,Skandinaviska Enskilda Banken AB,SEB,SE,bank,eu,,F3JS33DEI6XQ4ZBPTN86,SEB-A.ST,,eu_large,true

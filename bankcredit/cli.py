@@ -7,6 +7,7 @@
   python -m bankcredit.cli pdf <entity> file.pdf [url]  # extract one PDF and load or queue it
   python -m bankcredit.cli review list|ingest        # review queue for failed extractions
   python -m bankcredit.cli learn                     # what the reviewer's answers taught the extractor
+  python -m bankcredit.cli browser [entity ...]      # bot-blocked sites: plain request, then headless Chromium
   python -m bankcredit.cli reprocess [entity]        # re-extract cached PDFs after an extractor change
 """
 from __future__ import annotations
@@ -75,6 +76,14 @@ def main(argv=None):
     if cmd == "reprocess":
         from .adapters.pillar3 import Pillar3Adapter
         print(Pillar3Adapter().reprocess(args[0] if args else None))
+        return 0
+    if cmd == "browser":
+        from .adapters.browser import collect
+        res = collect(args or None)
+        for k, v in res.items():
+            print(f"  {k:34s} {v}")
+        blocked = [k for k, v in res.items() if v.startswith("blocked")]
+        print(f"{len(res)} sites tried; {len(blocked)} still need the Chrome extension: {', '.join(blocked) or 'none'}")
         return 0
     if cmd == "learn":
         from .learn import summary
