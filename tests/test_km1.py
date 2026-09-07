@@ -173,3 +173,10 @@ def test_fully_loaded_twin_rows_do_not_stand_in_for_base_rows():
     assert vals["6"][0] == "17.0"
     assert km1._confirm("2", "Tier 1 fully loaded") is None
     assert km1._confirm("2", "Tier 1") == "tier1_capital"
+
+
+def test_single_digit_month_dates_keep_column_order():
+    # UBS column headers: the first column must win, not the only December date
+    assert km1.parse_dates("30.6.26 31.3.26 31.12.25 30.9.25") == [
+        km1.date(2026, 6, 30), km1.date(2026, 3, 31), km1.date(2025, 12, 31), km1.date(2025, 9, 30)]
+    assert km1.detect_units("Key metrics (KM1)\nUSD m, except where indicated")[0] == "USD"

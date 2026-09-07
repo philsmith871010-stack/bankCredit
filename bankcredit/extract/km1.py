@@ -100,12 +100,13 @@ def _year_group(tag: str) -> str:
 # One scanner with ordered alternatives, so "Mar-26" is read as month-year before "26 Dec" could be read as a day.
 DATE_SCAN = re.compile(
     r"\b(?P<d1>\d{1,2})\s?(?:st|nd|rd|th)?[\s./-]?" + MON.replace("(", "(?P<m1>", 1) + r"\.?" + _year_group("a")
-    + r"|\b(?P<d2>\d{1,2})[./](?P<m2>\d{2})[./](?P<y2>\d{4}|\d{2})\b"
+    + r"|\b(?P<d2>\d{1,2})[./](?P<m2>\d{1,2})[./](?P<y2>\d{4}|\d{2})\b"      # 31.12.25 and UBS's 30.6.26
     + r"|\b" + MON.replace("(", "(?P<m4>", 1) + r"\s+(?P<d4>\d{1,2})(?!\d)[,.]?" + _year_group("c")
     + r"|\b" + MON.replace("(", "(?P<m3>", 1) + _year_group("b")
     + r"|\b(?P<qh>[QH])(?P<n>[1-4])\s?[-']?\s?(?P<y4>\d{4}|\d{2})\b", re.I)
 CURRENCY = [("£", "GBP"), ("A$", "AUD"), ("C$", "CAD"), ("S$", "SGD"), ("HK$", "HKD"), ("US$", "USD"),
-            ("$", "USD"), ("€", "EUR"), ("¥", "JPY"), ("AED", "AED"), ("QAR", "QAR"), ("CHF", "CHF")]
+            ("$", "USD"), ("€", "EUR"), ("¥", "JPY"), ("AED", "AED"), ("QAR", "QAR"), ("CHF", "CHF"),
+            ("USD", "USD"), ("EUR", "EUR"), ("GBP", "GBP")]      # codes, as in UBS's "USD m"
 
 
 @dataclass
