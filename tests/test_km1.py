@@ -149,3 +149,8 @@ def test_prior_columns_follow_header_dates():
     # a prior column failing the capital arithmetic is dropped
     bad = [("cet1_capital", ["2,575", "1,000"], "1"), ("rwa", ["9,141", "9,100"], "2"), ("cet1_ratio", ["28.2%", "27.9%"], "3")]
     assert prior_columns(bad, dates[:2], True, 1.0) == {}
+
+
+def test_curly_apostrophe_thousands_are_scaled():
+    from bankcredit.extract.km1 import detect_units, _norm_text
+    assert detect_units(_norm_text("31 Mar 2023 £\u2019000 31 Mar 2022 £\u2019000 Common Equity Tier 1"))[1] == 0.001

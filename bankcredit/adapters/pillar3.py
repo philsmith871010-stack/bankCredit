@@ -342,11 +342,11 @@ class Pillar3Adapter(Adapter):
         counts: dict[str, int] = {}
         if docs.empty:
             return counts
-        if entity_id is None:
-            store.drop("facts", source=self.name)      # every pillar3 fact is rebuilt from the cached documents
-            review.save([])                            # and the queue with them
-        else:
-            store.drop("facts", source=self.name, entity_id=entity_id)
+        # Facts are replaced document by document as each cached PDF is re-read (load() drops a document's
+        # facts before writing its new ones). Documents cached elsewhere, and reviewer answers, are left alone;
+        # run `review ingest` afterwards so answers to items this pass re-queues are applied again.
+        # oldest first, so the continuity baseline for each bank advances with its documents
+        docs = docs.assign(_ref=docs.reference_date.fillna("9999")).sort_values(["entity_id", "_ref"])
         for r in docs.itertuples():
             if entity_id and r.entity_id != entity_id:
                 continue

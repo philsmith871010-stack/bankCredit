@@ -28,6 +28,7 @@ LEARNING = store.DATA / "review" / "learning.json"
 PCT_TOL = 0.15          # percentage points: extractor and reviewer agree on a ratio
 AMOUNT_TOL = 0.002      # relative: agree on a currency amount (rounding, not a different figure)
 CONTINUITY_BONUS = 0.05
+CONTINUITY_WINDOW_DAYS = 550     # about six quarters either way
 
 
 def _read(path: Path, default):
@@ -152,6 +153,11 @@ def continuity(entity_id: str, values: dict, reference_date: date | None) -> tup
     lv = last.get("values") or {}
     if not lv or not values:
         return None, ""
+    # a baseline is only a baseline while it is recent: five years of balance-sheet growth is not a contradiction
+    if reference_date and last.get("reference_date"):
+        gap = abs((reference_date - date.fromisoformat(str(last["reference_date"])[:10])).days)
+        if gap > CONTINUITY_WINDOW_DAYS:
+            return None, ""
     notes, bad = [], []
     if "cet1_ratio" in values and "cet1_ratio" in lv:
         d = abs(float(values["cet1_ratio"]) - float(lv["cet1_ratio"]))

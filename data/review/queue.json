@@ -1,1 +1,119 @@
-[]
+[
+ {
+  "id": "11ef7755e705",
+  "entity_id": "co-operative-bank",
+  "url": "https://www.co-operativebank.co.uk/assets/pdf/bank/investorrelations/2021-pillar-3-disclosures.pdf",
+  "local": "cache/pdf/co-operative-bank/11ef7755e705b734.pdf",
+  "title": "2021-pillar-3-disclosures.pdf",
+  "page": 5,
+  "reference_date": "2021-12-31",
+  "currency": "GBP",
+  "values": {
+   "cet1_ratio": 20.7,
+   "total_capital_ratio": 25.4,
+   "rwa": 4373.4,
+   "leverage_ratio": 3.1,
+   "tier1_ratio": 20.7
+  },
+  "checks": [
+   [
+    "warn",
+    "reference date taken from narrative text, not a column header"
+   ],
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "error",
+    "missing core row cet1_capital"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:reference date taken from narrative text, not a column header; warn:rows identified by label only (no row numbers in the table); error:missing core row cet1_capital; warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T09:15:41"
+ },
+ {
+  "id": "c19fede1c70f",
+  "entity_id": "co-operative-bank",
+  "url": "https://www.co-operativebank.co.uk/assets/pdf/bank/investorrelations/2020-pillar-3-disclosures.pdf",
+  "local": "cache/pdf/co-operative-bank/c19fede1c70fd8ea.pdf",
+  "title": "2020-pillar-3-disclosures.pdf",
+  "page": 5,
+  "reference_date": "2020-12-31",
+  "currency": "GBP",
+  "values": {
+   "cet1_ratio": 2020.0,
+   "total_capital_ratio": 23.7,
+   "rwa": 4683.7,
+   "leverage_ratio": 3.4,
+   "tier1_ratio": 19.2
+  },
+  "checks": [
+   [
+    "warn",
+    "reference date taken from narrative text, not a column header"
+   ],
+   [
+    "error",
+    "missing core row cet1_capital"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ],
+   [
+    "error",
+    "cet1_ratio 2020 outside 3..80"
+   ],
+   [
+    "error",
+    "tier1_ratio below cet1_ratio"
+   ]
+  ],
+  "reason": "warn:reference date taken from narrative text, not a column header; error:missing core row cet1_capital; warn:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 2020 outside 3..80; error:tier1_ratio below cet1_ratio",
+  "status": "open",
+  "created": "2026-09-07T09:15:41"
+ },
+ {
+  "id": "e0495d04a09f",
+  "entity_id": "co-operative-bank",
+  "url": "https://www.co-operativebank.co.uk/assets/pdf/bank/investorrelations/2019-pillar-3-disclosures.pdf",
+  "local": "cache/pdf/co-operative-bank/e0495d04a09f4f4f.pdf",
+  "title": "2019-pillar-3-disclosures.pdf",
+  "page": 6,
+  "reference_date": "2019-12-31",
+  "currency": "GBP",
+  "values": {
+   "cet1_ratio": 19.6,
+   "total_capital_ratio": 23.8,
+   "rwa": 4803.7,
+   "leverage_ratio": 3.9
+  },
+  "checks": [
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "warn",
+    "no period date found in the template header; using the expected date"
+   ],
+   [
+    "error",
+    "missing core row cet1_capital"
+   ],
+   [
+    "warn",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:rows identified by label only (no row numbers in the table); warn:no period date found in the template header; using the expected date; error:missing core row cet1_capital; warn:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-07T09:15:41"
+ }
+]

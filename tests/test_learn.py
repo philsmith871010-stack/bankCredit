@@ -54,3 +54,12 @@ def test_answer_is_learned_once(tmp_path, monkeypatch):
     assert learn.record_answer({"id": "z9", "entity_id": "tsb", "values": {"cet1_ratio": 16.0}}, ans)["matched"] == 1
     assert learn.record_answer(None, ans) == {}
     assert learn.summary()["answers"] == 1
+
+
+def test_continuity_ignores_old_baselines(tmp_path, monkeypatch):
+    _iso(tmp_path, monkeypatch)
+    learn.remember_verified("leeds-bs", date(2021, 12, 31), {"cet1_ratio": 38.0, "rwa": 3231.0})
+    assert learn.continuity("leeds-bs", {"cet1_ratio": 25.5, "rwa": 6735.0}, date(2025, 12, 31)) == (None, "")
+    learn.remember_verified("leeds-bs", date(2024, 12, 31), {"cet1_ratio": 28.2, "rwa": 5355.0})
+    ok, _ = learn.continuity("leeds-bs", {"cet1_ratio": 25.5, "rwa": 6735.0}, date(2025, 12, 31))
+    assert ok == "ok"
