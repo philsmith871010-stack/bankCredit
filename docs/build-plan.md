@@ -314,3 +314,11 @@ challenge page (Goldman Sachs) is now opened in a browser tab so the challenge c
 captured, with one more plain request on the cookie it sets; and a report published as a web page (UBS's digital
 Pillar 3 reports) is rendered after its scripts run, stripped of navigation and images, laid out as a PDF by PyMuPDF
 and read by the same extractor. Both are untested against the live sites from here and will show in the next Mac run.
+
+### Coverage page, 7 September 2026 (evening)
+
+A Coverage page (in the navigation before Status) lists every entity with the score it earns, its composite rating and
+the agencies behind it, share price, CDS and bond depth, headlines in 90 days, and for each of twelve ratios the
+number of reporting periods held and the years they span, shaded by depth. The same rows are in `audit.json`. It is a
+build-time view: it says where the history is thin (most UK small banks and building societies: one to five periods,
+no asset quality or profitability) before anyone trusts a score built on it.

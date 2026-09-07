@@ -392,26 +392,49 @@ def ratings_summary(active, ratings: pd.DataFrame, events: pd.DataFrame) -> dict
     return {"rows": rows, "actions": actions}
 
 
-def data_audit(active, facts, ratings, prices, cds, bonds) -> list[dict]:
-    """What we hold for each entity: regulatory history (periods, first, last, sources), ratings, prices, CDS, bonds."""
+AUDIT_METRICS = ["cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "lcr", "nsfr",
+                 "overall_capital_requirement", "npl_ratio", "roe", "roa", "efficiency_ratio", "total_assets"]
+
+
+def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=None) -> list[dict]:
+    """What we hold for each entity: regulatory history (periods, first, last, sources) overall and per
+    metric, ratings by agency, prices, CDS, bonds and news, with the score the board gives it."""
     rows = []
     core = facts[facts.metric == "cet1_ratio"] if not facts.empty else facts
+    by_board = {r["id"]: r for r in (board or [])}
+    cutoff90 = (date.today() - timedelta(days=90)).isoformat()
     for e in active:
+        f = facts[facts.entity_id == e.id] if not facts.empty else facts
         g = core[core.entity_id == e.id] if not core.empty else core
         r = ratings[ratings.entity_id == e.id] if not ratings.empty else ratings
         p = prices[prices.entity_id == e.id] if not prices.empty else prices
         c = cds[cds.entity_id == e.id] if not cds.empty else cds
         b = bonds[bonds.entity_id == e.id] if bonds is not None and not bonds.empty else None
+        ev = events[events.entity_id == e.id] if events is not None and not events.empty else None
         dates = sorted({str(d)[:10] for d in g.reference_date}) if not g.empty else []
-        rows.append({"id": e.id, "short": e.short_name, "region": e.region, "type": e.type,
+        metrics = {}
+        for m in AUDIT_METRICS:
+            md = sorted({str(d)[:10] for d in f[f.metric == m].reference_date}) if not f.empty else []
+            metrics[m] = {"n": len(md), "first": md[0] if md else None, "last": md[-1] if md else None}
+        lt = r[r.horizon == "long"] if not r.empty else r           # any long-term rating type: issuer, IDR, deposit, counterparty
+        agencies = sorted(set(lt.agency)) if not lt.empty else []
+        bd = by_board.get(e.id, {})
+        rows.append({"id": e.id, "short": e.short_name, "region": e.region, "type": e.type, "peer_group": e.peer_group,
                      "periods": len(dates), "first": dates[0] if dates else None, "last": dates[-1] if dates else None,
                      "years": round((date.fromisoformat(dates[-1]) - date.fromisoformat(dates[0])).days / 365.25, 1) if len(dates) > 1 else 0,
-                     "sources": sorted(set(g.source)) if not g.empty else [],
-                     "agencies": int(r.agency.nunique()) if not r.empty else 0,
+                     "sources": sorted(set(f.source)) if not f.empty else [],
+                     "metrics": metrics,
+                     "agencies": len(agencies), "agency_list": agencies,
+                     "rating": bd.get("rating_composite") or "",
                      "price_days": int(p.date.nunique()) if not p.empty else 0,
+                     "price_first": str(p.date.min())[:10] if not p.empty else None,
+                     "symbol": str(p.symbol.iloc[-1]) if not p.empty and "symbol" in p else "",
                      "cds_days": int(c.date.nunique()) if not c.empty else 0,
                      "bonds": int(len(b)) if b is not None else 0,
-                     "ticker": bool(e.tickers)})
+                     "news90": int(((ev.type == "news") & (ev.date.astype(str).str[:10] >= cutoff90)).sum()) if ev is not None else 0,
+                     "events": int(len(ev)) if ev is not None else 0,
+                     "ticker": bool(e.tickers),
+                     "score": bd.get("score"), "band": bd.get("band", ""), "coverage": bd.get("coverage")})
     return rows
 
 
@@ -564,7 +587,7 @@ def export_json() -> None:
     generated = datetime.utcnow().isoformat(timespec="seconds") + "Z"
     store.write_json("board", {"generated": generated, "rows": board, "benchmarks": benchmarks})
     store.write_json("policy", {"generated": generated, "rows": policy_rows})
-    store.write_json("audit", {"generated": generated, "rows": data_audit(active, facts, ratings, prices, cds, store.read("bonds"))})
+    store.write_json("audit", {"generated": generated, "rows": data_audit(active, facts, ratings, prices, cds, store.read("bonds"), events, board)})
     store.write_json("ratings", {"generated": generated, **ratings_summary(active, ratings, events)})
     status = []
     if not runs.empty:

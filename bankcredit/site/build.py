@@ -8,6 +8,7 @@ from .. import store
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
+from ..export import AGENCY_LETTER
 from ..models import METRICS
 from ..score import PILLARS, BANDS, OVERLAY_CAP
 from . import components as c
@@ -538,6 +539,70 @@ def learning_card(status):
 {('<h4>Why items were queued</h4><ul class="small">' + reason_rows + '</ul>') if reason_rows else ''}</div>'''
 
 
+AUDIT_COLS = [("cet1_ratio", "CET1"), ("tier1_ratio", "Tier 1"), ("total_capital_ratio", "Total cap."), ("leverage_ratio", "Leverage"),
+              ("lcr", "LCR"), ("nsfr", "NSFR"), ("overall_capital_requirement", "Requirement"), ("npl_ratio", "NPL"),
+              ("roe", "ROE"), ("roa", "ROA"), ("efficiency_ratio", "Cost/income"), ("total_assets", "Assets")]
+
+
+def _depth_cell(m: dict) -> str:
+    n = m["n"]
+    if not n:
+        return '<td class="cov cov0" data-v="0">—</td>'
+    span = m["first"][:4] if m["first"] == m["last"] else f'{m["first"][:4]}–{m["last"][2:4]}'
+    k = 1 if n < 4 else 2 if n < 12 else 3
+    return f'<td class="cov cov{k}" data-v="{n}"><b>{n}</b><span>{span}</span></td>'
+
+
+def page_coverage(generated):
+    A = load("audit")["rows"]
+    n = len(A)
+
+    def cnt(fn):
+        return sum(1 for a in A if fn(a))
+    tiles = "".join(f'<div class="rtile"><div class="rt-n">{v}</div><div class="rt-l">{c.esc(l)}</div></div>' for v, l in [
+        (n, "entities"), (cnt(lambda a: a["score"] is not None), "scored"), (cnt(lambda a: a["agencies"]), "rated"),
+        (cnt(lambda a: a["years"] >= 5), "5+ years of ratios"), (cnt(lambda a: a["metrics"]["lcr"]["n"]), "with LCR"),
+        (cnt(lambda a: a["metrics"]["npl_ratio"]["n"]), "with asset quality"), (cnt(lambda a: a["price_days"]), "with a share price"),
+        (cnt(lambda a: a["cds_days"]), "with CDS"), (cnt(lambda a: a["bonds"]), "with bonds")])
+    trs = []
+    for a in sorted(A, key=lambda a: (-(a["score"] or -1), a["short"])):
+        band = c.chip(c.esc(a["band"] or "—"), "muted") if a["band"] else ""
+        letters = "".join(AGENCY_LETTER.get(x, x[:1].upper()) for x in a["agency_list"])
+        rating = f'<b>{c.esc(a["rating"])}</b> <span class="muted small">{c.esc(letters)}</span>' if a["agencies"] else '<span class="muted">unrated</span>'
+        price = f'{a["price_days"]}<span class="muted small"> {c.esc(a["symbol"])}</span>' if a["price_days"] else ('<span class="muted">0</span>' if a["ticker"] else '<span class="muted">—</span>')
+        cells = "".join(_depth_cell(a["metrics"][m]) for m, _ in AUDIT_COLS)
+        score = a["score"] if a["score"] is not None else -1
+        sources = ", ".join(x.replace("eba_te", "EBA TE") for x in a["sources"])
+        trs.append(f'<tr data-id="{c.esc(a["id"])}" data-name="{c.esc(a["short"].lower())}" data-region="{c.esc(a["region"])}" data-score="{score}">'
+                   f'<td class="b"><a href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><div class="muted small">{c.esc(a["peer_group"])}</div></td>'
+                   f'<td class="mono" data-v="{score}">{a["score"] if a["score"] is not None else "—"} {band}</td>'
+                   f'<td data-v="{a["agencies"]}">{rating}</td>'
+                   f'<td class="mono" data-v="{a["price_days"]}">{price}</td>'
+                   f'<td class="mono" data-v="{a["cds_days"]}">{a["cds_days"] or "—"}</td>'
+                   f'<td class="mono" data-v="{a["bonds"]}">{a["bonds"] or "—"}</td>'
+                   f'<td class="mono" data-v="{a["news90"]}">{a["news90"] or "—"}</td>'
+                   f'<td class="mono" data-v="{a["years"]}">{a["years"] or "—"}</td>'
+                   f'<td class="small muted">{c.esc(sources)}</td>{cells}</tr>')
+    regions = [("all", "All"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
+    filters = "".join(f'<button class="filter{" active" if k == "all" else ""}" data-region="{k}">{c.esc(l)}</button>' for k, l in regions)
+    heads = "".join(f'<th class="num" data-sort="col" title="periods held and the years they span">{c.esc(l)}</th>' for _, l in AUDIT_COLS)
+    body = "".join(trs)
+    content = (
+        '<div class="page-head"><div><h1>Coverage</h1><div class="lede">What is held for every entity: the score it earns, ratings by agency, '
+        'share price, CDS and bond data, news, and for each ratio the number of reporting periods and the years they span. '
+        'A build-time view, so gaps are visible before they are trusted.</div></div></div>'
+        f'<div class="rtiles">{tiles}</div>'
+        f'<div class="card" style="margin-top:16px"><div class="toolbar"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>'
+        '<div class="table-wrap"><table id="board" class="plain coverage"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Score</th>'
+        '<th data-sort="col">Rating</th><th class="num" data-sort="col" title="trading days of closing prices held">Price days</th>'
+        '<th class="num" data-sort="col" title="settlement days with a CDS level">CDS days</th><th class="num" data-sort="col">Bonds</th>'
+        '<th class="num" data-sort="col" title="headlines kept in the last 90 days">News 90d</th>'
+        f'<th class="num" data-sort="col" title="span of the CET1 history in years">Years</th><th>Sources</th>{heads}</tr></thead><tbody>{body}</tbody></table></div>'
+        '<div class="table-foot"><span>Ratio cells: periods held, then the first and last year. Shading: light under 4 periods, mid under 12, dark 12 and over. '
+        "Rating letters are the agencies holding a long-term issuer rating (F Fitch, S S&amp;P, M Moody's, D DBRS, K KBRA, Sc Scope, J JCR). Click a column heading to sort.</span></div></div>")
+    return c.shell("Coverage", content, "coverage", "../", generated)
+
+
 def build():
     board = load("board"); status = load("status"); generated = board["generated"]
     if OUT.exists():
@@ -552,6 +617,8 @@ def build():
     (OUT / "method" / "index.html").write_text(page_method(generated))
     (OUT / "ratings").mkdir(exist_ok=True)
     (OUT / "ratings" / "index.html").write_text(page_ratings(generated))
+    (OUT / "coverage").mkdir(exist_ok=True)
+    (OUT / "coverage" / "index.html").write_text(page_coverage(generated))
     (OUT / "policy").mkdir(exist_ok=True)
     (OUT / "policy" / "index.html").write_text(page_policy(generated))
     (OUT / "data").mkdir(exist_ok=True)
