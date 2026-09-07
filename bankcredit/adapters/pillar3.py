@@ -310,8 +310,14 @@ class Pillar3Adapter(Adapter):
                 continue
             if res.ok:
                 status = "loaded" if res.confidence >= 0.9 else "unverified"
-                store.drop("facts", document=url, source=self.name)
-                n += store.upsert("facts", self._facts(ent, url, res))
+                # the reviewer's answers for this document outlive a re-read: rows the rules cannot reach stay,
+                # and a rules value never overwrites a manual one on the same key
+                held = store.read("facts")
+                held = held[(held.document == url) & (held.method == "pdf_manual")] if not held.empty else held
+                manual_keys = set(zip(held.entity_id, held.reference_date.astype(str).str[:10], held.metric, held.basis)) if not held.empty else set()
+                fresh = [f for f in self._facts(ent, url, res) if (f.entity_id, f.reference_date.isoformat(), f.metric, f.basis) not in manual_keys]
+                store.drop("facts", ne={"method": "pdf_manual"}, document=url, source=self.name)
+                n += store.upsert("facts", fresh)
                 review.remove((sha or hashlib.sha1(url.encode()).hexdigest())[:12])
                 if status == "loaded" and res.reference_date:
                     learn.remember_verified(ent, res.reference_date, res.values)

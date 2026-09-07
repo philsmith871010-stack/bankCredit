@@ -64,14 +64,16 @@ def upsert(table: str, rows: list | pd.DataFrame) -> int:
     return len(new)
 
 
-def drop(table: str, **eq) -> int:
-    """Delete rows whose columns equal the given values. Returns rows removed."""
+def drop(table: str, ne: dict | None = None, **eq) -> int:
+    """Delete rows whose columns equal the given values (and differ from any in ne). Returns rows removed."""
     df = read(table)
     if df.empty:
         return 0
     mask = pd.Series(True, index=df.index)
     for col, val in eq.items():
         mask &= df[col] == val
+    for col, val in (ne or {}).items():
+        mask &= df[col] != val
     if not mask.any():
         return 0
     df[~mask].to_parquet(path(table), index=False)

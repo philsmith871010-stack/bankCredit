@@ -589,9 +589,16 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
     if not res.period_dates:
         standalone = [l.strip() for l in lines if len(l.strip()) <= 20 and parse_dates(l, year_end=year_end)]
         res.period_dates = parse_dates("\n".join(standalone), year_end=year_end)
+    narrative = False
     if not res.period_dates:
-        res.period_dates = parse_dates(header, year_end=year_end)
-        if res.period_dates:
+        found = parse_dates(header, year_end=year_end)
+        if found:
+            # narrative text: the date after "as at" / "as of" / "ended" names the period; otherwise the latest date
+            m = re.search(r"\b(?:as at|as of|at|ended|ending|period end(?:ed)?)\s+(\d{1,2}\s+" + MON + r"\.?\s+\d{2,4}|" + MON + r"\s+\d{1,2},?\s+\d{4})", _norm_text(header), re.I)
+            named = parse_dates(m.group(1), year_end=year_end) if m else []
+            first = named[0] if named else max(found)
+            res.period_dates = [first] + [d for d in found if d != first]
+            narrative = True
             res.checks.append(("warn", "reference date taken from narrative text, not a column header"))
     descending = True
     if len(res.period_dates) >= 2 and res.period_dates[0] < res.period_dates[1]:
@@ -613,7 +620,7 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
             picked.append((metric, toks, "label"))
     if picked and not numbered:
         res.checks.append(("warn", "rows identified by label only (no row numbers in the table)"))
-    res.history = prior_columns(picked, res.period_dates, descending, res.scale)
+    res.history = {} if narrative else prior_columns(picked, res.period_dates, descending, res.scale)   # narrative dates are not columns
     for metric, toks, row in picked:
         kind = KIND[metric]
         pick = toks[0] if descending else toks[-1]

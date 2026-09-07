@@ -199,3 +199,18 @@ def test_first_unit_statement_wins():
     assert km1.detect_units("KM1 (Millions of Canadian dollars)\nTotal RWA increased by $29 billion")[1] == 1.0
     assert km1.detect_units("Key metrics £bn\n1 CET1 capital 40.7")[1] == 1000.0
     assert km1.detect_units("Key metrics £'000\n1 CET1 capital 40,700")[1] == 0.001
+
+
+def test_narrative_date_prefers_the_as_at_phrase():
+    lines = ["Table 4.1B Key metrics", "The Group adopted the framework from 1 January 2013. Table 4.1B shows capital as at 30 Sep 17.",
+             "Common Equity Tier 1 capital", "34,000", "Tier 1 capital", "40,000", "Total capital", "48,000",
+             "Total risk-weighted assets", "380,000", "Common Equity Tier 1 ratio", "10.1%", "Tier 1 ratio", "12.4%", "Total capital ratio", "14.6%"]
+    import fitz
+    doc = fitz.open(); page = doc.new_page(); y = 60
+    for l in lines:
+        page.insert_text((50, y), l, fontsize=10); y += 16
+    import tempfile, os
+    path = os.path.join(tempfile.mkdtemp(), "nab.pdf"); doc.save(path)
+    res = km1.extract(path, currency_hint="AUD")
+    assert res.reference_date == km1.date(2017, 9, 30)
+    assert res.history == {}
