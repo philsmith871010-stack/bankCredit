@@ -125,7 +125,8 @@ LOCATORS: list[dict] = [
     dict(entity="icici-bank-uk", page="https://www.icicibank.co.uk/about-us/basel-disclosures",
          match=r"basel-pillar-3-disclosures.*\.pdf", year_end="03-31"),
     dict(entity="bank-of-china-uk", page="https://www.bankofchina.com/uk/en/aboutus/ab1/", match=P3 + r".*\.pdf", kind="browser"),
-    dict(entity="icbc-london", page="https://london.icbc.com.cn/en/", match=P3 + r".*\.pdf", kind="browser"),
+    dict(entity="icbc-london", page="https://www.icbclondon.com/en/about-us/", match=P3 + r".*\.pdf", kind="browser",
+         note="london.icbc.com.cn no longer resolves; site address to be confirmed from the Mac"),
     dict(entity="bank-of-baroda-uk", page="https://www.bankofbarodauk.com/about-us",
          match=r"ukretail/pdf/disclosures-as-on.*\.pdf", year_end="03-31"),
     dict(entity="qib-uk", page="https://www.qib-uk.com/about-us/financial-information/", match=P3 + r".*\.pdf", kind="browser"),
@@ -208,7 +209,8 @@ LOCATORS += [
     dict(entity="goldman-sachs", kind="browser", template="us_capital", currency="USD",
          page="https://www.goldmansachs.com/investor-relations/financials/other-information", match=P3 + r".*\.pdf", note="CET1 and SLR also come from EDGAR XBRL"),
     dict(entity="ubs", kind="browser", currency="USD",
-         page="https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html", match=P3 + r".*\.pdf", note="UBS KM1 in the quarterly Pillar 3 report"),
+         page="https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html", match=P3 + r".*\.pdf",
+         exclude=r"gsib|g-sib|indicator|tlac|resolution|remuneration", note="UBS KM1 in the quarterly Pillar 3 report; the G-SIB indicators file is not it"),
 ]
 
 COUNTRY_CCY = {"GB": "GBP", "US": "USD", "AU": "AUD", "CA": "CAD", "SG": "SGD", "HK": "HKD", "JP": "JPY",

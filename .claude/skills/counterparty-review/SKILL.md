@@ -88,6 +88,11 @@ Status page shows them older than 150 days:
    browser headers, then with headless Chromium, loads whatever it finds and
    prints the firms that are still blocked. Nothing else is needed for the
    firms it collected.
+   Firms reported as "no matching links" had a readable page whose documents the
+   locator pattern did not fit; the links the page offered are saved in
+   `data/review/browser-links.json` (commit it with your push) so the pattern can
+   be fixed in code. If one of those links is plainly the newest Pillar 3 PDF,
+   download it and use step 3 rather than waiting.
 2. For the firms it reports as blocked, use the Chrome extension: open the
    locator's `page`, find the newest Pillar 3 PDF and save it under
    `data/cache/pdf/<entity_id>/`.

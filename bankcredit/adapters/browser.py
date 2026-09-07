@@ -15,6 +15,7 @@ documents table behave exactly as for the pipeline's own collection. No AI servi
 """
 from __future__ import annotations
 
+import json
 import logging
 import os
 import re
@@ -47,21 +48,61 @@ def looks_blocked(status: int, body: str) -> bool:
     return status != 200 or len(body) < 1500 or bool(CHALLENGE.search(body[:20000]))
 
 
-def candidates(loc: dict, body: str, links: list[str], adapter: Pillar3Adapter) -> list[tuple[str, date | None, str]]:
-    """Links on a listing page (from its HTML and from the rendered DOM) that match the locator, newest first."""
+GENERIC = re.compile(r"pillar[-_ %]?(?:3|iii)|basel[-_ %]?(?:3|iii).*disclos", re.I)
+GENERIC_EXCLUDE = re.compile(r"gsib|g-sib|indicator|tlac|remuneration|glossary|appendix|chinese|-cn\b|template|policy|terms", re.I)
+LINKS_SEEN = store.DATA / "review" / "browser-links.json"
+
+
+def _pairs(body: str, links: list, adapter: Pillar3Adapter, page_url: str) -> list[tuple[str, str]]:
+    """(url, anchor text) for every link on the page, HTML-scraped and DOM-rendered alike."""
+    out, seen = [], set()
+    for l in links:
+        href, text = (l[0], l[1]) if isinstance(l, (list, tuple)) else (l, "")
+        u = urljoin(page_url, href).split("#")[0]
+        if u not in seen:
+            seen.add(u); out.append((u, text))
+    for u in adapter._links(page_url, body):
+        u = u.split("#")[0]
+        if u not in seen:
+            seen.add(u); out.append((u, ""))
+    return out
+
+
+def candidates(loc: dict, body: str, links: list, adapter: Pillar3Adapter, generic: bool = False) -> list[tuple[str, date | None, str]]:
+    """Links on a listing page that match the locator, newest first. With generic=True the locator's own
+    pattern is set aside and anything that looks like a Pillar 3 document (by URL or by link text) is taken."""
     mrx = re.compile(loc["match"], re.I)
     xrx = re.compile(loc["exclude"], re.I) if loc.get("exclude") else None
-    seen, found = set(), []
-    for u in adapter._links(loc["page"], body) + [urljoin(loc["page"], l) for l in links]:
-        u = u.split("#")[0]
+    found = []
+    for u, text in _pairs(body, links, adapter, loc["page"]):
         d = unquote(u)
-        if u in seen or not mrx.search(d) or (xrx and xrx.search(d)) or re.search(r"\.(jpg|png|gif|svg|css|js|xlsx?|docx?)(\?|$)", d, re.I):
+        if re.search(r"\.(jpg|png|gif|svg|css|js|xlsx?|docx?|zip)(\?|$)", d, re.I):
             continue
-        seen.add(u)
+        if generic:
+            ok = (GENERIC.search(d) or GENERIC.search(text)) and not GENERIC_EXCLUDE.search(d + " " + text) \
+                 and (d.lower().endswith(".pdf") or ".pdf" in d.lower() or re.search(r"download|document|media|file", d, re.I) or GENERIC.search(text))
+        else:
+            ok = mrx.search(d) and not (xrx and xrx.search(d))
+        if not ok:
+            continue
         ye = loc.get("year_end", "12-31")
-        found.append((u, infer_period(d.rsplit("/", 1)[-1], ye) or infer_period(d, ye), d.rsplit("/", 1)[-1][:120]))
+        name = d.rsplit("/", 1)[-1][:120] or text[:120]
+        found.append((u, infer_period(name, ye) or infer_period(d, ye) or infer_period(text, ye), name if name else text[:120]))
     found.sort(key=lambda x: (x[1] or date(1900, 1, 1)), reverse=True)
     return found
+
+
+def remember_links(entity: str, body: str, links: list, adapter: Pillar3Adapter, page_url: str) -> None:
+    """Keep the document-looking links a page offered, so a locator pattern can be tuned without a browser."""
+    try:
+        seen = json.loads(LINKS_SEEN.read_text()) if LINKS_SEEN.exists() else {}
+    except Exception:
+        seen = {}
+    docs = [{"url": u, "text": t} for u, t in _pairs(body, links, adapter, page_url)
+            if re.search(r"\.pdf|download|document|disclos|pillar|basel|report", u + " " + t, re.I)][:60]
+    seen[entity] = {"page": page_url, "checked": date.today().isoformat(), "links": docs}
+    LINKS_SEEN.parent.mkdir(parents=True, exist_ok=True)
+    LINKS_SEEN.write_text(json.dumps(seen, indent=1, ensure_ascii=False))
 
 
 class Browser:
@@ -88,7 +129,7 @@ class Browser:
             log.warning("browser: Playwright unavailable (%s); pip install playwright && playwright install chromium", exc)
         return self.ctx
 
-    def listing(self, url: str) -> tuple[int, str, list[str]]:
+    def listing(self, url: str) -> tuple[int, str, list]:
         ctx = self.open()
         if not ctx:
             return 0, "", []
@@ -98,7 +139,7 @@ class Browser:
             page.wait_for_timeout(5000)                       # script-built lists and cookie banners settle
             status = r.status if r else 0
             body = page.content()
-            links = page.eval_on_selector_all("a[href]", "els => els.map(e => e.href)")
+            links = page.eval_on_selector_all("a[href]", "els => els.map(e => [e.href, (e.textContent || '').trim().slice(0, 120)])")
             return status, body, links
         except Exception as exc:
             log.warning("browser: %s -> %s", url, exc)
@@ -155,9 +196,15 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
         if not body:
             out[ent] = "blocked" if (use_pw and not browser.error) else "blocked (no Playwright)"
             continue
-        cands = [c for c in candidates(loc, body, links, ad) if c[0] not in ad.seen][:max_new]
+        remember_links(ent, body, links, ad, loc["page"])
+        allc = candidates(loc, body, links, ad)
+        how = "locator"
+        if not allc:
+            allc = candidates(loc, body, links, ad, generic=True)
+            how = "generic"
+        cands = [c for c in allc if c[0] not in ad.seen][:max_new]
         if not cands:
-            out[ent] = "nothing new" if any(c[0] in ad.seen for c in candidates(loc, body, links, ad)) else "no matching links"
+            out[ent] = "nothing new" if allc else "no matching links (see data/review/browser-links.json)"
             continue
         n = 0
         for url, _hint, title in cands:
@@ -181,6 +228,6 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
                 n += 1
             finally:
                 Path(tmp.name).unlink(missing_ok=True)
-        out[ent] = f"collected {n}" if n else "download failed"
+        out[ent] = (f"collected {n}" + (" (generic match)" if how == "generic" else "")) if n else "download failed"
     browser.close()
     return out
