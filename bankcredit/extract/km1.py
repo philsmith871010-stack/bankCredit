@@ -722,6 +722,10 @@ def validate(res: Result) -> None:
         implied = v["cet1_capital"] / v["rwa"] * 100
         if abs(implied - v["cet1_ratio"]) > 0.35:
             res.checks.append(("error", f"cet1_ratio {v['cet1_ratio']:.2f} vs implied {implied:.2f} from capital/RWA"))
+        else:
+            # capital, RWA and the ratio agree: rows matched by label alone are confirmed by arithmetic
+            res.checks = [("info", m + "; confirmed by capital arithmetic") if s == "warn" and m.startswith("rows identified by label only") else (s, m)
+                          for s, m in res.checks]
     if "tier1_capital" in v and "leverage_exposure" in v and "leverage_ratio" in v and v["leverage_exposure"]:
         implied = v["tier1_capital"] / v["leverage_exposure"] * 100
         if v["leverage_ratio"] and 800 < implied / v["leverage_ratio"] < 1250:

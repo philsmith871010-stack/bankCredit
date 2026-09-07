@@ -1390,5 +1390,24 @@
    },
    "method": "pdf_rules"
   }
+ },
+ "principality-bs": {
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 753.8,
+    "tier1_capital": 753.8,
+    "total_capital": 753.8,
+    "rwa": 4022.6,
+    "cet1_ratio": 18.7,
+    "tier1_ratio": 18.7,
+    "total_capital_ratio": 18.7,
+    "leverage_exposure": 14153.5,
+    "leverage_ratio": 5.3,
+    "lcr": 167.6,
+    "nsfr": 144.0
+   },
+   "method": "pdf_rules"
+  }
  }
 }
