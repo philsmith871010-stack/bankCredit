@@ -85,3 +85,11 @@ table.coverage th{white-space:nowrap}table.coverage td{vertical-align:middle}
 
 svg.ribbon{background:linear-gradient(90deg,#c9d3de 0 35%,#a9b8c9 35% 50%,#7d93ad 50% 65%,#3f5f85 65% 80%,#0a2540 80% 100%);background-clip:content-box;padding:3px 0;box-sizing:border-box;border-radius:2px}
 .band-A{background:#0a2540;color:#fff}.band-B{background:#3f5f85;color:#fff}.band-C{background:#7d93ad;color:#fff}.band-D{background:#a9b8c9;color:#243240}.band-E{background:#c9d3de;color:#243240}.band-x{background:#dfe5eb;color:#243240}
+.nv-card{padding:14px 16px}.nv-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.nv-tools .search{width:320px}.nv-sort select{font:inherit;font-size:13px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--white);margin-left:4px}.nv-count{margin-left:auto}
+.nv-facets{display:flex;flex-direction:column;gap:6px;padding-bottom:10px;border-bottom:1px solid var(--line)}.nv-facets .filter{height:28px;padding:0 10px;font-size:12px}.nv-facets .filter .cnt{margin-left:6px;opacity:.6;font-weight:400;font-variant-numeric:tabular-nums}.nv-facets .filter:disabled{opacity:.35;cursor:default}
+.nv-head,.nv-row{display:grid;grid-template-columns:28px minmax(200px,1fr) 44px 52px 110px 40px 44px 96px;align-items:center;gap:8px}
+.nv-head{padding:8px 6px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.nv-row{padding:7px 6px;border-top:1px solid var(--line-soft)}.nv-row:hover{background:var(--bg)}.nv-row .nm{font-weight:600;display:block}.nv-row .sub{font-size:12px;color:var(--muted)}.nv-name{color:var(--text)}
+.nv-child .nv-name{padding-left:18px;position:relative}.nv-child .nv-name:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;border-left:2px solid var(--line)}.nv-flat .nv-child .nv-name,.nv-orphan .nv-name{padding-left:0}.nv-flat .nv-child .nv-name:before,.nv-orphan .nv-name:before{display:none}
+.nv-score{text-align:right}.nv-news{text-align:right;color:var(--muted)}.nv-row .watch{background:none;border:0;cursor:pointer;padding:2px}
+@media(max-width:800px){.nv-head{display:none}.nv-row{grid-template-columns:24px 1fr 40px 44px;grid-auto-rows:auto}.nv-rating,.nv-mkt,.nv-news,.nv-asof{display:none}.nv-tools .search{width:100%}}

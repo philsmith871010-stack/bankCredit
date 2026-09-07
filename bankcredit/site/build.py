@@ -85,16 +85,62 @@ def page_board(board, generated):
     return c.shell("Board", content, "board", "", generated)
 
 
-def page_banks_index(board, generated):
-    rows = sorted(board["rows"], key=lambda r: (r["region"], r["name"]))
-    groups = {}
-    for r in rows:
-        groups.setdefault(r["region"], []).append(r)
-    blocks = "".join(f'<section class="group"><h2>{REGION_LABEL[k]}</h2><div class="grid-cards">' + "".join(
-        f'<a class="bank-card" href="{r["id"]}.html"><span class="nm">{c.esc(r["name"])}</span><span class="sub">{TYPE_LABEL.get(r["type"], r["type"])} · {COUNTRY.get(r["country"], r["country"])}</span><span class="row">{c.band_chip(r["band"])}<span class="mono">{sc(r)}</span>{c.agency_chips(r["ratings"][:3])}</span></a>' for r in v) + "</div></section>" for k, v in groups.items())
-    content = f'<div class="page-head"><div><h1>Bank profiles</h1><div class="lede">Every entity in the release-one universe, grouped by region</div></div></div>{blocks}'
-    return c.shell("Bank profiles", content, "banks", "../", generated)
+NAV_TYPES = [("bank", "Banks"), ("building_society", "Building societies"), ("holding", "Groups"), ("subsidiary", "Overseas-owned banks")]
+NAV_GRADES = [("top", "AA- and above"), ("a", "A range"), ("bbb", "BBB range"), ("sub", "Below BBB-"), ("nr", "Unrated")]
 
+
+def _grade_bucket(r) -> str:
+    g = r.get("rating_grade")
+    if g is None:
+        return "nr"
+    return "top" if g <= 4 else "a" if g <= 7 else "bbb" if g <= 10 else "sub"
+
+
+def page_banks_index(board, generated):
+    rows = board["rows"]
+    by_id = {r["id"]: r for r in rows}
+    # families: a parent first, its subsidiaries beneath it; an entity whose group is not covered stands alone
+    order = []
+    for r in sorted(rows, key=lambda r: r["name"].lower()):
+        if r["group"] and r["group"] in by_id:
+            continue
+        order.append((r, 0))
+        for ch in sorted((x for x in rows if x["group"] == r["id"]), key=lambda x: x["name"].lower()):
+            order.append((ch, 1))
+    items = []
+    for i, (r, depth) in enumerate(order):
+        rating = (f'<b>{c.esc(r["rating_composite"])}</b><span class="muted small"> {len(r["ratings"])} ag.</span>' if r["ratings"]
+                  else '<span class="muted small">unrated</span>')
+        age = r["age_days"]
+        asof = (f'<span class="age {"age-late" if age and age > 150 else ""}">{c.esc(r["asof"])}</span>' if r["asof"] else '<span class="muted">—</span>')
+        news = r.get("events90") or 0
+        items.append(
+            f'<div class="nv-row{" nv-child" if depth else ""}" data-id="{c.esc(r["id"])}" data-i="{i}" data-name="{c.esc(r["name"].lower())} {c.esc(r["short"].lower())} {c.esc(r["id"])}" '
+            f'data-region="{c.esc(r["region"])}" data-type="{c.esc(r["type"])}" data-band="{c.esc(r["band"] or "?")}" data-grade="{_grade_bucket(r)}" '
+            f'data-score="{r["score"] if r["score"] is not None else -1}" data-g="{r["rating_grade"] if r["rating_grade"] is not None else 99}" data-asof="{c.esc(r["asof"] or "")}" data-group="{c.esc(r["group"] or "")}">'
+            f'<button class="watch" data-id="{c.esc(r["id"])}" aria-label="Watch">{c.use_icon("star", 15, "#cbd3dc")}</button>'
+            f'<a class="nv-name" href="{c.esc(r["id"])}.html"><span class="nm">{c.esc(r["name"])}</span><span class="sub">{TYPE_LABEL.get(r["type"], r["type"])} · {COUNTRY.get(r["country"], r["country"])}{(" · part of " + c.esc(by_id[r["group"]]["short"])) if r["group"] in by_id else ""}</span></a>'
+            f'<span class="nv-band">{c.band_chip(r["band"])}</span><span class="nv-score mono">{sc(r) or "—"}</span>'
+            f'<span class="nv-rating">{rating}</span><span class="nv-mkt">{c.market_glyph(r["market"])}</span>'
+            f'<span class="nv-news mono small" title="headlines kept in 90 days">{news or ""}</span><span class="nv-asof mono small">{asof}</span></div>')
+    regions = [("all", "All regions")] + [(k, v) for k, v in REGION_LABEL.items()]
+    chips = lambda key, opts: "".join(f'<button class="filter nv-f" data-key="{key}" data-val="{k}">{c.esc(l)}<span class="cnt"></span></button>' for k, l in opts)
+    content = f'''<div class="page-head"><div><h1>Bank navigator</h1><div class="lede">Every covered entity in one list. Type to search; combine the filters; families sit together, subsidiaries beneath their parent.</div></div></div>
+<div class="card nv-card"><div class="nv-tools">
+<div class="search">{c.ico("search", 16, c.MUTED)}<input id="nvq" placeholder="Name, short name or country" autocomplete="off"></div>
+<label class="nv-sort small muted">Sort <select id="nvsort"><option value="family">Family, A to Z</option><option value="score">Score, high to low</option><option value="rating">Rating, strong to weak</option><option value="asof">Freshest figures</option><option value="name">Name</option></select></label>
+<span class="nv-count small muted" id="nvcount"></span></div>
+<div class="nv-facets">
+<div class="filters" data-facet="region">{chips("region", regions)}</div>
+<div class="filters" data-facet="type"><button class="filter nv-f" data-key="type" data-val="all">All types<span class="cnt"></span></button>{chips("type", NAV_TYPES)}</div>
+<div class="filters" data-facet="band"><button class="filter nv-f" data-key="band" data-val="all">Any band<span class="cnt"></span></button>{chips("band", [(b, "Band " + b) for b in "ABCDE"] + [("?", "No band yet")])}</div>
+<div class="filters" data-facet="grade"><button class="filter nv-f" data-key="grade" data-val="all">Any rating<span class="cnt"></span></button>{chips("grade", NAV_GRADES)}</div>
+<div class="filters" data-facet="watch"><button class="filter nv-f" data-key="watch" data-val="all">Everyone<span class="cnt"></span></button><button class="filter nv-f" data-key="watch" data-val="watch">Watching<span class="cnt"></span></button></div>
+</div>
+<div class="nv-head"><span></span><span>Entity</span><span>Band</span><span>Score</span><span>Rating</span><span>Mkt</span><span title="headlines kept in 90 days">News</span><span>As of</span></div>
+<div class="nv-list" id="nvlist">{"".join(items)}</div>
+<div class="empty" id="nvempty" hidden>Nothing matches. Clear a filter or shorten the search.</div></div>'''
+    return c.shell("Bank navigator", content, "banks", "../", generated).replace("</body>", '<script src="../assets/navigator.js"></script></body>')
 
 def tile(metric, label, unit, dp, series, peer_median=None):
     pts = series.get(metric, [])
