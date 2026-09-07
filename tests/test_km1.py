@@ -154,3 +154,22 @@ def test_prior_columns_follow_header_dates():
 def test_curly_apostrophe_thousands_are_scaled():
     from bankcredit.extract.km1 import detect_units, _norm_text
     assert detect_units(_norm_text("31 Mar 2023 £\u2019000 31 Mar 2022 £\u2019000 Common Equity Tier 1"))[1] == 0.001
+
+
+def test_fully_loaded_twin_rows_do_not_stand_in_for_base_rows():
+    # Barclays 2018 Table 7: labels and values in separate blocks, each base row followed by a
+    # "Fully loaded ECL accounting model" twin. The twin's value must not become the base row's.
+    lines = ["1", "Common Equity Tier 1 (CET1)", "41,100", "40,400",
+             "1a", "Fully loaded ECL accounting model",
+             "2", "Tier 1", "2a", "Fully loaded ECL accounting model", "50,000",
+             "3", "Total capital", "64,594",
+             "4", "Total risk-weighted assets (RWA)", "311,926",
+             "6", "Tier 1 ratio (%)", "17.0",
+             "6a Fully loaded ECL accounting model Tier 1 ratio (%)", "16.4"]
+    vals, labels = km1.parse_rows(lines)
+    assert vals["1"][0] == "41,100"
+    assert "2" not in vals                      # missing beats wrong
+    assert vals["3"][0] == "64,594" and vals["4"][0] == "311,926"
+    assert vals["6"][0] == "17.0"
+    assert km1._confirm("2", "Tier 1 fully loaded") is None
+    assert km1._confirm("2", "Tier 1") == "tier1_capital"

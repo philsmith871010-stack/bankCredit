@@ -34,3 +34,17 @@ def test_subpages_follow_report_hubs_on_the_same_host():
              ["https://www.furnessbs.co.uk/careers/", "Careers"]]
     assert B.subpages(loc, "", links, ad) == ["https://www.furnessbs.co.uk/financial-reports/"]
     assert B.document_links("", links, ad, loc["page"]) == 1
+
+
+def test_locator_text_key_tells_opaque_downloads_apart():
+    ad = Pillar3Adapter()
+    loc = {"entity": "jpmorgan-chase", "page": "https://example.org/ir/", "match": r"static-files",
+           "text": r"pillar ?3|liquidity coverage", "exclude": r"financial statement|securities llc"}
+    links = [["https://example.org/static-files/aaa", "Basel III Pillar 3 Regulatory Capital Disclosures Report – Q2 2026"],
+             ["https://example.org/static-files/bbb", "JPMorgan Chase Bank, N.A. Consolidated Financial Statements 2025"],
+             ["https://example.org/static-files/ccc", "J.P. Morgan Securities LLC Statement of Financial Condition"],
+             ["https://example.org/static-files/ddd", "Liquidity Coverage Ratio Disclosure Q1 2026"]]
+    got = [u for u, _d, _t in B.candidates(loc, "", links, ad)]
+    assert got == ["https://example.org/static-files/aaa", "https://example.org/static-files/ddd"]
+    generic = [u for u, _d, _t in B.candidates(loc, "", links, ad, generic=True)]
+    assert "https://example.org/static-files/bbb" not in generic

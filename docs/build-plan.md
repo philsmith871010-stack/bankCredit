@@ -296,3 +296,16 @@ Mac under the subscription, judges the fortnight's headlines against a treasurer
 `data/review/news_verdicts.json`; the pipeline's prune step applies the verdicts (drop, or corrected severity) on
 every run, so each headline is judged once and stays judged. What the reviewer drops most often is the work order for
 the next rule.
+
+### What the Mac's collection taught us, 7 September 2026 (evening)
+
+Two extractor faults surfaced by the review answers, both fixed with tests. Barclays' older Key Metrics tables print a
+"fully loaded ECL accounting model" twin (1a, 2a, 3a...) under each base row; when the labels and values sit in
+separate text blocks the twin's figure was read as the base row's. Suffixed rows the template does not track now end
+the row before them, and a label that says fully loaded, fully phased-in or ECL model is never accepted for a base
+row: missing beats wrong, and the review loop fills the gap. JPMorgan's disclosure page hands out opaque
+`static-files` addresses, so the locator matched consolidated financial statements of the bank and the broker-dealer;
+a locator can now name the link text it wants (`text=`), and the generic sweep skips financial statements.
+Reference dates: six of the 115 answers moved the date, all on documents the extractor had already flagged (split
+month and year headers at NAB, no date in the header at Standard Chartered), so the warning is doing its job and the
+answer is recorded as a verified point.

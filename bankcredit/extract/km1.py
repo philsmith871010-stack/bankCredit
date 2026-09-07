@@ -281,6 +281,15 @@ def _row_key(m) -> str | None:
     return None
 
 
+def _sub_row_marker(line: str) -> bool:
+    """True for a numbered variant row the template does not track (1a, 2a, 5a: the fully loaded
+    or ECL-transitional twins Barclays and others print under each base row). Such a line ends
+    the row before it; its own values are never read."""
+    line = line.strip()
+    m = BARE_ROW_RE.match(line) or (INLINE_ROW_RE.match(line) if not _is_value_line(line) else None)
+    return bool(m and m.group(2) and _row_key(m) is None)
+
+
 def _row_start(lines: list[str], i: int) -> tuple[str, str, int] | None:
     """(row key, inline label, index of the first label line) if line i starts a template row, else None."""
     line = lines[i].strip()
@@ -318,9 +327,13 @@ def parse_rows(lines: list[str]) -> tuple[dict, dict]:
         start = _row_start(lines, i)
         if start:
             key, label, i = start
-            while i < n and not _is_value_line(lines[i]) and not _row_start(lines, i):
+            while i < n and not _is_value_line(lines[i]) and not _row_start(lines, i) and not _sub_row_marker(lines[i]):
                 label = (label + " " + lines[i].strip()).strip()
                 i += 1
+            if i < n and _sub_row_marker(lines[i]):
+                entries.append([key, label, []])   # base row printed without values here; its twin's are not ours
+                i += 1
+                continue
             # values printed on the label line itself: "NSFR ratio (%) 112.1% 113.3%"
             toks = _tokens(label)
             while toks and re.fullmatch(r"\(\d{1,2}\)|\d", toks[-1]):
@@ -375,6 +388,8 @@ def _confirm(row: str, label: str) -> str | None:
     if re.search(pat, low):
         if re.search(r"\bnotes?\b$|pillar 3|page \d|overview|key metrics|template|annex|contents", low):
             return None
+        if re.search(r"fully[- ]loaded|fully[- ]phased|ecl accounting model|pre[- ]ifrs ?9|excluding (?:the )?(?:ifrs ?9|ecl)", low):
+            return None          # the transitional base row is the one the template asks for
         # disambiguate ratio rows that share words
         if metric == "tier1_ratio" and re.search(r"common equity|cet", low):
             return None

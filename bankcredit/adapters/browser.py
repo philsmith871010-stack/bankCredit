@@ -49,7 +49,7 @@ def looks_blocked(status: int, body: str) -> bool:
 
 
 GENERIC = re.compile(r"pillar[-_ %]?(?:3|iii)|basel[-_ %]?(?:3|iii).*disclos", re.I)
-GENERIC_EXCLUDE = re.compile(r"gsib|g-sib|indicator|tlac|remuneration|glossary|appendix|chinese|-cn\b|template|policy|terms", re.I)
+GENERIC_EXCLUDE = re.compile(r"gsib|g-sib|indicator|tlac|remuneration|glossary|appendix|chinese|-cn\b|template|policy|terms|financial statements?|consolidated financial|securities llc|bank,? n\.?a\b", re.I)
 LINKS_SEEN = store.DATA / "review" / "browser-links.json"
 
 
@@ -83,6 +83,9 @@ def candidates(loc: dict, body: str, links: list, adapter: Pillar3Adapter, gener
                  and (d.lower().endswith(".pdf") or ".pdf" in d.lower() or re.search(r"download|document|media|file", d, re.I) or GENERIC.search(text))
         else:
             ok = mrx.search(d) and not (xrx and xrx.search(d))
+            if ok and loc.get("text"):
+                # opaque download addresses (JPMorgan's static-files) are told apart only by their link text
+                ok = re.search(loc["text"], text or "", re.I) and not (xrx and xrx.search(text or ""))
         if not ok:
             continue
         ye = loc.get("year_end", "12-31")
