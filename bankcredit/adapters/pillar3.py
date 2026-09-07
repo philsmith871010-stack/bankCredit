@@ -37,7 +37,7 @@ BROWSER_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (
               "Chrome/128.0.0.0 Safari/537.36")
 NSM_API = "https://api.data.fca.org.uk/search?index=nsm-search"
 NSM_ARTEFACTS = "https://data.fca.org.uk/artefacts/"
-MAX_NEW_PER_ENTITY = 3          # newest unseen PDFs fetched per run
+MAX_NEW_PER_ENTITY = int(os.environ.get("BANKCREDIT_MAX_NEW", "3"))    # newest unseen PDFs fetched per run (raise for a one-off deep pass)
 LINK_RE = re.compile(r"""(?:https?:)?//[^\s"'<>\\)]+|/[^\s"'<>\\)]+""")
 SLEEP = 1.0
 
@@ -195,7 +195,7 @@ class Pillar3Adapter(Adapter):
 
     def _nsm_hits(self) -> list[dict]:
         if self._nsm is None:
-            since = (date.today() - timedelta(days=400)).isoformat()
+            since = (date.today() - timedelta(days=int(os.environ.get("BANKCREDIT_NSM_DAYS", "400")))).isoformat()
             body = {"from": 0, "size": 300, "sortorder": "desc",
                     "criteriaObj": {"criteria": [{"name": "headline", "value": "Pillar 3"}],
                                     "dateCriteria": [{"name": "publication_date",

@@ -45,8 +45,8 @@ def _series(facts: pd.DataFrame) -> dict:
         cons = g[g.basis == "consolidated"]
         if not cons.empty and (pd.Timestamp(g.reference_date.max()) - pd.Timestamp(cons.reference_date.max())).days <= 120:
             g = cons
-        g = g.assign(_basis_rank=(g.basis == "consolidated").astype(int))
-        g = g.sort_values(["reference_date", "_basis_rank", "confidence"]).drop_duplicates("reference_date", keep="last")
+        g = g.assign(_basis_rank=(g.basis == "consolidated").astype(int), _src_rank=(g.source != "eba_te").astype(int))
+        g = g.sort_values(["reference_date", "_basis_rank", "_src_rank", "confidence"]).drop_duplicates("reference_date", keep="last")
         out[metric] = [{"d": str(r.reference_date)[:10], "v": _clean(float(r.value)), "src": r.source, "basis": r.basis,
                         "doc": r.document, "page": _clean(r.page) if hasattr(r, "page") else None,
                         "method": r.method, "conf": _clean(float(r.confidence))} for r in g.itertuples()]
@@ -298,6 +298,29 @@ def _overlay(market: dict, ratings: list[dict]) -> float:
     return round(max(-cap, min(cap, adj)), 1)
 
 
+def data_audit(active, facts, ratings, prices, cds, bonds) -> list[dict]:
+    """What we hold for each entity: regulatory history (periods, first, last, sources), ratings, prices, CDS, bonds."""
+    rows = []
+    core = facts[facts.metric == "cet1_ratio"] if not facts.empty else facts
+    for e in active:
+        g = core[core.entity_id == e.id] if not core.empty else core
+        r = ratings[ratings.entity_id == e.id] if not ratings.empty else ratings
+        p = prices[prices.entity_id == e.id] if not prices.empty else prices
+        c = cds[cds.entity_id == e.id] if not cds.empty else cds
+        b = bonds[bonds.entity_id == e.id] if bonds is not None and not bonds.empty else None
+        dates = sorted({str(d)[:10] for d in g.reference_date}) if not g.empty else []
+        rows.append({"id": e.id, "short": e.short_name, "region": e.region, "type": e.type,
+                     "periods": len(dates), "first": dates[0] if dates else None, "last": dates[-1] if dates else None,
+                     "years": round((date.fromisoformat(dates[-1]) - date.fromisoformat(dates[0])).days / 365.25, 1) if len(dates) > 1 else 0,
+                     "sources": sorted(set(g.source)) if not g.empty else [],
+                     "agencies": int(r.agency.nunique()) if not r.empty else 0,
+                     "price_days": int(p.date.nunique()) if not p.empty else 0,
+                     "cds_days": int(c.date.nunique()) if not c.empty else 0,
+                     "bonds": int(len(b)) if b is not None else 0,
+                     "ticker": bool(e.tickers)})
+    return rows
+
+
 def export_json() -> None:
     entities = load_entities()
     facts, ratings, prices, cds, events, runs = (store.read(t) for t in ["facts", "ratings", "prices", "cds", "events", "runs"])
@@ -428,6 +451,7 @@ def export_json() -> None:
     generated = datetime.utcnow().isoformat(timespec="seconds") + "Z"
     store.write_json("board", {"generated": generated, "rows": board, "benchmarks": benchmarks})
     store.write_json("policy", {"generated": generated, "rows": policy_rows})
+    store.write_json("audit", {"generated": generated, "rows": data_audit(active, facts, ratings, prices, cds, store.read("bonds"))})
     status = []
     if not runs.empty:
         for src, g in runs.sort_values("finished").groupby("source"):

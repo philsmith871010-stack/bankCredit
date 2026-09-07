@@ -253,3 +253,20 @@ tenor or limit. The comparison needs a common rating scale, so the export now ca
 - **Bank of Baroda UK** marked inactive: in solvent wind-down, so not a counterparty.
 - Reviewer answers on old documents no longer set the continuity baseline for new ones (six-quarter window), and
   curly-apostrophe thousands are scaled.
+
+### Deeper history, 7 September 2026 (afternoon)
+
+Three things decide how far back a bank's ratios run. The EBA Pillar 3 data hub only holds six reference dates from
+June 2025, so for EU banks the deep source is the EU-wide Transparency Exercise: annual CSV releases, each carrying four
+quarterly reference dates, for about 120 banks, with UK banks included until 2020. The `te` adapter stacks the 2019 to
+2024 releases: 41 of our entities, 24 quarters each back to September 2018, 7,600 figures, loaded under source `eba_te`
+and ranked below a bank's own disclosure or the hub for the same date. For UK banks the depth comes from the documents
+themselves: the extractor reads each template's four prior columns, and a one-off deep collection pass
+(`BANKCREDIT_MAX_NEW=12`, `BANKCREDIT_NSM_DAYS=2200`) fetches up to twelve older reports per bank from listing pages and
+six years of FCA NSM filings. US banks already have ten years from the FDIC. A data audit on the Status page shows, for
+every entity, periods, first and last date, span, sources, agencies, price days, CDS days and bonds.
+
+Equities: 71 entities have a ticker and 69 have prices; the two without are the Abu Dhabi listings Yahoo does not carry.
+The other 82 are unlisted: ring-fenced and non-ring-fenced bank subsidiaries (which inherit the group equity signal,
+labelled), building societies, and private banks such as Monzo, Starling, Shawbrook and Aldermore. There is no equity
+to collect for them.

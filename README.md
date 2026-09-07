@@ -21,7 +21,8 @@ python -m bankcredit.cli build        # writes site/
 
 Adapters: `fdic`, `eba`, `edgar` (quarterly), `esma` ratings, `yahoo` prices, `pillar3`
 documents, `events` (rating actions, disclosures, filtered news), `fred`
-benchmark spreads, `ice` and `dtcc` CDS, and `bonds` (daily). Bond quotes come from Börse Frankfurt's
+benchmark spreads, `ice` and `dtcc` CDS, `bonds` (daily) and `te`, the EBA Transparency Exercise
+(quarterly, six years of EU capital history). Bond quotes come from Börse Frankfurt's
 public price pages and are rebuilt on every run rather than committed; the site shows only each bank's
 30-day yield change against peers in the same currency, never a level. No AI API key is used anywhere. Pillar 3 PDFs are read by a rules-based KM1
 extractor (`bankcredit/extract/km1.py`) with arithmetic cross-checks; whatever
