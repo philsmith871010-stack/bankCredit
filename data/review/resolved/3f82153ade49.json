@@ -1,0 +1,20 @@
+{
+ "id": "3f82153ade49",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2019/31-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 4,
+ "reference_date": "2019-12-31",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 3352.9,
+  "tier1_capital": 4248.8,
+  "total_capital": 4924.3,
+  "rwa": 37265.6,
+  "cet1_ratio": 9.0,
+  "tier1_ratio": 11.4,
+  "total_capital_ratio": 13.21,
+  "lcr": 130.0,
+  "nsfr": 115.2
+ },
+ "note": "Bendigo and Adelaide Bank reports under APRA's APS 330, which has no KM1 template. Ratios and total RWA from Table 3 'Capital Adequacy' (stated for the consolidated group), first column = the reporting date; LCR from Table 20, current-period column. APS 330 requires no leverage ratio, so none is recorded. Capital amounts from Table 1 'Common Disclosure Template' (rows 29, 45, 59, 60) and NSFR from Table 21, taking the page headed with the reporting date rather than the prior-period page after it. The CET1 ratio is not printed in the common disclosure extract; 3,352.9/37,265.6 = 9.00%, confirmed independently by the prior-period column of Table 3 in the March 2020 report."
+}

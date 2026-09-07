@@ -1,0 +1,21 @@
+{
+ "id": "e25dc29b525b",
+ "entity_id": "santander-uk",
+ "url": "https://assets.santandermedia.com/adobe/assets/urn:aaid:aem:4844b5bc-6c6b-407a-815e-def749f23d4b/original/as/2019_acrmd.pdf",
+ "page": 3,
+ "reference_date": "2019-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 10438.0,
+  "tier1_capital": 13083.0,
+  "total_capital": 15778.0,
+  "rwa": 73202.0,
+  "cet1_ratio": 14.3,
+  "tier1_ratio": 17.9,
+  "total_capital_ratio": 21.6,
+  "leverage_exposure": 295600.0,
+  "leverage_ratio": 4.3,
+  "lcr": 142.2
+ },
+ "note": "Santander UK's 'Additional Capital and Risk Management Disclosures' carries a Key metrics table rather than the KM1 template, with five quarter-end columns running backwards from the reporting date; the first column is taken. Transitional figures are recorded, matching the headline ratios; the fully loaded ECL alternates in the same table are not. The leverage exposure measure is printed in GBP billions and is converted to millions here. The extractor flagged a cet1_ratio error and no leverage row: the ratio 14.3% is correct (10,438/73,202 = 14.26%) and the leverage rows are there, labelled 'CRD IV leverage ratio' rather than the KM1 wording. Every figure is confirmed by the June 2020 report, whose 31 December 2019 comparative column repeats CET1 10,438, RWA 73,202, 14.3%, leverage 4.3% and LCR 142.2%."
+}

@@ -1,0 +1,22 @@
+{
+ "id": "0ae7970ce89a",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nab/documents/reports/corporate/2022-full-year-pillar-3-report.pdf",
+ "page": 12,
+ "reference_date": "2022-09-30",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 51776.0,
+  "tier1_capital": 59112.0,
+  "total_capital": 81735.0,
+  "rwa": 449918.0,
+  "cet1_ratio": 11.51,
+  "tier1_ratio": 13.14,
+  "total_capital_ratio": 18.17,
+  "leverage_exposure": 1167759.0,
+  "leverage_ratio": 5.06,
+  "lcr": 137.0,
+  "nsfr": 119.0
+ },
+ "note": "NAB reports under APRA's APS 330, which has no KM1 template. Level 2 basis throughout. Capital amounts from the detailed capital disclosures, ratios and leverage from the capital and leverage ratios table, LCR and NSFR from the APS 330 liquidity templates, taking the NSFR page whose 'As at' header matches the reporting date. Check: CET1 capital over total RWA reproduces the published CET1 ratio."
+}

@@ -1,0 +1,21 @@
+{
+ "id": "d714206ac60f",
+ "entity_id": "aldermore",
+ "url": "https://www.aldermore.co.uk/media/y3dlmgpz/pillar_3_disclosures.pdf",
+ "page": 16,
+ "reference_date": "2016-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 525.8,
+  "tier1_capital": 599.8,
+  "total_capital": 712.9,
+  "rwa": 4576.1,
+  "cet1_ratio": 11.5,
+  "tier1_ratio": 13.1,
+  "total_capital_ratio": 15.6,
+  "leverage_exposure": 8544.0,
+  "leverage_ratio": 7.0,
+  "lcr": 205.0
+ },
+ "note": "Aldermore's 2016 report predates KM1, so there is no key metrics template - the figures are spread across section 8. Capital ratios and total RWA from the capital position table on p.16, columns 31 December 2016 and 2015, taking 2016; capital amounts from Table 3 'Capital composition' on the same page. Leverage from Table 7 'Leverage ratio common disclosure' (p.19): Tier 1 599.8 over total leverage exposures 8,544.0, giving the stated 7.0%. LCR 205% is stated in the liquidity section (p.40). NSFR is not disclosed. These are Group figures, not the Bank solo figures in Appendix 1. Check: 525.8/4,576.1 = 11.49% and 712.9/4,576.1 = 15.58%, matching the published 11.5% and 15.6%."
+}
