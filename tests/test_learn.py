@@ -63,3 +63,9 @@ def test_continuity_ignores_old_baselines(tmp_path, monkeypatch):
     learn.remember_verified("leeds-bs", date(2024, 12, 31), {"cet1_ratio": 28.2, "rwa": 5355.0})
     ok, _ = learn.continuity("leeds-bs", {"cet1_ratio": 25.5, "rwa": 6735.0}, date(2025, 12, 31))
     assert ok == "ok"
+
+
+def test_browser_page_is_remembered(tmp_path, monkeypatch):
+    _iso(tmp_path, monkeypatch)
+    learn.remember_browser_page("furness-bs", "https://www.furnessbs.co.uk/financial-reports/")
+    assert learn.hint_for("furness-bs")["browser_page"] == "https://www.furnessbs.co.uk/financial-reports/"

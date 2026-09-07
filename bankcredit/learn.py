@@ -146,6 +146,16 @@ def remember_verified(entity_id: str, reference_date: date, values: dict) -> Non
         _write(HINTS, hints)
 
 
+def remember_browser_page(entity_id: str, page: str) -> None:
+    """The page where the browser collector last found documents; the next run starts there."""
+    hints = load_hints()
+    h = hints.setdefault(entity_id, {})
+    if h.get("browser_page") != page:
+        h["browser_page"] = page
+        h["browser_page_found"] = date.today().isoformat()
+        _write(HINTS, hints)
+
+
 def continuity(entity_id: str, values: dict, reference_date: date | None) -> tuple[str | None, str]:
     """Compare freshly extracted figures with the entity's last verified set.
     Returns ('ok' | 'contradiction' | None, message)."""

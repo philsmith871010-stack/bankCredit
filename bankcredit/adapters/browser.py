@@ -204,9 +204,13 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
     browser = Browser()
     out: dict[str, str] = {}
     locs = [l for l in LOCATORS if l.get("kind") == "browser" and (not entity_ids or l["entity"] in entity_ids)]
+    from .. import learn
     for n, loc in enumerate(locs, start=1):
         ent = loc["entity"]
         print(f"  [{n}/{len(locs)}] {ent} ...", flush=True)
+        remembered = learn.hint_for(ent).get("browser_page")
+        if remembered and remembered != loc["page"]:
+            loc = dict(loc, page=remembered, _fallback_page=loc["page"])     # go straight to the page that worked last time
         body, links, via = "", [], "request"
         try:
             r = session.get(loc["page"], timeout=60)
@@ -285,5 +289,8 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
                 Path(tmp.name).unlink(missing_ok=True)
         out[ent] = (f"collected {n}" + (" (generic match)" if how == "generic" else "")) if n else "download failed"
         print(f"      {out[ent]}", flush=True)
+        if n:
+            found_on = how[len("subpage "):] if how.startswith("subpage ") else loc["page"]
+            learn.remember_browser_page(ent, found_on)
     browser.close()
     return out
