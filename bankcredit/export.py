@@ -584,6 +584,7 @@ def export_json() -> None:
             hist_all.setdefault(r.entity_id, []).append({"date": str(r.date)[:10], "score": _clean(r.score), "rating_grade": _clean(r.rating_grade)})
     new_hist: list[dict] = []
     active = [e for e in entities if e.active]
+    by_id = {e.id: e for e in entities}
     series_all = {e.id: _series(facts[facts.entity_id == e.id] if not facts.empty else facts) for e in active}
     market_all = {e.id: _market(prices[prices.entity_id == e.id] if not prices.empty else prices,
                                 cds[cds.entity_id == e.id] if not cds.empty else cds, bond_changes.get(e.id), snrfin) for e in active}
@@ -591,6 +592,14 @@ def export_json() -> None:
         f = facts[facts.entity_id == e.id] if not facts.empty else facts
         r = ratings[ratings.entity_id == e.id] if not ratings.empty else ratings
         p = prices[prices.entity_id == e.id] if not prices.empty else prices
+        # A subsidiary has no listed equity of its own; the price that exists belongs to its group.
+        # The profile shows the group's, named as the group's - it is not this entity's security,
+        # and it is not fed into this entity's market signal or score.
+        price_owner = None
+        if p.empty and e.group and not prices.empty:
+            gp = prices[prices.entity_id == e.group]
+            if not gp.empty:
+                p, price_owner = gp, e.group
         ev = events[events.entity_id == e.id] if not events.empty else events
         series = dict(series_all[e.id])
         inherited = []
@@ -712,6 +721,11 @@ def export_json() -> None:
                             for x in r.sort_values(["agency", "horizon", "rating_type"]).itertuples()] if not r.empty else [],
             "prices": [{"d": str(x.date)[:10], "c": float(x.close)} for x in p.sort_values("date").tail(260).itertuples()] if not p.empty else [],
             "price_currency": (p.currency.iloc[-1] if not p.empty else None),
+            "price_owner": price_owner,
+            "price_owner_name": (by_id[price_owner].short_name if price_owner and price_owner in by_id else None),
+            # the same series describes itself: shown with the chart, and labelled as the group's
+            "price_owner_stats": ({k: (market_all.get(price_owner) or {}).get(k) for k in ("vol30", "drawdown52", "last_price_date")}
+                                  if price_owner else None),
             "market_public": {k: market.get(k) for k in ("direction", "label", "vol30", "drawdown52", "last_price_date",
                                                          "bond_change30", "bond_count", "bond_asof", "bond_window")},
             "events": [{k: _clean(v) for k, v in x.items()} for x in _dedupe_events(ev).head(60).to_dict("records")] if not ev.empty else [],

@@ -300,8 +300,16 @@ def page_bank(b, generated):
         bond_line = f'<div><span>Bond yields vs peers, {w}-day</span><span class="mono" style="color:{col};font-weight:500">{sign}{abs(v):.0f} bp <span class="muted" style="font-weight:400">({n} bond{"s" if n != 1 else ""}, {c.esc(mp.get("bond_asof") or "")})</span></span></div>'
     prices = b["prices"]
     price_chart = c.chart([(p["d"][2:7], p["c"]) for p in prices[::max(1, len(prices)//60)]], unit="", dp=2) if len(prices) > 5 else '<div class="empty">Not listed, or no price data collected.</div>'
-    market_html = f'''<div class="grid-2"><div class="chart-block"><div class="chart-head"><span>Share price, 12 months</span><span class="muted">{c.esc(b.get("price_currency") or "")}</span></div>{price_chart}</div>
-<div class="kv"><div><span>30-day realised volatility</span>{c.fmt(mp.get("vol30"), 1, "%")}</div><div><span>Drawdown from 52-week high</span>{c.fmt(mp.get("drawdown52"), 1, "%")}</div><div><span>Market signal</span><span>{c.market_glyph(mp)} {c.esc(mp.get("label"))}</span></div><div><span>Last price</span><span class="mono">{c.esc(mp.get("last_price_date") or "—")}</span></div>{bond_line}
+    # an unlisted subsidiary shows its group's listed equity, named, rather than an empty panel
+    owner = b.get("price_owner_name")
+    price_head = f'Share price, 12 months{"" if not owner else " &middot; " + c.esc(owner)}'
+    price_note = (f'<div class="note">{c.esc(owner)} is the listed company; this entity has no equity of its own, '
+                  f'and the group price does not enter its score.</div>') if owner else ""
+    # the volatility and the drawdown describe whichever series is drawn above them
+    pstat = (b.get("price_owner_stats") or {}) if owner else mp
+    owner_tag = f' <span class="muted">&middot; {c.esc(owner)}</span>' if owner else ""
+    market_html = f'''<div class="grid-2"><div class="chart-block"><div class="chart-head"><span>{price_head}</span><span class="muted">{c.esc(b.get("price_currency") or "")}</span></div>{price_chart}{price_note}</div>
+<div class="kv"><div><span>30-day realised volatility{owner_tag}</span>{c.fmt(pstat.get("vol30"), 1, "%")}</div><div><span>Drawdown from 52-week high{owner_tag}</span>{c.fmt(pstat.get("drawdown52"), 1, "%")}</div><div><span>Market signal</span><span>{c.market_glyph(mp)} {c.esc(mp.get("label"))}</span></div><div><span>Last price{owner_tag}</span><span class="mono">{c.esc(pstat.get("last_price_date") or "—")}</span></div>{bond_line}
 <div class="note">CDS levels, bond yields and agency ratings feed the private market overlay and are never shown as levels; only the direction and the change against peers are public.</div></div></div>'''
     # sources
     docs = {}
