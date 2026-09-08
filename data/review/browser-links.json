@@ -150,39 +150,39 @@
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/Voluntary-modern-slavery-and-human-trafficking-statement.pdf",
-    "text": "Read our Modern Slavery Statement"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Review-of-the-Year-2025.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Report-and-Accounts-2025.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2021/11/SBS13-Rules-Memorandum.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2025/03/6c.-SuBS-Internal-Audit-Charter-202425-issued-2111.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2025/04/TERMS-OF-REFERENCE-FOR-REMUNERATION-COMMITTEE-MARCH-2025.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2025/04/TERMS-OF-REFERENCE-FOR-THE-NOMINATIONS-COMMITTEE-MARCH-2025.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/06/TERMS-OF-REFERENCE-FOR-THE-AUDIT-COMMITTEE-MAY-2026.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2025/04/TERMS-OF-REFERENCE-FOR-THE-BOARD-RISK-AND-COMPLIANCE-COMMITTEE-MARCH-2025.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/INVL107-01-26-FSCS-Information-Sheet.pdf",
@@ -222,23 +222,23 @@
   "links": [
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Mortgage%20Fees%20and%20Charges%202026%20-%20MortFeeCharg-REV04-26.pdf",
-    "text": "Mortgage Fees and Charges"
+    "text": ""
    },
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Guiding%20You%20Through%20Home%20Buying%20Process%20V005%20Oct%202023.pdf",
-    "text": "Homebuyers Guide"
+    "text": ""
    },
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Ultimate%20Guide%20For%20First%20Time%20Buyers%202025%20-%20V009.pdf",
-    "text": "Our Ultimate First Time Buyers Guide"
+    "text": ""
    },
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Rules%20of%20the%20Society%202021%20Edition%20L000944-006.pdf",
-    "text": "Rules of the Society"
+    "text": ""
    },
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Visiting%20our%20Head%20Office%20v002%202025.pdf",
-    "text": "Visiting our Head Office"
+    "text": ""
    }
   ]
  },
@@ -248,11 +248,11 @@
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
-    "text": "Annual report and accounts summary"
+    "text": ""
    },
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2024/11/Whistleblowing-Policy-Public-2024.pdf",
-    "text": "Public Whistleblowing Policy"
+    "text": ""
    }
   ]
  },
@@ -1304,7 +1304,12 @@
  "emirates-nbd": {
   "page": "https://www.emiratesnbd.com/en/investor-relations/basel-iii-pillar-3",
   "checked": "2026-09-08",
-  "links": []
+  "links": [
+   {
+    "url": "https://www.emiratesnbd.com/en/investor-relations/basel-iii-pillar-3",
+    "text": ""
+   }
+  ]
  },
  "goldman-sachs": {
   "page": "https://www.goldmansachs.com/investor-relations/financials/other-information",
@@ -1400,6 +1405,10 @@
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
     "text": ""
    }
   ]
@@ -2417,6 +2426,10 @@
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
     "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
+    "text": ""
    }
   ]
  },
@@ -2667,20 +2680,20 @@
   "checked": "2026-09-08",
   "links": [
    {
+    "url": "javascript:var%20d=document.open();d.domain=",
+    "text": ""
+   },
+   {
     "url": "https://www.goldmansachs.com/insights/reports",
-    "text": "Reports"
+    "text": ""
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/corporate-governance/sustainability-reporting",
-    "text": "Sustainability and Other ReportingRead More"
+    "text": ""
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/financials/annual-reports",
-    "text": "Annual Report"
-   },
-   {
-    "url": "https://www.goldmansachs.com/disclosures",
-    "text": "Regulatory Disclosures"
+    "text": ""
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
@@ -2696,6 +2709,10 @@
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
     "text": ""
    }
   ]
@@ -3023,19 +3040,19 @@
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Review-of-the-Year-2025.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Report-and-Accounts-2025.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/04/Richard-Norrington-speech-2026.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/04/Peter-Elcock-speech-2026.pdf",
-    "text": "Download"
+    "text": ""
    },
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/INVL107-01-26-FSCS-Information-Sheet.pdf",
@@ -3296,19 +3313,19 @@
   "links": [
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Mortgage%20Fees%20and%20Charges%202026%20-%20MortFeeCharg-REV04-26.pdf",
-    "text": "Mortgage Fees and Charges"
+    "text": ""
    },
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Guiding%20You%20Through%20Home%20Buying%20Process%20V005%20Oct%202023.pdf",
-    "text": "Homebuyers Guide"
+    "text": ""
    },
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Ultimate%20Guide%20For%20First%20Time%20Buyers%202025%20-%20V009.pdf",
-    "text": "Our Ultimate First Time Buyers Guide"
+    "text": ""
    },
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Visiting%20our%20Head%20Office%20v002%202025.pdf",
-    "text": "Visiting our Head Office"
+    "text": ""
    }
   ]
  },
@@ -3318,15 +3335,15 @@
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
-    "text": "Annual report and accounts summary"
+    "text": ""
    },
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2025/12/fscs_protected-website-leaflet-nov-2025-1.pdf",
-    "text": "Financial Services Compensation Scheme (FSCS)"
+    "text": ""
    },
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2025/12/2-70-Financial-Service-Compensation-Scheme-Info-leaflet-12-25.pdf",
-    "text": "Financial Service Compensation Scheme Information leaflet"
+    "text": ""
    }
   ]
  },
@@ -3346,23 +3363,23 @@
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
-    "text": "Annual report and accounts summary"
+    "text": ""
    },
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/08/Audit-and-Compliance-Terms-of-Reference-2026.pdf",
-    "text": "Learn more"
+    "text": ""
    },
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/08/Nominations-and-Governance-Committee-Terms-of-Reference-2026.pdf",
-    "text": "Learn more"
+    "text": ""
    },
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/08/Remuneration-Committee-Terms-of-Reference-2026.pdf",
-    "text": "Learn more"
+    "text": ""
    },
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/08/Risk-Committee-Terms-of-Reference-2026.pdf",
-    "text": "Learn more"
+    "text": ""
    }
   ]
  },
@@ -3372,7 +3389,7 @@
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
-    "text": "Annual report and accounts summary"
+    "text": ""
    },
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/02/Hinckley_and_Rugby_Building_Society_Chairs_Letter_2026.pdf",
@@ -7411,5 +7428,10 @@
     "text": ""
    }
   ]
+ },
+ "hinckley-and-rugby-bs > embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2": {
+  "page": "https://www.hrbs.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2Fthe-society%2Fgovernance%2F&format=xml",
+  "checked": "2026-09-08",
+  "links": []
  }
 }

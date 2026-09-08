@@ -1129,7 +1129,7 @@
   }
  },
  "state-street": {
-  "page": 10,
+  "page": 9,
   "currency": "USD",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -1263,7 +1263,7 @@
  "goldman-sachs": {
   "browser_page": "https://www.goldmansachs.com/investor-relations/financials/other-information",
   "browser_page_found": "2026-09-07",
-  "page": 8,
+  "page": 7,
   "currency": "USD",
   "last_verified": {
    "reference_date": "2026-06-30",

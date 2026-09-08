@@ -1,0 +1,21 @@
+{
+ "id": "a9bc487a590a",
+ "entity_id": "goldman-sachs",
+ "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2025/1q-pillar-3-2025.pdf",
+ "page": 7,
+ "reference_date": "2025-03-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 102721.0,
+  "tier1_capital": 117488.0,
+  "total_capital": 127768.0,
+  "rwa": 662094.0,
+  "cet1_ratio": 15.5,
+  "tier1_ratio": 17.7,
+  "total_capital_ratio": 19.3,
+  "leverage_exposure": 2153684.0,
+  "leverage_ratio": 5.5,
+  "tier1_leverage": 6.8
+ },
+ "note": "The Goldman Sachs Group, Inc. reports under the U.S. Basel III framework, which has no KM1 template. Figures come from Table 1 'Risk-Based Capital and Leverage Requirements', Table 3 'Capital Structure' and Table 4 'RWAs by Exposure Category'. Table 1 lists three blocks in sequence - minimum requirements, total requirements including buffers, then the actual ratios - so the first 'CET1 capital ratio' a reader meets is 4.5%, and the same applies to the SLR rows, where the first figure is the 5.0% requirement and the second the actual ratio. Two columns per table, the reporting quarter and December 2024; the first is taken. These are the Advanced Capital Rules figures, the only basis this document presents - unlike the State Street records above, where both approaches are published and the binding Standardized column is taken. Goldman's Standardized ratios are in the Form 10-Q, not here. Amounts are US dollar millions. This issue runs a page shorter than the later two, so the capital structure table is on p.7 rather than p.8. Check: 102,721/662,094 = 15.51%, 127,768/662,094 = 19.30% and 117,488/2,153,684 = 5.46%, matching the published 15.5%, 19.3% and 5.5%."
+}

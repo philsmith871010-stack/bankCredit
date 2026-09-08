@@ -2227,5 +2227,104 @@
   "page_reviewer": 5,
   "date_extractor": "2024-06-30",
   "date_reviewer": "2024-06-30"
+ },
+ {
+  "date": "2026-09-08T08:44:13",
+  "id": "02711c100596",
+  "entity_id": "goldman-sachs",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 8,
+  "date_extractor": "2025-06-30",
+  "date_reviewer": "2025-06-30"
+ },
+ {
+  "date": "2026-09-08T08:44:15",
+  "id": "88f8d277a5b8",
+  "entity_id": "goldman-sachs",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 8,
+  "date_extractor": "2025-09-30",
+  "date_reviewer": "2025-09-30"
+ },
+ {
+  "date": "2026-09-08T08:44:15",
+  "id": "90f565a868a0",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    13.3
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 9,
+  "date_extractor": "2025-06-30",
+  "date_reviewer": "2025-06-30"
+ },
+ {
+  "date": "2026-09-08T08:44:16",
+  "id": "a9bc487a590a",
+  "entity_id": "goldman-sachs",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 7,
+  "date_extractor": "2025-03-31",
+  "date_reviewer": "2025-03-31"
+ },
+ {
+  "date": "2026-09-08T08:44:16",
+  "id": "cd4a8c2af9b4",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    13.9
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 9,
+  "date_extractor": "2025-09-30",
+  "date_reviewer": "2025-09-30"
+ },
+ {
+  "date": "2026-09-08T08:44:17",
+  "id": "e815dd01dc71",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    13.8
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 9,
+  "date_extractor": "2025-03-31",
+  "date_reviewer": "2025-03-31"
  }
 ]
