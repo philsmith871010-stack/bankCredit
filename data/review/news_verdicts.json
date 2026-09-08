@@ -1,385 +1,4447 @@
 {
-  "news:ad10ff44ab23a089": {"keep": true,  "severity": "info", "why": "H1 results"},
-  "news:7c3160f89ab8a019": {"keep": false, "severity": null,   "why": "product partnership"},
-  "news:19d0e6293f139699": {"keep": false, "severity": null,   "why": "routine covered bond pricing"},
-  "news:ed410a7921b9fad5": {"keep": true,  "severity": "warn", "why": "$176m lawsuit settlement"},
-  "news:a49b1d3e6cbef590": {"keep": false, "severity": null,   "why": "custody mandate win"},
-  "news:0c109d3c7b43d272": {"keep": false, "severity": null,   "why": "planning row over ex-branch"},
-  "news:2042e9625afe0a0e": {"keep": false, "severity": null,   "why": "divisional broking retirement"},
-  "news:e655a7a440c5a498": {"keep": true,  "severity": "warn", "why": "$176m lawsuit settlement"},
-  "news:9091bc595b10e03c": {"keep": false, "severity": null,   "why": "junior lending appointment"},
-  "news:df5bf6f275c7702f": {"keep": true,  "severity": "warn", "why": "COO exits after under a year"},
-  "news:28ff8485bbdddd20": {"keep": true,  "severity": "warn", "why": "Monte dei Paschi lawsuit settled"},
-  "news:3ee5a34d7ef95de8": {"keep": true,  "severity": "warn", "why": "$176m lawsuit settlement"},
-  "news:4f711e646fc9816f": {"keep": true,  "severity": "warn", "why": "$176m lawsuit settlement"},
-  "news:5678952acb7a1b52": {"keep": false, "severity": null,   "why": "third party misused bank name"},
-  "news:678c9567c0f121f4": {"keep": true,  "severity": "info", "why": "senior leadership changes"},
-  "news:b0f2759cf5f9ec37": {"keep": false, "severity": null,   "why": "bank as equity strategist"},
-  "news:6d37baf814df7136": {"keep": true,  "severity": "info", "why": "H1 results"},
-  "news:7e96da53e2d73590": {"keep": true,  "severity": "warn", "why": "EUR152m lawsuit settlement"},
-  "news:97433c0144bf1066": {"keep": true,  "severity": "warn", "why": "lawsuit settled with ex-manager"},
-  "news:776b42a5c3f39531": {"keep": false, "severity": null,   "why": "building opening ceremony"},
-  "news:6312b8b15945228a": {"keep": false, "severity": null,   "why": "custody mandate win"},
-  "news:b5aa8878e282912e": {"keep": false, "severity": null,   "why": "workplace human interest"},
-  "news:af12764d54612e22": {"keep": false, "severity": null,   "why": "bank as market forecaster"},
-  "news:4f43a016aad886be": {"keep": true,  "severity": "info", "why": "$600m Tier 2 sukuk completed"},
-  "news:ee50df7362e76188": {"keep": true,  "severity": "info", "why": "RAM rating action"},
-  "news:538f47aa0da3cb2c": {"keep": true,  "severity": "info", "why": "AT1 tender"},
-  "news:a0fb47f320603585": {"keep": false, "severity": null,   "why": "13F holdings commentary"},
-  "news:8756d3c10f4869da": {"keep": true,  "severity": "info", "why": "138 US branch sale completed"},
-  "news:454c13a71aae8a3b": {"keep": false, "severity": null,   "why": "auto-generated ratios page"},
-  "news:3e7d202fec6262c0": {"keep": false, "severity": null,   "why": "banker as oil commentator"},
-  "news:9b59163f4de3fb54": {"keep": false, "severity": null,   "why": "bank as bookrunner"},
-  "news:c08c60c28b10dc01": {"keep": false, "severity": null,   "why": "bank as market forecaster"},
-  "news:eef1485a267bc802": {"keep": true,  "severity": "info", "why": "138 US branch sale completed"},
-  "news:3872bf057cdc59ed": {"keep": true,  "severity": "info", "why": "138 US branch sale completed"},
-  "news:6f1dc05d8c250d7f": {"keep": false, "severity": null,   "why": "bank as creditor, immaterial sum"},
-  "news:90d7eabd2d1045ed": {"keep": false, "severity": null,   "why": "bank economist interview"},
-  "news:8376eddeb20e87ac": {"keep": false, "severity": null,   "why": "blockchain product pilot"},
-  "news:4119d92e7778dc48": {"keep": false, "severity": null,   "why": "stocks-to-watch roundup"},
-  "news:7ddf9f9e6dfe7bd4": {"keep": false, "severity": null,   "why": "analyst estimate filler"},
-  "news:7f68952b5d6b9260": {"keep": true,  "severity": "info", "why": "takeover talks with Hesse premier"},
-  "news:885a80d2a36fe9d2": {"keep": true,  "severity": "info", "why": "$600m Tier 2 sukuk priced"},
-  "news:feada8c5fdc258fd": {"keep": false, "severity": null,   "why": "retail marketing offer"},
-  "news:14f0ef5a6f853c97": {"keep": false, "severity": null,   "why": "routine senior issuance"},
-  "news:6ef19c25bc5a249d": {"keep": false, "severity": null,   "why": "ex-adviser fined, immaterial"},
-  "news:e1b8b967ee8ec6e0": {"keep": false, "severity": null,   "why": "routine note redemption"},
-  "news:91aff4349abe7131": {"keep": false, "severity": null,   "why": "CD rate listicle"},
-  "news:f0cca070237954b5": {"keep": false, "severity": null,   "why": "CEO tax-policy lobbying"},
-  "news:a24ba108b724d295": {"keep": true,  "severity": "info", "why": "H1 profit result"},
-  "news:edd50d5d9a312214": {"keep": false, "severity": null,   "why": "routine covered bond pricing"},
-  "news:eaeb7efc04229bda": {"keep": false, "severity": null,   "why": "bank as conference host"},
-  "news:2b236a5067a86950": {"keep": true,  "severity": "info", "why": "takeover consequences"},
-  "news:0ff5975a2b5fa01f": {"keep": true,  "severity": "info", "why": "senior leadership reshuffle"},
-  "news:54e8627d69e19cb2": {"keep": false, "severity": null,   "why": "subsidiary board chair"},
-  "news:5b4d74caf2a6e3b1": {"keep": true,  "severity": "warn", "why": "OFSI sanctions fine"},
-  "news:bed83d013be862d7": {"keep": false, "severity": null,   "why": "local business colour"},
-  "news:a628fe6f5973b6c2": {"keep": false, "severity": null,   "why": "macro outlook by bank"},
-  "news:03e634c6f4af47fd": {"keep": false, "severity": null,   "why": "bank as conference host"},
-  "news:a72fb1fa7f8244fd": {"keep": false, "severity": null,   "why": "CEO macro commentary"},
-  "news:fa0d0694e17a7f46": {"keep": false, "severity": null,   "why": "subsidiary CEO appointment"},
-  "news:576d0d7590e45e65": {"keep": false, "severity": null,   "why": "stock narrative filler"},
-  "news:794d30acc861b559": {"keep": true,  "severity": "warn", "why": "court sanctions threat in discovery"},
-  "news:4dbfb8388fd8492e": {"keep": false, "severity": null,   "why": "ex-employee hired elsewhere"},
-  "news:cbbe900d60b2b9e4": {"keep": false, "severity": null,   "why": "CD rate listicle"},
-  "news:e6057e738c74edbb": {"keep": false, "severity": null,   "why": "equity broker rating"},
-  "news:ca735afa8d64f8a2": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:d31a4fca399a97c9": {"keep": false, "severity": null,   "why": "asset management property deal"},
-  "news:17c531161943d816": {"keep": false, "severity": null,   "why": "FX commentary by bank"},
-  "news:65118252189b8937": {"keep": true,  "severity": "info", "why": "Tier 2 sukuk planned"},
-  "news:8ee77cc791fa41df": {"keep": true,  "severity": "info", "why": "Tier 2 sukuk planned"},
-  "news:ab9cc282e3b5ea66": {"keep": false, "severity": null,   "why": "bank as conference host"},
-  "news:6f18a2e35456192c": {"keep": false, "severity": null,   "why": "share price roundup"},
-  "news:9b12a04d41944573": {"keep": false, "severity": null,   "why": "bank as conference host"},
-  "news:73f4f5fc0bda5ce6": {"keep": true,  "severity": "info", "why": "senior leadership changes"},
-  "news:1f47babde4e370b9": {"keep": false, "severity": null,   "why": "bank as equity analyst"},
-  "news:e1c9aa00b8f42967": {"keep": false, "severity": null,   "why": "small subsidiary securitisation"},
-  "news:4a6c6703ccb8a4f4": {"keep": true,  "severity": "warn", "why": "sanctions fine roundup"},
-  "news:d5b9e3999045ab8e": {"keep": true,  "severity": "warn", "why": "OFSI sanctions fine"},
-  "news:2e9186bb13bf4afb": {"keep": false, "severity": null,   "why": "equity broker upgrades"},
-  "news:a7a20004af69c1b3": {"keep": false, "severity": null,   "why": "auto-generated stock page"},
-  "news:35a460a9d4278d69": {"keep": true,  "severity": "warn", "why": "GBP4.7m sanctions fine"},
-  "news:1afc912d873060df": {"keep": true,  "severity": "warn", "why": "OFSI sanctions fine"},
-  "news:5cce3dd542ae3d44": {"keep": true,  "severity": "warn", "why": "sanctions settlement"},
-  "news:f143e3bb563bc778": {"keep": false, "severity": null,   "why": "CD rate listicle"},
-  "news:0b1081ede23fccff": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:5d85fd17f5c096ac": {"keep": false, "severity": null,   "why": "league table colour"},
-  "news:befdd990b3ab7825": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:9737ebf813aa93af": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:00e3ccd03e56a205": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:9f0eba355de2a1c5": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:9d9797bece8a3e6b": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:159773dc28a4e591": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:e779af085cb0f5a9": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:67f107f815aeb79b": {"keep": false, "severity": null,   "why": "bank as creditor of a borrower"},
-  "news:b6a9151626d63da3": {"keep": true,  "severity": "warn", "why": "APRA capital add-on after liquidity misstatement"},
-  "news:8c354edc29123e85": {"keep": false, "severity": null,   "why": "audit tender process detail"},
-  "news:5d3b38f0d4e1c666": {"keep": false, "severity": null,   "why": "bank as equity analyst"},
-  "news:d0f2eb40db22bb35": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:d60095be2cbaae3d": {"keep": true,  "severity": "info", "why": "counterparty exposure curbed"},
-  "news:ee690a3b4b60afb7": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:151bfd53d508a080": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:289c0cf923399f59": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:63e1537984e8c539": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:911041b7a7774a3b": {"keep": true,  "severity": "warn", "why": "FCA investigation urged"},
-  "news:3478ab1bde324b42": {"keep": true,  "severity": "info", "why": "CEO tenure tied to takeover"},
-  "news:0b02be6943f41b04": {"keep": false, "severity": null,   "why": "share plan notice"},
-  "news:eb1b6f0c0485d2b4": {"keep": false, "severity": null,   "why": "house price forecast by bank"},
-  "news:0b443ea775c80f2d": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:9d69a5ee76db47a7": {"keep": true,  "severity": "info", "why": "CEO may leave over takeover"},
-  "news:a7e4848b7f25411d": {"keep": false, "severity": null,   "why": "CEO political commentary"},
-  "news:4f7c3c2e231bbf93": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:0b2e154df765e68f": {"keep": false, "severity": null,   "why": "FX commentary by bank"},
-  "news:728c0eb17b6fd50b": {"keep": true,  "severity": "info", "why": "CEO tenure tied to takeover"},
-  "news:cb7a9a73e3e88b00": {"keep": false, "severity": null,   "why": "fund distribution notice"},
-  "news:0dd7b030ead9e271": {"keep": true,  "severity": "warn", "why": "sanctions fine"},
-  "news:6b157df0474983e2": {"keep": false, "severity": null,   "why": "routine issuance colour"},
-  "news:95ed3df7b42ddf19": {"keep": false, "severity": null,   "why": "subsidiary board chair"},
-  "news:65dee33d8836fc84": {"keep": false, "severity": null,   "why": "bank as equity analyst"},
-  "news:0638612a42a111e4": {"keep": true,  "severity": "warn", "why": "GBP4.7m sanctions fine"},
-  "news:67730e2f8a14c048": {"keep": false, "severity": null,   "why": "bank as conference host"},
-  "news:207d0769aefb6cca": {"keep": false, "severity": null,   "why": "golf sponsorship"},
-  "news:bd82d646ef49a9dc": {"keep": false, "severity": null,   "why": "bank as stock picker"},
-  "news:172c90156f7fa71d": {"keep": false, "severity": null,   "why": "subsidiary board chair"},
-  "news:9c348e629c55ea5b": {"keep": true,  "severity": "warn", "why": "capital buffer thinning"},
-  "news:5e84cde0b444c86a": {"keep": false, "severity": null,   "why": "cricket sponsorship"},
-  "news:571692e5caa1e31e": {"keep": false, "severity": null,   "why": "bank as equity analyst"},
-  "news:8d36f113d01690bf": {"keep": true,  "severity": "info", "why": "minister on capital regime"},
-  "news:202f9f78b3fdaa9f": {"keep": false, "severity": null,   "why": "share capital and voting rights notice"},
-  "news:0e3edf53d07e1504": {"keep": false, "severity": null,   "why": "speculative growth strategy"},
-  "news:20a56fcbc94cd2a3": {"keep": false, "severity": null,   "why": "CD rate listicle"},
-  "news:a0a3b80006f78b57": {"keep": false, "severity": null,   "why": "functional appointment"},
-  "news:51de409e3b23e16f": {"keep": true,  "severity": "warn", "why": "commercial real estate losses"},
-  "news:7c1f9afea0a487ba": {"keep": false, "severity": null,   "why": "cricket sponsorship"},
-  "news:22e4422b30a8b0ac": {"keep": false, "severity": null,   "why": "financial calendar notice"},
-  "news:d11254bce0c7bf25": {"keep": true,  "severity": "info", "why": "stepped-up default recoveries"},
-  "news:6e1bee2267b17935": {"keep": false, "severity": null,   "why": "diversity policy"},
-  "news:cb8791cdf716a832": {"keep": true,  "severity": "info", "why": "MPS takeover progress"},
-  "news:5fb2a7f352df4e03": {"keep": false, "severity": null,   "why": "equity broker upgrade"},
-  "news:a6e746b010e17066": {"keep": false, "severity": null,   "why": "target shareholder colour"},
-  "news:6c14ce6b0d743356": {"keep": false, "severity": null,   "why": "CD rate listicle"},
-  "news:4e9641337e22284e": {"keep": false, "severity": null,   "why": "regional appointment"},
-  "news:f30cb2182757fd95": {"keep": true,  "severity": "info", "why": "Swiss capital concessions passed"},
-  "news:73b5cff140de3ce2": {"keep": false, "severity": null,   "why": "boardroom colour"},
-  "news:a6d48f966f961e1d": {"keep": true,  "severity": "info", "why": "capital requirement reprieve"},
-  "news:388af07eb47c0f4a": {"keep": false, "severity": null,   "why": "cricket sponsorship"},
-  "news:9b38bee0dfde4620": {"keep": true,  "severity": "info", "why": "annual profit result"},
-  "news:7e2bc6e067f727ca": {"keep": false, "severity": null,   "why": "stock tip filler"},
-  "news:814380a8c2614d70": {"keep": false, "severity": null,   "why": "immaterial bolt-on acquisition"},
-  "news:a77dda3160fbf362": {"keep": false, "severity": null,   "why": "fund investment activity"},
-  "news:d0046de18d53e8dd": {"keep": false, "severity": null,   "why": "individual employment claim"},
-  "news:aaff9d7b1ee0e85b": {"keep": false, "severity": null,   "why": "bank as CLO arranger"},
-  "news:d8448d06aea553f5": {"keep": true,  "severity": "info", "why": "takeover manoeuvring"},
-  "news:264d32aca5e75808": {"keep": true,  "severity": "info", "why": "results, lower credit costs"},
-  "news:fd6470c8a042b97e": {"keep": false, "severity": null,   "why": "fund distribution notice"},
-  "news:b4d98a3a6efeff0e": {"keep": false, "severity": null,   "why": "stock filler"},
-  "news:da5b7727004e5eb5": {"keep": false, "severity": null,   "why": "CD rate listicle"},
-  "news:2a786d02349c304f": {"keep": false, "severity": null,   "why": "fund distribution notice"},
-  "news:22fe44175767d3c1": {"keep": true,  "severity": "info", "why": "Q3 results and branch expansion"},
-  "news:5a7e8d0835367aa3": {"keep": false, "severity": null,   "why": "equity broker rating"},
-  "news:b20e5952402f374a": {"keep": false, "severity": null,   "why": "macro outlook by banks"},
-  "news:eb87b9a3813001ea": {"keep": true,  "severity": "good", "why": "Q3 beat"},
-  "news:85efc2206349c33b": {"keep": true,  "severity": "info", "why": "Q3 results announcement"},
-  "news:d314e5c6669df1ee": {"keep": true,  "severity": "good", "why": "Q3 profit beat"},
-  "news:97bc8920b090621f": {"keep": false, "severity": null,   "why": "dividend declaration"},
-  "news:c7c803a1610023a1": {"keep": true,  "severity": "info", "why": "Swiss capital debate"},
-  "news:42017efc73070a43": {"keep": true,  "severity": "good", "why": "Q3 profit beat"},
-  "news:4cb442075bb36a6c": {"keep": true,  "severity": "info", "why": "takeover manoeuvring"},
-  "news:3db355078669b171": {"keep": true,  "severity": "info", "why": "government takeover talks"},
-  "news:35b490edd9b7be6d": {"keep": false, "severity": null,   "why": "banker gossip"},
-  "news:dcfcd43c3dc333c4": {"keep": false, "severity": null,   "why": "sector research by bank"},
-  "news:ff08aa8760fd99f8": {"keep": true,  "severity": "info", "why": "Q3 results and branch expansion"},
-  "news:1eeba0a70c1fc326": {"keep": true,  "severity": "good", "why": "Q3 beat"},
-  "news:494cf390c23598d7": {"keep": false, "severity": null,   "why": "CD rate listicle"},
-  "news:5fab174298ef8777": {"keep": true,  "severity": "info", "why": "group board appointment"},
-  "news:5a80b121891e2385": {"keep": true,  "severity": "good", "why": "Q3 profit jump"},
-  "news:572c6f2af05b4db0": {"keep": true,  "severity": "info", "why": "Q3 earnings roundup"},
-  "news:db425e62cbeb905b": {"keep": true,  "severity": "warn", "why": "mortgage delinquencies rising"},
-  "news:df09773dfd789565": {"keep": true,  "severity": "good", "why": "Q3 profit up sharply"},
-  "news:e48e4f082c28c906": {"keep": true,  "severity": "good", "why": "Q3 beats"},
-  "news:4c094238c14e088a": {"keep": false, "severity": null,   "why": "dividend declaration"},
-  "news:1d54791f780fc342": {"keep": true,  "severity": "info", "why": "Q3 results announcement"},
-  "news:a040cc7d7f582b75": {"keep": true,  "severity": "good", "why": "Q3 beat"},
-  "news:6d3633c73430806d": {"keep": true,  "severity": "good", "why": "Q3 earnings beats"},
-  "news:ab1f77ab74831ded": {"keep": true,  "severity": "info", "why": "Q3 results and branch expansion"},
-  "news:da00abcb2b183e63": {"keep": false, "severity": null,   "why": "asset management commentary"},
-  "news:6905e64d34a717bb": {"keep": false, "severity": null,   "why": "debt charity partnership"},
-  "news:39fdebd4cc239df4": {"keep": false, "severity": null,   "why": "asset management commentary"},
-  "news:a3f9241ca9fe2a21": {"keep": true,  "severity": "info", "why": "Tier 2 sukuk return"},
-  "news:b2def2b4b40f867d": {"keep": true,  "severity": "info", "why": "government takeover talks"},
-  "news:efa16c9a990cb1eb": {"keep": false, "severity": null,   "why": "equity broker ratings"},
-  "news:303efca76a2aea7e": {"keep": true,  "severity": "info", "why": "government takeover talks"},
-  "news:5cb92842af3e4b17": {"keep": true,  "severity": "info", "why": "MPS bid dispute at watchdog"},
-  "news:56db7a730843635e": {"keep": true,  "severity": "info", "why": "government takeover talks"},
-  "news:c4007679ae7560d8": {"keep": true,  "severity": "info", "why": "government takeover talks"},
-  "news:2163e02ad7a6b7ac": {"keep": false, "severity": null,   "why": "routine issuance and share plan"},
-  "news:dd23484c6470ba81": {"keep": true,  "severity": "good", "why": "record quarter"},
-  "news:e2e8a4ff6a21fa45": {"keep": true,  "severity": "info", "why": "Q3 results"},
-  "news:2518f149007505cc": {"keep": true,  "severity": "good", "why": "earnings beats"},
-  "news:3613fbe50427e2e7": {"keep": false, "severity": null,   "why": "CEO trade-war commentary"},
-  "news:04a6be9d22a7ab0c": {"keep": true,  "severity": "good", "why": "profit beats"},
-  "news:52b3d1ec0dc69038": {"keep": true,  "severity": "info", "why": "Q3 results announcement"},
-  "news:afb20be563598ce6": {"keep": false, "severity": null,   "why": "retail dividend comparison"},
-  "news:e565bbac2320e88d": {"keep": true,  "severity": "good", "why": "Q3 profit beat"},
-  "news:5acda951758525f4": {"keep": false, "severity": null,   "why": "FX commentary by bank"},
-  "news:c475636569aa1223": {"keep": false, "severity": null,   "why": "CEO trade-war commentary"},
-  "news:545f843e119cb6a3": {"keep": true,  "severity": "good", "why": "Q3 beat"},
-  "news:552661c2d1fbb161": {"keep": false, "severity": null,   "why": "unsourced M&A speculation"},
-  "news:fb868f8801ac4722": {"keep": false, "severity": null,   "why": "analyst estimate filler"},
-  "news:03fa44160a454a39": {"keep": false, "severity": null,   "why": "CD rate listicle"},
-  "news:40eada43dc6a9245": {"keep": false, "severity": null,   "why": "CEO trade-war commentary"},
-  "news:eb66bc98efeebea8": {"keep": true,  "severity": "warn", "why": "AML capital charge"},
-  "news:962d02c37dc217a7": {"keep": false, "severity": null,   "why": "CEO trade-war commentary"},
-  "news:86c5b9a827ea7ea8": {"keep": false, "severity": null,   "why": "routine covered bond pricing"},
-  "news:a2b267e226b8ab98": {"keep": false, "severity": null,   "why": "routine senior issuance"},
-  "news:7bf5d37cf1da0120": {"keep": false, "severity": null,   "why": "results date advisory"},
-  "news:2275a1420fbe6f89": {"keep": true,  "severity": "info", "why": "takeover rules review call"},
-  "news:0c28c944ccc2670c": {"keep": false, "severity": null,   "why": "routine statistical filing"},
-  "news:535d1f0ffd53729f": {"keep": false, "severity": null,   "why": "junior lending appointment"},
-  "news:d760c1979dc934b5": {"keep": false, "severity": null,   "why": "thought leadership piece"},
-  "news:1165d6051971ab3e": {"keep": true,  "severity": "warn", "why": "earnings hit from risk remediation"},
-  "news:424dfb661cdedec2": {"keep": false, "severity": null,   "why": "bank as conference host"},
-  "news:b06e71faddf7a41d": {"keep": false, "severity": null,   "why": "unsourced M&A speculation"},
-  "news:a48241c9dd28f5d3": {"keep": true,  "severity": "info", "why": "FY results"},
-  "news:eadde28a10fb87ee": {"keep": false, "severity": null,   "why": "macro commentary by bank"},
-  "news:435fe551583fbd15": {"keep": true,  "severity": "info", "why": "takeover rules review call"},
-  "news:231dc9a85259fa5a": {"keep": true,  "severity": "info", "why": "takeover rules review call"},
-  "news:0a1284b4d3b53bb0": {"keep": false, "severity": null,   "why": "CEO macro commentary"},
-  "news:e5281ad8ae2d885e": {"keep": false, "severity": null,   "why": "bank as creditor, immaterial sum"},
-  "news:f0fbcaa9d46d5875": {"keep": false, "severity": null,   "why": "bank as lender on a deal"},
-  "news:89e4ee29c4cdc995": {"keep": false, "severity": null,   "why": "share cancellation notice"},
-  "news:a23425582f90ad5f": {"keep": false, "severity": null,   "why": "stock tip filler"},
-  "news:369934811c7891a1": {"keep": false, "severity": null,   "why": "regulatory lobbying commentary"},
-  "news:08c08a8aad524d5f": {"keep": false, "severity": null,   "why": "14 local job cuts"},
-  "news:93123b1a07727c64": {"keep": false, "severity": null,   "why": "Zacks industry filler"},
-  "news:d6570efe64880402": {"keep": true,  "severity": "warn", "why": "cum-ex charges against ex-staff"},
-  "news:43e757f47c00699b": {"keep": false, "severity": null,   "why": "valuation filler"},
-  "news:182a8b2b1f58256d": {"keep": true,  "severity": "info", "why": "board appointment"},
-  "news:77cd8be2c842b326": {"keep": false, "severity": null,   "why": "bank as sovereign lender"},
-  "news:9f259277270ced8a": {"keep": true,  "severity": "warn", "why": "layoffs at highest since 2015"},
-  "news:ce90d1b9b3736019": {"keep": true,  "severity": "info", "why": "CVC bid prepared"},
-  "news:0bd87135b6140b84": {"keep": true,  "severity": "warn", "why": "board resignation"},
-  "news:1334f5fab2db984b": {"keep": true,  "severity": "warn", "why": "tax fraud charges against ex-staff"},
-  "news:d99923b706131610": {"keep": true,  "severity": "warn", "why": "largest senior banker cull since crisis"},
-  "news:ebacd409a35415e7": {"keep": false, "severity": null,   "why": "routine covered bond pricing"},
-  "news:191296de6eef1208": {"keep": false, "severity": null,   "why": "stocks-to-watch roundup"},
-  "news:718f6559f1329f5b": {"keep": true,  "severity": "warn", "why": "customer-facing outage"},
-  "news:b0f9f28923153d15": {"keep": false, "severity": null,   "why": "routine small issuance"},
-  "news:b5d508ac5a278b12": {"keep": true,  "severity": "warn", "why": "payments outage"},
-  "news:dbd8fbac88d9bb1a": {"keep": false, "severity": null,   "why": "subsidiary appointment"},
-  "news:84233d2c80209869": {"keep": false, "severity": null,   "why": "routine covered bond pricing"},
-  "news:a30994eea6cfcd94": {"keep": false, "severity": null,   "why": "succession speculation"},
-  "news:d65345915d00f84f": {"keep": false, "severity": null,   "why": "blockchain product pilot"},
-  "news:0787503afe109dde": {"keep": true,  "severity": "warn", "why": "APRA action on risk weaknesses"},
-  "news:8c79d43e2b6615e1": {"keep": false, "severity": null,   "why": "incentive share award notice"},
-  "news:1a56f5755b243959": {"keep": true,  "severity": "warn", "why": "APRA action and FY result"},
-  "news:1efa39ab8c6e2aaa": {"keep": true,  "severity": "warn", "why": "tougher APRA licence terms"},
-  "news:ec4bdb212457146d": {"keep": true,  "severity": "warn", "why": "licence conditions after cyber breach"},
-  "news:971c2d5b7de807c6": {"keep": true,  "severity": "info", "why": "CEO on turnaround under bid"},
-  "news:93785b9f690458c8": {"keep": false, "severity": null,   "why": "valuation filler"},
-  "news:81cb956705550e86": {"keep": false, "severity": null,   "why": "security tooling story"},
-  "news:0bab3aeda2b12620": {"keep": false, "severity": null,   "why": "junior lending appointment"},
-  "news:9be1d726040ff674": {"keep": false, "severity": null,   "why": "bank as sell-side adviser"},
-  "news:91c3713ac4358e27": {"keep": false, "severity": null,   "why": "junior lending appointment"},
-  "news:03336271261c44fe": {"keep": true,  "severity": "warn", "why": "regulator imposes licence conditions"},
-  "news:c106b6f487b96797": {"keep": true,  "severity": "info", "why": "chair steps down"},
-  "news:bded7d7135256f01": {"keep": true,  "severity": "info", "why": "chair steps down"},
-  "news:4027c08d018aa612": {"keep": false, "severity": null,   "why": "phishing using bank name"},
-  "news:dbc6b82ef2be2f30": {"keep": false, "severity": null,   "why": "CEO colour piece"},
-  "news:79b4a9197f59779e": {"keep": true,  "severity": "info", "why": "chair steps down"},
-  "news:e2e0733b1eb7449b": {"keep": true,  "severity": "info", "why": "chair steps down"},
-  "news:4c800da496367cbc": {"keep": false, "severity": null,   "why": "small subsidiary results"},
-  "news:c40c1f10a0327d8d": {"keep": true,  "severity": "info", "why": "chair steps down"},
-  "news:b428b51b6633b500": {"keep": true,  "severity": "info", "why": "chair steps down"},
-  "news:04196586e92afba2": {"keep": false, "severity": null,   "why": "routine senior issuance"},
-  "news:640334f39cdf5deb": {"keep": true,  "severity": "info", "why": "chair steps down"},
-  "news:5cf48ec5338c5527": {"keep": false, "severity": null,   "why": "settlement technology story"},
-  "news:1bfc5e03f0b53cca": {"keep": true,  "severity": "info", "why": "chair steps down"},
-  "news:18b1e541077ef175": {"keep": false, "severity": null,   "why": "individual discrimination claim"},
-  "news:a3d086550c437c28": {"keep": true,  "severity": "info", "why": "$500m preferred issuance"},
-  "news:032e3ff228492cce": {"keep": false, "severity": null,   "why": "blockchain product pilot"},
-  "news:932d829f5b2c8fc9": {"keep": true,  "severity": "info", "why": "takeover analysis"},
-  "news:f8fa1e91d4dcb4c3": {"keep": true,  "severity": "info", "why": "MPS takeover politics"},
-  "news:6753813f150fe52d": {"keep": false, "severity": null,   "why": "FX commentary by bank"},
-  "news:32b4b3e1c72359df": {"keep": false, "severity": null,   "why": "insider share sale notice"},
-  "news:42ef5518bf9f398b": {"keep": false, "severity": null,   "why": "CEO strategy colour"},
-  "news:04947483460a6e22": {"keep": false, "severity": null,   "why": "routine liability management"},
-  "news:77838aaa0fd8e513": {"keep": true,  "severity": "info", "why": "board appointment"},
-  "news:353bb14a800f0007": {"keep": false, "severity": null,   "why": "share price filler"},
-  "news:bb548829ec9e1264": {"keep": true,  "severity": "info", "why": "H1 results after disposal"},
-  "news:b20f6c780a3b2770": {"keep": false, "severity": null,   "why": "remuneration notice"},
-  "news:8d5166fb042e4e39": {"keep": false, "severity": null,   "why": "CEO macro commentary"},
-  "news:ab8d20ace2d60a1b": {"keep": true,  "severity": "info", "why": "senior appointment"},
-  "news:c6316165922101f3": {"keep": false, "severity": null,   "why": "blockchain product pilot"},
-  "news:3f2eebee1d943fc2": {"keep": false, "severity": null,   "why": "campaign group on arranger role"},
-  "news:24f6bda013095878": {"keep": true,  "severity": "info", "why": "Jio Credit stake acquisition"},
-  "news:f68260bd7ac079f6": {"keep": true,  "severity": "warn", "why": "$8m cyber penalty"},
-  "news:698a1fb0de50efe0": {"keep": true,  "severity": "info", "why": "NEOS acquisition"},
-  "news:b430c2ad6072490b": {"keep": true,  "severity": "info", "why": "Q2 results"},
-  "news:8df72c84f2d96cdd": {"keep": true,  "severity": "info", "why": "Jio Credit joint venture"},
-  "news:146842ede8ca57f1": {"keep": false, "severity": null,   "why": "bank as lender on a deal"},
-  "news:3beaddcb02827eb1": {"keep": false, "severity": null,   "why": "functional appointment"},
-  "news:24440cb008a88d22": {"keep": true,  "severity": "info", "why": "ECB leaning to approve bid"},
-  "news:e83f849b379452c3": {"keep": true,  "severity": "info", "why": "FY results"},
-  "news:2aa9d32345c84662": {"keep": true,  "severity": "good", "why": "profit beat, guidance raised"},
-  "news:4f46bf97e2693fd8": {"keep": true,  "severity": "good", "why": "profit jump, guidance raised"},
-  "news:e5e22467783475e0": {"keep": true,  "severity": "good", "why": "profit beat, guidance raised"},
-  "news:a307f3d05dc3e72e": {"keep": true,  "severity": "info", "why": "business head steps down"},
-  "news:2e63556e06f3a020": {"keep": true,  "severity": "info", "why": "FY results, loan applications down"},
-  "news:2f773c435eeb99e4": {"keep": false, "severity": null,   "why": "executive market commentary"},
-  "news:a54756dc354341e3": {"keep": true,  "severity": "info", "why": "Q2 results and asset quality"},
-  "news:33177cf77d282597": {"keep": false, "severity": null,   "why": "banker gossip"},
-  "news:8a79130e5068b89c": {"keep": true,  "severity": "warn", "why": "$5.65m penalty over 2023 breach"},
-  "news:b4ced601c74018dc": {"keep": false, "severity": null,   "why": "retail product launch"},
-  "news:d72614082ec45b5b": {"keep": false, "severity": null,   "why": "cricket sponsorship"},
-  "news:880e977641b7cf00": {"keep": false, "severity": null,   "why": "cricket sponsorship"},
-  "news:2306d617fb01e299": {"keep": true,  "severity": "warn", "why": "admits breaching accountability laws"},
-  "news:46e459c97e4729af": {"keep": true,  "severity": "info", "why": "capital decision postponed"},
-  "news:5b41bb73cdbb1d32": {"keep": true,  "severity": "info", "why": "takeover negotiations opened"},
-  "news:35eab6937ceb9b41": {"keep": true,  "severity": "warn", "why": "GBP1.2bn fraud trial"},
-  "news:602259a0d182ebdc": {"keep": true,  "severity": "info", "why": "capital reform timetable"},
-  "news:d11f64438b07fabb": {"keep": false, "severity": null,   "why": "regional appointment"},
-  "news:dd118ad1d39c7d93": {"keep": false, "severity": null,   "why": "dividend analysis filler"},
-  "news:5d4148646ab52a77": {"keep": false, "severity": null,   "why": "macro commentary by bank"},
-  "news:f16ca9f792974b68": {"keep": false, "severity": null,   "why": "clearing mandate"},
-  "news:2b109e23d25b0c1b": {"keep": false, "severity": null,   "why": "market wrap"},
-  "news:4a5c0d0d99296a63": {"keep": false, "severity": null,   "why": "bank as financing partner"},
-  "news:1049fa85b0c40adf": {"keep": true,  "severity": "info", "why": "takeover talks begin"},
-  "news:26d43cdb65797cf4": {"keep": true,  "severity": "warn", "why": "GBP1.2bn fraud claims"},
-  "news:a36f44dff67bafc0": {"keep": true,  "severity": "warn", "why": "GBP1.2bn Arena TV lawsuits"},
-  "news:e8f4666a425c47ca": {"keep": true,  "severity": "info", "why": "H1 results"},
-  "news:c134a5dbd8cbfdf9": {"keep": false, "severity": null,   "why": "retail results comparison"},
-  "news:96b5c26f7fdb199b": {"keep": true,  "severity": "good", "why": "Q2 profit up"},
-  "news:fe73313cdb261f71": {"keep": true,  "severity": "good", "why": "Q2 profit up 22%"},
-  "news:4c72110b9f765e2f": {"keep": false, "severity": null,   "why": "share price move"},
-  "news:9ebbfacac00c6dfe": {"keep": true,  "severity": "good", "why": "record H1 net profit"},
-  "news:b4944dd7a8f0bee8": {"keep": true,  "severity": "good", "why": "Q2 profit up 22%"},
-  "news:186ce8c7e28d98dc": {"keep": true,  "severity": "info", "why": "CEO retirement"},
-  "news:946ec3280f4eaa9b": {"keep": true,  "severity": "warn", "why": "guidance cut on funding costs"},
-  "news:e4278966d819a1db": {"keep": true,  "severity": "info", "why": "takeover approach"},
-  "news:0f8cbf01f05e94e3": {"keep": true,  "severity": "info", "why": "takeover contact"},
-  "news:a3b8bb9fa1e7e57e": {"keep": true,  "severity": "info", "why": "state bailout nearly recouped"},
-  "news:ab3f76bb0d15f892": {"keep": true,  "severity": "warn", "why": "debanking lawsuit"},
-  "news:9246465974a17d8f": {"keep": false, "severity": null,   "why": "promotional interview"},
-  "news:98d787b7ee927c78": {"keep": true,  "severity": "info", "why": "bid for MPS"},
-  "news:51822db0de11245d": {"keep": false, "severity": null,   "why": "employee share offering"},
-  "news:0c0cd9d32aedc43d": {"keep": false, "severity": null,   "why": "results date advisory"},
-  "news:97598577099589ce": {"keep": true,  "severity": "info", "why": "CEO on takeover value"},
-  "news:d0fa2880c2772721": {"keep": true,  "severity": "info", "why": "record profits"},
-  "news:a13d1b8fc77e8633": {"keep": true,  "severity": "warn", "why": "prosecutors probed fraud-handling claims"},
-  "news:8194694462aaed2c": {"keep": false, "severity": null,   "why": "CEO commentary on AI"},
-  "news:a06604104de0acf2": {"keep": false, "severity": null,   "why": "60 local job cuts"},
-  "news:0c966cacd9fddfbf": {"keep": false, "severity": null,   "why": "earnings preview speculation"},
-  "news:4a34580409ebc23c": {"keep": true,  "severity": "warn", "why": "$70m trade-loss settlement"},
-  "news:f7d2cb68842473b6": {"keep": true,  "severity": "info", "why": "H1 results"},
-  "news:75c88460e7536f9a": {"keep": false, "severity": null,   "why": "research piece by bank"},
-  "news:c6d141e08bf02a05": {"keep": true,  "severity": "info", "why": "Italian unit M&A interest"},
-  "news:aca9546cc04c42bf": {"keep": false, "severity": null,   "why": "employee benefits colour"},
-  "news:7f8a22154e9af130": {"keep": false, "severity": null,   "why": "CEO profile interview"},
-  "news:ff52e22a9cd5c125": {"keep": true,  "severity": "info", "why": "BaFin clears takeover bid"},
-  "news:45ba249ef71488a5": {"keep": true,  "severity": "info", "why": "H1 results"},
-  "news:5cffbdee7aaa3346": {"keep": true,  "severity": "warn", "why": "flat profit, bracing for loan losses"},
-  "news:be082a2b9bcd7b23": {"keep": false, "severity": null,   "why": "59 local job cuts"},
-  "news:65834b7595af467f": {"keep": true,  "severity": "good", "why": "profit up 23%"},
-  "news:0c6ceb3995d13309": {"keep": false, "severity": null,   "why": "CEO interview"},
-  "news:e07f135d40119835": {"keep": false, "severity": null,   "why": "individual refund dispute"},
-  "news:a9166e546b803d64": {"keep": true,  "severity": "info", "why": "Hang Seng privatisation follow-up"},
-  "news:c0f2f569c1c7bc4d": {"keep": true,  "severity": "good", "why": "profit beats estimates"},
-  "news:20cef3ece2fe39a0": {"keep": true,  "severity": "info", "why": "EUR2bn tech spend, possible job cuts"},
-  "news:f2613b3adec522f0": {"keep": true,  "severity": "warn", "why": "redundancy talks"},
-  "news:b467ab34074e8121": {"keep": true,  "severity": "good", "why": "H1 profit beat"},
-  "news:33ce62fd1465a8ac": {"keep": true,  "severity": "info", "why": "EUR2bn tech spend, flat profit"},
-  "news:98d2b8c2e61fb9fa": {"keep": true,  "severity": "info", "why": "Q1 profit up 48%"},
-  "news:d62ea5e816648ecc": {"keep": true,  "severity": "info", "why": "HSBC Egypt retail acquisition"},
-  "news:c01c8a9477d4a872": {"keep": true,  "severity": "info", "why": "debanking court ruling"},
-  "news:e1d0f7e8b2a04173": {"keep": true,  "severity": "info", "why": "HSBC Egypt retail acquisition"},
-  "news:cb15686ec44b9265": {"keep": true,  "severity": "info", "why": "NIBC acquisition completed"},
-  "news:8e15db6a3b7d835d": {"keep": true,  "severity": "info", "why": "HSBC Egypt retail acquisition"},
-  "news:656b65544f97f21f": {"keep": true,  "severity": "info", "why": "HSBC Egypt retail acquisition"},
-  "news:1c10bde27f6309b1": {"keep": true,  "severity": "info", "why": "HSBC Egypt retail acquisition"},
-  "news:1f16e7718afc54f1": {"keep": false, "severity": null,   "why": "small subsidiary results"},
-  "news:6e99aa3c791a6284": {"keep": true,  "severity": "info", "why": "Q2 results"},
-  "news:90909412f71f4f38": {"keep": true,  "severity": "info", "why": "Athlon acquisition completed"},
-  "news:110ee89368fdfc48": {"keep": true,  "severity": "good", "why": "profits up a third"},
-  "news:955f42db6be125f8": {"keep": true,  "severity": "good", "why": "H1 pre-tax profit up 33%"}
+ "news:ad10ff44ab23a089": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results"
+ },
+ "news:7c3160f89ab8a019": {
+  "keep": false,
+  "severity": null,
+  "why": "product partnership"
+ },
+ "news:19d0e6293f139699": {
+  "keep": false,
+  "severity": null,
+  "why": "routine covered bond pricing"
+ },
+ "news:ed410a7921b9fad5": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$176m lawsuit settlement"
+ },
+ "news:a49b1d3e6cbef590": {
+  "keep": false,
+  "severity": null,
+  "why": "custody mandate win"
+ },
+ "news:0c109d3c7b43d272": {
+  "keep": false,
+  "severity": null,
+  "why": "planning row over ex-branch"
+ },
+ "news:2042e9625afe0a0e": {
+  "keep": false,
+  "severity": null,
+  "why": "divisional broking retirement"
+ },
+ "news:e655a7a440c5a498": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$176m lawsuit settlement"
+ },
+ "news:9091bc595b10e03c": {
+  "keep": false,
+  "severity": null,
+  "why": "junior lending appointment"
+ },
+ "news:df5bf6f275c7702f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "COO exits after under a year"
+ },
+ "news:28ff8485bbdddd20": {
+  "keep": true,
+  "severity": "warn",
+  "why": "Monte dei Paschi lawsuit settled"
+ },
+ "news:3ee5a34d7ef95de8": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$176m lawsuit settlement"
+ },
+ "news:4f711e646fc9816f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$176m lawsuit settlement"
+ },
+ "news:5678952acb7a1b52": {
+  "keep": false,
+  "severity": null,
+  "why": "third party misused bank name"
+ },
+ "news:678c9567c0f121f4": {
+  "keep": true,
+  "severity": "info",
+  "why": "senior leadership changes"
+ },
+ "news:b0f2759cf5f9ec37": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity strategist"
+ },
+ "news:6d37baf814df7136": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results"
+ },
+ "news:7e96da53e2d73590": {
+  "keep": true,
+  "severity": "warn",
+  "why": "EUR152m lawsuit settlement"
+ },
+ "news:97433c0144bf1066": {
+  "keep": true,
+  "severity": "warn",
+  "why": "lawsuit settled with ex-manager"
+ },
+ "news:776b42a5c3f39531": {
+  "keep": false,
+  "severity": null,
+  "why": "building opening ceremony"
+ },
+ "news:6312b8b15945228a": {
+  "keep": false,
+  "severity": null,
+  "why": "custody mandate win"
+ },
+ "news:b5aa8878e282912e": {
+  "keep": false,
+  "severity": null,
+  "why": "workplace human interest"
+ },
+ "news:af12764d54612e22": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as market forecaster"
+ },
+ "news:4f43a016aad886be": {
+  "keep": true,
+  "severity": "info",
+  "why": "$600m Tier 2 sukuk completed"
+ },
+ "news:ee50df7362e76188": {
+  "keep": true,
+  "severity": "info",
+  "why": "RAM rating action"
+ },
+ "news:538f47aa0da3cb2c": {
+  "keep": true,
+  "severity": "info",
+  "why": "AT1 tender"
+ },
+ "news:a0fb47f320603585": {
+  "keep": false,
+  "severity": null,
+  "why": "13F holdings commentary"
+ },
+ "news:8756d3c10f4869da": {
+  "keep": true,
+  "severity": "info",
+  "why": "138 US branch sale completed"
+ },
+ "news:454c13a71aae8a3b": {
+  "keep": false,
+  "severity": null,
+  "why": "auto-generated ratios page"
+ },
+ "news:3e7d202fec6262c0": {
+  "keep": false,
+  "severity": null,
+  "why": "banker as oil commentator"
+ },
+ "news:9b59163f4de3fb54": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as bookrunner"
+ },
+ "news:c08c60c28b10dc01": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as market forecaster"
+ },
+ "news:eef1485a267bc802": {
+  "keep": true,
+  "severity": "info",
+  "why": "138 US branch sale completed"
+ },
+ "news:3872bf057cdc59ed": {
+  "keep": true,
+  "severity": "info",
+  "why": "138 US branch sale completed"
+ },
+ "news:6f1dc05d8c250d7f": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as creditor, immaterial sum"
+ },
+ "news:90d7eabd2d1045ed": {
+  "keep": false,
+  "severity": null,
+  "why": "bank economist interview"
+ },
+ "news:8376eddeb20e87ac": {
+  "keep": false,
+  "severity": null,
+  "why": "blockchain product pilot"
+ },
+ "news:4119d92e7778dc48": {
+  "keep": false,
+  "severity": null,
+  "why": "stocks-to-watch roundup"
+ },
+ "news:7ddf9f9e6dfe7bd4": {
+  "keep": false,
+  "severity": null,
+  "why": "analyst estimate filler"
+ },
+ "news:7f68952b5d6b9260": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover talks with Hesse premier"
+ },
+ "news:885a80d2a36fe9d2": {
+  "keep": true,
+  "severity": "info",
+  "why": "$600m Tier 2 sukuk priced"
+ },
+ "news:feada8c5fdc258fd": {
+  "keep": false,
+  "severity": null,
+  "why": "retail marketing offer"
+ },
+ "news:14f0ef5a6f853c97": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:6ef19c25bc5a249d": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-adviser fined, immaterial"
+ },
+ "news:e1b8b967ee8ec6e0": {
+  "keep": false,
+  "severity": null,
+  "why": "routine note redemption"
+ },
+ "news:91aff4349abe7131": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:f0cca070237954b5": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO tax-policy lobbying"
+ },
+ "news:a24ba108b724d295": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 profit result"
+ },
+ "news:edd50d5d9a312214": {
+  "keep": false,
+  "severity": null,
+  "why": "routine covered bond pricing"
+ },
+ "news:eaeb7efc04229bda": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as conference host"
+ },
+ "news:2b236a5067a86950": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover consequences"
+ },
+ "news:0ff5975a2b5fa01f": {
+  "keep": true,
+  "severity": "info",
+  "why": "senior leadership reshuffle"
+ },
+ "news:54e8627d69e19cb2": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary board chair"
+ },
+ "news:5b4d74caf2a6e3b1": {
+  "keep": true,
+  "severity": "warn",
+  "why": "OFSI sanctions fine"
+ },
+ "news:bed83d013be862d7": {
+  "keep": false,
+  "severity": null,
+  "why": "local business colour"
+ },
+ "news:a628fe6f5973b6c2": {
+  "keep": false,
+  "severity": null,
+  "why": "macro outlook by bank"
+ },
+ "news:03e634c6f4af47fd": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as conference host"
+ },
+ "news:a72fb1fa7f8244fd": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:fa0d0694e17a7f46": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary CEO appointment"
+ },
+ "news:576d0d7590e45e65": {
+  "keep": false,
+  "severity": null,
+  "why": "stock narrative filler"
+ },
+ "news:794d30acc861b559": {
+  "keep": true,
+  "severity": "warn",
+  "why": "court sanctions threat in discovery"
+ },
+ "news:4dbfb8388fd8492e": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee hired elsewhere"
+ },
+ "news:cbbe900d60b2b9e4": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:e6057e738c74edbb": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker rating"
+ },
+ "news:ca735afa8d64f8a2": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:d31a4fca399a97c9": {
+  "keep": false,
+  "severity": null,
+  "why": "asset management property deal"
+ },
+ "news:17c531161943d816": {
+  "keep": false,
+  "severity": null,
+  "why": "FX commentary by bank"
+ },
+ "news:65118252189b8937": {
+  "keep": true,
+  "severity": "info",
+  "why": "Tier 2 sukuk planned"
+ },
+ "news:8ee77cc791fa41df": {
+  "keep": true,
+  "severity": "info",
+  "why": "Tier 2 sukuk planned"
+ },
+ "news:ab9cc282e3b5ea66": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as conference host"
+ },
+ "news:6f18a2e35456192c": {
+  "keep": false,
+  "severity": null,
+  "why": "share price roundup"
+ },
+ "news:9b12a04d41944573": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as conference host"
+ },
+ "news:73f4f5fc0bda5ce6": {
+  "keep": true,
+  "severity": "info",
+  "why": "senior leadership changes"
+ },
+ "news:1f47babde4e370b9": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:e1c9aa00b8f42967": {
+  "keep": false,
+  "severity": null,
+  "why": "small subsidiary securitisation"
+ },
+ "news:4a6c6703ccb8a4f4": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine roundup"
+ },
+ "news:d5b9e3999045ab8e": {
+  "keep": true,
+  "severity": "warn",
+  "why": "OFSI sanctions fine"
+ },
+ "news:2e9186bb13bf4afb": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker upgrades"
+ },
+ "news:a7a20004af69c1b3": {
+  "keep": false,
+  "severity": null,
+  "why": "auto-generated stock page"
+ },
+ "news:35a460a9d4278d69": {
+  "keep": true,
+  "severity": "warn",
+  "why": "GBP4.7m sanctions fine"
+ },
+ "news:1afc912d873060df": {
+  "keep": true,
+  "severity": "warn",
+  "why": "OFSI sanctions fine"
+ },
+ "news:5cce3dd542ae3d44": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions settlement"
+ },
+ "news:f143e3bb563bc778": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:0b1081ede23fccff": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:5d85fd17f5c096ac": {
+  "keep": false,
+  "severity": null,
+  "why": "league table colour"
+ },
+ "news:befdd990b3ab7825": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:9737ebf813aa93af": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:00e3ccd03e56a205": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:9f0eba355de2a1c5": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:9d9797bece8a3e6b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:159773dc28a4e591": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:e779af085cb0f5a9": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:67f107f815aeb79b": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as creditor of a borrower"
+ },
+ "news:b6a9151626d63da3": {
+  "keep": true,
+  "severity": "warn",
+  "why": "APRA capital add-on after liquidity misstatement"
+ },
+ "news:8c354edc29123e85": {
+  "keep": false,
+  "severity": null,
+  "why": "audit tender process detail"
+ },
+ "news:5d3b38f0d4e1c666": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:d0f2eb40db22bb35": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:d60095be2cbaae3d": {
+  "keep": true,
+  "severity": "info",
+  "why": "counterparty exposure curbed"
+ },
+ "news:ee690a3b4b60afb7": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:151bfd53d508a080": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:289c0cf923399f59": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:63e1537984e8c539": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:911041b7a7774a3b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "FCA investigation urged"
+ },
+ "news:3478ab1bde324b42": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO tenure tied to takeover"
+ },
+ "news:0b02be6943f41b04": {
+  "keep": false,
+  "severity": null,
+  "why": "share plan notice"
+ },
+ "news:eb1b6f0c0485d2b4": {
+  "keep": false,
+  "severity": null,
+  "why": "house price forecast by bank"
+ },
+ "news:0b443ea775c80f2d": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:9d69a5ee76db47a7": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO may leave over takeover"
+ },
+ "news:a7e4848b7f25411d": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO political commentary"
+ },
+ "news:4f7c3c2e231bbf93": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:0b2e154df765e68f": {
+  "keep": false,
+  "severity": null,
+  "why": "FX commentary by bank"
+ },
+ "news:728c0eb17b6fd50b": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO tenure tied to takeover"
+ },
+ "news:cb7a9a73e3e88b00": {
+  "keep": false,
+  "severity": null,
+  "why": "fund distribution notice"
+ },
+ "news:0dd7b030ead9e271": {
+  "keep": true,
+  "severity": "warn",
+  "why": "sanctions fine"
+ },
+ "news:6b157df0474983e2": {
+  "keep": false,
+  "severity": null,
+  "why": "routine issuance colour"
+ },
+ "news:95ed3df7b42ddf19": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary board chair"
+ },
+ "news:65dee33d8836fc84": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:0638612a42a111e4": {
+  "keep": true,
+  "severity": "warn",
+  "why": "GBP4.7m sanctions fine"
+ },
+ "news:67730e2f8a14c048": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as conference host"
+ },
+ "news:207d0769aefb6cca": {
+  "keep": false,
+  "severity": null,
+  "why": "golf sponsorship"
+ },
+ "news:bd82d646ef49a9dc": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as stock picker"
+ },
+ "news:172c90156f7fa71d": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary board chair"
+ },
+ "news:9c348e629c55ea5b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "capital buffer thinning"
+ },
+ "news:5e84cde0b444c86a": {
+  "keep": false,
+  "severity": null,
+  "why": "cricket sponsorship"
+ },
+ "news:571692e5caa1e31e": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:8d36f113d01690bf": {
+  "keep": true,
+  "severity": "info",
+  "why": "minister on capital regime"
+ },
+ "news:202f9f78b3fdaa9f": {
+  "keep": false,
+  "severity": null,
+  "why": "share capital and voting rights notice"
+ },
+ "news:0e3edf53d07e1504": {
+  "keep": false,
+  "severity": null,
+  "why": "speculative growth strategy"
+ },
+ "news:20a56fcbc94cd2a3": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:a0a3b80006f78b57": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:51de409e3b23e16f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "commercial real estate losses"
+ },
+ "news:7c1f9afea0a487ba": {
+  "keep": false,
+  "severity": null,
+  "why": "cricket sponsorship"
+ },
+ "news:22e4422b30a8b0ac": {
+  "keep": false,
+  "severity": null,
+  "why": "financial calendar notice"
+ },
+ "news:d11254bce0c7bf25": {
+  "keep": true,
+  "severity": "info",
+  "why": "stepped-up default recoveries"
+ },
+ "news:6e1bee2267b17935": {
+  "keep": false,
+  "severity": null,
+  "why": "diversity policy"
+ },
+ "news:cb8791cdf716a832": {
+  "keep": true,
+  "severity": "info",
+  "why": "MPS takeover progress"
+ },
+ "news:5fb2a7f352df4e03": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker upgrade"
+ },
+ "news:a6e746b010e17066": {
+  "keep": false,
+  "severity": null,
+  "why": "target shareholder colour"
+ },
+ "news:6c14ce6b0d743356": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:4e9641337e22284e": {
+  "keep": false,
+  "severity": null,
+  "why": "regional appointment"
+ },
+ "news:f30cb2182757fd95": {
+  "keep": true,
+  "severity": "info",
+  "why": "Swiss capital concessions passed"
+ },
+ "news:73b5cff140de3ce2": {
+  "keep": false,
+  "severity": null,
+  "why": "boardroom colour"
+ },
+ "news:a6d48f966f961e1d": {
+  "keep": true,
+  "severity": "info",
+  "why": "capital requirement reprieve"
+ },
+ "news:388af07eb47c0f4a": {
+  "keep": false,
+  "severity": null,
+  "why": "cricket sponsorship"
+ },
+ "news:9b38bee0dfde4620": {
+  "keep": true,
+  "severity": "info",
+  "why": "annual profit result"
+ },
+ "news:7e2bc6e067f727ca": {
+  "keep": false,
+  "severity": null,
+  "why": "stock tip filler"
+ },
+ "news:814380a8c2614d70": {
+  "keep": false,
+  "severity": null,
+  "why": "immaterial bolt-on acquisition"
+ },
+ "news:a77dda3160fbf362": {
+  "keep": false,
+  "severity": null,
+  "why": "fund investment activity"
+ },
+ "news:d0046de18d53e8dd": {
+  "keep": false,
+  "severity": null,
+  "why": "individual employment claim"
+ },
+ "news:aaff9d7b1ee0e85b": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as CLO arranger"
+ },
+ "news:d8448d06aea553f5": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover manoeuvring"
+ },
+ "news:264d32aca5e75808": {
+  "keep": true,
+  "severity": "info",
+  "why": "results, lower credit costs"
+ },
+ "news:fd6470c8a042b97e": {
+  "keep": false,
+  "severity": null,
+  "why": "fund distribution notice"
+ },
+ "news:b4d98a3a6efeff0e": {
+  "keep": false,
+  "severity": null,
+  "why": "stock filler"
+ },
+ "news:da5b7727004e5eb5": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:2a786d02349c304f": {
+  "keep": false,
+  "severity": null,
+  "why": "fund distribution notice"
+ },
+ "news:22fe44175767d3c1": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 results and branch expansion"
+ },
+ "news:5a7e8d0835367aa3": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker rating"
+ },
+ "news:b20e5952402f374a": {
+  "keep": false,
+  "severity": null,
+  "why": "macro outlook by banks"
+ },
+ "news:eb87b9a3813001ea": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 beat"
+ },
+ "news:85efc2206349c33b": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 results announcement"
+ },
+ "news:d314e5c6669df1ee": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 profit beat"
+ },
+ "news:97bc8920b090621f": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend declaration"
+ },
+ "news:c7c803a1610023a1": {
+  "keep": true,
+  "severity": "info",
+  "why": "Swiss capital debate"
+ },
+ "news:42017efc73070a43": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 profit beat"
+ },
+ "news:4cb442075bb36a6c": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover manoeuvring"
+ },
+ "news:3db355078669b171": {
+  "keep": true,
+  "severity": "info",
+  "why": "government takeover talks"
+ },
+ "news:35b490edd9b7be6d": {
+  "keep": false,
+  "severity": null,
+  "why": "banker gossip"
+ },
+ "news:dcfcd43c3dc333c4": {
+  "keep": false,
+  "severity": null,
+  "why": "sector research by bank"
+ },
+ "news:ff08aa8760fd99f8": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 results and branch expansion"
+ },
+ "news:1eeba0a70c1fc326": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 beat"
+ },
+ "news:494cf390c23598d7": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:5fab174298ef8777": {
+  "keep": true,
+  "severity": "info",
+  "why": "group board appointment"
+ },
+ "news:5a80b121891e2385": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 profit jump"
+ },
+ "news:572c6f2af05b4db0": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 earnings roundup"
+ },
+ "news:db425e62cbeb905b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "mortgage delinquencies rising"
+ },
+ "news:df09773dfd789565": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 profit up sharply"
+ },
+ "news:e48e4f082c28c906": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 beats"
+ },
+ "news:4c094238c14e088a": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend declaration"
+ },
+ "news:1d54791f780fc342": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 results announcement"
+ },
+ "news:a040cc7d7f582b75": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 beat"
+ },
+ "news:6d3633c73430806d": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 earnings beats"
+ },
+ "news:ab1f77ab74831ded": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 results and branch expansion"
+ },
+ "news:da00abcb2b183e63": {
+  "keep": false,
+  "severity": null,
+  "why": "asset management commentary"
+ },
+ "news:6905e64d34a717bb": {
+  "keep": false,
+  "severity": null,
+  "why": "debt charity partnership"
+ },
+ "news:39fdebd4cc239df4": {
+  "keep": false,
+  "severity": null,
+  "why": "asset management commentary"
+ },
+ "news:a3f9241ca9fe2a21": {
+  "keep": true,
+  "severity": "info",
+  "why": "Tier 2 sukuk return"
+ },
+ "news:b2def2b4b40f867d": {
+  "keep": true,
+  "severity": "info",
+  "why": "government takeover talks"
+ },
+ "news:efa16c9a990cb1eb": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker ratings"
+ },
+ "news:303efca76a2aea7e": {
+  "keep": true,
+  "severity": "info",
+  "why": "government takeover talks"
+ },
+ "news:5cb92842af3e4b17": {
+  "keep": true,
+  "severity": "info",
+  "why": "MPS bid dispute at watchdog"
+ },
+ "news:56db7a730843635e": {
+  "keep": true,
+  "severity": "info",
+  "why": "government takeover talks"
+ },
+ "news:c4007679ae7560d8": {
+  "keep": true,
+  "severity": "info",
+  "why": "government takeover talks"
+ },
+ "news:2163e02ad7a6b7ac": {
+  "keep": false,
+  "severity": null,
+  "why": "routine issuance and share plan"
+ },
+ "news:dd23484c6470ba81": {
+  "keep": true,
+  "severity": "good",
+  "why": "record quarter"
+ },
+ "news:e2e8a4ff6a21fa45": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 results"
+ },
+ "news:2518f149007505cc": {
+  "keep": true,
+  "severity": "good",
+  "why": "earnings beats"
+ },
+ "news:3613fbe50427e2e7": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO trade-war commentary"
+ },
+ "news:04a6be9d22a7ab0c": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit beats"
+ },
+ "news:52b3d1ec0dc69038": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 results announcement"
+ },
+ "news:afb20be563598ce6": {
+  "keep": false,
+  "severity": null,
+  "why": "retail dividend comparison"
+ },
+ "news:e565bbac2320e88d": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 profit beat"
+ },
+ "news:5acda951758525f4": {
+  "keep": false,
+  "severity": null,
+  "why": "FX commentary by bank"
+ },
+ "news:c475636569aa1223": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO trade-war commentary"
+ },
+ "news:545f843e119cb6a3": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 beat"
+ },
+ "news:552661c2d1fbb161": {
+  "keep": false,
+  "severity": null,
+  "why": "unsourced M&A speculation"
+ },
+ "news:fb868f8801ac4722": {
+  "keep": false,
+  "severity": null,
+  "why": "analyst estimate filler"
+ },
+ "news:03fa44160a454a39": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:40eada43dc6a9245": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO trade-war commentary"
+ },
+ "news:eb66bc98efeebea8": {
+  "keep": true,
+  "severity": "warn",
+  "why": "AML capital charge"
+ },
+ "news:962d02c37dc217a7": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO trade-war commentary"
+ },
+ "news:86c5b9a827ea7ea8": {
+  "keep": false,
+  "severity": null,
+  "why": "routine covered bond pricing"
+ },
+ "news:a2b267e226b8ab98": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:7bf5d37cf1da0120": {
+  "keep": false,
+  "severity": null,
+  "why": "results date advisory"
+ },
+ "news:2275a1420fbe6f89": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover rules review call"
+ },
+ "news:0c28c944ccc2670c": {
+  "keep": false,
+  "severity": null,
+  "why": "routine statistical filing"
+ },
+ "news:535d1f0ffd53729f": {
+  "keep": false,
+  "severity": null,
+  "why": "junior lending appointment"
+ },
+ "news:d760c1979dc934b5": {
+  "keep": false,
+  "severity": null,
+  "why": "thought leadership piece"
+ },
+ "news:1165d6051971ab3e": {
+  "keep": true,
+  "severity": "warn",
+  "why": "earnings hit from risk remediation"
+ },
+ "news:424dfb661cdedec2": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as conference host"
+ },
+ "news:b06e71faddf7a41d": {
+  "keep": false,
+  "severity": null,
+  "why": "unsourced M&A speculation"
+ },
+ "news:a48241c9dd28f5d3": {
+  "keep": true,
+  "severity": "info",
+  "why": "FY results"
+ },
+ "news:eadde28a10fb87ee": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:435fe551583fbd15": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover rules review call"
+ },
+ "news:231dc9a85259fa5a": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover rules review call"
+ },
+ "news:0a1284b4d3b53bb0": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:e5281ad8ae2d885e": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as creditor, immaterial sum"
+ },
+ "news:f0fbcaa9d46d5875": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender on a deal"
+ },
+ "news:89e4ee29c4cdc995": {
+  "keep": false,
+  "severity": null,
+  "why": "share cancellation notice"
+ },
+ "news:a23425582f90ad5f": {
+  "keep": false,
+  "severity": null,
+  "why": "stock tip filler"
+ },
+ "news:369934811c7891a1": {
+  "keep": false,
+  "severity": null,
+  "why": "regulatory lobbying commentary"
+ },
+ "news:08c08a8aad524d5f": {
+  "keep": false,
+  "severity": null,
+  "why": "14 local job cuts"
+ },
+ "news:93123b1a07727c64": {
+  "keep": false,
+  "severity": null,
+  "why": "Zacks industry filler"
+ },
+ "news:d6570efe64880402": {
+  "keep": true,
+  "severity": "warn",
+  "why": "cum-ex charges against ex-staff"
+ },
+ "news:43e757f47c00699b": {
+  "keep": false,
+  "severity": null,
+  "why": "valuation filler"
+ },
+ "news:182a8b2b1f58256d": {
+  "keep": true,
+  "severity": "info",
+  "why": "board appointment"
+ },
+ "news:77cd8be2c842b326": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as sovereign lender"
+ },
+ "news:9f259277270ced8a": {
+  "keep": true,
+  "severity": "warn",
+  "why": "layoffs at highest since 2015"
+ },
+ "news:ce90d1b9b3736019": {
+  "keep": true,
+  "severity": "info",
+  "why": "CVC bid prepared"
+ },
+ "news:0bd87135b6140b84": {
+  "keep": true,
+  "severity": "warn",
+  "why": "board resignation"
+ },
+ "news:1334f5fab2db984b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "tax fraud charges against ex-staff"
+ },
+ "news:d99923b706131610": {
+  "keep": true,
+  "severity": "warn",
+  "why": "largest senior banker cull since crisis"
+ },
+ "news:ebacd409a35415e7": {
+  "keep": false,
+  "severity": null,
+  "why": "routine covered bond pricing"
+ },
+ "news:191296de6eef1208": {
+  "keep": false,
+  "severity": null,
+  "why": "stocks-to-watch roundup"
+ },
+ "news:718f6559f1329f5b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "customer-facing outage"
+ },
+ "news:b0f9f28923153d15": {
+  "keep": false,
+  "severity": null,
+  "why": "routine small issuance"
+ },
+ "news:b5d508ac5a278b12": {
+  "keep": true,
+  "severity": "warn",
+  "why": "payments outage"
+ },
+ "news:dbd8fbac88d9bb1a": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary appointment"
+ },
+ "news:84233d2c80209869": {
+  "keep": false,
+  "severity": null,
+  "why": "routine covered bond pricing"
+ },
+ "news:a30994eea6cfcd94": {
+  "keep": false,
+  "severity": null,
+  "why": "succession speculation"
+ },
+ "news:d65345915d00f84f": {
+  "keep": false,
+  "severity": null,
+  "why": "blockchain product pilot"
+ },
+ "news:0787503afe109dde": {
+  "keep": true,
+  "severity": "warn",
+  "why": "APRA action on risk weaknesses"
+ },
+ "news:8c79d43e2b6615e1": {
+  "keep": false,
+  "severity": null,
+  "why": "incentive share award notice"
+ },
+ "news:1a56f5755b243959": {
+  "keep": true,
+  "severity": "warn",
+  "why": "APRA action and FY result"
+ },
+ "news:1efa39ab8c6e2aaa": {
+  "keep": true,
+  "severity": "warn",
+  "why": "tougher APRA licence terms"
+ },
+ "news:ec4bdb212457146d": {
+  "keep": true,
+  "severity": "warn",
+  "why": "licence conditions after cyber breach"
+ },
+ "news:971c2d5b7de807c6": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO on turnaround under bid"
+ },
+ "news:93785b9f690458c8": {
+  "keep": false,
+  "severity": null,
+  "why": "valuation filler"
+ },
+ "news:81cb956705550e86": {
+  "keep": false,
+  "severity": null,
+  "why": "security tooling story"
+ },
+ "news:0bab3aeda2b12620": {
+  "keep": false,
+  "severity": null,
+  "why": "junior lending appointment"
+ },
+ "news:9be1d726040ff674": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as sell-side adviser"
+ },
+ "news:91c3713ac4358e27": {
+  "keep": false,
+  "severity": null,
+  "why": "junior lending appointment"
+ },
+ "news:03336271261c44fe": {
+  "keep": true,
+  "severity": "warn",
+  "why": "regulator imposes licence conditions"
+ },
+ "news:c106b6f487b96797": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair steps down"
+ },
+ "news:bded7d7135256f01": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair steps down"
+ },
+ "news:4027c08d018aa612": {
+  "keep": false,
+  "severity": null,
+  "why": "phishing using bank name"
+ },
+ "news:dbc6b82ef2be2f30": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO colour piece"
+ },
+ "news:79b4a9197f59779e": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair steps down"
+ },
+ "news:e2e0733b1eb7449b": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair steps down"
+ },
+ "news:4c800da496367cbc": {
+  "keep": false,
+  "severity": null,
+  "why": "small subsidiary results"
+ },
+ "news:c40c1f10a0327d8d": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair steps down"
+ },
+ "news:b428b51b6633b500": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair steps down"
+ },
+ "news:04196586e92afba2": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:640334f39cdf5deb": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair steps down"
+ },
+ "news:5cf48ec5338c5527": {
+  "keep": false,
+  "severity": null,
+  "why": "settlement technology story"
+ },
+ "news:1bfc5e03f0b53cca": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair steps down"
+ },
+ "news:18b1e541077ef175": {
+  "keep": false,
+  "severity": null,
+  "why": "individual discrimination claim"
+ },
+ "news:a3d086550c437c28": {
+  "keep": true,
+  "severity": "info",
+  "why": "$500m preferred issuance"
+ },
+ "news:032e3ff228492cce": {
+  "keep": false,
+  "severity": null,
+  "why": "blockchain product pilot"
+ },
+ "news:932d829f5b2c8fc9": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover analysis"
+ },
+ "news:f8fa1e91d4dcb4c3": {
+  "keep": true,
+  "severity": "info",
+  "why": "MPS takeover politics"
+ },
+ "news:6753813f150fe52d": {
+  "keep": false,
+  "severity": null,
+  "why": "FX commentary by bank"
+ },
+ "news:32b4b3e1c72359df": {
+  "keep": false,
+  "severity": null,
+  "why": "insider share sale notice"
+ },
+ "news:42ef5518bf9f398b": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO strategy colour"
+ },
+ "news:04947483460a6e22": {
+  "keep": false,
+  "severity": null,
+  "why": "routine liability management"
+ },
+ "news:77838aaa0fd8e513": {
+  "keep": true,
+  "severity": "info",
+  "why": "board appointment"
+ },
+ "news:353bb14a800f0007": {
+  "keep": false,
+  "severity": null,
+  "why": "share price filler"
+ },
+ "news:bb548829ec9e1264": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results after disposal"
+ },
+ "news:b20f6c780a3b2770": {
+  "keep": false,
+  "severity": null,
+  "why": "remuneration notice"
+ },
+ "news:8d5166fb042e4e39": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:ab8d20ace2d60a1b": {
+  "keep": true,
+  "severity": "info",
+  "why": "senior appointment"
+ },
+ "news:c6316165922101f3": {
+  "keep": false,
+  "severity": null,
+  "why": "blockchain product pilot"
+ },
+ "news:3f2eebee1d943fc2": {
+  "keep": false,
+  "severity": null,
+  "why": "campaign group on arranger role"
+ },
+ "news:24f6bda013095878": {
+  "keep": true,
+  "severity": "info",
+  "why": "Jio Credit stake acquisition"
+ },
+ "news:f68260bd7ac079f6": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$8m cyber penalty"
+ },
+ "news:698a1fb0de50efe0": {
+  "keep": true,
+  "severity": "info",
+  "why": "NEOS acquisition"
+ },
+ "news:b430c2ad6072490b": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
+ },
+ "news:8df72c84f2d96cdd": {
+  "keep": true,
+  "severity": "info",
+  "why": "Jio Credit joint venture"
+ },
+ "news:146842ede8ca57f1": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender on a deal"
+ },
+ "news:3beaddcb02827eb1": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:24440cb008a88d22": {
+  "keep": true,
+  "severity": "info",
+  "why": "ECB leaning to approve bid"
+ },
+ "news:e83f849b379452c3": {
+  "keep": true,
+  "severity": "info",
+  "why": "FY results"
+ },
+ "news:2aa9d32345c84662": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit beat, guidance raised"
+ },
+ "news:4f46bf97e2693fd8": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit jump, guidance raised"
+ },
+ "news:e5e22467783475e0": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit beat, guidance raised"
+ },
+ "news:a307f3d05dc3e72e": {
+  "keep": true,
+  "severity": "info",
+  "why": "business head steps down"
+ },
+ "news:2e63556e06f3a020": {
+  "keep": true,
+  "severity": "info",
+  "why": "FY results, loan applications down"
+ },
+ "news:2f773c435eeb99e4": {
+  "keep": false,
+  "severity": null,
+  "why": "executive market commentary"
+ },
+ "news:a54756dc354341e3": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results and asset quality"
+ },
+ "news:33177cf77d282597": {
+  "keep": false,
+  "severity": null,
+  "why": "banker gossip"
+ },
+ "news:8a79130e5068b89c": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$5.65m penalty over 2023 breach"
+ },
+ "news:b4ced601c74018dc": {
+  "keep": false,
+  "severity": null,
+  "why": "retail product launch"
+ },
+ "news:d72614082ec45b5b": {
+  "keep": false,
+  "severity": null,
+  "why": "cricket sponsorship"
+ },
+ "news:880e977641b7cf00": {
+  "keep": false,
+  "severity": null,
+  "why": "cricket sponsorship"
+ },
+ "news:2306d617fb01e299": {
+  "keep": true,
+  "severity": "warn",
+  "why": "admits breaching accountability laws"
+ },
+ "news:46e459c97e4729af": {
+  "keep": true,
+  "severity": "info",
+  "why": "capital decision postponed"
+ },
+ "news:5b41bb73cdbb1d32": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover negotiations opened"
+ },
+ "news:35eab6937ceb9b41": {
+  "keep": true,
+  "severity": "warn",
+  "why": "GBP1.2bn fraud trial"
+ },
+ "news:602259a0d182ebdc": {
+  "keep": true,
+  "severity": "info",
+  "why": "capital reform timetable"
+ },
+ "news:d11f64438b07fabb": {
+  "keep": false,
+  "severity": null,
+  "why": "regional appointment"
+ },
+ "news:dd118ad1d39c7d93": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend analysis filler"
+ },
+ "news:5d4148646ab52a77": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:f16ca9f792974b68": {
+  "keep": false,
+  "severity": null,
+  "why": "clearing mandate"
+ },
+ "news:2b109e23d25b0c1b": {
+  "keep": false,
+  "severity": null,
+  "why": "market wrap"
+ },
+ "news:4a5c0d0d99296a63": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as financing partner"
+ },
+ "news:1049fa85b0c40adf": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover talks begin"
+ },
+ "news:26d43cdb65797cf4": {
+  "keep": true,
+  "severity": "warn",
+  "why": "GBP1.2bn fraud claims"
+ },
+ "news:a36f44dff67bafc0": {
+  "keep": true,
+  "severity": "warn",
+  "why": "GBP1.2bn Arena TV lawsuits"
+ },
+ "news:e8f4666a425c47ca": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results"
+ },
+ "news:c134a5dbd8cbfdf9": {
+  "keep": false,
+  "severity": null,
+  "why": "retail results comparison"
+ },
+ "news:96b5c26f7fdb199b": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 profit up"
+ },
+ "news:fe73313cdb261f71": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 profit up 22%"
+ },
+ "news:4c72110b9f765e2f": {
+  "keep": false,
+  "severity": null,
+  "why": "share price move"
+ },
+ "news:9ebbfacac00c6dfe": {
+  "keep": true,
+  "severity": "good",
+  "why": "record H1 net profit"
+ },
+ "news:b4944dd7a8f0bee8": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 profit up 22%"
+ },
+ "news:186ce8c7e28d98dc": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO retirement"
+ },
+ "news:946ec3280f4eaa9b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "guidance cut on funding costs"
+ },
+ "news:e4278966d819a1db": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover approach"
+ },
+ "news:0f8cbf01f05e94e3": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover contact"
+ },
+ "news:a3b8bb9fa1e7e57e": {
+  "keep": true,
+  "severity": "info",
+  "why": "state bailout nearly recouped"
+ },
+ "news:ab3f76bb0d15f892": {
+  "keep": true,
+  "severity": "warn",
+  "why": "debanking lawsuit"
+ },
+ "news:9246465974a17d8f": {
+  "keep": false,
+  "severity": null,
+  "why": "promotional interview"
+ },
+ "news:98d787b7ee927c78": {
+  "keep": true,
+  "severity": "info",
+  "why": "bid for MPS"
+ },
+ "news:51822db0de11245d": {
+  "keep": false,
+  "severity": null,
+  "why": "employee share offering"
+ },
+ "news:0c0cd9d32aedc43d": {
+  "keep": false,
+  "severity": null,
+  "why": "results date advisory"
+ },
+ "news:97598577099589ce": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO on takeover value"
+ },
+ "news:d0fa2880c2772721": {
+  "keep": true,
+  "severity": "info",
+  "why": "record profits"
+ },
+ "news:a13d1b8fc77e8633": {
+  "keep": true,
+  "severity": "warn",
+  "why": "prosecutors probed fraud-handling claims"
+ },
+ "news:8194694462aaed2c": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO commentary on AI"
+ },
+ "news:a06604104de0acf2": {
+  "keep": false,
+  "severity": null,
+  "why": "60 local job cuts"
+ },
+ "news:0c966cacd9fddfbf": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview speculation"
+ },
+ "news:4a34580409ebc23c": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$70m trade-loss settlement"
+ },
+ "news:f7d2cb68842473b6": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results"
+ },
+ "news:75c88460e7536f9a": {
+  "keep": false,
+  "severity": null,
+  "why": "research piece by bank"
+ },
+ "news:c6d141e08bf02a05": {
+  "keep": true,
+  "severity": "info",
+  "why": "Italian unit M&A interest"
+ },
+ "news:aca9546cc04c42bf": {
+  "keep": false,
+  "severity": null,
+  "why": "employee benefits colour"
+ },
+ "news:7f8a22154e9af130": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO profile interview"
+ },
+ "news:ff52e22a9cd5c125": {
+  "keep": true,
+  "severity": "info",
+  "why": "BaFin clears takeover bid"
+ },
+ "news:45ba249ef71488a5": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results"
+ },
+ "news:5cffbdee7aaa3346": {
+  "keep": true,
+  "severity": "warn",
+  "why": "flat profit, bracing for loan losses"
+ },
+ "news:be082a2b9bcd7b23": {
+  "keep": false,
+  "severity": null,
+  "why": "59 local job cuts"
+ },
+ "news:65834b7595af467f": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit up 23%"
+ },
+ "news:0c6ceb3995d13309": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO interview"
+ },
+ "news:e07f135d40119835": {
+  "keep": false,
+  "severity": null,
+  "why": "individual refund dispute"
+ },
+ "news:a9166e546b803d64": {
+  "keep": true,
+  "severity": "info",
+  "why": "Hang Seng privatisation follow-up"
+ },
+ "news:c0f2f569c1c7bc4d": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit beats estimates"
+ },
+ "news:20cef3ece2fe39a0": {
+  "keep": true,
+  "severity": "info",
+  "why": "EUR2bn tech spend, possible job cuts"
+ },
+ "news:f2613b3adec522f0": {
+  "keep": true,
+  "severity": "warn",
+  "why": "redundancy talks"
+ },
+ "news:b467ab34074e8121": {
+  "keep": true,
+  "severity": "good",
+  "why": "H1 profit beat"
+ },
+ "news:33ce62fd1465a8ac": {
+  "keep": true,
+  "severity": "info",
+  "why": "EUR2bn tech spend, flat profit"
+ },
+ "news:98d2b8c2e61fb9fa": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q1 profit up 48%"
+ },
+ "news:d62ea5e816648ecc": {
+  "keep": true,
+  "severity": "info",
+  "why": "HSBC Egypt retail acquisition"
+ },
+ "news:c01c8a9477d4a872": {
+  "keep": true,
+  "severity": "info",
+  "why": "debanking court ruling"
+ },
+ "news:e1d0f7e8b2a04173": {
+  "keep": true,
+  "severity": "info",
+  "why": "HSBC Egypt retail acquisition"
+ },
+ "news:cb15686ec44b9265": {
+  "keep": true,
+  "severity": "info",
+  "why": "NIBC acquisition completed"
+ },
+ "news:8e15db6a3b7d835d": {
+  "keep": true,
+  "severity": "info",
+  "why": "HSBC Egypt retail acquisition"
+ },
+ "news:656b65544f97f21f": {
+  "keep": true,
+  "severity": "info",
+  "why": "HSBC Egypt retail acquisition"
+ },
+ "news:1c10bde27f6309b1": {
+  "keep": true,
+  "severity": "info",
+  "why": "HSBC Egypt retail acquisition"
+ },
+ "news:1f16e7718afc54f1": {
+  "keep": false,
+  "severity": null,
+  "why": "small subsidiary results"
+ },
+ "news:6e99aa3c791a6284": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
+ },
+ "news:90909412f71f4f38": {
+  "keep": true,
+  "severity": "info",
+  "why": "Athlon acquisition completed"
+ },
+ "news:110ee89368fdfc48": {
+  "keep": true,
+  "severity": "good",
+  "why": "profits up a third"
+ },
+ "news:955f42db6be125f8": {
+  "keep": true,
+  "severity": "good",
+  "why": "H1 pre-tax profit up 33%"
+ },
+ "news:4391ec183c3b3327": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q1 profit up 45%"
+ },
+ "news:d464d72f979690e1": {
+  "keep": true,
+  "severity": "info",
+  "why": "MPS merger effort ends"
+ },
+ "news:bc2aa7f6f5e577b5": {
+  "keep": true,
+  "severity": "info",
+  "why": "divisional H1 results"
+ },
+ "news:a393d40906ec1e59": {
+  "keep": true,
+  "severity": "info",
+  "why": "record CIB H1 revenues"
+ },
+ "news:de912ceb64b23dec": {
+  "keep": true,
+  "severity": "good",
+  "why": "H1 profit surge"
+ },
+ "news:ec9667ea478344d2": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:28a8d0342a1a4faf": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit up 20%, guidance raised"
+ },
+ "news:63a0d1c8c0784def": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker downgrade"
+ },
+ "news:6a10f335f30cb305": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results"
+ },
+ "news:f15c79ccc7d91c22": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results"
+ },
+ "news:926def6ed7ab8873": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q1 profit up 33%"
+ },
+ "news:7e48ca39750ae226": {
+  "keep": false,
+  "severity": null,
+  "why": "tokenised deposit pilot"
+ },
+ "news:03e9c04a091fcf15": {
+  "keep": true,
+  "severity": "info",
+  "why": "$500m sukuk placed"
+ },
+ "news:b387d5597227bd89": {
+  "keep": true,
+  "severity": "info",
+  "why": "new chair"
+ },
+ "news:b919165386506cd0": {
+  "keep": false,
+  "severity": null,
+  "why": "structured notes product"
+ },
+ "news:db8b1d8fc099ca91": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit up 20%, outlook raised"
+ },
+ "news:1661c714269f3fd5": {
+  "keep": true,
+  "severity": "good",
+  "why": "profits up 23%, cost cuts"
+ },
+ "news:4151c2c9fd0d38da": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO video clip"
+ },
+ "news:764831039dc72275": {
+  "keep": false,
+  "severity": null,
+  "why": "sector commentary"
+ },
+ "news:9d5ab15a7659c3f2": {
+  "keep": true,
+  "severity": "good",
+  "why": "GBP4.3bn profit, higher returns"
+ },
+ "news:9442fe762efaa1f8": {
+  "keep": false,
+  "severity": null,
+  "why": "valuation filler"
+ },
+ "news:bae18ec4d1715dac": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:545b37f92f09bdd0": {
+  "keep": true,
+  "severity": "good",
+  "why": "higher interim profit"
+ },
+ "news:98d557bd255110af": {
+  "keep": false,
+  "severity": null,
+  "why": "individual employment case"
+ },
+ "news:6815eae064047e79": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit beat and new strategy"
+ },
+ "news:c2d30c59bf3e6579": {
+  "keep": false,
+  "severity": null,
+  "why": "CFO television clip"
+ },
+ "news:40e8bb178de8973a": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q1 profit up 45%, forecast raised"
+ },
+ "news:4b8bbb7f90d14890": {
+  "keep": true,
+  "severity": "good",
+  "why": "strong H1, new strategy"
+ },
+ "news:01fc0dea561188f1": {
+  "keep": true,
+  "severity": "good",
+  "why": "profits up 23%, cost target"
+ },
+ "news:1e65604a6e9305f8": {
+  "keep": false,
+  "severity": null,
+  "why": "compliance hire"
+ },
+ "news:4acd14f6de17f9a0": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit beat, targets raised"
+ },
+ "news:8d648200fbdebf09": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 profit, outlook raised"
+ },
+ "news:a54707d19b7fa580": {
+  "keep": false,
+  "severity": null,
+  "why": "investor relations index page"
+ },
+ "news:73c101584c870a50": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 consolidated results"
+ },
+ "news:e1848f22201a63e3": {
+  "keep": true,
+  "severity": "good",
+  "why": "H1 profit up 8.5%"
+ },
+ "news:bb379271d77b5788": {
+  "keep": true,
+  "severity": "good",
+  "why": "record H1, guidance upgraded"
+ },
+ "news:16e630e7b10fa824": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO succession"
+ },
+ "news:81c321ede976e23d": {
+  "keep": true,
+  "severity": "info",
+  "why": "guidance unchanged"
+ },
+ "news:1943a818a6e7d24d": {
+  "keep": true,
+  "severity": "info",
+  "why": "new CFO and leadership reshuffle"
+ },
+ "news:a8311bd3020f24ca": {
+  "keep": true,
+  "severity": "info",
+  "why": "guidance confirmed, lending up"
+ },
+ "news:7608ec8fb5a49629": {
+  "keep": true,
+  "severity": "info",
+  "why": "divisional Q2 results"
+ },
+ "news:63afb85ef8a58ddf": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as project lender"
+ },
+ "news:2a41ba223e71f7e4": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results commentary"
+ },
+ "news:b91966b79956cd35": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit up 28%"
+ },
+ "news:c779e33a10315b9b": {
+  "keep": false,
+  "severity": null,
+  "why": "executive relocation colour"
+ },
+ "news:aafb806a1196d0cc": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
+ },
+ "news:f9e1dd3d6f4df2d4": {
+  "keep": true,
+  "severity": "good",
+  "why": "trading-led profit surge"
+ },
+ "news:875d4d2116977e8d": {
+  "keep": false,
+  "severity": null,
+  "why": "research outlook"
+ },
+ "news:91285237abd049a6": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 beat, new targets"
+ },
+ "news:7937d1d8b47cab64": {
+  "keep": true,
+  "severity": "good",
+  "why": "may beat improved outlook"
+ },
+ "news:8dd73edfef1c7bc3": {
+  "keep": true,
+  "severity": "info",
+  "why": "guidance revised"
+ },
+ "news:77a03a4cd353efc0": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 clean beat"
+ },
+ "news:3277df4c2cf3d455": {
+  "keep": true,
+  "severity": "good",
+  "why": "profits surge to GBP6.1bn"
+ },
+ "news:acab406e4921f186": {
+  "keep": false,
+  "severity": null,
+  "why": "bank tax campaign"
+ },
+ "news:3566e3ba49062b92": {
+  "keep": false,
+  "severity": null,
+  "why": "bank tax campaign"
+ },
+ "news:59decb2c85c81a48": {
+  "keep": true,
+  "severity": "info",
+  "why": "interim results"
+ },
+ "news:3ea7ba333a2862b2": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender on a deal"
+ },
+ "news:9963b9e93363cc0f": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit surge on trading"
+ },
+ "news:af5b5bdf4f1485b1": {
+  "keep": true,
+  "severity": "good",
+  "why": "strong Q2 earnings"
+ },
+ "news:9d9c76e2a979ce3e": {
+  "keep": false,
+  "severity": null,
+  "why": "campaign group piece"
+ },
+ "news:8e0d2946498a23e0": {
+  "keep": false,
+  "severity": null,
+  "why": "insider filing notice"
+ },
+ "news:4447ffb4bb3570c4": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary CEO departure"
+ },
+ "news:1a1b349a1ad6f8a9": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary CEO departure"
+ },
+ "news:0b73d3bbea7fe8e9": {
+  "keep": true,
+  "severity": "info",
+  "why": "resistance to takeover dropped"
+ },
+ "news:90d5c838ae43d186": {
+  "keep": false,
+  "severity": null,
+  "why": "staff award PR"
+ },
+ "news:f33eb64c1564a4eb": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair ready for takeover talks"
+ },
+ "news:6005753d573bb831": {
+  "keep": false,
+  "severity": null,
+  "why": "staff award PR"
+ },
+ "news:51ecd5cbf82c024a": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$50m fine for withholding information"
+ },
+ "news:0e55dcedbda36601": {
+  "keep": false,
+  "severity": null,
+  "why": "generic scam warning"
+ },
+ "news:75ca73f10dd37e9b": {
+  "keep": false,
+  "severity": null,
+  "why": "product league table"
+ },
+ "news:d0a7019060437524": {
+  "keep": true,
+  "severity": "info",
+  "why": "executive appointments in TSB integration"
+ },
+ "news:e941876dbc26b989": {
+  "keep": true,
+  "severity": "info",
+  "why": "GBP15bn mortgage book sale"
+ },
+ "news:8300e9a901cd2a04": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:efa40e3b4041c568": {
+  "keep": false,
+  "severity": null,
+  "why": "individual employment suit"
+ },
+ "news:f1dcd0ad16eead62": {
+  "keep": true,
+  "severity": "info",
+  "why": "SGD2.7bn insurance disposal"
+ },
+ "news:97d901a8bbeef363": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 sector results"
+ },
+ "news:484baccb6233aa43": {
+  "keep": true,
+  "severity": "info",
+  "why": "Singapore life disposal"
+ },
+ "news:3956b795d23138fb": {
+  "keep": false,
+  "severity": null,
+  "why": "small themed bond"
+ },
+ "news:effa3d948c354504": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair ready for takeover talks"
+ },
+ "news:052309c6e006aefb": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend increase notice"
+ },
+ "news:50c21cb8210d4426": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair calls for takeover talks"
+ },
+ "news:96215719181e420c": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary board appointment"
+ },
+ "news:d8d109c0851369f5": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover talks entered"
+ },
+ "news:412cef53e4f809b8": {
+  "keep": true,
+  "severity": "info",
+  "why": "$2.1bn insurance disposal"
+ },
+ "news:3e773fbcd431a1f4": {
+  "keep": true,
+  "severity": "info",
+  "why": "chair ready for takeover talks"
+ },
+ "news:3a6c66298223a5a2": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results"
+ },
+ "news:f25e813bc3dedefa": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover timing signalled"
+ },
+ "news:968d3420de81c11f": {
+  "keep": true,
+  "severity": "info",
+  "why": "results amid regional disruption"
+ },
+ "news:19fc80321336deff": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit beats, stake near 50%"
+ },
+ "news:9adbfb3a5b36b067": {
+  "keep": true,
+  "severity": "good",
+  "why": "record H1 pre-tax profit"
+ },
+ "news:261f1717b7a5eb6c": {
+  "keep": false,
+  "severity": null,
+  "why": "pensions product tie-up"
+ },
+ "news:ec5a30958ccb0f0c": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 sector results"
+ },
+ "news:c9dcc92a320a5b25": {
+  "keep": true,
+  "severity": "good",
+  "why": "record H1 profit"
+ },
+ "news:589fb6caae6c09c2": {
+  "keep": true,
+  "severity": "good",
+  "why": "record H1 profit up 28%"
+ },
+ "news:ca3fdd7692268961": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit lifted by loan growth"
+ },
+ "news:d74f3ef14d736e2e": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 profit up, impairments rising"
+ },
+ "news:045cc37229d94fdc": {
+  "keep": true,
+  "severity": "good",
+  "why": "record H1 pre-tax profit"
+ },
+ "news:e6aa43d0718434a3": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO steps down"
+ },
+ "news:20c3b31db45be917": {
+  "keep": true,
+  "severity": "info",
+  "why": "merger under consideration"
+ },
+ "news:f0cb2acb5f299319": {
+  "keep": false,
+  "severity": null,
+  "why": "employee share offering"
+ },
+ "news:dd74e4c8f6758d96": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as project lender"
+ },
+ "news:a3dfa3709180df67": {
+  "keep": false,
+  "severity": null,
+  "why": "employee share offering"
+ },
+ "news:98c3bc882a87f6b2": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO succession"
+ },
+ "news:785e9a85112e0d62": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO retirement"
+ },
+ "news:2ea33efe9b7ea94d": {
+  "keep": true,
+  "severity": "good",
+  "why": "quarterly profit up"
+ },
+ "news:16271b7179da80b2": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO succession"
+ },
+ "news:088ea941043e1a8a": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO steps down"
+ },
+ "news:a6021f5c60e92b99": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
+ },
+ "news:1ddb91702ea1ef36": {
+  "keep": true,
+  "severity": "good",
+  "why": "quarterly profit jump"
+ },
+ "news:89af1575be3a4e6d": {
+  "keep": false,
+  "severity": null,
+  "why": "broker note"
+ },
+ "news:44f86375a35d5910": {
+  "keep": true,
+  "severity": "good",
+  "why": "H1 profits up"
+ },
+ "news:e061171f1eaaab8c": {
+  "keep": true,
+  "severity": "good",
+  "why": "profits up a third"
+ },
+ "news:963cfd18994c7c56": {
+  "keep": false,
+  "severity": null,
+  "why": "branch closure statement"
+ },
+ "news:a48d65bf175bb489": {
+  "keep": false,
+  "severity": null,
+  "why": "stock narrative filler"
+ },
+ "news:e3e1613550bc2b0c": {
+  "keep": false,
+  "severity": null,
+  "why": "market-close PR stunt"
+ },
+ "news:dc4343f3e038ae5a": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results detail"
+ },
+ "news:ddbea62f6615ec5a": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 earnings call"
+ },
+ "news:775978ecdbf08fbe": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 earnings top estimates"
+ },
+ "news:0f57ec091bf9f043": {
+  "keep": true,
+  "severity": "info",
+  "why": "flat quarterly profit"
+ },
+ "news:5a2e1371e9507937": {
+  "keep": false,
+  "severity": null,
+  "why": "branch policy pledge"
+ },
+ "news:1262b9b88a343f81": {
+  "keep": true,
+  "severity": "warn",
+  "why": "ex-staff jailed over money laundering"
+ },
+ "news:5871a3a954bb4c53": {
+  "keep": false,
+  "severity": null,
+  "why": "policy commentary"
+ },
+ "news:4bc8e1b57dda82ee": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 profit up 14%"
+ },
+ "news:9b869f786f484324": {
+  "keep": true,
+  "severity": "info",
+  "why": "GBP2bn merger explored"
+ },
+ "news:7150fe7994159f79": {
+  "keep": false,
+  "severity": null,
+  "why": "sector research"
+ },
+ "news:b9d47aa8b6f8605a": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as creditor in a deal"
+ },
+ "news:791bd9fb9c8393d3": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 profit beat"
+ },
+ "news:ea7d63dcfa0e744b": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:20427af5d441b65b": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:7d4301060f0315f1": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 sector results"
+ },
+ "news:e5b9aeee245bbf0a": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend declaration"
+ },
+ "news:9f09af36193df683": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend announcements"
+ },
+ "news:cb061fdc2ded3805": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend declaration"
+ },
+ "news:fa01459100588984": {
+  "keep": true,
+  "severity": "info",
+  "why": "GBP2bn bid weighed"
+ },
+ "news:ece94b049a142da3": {
+  "keep": true,
+  "severity": "info",
+  "why": "merger talks amid FirstRand exit"
+ },
+ "news:02977a8518241340": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results"
+ },
+ "news:4f0282377e83197f": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker downgrade"
+ },
+ "news:873f9168556be466": {
+  "keep": true,
+  "severity": "info",
+  "why": "GBP2bn merger explored"
+ },
+ "news:350da8703600295b": {
+  "keep": true,
+  "severity": "info",
+  "why": "$2.7bn merger explored"
+ },
+ "news:6b6e38beee62b115": {
+  "keep": true,
+  "severity": "info",
+  "why": "$2.7bn merger explored"
+ },
+ "news:2af62a016c3af9be": {
+  "keep": true,
+  "severity": "info",
+  "why": "GBP2bn bid weighed"
+ },
+ "news:0c7931372dc3148a": {
+  "keep": false,
+  "severity": null,
+  "why": "regional appointment"
+ },
+ "news:dedf0b58a23d85d4": {
+  "keep": false,
+  "severity": null,
+  "why": "cricket sponsorship"
+ },
+ "news:0c25713345f925db": {
+  "keep": true,
+  "severity": "warn",
+  "why": "ex-staff sentenced over money laundering"
+ },
+ "news:704d42cc65002ab4": {
+  "keep": true,
+  "severity": "info",
+  "why": "acquired unit earnings"
+ },
+ "news:187992e797aae0f7": {
+  "keep": true,
+  "severity": "warn",
+  "why": "BaFin orders CDD remediation"
+ },
+ "news:affaa0a303cb94b8": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:3d9ebb96e7be324b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "BaFin orders AML remediation"
+ },
+ "news:018e7cfac7dbf78e": {
+  "keep": true,
+  "severity": "info",
+  "why": "record sector profits"
+ },
+ "news:d92fc4699cce3396": {
+  "keep": false,
+  "severity": null,
+  "why": "UK subsidiary results"
+ },
+ "news:ad87754e1c1fa43d": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as bond arranger"
+ },
+ "news:f68e538428197594": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$50m New York fine"
+ },
+ "news:54d646c02e634936": {
+  "keep": true,
+  "severity": "warn",
+  "why": "settles AML case with NY regulator"
+ },
+ "news:92be0085781e228b": {
+  "keep": false,
+  "severity": null,
+  "why": "sector outlook"
+ },
+ "news:b8c132ba9d18a0e9": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$50m AML penalty"
+ },
+ "news:23ec43492105fe04": {
+  "keep": false,
+  "severity": null,
+  "why": "research outlook"
+ },
+ "news:d391f16f83ff5b49": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$50m settlement of US probe"
+ },
+ "news:6e75c97d2f8412ed": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 profit up 56%"
+ },
+ "news:a5ff754b79ee465c": {
+  "keep": false,
+  "severity": null,
+  "why": "UK subsidiary results"
+ },
+ "news:1ad9532311184e4b": {
+  "keep": false,
+  "severity": null,
+  "why": "market entry strategy"
+ },
+ "news:a7c2f7baff8c38d2": {
+  "keep": false,
+  "severity": null,
+  "why": "UK subsidiary results"
+ },
+ "news:f69ec54a1932ce35": {
+  "keep": true,
+  "severity": "info",
+  "why": "Addiko bid clears hurdle"
+ },
+ "news:dce86b6a4375096e": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend stock filler"
+ },
+ "news:233a5c5ff4e87aea": {
+  "keep": true,
+  "severity": "info",
+  "why": "Fitch rating action"
+ },
+ "news:403afa7d3af78607": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 results"
+ },
+ "news:9b387646ca2551b0": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
+ },
+ "news:12adc5caf3cce0be": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$50m New York penalty"
+ },
+ "news:57b5b604dc5ab09b": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:be2d3a6e53eee6dd": {
+  "keep": false,
+  "severity": null,
+  "why": "Baltic subsidiary results"
+ },
+ "news:ac8203359f3e9861": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$50m New York fine"
+ },
+ "news:19733749e180e2cf": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$50m fine for failing to cooperate"
+ },
+ "news:ff566ddba9ecf22c": {
+  "keep": true,
+  "severity": "good",
+  "why": "quarterly profit up 56%"
+ },
+ "news:a8777a52828ca47d": {
+  "keep": true,
+  "severity": "warn",
+  "why": "New York regulator fine"
+ },
+ "news:99f77d6f6364b9b1": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$50m fine"
+ },
+ "news:a3418c11d47bc8cf": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 earnings beat"
+ },
+ "news:d3912a2e02c5d1fa": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as property lender"
+ },
+ "news:bcc1df8a5c584d64": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend declaration"
+ },
+ "news:7d4d0330018bed3e": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:df8a1a2eab13964f": {
+  "keep": false,
+  "severity": null,
+  "why": "former executive joins another firm"
+ },
+ "news:441ae7a3c4ba0eff": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker ratings"
+ },
+ "news:74a425ea4a5e7f26": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:19ea8e20d102b4dd": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
+ },
+ "news:ad44c2b29a24da9e": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
+ },
+ "news:b3d179b08cbc5708": {
+  "keep": true,
+  "severity": "warn",
+  "why": "further layoffs signalled"
+ },
+ "news:076445ccafeb797b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "possible EU sanctions listing"
+ },
+ "news:9c0729fd853e4621": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit beat"
+ },
+ "news:5de4c57de555c852": {
+  "keep": false,
+  "severity": null,
+  "why": "payments product"
+ },
+ "news:0ae663d3d1ea9e0d": {
+  "keep": false,
+  "severity": null,
+  "why": "third party faked bank's bonds"
+ },
+ "news:86c485d5d9b46593": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary bond listing"
+ },
+ "news:57b12396fbb9f18d": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit jump, credit quality beat"
+ },
+ "news:d0c686c11232a32c": {
+  "keep": true,
+  "severity": "good",
+  "why": "decade-high revenue, $30bn capital return"
+ },
+ "news:1040dba1c799d74b": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as property lender"
+ },
+ "news:8f4f8312e1afde73": {
+  "keep": false,
+  "severity": null,
+  "why": "routine note redemption"
+ },
+ "news:a96ba5971664776e": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 EPS and 23.5% ROE"
+ },
+ "news:d8024d660f227042": {
+  "keep": false,
+  "severity": null,
+  "why": "former executive joins another firm"
+ },
+ "news:de77fb5ddefc83b4": {
+  "keep": false,
+  "severity": null,
+  "why": "digital securities sandbox"
+ },
+ "news:07ad3b231edd1a85": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
+ },
+ "news:b7d5c8db784895a3": {
+  "keep": false,
+  "severity": null,
+  "why": "divisional appointment"
+ },
+ "news:c491f21227497e68": {
+  "keep": true,
+  "severity": "warn",
+  "why": "contention over EU sanctions package"
+ },
+ "news:9f571c52614f7eb8": {
+  "keep": false,
+  "severity": null,
+  "why": "third party faked bank's bonds"
+ },
+ "news:69f6402fb5739925": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:7b66aa152f761ac6": {
+  "keep": false,
+  "severity": null,
+  "why": "lender product update"
+ },
+ "news:5b88a904cb7c24a3": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:d07557fcefd96190": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as acquisition lender"
+ },
+ "news:f3bf32c126d09f42": {
+  "keep": false,
+  "severity": null,
+  "why": "broker forecast"
+ },
+ "news:e9e1a59e14d09c9b": {
+  "keep": false,
+  "severity": null,
+  "why": "peer comparison filler"
+ },
+ "news:9c617a806a59054d": {
+  "keep": false,
+  "severity": null,
+  "why": "office attendance policy"
+ },
+ "news:d18dc3ce83d01f27": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:e0a5718184b8dfe8": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:1ad9add27364439c": {
+  "keep": true,
+  "severity": "info",
+  "why": "Turkish unit sale approved"
+ },
+ "news:86a6f6818b579359": {
+  "keep": false,
+  "severity": null,
+  "why": "immaterial fintech bolt-on"
+ },
+ "news:7b2ab5f6e38ba82d": {
+  "keep": false,
+  "severity": null,
+  "why": "marketing story"
+ },
+ "news:5ad515e048ed1338": {
+  "keep": true,
+  "severity": "warn",
+  "why": "bank and ex-chair to stand trial"
+ },
+ "news:ba4d633ef984ebb5": {
+  "keep": true,
+  "severity": "info",
+  "why": "board appointment"
+ },
+ "news:2c69ff509e2b3938": {
+  "keep": false,
+  "severity": null,
+  "why": "product partnership"
+ },
+ "news:7ccc682e21e82ea7": {
+  "keep": true,
+  "severity": "warn",
+  "why": "EUR8.5m AML fine"
+ },
+ "news:912667fbd25e11f2": {
+  "keep": true,
+  "severity": "warn",
+  "why": "AML shortcomings penalised"
+ },
+ "news:f092218de34937dc": {
+  "keep": true,
+  "severity": "info",
+  "why": "RBL Bank acquisition"
+ },
+ "news:6ff5c782bf8f8713": {
+  "keep": true,
+  "severity": "warn",
+  "why": "AML shortcomings penalised"
+ },
+ "news:d7140a306005044f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "bank and ex-chair to stand trial"
+ },
+ "news:0a28dc2602464880": {
+  "keep": true,
+  "severity": "info",
+  "why": "EUR2bn synthetic securitisation"
+ },
+ "news:8fa377ab92e0aebe": {
+  "keep": true,
+  "severity": "warn",
+  "why": "EUR8.5m central bank fine"
+ },
+ "news:2d3e87bf6eebfe03": {
+  "keep": true,
+  "severity": "warn",
+  "why": "DNB fine for weak due diligence"
+ },
+ "news:3fe115fc4f5ffafd": {
+  "keep": true,
+  "severity": "warn",
+  "why": "DNB fine over AML controls"
+ },
+ "news:eb71bba7b76ecd8d": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:101de5770c384957": {
+  "keep": false,
+  "severity": null,
+  "why": "Indian subsidiary results"
+ },
+ "news:548f384412b36d38": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover nearing completion"
+ },
+ "news:9fb328de8fb182c2": {
+  "keep": true,
+  "severity": "warn",
+  "why": "EUR8.5m AML fine"
+ },
+ "news:e1a3ce9c852ab77a": {
+  "keep": false,
+  "severity": null,
+  "why": "routine note redemption"
+ },
+ "news:d2734f81cdca23b5": {
+  "keep": true,
+  "severity": "info",
+  "why": "AT1 capital notes issue"
+ },
+ "news:f47fc4d48af84e23": {
+  "keep": false,
+  "severity": null,
+  "why": "Indian subsidiary results"
+ },
+ "news:e044869999890cf8": {
+  "keep": false,
+  "severity": null,
+  "why": "product launch"
+ },
+ "news:c26a34eef967a220": {
+  "keep": true,
+  "severity": "warn",
+  "why": "EUR8.5m due diligence fine"
+ },
+ "news:365251ac157b2319": {
+  "keep": true,
+  "severity": "warn",
+  "why": "EUR8.5m AML fine"
+ },
+ "news:96352351def2b7d4": {
+  "keep": true,
+  "severity": "warn",
+  "why": "EUR8.5m AML fine"
+ },
+ "news:f1126702498b7f6c": {
+  "keep": false,
+  "severity": null,
+  "why": "product launch"
+ },
+ "news:ae0997cca641b522": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary executive interview"
+ },
+ "news:5c14497ace651c71": {
+  "keep": false,
+  "severity": null,
+  "why": "results date notice"
+ },
+ "news:7f52e14110d2983f": {
+  "keep": false,
+  "severity": null,
+  "why": "investment partnership"
+ },
+ "news:5b4da7dfbc94e87d": {
+  "keep": true,
+  "severity": "info",
+  "why": "reverse mortgage book sale"
+ },
+ "news:82045071dd726775": {
+  "keep": false,
+  "severity": null,
+  "why": "executive fraud commentary"
+ },
+ "news:2e915f102ccbeef0": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker downgrade"
+ },
+ "news:486c9428325aa3a9": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary CEO appointment"
+ },
+ "news:4604bcc55352c1c0": {
+  "keep": true,
+  "severity": "warn",
+  "why": "days of service outages"
+ },
+ "news:45f2b3e88cdb2def": {
+  "keep": true,
+  "severity": "info",
+  "why": "EUR750m AT1 issue and tender"
+ },
+ "news:80c8644bd0ed2851": {
+  "keep": false,
+  "severity": null,
+  "why": "former executive joins another firm"
+ },
+ "news:02b2014eab116987": {
+  "keep": false,
+  "severity": null,
+  "why": "fund servicing mandate"
+ },
+ "news:2ef30b41f9215e14": {
+  "keep": false,
+  "severity": null,
+  "why": "broker note"
+ },
+ "news:2a14eece3d430dc0": {
+  "keep": true,
+  "severity": "info",
+  "why": "motor finance redress delayed"
+ },
+ "news:5d06f4ee023ccb4e": {
+  "keep": false,
+  "severity": null,
+  "why": "stablecoin product"
+ },
+ "news:a69bbe3a07b698a1": {
+  "keep": true,
+  "severity": "info",
+  "why": "Banco BPM stake at 29.3%"
+ },
+ "news:deb5fb01320d9c57": {
+  "keep": false,
+  "severity": null,
+  "why": "AI model consortium"
+ },
+ "news:59c6b8f94fc92cda": {
+  "keep": false,
+  "severity": null,
+  "why": "former executive joins another firm"
+ },
+ "news:e0da7fdcc2b8f669": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$10m class action settlement"
+ },
+ "news:cd4e7cda8e87399f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "service outage"
+ },
+ "news:7959c38ba4afd244": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as bookrunner"
+ },
+ "news:aff6b7da469d037b": {
+  "keep": true,
+  "severity": "info",
+  "why": "SNB says capital already sufficient"
+ },
+ "news:812a507307a00526": {
+  "keep": true,
+  "severity": "info",
+  "why": "GBP2.7bn Evelyn acquisition"
+ },
+ "news:20a7d2b09141a32b": {
+  "keep": true,
+  "severity": "info",
+  "why": "GBP2.7bn Evelyn acquisition"
+ },
+ "news:2992c03678d76077": {
+  "keep": true,
+  "severity": "warn",
+  "why": "hundreds of redundancies"
+ },
+ "news:30d949ddab63e16d": {
+  "keep": false,
+  "severity": null,
+  "why": "sector research by bank"
+ },
+ "news:cddb463a56694562": {
+  "keep": false,
+  "severity": null,
+  "why": "IT migration"
+ },
+ "news:9056a6c2a38d3c44": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:23dbdb0e184a5c49": {
+  "keep": false,
+  "severity": null,
+  "why": "retail brand retirement"
+ },
+ "news:f16cdc78ff00cdf9": {
+  "keep": true,
+  "severity": "info",
+  "why": "GBP2.7bn Evelyn acquisition"
+ },
+ "news:a390e270506bebdd": {
+  "keep": true,
+  "severity": "info",
+  "why": "national default mandate"
+ },
+ "news:8ff8398665349698": {
+  "keep": false,
+  "severity": null,
+  "why": "FX commentary by bank"
+ },
+ "news:74da4b1b1e0a78b7": {
+  "keep": true,
+  "severity": "info",
+  "why": "GBP2.7bn Evelyn acquisition"
+ },
+ "news:5c02f37bf327c947": {
+  "keep": true,
+  "severity": "info",
+  "why": "Evelyn acquisition completed"
+ },
+ "news:696b2cc632a6c18d": {
+  "keep": true,
+  "severity": "info",
+  "why": "Evelyn acquisition completed"
+ },
+ "news:20bb0eb98a08b941": {
+  "keep": true,
+  "severity": "info",
+  "why": "Evelyn acquisition completed"
+ },
+ "news:1022c1b1c90792d8": {
+  "keep": true,
+  "severity": "info",
+  "why": "Evelyn deal completed"
+ },
+ "news:090463bff5ad58e1": {
+  "keep": false,
+  "severity": null,
+  "why": "cloud partnership"
+ },
+ "news:e3eff9aa9a347c45": {
+  "keep": true,
+  "severity": "info",
+  "why": "unified UK and Europe CEO role"
+ },
+ "news:42b34ee407832e05": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:f4878573bfd66a5f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "GBP250m Thurrock lawsuit"
+ },
+ "news:baa3aee451b51f35": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:b61f4640b21fac35": {
+  "keep": true,
+  "severity": "info",
+  "why": "HSBC Turkey acquisition talks"
+ },
+ "news:a82e9463d84f803e": {
+  "keep": true,
+  "severity": "info",
+  "why": "Turkey exit weighed"
+ },
+ "news:46a67956672cd456": {
+  "keep": true,
+  "severity": "info",
+  "why": "first Europe and UK CEO"
+ },
+ "news:102af876004cd442": {
+  "keep": false,
+  "severity": null,
+  "why": "league table colour"
+ },
+ "news:0363595bf7065e13": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO promotions"
+ },
+ "news:1ea8c7b4859b6436": {
+  "keep": true,
+  "severity": "info",
+  "why": "European leadership changes"
+ },
+ "news:4d56670b44dfc33f": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as venture lender"
+ },
+ "news:3f7891d4eb819c4c": {
+  "keep": false,
+  "severity": null,
+  "why": "marketing PR"
+ },
+ "news:facbaba71086c0b6": {
+  "keep": true,
+  "severity": "info",
+  "why": "European leadership changes"
+ },
+ "news:748e697f719828b0": {
+  "keep": true,
+  "severity": "info",
+  "why": "HSBC Turkey acquisition talks"
+ },
+ "news:a254ad850968b453": {
+  "keep": false,
+  "severity": null,
+  "why": "headquarters property purchase"
+ },
+ "news:3b1e056ae87403ef": {
+  "keep": false,
+  "severity": null,
+  "why": "political colour piece"
+ },
+ "news:2f20d5132fcd5e48": {
+  "keep": true,
+  "severity": "warn",
+  "why": "self-dealing suit appeal allowed"
+ },
+ "news:a84da3230bbd03a6": {
+  "keep": true,
+  "severity": "warn",
+  "why": "600 job cuts"
+ },
+ "news:19a2d9d57a7c4889": {
+  "keep": false,
+  "severity": null,
+  "why": "country head appointment"
+ },
+ "news:8e8349ddca3e022a": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as acquisition lender"
+ },
+ "news:38d5de507cb2e3cf": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend narrative filler"
+ },
+ "news:f475a803c4520890": {
+  "keep": false,
+  "severity": null,
+  "why": "stock tip filler"
+ },
+ "news:ece68a6268e65603": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:38e4b44a66bdd696": {
+  "keep": true,
+  "severity": "info",
+  "why": "stress test result and capital return"
+ },
+ "news:47e81890e98388fb": {
+  "keep": false,
+  "severity": null,
+  "why": "client PR"
+ },
+ "news:b2c9662df7aed032": {
+  "keep": true,
+  "severity": "warn",
+  "why": "warnings ignored in $330m embezzlement"
+ },
+ "news:2729f17cfba21934": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO television clip"
+ },
+ "news:495784663f0a687c": {
+  "keep": false,
+  "severity": null,
+  "why": "stock narrative filler"
+ },
+ "news:53e64a95c0db651a": {
+  "keep": false,
+  "severity": null,
+  "why": "appointments roundup"
+ },
+ "news:089ab7b03f4d7489": {
+  "keep": false,
+  "severity": null,
+  "why": "research piece by bank"
+ },
+ "news:7ebd2add8ae33f84": {
+  "keep": false,
+  "severity": null,
+  "why": "research outlook"
+ },
+ "news:0889ddc940c35c71": {
+  "keep": true,
+  "severity": "info",
+  "why": "Banco BPM stake toward 30%"
+ },
+ "news:fdc58b1aa061efa9": {
+  "keep": false,
+  "severity": null,
+  "why": "consumer fraud statistics"
+ },
+ "news:22e2b59a01ddb3b3": {
+  "keep": true,
+  "severity": "warn",
+  "why": "denies filing for administration"
+ },
+ "news:7b7f7abfaccb055f": {
+  "keep": true,
+  "severity": "info",
+  "why": "bid for Aldermore considered"
+ },
+ "news:31a3b08e81ada0e6": {
+  "keep": true,
+  "severity": "info",
+  "why": "new lending halted after takeover"
+ },
+ "news:d6a81f63b76e6082": {
+  "keep": true,
+  "severity": "info",
+  "why": "Turkish unit sale approved"
+ },
+ "news:2402b19adf10621b": {
+  "keep": true,
+  "severity": "info",
+  "why": "new group chair"
+ },
+ "news:1c3a4c70985fcc20": {
+  "keep": false,
+  "severity": null,
+  "why": "generic regulatory consultation"
+ },
+ "news:96461b64da2ee017": {
+  "keep": true,
+  "severity": "info",
+  "why": "stress test result and dividend plan"
+ },
+ "news:e6530f62331c9ed0": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend increase notice"
+ },
+ "news:75d5e46b0428ca10": {
+  "keep": false,
+  "severity": null,
+  "why": "community reinvestment PR"
+ },
+ "news:ce8c01569e8bc6bd": {
+  "keep": false,
+  "severity": null,
+  "why": "ETF market making product"
+ },
+ "news:927626d8437215c2": {
+  "keep": true,
+  "severity": "info",
+  "why": "new group chair"
+ },
+ "news:896b723297951463": {
+  "keep": true,
+  "severity": "info",
+  "why": "new group chair"
+ },
+ "news:bf8599116bc14dcb": {
+  "keep": true,
+  "severity": "info",
+  "why": "new chair ahead of IPO"
+ },
+ "news:d537d351fa020c6d": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:a31deb41ef346005": {
+  "keep": false,
+  "severity": null,
+  "why": "immaterial fintech disposal"
+ },
+ "news:5c226dfdace56e18": {
+  "keep": true,
+  "severity": "info",
+  "why": "new group chair"
+ },
+ "news:76fd009cb1e5a044": {
+  "keep": false,
+  "severity": null,
+  "why": "development finance partnership"
+ },
+ "news:bac8cc9571e5810f": {
+  "keep": false,
+  "severity": null,
+  "why": "asset management strategy"
+ },
+ "news:8643b0cd2739397e": {
+  "keep": true,
+  "severity": "info",
+  "why": "Leocare acquisition"
+ },
+ "news:dd161b9f44540d2c": {
+  "keep": false,
+  "severity": null,
+  "why": "cricket sponsorship"
+ },
+ "news:aa7b56fcab3a3b11": {
+  "keep": true,
+  "severity": "info",
+  "why": "EUR31bn MPS deal"
+ },
+ "news:bf45e1132549eeb4": {
+  "keep": true,
+  "severity": "info",
+  "why": "bid for Aldermore weighed"
+ },
+ "news:42ba610fb475f812": {
+  "keep": true,
+  "severity": "info",
+  "why": "Aldermore takeover eyed"
+ },
+ "news:e25a89cb109a09cf": {
+  "keep": true,
+  "severity": "info",
+  "why": "bid for Aldermore weighed"
+ },
+ "news:7b94adae98a08bcb": {
+  "keep": true,
+  "severity": "info",
+  "why": "Aldermore takeover explored"
+ },
+ "news:2ecb4b4542a7abdc": {
+  "keep": false,
+  "severity": null,
+  "why": "technology hiring"
+ },
+ "news:45c8a8affd5ddf37": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:1b126bf875c54ca6": {
+  "keep": false,
+  "severity": null,
+  "why": "corporate broker appointment"
+ },
+ "news:f177c8dc418e281d": {
+  "keep": false,
+  "severity": null,
+  "why": "fraud prevention PR"
+ },
+ "news:c23f3093a75491e4": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender on a deal"
+ },
+ "news:d857ba119cdc39e4": {
+  "keep": true,
+  "severity": "info",
+  "why": "RBL Bank acquisition closed"
+ },
+ "news:9010a90029ce7bd7": {
+  "keep": false,
+  "severity": null,
+  "why": "research outlook"
+ },
+ "news:646903d0a46a3fb2": {
+  "keep": true,
+  "severity": "info",
+  "why": "Russia exit advice and EU capital rules"
+ },
+ "news:e6b19a504b6dd87f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "APRA questions over small business lending"
+ },
+ "news:0c1d8122166d2d2c": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover acceptances"
+ },
+ "news:e950f01d37c094b9": {
+  "keep": true,
+  "severity": "warn",
+  "why": "multimillion-dollar fine"
+ },
+ "news:979c9b63b101f2b6": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$35m fine over scam protection"
+ },
+ "news:317daf6df69c8fb2": {
+  "keep": false,
+  "severity": null,
+  "why": "mentioned in passing"
+ },
+ "news:a44c48de17290c84": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary leadership colour"
+ },
+ "news:6819db692aa8fe32": {
+  "keep": true,
+  "severity": "info",
+  "why": "Addiko takeover offer"
+ },
+ "news:845bf4e595617c58": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:9d171323218175f6": {
+  "keep": false,
+  "severity": null,
+  "why": "retail product review"
+ },
+ "news:4bb6b68aff11b9fc": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover offer deadline"
+ },
+ "news:5daf7177804591f3": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend timing notice"
+ },
+ "news:426e0675a83922c0": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender on a deal"
+ },
+ "news:b9554c9ba0115ef9": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:e2111ff52ee0ce59": {
+  "keep": true,
+  "severity": "info",
+  "why": "dispute over bid acceptances"
+ },
+ "news:f88e8e7eb23b6618": {
+  "keep": true,
+  "severity": "warn",
+  "why": "second app outage of the year"
+ },
+ "news:cc0d60c46d0e9ad0": {
+  "keep": false,
+  "severity": null,
+  "why": "industry anti-fraud initiative"
+ },
+ "news:45b61edf03848942": {
+  "keep": false,
+  "severity": null,
+  "why": "industry anti-fraud initiative"
+ },
+ "news:477fb19e2a736068": {
+  "keep": false,
+  "severity": null,
+  "why": "trade finance product"
+ },
+ "news:5f356e120049966e": {
+  "keep": true,
+  "severity": "info",
+  "why": "Leocare acquisition"
+ },
+ "news:589c0d0cda956ef8": {
+  "keep": false,
+  "severity": null,
+  "why": "research outlook"
+ },
+ "news:9893e37eb2a445b9": {
+  "keep": false,
+  "severity": null,
+  "why": "immaterial fintech bolt-on"
+ },
+ "news:b3ef7dfc3f0487a7": {
+  "keep": false,
+  "severity": null,
+  "why": "local branch crime"
+ },
+ "news:11cbd2563d8fc399": {
+  "keep": false,
+  "severity": null,
+  "why": "immaterial fintech bolt-on"
+ },
+ "news:1ccae9e965096e2d": {
+  "keep": true,
+  "severity": "info",
+  "why": "buy-in of Jamaican subsidiary"
+ },
+ "news:05d7843055f4b414": {
+  "keep": false,
+  "severity": null,
+  "why": "immaterial fintech bolt-on"
+ },
+ "news:e7caab34d60f9039": {
+  "keep": false,
+  "severity": null,
+  "why": "market commentary interview"
+ },
+ "news:2996b20c90b97363": {
+  "keep": true,
+  "severity": "info",
+  "why": "first acquisition since AML crisis"
+ },
+ "news:ca8fe6e6e594509f": {
+  "keep": false,
+  "severity": null,
+  "why": "stock narrative filler"
+ },
+ "news:46640a836644b9b9": {
+  "keep": false,
+  "severity": null,
+  "why": "analyst view"
+ },
+ "news:d6f997f7f5b0dc50": {
+  "keep": true,
+  "severity": "info",
+  "why": "AT1 tender offer result"
+ },
+ "news:c9a06904077e5d30": {
+  "keep": true,
+  "severity": "info",
+  "why": "stake raised over 10 points"
+ },
+ "news:5950c952495c098a": {
+  "keep": false,
+  "severity": null,
+  "why": "arena sponsorship"
+ },
+ "news:5b150d5d94f061f3": {
+  "keep": true,
+  "severity": "info",
+  "why": "regulators weigh capital relief"
+ },
+ "news:6010d0067023b279": {
+  "keep": false,
+  "severity": null,
+  "why": "fraud prevention PR"
+ },
+ "news:411b4aba50931e57": {
+  "keep": false,
+  "severity": null,
+  "why": "regional appointment"
+ },
+ "news:de47fa45053b2a23": {
+  "keep": false,
+  "severity": null,
+  "why": "macro research by bank"
+ },
+ "news:9fd1c5e503e04052": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:2f70fa448fb47f2b": {
+  "keep": false,
+  "severity": null,
+  "why": "market research by bank"
+ },
+ "news:a2d572298f1e35bd": {
+  "keep": true,
+  "severity": "info",
+  "why": "CFO guides interest income higher"
+ },
+ "news:a004ab199e4fc080": {
+  "keep": false,
+  "severity": null,
+  "why": "product partnership"
+ },
+ "news:9099a67983bb44a2": {
+  "keep": false,
+  "severity": null,
+  "why": "bank tax lobbying"
+ },
+ "news:39a558bcb89a1290": {
+  "keep": false,
+  "severity": null,
+  "why": "broker mandate"
+ },
+ "news:72120e81e200c8f5": {
+  "keep": true,
+  "severity": "info",
+  "why": "EUR30.6bn bid for MPS"
+ },
+ "news:6de03298e8271cdf": {
+  "keep": true,
+  "severity": "info",
+  "why": "$35bn bid for MPS"
+ },
+ "news:60b637d43bd5e48b": {
+  "keep": true,
+  "severity": "info",
+  "why": "EUR31bn bid for MPS"
+ },
+ "news:fa8714444b5f3904": {
+  "keep": true,
+  "severity": "info",
+  "why": "bid for all MPS shares"
+ },
+ "news:450b91f275fce2eb": {
+  "keep": true,
+  "severity": "info",
+  "why": "$35bn bid for MPS"
+ },
+ "news:fd34271082199efe": {
+  "keep": false,
+  "severity": null,
+  "why": "individual customer dispute"
+ },
+ "news:852dccf432155dd1": {
+  "keep": false,
+  "severity": null,
+  "why": "individual customer dispute"
+ },
+ "news:c9198cb275fb6721": {
+  "keep": true,
+  "severity": "info",
+  "why": "MPS bid analysis"
+ },
+ "news:e957410dc9ce8cff": {
+  "keep": false,
+  "severity": null,
+  "why": "divisional appointment"
+ },
+ "news:2ece22128b6f461f": {
+  "keep": false,
+  "severity": null,
+  "why": "regional appointment"
+ },
+ "news:7b9bb8ac74cbe7ed": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as project lender"
+ },
+ "news:19543e0b2194299a": {
+  "keep": true,
+  "severity": "warn",
+  "why": "AI rollout to cut a quarter of headcount"
+ },
+ "news:aaa7b109fc480e57": {
+  "keep": true,
+  "severity": "warn",
+  "why": "managerial job cuts in restructuring"
+ },
+ "news:006e381f62d64ec3": {
+  "keep": false,
+  "severity": null,
+  "why": "product pilot"
+ },
+ "news:b688500757e8889d": {
+  "keep": false,
+  "severity": null,
+  "why": "retail product launch"
+ },
+ "news:232702f5238035aa": {
+  "keep": true,
+  "severity": "bad",
+  "why": "record EUR880m money laundering penalty sought"
+ },
+ "news:39f99784b8ace26a": {
+  "keep": true,
+  "severity": "bad",
+  "why": "record EUR880m money laundering penalty sought"
+ },
+ "news:7e2736c7a7754a07": {
+  "keep": true,
+  "severity": "info",
+  "why": "regulator review of stake disclosures sought"
+ },
+ "news:34e9bff069fffaca": {
+  "keep": true,
+  "severity": "warn",
+  "why": "customers locked out in outage"
+ },
+ "news:4693258bf204fa50": {
+  "keep": true,
+  "severity": "warn",
+  "why": "online banking outage"
+ },
+ "news:a55044e5ece8db60": {
+  "keep": true,
+  "severity": "warn",
+  "why": "banking apps down"
+ },
+ "news:1080ebb9def4f9e9": {
+  "keep": false,
+  "severity": null,
+  "why": "policy paper"
+ },
+ "news:a137751d8dcd2d27": {
+  "keep": true,
+  "severity": "bad",
+  "why": "record EUR880m penalty in Denmark"
+ },
+ "news:87414457d72f5ac0": {
+  "keep": true,
+  "severity": "warn",
+  "why": "customers locked out in outage"
+ },
+ "news:0ce0687c5073ac09": {
+  "keep": true,
+  "severity": "warn",
+  "why": "statement on major outage"
+ },
+ "news:f7f6bf15083169ec": {
+  "keep": true,
+  "severity": "warn",
+  "why": "apps down after technical outage"
+ },
+ "news:5ec69c7f4557e683": {
+  "keep": false,
+  "severity": null,
+  "why": "fund launch"
+ },
+ "news:5266ba875b16d6da": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as conference host"
+ },
+ "news:2b8b21076bc9a647": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:f5b9467bd3c093e6": {
+  "keep": true,
+  "severity": "info",
+  "why": "half-year results"
+ },
+ "news:36172f52ef553b28": {
+  "keep": false,
+  "severity": null,
+  "why": "asset management interview"
+ },
+ "news:0bec89603ee2a395": {
+  "keep": false,
+  "severity": null,
+  "why": "divisional hires"
+ },
+ "news:0ce49c8827853189": {
+  "keep": false,
+  "severity": null,
+  "why": "divisional appointments"
+ },
+ "news:5d582d7c64e7b75b": {
+  "keep": false,
+  "severity": null,
+  "why": "vendor selection PR"
+ },
+ "news:d92dcd4e6b5e8341": {
+  "keep": false,
+  "severity": null,
+  "why": "vendor partnership PR"
+ },
+ "news:ef492bf2c134c336": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:f1ee550c41cee753": {
+  "keep": true,
+  "severity": "info",
+  "why": "strongest deposit growth among peers"
+ },
+ "news:a4061eb1ee6e2801": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:bd9f841b5aac95a1": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend stock filler"
+ },
+ "news:f57378436cd9e0fe": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as project lender"
+ },
+ "news:685fe48b11f6945a": {
+  "keep": false,
+  "severity": null,
+  "why": "asset management reorganisation"
+ },
+ "news:0a38cc761b0a1a73": {
+  "keep": true,
+  "severity": "warn",
+  "why": "hundreds more job cuts"
+ },
+ "news:d2cf64e8f6442125": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:9e7dca8dd05b72e3": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q2 profit up 25%"
+ },
+ "news:9404b5af3fb69eda": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as bookrunner"
+ },
+ "news:cf174b10f769c9ab": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO commentary"
+ },
+ "news:ea211dcd5a1f360c": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
+ },
+ "news:77c44d42af671ad5": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO commentary on AI"
+ },
+ "news:7043efb0c881c799": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary union dispute"
+ },
+ "news:586f98f4b9eb9197": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:df7a6e743b89c9e9": {
+  "keep": true,
+  "severity": "info",
+  "why": "$1.6bn Caribbean unit sale, Q2 results"
+ },
+ "news:b23522e0b653d84a": {
+  "keep": true,
+  "severity": "info",
+  "why": "Caribbean unit sold to Butterfield"
+ },
+ "news:0de355f41acaf9d4": {
+  "keep": true,
+  "severity": "info",
+  "why": "$1.6bn Caribbean unit sale, Q2 results"
+ },
+ "news:85c5bd674fb8381e": {
+  "keep": true,
+  "severity": "info",
+  "why": "senior leadership changes"
+ },
+ "news:084c3bf2430d4a08": {
+  "keep": true,
+  "severity": "warn",
+  "why": "CFO steps down"
+ },
+ "news:f96d4dac19db34c2": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
+ },
+ "news:51c1327c0caca30e": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend increase notice"
+ },
+ "news:93903ca2c0652f33": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend increase notice"
+ },
+ "news:f2226377e4962a38": {
+  "keep": true,
+  "severity": "warn",
+  "why": "exposure to MFS-linked insolvencies"
+ },
+ "news:e32a0621ac68bb17": {
+  "keep": true,
+  "severity": "info",
+  "why": "Addiko backs Raiffeisen bid"
+ },
+ "news:f3b334b7448f57d2": {
+  "keep": true,
+  "severity": "info",
+  "why": "rising expenses, $20bn M&A appetite"
+ },
+ "news:ee214f54e17d3c39": {
+  "keep": true,
+  "severity": "info",
+  "why": "Addiko endorses Raiffeisen bid"
+ },
+ "news:1c2da67937a1d21a": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:895578bc5a29a7fc": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as club deal lender"
+ },
+ "news:b75e946569bab99a": {
+  "keep": true,
+  "severity": "info",
+  "why": "AT1 tender offer"
+ },
+ "news:8245afe3b16b292a": {
+  "keep": true,
+  "severity": "info",
+  "why": "merger with Aldermore mulled"
+ },
+ "news:7d50dffed0104b10": {
+  "keep": false,
+  "severity": null,
+  "why": "results date advisory"
+ },
+ "news:4b4d72040a376bef": {
+  "keep": false,
+  "severity": null,
+  "why": "themed bond PR"
+ },
+ "news:48ba4949edf75d82": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as project lender"
+ },
+ "news:79ea099ae4b9e108": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as bookrunner"
+ },
+ "news:3b129d6b08c50ca3": {
+  "keep": false,
+  "severity": null,
+  "why": "strategy video clip"
+ },
+ "news:40b0e1d6c9694184": {
+  "keep": true,
+  "severity": "warn",
+  "why": "job cuts and CEO apology"
+ },
+ "news:5dd14d9af5a42d2f": {
+  "keep": true,
+  "severity": "good",
+  "why": "FY revenue and profit up sharply"
+ },
+ "news:7b8f2fb6095d5266": {
+  "keep": true,
+  "severity": "warn",
+  "why": "higher motor finance provision"
+ },
+ "news:480832c57b485a6c": {
+  "keep": false,
+  "severity": null,
+  "why": "share price filler"
+ },
+ "news:1435655b424fe081": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker upgrade"
+ },
+ "news:305a6ba31cfcf3ad": {
+  "keep": true,
+  "severity": "good",
+  "why": "EUR1.4bn profit, dividend hike"
+ },
+ "news:df1af29518942e40": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as property lender"
+ },
+ "news:977164a8e843df90": {
+  "keep": true,
+  "severity": "warn",
+  "why": "redress provision at GBP320m"
+ },
+ "news:a754625cf878c94b": {
+  "keep": true,
+  "severity": "good",
+  "why": "restructuring savings to beat guidance"
+ },
+ "news:0943e8fc35dd5b54": {
+  "keep": true,
+  "severity": "info",
+  "why": "takeover offer rejected"
+ },
+ "news:4d73278dc442a77e": {
+  "keep": true,
+  "severity": "warn",
+  "why": "job cuts from automation"
+ },
+ "news:51e01b0975565bcf": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO commentary on AI"
+ },
+ "news:497d001b958f9fe7": {
+  "keep": true,
+  "severity": "good",
+  "why": "FY26 profitability"
+ },
+ "news:4f65fd19d5941d2c": {
+  "keep": false,
+  "severity": null,
+  "why": "routine sukuk issuance"
+ },
+ "news:d5f912dbe3d317b6": {
+  "keep": false,
+  "severity": null,
+  "why": "financial crime initiative"
+ },
+ "news:569b86dfba47ff54": {
+  "keep": false,
+  "severity": null,
+  "why": "results date advisory"
+ },
+ "news:3901332ac5c470d1": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as acquisition lender"
+ },
+ "news:5703f6d68f60571c": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as project lender"
+ },
+ "news:e746d68226638b95": {
+  "keep": true,
+  "severity": "good",
+  "why": "profits surge"
+ },
+ "news:b7029d91795dbd82": {
+  "keep": true,
+  "severity": "good",
+  "why": "profits soar, record customers"
+ },
+ "news:679a81c6d921bbaa": {
+  "keep": false,
+  "severity": null,
+  "why": "consumer fraud advice"
+ },
+ "news:13df8fb57413f14a": {
+  "keep": true,
+  "severity": "warn",
+  "why": "fraud reimbursement payouts up 85%"
+ },
+ "news:9d3e43f838ce3b0b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "7,800 job cuts"
+ },
+ "news:e8dd1156db2ae9e9": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:956bff39adbacb1a": {
+  "keep": true,
+  "severity": "info",
+  "why": "new CFO"
+ },
+ "news:0ba295fe69c99c2e": {
+  "keep": true,
+  "severity": "warn",
+  "why": "staff to be replaced by AI"
+ },
+ "news:ef19092bdee02e98": {
+  "keep": true,
+  "severity": "info",
+  "why": "RBL stake approvals received"
+ },
+ "news:e3098139347597d5": {
+  "keep": false,
+  "severity": null,
+  "why": "immaterial custody bolt-on"
+ },
+ "news:3faedb95f981b9e5": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$110m lawsuit settlement"
+ },
+ "news:2d0f2a2adaa3c701": {
+  "keep": true,
+  "severity": "info",
+  "why": "board appointment"
+ },
+ "news:cfcaa854a7d6ebfd": {
+  "keep": false,
+  "severity": null,
+  "why": "former employee joins another firm"
+ },
+ "news:7275af87d546cf1e": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender on a deal"
+ },
+ "news:0c477c546df27a77": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as IPO coordinator"
+ },
+ "news:623322f651a87ee5": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as arranger for a client"
+ },
+ "news:89c34e457bfbb703": {
+  "keep": false,
+  "severity": null,
+  "why": "on-chain markets technology"
+ },
+ "news:1e94ba2fc8fb6736": {
+  "keep": true,
+  "severity": "good",
+  "why": "record FY profit"
+ },
+ "news:c15df385caa0c20c": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q1 net profit up"
+ },
+ "news:6d24ba9d90561500": {
+  "keep": true,
+  "severity": "good",
+  "why": "Fitch upgrade of subsidiaries"
+ },
+ "news:c42e87a3ea155ddb": {
+  "keep": false,
+  "severity": null,
+  "why": "share capital notice"
+ },
+ "news:6c894cd12abafb48": {
+  "keep": true,
+  "severity": "good",
+  "why": "Fitch rating actions"
+ },
+ "news:de001be7b891a9c2": {
+  "keep": true,
+  "severity": "good",
+  "why": "Fitch lifts subsidiaries to AA"
+ },
+ "news:f464c565f419698a": {
+  "keep": true,
+  "severity": "good",
+  "why": "cost control lifts profit"
+ },
+ "news:a9059b3a08842d60": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:a3372e2bc613f1be": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q1 results"
+ },
+ "news:cc503c3b217e0556": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q1 profit beat"
+ },
+ "news:7197f98619370ee9": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as bookrunner"
+ },
+ "news:d4461f4ac726ed01": {
+  "keep": true,
+  "severity": "good",
+  "why": "Fitch upgrades Spanish banks"
+ },
+ "news:733578990a267999": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as securitisation lender"
+ },
+ "news:1d82aefb6fe4b650": {
+  "keep": false,
+  "severity": null,
+  "why": "policy commentary by bank"
+ },
+ "news:9994638cbf0b3069": {
+  "keep": false,
+  "severity": null,
+  "why": "sector commentary by bank"
+ },
+ "news:0478fd0bddf7d9e0": {
+  "keep": true,
+  "severity": "good",
+  "why": "Fitch upgrade to A"
+ },
+ "news:a17c7eb17e14aa16": {
+  "keep": true,
+  "severity": "warn",
+  "why": "3,000 job cuts under takeover defence"
+ },
+ "news:757d5ff0e57e1612": {
+  "keep": false,
+  "severity": null,
+  "why": "leasing fund launch"
+ },
+ "news:4390e945e95e26fd": {
+  "keep": false,
+  "severity": null,
+  "why": "asset management colour"
+ }
 }
