@@ -104,7 +104,10 @@ def grade_letter(grade: float | None) -> str:
 
 
 import os
-DEBUG_DATA = bool(os.environ.get("BANKCREDIT_DEBUG_DATA"))   # beta: every driving input on a Data tab per profile
+# Every driving input, raw, on a Data tab per profile. Local builds only: it carries ICE CDS levels
+# and Frankfurt bond quotes, which neither licence permits us to redistribute, and it is three times
+# the weight of the rest of the page. Never set this in a workflow that publishes.
+DEBUG_DATA = bool(os.environ.get("BANKCREDIT_DEBUG_DATA"))
 CDS_MAX_AGE_DAYS = 10     # a CDS level older than this is not used in the signal or the overlay
 BOND_MAX_AGE_DAYS = 10    # a bond quote older than this says nothing about today either
 BOND_MIN_WINDOW_DAYS = 5  # the shortest history a bond change may be measured over while quotes accumulate

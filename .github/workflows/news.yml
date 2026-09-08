@@ -25,7 +25,6 @@ jobs:
       - name: Export and build site
         env:
           COUNTERPARTY_OVERLAY: ${{ secrets.COUNTERPARTY_OVERLAY }}
-          BANKCREDIT_DEBUG_DATA: "1"     # beta only: a Data tab per profile with raw CDS, bond quotes and facts; remove before production (ICE and Frankfurt terms)
         run: python -m bankcredit.cli build
       - name: Commit events
         run: |

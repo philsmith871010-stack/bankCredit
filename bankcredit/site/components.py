@@ -2,6 +2,18 @@
 from __future__ import annotations
 
 import html
+import json
+
+# Prefetch is cheap - the document is fetched and held, nothing is parsed or run. Prerender is a
+# whole page load: parse, scripts, fonts, layout. At "moderate" it fires when the pointer settles
+# on a link, so running the mouse down the board's 153 bank links starts and evicts prerender after
+# prerender, each a 438 KB document, against the page the reader is actually looking at. Prefetch
+# on hover, and prerender only once a click has begun, keeps the arrival instant without that.
+SPECULATION = json.dumps({
+    "prefetch": [{"where": {"href_matches": "/*"}, "eagerness": "moderate"}],
+    "prerender": [{"where": {"href_matches": "/*"}, "eagerness": "conservative"}],
+}, separators=(",", ":"))
+
 
 NAVY, NAVY_MID, NAVY_LIGHT = "#0a2540", "#143659", "#1a4775"
 ORANGE, ORANGE_SOFT = "#fd7e14", "#fff5e9"
@@ -210,7 +222,7 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <link rel="preload" href="{root}assets/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{root}assets/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{root}assets/site.css">
-<script type="speculationrules">{{"prerender":[{{"where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}</script>
+<script type="speculationrules">{SPECULATION}</script>
 </head><body>{symbols()}
 <header class="top"><a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>
 <button class="menu-btn" id="menuBtn" aria-label="Menu">{ico("menu", 20, NAVY)}</button>

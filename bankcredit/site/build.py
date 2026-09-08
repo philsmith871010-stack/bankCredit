@@ -202,7 +202,11 @@ def tile(metric, label, unit, dp, series, peer_median=None):
 
 
 def debug_panel(b) -> str:
-    """Beta only: every input that drives this profile, raw. Switched on by BANKCREDIT_DEBUG_DATA at build time."""
+    """Every input that drives this profile, raw, for checking a bank by hand.
+
+    Local builds only. It publishes CDS levels and bond quotes that may not be redistributed, and
+    on a bank with history it is 300 KB of the page's 438 KB - the reason profiles felt slow.
+    """
     D = b["debug"]
     def tbl(cols, rows, fmt=None):
         head = "".join(f"<th>{c.esc(h)}</th>" for h in cols)
