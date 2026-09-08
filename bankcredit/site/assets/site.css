@@ -505,3 +505,12 @@ th .i,.uni th .i{margin-left:4px}
    overview, the profile's trends and the analysis panels alike. */
 .chart-head,.pc-head h3{padding-left:8px;border-left:2px solid var(--orange)}
 .pc-head h3{line-height:1.25}
+
+/* The score is its own scale ---------------------------------------------------------------- */
+.sc-n{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums;font-weight:600}
+.sc-b{margin-left:5px;font-size:10.5px;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+.ck-score .sc-n{font-size:19px;letter-spacing:-.02em}
+.ck-score .sc-b{font-size:11px}
+table.uni .sc-n{font-size:14px}
+.ll-score .sc-n{font-size:18px;letter-spacing:-.02em}
+.pe-sc .sc-n{font-size:14px}

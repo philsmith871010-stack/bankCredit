@@ -24,6 +24,31 @@
            'Its figures are the group\u2019s.">Holding company</span>';
   }
   var BANDC={A:'#0a2540',B:'#3f5f85',C:'#7d93ad',D:'#a9b8c9',E:'#c9d3de'};
+  // The score carries its own colour, red through to green, instead of a chip beside it that was
+  // the same shape and nearly the same colour for every name a policy usually holds. Every stop
+  // clears 5:1 on white, and the band letter stays beside the number in words, so nothing here
+  // depends on telling red from green.
+  // Anchored to where scores actually fall - the universe runs 49 to 99, quartiles at 67, 73 and 78
+  // - so the ramp turns over the range a reader is comparing, rather than spending most of itself
+  // on scores no bank has.
+  var RAMP=[[50,163,22,29],[62,184,69,26],[70,138,98,6],[77,79,122,31],[85,30,122,58],[95,20,102,58]];
+  function scoreColour(v){
+    if(v==null)return '#6c757d';
+    v=Math.max(0,Math.min(100,v));
+    for(var i=1;i<RAMP.length;i++){
+      if(v<=RAMP[i][0]){
+        var a=RAMP[i-1],b=RAMP[i],t=(v-a[0])/((b[0]-a[0])||1);
+        return 'rgb('+[1,2,3].map(function(k){return Math.round(a[k]+(b[k]-a[k])*t)}).join(',')+')';
+      }
+    }
+    return 'rgb(20,102,58)';
+  }
+  // one number, one colour, one letter - used wherever a score is shown in a row or a card
+  function scoreNum(v,band,cls){
+    if(v==null)return '<span class="na">\u2014</span>';
+    return '<span class="sc-n'+(cls?' '+cls:'')+'" style="color:'+scoreColour(v)+'">'+v.toFixed(cls==='sc-1'?1:0)+'</span>'+
+           (band?'<span class="sc-b">'+esc(band)+'</span>':'');
+  }
   // A score is a ratio against a scale, so it reads as a meter on the band ramp - one hue,
   // light to dark - rather than as a one-bar chart. The track carries no meaning of its own.
   function meter(score,band,cls){
@@ -258,7 +283,7 @@
     var act=tenor?'<button class="filter active pol-add-ll" data-id="'+esc(id)+'" data-tenor="'+tenor+'">Add at '+esc(tenorLabel(tenor))+'</button>':'';
     dlg.innerHTML='<div class="md-head"><div><div class="md-nm">'+esc(e.short||id)+'</div>'+
       '<div class="small muted">'+esc(e.name||'')+' \u00b7 '+esc(e.country||'')+typeTag(e)+'</div></div>'+
-      '<div class="md-sc">'+(e.score==null?'<span class="na">—</span>':'<span class="cp-score">'+e.score.toFixed(0)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>')+'</div>'+
+      '<div class="md-sc">'+(e.score==null?'<span class="na">—</span>':'<span class="cp-score" style="color:'+scoreColour(e.score)+'">'+e.score.toFixed(0)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>')+'</div>'+
       act+'<a class="filter" href="'+ROOT+'banks/'+esc(id)+'.html">Full profile</a>'+
       '<button class="filter" id="md-close" aria-label="Close">Close</button></div>'+
       '<div id="md-body"><div class="empty">Loading…</div></div>';
@@ -330,7 +355,7 @@
         '<td class="num">'+(e.score==null?'<span class="na">—</span>':
             // the number and its band already say where the name stands, and the table sorts on it;
             // a bar in every one of 152 rows only adds weight
-            '<span class="mono b">'+e.score.toFixed(1)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>')+
+            scoreNum(e.score,e.band,'sc-1'))+
           (e.score==null&&e.unscored?'<div class="small muted">'+esc(e.unscored)+'</div>':'')+'</td>'+
         '<td class="mono">'+esc(e.rating_composite||'—')+'</td>'+
         '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1))+'</td>'+
@@ -384,8 +409,7 @@
         ' scored names sit'+mk('score')+'</figcaption>'+scoreHist([],data.rows,1)+'</figure></div>'+
         '<div class="pe-top"><h5>Strongest published standing today</h5>'+top.map(function(e){
           return '<div class="pe-row" data-id="'+esc(e.id)+'"><span class="pe-nm">'+esc(e.short)+'</span>'+
-                 '<span class="pe-sc mono">'+e.score.toFixed(1)+'</span>'+
-                 '<span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>'+
+                 '<span class="pe-sc">'+scoreNum(e.score,e.band,'sc-1')+'</span>'+
                  '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="365">Add</button></div>';
         }).join('')+'</div></div>'}
     else{
@@ -413,8 +437,7 @@
             '<button class="cp-exp" data-id="'+esc(e.id)+'" aria-expanded="false" aria-label="Show detail for '+esc(e.short)+'"></button>'+
             '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+
               '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div></div>'+
-            kv((e.score==null?'<span class="na">\u2014</span>':e.score.toFixed(0))+
-               (e.band?' <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>':''),'score','ck-score')+
+            kv(scoreNum(e.score,e.band),'score','ck-score')+
             kv(esc(e.rating_composite||'\u2014'),'rating')+
             kv(num(e.cet1,1),'CET1')+
             kv(num(e.leverage,1)+(e.leverage_basis==='us_tier1'?'\u2020':''),'leverage')+
@@ -429,7 +452,7 @@
               '<div class="cp-cell"><h5>Counterparty score'+mk('score')+'</h5>'+
                 (e.score==null
                   ? '<div class="cp-score-row"><span class="na big">\u2014</span></div><div class="small muted">'+esc(e.unscored||'not scored')+'</div>'
-                  : '<div class="cp-score-row"><span class="cp-score">'+e.score.toFixed(0)+'</span>'+
+                  : '<div class="cp-score-row"><span class="cp-score" style="color:'+scoreColour(e.score)+'">'+e.score.toFixed(0)+'</span>'+
                     '<span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span></div>'+
                     meter(e.score,e.band)+
                     '<div class="small muted">'+(e.coverage!=null?Math.round(e.coverage*100)+'% of the method\u2019s inputs':'')+'</div>')+
@@ -471,7 +494,7 @@
             '<div class="ll-top"><span class="ll-nm">'+esc(e.short)+typeTag(e)+'</span>'+
               '<span class="ll-act">'+mp+'<button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></span></div>'+
             '<div class="ll-co">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div>'+
-            '<div class="ll-score"><b>'+e.score.toFixed(1)+'</b><span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>'+
+            '<div class="ll-score">'+scoreNum(e.score,e.band,'sc-1')+
               (vs!=null&&vs>0?'<span class="ll-vs">+'+vs.toFixed(1)+'</span>':'')+'</div>'+
             '<div class="ll-rt">'+ratings(e.ratings)+'</div></div>';
         }).join('')+'</div>':'<p class="small muted">No further covered name matches the weakest standing you accept at this tenor.</p>');
