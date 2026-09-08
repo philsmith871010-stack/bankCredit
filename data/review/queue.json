@@ -11,18 +11,12 @@
   "values": {
    "rwa": 379191.0,
    "cet1_capital": 8.74,
-   "tier1_capital": 10.87,
-   "cet1_ratio": 0.0,
-   "tier1_ratio": 0.0
+   "tier1_capital": 10.87
   },
   "checks": [
    [
-    "info",
-    "cet1_ratio derived from cet1_capital over RWA"
-   ],
-   [
-    "info",
-    "tier1_ratio derived from tier1_capital over RWA"
+    "error",
+    "missing core row cet1_ratio"
    ],
    [
     "info",
@@ -31,19 +25,11 @@
    [
     "info",
     "no LCR row (not disclosed at this level, or not read)"
-   ],
-   [
-    "error",
-    "cet1_ratio 0 outside 3..80"
-   ],
-   [
-    "error",
-    "tier1_ratio 0 outside 3..80"
    ]
   ],
-  "reason": "info:cet1_ratio derived from cet1_capital over RWA; info:tier1_ratio derived from tier1_capital over RWA; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 0 outside 3..80; error:tier1_ratio 0 outside 3..80",
+  "reason": "error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
-  "created": "2026-09-08T09:04:39"
+  "created": "2026-09-08T09:44:33"
  },
  {
   "id": "a8816b01fae8",
@@ -78,7 +64,7 @@
   ],
   "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
-  "created": "2026-09-08T09:04:39"
+  "created": "2026-09-08T09:44:33"
  },
  {
   "id": "e4679de800db",
@@ -92,18 +78,12 @@
   "values": {
    "rwa": 370012.0,
    "cet1_capital": 8.46,
-   "tier1_capital": 10.63,
-   "cet1_ratio": 0.0,
-   "tier1_ratio": 0.0
+   "tier1_capital": 10.63
   },
   "checks": [
    [
-    "info",
-    "cet1_ratio derived from cet1_capital over RWA"
-   ],
-   [
-    "info",
-    "tier1_ratio derived from tier1_capital over RWA"
+    "error",
+    "missing core row cet1_ratio"
    ],
    [
     "info",
@@ -112,19 +92,11 @@
    [
     "info",
     "no LCR row (not disclosed at this level, or not read)"
-   ],
-   [
-    "error",
-    "cet1_ratio 0 outside 3..80"
-   ],
-   [
-    "error",
-    "tier1_ratio 0 outside 3..80"
    ]
   ],
-  "reason": "info:cet1_ratio derived from cet1_capital over RWA; info:tier1_ratio derived from tier1_capital over RWA; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 0 outside 3..80; error:tier1_ratio 0 outside 3..80",
+  "reason": "error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
-  "created": "2026-09-08T09:04:39"
+  "created": "2026-09-08T09:44:33"
  },
  {
   "id": "da068187547d",
@@ -140,7 +112,6 @@
    "total_capital": 5202.6,
    "rwa": 38215.2,
    "cet1_capital": 9.25,
-   "cet1_ratio": 0.02,
    "tier1_ratio": 11.59,
    "total_capital_ratio": 13.61
   },
@@ -151,15 +122,15 @@
    ],
    [
     "info",
-    "cet1_ratio derived from cet1_capital over RWA"
-   ],
-   [
-    "info",
     "tier1_ratio derived from tier1_capital over RWA"
    ],
    [
     "info",
     "total_capital_ratio derived from total_capital over RWA"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
    ],
    [
     "info",
@@ -168,15 +139,11 @@
    [
     "info",
     "no LCR row (not disclosed at this level, or not read)"
-   ],
-   [
-    "error",
-    "cet1_ratio 0.02 outside 3..80"
    ]
   ],
-  "reason": "warn:header date 2020-06-30 disagrees with expected 2030-06-30; info:cet1_ratio derived from cet1_capital over RWA; info:tier1_ratio derived from tier1_capital over RWA; info:total_capital_ratio derived from total_capital over RWA; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 0.02 outside 3..80",
+  "reason": "warn:header date 2020-06-30 disagrees with expected 2030-06-30; info:tier1_ratio derived from tier1_capital over RWA; info:total_capital_ratio derived from total_capital over RWA; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
-  "created": "2026-09-08T09:04:51"
+  "created": "2026-09-08T09:44:43"
  },
  {
   "id": "42adde1d3e0c",
@@ -215,7 +182,7 @@
   ],
   "reason": "warn:header date 2019-06-30 disagrees with expected 2030-06-30; error:missing core row cet1_capital; error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one)",
   "status": "open",
-  "created": "2026-09-08T09:04:51"
+  "created": "2026-09-08T09:44:43"
  },
  {
   "id": "d28cd63ccb13",
@@ -231,7 +198,6 @@
    "total_capital": 4925.0,
    "rwa": 37483.1,
    "cet1_capital": 8.92,
-   "cet1_ratio": 0.02,
    "tier1_ratio": 11.31,
    "total_capital_ratio": 13.14
   },
@@ -242,12 +208,55 @@
    ],
    [
     "info",
-    "cet1_ratio derived from cet1_capital over RWA"
+    "tier1_ratio derived from tier1_capital over RWA"
    ],
    [
     "info",
-    "tier1_ratio derived from tier1_capital over RWA"
+    "total_capital_ratio derived from total_capital over RWA"
    ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:header date 2019-06-30 disagrees with expected 2030-06-30; info:tier1_ratio derived from tier1_capital over RWA; info:total_capital_ratio derived from total_capital over RWA; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-08T09:44:43"
+ },
+ {
+  "id": "c574b01284ac",
+  "entity_id": "standard-chartered-hk",
+  "url": "https://vpr.hkma.gov.hk/statics/assets/doc/100269/fd_int/fd_int_0323_eng.pdf",
+  "local": "cache/pdf/standard-chartered-hk/c574b01284ac40f7.pdf",
+  "title": "fd_int_0323_eng.pdf",
+  "page": 4,
+  "reference_date": "2023-03-31",
+  "currency": "HKD",
+  "values": {
+   "cet1_capital": 143900.0,
+   "tier1_capital": 164583.0,
+   "total_capital": 178391.0,
+   "rwa": 867207.0,
+   "cet1_ratio": 5.0,
+   "tier1_ratio": 5.0,
+   "combined_buffer": 5.0,
+   "leverage_exposure": 2620875.0,
+   "hqla": 482997.0,
+   "net_cash_outflows": 277630.0,
+   "available_stable_funding": 1387959.0,
+   "required_stable_funding": 1046427.0,
+   "nsfr": 133.0,
+   "total_capital_ratio": 20.57
+  },
+  "checks": [
    [
     "info",
     "total_capital_ratio derived from total_capital over RWA"
@@ -262,11 +271,11 @@
    ],
    [
     "error",
-    "cet1_ratio 0.02 outside 3..80"
+    "cet1_ratio 5.00 vs implied 16.59 from capital/RWA"
    ]
   ],
-  "reason": "warn:header date 2019-06-30 disagrees with expected 2030-06-30; info:cet1_ratio derived from cet1_capital over RWA; info:tier1_ratio derived from tier1_capital over RWA; info:total_capital_ratio derived from total_capital over RWA; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 0.02 outside 3..80",
+  "reason": "info:total_capital_ratio derived from total_capital over RWA; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 5.00 vs implied 16.59 from capital/RWA",
   "status": "open",
-  "created": "2026-09-08T09:04:51"
+  "created": "2026-09-08T09:57:02"
  }
 ]
