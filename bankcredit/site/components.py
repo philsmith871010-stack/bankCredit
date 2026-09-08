@@ -218,8 +218,10 @@ def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | 
             f'<polyline points="{pts}" fill="none" stroke="{NAVY}" stroke-width="2" stroke-linejoin="round"/>{dots}{end}{xl}</svg>')
 
 
-NAV = [("board", "Board", "grid", "index.html"), ("policy", "My policy", "compare", "policy/index.html"), ("compare", "Analysis", "activity", "compare/index.html"), ("ratings", "Ratings", "star", "ratings/index.html"), ("banks", "Banks", "bank", "banks/index.html"),
-       ("events", "Events", "activity", "events/index.html"),
+# One page does the work - policy, universe, ratings, events - so the nav names it once. Analysis
+# stays separate because comparing several banks is the one thing a single name's dialog cannot do.
+NAV = [("home", "Counterparty", "grid", "index.html"),
+       ("compare", "Analysis", "activity", "compare/index.html"),
        ("method", "Method", "list", "method/index.html"),
        ("coverage", "Coverage", "search", "coverage/index.html"),
        ("status", "Status", "status", "status/index.html")]
@@ -240,7 +242,7 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 </head><body>{symbols()}
 <header class="top"><a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>
 <button class="menu-btn" id="menuBtn" aria-label="Menu">{ico("menu", 20, NAVY)}</button>
-<div class="crumb"><span class="crumb-app">Counterparty</span><span class="crumb-sep">/</span><span class="crumb-page">{esc(title)}</span></div>
+<div class="crumb"><span class="crumb-app">Counterparty</span>{'' if title == "Counterparty" else f'<span class="crumb-sep">/</span><span class="crumb-page">{esc(title)}</span>'}</div>
 <div class="top-right"><span class="beta">Beta</span></div></header>
 <div class="frame"><aside class="side" id="side"><div class="side-label">Counterparty</div>{items}<div class="side-fill"></div>
 <div class="side-status">{ico("clock", 14, ORANGE)} Built {esc(generated[:16].replace("T", " "))} UTC</div></aside>

@@ -390,14 +390,14 @@ def page_bank(b, generated):
 <section class="panel" data-panel="events">{events_rows}</section>
 {debug_panel(b) if b.get("debug") else ''}
 <section class="panel" data-panel="sources"><h3>Documents and feeds</h3>{src_rows or '<div class="empty">Nothing collected yet.</div>'}<h3>Latest value of every metric held</h3><div class="table-wrap"><table class="plain"><thead><tr><th>Metric</th><th>Value</th><th>Reference date</th><th>Source</th><th>Confidence</th></tr></thead><tbody>{metric_rows}</tbody></table></div></section></div>'''
-    return c.shell(b["name"], content, "banks", "../", generated)
+    return c.shell(b["name"], content, "home", "../", generated)
 
 
 def page_brief_redirect(generated):
     return '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../events/index.html"><title>Brief moved</title><p>The brief now opens the <a href="../events/index.html">Events</a> page.</p>'
 
 
-def page_events(board, status, generated):
+def page_events(board, status, generated, inner: bool = False):
     items = []
     recent = (datetime.utcnow() - timedelta(days=45)).date().isoformat()
     for r in board["rows"]:
@@ -455,7 +455,7 @@ def page_events(board, status, generated):
                + digest(board, status, generated) +
                f'<div class="toolbar ev-toolbar"><div class="filters" id="event-filters">{filters}<a class="filter" href="feed.xml" title="RSS feed of flagged events">RSS feed</a></div><div class="search">{c.ico("search", 16, c.MUTED)}<input id="evq" placeholder="Bank or headline" autocomplete="off"></div>{shown_note}</div><div class="card pad" id="events">{rows or "<div class=empty>Nothing collected yet.</div>"}</div>'
                f'<p class="note">Headlines are refreshed every two hours on weekdays between 07:00 and 19:00 UK; rating actions from the register and new documents arrive with the morning run. The RSS feed carries the last 100 flagged events for a reader or an alerting tool.</p>')
-    return c.shell("Events", content, "events", "../", generated)
+    return content if inner else c.shell("Events", content, "events", "../", generated)
 
 
 def events_feed(flagged, generated) -> str:
@@ -664,7 +664,7 @@ def grade_trend(r) -> str:
     return f'<span class="small muted">held since {c.esc(since)}</span>' if since and since != "9999" else '<span class="muted">—</span>'
 
 
-def page_ratings(generated):
+def page_ratings(generated, inner: bool = False):
     R = load("ratings")
     rows = R["rows"]
     rated = [r for r in rows if r["grade"] is not None]
@@ -734,18 +734,28 @@ def page_ratings(generated):
 <div class="grid-2 rgrid2"><div class="card pad" id="actions"><h3>Latest rating actions <span class="muted small">· 90 days, affirmations excluded</span></h3><div class="racts">{acts}</div></div>
 <div class="card pad"><h3>How each agency sees the universe</h3><div class="dist">{dist}</div><div class="dlegend"><span><i style="background:#0a2540"></i>AA- and above</span><span><i style="background:#3f5f85"></i>A range</span><span><i style="background:#7d93ad"></i>BBB range</span><span><i style="background:#b04632"></i>below BBB-</span></div>
 <p class="note">Long-term issuer ratings only, one per agency per entity. Differences between the bars are mostly which banks each agency rates, not disagreement about the same bank.</p></div></div>'''
-    return c.shell("Ratings", content, "ratings", "../", generated)
+    return content if inner else c.shell("Ratings", content, "ratings", "../", generated)
 
-def page_policy(generated):
-    content = '''<div class="page-head"><div><h1>My policy</h1><div class="lede">Your approved counterparties and the longest tenor you accept for each, checked against today's public standing, market signal and news. The list lives in this browser and in the share link; nothing is sent anywhere.</div></div></div>
+def page_policy_content() -> str:
+    return '''<div class="page-head"><div><h1>My policy</h1><div class="lede">Your approved counterparties and the longest tenor you accept for each, checked against today's public standing, market signal and news. The list lives in this browser and in the share link; nothing is sent anywhere.</div></div></div>
 <div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>
 <div class="card pad"><h3>Add a counterparty</h3>
 <div class="pol-form"><label>Name<input id="pol-name" list="pol-names" placeholder="Start typing a bank or building society" autocomplete="off"><datalist id="pol-names"></datalist></label>
 <label>Longest tenor you accept<select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button></div>
 <p class="note">Use the legal entity you actually place with: Barclays Bank UK PLC rather than Barclays PLC, HSBC UK Bank plc rather than HSBC Holdings. Each name is checked from the day you add it.</p></div>
 <div class="card pad" style="margin-top:16px"><h3>Your counterparties</h3><div id="policy-body"><div class="empty">Loading…</div></div>
-<h3 style="margin-top:26px">Every covered name</h3>
-<p class="small muted">The whole universe, with the same detail on click and the same Add. Filter it to find a name, or sort a column to see who leads on it.</p>
+<div class="pol-share"><button class="filter" id="pol-copy">Copy link</button><input id="pol-link" readonly placeholder="A link that carries this policy appears here"><button class="filter" id="pol-clear">Clear all</button></div>
+<dialog id="pol-modal" class="pol-modal"></dialog>
+<p class="note">Counterparty is information, not advice. The flags say what has changed in public information since you approved a name; whether that changes your policy is for you and your adviser.</p></div>'''
+
+
+def _panel_content(html: str) -> str:
+    """A page's own content, with its page-head reduced to the lede so it reads as a panel."""
+    m = re.search(r'<div class="page-head">.*?<div class="lede">(.*?)</div>.*?</div></div>', html, re.S)
+    return (f'<p class="small muted panel-lede">{m.group(1)}</p>' + html[m.end():]) if m else html
+
+
+UNIVERSE_PANEL = """<p class="small muted">The whole universe, with the same detail on click and the same Add. Filter it to find a name, or sort a column to see who leads on it.</p>
 <div class="uni-bar">
   <input id="uni-q" type="search" placeholder="Search name, country or LEI" autocomplete="off">
   <select id="uni-region"><option value="">Every region</option></select>
@@ -759,10 +769,38 @@ def page_policy(generated):
   <th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score</th>
   <th data-sort="rating_grade">Rating</th><th data-sort="cet1" class="num">CET1</th><th data-sort="lcr" class="num">LCR</th>
   <th data-sort="asof">Figures</th><th>Market</th><th></th></tr></thead><tbody id="uni-body"></tbody></table></div>
-<div class="pol-share"><button class="filter" id="pol-copy">Copy link</button><input id="pol-link" readonly placeholder="A link that carries this policy appears here"><button class="filter" id="pol-clear">Clear all</button></div>
-<dialog id="pol-modal" class="pol-modal"></dialog>
-<p class="note">Counterparty is information, not advice. The flags say what has changed in public information since you approved a name; whether that changes your policy is for you and your adviser.</p></div>'''
-    return c.shell("My policy", content, "policy", "../", generated).replace('<script src="../assets/app.js"></script>', '<script src="../assets/app.js"></script><script src="../assets/policy.js"></script>').replace("<body>", '<body data-root="../">')
+"""
+
+
+def page_home(board, status, generated):
+    """One page for the whole job: build a policy, watch it, and find the next name.
+
+    The board, the bank navigator, the ratings grid and the events feed were four pages showing
+    slices of one universe. They are panels here, so nothing is lost and nothing is a journey.
+    """
+    content = (page_policy_content()
+               + '<div class="card tabs-card" style="margin-top:16px" id="browse">'
+                 '<div class="tabs" role="tablist">'
+                 '<button class="tab active" data-tab="universe">Every covered name</button>'
+                 '<button class="tab" data-tab="ratings">Ratings</button>'
+                 '<button class="tab" data-tab="events">Events</button></div>'
+                 f'<section class="panel active" data-panel="universe">{UNIVERSE_PANEL}</section>'
+                 f'<section class="panel" data-panel="ratings">{_panel_content(page_ratings(generated, inner=True))}</section>'
+                 f'<section class="panel" data-panel="events">{_panel_content(page_events(board, status, generated, inner=True))}</section>'
+                 '</div>')
+    return (c.shell("Counterparty", content, "home", "", generated)
+            .replace('<script src="assets/app.js"></script>', '<script src="assets/app.js"></script><script src="assets/policy.js"></script>')
+            .replace("<body>", '<body data-root="">'))
+
+
+def page_gone(title: str, generated: str) -> str:
+    """A page that has been folded into the one working page; its address still resolves."""
+    content = (f'<div class="page-head"><div><h1>{c.esc(title)}</h1>'
+               f'<div class="lede">This view now sits on the main page, so a policy can be built, watched and '
+               f'added to without leaving it. Taking you there.</div></div></div>'
+               '<meta http-equiv="refresh" content="0; url=../index.html">'
+               '<p><a class="filter" href="../index.html">Continue</a></p>')
+    return c.shell(title, content, "home", "../", generated)
 
 
 def audit_card():
@@ -961,21 +999,21 @@ def build():
     faces = (ASSETS / "fonts.css").read_text()
     css = OUT / "assets" / "site.css"
     css.write_text(faces + css.read_text())        # one stylesheet: the faces first, then everything that uses them
-    _write(OUT / "index.html", page_board(board, generated))
-    _write(OUT / "banks" / "index.html", page_banks_index(board, generated))
+    _write(OUT / "index.html", page_home(board, status, generated))
+    _write(OUT / "banks" / "index.html", page_gone("Banks", generated))
     for r in board["rows"]:
         _write(OUT / "banks" / f"{r['id']}.html", page_bank(load(f"banks/{r['id']}"), generated))
-    _write(OUT / "events" / "index.html", page_events(board, status, generated))
+    _write(OUT / "events" / "index.html", page_gone("Events", generated))
     _write(OUT / "method" / "index.html", page_method(generated))
     (OUT / "ratings").mkdir(exist_ok=True)
-    _write(OUT / "ratings" / "index.html", page_ratings(generated))
+    _write(OUT / "ratings" / "index.html", page_gone("Ratings", generated))
     (OUT / "compare").mkdir(exist_ok=True); (OUT / "data").mkdir(exist_ok=True)
     _write(OUT / "compare" / "index.html", page_compare(generated))
     shutil.copy(store.DATA / "json" / "compare.json", OUT / "data" / "compare.json")
     (OUT / "coverage").mkdir(exist_ok=True)
     _write(OUT / "coverage" / "index.html", page_coverage(generated))
     (OUT / "policy").mkdir(exist_ok=True)
-    _write(OUT / "policy" / "index.html", page_policy(generated))
+    _write(OUT / "policy" / "index.html", page_gone("My policy", generated))
     (OUT / "data").mkdir(exist_ok=True)
     shutil.copy(store.DATA / "json" / "policy.json", OUT / "data" / "policy.json")
     write_detail()
