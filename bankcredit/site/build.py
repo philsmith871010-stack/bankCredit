@@ -312,12 +312,27 @@ def page_bank(b, generated):
             delta = last - prev
             good = (delta >= 0) != (metric in LOWER_BETTER)
             dchip = f'<span class="delta {"up" if good else "down"}">{"+" if delta > 0 else ("−" if delta < 0 else "")}{abs(delta):.{cdp}f}{u if u == "%" else ""}</span>' if abs(delta) > 0 else '<span class="delta flat">no change</span>'
-            big = c.chart(data, unit="" if u in ("m", "bn") else u, req=req, req_label=req_label, dp=cdp, w=720, h=300)
-            small = c.chart(data, unit="" if u in ("m", "bn") else u, req=req, dp=cdp, w=300, h=96, compact=True)
+            # the peer group's current quartile band behind the bank's own path, on the ratios
+            # where a peer position means anything; a currency amount is not comparable that way
+            pq = (b.get("peer_ratios") or {}).get(metric) if u == "%" else None
+            band = (pq["p25"], pq["p75"]) if pq else None
+            median = pq["p50"] if pq else None
+            vs = ""
+            if pq:
+                diff = last - median
+                if abs(diff) < 0.05:
+                    diff = 0.0
+                cls = "up" if (diff >= 0) != (metric in LOWER_BETTER) else "down"
+                vs = (f'<span class="sm-peer {cls if diff else "flat"}">{"+" if diff > 0 else ("−" if diff < 0 else "")}'
+                      f'{abs(diff):.{cdp}f} vs peers</span>')
+            big = c.chart(data, unit="" if u in ("m", "bn") else u, req=req, req_label=req_label, dp=cdp,
+                          band=band, median=median, w=720, h=300)
+            small = c.chart(data, unit="" if u in ("m", "bn") else u, req=req, dp=cdp,
+                            band=band, median=median, w=300, h=96, compact=True)
             src = pts[-1].get("src", "")
             cards.append(f'<button class="sm" type="button" data-title="{c.esc(label)}" data-sub="{c.esc(METRICS.get(metric, ""))} · {len(data)} periods · {c.esc(src)}" aria-label="Expand {c.esc(label)}">'
                          f'<div class="sm-head"><span class="sm-label">{c.esc(label)}</span><span class="sm-val mono">{last:,.{cdp}f}<small>{u if u != "m" else "m"}</small></span></div>'
-                         f'<div class="sm-sub">{dchip}<span class="muted">vs {c.esc(data[-2][0])}</span></div>{small}<template>{big}</template></button>')
+                         f'<div class="sm-sub">{dchip}<span class="muted">vs {c.esc(data[-2][0])}</span>{vs}</div>{small}<template>{big}</template></button>')
             n_charts += 1
         if cards:
             charts.append(f'<div class="sm-group"><h4>{group}</h4><div class="sm-grid">{"".join(cards)}</div></div>')
@@ -369,7 +384,7 @@ def page_bank(b, generated):
 <div class="score-note">Rating anchor and public pillars with published weights (w).{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../method/index.html">Method</a></div></div>
 <div class="tiles">{tiles}</div></div>
 <div class="card tabs-card"><div class="tabs" role="tablist"><button class="tab active" data-tab="trends">Trends</button><button class="tab" data-tab="ratings">Ratings</button><button class="tab" data-tab="market">Market</button><button class="tab" data-tab="events">Events</button><button class="tab" data-tab="sources">Sources</button>{'<button class="tab" data-tab="data">Data</button>' if b.get("debug") else ''}</div>
-<section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.</div>' if n_charts else ''}{"".join(charts) or '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
+<section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.{" The grey band on a ratio is where this bank" + chr(8217) + "s peer group stands today, quartile to quartile, with the median dashed — not a peer history." if b.get("peer_ratios") else ""}</div>' if n_charts else ''}{"".join(charts) or '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
 <section class="panel" data-panel="ratings">{ratings_html}</section>
 <section class="panel" data-panel="market">{market_html}</section>
 <section class="panel" data-panel="events">{events_rows}</section>

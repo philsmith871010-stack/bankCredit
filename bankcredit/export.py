@@ -492,6 +492,38 @@ def score_history(series: dict, composite: float | None, today: date) -> list[di
     return out
 
 
+PEER_METRICS = ("cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "lcr",
+                "nsfr", "npl_ratio", "roe", "efficiency_ratio", "nim", "roa")
+
+
+def peer_quartiles(details: dict) -> dict:
+    """{peer group: {metric: {p25, p50, p75, n}}} from the latest value each peer holds.
+
+    A group needs four banks holding the ratio before it is reported: below that a quartile is
+    a restatement of one bank, not a peer position.
+    """
+    vals: dict[str, dict[str, list]] = {}
+    for row, extra in details.values():
+        pg = row.get("peer_group") or ""
+        if not pg:
+            continue
+        for m in PEER_METRICS:
+            pts = (extra.get("series") or {}).get(m) or []
+            if pts and pts[-1].get("v") is not None:
+                vals.setdefault(pg, {}).setdefault(m, []).append(float(pts[-1]["v"]))
+    out: dict[str, dict] = {}
+    for pg, metrics in vals.items():
+        for m, xs in metrics.items():
+            if len(xs) < 4:
+                continue
+            xs = sorted(xs)
+            q = lambda f: xs[min(len(xs) - 1, int(f * (len(xs) - 1) + 0.5))]
+            out.setdefault(pg, {})[m] = {"p25": round(q(0.25), 2), "p50": round(q(0.5), 2),
+                                         "p75": round(q(0.75), 2), "n": len(xs)}
+    return out
+
+
+
 def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=None) -> list[dict]:
     """What we hold for each entity: regulatory history (periods, first, last, sources) overall and per
     metric, ratings by agency, prices, CDS, bonds and news, with the score the board gives it."""
@@ -694,8 +726,14 @@ def export_json() -> None:
                     row["peer"] = {"p25": round(q[0], 1), "p50": round(q[1], 1), "p75": round(q[2], 1), "n": int(len(g))}
                     if row["score"] is not None:
                         row["percentile"] = int(round((g.score < row["score"]).mean() * 100))
+    # peer quartiles for each ratio, so a bank's own trend can be read against its peers rather
+    # than only against its own past. These are where the peers stand now - the latest value each
+    # holds - not a peer history, and every page that draws them says so.
+    peer_ratios = peer_quartiles(details)
     for eid, (row, extra) in details.items():
-        detail = dict(row); detail.update(extra); store.write_json(f"banks/{eid}", detail)
+        detail = dict(row); detail.update(extra)
+        detail["peer_ratios"] = peer_ratios.get(row.get("peer_group") or "", {})
+        store.write_json(f"banks/{eid}", detail)
     benchmarks = []
     series = store.read("series")
     if not series.empty:

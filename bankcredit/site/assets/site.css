@@ -319,3 +319,5 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .mt-key{display:inline-block;width:18px;height:8px;background:rgba(173,181,189,.32);border-radius:2px;vertical-align:-1px;margin-right:5px}
 .mt-vs.lv{color:var(--muted)}
 .md-trends figcaption{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sm-peer{font-size:10.5px;font-weight:600;margin-left:auto}
+.sm-peer.up{color:var(--green)}.sm-peer.down{color:var(--red)}.sm-peer.flat{color:var(--muted)}
