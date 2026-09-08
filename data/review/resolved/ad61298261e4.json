@@ -1,0 +1,22 @@
+{
+ "id": "ad61298261e4",
+ "entity_id": "credit-agricole-cib",
+ "url": "https://www.ca-cib.com/sites/default/files/2025-09/Pilier_3_CACIB_EN_20250630.pdf",
+ "page": 4,
+ "reference_date": "2025-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 16246.0,
+  "tier1_capital": 28731.0,
+  "total_capital": 32722.0,
+  "rwa": 133984.0,
+  "cet1_ratio": 12.13,
+  "tier1_ratio": 21.44,
+  "total_capital_ratio": 24.42,
+  "leverage_exposure": 812092.0,
+  "leverage_ratio": 3.54,
+  "lcr": 123.3,
+  "nsfr": 114.09
+ },
+ "note": "The half-year report, which unlike the quarterlies carries the full capital position - but as a 'Simplified regulatory capital' table in section 1.1.1 rather than a KM1 template, which is why the extractor found none. Three columns: 30.06.2025, then 31.12.2024 phased in and fully loaded; the first is taken. The report notes that from 1 January 2025 there is no more IFRS 9 phasing, so only one basis is completed at 30 June 2025. Amounts are EUR millions. Leverage from the LR2 common disclosure (p.9): Tier 1 28,731 over a total exposure measure of 812,092. LCR 123.30% is the first of four quarterly averages in EU-LIQ1 and NSFR 114.09% from the EU-LIQ2 template. Check: 16,246/133,984 = 12.13%, 32,722/133,984 = 24.42% and 28,731/812,092 = 3.54%, all matching the published ratios."
+}

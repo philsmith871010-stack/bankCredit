@@ -1,0 +1,16 @@
+{
+ "id": "5831bb0dbeba",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2024/30-september--basel-iii-pillar-3-disclosures--prudential-standard-aps330.pdf",
+ "page": 4,
+ "reference_date": "2024-09-30",
+ "currency": "AUD",
+ "values": {
+  "rwa": 38353.0,
+  "cet1_ratio": 10.87,
+  "tier1_ratio": 12.96,
+  "total_capital_ratio": 15.25,
+  "lcr": 135.0
+ },
+ "note": "Bendigo's APS 330 disclosure is the APRA regime, not Basel KM1. This is a September quarterly, which unlike the June half-year carries no common disclosure template at all - only Table 3 'Capital Adequacy', Table 4 'Credit Risk', Table 5 'Securitisation' and Table 20 'Liquidity Coverage Ratio' - hence 'no KM1 template found'. Table 3 gives total risk-weighted assets and the three capital ratios for the consolidated group but no capital amounts, so CET1, Tier 1 and total capital are left out rather than derived from the ratios. Two columns, the reporting quarter and the prior June; the first is taken. Amounts are AUD millions. No leverage ratio and no NSFR in the quarterly. This PDF additionally has no text layer - every page is an image - so the pipeline OCR'd it and read the Tier 1 and total capital ratios as capital amounts (12.96 and 15.25), while missing the CET1 ratio entirely. I read the rendered pages instead. Table 3 (p.4): total RWA 38,353.0, CET1 10.87%, Tier 1 12.96%, total capital 15.25%. LCR 135% is row 35 of Table 20 (p.8), the average of 66 daily observations over the September 2024 quarter. The June 2024 comparative column of both tables gives 38,005.2 / 11.32 / 13.43 / 15.74 and an LCR of 138%, which is exactly the June 2024 report, so the reading is consistent across the two documents."
+}

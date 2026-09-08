@@ -1,0 +1,16 @@
+{
+ "id": "212c70f61c8d",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2023/30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 4,
+ "reference_date": "2023-09-30",
+ "currency": "AUD",
+ "values": {
+  "rwa": 37824.1,
+  "cet1_ratio": 11.08,
+  "tier1_ratio": 13.26,
+  "total_capital_ratio": 15.5,
+  "lcr": 149.0
+ },
+ "note": "Bendigo's APS 330 disclosure is the APRA regime, not Basel KM1. This is a September quarterly, which unlike the June half-year carries no common disclosure template at all - only Table 3 'Capital Adequacy', Table 4 'Credit Risk', Table 5 'Securitisation' and Table 20 'Liquidity Coverage Ratio' - hence 'no KM1 template found'. Table 3 gives total risk-weighted assets and the three capital ratios for the consolidated group but no capital amounts, so CET1, Tier 1 and total capital are left out rather than derived from the ratios. Two columns, the reporting quarter and the prior June; the first is taken. Amounts are AUD millions. No leverage ratio and no NSFR in the quarterly. Table 3 (p.4): total RWA 37,824.1, CET1 11.08%, Tier 1 13.26%, total capital 15.50%. LCR 149% is row 35 of Table 20 (p.7), the average of 66 daily observations over the September 2023 quarter. The June 2023 comparative column gives 37,900.3 / 11.25 / 13.43 / 15.63 and an LCR of 131%, matching the June 2023 report. Note this PDF is two documents stapled together: the Pillar 3 disclosure on pages 1-8 and the '2024 First Quarter Information Pack' from page 9 on, whose slide on p.13 repeats the LCR as a five-quarter bar chart."
+}

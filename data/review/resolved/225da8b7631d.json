@@ -1,0 +1,20 @@
+{
+ "id": "225da8b7631d",
+ "entity_id": "standard-chartered",
+ "url": "https://www.sc.com/en/uploads/sites/66/content/docs/Standard_Chartered_PLC_-_Q1_Pillar_3_dislosure.pdf",
+ "page": 3,
+ "reference_date": "2017-03-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 37757.0,
+  "tier1_capital": 44439.0,
+  "total_capital": 59429.0,
+  "rwa": 273303.0,
+  "cet1_ratio": 13.8,
+  "tier1_ratio": 16.3,
+  "total_capital_ratio": 21.7,
+  "leverage_exposure": 721906.0,
+  "leverage_ratio": 5.9
+ },
+ "note": "This PDF has no text layer at all - every page is an image - so the pipeline fell back to OCR, and the OCR misread Table 1. Table 1 'Capital Base' on p.3 opens with a three-row 'Capital Ratios' block (CET1 13.8%, Tier 1 16.3%, Total capital 21.7%) and only then gives the 'CRD IV Capital base' amounts below it. The extractor took the ratio rows as the capital amounts - hence cet1_capital 13.8 - and then derived ratios of 0.01% from them. I read the rendered pages directly instead. Correct amounts, in USD millions, from the CRD IV capital base: CET1 capital 37,757, Tier 1 44,439, Tier 2 14,990, total capital 59,429, total risk-weighted assets 273,303. Two columns, 31.03.2017 and 31.12.2016; the first is taken. RWA 273,303 is confirmed independently by the Table 3 (EU OV1) total on p.5. Leverage is Table 2 on p.4: this is the UK leverage ratio, which excludes qualifying central bank claims from the exposure measure and which the document says runs about 30 basis points above the CRD IV basis; Tier 1 capital (end point) 42,700 over UK leverage exposure 721,906 = 5.9%. Note the leverage numerator is the end-point Tier 1 of 42,700, not the 44,439 in Table 1, because certain preference shares do not qualify on an end-point basis. No LCR or NSFR: this is a six-page capital-and-RWA disclosure carrying only Tables 1 to 6, with no liquidity template. Checks: 37,757/273,303 = 13.82%, 44,439/273,303 = 16.26%, 59,429/273,303 = 21.74% and 42,700/721,906 = 5.92%, all matching the published 13.8/16.3/21.7/5.9."
+}

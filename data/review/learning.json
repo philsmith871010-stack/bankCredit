@@ -2011,5 +2011,221 @@
   "page_reviewer": 11,
   "date_extractor": "2013-01-01",
   "date_reviewer": "2017-09-30"
+ },
+ {
+  "date": "2026-09-08T07:18:53",
+  "id": "212c70f61c8d",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2023-09-30"
+ },
+ {
+  "date": "2026-09-08T07:18:53",
+  "id": "225da8b7631d",
+  "entity_id": "standard-chartered",
+  "reason": "warn:text recovered by OCR from an image-only document; info:cet1_ratio derived ",
+  "skip": false,
+  "compared": 9,
+  "matched": 3,
+  "mismatches": {
+   "cet1_capital": [
+    13.8,
+    37757.0
+   ],
+   "tier1_capital": [
+    16.3,
+    44439.0
+   ],
+   "total_capital": [
+    21.7,
+    59429.0
+   ],
+   "cet1_ratio": [
+    0.01,
+    13.8
+   ],
+   "tier1_ratio": [
+    0.01,
+    16.3
+   ],
+   "total_capital_ratio": [
+    0.01,
+    21.7
+   ]
+  },
+  "page_extractor": 3,
+  "page_reviewer": 3,
+  "date_extractor": "2017-03-31",
+  "date_reviewer": "2017-03-31"
+ },
+ {
+  "date": "2026-09-08T07:18:53",
+  "id": "227422e3dd77",
+  "entity_id": "credit-agricole-cib",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2025-09-30"
+ },
+ {
+  "date": "2026-09-08T07:18:53",
+  "id": "3d9a9bef0fb0",
+  "entity_id": "nab",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 3,
+  "matched": 3,
+  "mismatches": {},
+  "page_extractor": 10,
+  "page_reviewer": 9,
+  "date_extractor": "2017-03-31",
+  "date_reviewer": "2017-03-31"
+ },
+ {
+  "date": "2026-09-08T07:18:54",
+  "id": "42ad539eefb4",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2022-09-30"
+ },
+ {
+  "date": "2026-09-08T07:18:54",
+  "id": "5831bb0dbeba",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:text recovered by OCR from an image-only document; warn:header date 2024-09",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2024-09-30",
+  "date_reviewer": "2024-09-30"
+ },
+ {
+  "date": "2026-09-08T07:18:56",
+  "id": "920a27b1eaf9",
+  "entity_id": "credit-agricole-cib",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2026-03-31"
+ },
+ {
+  "date": "2026-09-08T07:18:56",
+  "id": "a8efde84683d",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2022-06-30 disagrees with expected 2030-06-30; info:cet1_ratio ",
+  "skip": false,
+  "compared": 7,
+  "matched": 5,
+  "mismatches": {
+   "cet1_capital": [
+    9.68,
+    4082.9
+   ],
+   "cet1_ratio": [
+    0.02,
+    9.68
+   ]
+  },
+  "page_extractor": 6,
+  "page_reviewer": 7,
+  "date_extractor": "2022-06-30",
+  "date_reviewer": "2022-06-30"
+ },
+ {
+  "date": "2026-09-08T07:18:57",
+  "id": "ad61298261e4",
+  "entity_id": "credit-agricole-cib",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2025-06-30"
+ },
+ {
+  "date": "2026-09-08T07:18:58",
+  "id": "edc5020933f0",
+  "entity_id": "nab",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 3,
+  "matched": 3,
+  "mismatches": {},
+  "page_extractor": 11,
+  "page_reviewer": 10,
+  "date_extractor": "2016-03-31",
+  "date_reviewer": "2016-03-31"
+ },
+ {
+  "date": "2026-09-08T07:18:58",
+  "id": "f8040882374a",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2023-06-30 disagrees with expected 2030-06-30; info:cet1_ratio ",
+  "skip": false,
+  "compared": 7,
+  "matched": 5,
+  "mismatches": {
+   "cet1_capital": [
+    11.25,
+    4265.3
+   ],
+   "cet1_ratio": [
+    0.03,
+    11.25
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2023-06-30",
+  "date_reviewer": "2023-06-30"
+ },
+ {
+  "date": "2026-09-08T07:18:58",
+  "id": "fb955040a03f",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2024-06-30 disagrees with expected 2030-06-30; error:missing co",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "cet1_capital": [
+    11.32,
+    4302.3
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2024-06-30",
+  "date_reviewer": "2024-06-30"
  }
 ]

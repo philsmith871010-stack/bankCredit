@@ -1,0 +1,19 @@
+{
+ "id": "3d9a9bef0fb0",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/corporate/march-2017-pillar-3-report.pdf",
+ "page": 5,
+ "reference_date": "2017-03-31",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 46842.0,
+  "rwa": 374487.0,
+  "cet1_ratio": 10.11,
+  "tier1_ratio": 12.51,
+  "total_capital_ratio": 14.71,
+  "leverage_exposure": 850796.0,
+  "leverage_ratio": 5.51,
+  "lcr": 122.0
+ },
+ "note": "NAB half-year report under APRA's APS 330, which has no KM1 template. Level 2 (consolidated group) basis. The core rows the extractor reported missing sit on separate pages: total RWA 374,487 in the capital adequacy table on p.8 and the CET1 ratio of 10.11% in the capital ratios table on p.5. Tier 1 capital and the leverage figures come from the leverage ratio common disclosure on p.9, LCR from the APS 330 template on p.53. This vintage carries no detailed capital disclosure, so no CET1 or total capital amount is recorded. Check: 46,842/374,487 = 12.51% and 46,842/850,796 = 5.51%, both matching the published figures. Rewritten by hand: a script of mine truncated this file to zero bytes, which would have broken the next ingest."
+}

@@ -1,0 +1,13 @@
+{
+ "id": "227422e3dd77",
+ "entity_id": "credit-agricole-cib",
+ "url": "https://www.ca-cib.com/sites/default/files/2025-11/Pilier_3_CACIB_EN_20250930.pdf",
+ "page": 3,
+ "reference_date": "2025-09-30",
+ "currency": "EUR",
+ "values": {
+  "rwa": 136719.0,
+  "lcr": 123.1
+ },
+ "note": "Cr\u00e9dit Agricole CIB's quarterly Pillar 3 is a short financial review, not a full disclosure: it carries OV1, the credit, counterparty and market risk breakdowns and EU-LIQ1, but no KM1 and no capital ratios at all - hence 'no KM1 template found'. Recorded total RWA from OV1 row 29 (current-period column, EUR millions) and the LCR from EU-LIQ1, taking the first of the four quarterly averages, which is the quarter ending on the reporting date. The fuller half-year report carries the capital figures. OV1 here has four columns - RWA at 30.09.2025, 30.06.2025 and 31.03.2025, then own funds requirements - and the total row gives 136,719 against a requirement of 10,938, again 8.0%."
+}

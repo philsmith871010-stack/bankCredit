@@ -1,0 +1,20 @@
+{
+ "id": "fb955040a03f",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2024/30-june-basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 5,
+ "reference_date": "2024-06-30",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 4302.3,
+  "tier1_capital": 5104.7,
+  "total_capital": 5983.7,
+  "rwa": 38005.2,
+  "cet1_ratio": 11.32,
+  "tier1_ratio": 13.43,
+  "total_capital_ratio": 15.74,
+  "lcr": 138.0,
+  "nsfr": 116.4
+ },
+ "note": "Bendigo's APS 330 disclosure is the APRA regime, not Basel KM1. The half-year report carries the full 'Table 1 Common Disclosure Template', where the capital ratios are rows 61-63 and RWA is row 60, but the three ratios are also printed as loose text at the top of the first template page, above the row-numbered body. The extractor met those first and took them as capital amounts - hence a 'cet1_capital' of around 11 - which is why the CET1 ratio failed its range check. The row-numbered figures are used here instead. One reporting-date column; amounts are AUD millions. No leverage ratio: APRA does not require one in this disclosure and none appears in the document, so the check's 'no leverage ratio row' is correct. The 'header date disagrees with expected 2030-06-30' warning is the extractor misreading the '30 June' in the page header as a year; the reference date is the one stated on the cover. CET1 capital 4,302.3 is row 29 (p.4); Tier 2 879.0 row 58, total capital 5,983.7 row 59 and RWA 38,005.2 row 60 (p.5); Tier 1 5,104.7 is row 45. LCR 138% is row 35 of Table 20 (p.13), the average of 63 daily observations over the June 2024 quarter, and NSFR 116.4% is row 34 of Table 21 (p.14). Checks: 4,302.3/38,005.2 = 11.32%, 5,104.7/38,005.2 = 13.43% and 5,983.7/38,005.2 = 15.74%, matching rows 61-63. The September 2024 report's comparative column repeats all four of 38,005.2, 11.32, 13.43 and 15.74."
+}

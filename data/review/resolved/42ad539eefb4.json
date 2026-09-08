@@ -1,0 +1,16 @@
+{
+ "id": "42ad539eefb4",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2023/30-september--basel-iii-pillar-3-disclosures--prudential-standard-aps-330.pdf",
+ "page": 4,
+ "reference_date": "2022-09-30",
+ "currency": "AUD",
+ "values": {
+  "rwa": 41835.4,
+  "cet1_ratio": 9.76,
+  "tier1_ratio": 11.73,
+  "total_capital_ratio": 13.71,
+  "lcr": 136.2
+ },
+ "note": "Bendigo's APS 330 disclosure is the APRA regime, not Basel KM1. This is a September quarterly, which unlike the June half-year carries no common disclosure template at all - only Table 3 'Capital Adequacy', Table 4 'Credit Risk', Table 5 'Securitisation' and Table 20 'Liquidity Coverage Ratio' - hence 'no KM1 template found'. Table 3 gives total risk-weighted assets and the three capital ratios for the consolidated group but no capital amounts, so CET1, Tier 1 and total capital are left out rather than derived from the ratios. Two columns, the reporting quarter and the prior June; the first is taken. Amounts are AUD millions. No leverage ratio and no NSFR in the quarterly. Reference date warning: this file sits in the site's '2023' folder and its URL differs from the September 2023 report only by a doubled hyphen, but the document itself is the September 2022 report - cover page 'prepared as at 30 September 2022', released 8 November 2022. Bendigo files by financial year, so FY23 Q1 is September 2022. The date must be taken from the cover, not the path. Table 3 (p.4): total RWA 41,835.4, CET1 9.76%, Tier 1 11.73%, total capital 13.71%. LCR 136.2% is the September 2022 quarter average stated on p.8, the simple average of 65 daily observations. The June 2022 comparative column gives 42,197.9 / 9.68 / 11.63 / 13.60, matching the June 2022 report."
+}

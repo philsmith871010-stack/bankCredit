@@ -1,0 +1,19 @@
+{
+ "id": "edc5020933f0",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/march-2016-pillar3-report-release.pdf",
+ "page": 10,
+ "reference_date": "2016-03-31",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 35036.0,
+  "tier1_capital": 42535.0,
+  "total_capital": 47879.0,
+  "rwa": 361433.0,
+  "cet1_ratio": 9.69,
+  "tier1_ratio": 11.77,
+  "total_capital_ratio": 13.25,
+  "lcr": 125.0
+ },
+ "note": "NAB's APS 330 Pillar 3 report has no KM1 template - the capital position is split across Table 4.1A 'Risk-Weighted Assets', Table 4.1B 'Capital Ratios' and Table 4.2A 'Regulatory Capital Structure - Summary', on consecutive pages, which is why the extractor found the capital amounts but neither RWA nor the ratios. All figures are the Level 2 Group, i.e. the consolidated NAB Group, not Level 1 (the extended licence entity) and not the BNZ subsidiary, both of which Table 4.1B also lists. Two columns, the reporting date and the prior half year; the first is taken. Amounts are AUD millions. RWA 361,433 from Table 4.1A (p.9); ratios from Table 4.1B (p.10); capital from Table 4.2A (p.11). No leverage ratio: unlike the March 2017 report, this one discloses none anywhere, so the check's 'no leverage ratio row' is correct. LCR 125% is row 25 of the section 11.1 LCR template (p.54), the average of daily outcomes for the quarter ended 31 March 2016, the first of that table's three quarterly columns. Checks: 35,036/361,433 = 9.69%, 42,535/361,433 = 11.77% and 47,879/361,433 = 13.25%, all matching the published ratios."
+}

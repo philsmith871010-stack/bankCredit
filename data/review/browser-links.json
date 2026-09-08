@@ -1,7 +1,7 @@
 {
  "lloyds-banking-group": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
@@ -11,7 +11,7 @@
  },
  "lloyds-bank": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
@@ -21,7 +21,7 @@
  },
  "bank-of-scotland": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
@@ -31,7 +31,7 @@
  },
  "investec": {
   "page": "https://www.investec.com/en_gb/welcome-to-investec/about-us/investor-relations.html",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
@@ -54,6 +54,10 @@
     "text": "View reports"
    },
    {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=518/content/dam/investor-relations/integrated-reporting-product-listing-image.jpg",
+    "text": ""
+   },
+   {
     "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=387/content/dam/investor-relations/integrated-reporting-product-listing-image.jpg",
     "text": ""
    },
@@ -68,16 +72,12 @@
    {
     "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=710/content/dam/investor-relations/integrated-reporting-product-listing-image.jpg",
     "text": ""
-   },
-   {
-    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=518/content/dam/investor-relations/integrated-reporting-product-listing-image.jpg",
-    "text": ""
    }
   ]
  },
  "goldman-sachs-international-bank": {
   "page": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.goldmansachs.com/insights/reports",
@@ -123,12 +123,12 @@
  },
  "west-brom-bs": {
   "page": "https://www.westbrom.co.uk/about-us/investor-relations",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "saffron-bs": {
   "page": "https://www.saffronbs.co.uk/about-us/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -146,7 +146,7 @@
  },
  "suffolk-bs": {
   "page": "https://www.suffolkbuildingsociety.co.uk/about/governance/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/Voluntary-modern-slavery-and-human-trafficking-statement.pdf",
@@ -192,7 +192,7 @@
  },
  "progressive-bs": {
   "page": "https://theprogressive.com/about-us/your-society",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
@@ -218,7 +218,7 @@
  },
  "leek-bs": {
   "page": "https://www.leekbs.co.uk/about-us/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Mortgage%20Fees%20and%20Charges%202026%20-%20MortFeeCharg-REV04-26.pdf",
@@ -244,7 +244,7 @@
  },
  "hinckley-and-rugby-bs": {
   "page": "https://www.hrbs.co.uk/the-society/governance/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
@@ -257,11 +257,55 @@
   ]
  },
  "furness-bs": {
-  "page": "https://www.furnessbs.co.uk/about-us/",
-  "checked": "2026-09-07",
+  "page": "https://www.furnessbs.co.uk/financial-reports/",
+  "checked": "2026-09-08",
   "links": [
    {
+    "url": "https://www.furnessbs.co.uk/financial-reports",
+    "text": ""
+   },
+   {
     "url": "https://www.furnessbs.co.uk/financial-reports/",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk/financial-reports/%7BmodalNewCustomerButtonUrl%7D",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk/financial-reports/%7BmodalExistingCustomerButtonUrl%7D",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/i0zp2btz/furness-annual-report-accounts-2020.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/2xvdfazj/furness-members-review-2020.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/yqilyc14/annual_report.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/ligloryv/summary_financial_statement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/3u3j2cuk/notice-of-agm.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/5qxdt4ox/4-2-final-furness-annual-report-2022-a4.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/grddq0eq/4-3-final-48405-summary-financial-statement-2023.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk:443/media/eyfhr5t1/4-4-2022-pillar-3-for-board-pack-07-03-23.pdf",
     "text": ""
    },
    {
@@ -276,7 +320,7 @@
  },
  "al-rayan-bank": {
   "page": "https://www.alrayanbank.co.uk/about-us/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://apps.apple.com/gb/app/al-rayan-bank-uk/id1061102013",
@@ -289,11 +333,219 @@
   ]
  },
  "gatehouse-bank": {
-  "page": "https://www.gatehousebank.com/about-us",
-  "checked": "2026-09-07",
+  "page": "https://gatehousebank.com/about-us/corporate-governance",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://gatehousebank.com/intermediaries/documents-for-download",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2025",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2024",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/GFGL-Annual-Report-2024-FINAL.pdf?dm=1753107440",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2023",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/GFGL-Annual-Report-2023-FINAL.pdf?dm=1723131669",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2022",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/GFGL-Annual-Report-2022-FINAL.pdf?dm=1710181852",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Annual-Report-2021-FINAL-web.pdf?dm=1710181849",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/GFGL-Annual-Report-2021-FINAL.pdf?dm=1710181852",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2020",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2020",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2019",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2019",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2018",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2018",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2017",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2017",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2016",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2016",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2015",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gfgl-annual-report-2015",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2014",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2013",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/streamlined-energy-and-carbon-report-2025",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-responsible-banking-progress-statement-2025",
+    "text": ""
+   },
+   {
+    "url": "http://gatehousebank.com/downloads/sustainability-report-2025",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/UN-Principles-for-Responsible-Banking-Report-2024.pdf?dm=1753365816",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Sustainability-Report-2024.pdf?dm=1752074397",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Streamlined-Energy-and-Carbon-Report-2024.pdf?dm=1752074896",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/sustainability-report-2023",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gri-reporting-standards-content-index-2023",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/UN-Principles-of-Responsible-Banking-Report-2023-V2.pdf?dm=1720102035",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/streamlined-energy-and-carbon-report-2023",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/2022-sustainability-report",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/streamlined-energy-and-carbon-reporting-secr-report-2022",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/2021-sustainability-report",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/greenhouse-gas-report-2021",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/2020-self-assessment-report",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/csr-impact-report",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/greenhouse-gas-report-2020",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/greenhouse-gas-report-2019",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Pillar-III-Disclosure-2024-FINAL.pdf?dm=1754928802",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Pillar-III-Disclosure-2023-FINAL.pdf?dm=1728308645",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-pillar-3-disclosure-2022",
+    "text": ""
+   },
+   {
+    "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Pillar-III-Disclosure-2021-FINAL_2022-08-23-154942_nofu.pdf?dm=1710181850",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-pillar-3-disclosure-2020",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-pillar-3-disclosure-2019",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-pillar-3-disclosure-2018",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/gatehouse-bank-pillar-3-disclosure-2017",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/esg-policy",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/modern-slavery-statement",
+    "text": ""
+   },
+   {
+    "url": "https://gatehousebank.com/downloads/sustainable-procurement-policy",
     "text": ""
    },
    {
@@ -308,12 +560,12 @@
  },
  "bank-of-china-uk": {
   "page": "https://www.bankofchina.com/uk/en/aboutus/ab1/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "macquarie-bank": {
   "page": "https://www.macquarie.com/au/en/investors/regulatory-disclosures.html",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.macquarie.com/au/en/investors/regulatory-disclosures.html",
@@ -472,6 +724,18 @@
     "text": ""
    },
    {
+    "url": "https://www.macquarie.com/au/en/disclosures/important-terms-and-information.html",
+    "text": ""
+   },
+   {
+    "url": "https://www.macquarie.com/au/en/disclosures.html",
+    "text": ""
+   },
+   {
+    "url": "https://www.macquarie.com/au/en/disclosures/privacy-and-cookies.html",
+    "text": ""
+   },
+   {
     "url": "https://www.macquarie.com/disclosures/enity/green-investment-group-management-limited",
     "text": ""
    },
@@ -541,18 +805,6 @@
    },
    {
     "url": "https://www.macquarie.com/disclosures/document/cps-511",
-    "text": ""
-   },
-   {
-    "url": "https://www.macquarie.com/disclosures/year/2024",
-    "text": ""
-   },
-   {
-    "url": "https://www.macquarie.com/disclosures/year/2023",
-    "text": ""
-   },
-   {
-    "url": "https://www.macquarie.com/disclosures/year/2022",
     "text": ""
    }
   ]
@@ -804,39 +1056,15 @@
   ]
  },
  "first-abu-dhabi-bank": {
-  "page": "https://www.bankfab.com/en-ae/about-fab/investor-relations",
-  "checked": "2026-09-07",
+  "page": "https://www.bankfab.com/en-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.bankfab.com/en-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
     "text": ""
    },
    {
-    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/sustainability/reports-policy-frameworks/documents/esg-update-june-2026.pdf?view=1",
-    "text": ""
-   },
-   {
-    "url": "https://www.bankfab.com/-/media/fab-uds/common-images/icons/filetype-download.svg?iar=0&hash=E21B4FDE0129ED897E12731B2A9D3EB2",
-    "text": ""
-   },
-   {
-    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/fab-investment-case/pdfs/fab-at-a-glance-q2-2026.pdf?view=1",
-    "text": ""
-   },
-   {
-    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/fab-annual-report-2025-en.pdf?view=1",
-    "text": ""
-   },
-   {
-    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/presentations/pdfs/2026/june-2026-investor-presentation.pdf?view=1",
-    "text": ""
-   },
-   {
-    "url": "https://www.bankfab.com/en-ae/about-fab/sustainability/reports-policy-frameworks",
-    "text": ""
-   },
-   {
-    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/overview/reports-and-presentations-en.jpg?h=900&iar=0&w=1536&hash=C9676F7418C8F762483D2C4AE8175EF7",
+    "url": "https://www.bankfab.com/ar-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
     "text": ""
    },
    {
@@ -844,27 +1072,243 @@
     "text": ""
    },
    {
-    "url": "https://www.bankfab.com/-/media/fab-uds/personal/charges-and-fees/fees-and-charges-first-abu-dhabi-bank.pdf?view=1",
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/images/banner-financial-reports-en.png?h=433&iar=0&w=1316&hash=20E02378DAE12736155281E3BAB55987",
     "text": ""
    },
    {
-    "url": "https://www.bankfab.com/-/media/fab-uds/common-documents/20200831-customercharter-en.pdf?view=1",
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/fab-fs-q1-2026-english.pdf?view=1",
     "text": ""
    },
    {
-    "url": "https://www.bankfab.com/-/media/fab-uds/islamic-banking/overview/pdfs/fab_islamic_charter_v3_eng.pdf?view=1",
+    "url": "https://www.bankfab.com/-/media/fab-uds/common-images/icons/filetype-download.svg?iar=0&hash=E21B4FDE0129ED897E12731B2A9D3EB2",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/fab-fs-q2-2026-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/fab-mda-q1-2026-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/fab-mda-q2-2026-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/fab-earnings-presentation-q1-2026.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/fab-earnings-presentation-q2-2026.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/fab-quarterly-series-q1-2026.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/fab-quarterly-series-q2-2026.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/fab-q1-2026-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/fab-q2-2026-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/final-q1-pillar3-report-q1-2026.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q2/final-q2-pillar3-report-q2-2026.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/fab-annual-report-2025-en.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-fs-q1-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-fs-q2-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-fs-q3-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-fs-q4-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-mda-q1-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-mda-q2-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-mda-q3-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-mda-q4-2025-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-earnings-presentation-q1-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-earnings-presentation-q2-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-earnings-presentation-q3-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-earnings-presentation-q4-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-quarterly-series-q1-2025.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-quarterly-series-q2-2025.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-quarterly-series-q3-2025.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-quarterly-series-q4-2025.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-q1-2025-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-q2-2025-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-q3-2025-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-q4-2025-results-call.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q1/fab-pillar-3-report-q1-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q2/fab-pillar-3-report-q2-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q3/fab-pillar-3-report-q3-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2025/q4/fab-pillar-3-report-q4-2025.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://fabannualreport2024.com",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/fab-annual-report-2024-en.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q1/fab-fs-q1-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q2/fab-fs-q2-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q3/fab-fs-q3-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q4/fab-fs-q4-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q1/fab-mda-q1-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q2/fab-mda-q2-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q3/fab-mda-q3-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q4/fab-mda-q4-2024-english.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q1/fab-q124-earnings-presentation.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q2/fab-q224-earnings-presentation.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q3/fab-q324-earnings-presentation.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q4/fab-q4-2024-earnings-presentation.pdf?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q1/fab-quarterly-series-q1-2024.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q2/fab-quarterly-series-q2-2024.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q3/fab-quarterly-series-q3-2024.zip?view=1",
+    "text": ""
+   },
+   {
+    "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2024/q4/fab-quarterly-series-q4-2024.zip?view=1",
     "text": ""
    }
   ]
  },
  "emirates-nbd": {
   "page": "https://www.emiratesnbd.com/en/investor-relations/basel-iii-pillar-3",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "goldman-sachs": {
   "page": "https://www.goldmansachs.com/investor-relations/financials/other-information",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.goldmansachs.com/insights/reports",
@@ -957,16 +1401,12 @@
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
     "text": ""
-   },
-   {
-    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
-    "text": ""
    }
   ]
  },
  "jpmorgan-chase": {
   "page": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures/",
@@ -1072,7 +1512,7 @@
  },
  "citigroup": {
   "page": "https://www.citigroup.com/global/investors",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q22026/2026prqtr2rslt.pdf",
@@ -1270,7 +1710,7 @@
  },
  "state-street": {
   "page": "https://investors.statestreet.com/filings-and-reports/supplemental-public-disclosure-of-basel-iii-regulatory-capital/default.aspx",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://investors.statestreet.com/filings-and-reports/quarterly-results/default.aspx",
@@ -1516,7 +1956,7 @@
  },
  "ubs": {
   "page": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html",
@@ -1627,15 +2067,19 @@
     "text": "Report fraudulent mail"
    },
    {
-    "url": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures/_jcr_content/root/pagehead/opengraphimage.coreimg.1280.png/496661020/investors-quarterlies-1600x1000.png",
-    "text": ""
-   },
-   {
     "url": "https://fuse.ubs.com/d/tm.js?p=eh7KWg43bQ&l=&h=https%3A%2F%2Fwww.ubs.com%2Fglobal%2Fen%2Finvestor-relations%2Ffinancial-information%2Fpillar-3-disclosures.html",
     "text": ""
    },
    {
     "url": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.smartappmanifest.xjson",
+    "text": ""
+   },
+   {
+    "url": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures/_jcr_content/root/contentarea/mainpar/toplevelgrid_1828724384/col_1/textimage/image.580.jpg/1616145105001.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures/_jcr_content/root/pagehead/opengraphimage.coreimg.1280.png/496661020/investors-quarterlies-1600x1000.png",
     "text": ""
    },
    {
@@ -1673,16 +2117,12 @@
    {
     "url": "https://www.ubs.com/content/sites/global/en/investor-relations/financial-information/pillar-3-disclosures/jcr:content/root/contentarea/mainpar/toplevelgrid_1828724384/col_1/textimage/image.3840.jpg/1616145105001.jpg",
     "text": ""
-   },
-   {
-    "url": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures/_jcr_content/root/contentarea/mainpar/toplevelgrid_1828724384/col_1/textimage/image.580.jpg/1616145105001.jpg",
-    "text": ""
    }
   ]
  },
  "lloyds-banking-group > rb_bf10006sbr|rid=RID_-1289205583|rpid=-": {
   "page": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
@@ -1692,7 +2132,7 @@
  },
  "lloyds-bank > rb_bf10006sbr|rid=RID_-1289205583|rpid=-": {
   "page": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
@@ -1702,7 +2142,7 @@
  },
  "bank-of-scotland > rb_bf10006sbr|rid=RID_-1289205583|rpid=-": {
   "page": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
@@ -1712,7 +2152,7 @@
  },
  "investec > equity-capital-markets.html?link=Equity%": {
   "page": "https://www.investec.com/en_gb/business/public-companies/investment-banking-and-equities/equity-capital-markets.html?link=Equity%20capital%20markets&section=Business&category=Investment%20banking",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
@@ -1738,7 +2178,7 @@
  },
  "investec > foreign-exchange-for-funds.html?link=For": {
   "page": "https://www.investec.com/en_gb/business/popular-solutions/treasury-and-risk-management/foreign-exchange-for-funds.html?link=Foreign%20exchange%20for%20private%20capital%20markets&section=Business&category=Risk%20management",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
@@ -1764,7 +2204,7 @@
  },
  "investec > working-capital.html?link=Working%20capi": {
   "page": "https://www.investec.com/en_gb/business/private-companies/lending-and-finance/working-capital.html?link=Working%20capital&section=Business&category=Business%20financing",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
@@ -1787,6 +2227,22 @@
     "text": "Read full testimonial"
    },
    {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=518/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=518/content/dam/united-kingdom/downloads-and-documents/cib/required_it_card_image.jpg",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-34680b89d8c2dcc908016ab727144a60-lc.min.css",
+    "text": ""
+   },
+   {
+    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-e52a295dc26c9a18e5640da6b2e5e1fe-lc.min.js",
+    "text": ""
+   },
+   {
     "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=583/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
     "text": ""
    },
@@ -1800,10 +2256,6 @@
    },
    {
     "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=710/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
-    "text": ""
-   },
-   {
-    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=518/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
     "text": ""
    },
    {
@@ -1823,10 +2275,6 @@
     "text": ""
    },
    {
-    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=518/content/dam/united-kingdom/downloads-and-documents/cib/required_it_card_image.jpg",
-    "text": ""
-   },
-   {
     "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=387/content/dam/united-kingdom/downloads-and-documents/cib/cib-sales-support/images/the-coconut-callab-testimonial-prod-list-desk.jpg",
     "text": ""
    },
@@ -1841,20 +2289,12 @@
    {
     "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=347/content/dam/united-kingdom/downloads-and-documents/cib/required_it_card_image.jpg",
     "text": ""
-   },
-   {
-    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-34680b89d8c2dcc908016ab727144a60-lc.min.css",
-    "text": ""
-   },
-   {
-    "url": "https://www.investec.com/etc.clientlibs/dotcom/clientlibs/dotcom/components/document-asset-list.lc-e52a295dc26c9a18e5640da6b2e5e1fe-lc.min.js",
-    "text": ""
    }
   ]
  },
  "investec > private-capital.html?link=Private%20capi": {
   "page": "https://www.investec.com/en_gb/business/private-companies/lending-and-finance/private-capital.html?link=Private%20capital%20&section=Business&category=Business%20financing",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
@@ -1880,7 +2320,7 @@
  },
  "investec > institutions.html?section=Business&categ": {
   "page": "https://www.investec.com/en_gb/business/institutions.html?section=Business&category=Financial%20institutions",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
@@ -1910,7 +2350,7 @@
  },
  "investec > 2025.html?section=Business&category=PE%2": {
   "page": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
@@ -1941,22 +2381,22 @@
     "text": ""
    },
    {
+    "url": "https://www.investec.com/content/dam/united-kingdom/focus/direct-lending-annual-letter/iaim-direct-lending-annual-report-2025-stone-background-article-listing.jpg",
+    "text": ""
+   },
+   {
     "url": "https://www.mckinsey.com/industries/private-capital/our-insights/global-private-markets-report",
     "text": ""
    },
    {
     "url": "https://www.investec.com/newsletter/pe-trends-report,dotcom:content-hub-tags/uk-content-hub-tracking-tags/topic/ct7-16-direct-lending",
     "text": ""
-   },
-   {
-    "url": "https://www.investec.com/content/dam/united-kingdom/focus/direct-lending-annual-letter/iaim-direct-lending-annual-report-2025-stone-background-article-listing.jpg",
-    "text": ""
    }
   ]
  },
  "goldman-sachs-international-bank > reports": {
   "page": "https://www.goldmansachs.com/insights/reports",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.goldmansachs.com/insights/reports",
@@ -1977,16 +2417,12 @@
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
     "text": ""
-   },
-   {
-    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
-    "text": ""
    }
   ]
  },
  "goldman-sachs-international-bank > investor-relations": {
   "page": "https://www.goldmansachs.com/investor-relations",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.goldmansachs.com/insights/reports",
@@ -2144,7 +2580,7 @@
  },
  "goldman-sachs-international-bank > 2026-07-14-q2-results": {
   "page": "https://www.goldmansachs.com/pressroom/press-releases/2026/2026-07-14-q2-results",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.goldmansachs.com/insights/reports",
@@ -2182,7 +2618,7 @@
  },
  "goldman-sachs-international-bank > broadcast-second-quarter-2026": {
   "page": "https://www.goldmansachs.com/investor-relations/presentations/2026/broadcast-second-quarter-2026",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.goldmansachs.com/insights/reports",
@@ -2193,11 +2629,11 @@
     "text": ""
    },
    {
-    "url": "https://preview.gscom.gspublish.site.gs.com/api/public/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
     "text": ""
    },
    {
-    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
+    "url": "https://preview.gscom.gspublish.site.gs.com/api/public/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
     "text": ""
    },
    {
@@ -2228,7 +2664,7 @@
  },
  "goldman-sachs-international-bank > corporate-governance": {
   "page": "https://www.goldmansachs.com/investor-relations/corporate-governance",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.goldmansachs.com/insights/reports",
@@ -2261,16 +2697,12 @@
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
     "text": ""
-   },
-   {
-    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
-    "text": ""
    }
   ]
  },
  "goldman-sachs-international-bank > creditor-information": {
   "page": "https://www.goldmansachs.com/investor-relations/creditor-information",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.goldmansachs.com/insights/reports",
@@ -2372,7 +2804,7 @@
  },
  "west-brom-bs > financial-information": {
   "page": "https://www.westbrom.co.uk/about-us/financial-information",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.westbrom.co.uk/about-us/financial-information/financial-reports-and-results",
@@ -2382,7 +2814,7 @@
  },
  "west-brom-bs > corporate-governance": {
   "page": "https://www.westbrom.co.uk/about-us/corporate-governance",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.westbrom.co.uk/-/media/wbbs/images/about-us/rules-and-memorandum-document.jpg?h=193&iar=0&w=298&hash=1AEB436140F3B85D0C9FE29DEC23B148",
@@ -2396,12 +2828,12 @@
  },
  "west-brom-bs > modern-slavery-and-human-trafficking-sta": {
   "page": "https://www.westbrom.co.uk/about-us/corporate-governance/modern-slavery-and-human-trafficking-statement",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "saffron-bs > financial-results": {
   "page": "https://www.saffronbs.co.uk/financial-results",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -2483,7 +2915,7 @@
  },
  "saffron-bs > financial-wellbeing-reviews": {
   "page": "https://www.saffronbs.co.uk/savings/tips-tools-support/financial-wellbeing-reviews",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -2501,7 +2933,7 @@
  },
  "saffron-bs > useful-mortgage-documents": {
   "page": "https://www.saffronbs.co.uk/useful-mortgage-documents",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/useful-mortgage-documents",
@@ -2555,7 +2987,7 @@
  },
  "saffron-bs > independent-financial-advice": {
   "page": "https://www.saffronbs.co.uk/its-more-money/services/independent-financial-advice",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -2577,7 +3009,7 @@
  },
  "suffolk-bs > financial-education": {
   "page": "https://www.suffolkbuildingsociety.co.uk/financial-education/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/INVL107-01-26-FSCS-Information-Sheet.pdf",
@@ -2587,7 +3019,7 @@
  },
  "suffolk-bs > annual-general-meeting": {
   "page": "https://www.suffolkbuildingsociety.co.uk/about/governance/annual-general-meeting/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Review-of-the-Year-2025.pdf",
@@ -2613,12 +3045,12 @@
  },
  "suffolk-bs > embed?url=https%3A%2F%2Fwww.suffolkbuild": {
   "page": "https://www.suffolkbuildingsociety.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.suffolkbuildingsociety.co.uk%2Fabout%2Fgovernance%2F&format=xml",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "progressive-bs > search-results": {
   "page": "https://theprogressive.com/search-results",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
@@ -2636,7 +3068,7 @@
  },
  "progressive-bs > document-hub": {
   "page": "https://theprogressive.com/document-hub",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://theprogressive.com/document-hub",
@@ -2810,7 +3242,7 @@
  },
  "progressive-bs > governance-and-finance": {
   "page": "https://theprogressive.com/about-us/governance-and-finance",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
@@ -2860,7 +3292,7 @@
  },
  "leek-bs > wren-sterling": {
   "page": "https://www.leekbs.co.uk/financial-planning/wren-sterling/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Mortgage%20Fees%20and%20Charges%202026%20-%20MortFeeCharg-REV04-26.pdf",
@@ -2882,7 +3314,7 @@
  },
  "hinckley-and-rugby-bs > financial-services-compensation-scheme": {
   "page": "https://www.hrbs.co.uk/savings/existing-customers/important-account-information/financial-services-compensation-scheme/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
@@ -2900,7 +3332,7 @@
  },
  "hinckley-and-rugby-bs > directors-people": {
   "page": "https://www.hrbs.co.uk/the-society/governance/directors-people/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
@@ -2910,7 +3342,7 @@
  },
  "hinckley-and-rugby-bs > committees": {
   "page": "https://www.hrbs.co.uk/the-society/governance/committees/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
@@ -2936,7 +3368,7 @@
  },
  "hinckley-and-rugby-bs > agm": {
   "page": "https://www.hrbs.co.uk/the-society/governance/agm/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
@@ -2950,7 +3382,7 @@
  },
  "hinckley-and-rugby-bs > internal-audit-charter": {
   "page": "https://www.hrbs.co.uk/the-society/governance/internal-audit-charter/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
@@ -2960,7 +3392,7 @@
  },
  "hinckley-and-rugby-bs > annual-report-account-summary": {
   "page": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
@@ -3006,7 +3438,7 @@
  },
  "furness-bs > helping-you-through-financial-uncertaint": {
   "page": "https://www.furnessbs.co.uk/about-us/helping-you-through-financial-uncertainty/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.furnessbs.co.uk/financial-reports/",
@@ -3024,7 +3456,7 @@
  },
  "furness-bs > financial-reports": {
   "page": "https://www.furnessbs.co.uk/financial-reports/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.furnessbs.co.uk/financial-reports",
@@ -3032,6 +3464,14 @@
    },
    {
     "url": "https://www.furnessbs.co.uk/financial-reports/",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk/financial-reports/%7BmodalNewCustomerButtonUrl%7D",
+    "text": ""
+   },
+   {
+    "url": "https://www.furnessbs.co.uk/financial-reports/%7BmodalExistingCustomerButtonUrl%7D",
     "text": ""
    },
    {
@@ -3078,7 +3518,7 @@
  },
  "al-rayan-bank > results": {
   "page": "https://www.alrayanbank.co.uk/search/results",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://play.google.com/store/apps/details?id=com.alrayanbankuk.mobile",
@@ -3092,7 +3532,7 @@
  },
  "al-rayan-bank > investor-relations": {
   "page": "https://www.alrayanbank.co.uk/investor-relations",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.alrayanbank.co.uk/sites/default/files/media/file-uploads/2026-06/al_rayan_annual_report_accounts_2025.pdf",
@@ -3110,7 +3550,7 @@
  },
  "gatehouse-bank > documents-for-download": {
   "page": "https://gatehousebank.com/intermediaries/documents-for-download",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://gatehousebank.com/intermediaries/documents-for-download",
@@ -3292,7 +3732,7 @@
  },
  "gatehouse-bank > corporate-governance": {
   "page": "https://gatehousebank.com/about-us/corporate-governance",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://gatehousebank.com/intermediaries/documents-for-download",
@@ -3518,37 +3958,37 @@
  },
  "bank-of-china-uk > investor": {
   "page": "https://www.bankofchina.com/investor/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "bank-of-china-uk > ir1": {
   "page": "https://www.bankofchina.com/investor/ir1/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "bank-of-china-uk > ir2": {
   "page": "https://www.bankofchina.com/investor/ir2/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "bank-of-china-uk > ir5": {
   "page": "https://www.bankofchina.com/investor/ir5/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "bank-of-china-uk > ir3": {
   "page": "https://www.bankofchina.com/investor/ir3/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "bank-of-china-uk > ir9": {
   "page": "https://www.bankofchina.com/investor/ir9/",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": []
  },
  "first-abu-dhabi-bank > investor-relations": {
   "page": "https://www.bankfab.com/ar-ae/about-fab/investor-relations",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.bankfab.com/ar-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
@@ -3602,7 +4042,7 @@
  },
  "first-abu-dhabi-bank > quarterly-and-annual-reports": {
   "page": "https://www.bankfab.com/en-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.bankfab.com/en-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
@@ -3848,7 +4288,7 @@
  },
  "jpmorgan-chase > financial-statements": {
   "page": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/financial-statements",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.jpmorganchase.com/ir/annual-report/2023/ar-ceo-letters",
@@ -3886,7 +4326,7 @@
  },
  "citigroup > quarterly-earnings": {
   "page": "https://www.citigroup.com/global/investors/quarterly-earnings",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.citigroup.com/v1/content/citigpa/IRFile?content_json.documentType=Quarterly%20Earnings%20Releases%20and%20Supplements",
@@ -4132,7 +4572,7 @@
  },
  "citigroup > investor-contacts": {
   "page": "https://www.citigroup.com/global/investors/investor-contacts",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/business-document-and-information",
@@ -4262,7 +4702,7 @@
  },
  "citigroup > investor-day-2026": {
   "page": "https://www.citigroup.com/global/investors/events-and-presentations/investor-day-2026",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-ceo-presentation.pdf",
@@ -4476,7 +4916,7 @@
  },
  "citigroup > services-investor-day": {
   "page": "https://www.citigroup.com/global/investors/events-and-presentations/services-investor-day",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day-agenda.pdf",
@@ -4515,7 +4955,7 @@
     "text": ""
    },
    {
-    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/payments-presentation.pdf",
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/payments-presentation.pdf%20",
     "text": ""
    },
    {
@@ -4556,6 +4996,10 @@
    },
    {
     "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day-q-and-a.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day/payments-presentation.pdf",
     "text": ""
    },
    {
@@ -4694,7 +5138,7 @@
  },
  "citigroup > investor-day-2022": {
   "page": "https://www.citigroup.com/global/investors/events-and-presentations/investor-day-2022",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/akpublic/storage/public/ID22-CEO-Presentation.pdf",
@@ -4896,7 +5340,7 @@
  },
  "citigroup > citi-2026-barclays-global-financial-serv": {
   "page": "https://www.citigroup.com/global/news/press-release/2026/citi-2026-barclays-global-financial-services-conference-gonzalo-luchetti",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/business-document-and-information",
@@ -5046,7 +5490,7 @@
  },
  "mufg": {
   "page": "https://www.mufg.jp/english/ir/report/basel3/index.html",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.mufg.jp/english/ir/report/basel3/index.html",
@@ -5292,26 +5736,1678 @@
  },
  "mufg > index.html": {
   "page": "https://www.mufg.jp/english/profile/governance/risk/index.html",
-  "checked": "2026-09-07",
+  "checked": "2026-09-08",
   "links": [
    {
     "url": "https://www.mufg.jp/english/ir/report/index.html",
-    "text": ""
+    "text": "Annual Reports"
    },
    {
     "url": "https://www.mufg.jp/english/ir/report/annual_report/index.html",
-    "text": ""
+    "text": "Annual Reports"
    },
    {
     "url": "https://www.mufg.jp/english/csr/report/index.html",
-    "text": ""
+    "text": "Sustainability Report"
    },
    {
     "url": "https://www.mufg.jp/english/ir/report/form20-f/index.html",
-    "text": ""
+    "text": "SEC Filings"
    },
    {
     "url": "https://www.mufg.jp/english/ir/report/basel3/index.html",
+    "text": "Basel Ⅲ Disclosure"
+   },
+   {
+    "url": "https://www.mufg.jp/english/ir/ir_policy/index.html",
+    "text": "Disclosure Policy"
+   },
+   {
+    "url": "https://form.mufg.jp/regist/is?SMPFORM=nbp-mjsim-0e521dfd17a26a22a6e6d64d664bdb65",
+    "text": "Request for Annual Report"
+   }
+  ]
+ },
+ "lloyds-bank-corporate-markets": {
+  "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
+    "text": ""
+   }
+  ]
+ },
+ "lloyds-bank-corporate-markets > rb_bf10006sbr|rid=RID_-1289205583|rpid=-": {
+  "page": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.lloydsbankinggroup.com/ruxitagentjs_ICA27SVfhjoqrux_10187200323152418.js|reportUrl=/rb_bf10006sbr|rid=RID_-1289205583|rpid=-872896734",
+    "text": ""
+   }
+  ]
+ },
+ "credit-agricole-cib": {
+  "page": "https://www.ca-cib.com/en/document-search",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.ca-cib.com/fr/recherche-documentaire",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/en/document-search",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/en/about-us/compliance-rules/dodd-frank-disclosures-and-notices",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-08/EN_Amendment_URD_CACIB_2025_30%20June%202026.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-05/International%20standard%20on%20auditing%20%28ISAs%29%20-%20audit%20report%20on%20consolidated%20financial%20statements%202025.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-07/Non-sign%C3%A9-CACIB%202026%20CERTIFICATION%20REGARDING%20CORR.%20ACCOUNTS%20FOREIGN%20BANKS_0.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-06/2025-26%20Annual%20Information%20on%20Complaints%20-%20CACIB%20Canada%20Branch_EN.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-03/Reportings%20on%20claims%20handling%20activities%202025.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-07/CSR%20Policy%20Oil%20%26%20Gas%20-%20July%202026%20EN_VF.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-07/CACIB%20CSR%20policy-%20Power%20-%20July%202026%20-%20EN_VF.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-07/CSR%20Policy%20Road%20Transp%20MM%202026%20ENG_VF_0.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-08/2026%20Q2%20Financial%20Statement-English%20version.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-08/2026%20Q2%20Financial%20Statement-Chinese%20version.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-08/Audited%20Financials%20for%20FY%202025-26.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-09/Underwriting%20Announcement_%20CACIB%20USD50%2C000%2C000%20Callable%20Fixed%20Rate%20Notes%20due%20September%202036.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-09/Prospectus_%20CACIB%20USD50%2C000%2C000%20Callable%20Fixed%20Rate%20Notes%20due%20September%202036.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-08/Gender%20Pay%20Gap%20Report%202026.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/document-search",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/c94cd8c6-6313-4d46-b8a8-c9665f315fd7?resourceVersion=id%3A299977",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/c94cd8c6-6313-4d46-b8a8-c9665f315fd7?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/08667ee0-a2e6-4e15-91ce-3df4465a4317?resourceVersion=id%3A291596",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/08667ee0-a2e6-4e15-91ce-3df4465a4317?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/614df69e-8efe-452a-9df7-54e9862fa917?resourceVersion=id%3A299973",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/614df69e-8efe-452a-9df7-54e9862fa917?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/index/documents_v1?include=field_file",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/index/documents_v1?can_bulk_select=true",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/61eecf96-3b5d-411b-bc93-fd0966e69363?resourceVersion=id%3A298588",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/61eecf96-3b5d-411b-bc93-fd0966e69363?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/5cf0d62f-1fa4-44d6-96d9-bf7e9e7b508d?resourceVersion=id%3A293479",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/5cf0d62f-1fa4-44d6-96d9-bf7e9e7b508d?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/893407b2-da2f-45d2-8e21-fb09585dab8d?resourceVersion=id%3A289071",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/893407b2-da2f-45d2-8e21-fb09585dab8d?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "https://2026-03/Reportings",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/7d98c0f7-1b7d-4c31-a8e0-b5a60ee209cd?resourceVersion=id%3A299143",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/7d98c0f7-1b7d-4c31-a8e0-b5a60ee209cd?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/1ff276b3-d3d2-4973-9288-d39b796bb0e1?resourceVersion=id%3A299149",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/1ff276b3-d3d2-4973-9288-d39b796bb0e1?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/f83b5fd2-0565-4bb1-a911-ace7436a93ba?resourceVersion=id%3A299166",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/f83b5fd2-0565-4bb1-a911-ace7436a93ba?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/17f9475c-5754-42a6-8790-a815aa34a6e7?resourceVersion=id%3A301242",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/17f9475c-5754-42a6-8790-a815aa34a6e7?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/6e862643-1567-4906-9866-4ca25854fc75?resourceVersion=id%3A301241",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/6e862643-1567-4906-9866-4ca25854fc75?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/3c176ac2-23f0-485f-a807-a5d916e727d2?resourceVersion=id%3A299918",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/3c176ac2-23f0-485f-a807-a5d916e727d2?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/de2aed41-8ae9-4945-b2d2-e0e233d39d26?resourceVersion=id%3A302903",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/de2aed41-8ae9-4945-b2d2-e0e233d39d26?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/2401f951-6fd0-4f04-a937-93d6ca65c4eb?resourceVersion=id%3A302902",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/2401f951-6fd0-4f04-a937-93d6ca65c4eb?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/78f603a2-d43e-4abb-bedb-779ff071eb31?resourceVersion=id%3A301920",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/78f603a2-d43e-4abb-bedb-779ff071eb31?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/jsonapi/taxonomy_term/document_entities",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/taxonomy_term/document_entities/9fb98fb5-7bb3-47d2-bd76-88a15e5f58fa?resourceVersion=id%3A184",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/taxonomy_term/document_entities/9fb98fb5-7bb3-47d2-bd76-88a15e5f58fa?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/taxonomy_term/document_entities/b07a2c13-d672-4170-a726-e06901e04988?resourceVersion=id%3A185",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/taxonomy_term/document_entities/b07a2c13-d672-4170-a726-e06901e04988?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/document-search",
+    "text": ""
+   }
+  ]
+ },
+ "credit-agricole-cib > recherche-documentaire": {
+  "page": "https://www.ca-cib.com/fr/recherche-documentaire",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.ca-cib.com/fr/recherche-documentaire",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/en/document-search",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/fr/engagement-societal-finance-durable/nos-politiques-de-financement-durable/frameworks-et-reporting",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-08/FR_Amendement_DEU_CACIB_2025_30%20juin%202026.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-06/abc-gestion-rapport_entite_29lec_sfdr_2025_0.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-06/2025-26%20Information%20Annuelle%20sur%20les%20Plaintes%20-%20CACIB%20Canada_FR.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2025-10/FR_Credit%20Agricole%20CIB%20Procedure%20de%20gestion%20des%20plaintes%20brochure_2025-10.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-07/Politique%20RSE%20P%C3%A9trole%20Gaz%20-%20juillet%202026%20FR_VF.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-07/Politique%20sectorielle%20RSE%20Electricit%C3%A9%20juillet%202026%20-FR_VF.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-07/Politique%20RSE%20Transports%20routiers%20juillet%202026%20FR_VF_0.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-08/Audited%20Financials%20for%20FY%202025-26.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-07/CASA_CP_T2-26.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-05/INF903075647891122025.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-08/CA-CIB%20MCLR%2018-AUGUST-2026.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-07/MSME%20Quarterly%20Reporting%20-%20June%202026.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-06/Plan%20d%27accessibilite%20_FR_2026-2029.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/recherche-documentaire",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/c94cd8c6-6313-4d46-b8a8-c9665f315fd7?resourceVersion=id%3A299977",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/c94cd8c6-6313-4d46-b8a8-c9665f315fd7?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/614df69e-8efe-452a-9df7-54e9862fa917?resourceVersion=id%3A299973",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/614df69e-8efe-452a-9df7-54e9862fa917?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/354ecc3c-9a14-403c-96b6-c755b2b805eb?resourceVersion=id%3A299972",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/354ecc3c-9a14-403c-96b6-c755b2b805eb?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/index/documents_v1?include=field_file",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/index/documents_v1?can_bulk_select=true",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/9d768247-483e-4f50-a275-ea59171a2a56?resourceVersion=id%3A294088",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/9d768247-483e-4f50-a275-ea59171a2a56?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "https://2026-06/abc-gestion-rapport_entite_29lec_sfdr_2025_0.pdf",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/5cf0d62f-1fa4-44d6-96d9-bf7e9e7b508d?resourceVersion=id%3A293479",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/5cf0d62f-1fa4-44d6-96d9-bf7e9e7b508d?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/11925b08-13b9-4cf4-bf07-23e284e47b2b?resourceVersion=id%3A293476",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/11925b08-13b9-4cf4-bf07-23e284e47b2b?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/7d98c0f7-1b7d-4c31-a8e0-b5a60ee209cd?resourceVersion=id%3A299143",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/7d98c0f7-1b7d-4c31-a8e0-b5a60ee209cd?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/1ff276b3-d3d2-4973-9288-d39b796bb0e1?resourceVersion=id%3A299149",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/1ff276b3-d3d2-4973-9288-d39b796bb0e1?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/f83b5fd2-0565-4bb1-a911-ace7436a93ba?resourceVersion=id%3A299166",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/f83b5fd2-0565-4bb1-a911-ace7436a93ba?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/3c176ac2-23f0-485f-a807-a5d916e727d2?resourceVersion=id%3A299918",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/3c176ac2-23f0-485f-a807-a5d916e727d2?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/4f48b056-1652-46d0-ae10-cf152c8f6890?resourceVersion=id%3A298874",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/4f48b056-1652-46d0-ae10-cf152c8f6890?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "https://2026-07/CASA_CP_T2-26.pdf",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/4cb06a06-c320-4b66-a1dd-382686f36574?resourceVersion=id%3A293165",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/4cb06a06-c320-4b66-a1dd-382686f36574?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "https://2026-05/INF903075647891122025.pdf",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/2855da30-df4c-42f9-a6dc-c8b230edbc78?resourceVersion=id%3A300654",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/2855da30-df4c-42f9-a6dc-c8b230edbc78?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/13b968a1-8947-47ce-8410-9dd42f6c27c9?resourceVersion=id%3A298636",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/13b968a1-8947-47ce-8410-9dd42f6c27c9?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/422e5d84-fa09-4c90-9e42-24240c1f736f?resourceVersion=id%3A293480",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/paragraph/document_item_v1/422e5d84-fa09-4c90-9e42-24240c1f736f?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/jsonapi/taxonomy_term/document_entities",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/taxonomy_term/document_entities/9fb98fb5-7bb3-47d2-bd76-88a15e5f58fa?resourceVersion=id%3A184",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/taxonomy_term/document_entities/9fb98fb5-7bb3-47d2-bd76-88a15e5f58fa?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/taxonomy_term/document_entities/b07a2c13-d672-4170-a726-e06901e04988?resourceVersion=id%3A185",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/jsonapi/taxonomy_term/document_entities/b07a2c13-d672-4170-a726-e06901e04988?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/fr/recherche-documentaire",
+    "text": ""
+   }
+  ]
+ },
+ "credit-agricole-cib > governance-and-organisation-credit-agric": {
+  "page": "https://www.ca-cib.com/en/about-us/discover-credit-agricole-cib/governance-and-organisation-credit-agricole-cib",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.ca-cib.com/en/about-us/compliance-rules/dodd-frank-disclosures-and-notices",
+    "text": "Dodd Frank Disclosures and notices"
+   },
+   {
+    "url": "https://www.ca-cib.com/en/social-responsibility-sustainable-finance/our-sustainable-financing-policies/credit-agricole-group",
+    "text": "Crédit Agricole Group and Crédit Agricole CIB frameworks & reporting"
+   }
+  ]
+ },
+ "credit-agricole-cib > financial-security-system": {
+  "page": "https://www.ca-cib.com/en/about-us/compliance-rules/financial-security-system",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.ca-cib.com/en/about-us/compliance-rules/dodd-frank-disclosures-and-notices",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2026-07/20260106_CACIB%20FCCQ.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2025-07/Non-sign%C3%A9-CACIB%202026%20CERTIFICATION%20REGARDING%20CORR%20ACCOUNTS%20FOREIGN%20BANKS.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2023-04/Doc-de-ref-page-OFAC-EN.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2025-05/20250521_CACIB%20AML%20LETTER_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/en/document-search",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/small_document_block_v1/5fbf01fa-af26-460d-a73f-da3ec1001706?resourceVersion=id%3A272972",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/small_document_block_v1/5fbf01fa-af26-460d-a73f-da3ec1001706?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_block_group_v1/c3af74c9-7b3b-44b7-926f-4313d8d7bb79?resourceVersion=id%3A272971",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_block_group_v1/c3af74c9-7b3b-44b7-926f-4313d8d7bb79?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/f039e8ba-cf96-4cd5-a8db-1eaeea9e535e?resourceVersion=id%3A272970",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/f039e8ba-cf96-4cd5-a8db-1eaeea9e535e?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/node/document/39616bb4-1560-40b3-8fd1-72342c985735?resourceVersion=id%3A20207",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/node/document/39616bb4-1560-40b3-8fd1-72342c985735?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/cc350455-7ec5-4f9b-8f7a-4c957e8805f4?resourceVersion=id%3A298585",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/cc350455-7ec5-4f9b-8f7a-4c957e8805f4?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/small_document_block_v1/d7e73367-7181-49a3-bc0e-e19defc94e9f?resourceVersion=id%3A272977",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/small_document_block_v1/d7e73367-7181-49a3-bc0e-e19defc94e9f?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_block_group_v1/58db661b-e34c-49f5-ada9-0301d509658d?resourceVersion=id%3A272976",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_block_group_v1/58db661b-e34c-49f5-ada9-0301d509658d?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/d903bcfa-f07e-48b0-8a63-0508a1e34cf3?resourceVersion=id%3A272975",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/d903bcfa-f07e-48b0-8a63-0508a1e34cf3?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/node/document/c80c0bdf-385c-42d4-a4ee-92cb6242ff66?resourceVersion=id%3A8190",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/node/document/c80c0bdf-385c-42d4-a4ee-92cb6242ff66?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/cdfe3d34-2e15-4226-a37b-65ad9b596675?resourceVersion=id%3A132949",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/cdfe3d34-2e15-4226-a37b-65ad9b596675?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "https://2023-11/CACIB_US_Patriot_Act_20230726.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2023-11/CACIB_US_Patriot_Act_20230726.pdf",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/small_document_block_v1/ae6cf24e-d01b-46fb-89e9-499cf3ca936d?resourceVersion=id%3A272985",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/small_document_block_v1/ae6cf24e-d01b-46fb-89e9-499cf3ca936d?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_block_group_v1/d635d90b-5612-4e26-b414-df6d9001e87c?resourceVersion=id%3A272984",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_block_group_v1/d635d90b-5612-4e26-b414-df6d9001e87c?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/32553213-4ed1-4359-8362-05541548f209?resourceVersion=id%3A272983",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/32553213-4ed1-4359-8362-05541548f209?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/node/document/f2d4e91c-9af3-432e-a0ae-74f7977a8a62?resourceVersion=id%3A1676",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/node/document/f2d4e91c-9af3-432e-a0ae-74f7977a8a62?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/ef1824bd-ac86-42b4-bb43-722802b75eb4?resourceVersion=id%3A18726",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/ef1824bd-ac86-42b4-bb43-722802b75eb4?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "https://2023-04/Doc-de-ref-page-OFAC-EN.pdf",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/small_document_block_v1/fe8ef366-3a41-4c81-aad6-d145cf7b1e88?resourceVersion=id%3A272993",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/small_document_block_v1/fe8ef366-3a41-4c81-aad6-d145cf7b1e88?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_block_group_v1/9e1aa1e8-5d0a-4c31-8705-0260699c2d19?resourceVersion=id%3A272992",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_block_group_v1/9e1aa1e8-5d0a-4c31-8705-0260699c2d19?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/b364ee3c-0e57-4eb0-8c7e-8cafba3f2916?resourceVersion=id%3A272991",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/b364ee3c-0e57-4eb0-8c7e-8cafba3f2916?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/node/document/24078403-1b96-4a4a-9e20-b4bc3e7edef0?resourceVersion=id%3A4705",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/node/document/24078403-1b96-4a4a-9e20-b4bc3e7edef0?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/50f5d88f-8ba6-4bca-8215-eae0fe486e4c?resourceVersion=id%3A65449",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/50f5d88f-8ba6-4bca-8215-eae0fe486e4c?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "https://2023-04/CA_CIB-Money_Laundering_Prevention_13_April_2018.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2023-04/CA_CIB-Money_Laundering_Prevention_13_April_2018.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "credit-agricole-cib > dodd-frank-disclosures-and-notices": {
+  "page": "https://www.ca-cib.com/en/about-us/compliance-rules/dodd-frank-disclosures-and-notices",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.ca-cib.com/en/about-us/compliance-rules/dodd-frank-disclosures-and-notices",
+    "text": ""
+   },
+   {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2012-08-13/pdf/2012-18003.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/additional-disclosures-us-persons",
+    "text": ""
+   },
+   {
+    "url": "https://www.emta.org/documentation/emta-standard-documentation/fx-and-currency-derivatives-current-templates/",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/sites/default/files/2023-08/DFA%20SBS%20external%20disclaimer_0_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/en/document-search",
+    "text": ""
+   },
+   {
+    "url": "https://www.ca-cib.com/about-us/compliance-rules/dodd-frank-disclosures-and-notices",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/small_document_block_v1/f0421af9-cbb0-4377-8a56-9965ab577151?resourceVersion=id%3A299900",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/small_document_block_v1/f0421af9-cbb0-4377-8a56-9965ab577151?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_block_group_v1/8bbd7071-c0c6-4bb6-a4d3-a7ecbdf12e0c?resourceVersion=id%3A299899",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_block_group_v1/8bbd7071-c0c6-4bb6-a4d3-a7ecbdf12e0c?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/542d7315-679e-4a87-971c-efae839bb150?resourceVersion=id%3A299898",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/jsonapi/paragraph/document_item_v1/542d7315-679e-4a87-971c-efae839bb150?resourceVersion=rel%3Aworking-copy",
+    "text": ""
+   },
+   {
+    "url": "http://bo-en-instit-cacib.adsi.credit-agricole.fr/en/about-us/compliance-rules/dodd-frank-disclosures-and-notices",
+    "text": ""
+   }
+  ]
+ },
+ "credit-agricole-cib > equity-capital-markets": {
+  "page": "https://www.ca-cib.com/en/expertise/offering-investment-banking-advisory-expertise/equity-capital-markets",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.ca-cib.com/en/about-us/compliance-rules/dodd-frank-disclosures-and-notices",
+    "text": "Dodd Frank Disclosures and notices"
+   },
+   {
+    "url": "https://www.ca-cib.com/en/social-responsibility-sustainable-finance/our-sustainable-financing-policies/credit-agricole-group",
+    "text": "Crédit Agricole Group and Crédit Agricole CIB frameworks & reporting"
+   }
+  ]
+ },
+ "credit-agricole-cib > structured-financial-solutions": {
+  "page": "https://www.ca-cib.com/en/expertise/offering-investment-banking-advisory-expertise/structured-financial-solutions",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.ca-cib.com/en/about-us/compliance-rules/dodd-frank-disclosures-and-notices",
+    "text": "Dodd Frank Disclosures and notices"
+   },
+   {
+    "url": "https://www.ca-cib.com/en/social-responsibility-sustainable-finance/our-sustainable-financing-policies/credit-agricole-group",
+    "text": "Crédit Agricole Group and Crédit Agricole CIB frameworks & reporting"
+   }
+  ]
+ },
+ "mizuho": {
+  "page": "https://www.mizuhogroup.com/investors/financial-information/basel",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information/basel",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/who-we-are/governance?tab=rules-and-reports-etc",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information?tab=basel",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information/stock-information?tab=report-for-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports-home",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports?tab=data",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/fea20513-63d3-4eab-b6f9-1f98bdf10e09/fg-data26_1q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/b3a751e0-8f01-4ea5-abea-9b4318516854/fg-data26_1q_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/9ff487db-e8c6-49e3-84e7-c94408d171ec/fg-data26_1q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/51ed6d75-f211-4c71-a9ce-088ebeb7bef5/fg-investors-financial-information-briefing_202607_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/1877b010-b672-4471-ba8c-89524b031db2/Capital_Ratio_Material_for_FY2026_Q1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/cbe4ea24-8a4f-41c9-a4b4-7ab79b3849bc/financial_supplement2703_1q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/86cd5da3-c65b-4bf6-a298-aac8757f3f97/FY26_Q1_Update_for_Fixed_Income_Investors.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b9677c697afeea80e963e6_data25_1q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b967bdbdb34fa34a8accd6_data25_1q_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/6944bf6912496c5d8bd1846c_data25_2q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/aaa1eb27-5544-4bd0-8ec7-56b48a32efcc/data25_3q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/73e26e78c5765be/original/data25_3q_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/8e1911ca-5e38-4c5b-9dbf-43a9d2de3760/data25_fy.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b967a098646369e6f07cb1_data25_1q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68c9d04d48dc09d481c7e042_202508_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/6944bf681d3ea190eed2cb4d_data25_2q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/49d9b9953d3af2d3/original/data25_3q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/8d666f62eace105/original/financial-supplementary-information-202602_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/016d3852-3288-4b49-9f3f-40a50e222e50/data25_fy_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/daf4b9af-f61c-42f3-af74-fc08473c49fe/fg_20260519_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/fd48bd21-aa69-4234-ad79-8831d8adaba1/financial_supplement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/693b4a9caf7f75a402e3d5c4_202511_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/693b4a9d7ed1926597033427_202511_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/693b4a983c1733058097dbca_202511_4.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/8c340c4a-c9bb-4488-881f-db6a05acca02/fg_20260519_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/1eb05391-fcd1-4b56-897c-b0a0cc37165c/fg_20260519_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/f5e6cf42-c7aa-4fe4-aea4-b8f632051616/fg_20260519_4.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuho-fg.co.jp/investors/financial/briefing/pdf/20260706.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/d12bf679-7eb4-4484-9b8f-5bcc407b8a40/fg-meeting24_1_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/9510d504-f5a2-4baf-8cd0-9f8f184e96c4/fg-meeting24_2_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b9699531c80f234c73bbef_data24_1q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b96992e1a49e22b9c25060_data24_1q_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b969924092f0277938e10c_data24_2q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b96992df9a9cef26762b7f_data24_3q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b969921b296bc567fee721_data24_3q_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/685028cbfb401efcae3bdea2_data24_fy.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b969921fde88debcfd5d5e_data24_1q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/685035ab8c3149d3d49f30e9_202408_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/1c53d24d-9146-4ad0-ab68-2907806717f0/data24_2q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b96993cc9d10565249e592_data24_3q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/685030036dba3a840e6995a9_202502_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/685028f9b2059a1774899910_data24_fy_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/6850308831ef24795c057130_202411_1_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/6850323d1dd4edc6fd1f70e2_202411_4_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68503254b53e76969f63bee4_202411_5.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68502a01c289e983419aabf2_202505_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68502ee3c751a4f3b82d8f7a_202505_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68502f241729bb5f3c1cf7af_202505_4.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/6864289de85fee0a1612c0e9_meeting23_1_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686428d0ebcf18e778e4fa57_meeting23_2_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.microsoft.com/en-us/download/",
+    "text": ""
+   },
+   {
+    "url": "http://www.microsoft.com/en-us/download/",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/2f9d9ed2-70eb-43b4-b9c4-3171415330bc/fg-investors-financial-briefing_20260907_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/8bb02b14-4916-46e2-ad59-484af2c4a5ca/fg_20260520_1.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "mizuho > financial-information": {
+  "page": "https://www.mizuhogroup.com/investors/financial-information",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.mizuhogroup.com/who-we-are/governance?tab=rules-and-reports-etc",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information?tab=basel",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information/stock-information?tab=report-for-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports-home",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports?tab=data",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/fea20513-63d3-4eab-b6f9-1f98bdf10e09/fg-data26_1q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/b3a751e0-8f01-4ea5-abea-9b4318516854/fg-data26_1q_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/9ff487db-e8c6-49e3-84e7-c94408d171ec/fg-data26_1q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/51ed6d75-f211-4c71-a9ce-088ebeb7bef5/fg-investors-financial-information-briefing_202607_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/1877b010-b672-4471-ba8c-89524b031db2/Capital_Ratio_Material_for_FY2026_Q1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/cbe4ea24-8a4f-41c9-a4b4-7ab79b3849bc/financial_supplement2703_1q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/86cd5da3-c65b-4bf6-a298-aac8757f3f97/FY26_Q1_Update_for_Fixed_Income_Investors.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b9677c697afeea80e963e6_data25_1q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b967bdbdb34fa34a8accd6_data25_1q_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/6944bf6912496c5d8bd1846c_data25_2q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/aaa1eb27-5544-4bd0-8ec7-56b48a32efcc/data25_3q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/73e26e78c5765be/original/data25_3q_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/8e1911ca-5e38-4c5b-9dbf-43a9d2de3760/data25_fy.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b967a098646369e6f07cb1_data25_1q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68c9d04d48dc09d481c7e042_202508_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/6944bf681d3ea190eed2cb4d_data25_2q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/49d9b9953d3af2d3/original/data25_3q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/8d666f62eace105/original/financial-supplementary-information-202602_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/016d3852-3288-4b49-9f3f-40a50e222e50/data25_fy_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/daf4b9af-f61c-42f3-af74-fc08473c49fe/fg_20260519_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/fd48bd21-aa69-4234-ad79-8831d8adaba1/financial_supplement.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/693b4a9caf7f75a402e3d5c4_202511_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/693b4a9d7ed1926597033427_202511_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/693b4a983c1733058097dbca_202511_4.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/8c340c4a-c9bb-4488-881f-db6a05acca02/fg_20260519_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/1eb05391-fcd1-4b56-897c-b0a0cc37165c/fg_20260519_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/f5e6cf42-c7aa-4fe4-aea4-b8f632051616/fg_20260519_4.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuho-fg.co.jp/investors/financial/briefing/pdf/20260706.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/d12bf679-7eb4-4484-9b8f-5bcc407b8a40/fg-meeting24_1_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/9510d504-f5a2-4baf-8cd0-9f8f184e96c4/fg-meeting24_2_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b9699531c80f234c73bbef_data24_1q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b96992e1a49e22b9c25060_data24_1q_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b969924092f0277938e10c_data24_2q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b96992df9a9cef26762b7f_data24_3q.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b969921b296bc567fee721_data24_3q_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/685028cbfb401efcae3bdea2_data24_fy.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b969921fde88debcfd5d5e_data24_1q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/685035ab8c3149d3d49f30e9_202408_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/1c53d24d-9146-4ad0-ab68-2907806717f0/data24_2q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68b96993cc9d10565249e592_data24_3q_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/685030036dba3a840e6995a9_202502_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/685028f9b2059a1774899910_data24_fy_2.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/6850308831ef24795c057130_202411_1_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/6850323d1dd4edc6fd1f70e2_202411_4_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68503254b53e76969f63bee4_202411_5.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68502a01c289e983419aabf2_202505_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68502ee3c751a4f3b82d8f7a_202505_3.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68502f241729bb5f3c1cf7af_202505_4.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/6864289de85fee0a1612c0e9_meeting23_1_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686428d0ebcf18e778e4fa57_meeting23_2_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.microsoft.com/en-us/download/",
+    "text": ""
+   },
+   {
+    "url": "http://www.microsoft.com/en-us/download/",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/2f9d9ed2-70eb-43b4-b9c4-3171415330bc/fg-investors-financial-briefing_20260907_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/8bb02b14-4916-46e2-ad59-484af2c4a5ca/fg_20260520_1.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/a77af4d2-834f-494f-846f-4bda4d6b2992/fg_20260406_1.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "mizuho > governance-home": {
+  "page": "https://www.mizuhogroup.com/who-we-are/governance-home",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.mizuhogroup.com/who-we-are/governance?tab=rules-and-reports-etc",
+    "text": "Rules and Reports, etc."
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information/annual",
+    "text": "Integrated Report (Annual Review) / Financial Data of MHFG"
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information?tab=basel",
+    "text": "Basel Regulatory Disclosures"
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information/stock-information?tab=report-for-shareholders",
+    "text": "Report for Shareholders"
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/policy",
+    "text": "Disclosure Policy"
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports-home",
+    "text": "Reports"
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports?tab=data",
+    "text": "ESG Data"
+   }
+  ]
+ },
+ "mizuho > governance": {
+  "page": "https://www.mizuhogroup.com/who-we-are/governance",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.mizuhogroup.com/who-we-are/governance?tab=rules-and-reports-etc",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information?tab=basel",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information/stock-information?tab=report-for-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports-home",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports?tab=data",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686c36464e68bde7004ac238_20180601.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/c3b1a21b-c6c0-4084-b681-494866e612ff/fg_o_director.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuho-fg.co.jp/investors/financial/annual/data2503/pdf/data2503_all.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686c3b03d4b896cb4b5c636b_g_guideline-202104.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686cd66320a992816d9db6b2_compensation_2023.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/6eb60005c79a7b20/original/compensation_2023-pdf.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68642ae1623510380fb45218_meeting22_1_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68643098f1f223c87c233e7e_incorporation_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/42732e02-d990-4ef2-a0d5-be400c8dd152/fg_g_guideline.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/645c5b2e-d49b-49e8-a96d-3f76ab9821db/g_report-pdf.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/4742027df359e580/original/20250630release_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/687e481a01b56aad392e44c6_bribery.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/fddb069f-23d8-4fd8-ba16-3b6eced1bb58/fg-policies-business-conduct.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "mizuho > governance?tab=corporate-governance-poli": {
+  "page": "https://www.mizuhogroup.com/who-we-are/governance?tab=corporate-governance-policy",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.mizuhogroup.com/who-we-are/governance?tab=rules-and-reports-etc",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information?tab=basel",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information/stock-information?tab=report-for-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports-home",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports?tab=data",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686c36464e68bde7004ac238_20180601.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/c3b1a21b-c6c0-4084-b681-494866e612ff/fg_o_director.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuho-fg.co.jp/investors/financial/annual/data2503/pdf/data2503_all.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686c3b03d4b896cb4b5c636b_g_guideline-202104.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686cd66320a992816d9db6b2_compensation_2023.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/6eb60005c79a7b20/original/compensation_2023-pdf.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68642ae1623510380fb45218_meeting22_1_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68643098f1f223c87c233e7e_incorporation_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/42732e02-d990-4ef2-a0d5-be400c8dd152/fg_g_guideline.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/645c5b2e-d49b-49e8-a96d-3f76ab9821db/g_report-pdf.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/4742027df359e580/original/20250630release_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/687e481a01b56aad392e44c6_bribery.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/fddb069f-23d8-4fd8-ba16-3b6eced1bb58/fg-policies-business-conduct.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "mizuho > governance?tab=corporate-governance-stru": {
+  "page": "https://www.mizuhogroup.com/who-we-are/governance?tab=corporate-governance-structure",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.mizuhogroup.com/who-we-are/governance?tab=rules-and-reports-etc",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information?tab=basel",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information/stock-information?tab=report-for-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports-home",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports?tab=data",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686c36464e68bde7004ac238_20180601.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/c3b1a21b-c6c0-4084-b681-494866e612ff/fg_o_director.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuho-fg.co.jp/investors/financial/annual/data2503/pdf/data2503_all.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686c3b03d4b896cb4b5c636b_g_guideline-202104.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686cd66320a992816d9db6b2_compensation_2023.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/6eb60005c79a7b20/original/compensation_2023-pdf.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68642ae1623510380fb45218_meeting22_1_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68643098f1f223c87c233e7e_incorporation_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/42732e02-d990-4ef2-a0d5-be400c8dd152/fg_g_guideline.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/645c5b2e-d49b-49e8-a96d-3f76ab9821db/g_report-pdf.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/4742027df359e580/original/20250630release_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/687e481a01b56aad392e44c6_bribery.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/fddb069f-23d8-4fd8-ba16-3b6eced1bb58/fg-policies-business-conduct.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "mizuho > governance?tab=rules-and-reports-etc": {
+  "page": "https://www.mizuhogroup.com/who-we-are/governance?tab=rules-and-reports-etc",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://www.mizuhogroup.com/who-we-are/governance?tab=rules-and-reports-etc",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information?tab=basel",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information/stock-information?tab=report-for-shareholders",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports-home",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuhogroup.com/sustainability/reports?tab=data",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686c36464e68bde7004ac238_20180601.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/c3b1a21b-c6c0-4084-b681-494866e612ff/fg_o_director.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.mizuho-fg.co.jp/investors/financial/annual/data2503/pdf/data2503_all.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686c3b03d4b896cb4b5c636b_g_guideline-202104.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/686cd66320a992816d9db6b2_compensation_2023.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/6eb60005c79a7b20/original/compensation_2023-pdf.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68642ae1623510380fb45218_meeting22_1_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/68643098f1f223c87c233e7e_incorporation_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/42732e02-d990-4ef2-a0d5-be400c8dd152/fg_g_guideline.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/645c5b2e-d49b-49e8-a96d-3f76ab9821db/g_report-pdf.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/m/4742027df359e580/original/20250630release_eng.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://cdn.prod.website-files.com/67cb23eaf0c6c4d4080e059a/687e481a01b56aad392e44c6_bribery.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://library.mizuhogroup.com/asset/fddb069f-23d8-4fd8-ba16-3b6eced1bb58/fg-policies-business-conduct.pdf",
     "text": ""
    }
   ]
