@@ -152,8 +152,18 @@ def remember_links(entity: str, body: str, links: list, adapter: Pillar3Adapter,
         seen = json.loads(LINKS_SEEN.read_text()) if LINKS_SEEN.exists() else {}
     except Exception:
         seen = {}
-    docs = [{"url": u, "text": t} for u, t in _pairs(body, links, adapter, page_url)
-            if re.search(r"\.pdf|download|document|disclos|pillar|basel|report", u + " " + t, re.I)][:60]
+    def rank(pair):
+        u, t = pair
+        both = u + " " + t
+        return (0 if re.search(r"pillar[-_ %]?(?:3|iii)|basel", both, re.I) else
+                1 if u.lower().endswith(".pdf") else
+                2 if re.search(r"disclos|regulatory|capital", both, re.I) else 3)
+    # The cap is what a maintainer reads to fix a pattern, so the most likely documents have to
+    # survive it: sixty navigation links tell nobody why a locator matched nothing.
+    keep = sorted((p for p in _pairs(body, links, adapter, page_url)
+                   if re.search(r"\.pdf|download|document|disclos|pillar|basel|report", p[0] + " " + p[1], re.I)),
+                  key=rank)
+    docs = [{"url": u, "text": t} for u, t in keep[:60]]
     seen[entity] = {"page": page_url, "checked": date.today().isoformat(), "links": docs}
     LINKS_SEEN.parent.mkdir(parents=True, exist_ok=True)
     LINKS_SEEN.write_text(json.dumps(seen, indent=1, ensure_ascii=False))

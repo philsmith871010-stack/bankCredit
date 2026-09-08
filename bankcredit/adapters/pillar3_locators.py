@@ -180,7 +180,8 @@ LOCATORS: list[dict] = [
          match=r"wbc-.*pillar-3-report.*\.pdf", year_end="09-30", currency="AUD"),
     dict(entity="macquarie-bank", page="https://www.macquarie.com/au/en/investors/regulatory-disclosures.html",
          match=r"disclosures/document/basel-3-pillar-3-capital", year_end="03-31", currency="AUD", kind="browser",
-         note="document links resolve only in a browser session"),
+         note="the page lists every country's disclosures and the document address is a redirect "
+              "stub that 404s outside a browser session, so this one cannot be scripted"),
     dict(entity="bendigo-and-adelaide-bank", page="https://www.bendigoadelaide.com.au/investor-centre/regulatory-disclosures/",
          match=P3 + r".*\.pdf", year_end="06-30", currency="AUD"),
     dict(entity="rbc", kind="pattern", urls=["https://www.rbc.com/investor-relations/_assets-custom/pdf/{year}q{q}pillar3.pdf"],
@@ -202,9 +203,10 @@ LOCATORS: list[dict] = [
          match=r"documents/(?:publications/)?(?:Disclosure-Report|Offenlegung|EN_Offenlegung|FINAL_EN_Offenlegung)[^/]*\.pdf",
          currency="EUR", note="verified 7 Sep 2026; the group left the EBA Transparency Exercise after 2018"),
     # ---- Japan, Hong Kong: verified 7 September 2026 by following each group's own disclosure index
-    dict(entity="mufg", page="https://www.mufg.jp/english/ir/report/basel3/index.html", kind="browser",
+    dict(entity="mufg", page="https://www.mufg.jp/english/ir/report/basel3/index.html",
          match=r"/basel3/[\w-]+/pdf/mufg\d+_09_en\.pdf", year_end="03-31", currency="JPY",
-         note="the index links a page per quarter; the group splits KM1 across single-table PDFs and _09_ is Key metrics"),
+         note="the Basel 3 page indexes quarters, not files; the key metrics table is the _09_ file "
+              "one level down. _01_ is CC1 composition, which is not the template we read"),
     dict(entity="smfg", page="https://www.smfg.co.jp/english/investor/financial/basel_3.html",
          match=r"/basel_3/\d+/\d+_fg_e_km101\.pdf", year_end="03-31", currency="JPY",
          note="km101 is KM1 capital metrics; km102 is the liquidity half"),

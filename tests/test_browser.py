@@ -1,3 +1,5 @@
+import re
+
 from bankcredit.adapters import browser as B
 from bankcredit.adapters.pillar3 import Pillar3Adapter
 
@@ -128,3 +130,34 @@ def test_a_cdn_beacon_in_the_page_is_not_a_bot_wall():
 def test_an_akamai_deny_page_is_still_a_bot_wall():
     denied = "<html><body><h1>Access Denied</h1><p>Reference #18.4c2ff17.1788854987.abcdef</p></body></html>" + " " * 3000
     assert B.looks_blocked(200, denied)
+
+
+def test_a_listing_of_periods_is_followed_to_the_files():
+    """MUFG's Basel 3 page indexes quarters - basel3/2026-3q/index.html - and the PDFs live one
+    level down, so the locator's pattern was being tested against a page holding no files at all."""
+    ad = Pillar3Adapter()
+    loc = {"entity": "mufg", "page": "https://www.mufg.jp/english/ir/report/basel3/index.html",
+           "match": r"/basel3/[\w-]+/pdf/mufg\d+_09_en\.pdf"}
+    body = ('<a href="/english/ir/report/basel3/2026/index.html">FY2026</a>'
+            '<a href="/english/ir/report/basel3/2026-3q/index.html">Q3</a>'
+            '<a href="/english/careers/index.html">Careers</a>'
+            '<a href="/english/ir/report/basel3/index.html">This page</a>')
+    subs = ad._index_pages(loc, body)
+    assert "https://www.mufg.jp/english/ir/report/basel3/2026/index.html" in subs
+    assert "https://www.mufg.jp/english/ir/report/basel3/2026-3q/index.html" in subs
+    assert not any("careers" in s for s in subs), "only pages that look like a period or a section"
+    assert loc["page"] not in subs, "never the listing itself"
+
+
+def test_the_remembered_links_keep_the_documents_over_the_navigation():
+    """The cap is what a maintainer reads to fix a pattern. Sixty navigation links tell nobody why
+    a locator matched nothing, and Macquarie's page alone offers one per country."""
+    ad = Pillar3Adapter()
+    body = "".join(f'<a href="/{c}/en/investors/regulatory-disclosures.html">{c}</a>'
+                   for c in ("au", "is", "se", "no", "fi", "at", "be", "br", "ca", "de"))
+    body += '<a href="/docs/basel-3-pillar-3-capital.pdf">Pillar 3 capital</a>'
+    pairs = B._pairs(body, [], ad, "https://www.macquarie.com/au/en/investors/regulatory-disclosures.html")
+    ranked = sorted((p for p in pairs), key=lambda p: (
+        0 if re.search(r"pillar[-_ %]?(?:3|iii)|basel", p[0] + " " + p[1], re.I) else
+        1 if p[0].lower().endswith(".pdf") else 2))
+    assert "basel-3-pillar-3-capital" in ranked[0][0]

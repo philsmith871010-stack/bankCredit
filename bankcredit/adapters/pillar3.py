@@ -37,6 +37,10 @@ BROWSER_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (
               "Chrome/128.0.0.0 Safari/537.36")
 NSM_API = "https://api.data.fca.org.uk/search?index=nsm-search"
 NSM_ARTEFACTS = "https://data.fca.org.uk/artefacts/"
+# A link that names a reporting period or a disclosure section, so following it is likely to reach
+# the files rather than the rest of the website.
+INDEX_PAGE = re.compile(r"(?:19|20)\d\d(?:[-_/]?(?:q[1-4]|[1-4]q|h[12]|fy))?(?:/|/index|\.html?)?$|"
+                        r"basel|pillar|disclos|regulatory|capital", re.I)
 MAX_NEW_PER_ENTITY = int(os.environ.get("BANKCREDIT_MAX_NEW", "3"))    # newest unseen PDFs fetched per run (raise for a one-off deep pass)
 LINK_RE = re.compile(r"""(?:https?:)?//[^\s"'<>\\)]+|/[^\s"'<>\\)]+""")
 # an href attribute keeps its literal spaces (OCBC names files "Pillar 3 Disclosures.pdf"); those are
@@ -183,15 +187,11 @@ class Pillar3Adapter(Adapter):
                 seen.add(u); out.append(u)
         return out
 
-    def _candidates(self, loc: dict) -> list[tuple[str, date | None, str]]:
-        """(url, inferred period, title) for links on the listing page that match the locator."""
-        body = self._get_page(loc["page"])
-        if not body:
-            return []
+    def _matches(self, loc: dict, page_url: str, body: str) -> list[tuple[str, date | None, str]]:
         mrx = re.compile(loc["match"], re.I)
         xrx = re.compile(loc["exclude"], re.I) if loc.get("exclude") else None
         found = []
-        for u in self._links(loc["page"], body):
+        for u in self._links(page_url, body):
             d = unquote(u)
             if not mrx.search(d) or (xrx and xrx.search(d)):
                 continue
@@ -199,8 +199,48 @@ class Pillar3Adapter(Adapter):
                 continue
             found.append((u, infer_period(d.rsplit("/", 1)[-1], loc.get("year_end", "12-31")) or infer_period(d, loc.get("year_end", "12-31")),
                           d.rsplit("/", 1)[-1][:120]))
-        found.sort(key=lambda x: (x[1] or date(1900, 1, 1)), reverse=True)
         return found
+
+    def _index_pages(self, loc: dict, body: str, limit: int = 6) -> list[str]:
+        """Same-host pages this listing links that look like a period's own index.
+
+        Several banks publish an index of quarters rather than a list of files: MUFG's Basel 3
+        page links to basel3/2026-3q/index.html and the PDFs live one level down. Without this
+        the locator's pattern is tested against a page that has no documents on it at all."""
+        from urllib.parse import urlparse
+        host = urlparse(loc["page"]).netloc.replace("www.", "")
+        page = loc["page"].rstrip("/")
+        out = []
+        for u in self._links(loc["page"], body):
+            if urlparse(u).netloc.replace("www.", "") != host or u.rstrip("/") == page:
+                continue
+            if re.search(r"\.(pdf|jpg|png|svg|css|js|xlsx?|docx?|zip)(\?|$)|#|mailto:", u, re.I):
+                continue
+            if not INDEX_PAGE.search(u) or u in out:
+                continue
+            out.append(u)
+            if len(out) >= limit:
+                break
+        return out
+
+    def _candidates(self, loc: dict) -> list[tuple[str, date | None, str]]:
+        """(url, inferred period, title) for links on the listing page that match the locator,
+        following one level into per-period index pages when the listing itself holds no files."""
+        body = self._get_page(loc["page"])
+        if not body:
+            return []
+        found = self._matches(loc, loc["page"], body)
+        if not found and loc.get("follow", True):
+            for sub in self._index_pages(loc, body):
+                sbody = self._get_page(sub)
+                if sbody:
+                    found += self._matches(loc, sub, sbody)
+        seen, unique = set(), []
+        for f in found:
+            if f[0] not in seen:
+                seen.add(f[0]); unique.append(f)
+        unique.sort(key=lambda x: (x[1] or date(1900, 1, 1)), reverse=True)
+        return unique
 
     def _nsm_hits(self) -> list[dict]:
         if self._nsm is None:

@@ -1,9 +1,9 @@
 {
  "generated": "2026-09-08",
  "counts": {
-  "ok": 110,
+  "ok": 111,
   "overdue": 11,
-  "never": 26,
+  "never": 25,
   "no source": 2,
   "by design": 3
  },
@@ -194,20 +194,6 @@
   {
    "entity": "mizuho",
    "short": "Mizuho",
-   "region": "asia",
-   "locators": 1,
-   "kinds": [
-    "browser"
-   ],
-   "documents": 0,
-   "capital_as_of": null,
-   "age_days": null,
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
-   "entity": "mufg",
-   "short": "MUFG",
    "region": "asia",
    "locators": 1,
    "kinds": [
@@ -1597,6 +1583,22 @@
    "age_days": 70,
    "capital_sources": [
     "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "mufg",
+   "short": "MUFG",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 3,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
    ],
    "state": "ok"
   },
