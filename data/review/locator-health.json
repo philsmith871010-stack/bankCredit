@@ -523,7 +523,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 13,
+   "documents": 16,
    "capital_as_of": "2018-06-30",
    "age_days": 2992,
    "capital_sources": [
@@ -598,7 +598,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 5,
+   "documents": 8,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -629,7 +629,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 32,
+   "documents": 38,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -798,7 +798,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 45,
+   "documents": 48,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -874,7 +874,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 6,
+   "documents": 9,
    "capital_as_of": "2026-03-31",
    "age_days": 161,
    "capital_sources": [
@@ -1164,7 +1164,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 3,
+   "documents": 6,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1290,7 +1290,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 12,
+   "documents": 15,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1571,7 +1571,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 3,
+   "documents": 6,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1587,7 +1587,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 48,
+   "documents": 51,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1603,7 +1603,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 42,
+   "documents": 44,
    "capital_as_of": "2026-07-31",
    "age_days": 39,
    "capital_sources": [
@@ -1807,7 +1807,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 15,
+   "documents": 18,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -2027,7 +2027,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 12,
+   "documents": 15,
    "capital_as_of": "2025-12-31",
    "age_days": 251,
    "capital_sources": [
@@ -2091,7 +2091,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 6,
+   "documents": 9,
    "capital_as_of": "2026-03-31",
    "age_days": 161,
    "capital_sources": [
@@ -2246,7 +2246,7 @@
    "kinds": [
     "pattern"
    ],
-   "documents": 3,
+   "documents": 6,
    "capital_as_of": "2026-03-31",
    "age_days": 161,
    "capital_sources": [

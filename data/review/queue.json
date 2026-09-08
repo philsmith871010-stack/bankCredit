@@ -1,26 +1,18 @@
 [
  {
-  "id": "50bb086ef179",
-  "entity_id": "mizuho",
-  "url": "https://library.mizuhogroup.com/asset/b35a526c-2179-4b8a-9ddf-3003ee04c54f/fg-investors-liquidity_data2703_fg_1q01.pdf",
-  "local": "cache/pdf/mizuho/50bb086ef1798535.pdf",
-  "title": "fg-investors-liquidity_data2703_fg_1q01.pdf",
-  "page": 1,
-  "reference_date": "2027-03-31",
-  "currency": "JPY",
+  "id": "483e1f3c166c",
+  "entity_id": "rentenbank",
+  "url": "https://www.rentenbank.de/en/documents/publications/FINAL_EN_Offenlegung_2015.pdf",
+  "local": "cache/pdf/rentenbank/483e1f3c166cd8ea.pdf",
+  "title": "FINAL_EN_Offenlegung_2015.pdf",
+  "page": 23,
+  "reference_date": "2015-12-31",
+  "currency": "EUR",
   "values": {
-   "hqla": 81865523.0,
-   "net_cash_outflows": 64907167.0,
-   "lcr": 126.1,
-   "available_stable_funding": 122564410.0,
-   "required_stable_funding": 109180340.0,
-   "nsfr": 112.2
+   "cet1_capital": 3179.0,
+   "tier1_capital": 3179.0
   },
   "checks": [
-   [
-    "error",
-    "missing core row cet1_capital"
-   ],
    [
     "error",
     "missing core row rwa"
@@ -32,70 +24,14 @@
    [
     "info",
     "no leverage ratio row (not all Basel KM1 filers disclose one)"
-   ]
-  ],
-  "reason": "error:missing core row cet1_capital; error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one)",
-  "status": "open",
-  "created": "2026-09-08T15:24:09"
- },
- {
-  "id": "020546dcc97f",
-  "entity_id": "tsb",
-  "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2025/TSB-Bank-ARA-2025.pdf",
-  "local": "cache/pdf/tsb/020546dcc97f6d19.pdf",
-  "title": "TSB-Bank-ARA-2025.pdf",
-  "page": null,
-  "reference_date": null,
-  "currency": "",
-  "values": {},
-  "checks": [
+   ],
    [
-    "error",
-    "no KM1 page found"
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
    ]
   ],
-  "reason": "no KM1 template found",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
-  "created": "2026-09-08T15:26:13"
- },
- {
-  "id": "e83dd673a933",
-  "entity_id": "tsb",
-  "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2024/TSB-Bank-ARA-2024.pdf",
-  "local": "cache/pdf/tsb/e83dd673a933fba2.pdf",
-  "title": "TSB-Bank-ARA-2024.pdf",
-  "page": null,
-  "reference_date": null,
-  "currency": "",
-  "values": {},
-  "checks": [
-   [
-    "error",
-    "no KM1 page found"
-   ]
-  ],
-  "reason": "no KM1 template found",
-  "status": "open",
-  "created": "2026-09-08T15:26:13"
- },
- {
-  "id": "4c3711fc59b9",
-  "entity_id": "tsb",
-  "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2022/tsb-bank-ara-2022.pdf",
-  "local": "cache/pdf/tsb/4c3711fc59b965ac.pdf",
-  "title": "tsb-bank-ara-2022.pdf",
-  "page": null,
-  "reference_date": null,
-  "currency": "",
-  "values": {},
-  "checks": [
-   [
-    "error",
-    "no KM1 page found"
-   ]
-  ],
-  "reason": "no KM1 template found",
-  "status": "open",
-  "created": "2026-09-08T15:26:13"
+  "created": "2026-09-08T15:33:04"
  }
 ]

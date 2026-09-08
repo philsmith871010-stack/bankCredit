@@ -1604,12 +1604,16 @@
     "cet1_ratio": 16.7,
     "tier1_ratio": 19.1,
     "total_capital_ratio": 20.6,
+    "combined_buffer": 4.5,
+    "cet1_headroom": 12.2,
     "leverage_exposure": 2616503.0,
-    "leverage_ratio": 6.4,
-    "lcr": 220.0,
+    "hqla": 459443.0,
+    "net_cash_outflows": 211733.0,
+    "available_stable_funding": 1406726.0,
+    "required_stable_funding": 1042507.0,
     "nsfr": 135.0
    },
-   "method": "pdf_manual"
+   "method": "pdf_rules"
   }
  },
  "emirates-nbd": {
