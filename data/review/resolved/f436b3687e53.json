@@ -1,0 +1,15 @@
+{
+ "id": "f436b3687e53",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/march-2015-pillar-3.pdf",
+ "page": 5,
+ "reference_date": "2015-03-31",
+ "currency": "AUD",
+ "values": {
+  "rwa": 393238.0,
+  "cet1_ratio": 8.87,
+  "tier1_ratio": 11.13,
+  "total_capital_ratio": 12.81
+ },
+ "note": "NAB half-year report under APRA's APS 330, which has no KM1 template. Level 2 basis - the table is headed 'Capital ratios (Level 2)'. The cover reads 'Half Year Update as at 31 March 2015'. The core rows the extractor reported missing are on separate pages: total RWA 393,238 in the capital adequacy table on p.9 and the CET1 ratio of 8.87% in the capital ratios table on p.5. This vintage predates APRA's leverage ratio and LCR disclosure requirements, which became effective 1 July 2015 - the report says so explicitly - so neither is recorded, and there is no detailed capital disclosure of amounts either."
+}
