@@ -730,6 +730,7 @@ def page_policy(generated):
 <p class="note">Use the legal entity you actually place with: Barclays Bank UK PLC rather than Barclays PLC, HSBC UK Bank plc rather than HSBC Holdings. Each name is checked from the day you add it.</p></div>
 <div class="card pad" style="margin-top:16px"><h3>Your counterparties</h3><div id="policy-body"><div class="empty">Loading…</div></div>
 <div class="pol-share"><button class="filter" id="pol-copy">Copy link</button><input id="pol-link" readonly placeholder="A link that carries this policy appears here"><button class="filter" id="pol-clear">Clear all</button></div>
+<dialog id="pol-modal" class="pol-modal"></dialog>
 <p class="note">Counterparty is information, not advice. The flags say what has changed in public information since you approved a name; whether that changes your policy is for you and your adviser.</p></div>'''
     return c.shell("My policy", content, "policy", "../", generated).replace('<script src="../assets/app.js"></script>', '<script src="../assets/app.js"></script><script src="../assets/policy.js"></script>').replace("<body>", '<body data-root="../">')
 
@@ -865,6 +866,62 @@ def page_compare(generated):
 <div class="table-foot"><span>Figures are the latest reported by each name; sources and dates are on each profile. Ranks count only names with a figure at that date. The score's history is recomputed with today's method and rating on the ratios as they stood.</span></div>'''
     return c.shell("Analysis", content, "compare", "../", generated).replace("</body>", '<script src="../assets/compare.js"></script></body>')
 
+# What the policy page's dialog reads when a card is opened. The profile JSON carries the
+# document, page, method and confidence behind every point, which is the right record for a
+# bank's own page and a hundred kilobytes the dialog has no use for.
+DETAIL_SERIES = ("cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio",
+                 "lcr", "nsfr", "npl_ratio", "roe", "efficiency_ratio")
+DETAIL_KEEP = ("id", "short", "name", "country", "score", "band", "coverage", "asof",
+               "rating_composite", "peer_group", "percentile", "unscored")
+
+
+def _quartiles(vals: list[float]) -> dict | None:
+    v = sorted(x for x in vals if x is not None)
+    if len(v) < 4:
+        return None
+    q = lambda f: v[min(len(v) - 1, int(f * (len(v) - 1) + 0.5))]
+    return {"p25": round(q(0.25), 2), "p50": round(q(0.5), 2), "p75": round(q(0.75), 2), "n": len(v)}
+
+
+def write_detail(limit: int = 40) -> int:
+    """One slim file per bank, values and dates only, for the policy dialog.
+
+    Also writes the peer quartiles for each ratio by peer group, so a trend can be read against
+    the bank's peers rather than only against its own past. These are today's peer positions -
+    the latest value each peer holds - not a peer history, and the dialog says so.
+    """
+    src, dst = store.DATA / "json" / "banks", OUT / "data" / "detail"
+    dst.mkdir(parents=True, exist_ok=True)
+    groups: dict[str, dict[str, list]] = {}
+    n = 0
+    for f in sorted(src.glob("*.json")):
+        try:
+            b = json.loads(f.read_text())
+        except Exception:
+            continue
+        g = b.get("peer_group") or ""
+        if g:
+            for m in DETAIL_SERIES:
+                pts = b.get("series", {}).get(m) or []
+                if pts:
+                    groups.setdefault(g, {}).setdefault(m, []).append(pts[-1]["v"])
+        series = {}
+        for m in DETAIL_SERIES:
+            pts = b.get("series", {}).get(m) or []
+            if len(pts) >= 2:
+                series[m] = [{"d": p["d"], "v": p["v"]} for p in pts[-limit:]]
+        out = {k: b.get(k) for k in DETAIL_KEEP if b.get(k) is not None}
+        out["series"] = series
+        out["ratings_all"] = b.get("ratings_all") or b.get("ratings") or []
+        out["score_detail"] = (b.get("score_detail") or {}).get("pillars") and {"pillars": b["score_detail"]["pillars"]} or None
+        out["events"] = (b.get("events") or [])[:8]
+        (dst / f.name).write_text(json.dumps(out, separators=(",", ":")))
+        n += 1
+    peers = {g: {m: q for m, vals in ms.items() if (q := _quartiles(vals))} for g, ms in groups.items()}
+    (OUT / "data" / "peers.json").write_text(json.dumps(peers, separators=(",", ":")))
+    return n
+
+
 def build():
     board = load("board"); status = load("status"); generated = board["generated"]
     if OUT.exists():
@@ -891,6 +948,7 @@ def build():
     _write(OUT / "policy" / "index.html", page_policy(generated))
     (OUT / "data").mkdir(exist_ok=True)
     shutil.copy(store.DATA / "json" / "policy.json", OUT / "data" / "policy.json")
+    write_detail()
     (OUT / "brief").mkdir(exist_ok=True)
     _write(OUT / "brief" / "index.html", page_brief_redirect(generated))
     _write(OUT / "status" / "index.html", page_status(status, board, generated))
