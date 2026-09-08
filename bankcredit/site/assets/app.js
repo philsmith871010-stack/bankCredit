@@ -32,8 +32,11 @@
   if(q)q.addEventListener('input',apply);})();
 
 // Profile trends: a small multiple opens its full-size chart in a dialog
-(function(){var d=document.createElement('dialog');d.className='chart-dialog';d.innerHTML='<div class="cd-head"><div><h3></h3><div class="small muted"></div></div><button class="cd-close" aria-label="Close">×</button></div><div class="cd-body"></div>';
-  document.addEventListener('click',function(e){var b=e.target.closest('.sm');if(b){if(!d.isConnected)document.body.appendChild(d);var t=b.querySelector('template');d.querySelector('h3').textContent=b.dataset.title||'';d.querySelector('.cd-head .small').textContent=b.dataset.sub||'';d.querySelector('.cd-body').innerHTML=t?t.innerHTML:'';d.showModal();return}
+(function(){var d=document.createElement('dialog');d.className='chart-dialog';d.innerHTML='<div class="cd-head"><div><h3></h3><div class="small muted"></div></div><button class="cd-close" aria-label="Close">×</button></div><div class="cd-body"></div><div class="cd-def"></div>';
+  document.addEventListener('click',function(e){var b=e.target.closest('.sm');if(b){if(!d.isConnected)document.body.appendChild(d);var t=b.querySelector('template');d.querySelector('h3').textContent=b.dataset.title||'';d.querySelector('.cd-head .small').textContent=b.dataset.sub||'';d.querySelector('.cd-body').innerHTML=t?t.innerHTML:'';
+      var g=window.tipDef&&window.tipDef(b.dataset.def||'');            // what the measure is, beside the chart of it
+      d.querySelector('.cd-def').innerHTML=g?'<b>'+g[1]+'</b> '+g[2]:'';
+      d.showModal();return}
     if(e.target.closest('.cd-close')||(e.target===d))d.close()});
 })();
 
@@ -46,3 +49,100 @@
     if(cnt)cnt.textContent=n+' shown';document.querySelectorAll('.gfilter').forEach(function(b){b.classList.toggle('active',b.dataset.grade===grade)});document.querySelectorAll('.bfilter').forEach(function(b){b.classList.toggle('active',b.dataset.band===band)});if(clear)clear.hidden=!grade&&!band}
   document.addEventListener('click',function(e){var g=e.target.closest('.gfilter');if(g){grade=grade===g.dataset.grade?null:g.dataset.grade;band=null;apply();return}var b=e.target.closest('.bfilter');if(b){band=band===b.dataset.band?null:b.dataset.band;grade=null;apply();return}if(e.target.closest('.gclear')){grade=null;band=null;apply();return}if(e.target.closest('.filter[data-region]'))setTimeout(apply,0)});
   var q=document.getElementById('q');if(q)q.addEventListener('input',apply);apply()})();
+
+// Definitions: every number on the site can say what it is, in a sentence a first-time reader gets.
+// The glossary is embedded once per page as JSON; a single popover is moved to whichever marker was
+// asked. Fixed positioning, and inside an open dialog it is appended there, so nothing clips it.
+(function(){
+  var G=null, tip=null, open=null, hoverT=null;
+  function gloss(){
+    if(G)return G;
+    var el=document.getElementById('gloss');
+    try{G=JSON.parse(el?el.textContent:'{}')}catch(e){G={}}
+    return G;
+  }
+  // Markers built in the browser use the same shape as the server's, and read their label from
+  // the same glossary, so a definition is written once however the element got there.
+  window.tipDef=function(key){return key?(gloss()[key]||null):null};
+  window.tipMark=function(key,cls){
+    var g=gloss()[key];if(!g)return '';
+    return '<button type="button" class="i'+(cls?' '+cls:'')+'" data-t="'+key+'" aria-expanded="false" aria-label="What is '+
+           g[0].replace(/"/g,'&quot;')+'?">i</button>';
+  };
+  function el(){
+    if(tip)return tip;
+    tip=document.createElement('div');
+    tip.className='tip';tip.setAttribute('role','dialog');tip.hidden=true;
+    return tip;
+  }
+  function place(btn){
+    var t=el(), r=btn.getBoundingClientRect(), vw=innerWidth, vh=innerHeight;
+    var host=btn.closest('dialog')||document.body;      // the top layer paints over anything below it
+    if(t.parentNode!==host)host.appendChild(t);
+    t.hidden=false;t.style.left='0px';t.style.top='0px';
+    var w=Math.min(320,vw-24);
+    t.style.width=w+'px';
+    var h=t.offsetHeight;                                // measured at its final width, not before it
+    var left=Math.max(12,Math.min(r.left+r.width/2-w/2, vw-w-12));
+    var below=r.bottom+8, top=(below+h>vh-12&&r.top-h-8>12)?r.top-h-8:below;
+    top=Math.max(12,Math.min(top,vh-h-12));            // never off the screen, however small the screen is
+    t.style.left=left+'px';t.style.top=top+'px';
+  }
+  function show(btn){
+    var g=gloss()[btn.dataset.t];if(!g)return;
+    hide();
+    var t=el();
+    t.innerHTML='<h4>'+g[0]+'</h4><p class="lead">'+g[1]+'</p><p>'+g[2]+'</p>';
+    open=btn;btn.setAttribute('aria-expanded','true');
+    place(btn);
+  }
+  function hide(){
+    if(open)open.setAttribute('aria-expanded','false');
+    open=null;if(tip)tip.hidden=true;
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.i');
+    if(b){e.preventDefault();e.stopPropagation();if(open===b)hide();else show(b);return}
+    if(!e.target.closest('.tip'))hide();
+  },true);
+  document.addEventListener('mouseover',function(e){
+    var b=e.target.closest('.i');if(!b||open===b)return;
+    if(!matchMedia('(hover:hover)').matches)return;
+    clearTimeout(hoverT);hoverT=setTimeout(function(){show(b)},160);
+  });
+  document.addEventListener('mouseout',function(e){
+    if(e.target.closest&&e.target.closest('.i'))clearTimeout(hoverT);
+  });
+  // the same definitions read end to end, built from the payload already on the page
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('#glink'))return;
+    var d=document.getElementById('gloss-dlg');if(!d)return;
+    if(!d.dataset.filled){
+      var g=gloss(),sec='',out='<div class="gd-head"><h3>What the numbers mean</h3>'+
+        '<input id="gd-q" type="search" placeholder="Search a term" autocomplete="off">'+
+        '<button class="cd-close" aria-label="Close">\u00d7</button></div><div class="gd">';
+      for(var k in g){
+        if(g[k][3]!==sec){sec=g[k][3];out+='<h4>'+sec+'</h4>'}
+        out+='<div class="gd-t" data-k="'+(g[k][0]+' '+g[k][1]).toLowerCase().replace(/"/g,'')+'">'+
+             '<dt>'+g[k][0]+'</dt><dd><b>'+g[k][1]+'</b> '+g[k][2]+'</dd></div>';
+      }
+      d.innerHTML=out+'</div>';d.dataset.filled='1';
+      d.querySelector('#gd-q').addEventListener('input',function(){
+        var t=this.value.trim().toLowerCase();
+        d.querySelectorAll('.gd-t').forEach(function(x){x.hidden=!!t&&x.dataset.k.indexOf(t)<0});
+        d.querySelectorAll('.gd h4').forEach(function(h){                // a heading with nothing under it goes too
+          var n=h.nextElementSibling,any=false;
+          while(n&&n.tagName!=='H4'){if(!n.hidden)any=true;n=n.nextElementSibling}
+          h.hidden=!any;
+        });
+      });
+    }
+    d.showModal();
+  });
+  document.addEventListener('click',function(e){
+    var d=document.getElementById('gloss-dlg');
+    if(d&&d.open&&(e.target===d||e.target.closest('.gd-head .cd-close')))d.close();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')hide()});
+  addEventListener('scroll',hide,true);addEventListener('resize',hide);
+})();

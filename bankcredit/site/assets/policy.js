@@ -10,6 +10,8 @@
   var data=null, byId={};
   function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
   function save(p){try{localStorage.setItem(KEY,JSON.stringify(p))}catch(e){}}
+  // the definition marker, drawn from the glossary every page carries
+  function mk(k){return window.tipMark?window.tipMark(k):''}
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function fmt(v,dp,suf){return v==null?'<span class="na">—</span>':'<span class="mono">'+Number(v).toFixed(dp==null?1:dp)+(suf||'')+'</span>'}
   function tenorLabel(d){for(var i=0;i<TENORS.length;i++)if(TENORS[i][0]===d)return TENORS[i][1];return d+' days'}
@@ -42,9 +44,9 @@
     }).join('')+'</div>';
   }
   function kpis(e){
-    var t=[['CET1',e.cet1,1,''],['Leverage',e.leverage,1,e.leverage_basis==='us_tier1'?'\u2020':''],['LCR',e.lcr,0,'%']];
+    var t=[['CET1',e.cet1,1,'','cet1_ratio'],['Leverage',e.leverage,1,e.leverage_basis==='us_tier1'?'\u2020':'','leverage_ratio'],['LCR',e.lcr,0,'%','lcr']];
     return '<div class="cp-kpis">'+t.map(function(k){
-      return '<div class="cp-kpi"><b>'+(k[1]==null?'<span class="na">\u2014</span>':Number(k[1]).toFixed(k[2])+k[3])+'</b><span>'+k[0]+'</span></div>';
+      return '<div class="cp-kpi"><b>'+(k[1]==null?'<span class="na">\u2014</span>':Number(k[1]).toFixed(k[2])+k[3])+'</b><span>'+k[0]+mk(k[4])+'</span></div>';
     }).join('')+'</div>';
   }
   function mkt(m){if(!m||m.direction==='none')return '<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');return chip(m.label,k)}
@@ -167,10 +169,10 @@
         tile(stale,'figures over 180 days',stale?'pv-warn':'')+
       '</div>'+
       '<div class="pv-charts">'+
-        '<figure><figcaption>Band mix</figcaption>'+bandMix(es)+'</figure>'+
-        '<figure><figcaption>Score against every covered name</figcaption>'+scoreHist(es,data.rows)+'</figure>'+
-        '<figure><figcaption>Composite rating</figcaption>'+ratingHist(es)+'</figure>'+
-        '<figure><figcaption>Score by tenor accepted</figcaption>'+tenorScore(items)+'</figure>'+
+        '<figure><figcaption>Band mix'+mk('band')+'</figcaption>'+bandMix(es)+'</figure>'+
+        '<figure><figcaption>Score against every covered name'+mk('score')+'</figcaption>'+scoreHist(es,data.rows)+'</figure>'+
+        '<figure><figcaption>Composite rating'+mk('composite')+'</figcaption>'+ratingHist(es)+'</figure>'+
+        '<figure><figcaption>Score by tenor accepted'+mk('tenor')+'</figcaption>'+tenorScore(items)+'</figure>'+
       '</div></div>';
   }
 
@@ -180,13 +182,15 @@
   // place among peers, so a card opens all of it here rather than sending the reader away.
   var MCACHE={}, PEERS=null;
   var AGN={fitch:'Fitch',sp:'S&P',moodys:"Moody's",dbrs:'DBRS',kbra:'KBRA',scope:'Scope',jcr:'JCR',creditreform:'Creditreform'};
-  var TRENDS=[['cet1_ratio','CET1 ratio','%'],['tier1_ratio','Tier 1 ratio','%'],['total_capital_ratio','Total capital','%'],
-              ['leverage_ratio','Leverage','%'],['lcr','LCR','%'],['nsfr','NSFR','%'],
-              ['npl_ratio','Non-performing','%'],['roe','Return on equity','%'],['efficiency_ratio','Cost to income','%']];
+  var TRENDS=[['cet1_ratio','CET1 ratio','%','cet1_ratio'],['tier1_ratio','Tier 1 ratio','%','tier1_ratio'],
+              ['total_capital_ratio','Total capital','%','total_capital_ratio'],
+              ['leverage_ratio','Leverage','%','leverage_ratio'],['lcr','LCR','%','lcr'],['nsfr','NSFR','%','nsfr'],
+              ['npl_ratio','Non-performing','%','npl_ratio'],['roe','Return on equity','%','roe'],
+              ['efficiency_ratio','Cost to income','%','cost_to_income']];
   // The bank's own path, with its peer group's current quartile band behind it. The band is
   // where the peers stand today, not a peer history, so it is drawn flat and labelled as such:
   // it answers "is this bank ahead of its peers now", which the line alone cannot.
-  function trend(pts,label,unit,pq){
+  function trend(pts,label,unit,pq,gk){
     if(!pts||pts.length<2)return '';
     var w=150,h=46,pad=5,vals=pts.map(function(p){return p.v});
     var lo=Math.min.apply(null,vals),hi=Math.max.apply(null,vals);
@@ -204,7 +208,7 @@
       if(Math.abs(diff)<0.05)diff=0;
       vs='<span class="mt-vs '+(diff>0?'up':diff<0?'dn':'lv')+'">'+(diff>0?'+':'')+diff.toFixed(1)+' vs peers</span>';
     }
-    return '<figure class="mt"><figcaption>'+esc(label)+' <b>'+last.v.toFixed(1)+unit+'</b> '+vs+'</figcaption>'+
+    return '<figure class="mt"><figcaption>'+esc(label)+mk(gk)+' <b>'+last.v.toFixed(1)+unit+'</b> '+vs+'</figcaption>'+
       '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" aria-hidden="true">'+band+
       '<path d="'+d+'V'+(h-12)+'H'+pad+'Z" fill="#0a2540" fill-opacity="0.07"/>'+
       '<path d="'+d+'" fill="none" stroke="#0a2540" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+
@@ -215,7 +219,7 @@
   function modalBody(b,e){
     var s=b.series||{};
     var pg=(PEERS&&PEERS[b.peer_group||(e&&e.peer_group)])||{};
-    var charts=TRENDS.map(function(t){return trend(s[t[0]],t[1],t[2],pg[t[0]])}).filter(Boolean).join('')
+    var charts=TRENDS.map(function(t){return trend(s[t[0]],t[1],t[2],pg[t[0]],t[3])}).filter(Boolean).join('')
                ||(b.series?'<div class="muted small">Only one period held, so there is nothing to plot yet.</div>'
                           :'<div class="md-wait">'+[0,1,2,3,4,5].map(function(){return '<div class="md-sk"></div>'}).join('')+'</div>');
     // the headline rating per agency, with its short-term beside it; the rest are on the profile
@@ -240,10 +244,10 @@
       '<section><h4>Trends</h4><div class="md-trends" id="md-trends">'+charts+'</div>'+
         (Object.keys(pg).length?'<p class="small muted"><span class="mt-key"></span>The band is where this bank\u2019s peer group stands today, quartile to quartile, with the median dashed \u2014 not a peer history.</p>':'')+
       '</section>'+
-      '<section><h4>Ratings</h4><table class="plain md-rt"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup><tbody>'+rt+'</tbody></table>'+
+      '<section><h4>Ratings'+mk('rating')+'</h4><table class="plain md-rt"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup><tbody>'+rt+'</tbody></table>'+
         (extra>0?'<p class="small muted">'+extra+' further rating'+(extra>1?'s':'')+' by type on the full profile.</p>':'')+
-        (pill?'<h4>Score make-up</h4><div class="md-pills">'+pill+'</div>':'')+
-        (b.percentile!=null?'<p class="small muted">Stronger than '+Math.round(b.percentile)+'% of its peer group ('+esc(String(b.peer_group||'').replace(/_/g,' '))+').</p>':'')+
+        (pill?'<h4>Score make-up'+mk('pillar')+'</h4><div class="md-pills">'+pill+'</div>':'')+
+        (b.percentile!=null?'<p class="small muted">Stronger than '+Math.round(b.percentile)+'% of its peer group'+mk('percentile')+' ('+esc(String(b.peer_group||'').replace(/_/g,' '))+').</p>':'')+
       '</section>'+
       '<section><h4>Events</h4><div class="cp-news md-news">'+ev+'</div></section></div>';
   }
@@ -358,12 +362,12 @@
           '<div class="cp-top">'+
             '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+
               '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+esc(e.country)+typeTag(e)+'</div></div>'+
-            '<div class="cp-tenor"><div class="cp-t">'+esc(tenorLabel(it.tenor))+'</div>'+
+            '<div class="cp-tenor"><div class="cp-t">'+esc(tenorLabel(it.tenor))+mk('tenor')+'</div>'+
               '<div class="small">approved '+esc(it.added||'?')+'</div></div>'+
             '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">\u00d7</button>'+
           '</div>'+
           '<div class="cp-body">'+
-            '<div class="cp-cell"><h5>Counterparty score</h5>'+
+            '<div class="cp-cell"><h5>Counterparty score'+mk('score')+'</h5>'+
               (e.score==null
                 ? '<div class="cp-score-row"><span class="na big">\u2014</span></div><div class="small muted">'+esc(e.unscored||'not scored')+'</div>'
                 : '<div class="cp-score-row"><span class="cp-score">'+e.score.toFixed(0)+'</span>'+
@@ -372,10 +376,10 @@
                   '<div class="small muted">'+(e.coverage!=null?Math.round(e.coverage*100)+'% of the method\u2019s inputs':'')+'</div>')+
             '</div>'+
             '<div class="cp-cell"><h5>Key ratios</h5>'+kpis(e)+
-              '<div class="cp-asof">as of '+esc(e.asof||'\u2014')+
+              '<div class="cp-asof">as of'+mk('as_at')+' '+esc(e.asof||'\u2014')+
               (e.leverage_basis==='us_tier1'?' \u00b7 \u2020 Tier 1 leverage, US basis':'')+'</div></div>'+
-            '<div class="cp-cell"><h5>Ratings</h5>'+ratingGrid(e.ratings,e.short_ratings)+'</div>'+
-            '<div class="cp-cell cp-side"><h5>Market and since approval</h5>'+
+            '<div class="cp-cell"><h5>Ratings'+mk('rating')+'</h5>'+ratingGrid(e.ratings,e.short_ratings)+'</div>'+
+            '<div class="cp-cell cp-side"><h5>Market'+mk('market_signal')+' and since approval</h5>'+
               mkt(e.market)+
               (e.market_detail&&e.market_detail.bond_change30!=null
                 ? '<div class="small muted">bonds vs peers '+(e.market_detail.bond_change30>0?'+':'')+Math.round(e.market_detail.bond_change30)+' bp</div>':'')+

@@ -348,3 +348,43 @@ table.uni tbody tr{cursor:pointer;content-visibility:auto;contain-intrinsic-size
 table.uni tbody tr:hover{background:var(--bg)}
 table.uni .meter{width:74px;margin:4px 0 0 auto}
 table.uni .tag-hold{margin-left:6px}
+
+/* Definitions --------------------------------------------------------------------------------
+   A marker sits after the thing it explains, quiet until asked. It is a character rather than an
+   icon because a table of 152 rows carries a lot of them. */
+.i{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;padding:0;
+   margin-left:5px;border:0;border-radius:50%;background:#e9ecef;color:#6c757d;cursor:pointer;
+   font:700 9px/1 "IBM Plex Mono",monospace;vertical-align:middle;flex:none;
+   transition:background .12s,color .12s}
+.i:hover,.i[aria-expanded="true"]{background:#0a2540;color:#fff}
+.i:focus-visible{outline:2px solid #fd7e14;outline-offset:2px}
+th .i,.uni th .i{margin-left:4px}
+.tip{position:fixed;z-index:200;box-sizing:border-box;background:#fff;border:1px solid #e9ecef;
+     border-radius:12px;box-shadow:0 12px 34px rgba(10,37,64,.18);padding:13px 15px;
+     font-size:12.5px;line-height:1.55;color:#243240;text-align:left;font-weight:400}
+.tip h4{margin:0;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#6c757d}
+.tip .lead{margin:5px 0 0;font-size:13.5px;font-weight:600;color:#0a2540;line-height:1.45}
+.tip p+p{margin:7px 0 0;color:#4a5764}
+@media (max-width:640px){.tip{font-size:13px}}
+.cd-def{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);font-size:12.5px;line-height:1.55;color:#4a5764;max-width:64ch}
+.cd-def:empty{display:none}
+.cd-def b{color:#0a2540}
+.score-card .i,.tile-label.light .i{background:rgba(255,255,255,.2);color:#fff}
+.score-card .i:hover,.score-card .i[aria-expanded="true"]{background:#fd7e14;color:#fff}
+.i-static{cursor:default;pointer-events:none}
+.glink{background:none;border:0;padding:0;margin-right:8px;font:inherit;color:#0a2540;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.glink:hover{color:#fd7e14}
+.gloss-dlg{border:0;border-radius:16px;padding:0;max-width:720px;width:calc(100% - 32px);max-height:82vh;box-shadow:0 24px 60px rgba(10,37,64,.28)}
+.gloss-dlg::backdrop{background:rgba(10,37,64,.4)}
+.gd-head{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:12px;
+         padding:16px 20px;background:#fff;border-bottom:1px solid var(--line-soft);z-index:1}
+.gd-head h3{margin:0;font-size:16px}
+.gd{margin:0;padding:4px 20px 22px;overflow:auto}
+.gd h4{margin:22px 0 2px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#0a2540;
+       padding-bottom:6px;border-bottom:1px solid var(--line-soft)}
+.gd h4:first-child{margin-top:10px}
+.gd-t{margin-top:14px}
+.gd dt{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#6c757d;font-weight:600}
+#gd-q{flex:1;max-width:220px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px}
+.gd dd{margin:4px 0 0;font-size:13.5px;line-height:1.6;color:#4a5764;max-width:70ch}
+.gd dd b{color:#0a2540}

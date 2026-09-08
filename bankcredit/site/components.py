@@ -4,6 +4,8 @@ from __future__ import annotations
 import html
 import json
 
+from . import glossary
+
 # Prefetch is cheap - the document is fetched and held, nothing is parsed or run. Prerender is a
 # whole page load: parse, scripts, fonts, layout. At "moderate" it fires when the pointer settles
 # on a link, so running the mouse down the board's 153 bank links starts and evicts prerender after
@@ -39,6 +41,23 @@ ICONS = {
     "menu": '<path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/>', "back": '<path d="M15 18l-6-6 6-6"/>', "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     "status": '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
 }
+
+
+def info(key: str, cls: str = "") -> str:
+    """The small marker that opens a plain-English definition beside a number.
+
+    One button, no icon file: the glyph is a character, because these appear a few dozen times on
+    a page and a table of 152 rows cannot afford an SVG in every heading. The definition itself is
+    not repeated in the markup - every page carries the glossary once and the popover reads it.
+    """
+    title = glossary.TERMS[key][0]
+    return (f'<button type="button" class="i{" " + cls if cls else ""}" data-t="{key}" '
+            f'aria-expanded="false" aria-label="What is {esc(title)}?">i</button>')
+
+
+def term(key: str, label: str = "", cls: str = "") -> str:
+    """A label with its definition marker after it."""
+    return f'{esc(label or glossary.TERMS[key][0])}{info(key, cls)}'
 
 
 def esc(s) -> str:
@@ -245,5 +264,7 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <div class="frame"><aside class="side" id="side"><div class="side-label">Counterparty</div>{items}<div class="side-fill"></div>
 <div class="side-status">{ico("clock", 14, ORANGE)} Built {esc(generated[:16].replace("T", " "))} UTC</div></aside>
 <main class="main">{content}</main></div>
-<footer class="foot">Counterparty is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}admin/index.html#method">Method</a> · <a href="{root}admin/index.html#status">Data status</a></footer>
+<dialog id="gloss-dlg" class="gloss-dlg"></dialog>
+<footer class="foot"><button type="button" class="glink" id="glink">What do these numbers mean?</button> Counterparty is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}admin/index.html#method">Method</a> · <a href="{root}admin/index.html#status">Data status</a></footer>
+<script id="gloss" type="application/json">{glossary.payload()}</script>
 <script src="{root}assets/app.js"></script></body></html>"""

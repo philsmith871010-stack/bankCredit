@@ -22,8 +22,23 @@ ASSETS = Path(__file__).resolve().parent / "assets"
 REGION_LABEL = {"uk": "UK", "eu": "EU and EEA", "aus_can": "Australia and Canada", "asia": "Asia", "gulf": "Gulf", "us_ch": "US and Swiss"}
 TYPE_LABEL = {"bank": "Bank", "building_society": "Building society", "subsidiary": "Overseas-owned bank", "holding": "Group"}
 COUNTRY = {"GB": "UK", "FI": "Finland", "SE": "Sweden", "DK": "Denmark", "NO": "Norway", "NL": "Netherlands", "DE": "Germany", "FR": "France", "BE": "Belgium", "ES": "Spain", "IT": "Italy", "AT": "Austria", "IE": "Ireland", "AU": "Australia", "CA": "Canada", "SG": "Singapore", "HK": "Hong Kong", "JP": "Japan", "QA": "Qatar", "AE": "UAE", "SA": "Saudi Arabia", "US": "US", "CH": "Switzerland"}
+# Which definition belongs to which measure. A reader meeting "NSFR" for the first time should be
+# able to ask on the spot, wherever the number appears, so the mapping lives once and every surface
+# that draws a label uses it.
+GLOSS = {"cet1_ratio": "cet1_ratio", "tier1_ratio": "tier1_ratio", "total_capital_ratio": "total_capital_ratio",
+         "leverage_ratio": "leverage_ratio", "tier1_leverage": "leverage_ratio", "rwa": "rwa",
+         "lcr": "lcr", "nsfr": "nsfr", "deposits": "deposits", "total_assets": "total_assets",
+         "roe": "roe", "roa": "roa", "nim": "nim", "efficiency_ratio": "cost_to_income",
+         "npl_ratio": "npl_ratio", "cost_of_risk": "cost_of_risk",
+         "overall_capital_requirement": "overall_capital_requirement", "cet1_requirement": "overall_capital_requirement"}
+
+
 TILE_METRICS = [("cet1_ratio", "CET1 ratio", "%", 1), ("leverage_ratio", "Leverage ratio", "%", 1), ("total_capital_ratio", "Total capital", "%", 1),
                 ("lcr", "LCR", "%", 0), ("nsfr", "NSFR", "%", 0), ("rwa", "Risk-weighted assets", "m", 0)]
+
+
+TYPE_GLOSS = {"holding": c.info("holding"), "subsidiary": c.info("subsidiary"),
+              "building_society": c.info("building_society")}
 
 
 def sc(r):
@@ -99,8 +114,9 @@ def _grade_bucket(r) -> str:
 
 def tile(metric, label, unit, dp, series, peer_median=None):
     pts = series.get(metric, [])
+    mark = c.info(GLOSS[metric]) if metric in GLOSS else ""
     if not pts:
-        return f'<div class="tile tile-empty"><span class="tile-label">{label}</span><span class="na big">—</span><span class="tile-foot">not yet collected</span></div>'
+        return f'<div class="tile tile-empty"><span class="tile-label">{label}{mark}</span><span class="na big">—</span><span class="tile-foot">not yet collected</span></div>'
     vals = [p["v"] for p in pts[-8:]]
     last, prev = pts[-1], (pts[-2] if len(pts) > 1 else None)
     v = last["v"]
@@ -116,7 +132,7 @@ def tile(metric, label, unit, dp, series, peer_median=None):
     unverified = c.chip("unverified", "warn") if (last.get("conf") or 1) < 0.9 and str(last.get("method", "")).startswith("pdf") else ""
     if last.get("basis") == "group":
         unverified += c.chip("group figure", "navy")
-    return f'''<div class="tile"><div class="tile-head"><span class="tile-label">{label}</span><span class="tile-flags">{unverified}<span class="src-dot" title="{c.esc(src)}">{c.ico("info", 14, "#b8c2cc")}</span></span></div>
+    return f'''<div class="tile"><div class="tile-head"><span class="tile-label">{label}{mark}</span><span class="tile-flags">{unverified}<span class="src-dot" title="Source: {c.esc(src)}">{c.ico("doc", 13, "#b8c2cc")}</span></span></div>
 <div class="tile-body"><div><span class="mono big">{shown:,.{dpv}f}</span><span class="mono unit">{u}</span></div>{c.spark(vals)}</div>
 <div class="tile-foot"><span>{c.chg(delta, 1, "%" if unit == "m" else "") if delta is not None else "<span class=na>first period</span>"}{" vs prior" if delta is not None else ""}</span><span class="mono">{c.esc(last["d"])}</span></div></div>'''
 
@@ -152,7 +168,7 @@ def ratings_tile(b) -> str:
     with the composite grade and the market direction alongside the regulatory KPIs."""
     rs = b.get("ratings") or []
     if not rs:
-        return '<div class="tile tile-ratings tile-empty"><span class="tile-label">Agency ratings</span><span class="na big">NR</span><span class="tile-foot">no public issuer rating in the ESMA register</span></div>'
+        return f'<div class="tile tile-ratings tile-empty"><span class="tile-label">Agency ratings{c.info("rating")}</span><span class="na big">NR</span><span class="tile-foot">no public issuer rating in the ESMA register</span></div>'
     short = {}
     for x in b.get("ratings_all") or []:
         if x.get("horizon") == "short" and x["agency"] not in short:
@@ -165,7 +181,7 @@ def ratings_tile(b) -> str:
         f'<div class="rdate mono small muted">{c.esc(r.get("date") or "")}</div></div>' for r in rs)
     grade = b.get("rating_grade")
     comp = f'<span class="band mono" style="background:{grade_colour(grade)};color:{"#fff" if grade is not None and grade <= 10 else "#243240"}">{c.esc(b.get("rating_composite") or "NR")}</span>'
-    return (f'<div class="tile tile-ratings"><div class="tile-head"><span class="tile-label">Agency ratings</span><span class="tile-flags">composite {comp} {c.market_glyph(b.get("market") or {})} <span class="small muted">{c.esc((b.get("market") or {}).get("label") or "")}</span></span></div>'
+    return (f'<div class="tile tile-ratings"><div class="tile-head"><span class="tile-label">Agency ratings{c.info("rating")}</span><span class="tile-flags">composite{c.info("composite")} {comp} {c.market_glyph(b.get("market") or {})} <span class="small muted">{c.esc((b.get("market") or {}).get("label") or "")}</span></span></div>'
             f'<div class="rcells">{cells}</div><div class="tile-foot"><span>ESMA European Rating Platform, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span><span><a href="../ratings/index.html">All ratings</a></span></div></div>')
 
 
@@ -200,13 +216,13 @@ def page_bank(b, generated):
         dchip = f'<span class="delta {"up" if delta >= 0 else "down"}">{"+" if delta > 0 else ("−" if delta < 0 else "")}{abs(delta):.1f}</span>' if abs(delta) > 0.05 else '<span class="delta flat">no change</span>'
         big = c.chart(sc_pts, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)
         small = c.chart(sc_pts, unit="", dp=1, w=300, h=96, compact=True)
-        standing.append(f'<button class="sm" type="button" data-title="Counterparty score, recomputed" data-sub="Today\'s method and composite rating applied to the ratios as they stood at each quarter end · {len(sc_pts)} quarters" aria-label="Expand score history">'
+        standing.append(f'<button class="sm" type="button" data-title="Counterparty score, recomputed" data-def="score" data-sub="Today\'s method and composite rating applied to the ratios as they stood at each quarter end · {len(sc_pts)} quarters" aria-label="Expand score history">'
                         f'<div class="sm-head"><span class="sm-label">Score, recomputed</span><span class="sm-val mono">{last:.0f}</span></div><div class="sm-sub">{dchip}<span class="muted">vs {c.esc(sc_pts[-2][0])}</span></div>{small}<template>{big}</template></button>')
     snaps = [(d[5:], v) for d, v, _g in (hist.get("snapshots") or []) if v is not None]
     if len(snaps) >= 2:
         big = c.chart(snaps, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)
         small = c.chart(snaps, unit="", dp=1, w=300, h=96, compact=True)
-        standing.append(f'<button class="sm" type="button" data-title="Published score, daily" data-sub="The score as published on each build since snapshots began · {len(snaps)} days" aria-label="Expand published score">'
+        standing.append(f'<button class="sm" type="button" data-title="Published score, daily" data-def="score" data-sub="The score as published on each build since snapshots began · {len(snaps)} days" aria-label="Expand published score">'
                         f'<div class="sm-head"><span class="sm-label">Published score</span><span class="sm-val mono">{snaps[-1][1]:.0f}</span></div><div class="sm-sub"><span class="muted">since {c.esc(hist["snapshots"][0][0])}</span></div>{small}<template>{big}</template></button>')
     if standing:
         charts.append(f'<div class="sm-group"><h4>Standing</h4><div class="sm-grid">{"".join(standing)}</div></div>')
@@ -250,7 +266,10 @@ def page_bank(b, generated):
             small = c.chart(data, unit="" if u in ("m", "bn") else u, req=req, dp=cdp,
                             band=band, median=median, w=300, h=96, compact=True)
             src = pts[-1].get("src", "")
-            cards.append(f'<button class="sm" type="button" data-title="{c.esc(label)}" data-sub="{c.esc(METRICS.get(metric, ""))} · {len(data)} periods · {c.esc(src)}" aria-label="Expand {c.esc(label)}">'
+            # a marker cannot sit inside the button, so the definition travels with the card and is
+            # printed when the chart is opened full size
+            gk = GLOSS.get(metric, "")
+            cards.append(f'<button class="sm" type="button" data-title="{c.esc(label)}" data-def="{gk}" data-sub="{c.esc(METRICS.get(metric, ""))} · {len(data)} periods · {c.esc(src)}" aria-label="Expand {c.esc(label)}">'
                          f'<div class="sm-head"><span class="sm-label">{c.esc(label)}</span><span class="sm-val mono">{last:,.{cdp}f}<small>{u if u != "m" else "m"}</small></span></div>'
                          f'<div class="sm-sub">{dchip}<span class="muted">vs {c.esc(data[-2][0])}</span>{vs}</div>{small}<template>{big}</template></button>')
             n_charts += 1
@@ -294,14 +313,14 @@ def page_bank(b, generated):
     metric_rows = "".join(f'<tr><td>{c.esc(METRICS.get(m, m))}</td><td class="mono">{pts[-1]["v"]:,.2f}</td><td class="mono muted">{pts[-1]["d"]}</td><td class="muted">{c.esc(pts[-1]["src"])} · {c.esc(pts[-1]["method"])}</td><td class="mono muted">{pts[-1]["conf"]:.2f}{" " + c.chip("unverified", "warn") if (pts[-1]["conf"] or 1) < 0.9 and str(pts[-1]["method"]).startswith("pdf") else ""}{" " + c.chip("group figure", "navy") if pts[-1].get("basis") == "group" else ""}</td></tr>' for m, pts in series.items() if pts)
     events_rows = "".join(f'<div class="event"><span class="mono muted">{c.esc(str(e.get("date"))[:10])}</span><div><div class="b">{c.esc(e.get("title"))}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("severity") or "info"))}</div>' for e in b["events"]) or '<div class="empty">No events collected yet. Rating actions and disclosures will appear here once the events pipeline runs.</div>'
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
-<div class="lede">{TYPE_LABEL.get(b["type"], b["type"])} · {COUNTRY.get(b["country"], b["country"])}{" · " + c.chip("LEI " + c.esc(b["lei"])) if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
+<div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {COUNTRY.get(b["country"], b["country"])}{" · " + c.chip("LEI " + c.esc(b["lei"])) + c.info("lei") if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
 <div class="actions"><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button><button class="btn primary" onclick="window.print()">{c.ico("download", 16, c.WHITE)}Counterparty report</button></div></div>
-<div class="grid-12"><div class="score-card"><div class="score-head"><span class="tile-label light">Counterparty score</span>{c.chip("Band " + (b["band"] or "?"), "orange") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn")}</div>
-<div class="score-row">{score_html}<div class="score-meta"><div>{pct}</div><div>coverage <span class="mono">{cov*100:.0f}%</span> of the method</div></div></div>
+<div class="grid-12"><div class="score-card"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span>{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</div>
+<div class="score-row">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div></div>
 {c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12)}
 <div class="pillars">{prow}</div>
 {f'<div class="np-note"><b>{c.esc(b["not_published"]["reason"][0].upper() + b["not_published"]["reason"][1:])}.</b> {c.esc(b["not_published"].get("standing") or "")}. A score needs current capital ratios for this entity, so none is shown; the rating and the standing above are what to judge this name on. <a href="{c.esc(b["not_published"].get("source") or "")}" target="_blank" rel="noopener">Source</a></div>' if b.get("not_published") else ''}
-<div class="score-note">Rating anchor and public pillars with published weights (w).{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../admin/index.html#method">Method</a></div></div>
+<div class="score-note">Rating anchor and public pillars with published weights (w).{c.info("pillar")}{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../admin/index.html#method">Method</a></div></div>
 <div class="tiles">{tiles}</div></div>
 <div class="card tabs-card"><div class="tabs" role="tablist"><button class="tab active" data-tab="trends">Trends</button><button class="tab" data-tab="ratings">Ratings</button><button class="tab" data-tab="market">Market</button><button class="tab" data-tab="events">Events</button><button class="tab" data-tab="sources">Sources</button>{'<button class="tab" data-tab="data">Data</button>' if b.get("debug") else ''}</div>
 <section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.{" The grey band on a ratio is where this bank" + chr(8217) + "s peer group stands today, quartile to quartile, with the median dashed — not a peer history." if b.get("peer_ratios") else ""}</div>' if n_charts else ''}{"".join(charts) or '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
@@ -648,8 +667,8 @@ def page_ratings(generated, inner: bool = False):
     content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">Who rates whom, and how. One row per entity, one tinted cell per agency: the long-term rating with its outlook, the short-term rating and month beneath. Click a band, a grade bar or a region to filter; the ESMA European Rating Platform is the source, refreshed daily.</div></div></div>
 <div class="rtiles rtiles-f">{tiles}</div>
 <div class="card rgrid-card"><div class="toolbar rg-tools"><div class="filters">{filters}<button class="filter" data-region="moved">Moved in 90 days</button></div><input id="q" class="search" placeholder="Search"><span class="small muted" id="rg-count"></span></div>
-<div class="rg-hist"><span class="small muted">Composite grade</span>{hist}<button class="filter small gclear" hidden>Clear grade</button></div>
-<div class="table-wrap"><table id="board" class="plain rgrid"><thead><tr><th data-sort="name">Entity</th><th data-sort="score" title="Median of the agencies' long-term ratings on a common scale">Composite</th>{"".join(f"<th>{n}</th>" for _, n in used)}<th>Last action</th><th title="composite grade on each build since snapshots began">Since</th></tr></thead><tbody>{trs}</tbody></table></div>
+<div class="rg-hist"><span class="small muted">Composite grade{c.info("rating")}</span>{hist}<button class="filter small gclear" hidden>Clear grade</button></div>
+<div class="table-wrap"><table id="board" class="plain rgrid"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Composite{c.info("composite")}</th>{"".join(f"<th>{n}</th>" for _, n in used)}<th>Last action</th><th title="composite grade on each build since snapshots began">Since</th></tr></thead><tbody>{trs}</tbody></table></div>
 <div class="table-foot"><span>▲ positive outlook · ▼ negative · ◆ on watch · ▶ stable · cell tint follows the grade · a dot marks an action in 90 days · symbols are the agencies' and are shown with attribution; histories are not redistributed</span></div></div>
 <div class="grid-2 rgrid2"><div class="card pad" id="actions"><h3>Latest rating actions <span class="muted small">· 90 days, affirmations excluded</span></h3><div class="racts">{acts}</div></div>
 <div class="card pad"><h3>How each agency sees the universe</h3><div class="dist">{dist}</div><div class="dlegend"><span><i style="background:#0a2540"></i>AA- and above</span><span><i style="background:#3f5f85"></i>A range</span><span><i style="background:#7d93ad"></i>BBB range</span><span><i style="background:#b04632"></i>below BBB-</span></div>
@@ -657,11 +676,11 @@ def page_ratings(generated, inner: bool = False):
     return content if inner else c.shell("Ratings", content, "ratings", "../", generated)
 
 def page_policy_content() -> str:
-    return '''<div class="page-head"><div><h1>My policy</h1><div class="lede">Your approved counterparties and the longest tenor you accept for each, checked against today's public standing, market signal and news. The list lives in this browser and in the share link; nothing is sent anywhere.</div></div></div>
+    return f'''<div class="page-head"><div><h1>My policy</h1><div class="lede">Your approved counterparties and the longest tenor you accept for each, checked against today's public standing, market signal and news. The list lives in this browser and in the share link; nothing is sent anywhere.</div></div></div>
 <div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>
-<div class="card pad"><h3>Add a counterparty</h3>
+<div class="card pad"><h3>Add a counterparty{c.info("counterparty")}</h3>
 <div class="pol-form"><label>Name<input id="pol-name" list="pol-names" placeholder="Start typing a bank or building society" autocomplete="off"><datalist id="pol-names"></datalist></label>
-<label>Longest tenor you accept<select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button></div>
+<label><span>Longest tenor you accept{c.info('tenor')}</span><select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button></div>
 <p class="note">Use the legal entity you actually place with: Barclays Bank UK PLC rather than Barclays PLC, HSBC UK Bank plc rather than HSBC Holdings. Each name is checked from the day you add it.</p></div>
 <div class="card pad" style="margin-top:16px"><h3>Your counterparties</h3><div id="policy-body"><div class="empty">Loading…</div></div>
 <div class="pol-share"><button class="filter" id="pol-copy">Copy link</button><input id="pol-link" readonly placeholder="A link that carries this policy appears here"><button class="filter" id="pol-clear">Clear all</button></div>
@@ -675,7 +694,7 @@ def _panel_content(html: str) -> str:
     return (f'<p class="small muted panel-lede">{m.group(1)}</p>' + html[m.end():]) if m else html
 
 
-UNIVERSE_PANEL = """<p class="small muted">The whole universe, with the same detail on click and the same Add. Filter it to find a name, or sort a column to see who leads on it.</p>
+UNIVERSE_PANEL = f"""<p class="small muted">The whole universe, with the same detail on click and the same Add. Filter it to find a name, or sort a column to see who leads on it. Anything marked <span class="i i-static" aria-hidden="true">i</span> explains itself.</p>
 <div class="uni-bar">
   <input id="uni-q" type="search" placeholder="Search name, country or LEI" autocomplete="off">
   <select id="uni-region"><option value="">Every region</option></select>
@@ -686,9 +705,9 @@ UNIVERSE_PANEL = """<p class="small muted">The whole universe, with the same det
   <span class="uni-count small muted" id="uni-count"></span>
 </div>
 <div class="table-wrap"><table class="plain uni" id="uni-table"><thead><tr>
-  <th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score</th>
-  <th data-sort="rating_grade">Rating</th><th data-sort="cet1" class="num">CET1</th><th data-sort="lcr" class="num">LCR</th>
-  <th data-sort="asof">Figures</th><th>Market</th><th></th></tr></thead><tbody id="uni-body"></tbody></table></div>
+  <th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score{c.info("score")}</th>
+  <th data-sort="rating_grade">Rating{c.info("composite")}</th><th data-sort="cet1" class="num">CET1{c.info("cet1_ratio")}</th><th data-sort="lcr" class="num">LCR{c.info("lcr")}</th>
+  <th data-sort="asof">Figures{c.info("as_at")}</th><th>Market{c.info("market_signal")}</th><th></th></tr></thead><tbody id="uni-body"></tbody></table></div>
 """
 
 
@@ -861,7 +880,7 @@ def page_compare(generated):
     content = f'''<div class="page-head"><div><h1>Analysis</h1><div class="lede">One peer set, one measure, every view at once. Pin up to six names and they carry the same colour in every panel; hover any name anywhere and it lights up everywhere.</div></div></div>
 <div class="card cp-card"><div class="cp-tools">
 <div class="filters" id="cp-sets">{chips}</div>
-<div class="cp-row"><label class="small muted">Measure <select id="cp-metric"></select></label>
+<div class="cp-row"><label class="small muted">Measure <select id="cp-metric"></select></label><button type="button" class="i" id="cp-def" data-t="score" aria-expanded="false" aria-label="What is this measure?">i</button>
 <label class="small muted">against <select id="cp-metric2"></select></label>
 <div class="search cp-add">{c.ico("search", 16, c.MUTED)}<input id="cp-q" placeholder="Add a name to the set" autocomplete="off"><div class="cp-sugg" id="cp-sugg" hidden></div></div>
 <span class="small muted" id="cp-count"></span></div>

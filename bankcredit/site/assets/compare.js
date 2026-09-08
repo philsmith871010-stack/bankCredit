@@ -13,6 +13,12 @@
   function policyIds(){return ls('counterparty.policy').map(function(x){return x.id})}
   function readHash(){var h=location.hash.replace('#','');if(!h)return;h.split('&').forEach(function(kv){var p=kv.split('=');var k=p[0],v=decodeURIComponent(p[1]||'');if(k==='extra'||k==='pins'){state[k]=v?v.split(','):[];if(k==='pins')userPinned=true}else if(k in state&&k!=='pins'&&k!=='extra')state[k]=v})}
   function writeHash(){var parts=['set='+state.set,'metric='+state.metric,'metric2='+state.metric2];if(state.extra.length)parts.push('extra='+state.extra.join(','));if(userPinned&&state.pins.length)parts.push('pins='+state.pins.join(','));history.replaceState(null,'','#'+parts.join('&'))}
+  // the definition marker beside the measure picker follows whatever is chosen
+  var GK={score:'score',rating_grade:'composite',cet1_ratio:'cet1_ratio',leverage_ratio:'leverage_ratio',
+          total_capital_ratio:'total_capital_ratio',lcr:'lcr',nsfr:'nsfr',roe:'roe',roa:'roa',nim:'nim',
+          efficiency_ratio:'cost_to_income',npl_ratio:'npl_ratio',cost_of_risk:'cost_of_risk',total_assets:'total_assets'};
+  function markMeasure(code){var b=document.getElementById('cp-def');if(!b)return;
+    var k=GK[code];b.hidden=!k;if(k)b.dataset.t=k}
   function metric(code){for(var i=0;i<D.metrics.length;i++)if(D.metrics[i][0]===code)return D.metrics[i];return D.metrics[0]}
   function members(){var ids;
     if(state.set==='all')ids=D.rows.map(function(r){return r.id});
@@ -164,9 +170,10 @@
     sugg.innerHTML=hits.map(function(r){return '<button data-id="'+r.id+'">'+esc(r.short)+' <span class="muted small">'+esc(r.name)+'</span></button>'}).join('')||'<span class="muted small">No match</span>';sugg.hidden=false}
   fetch(((document.body.getAttribute('data-root')==null)?'../':document.body.getAttribute('data-root'))+'data/compare.json').then(function(r){return r.json()}).then(function(d){D=d;d.rows.forEach(function(r){byId[r.id]=r});
     d.metrics.forEach(function(m){sel.insertAdjacentHTML('beforeend','<option value="'+m[0]+'">'+esc(m[1])+'</option>');if(m[0]!=='score')sel2.insertAdjacentHTML('beforeend','<option value="'+m[0]+'">'+esc(m[1])+'</option>')});
+    markMeasure(state.metric||(d.metrics[0]||[])[0]);
     readHash();sel.value=state.metric;sel2.value=state.metric2;counts();render();
     document.getElementById('cp-sets').addEventListener('click',function(e){var b=e.target.closest('.cp-set');if(!b||b.disabled)return;state.set=b.dataset.set;state.extra=[];state.pins=[];userPinned=false;render()});
-    sel.addEventListener('change',function(){state.metric=sel.value;if(!userPinned)state.pins=[];render()});sel2.addEventListener('change',function(){state.metric2=sel2.value;render()});
+    sel.addEventListener('change',function(){state.metric=sel.value;markMeasure(sel.value);if(!userPinned)state.pins=[];render()});sel2.addEventListener('change',function(){state.metric2=sel2.value;render()});
     document.addEventListener('click',function(e){var b=e.target.closest('.pin');if(b){togglePin(b.dataset.id);return}
       var x=e.target.closest('.pc-x');if(x){var pnl=document.getElementById('p-'+x.dataset.panel);var was=pnl.classList.contains('wide');document.querySelectorAll('.panel-c.wide').forEach(function(q2){q2.classList.remove('wide')});if(!was)pnl.classList.add('wide');render();return}
       var th=e.target.closest('#c-table th[data-sort]');if(th){var k=th.dataset.sort;if(state.sort===k)state.dir=state.dir==='asc'?'desc':'asc';else{state.sort=k;state.dir=(k==='name'||k==='band'||k==='rating'||k==='efficiency_ratio'||k==='npl_ratio')?'asc':'desc'}renderTable(members());return}
