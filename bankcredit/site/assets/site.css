@@ -391,11 +391,12 @@ th .i,.uni th .i{margin-left:4px}
 /* The front door ------------------------------------------------------------------------------
    An empty list is a bad first impression, so the opening carries the scale and the sources. */
 .page-head.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
-.hero-strip{display:flex;gap:26px;flex-wrap:wrap;background:var(--white);border:1px solid var(--line);
-            border-radius:12px;padding:11px 18px}
+.hero-strip{display:flex;gap:26px;flex-wrap:wrap;border-radius:12px;padding:13px 20px;
+            background:linear-gradient(100deg,#0a2540 0%,#143659 55%,#1a4775 100%);
+            box-shadow:0 6px 20px rgba(10,37,64,.16)}
 .hs{display:flex;flex-direction:column;line-height:1.2}
-.hs b{font-size:22px;font-weight:700;color:#0a2540;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-.hs span{font-size:11px;color:var(--muted);max-width:13ch}
+.hs b{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.hs span{font-size:11px;color:rgba(255,255,255,.62);max-width:13ch}
 .pol-empty{padding:24px 4px 8px;max-width:52ch}
 .pol-empty h4{margin:0 0 6px;font-size:16px;color:#0a2540}
 .pol-empty p{margin:0 0 14px;font-size:13.5px;line-height:1.6;color:var(--muted)}
