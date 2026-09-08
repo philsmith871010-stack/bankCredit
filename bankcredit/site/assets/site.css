@@ -219,7 +219,7 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .cp-score{font-size:30px;font-weight:600;line-height:1;letter-spacing:-.02em}
 .meter{position:relative;height:7px;border-radius:4px;background:var(--line-soft);margin:8px 0 5px;overflow:hidden}
 .meter>i{position:absolute;inset:0 auto 0 0;border-radius:4px;display:block}
-.meter.sm{height:5px;margin:6px 0 4px}
+.meter.sm,.meter-sm{height:5px;margin:6px 0 4px}
 
 /* key ratios: a KPI row, value over label, one "as of" beneath */
 .cp-kpis{display:flex;gap:16px;flex-wrap:wrap}
@@ -306,8 +306,11 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 /* fixes found by rendering the page: cells sized by content, the dialog scrolls its body,
    and nothing in a grid cell is allowed to overflow into its neighbour */
 .cp-body{align-items:start}
-.pol-modal{display:flex;flex-direction:column}
+/* A dialog is display:none until it is open; setting display on the element itself overrides that
+   and leaves a dead copy of the last bank sitting in the page after you close it. */
+.pol-modal{flex-direction:column}
 .pol-modal[open]{display:flex}
+.pol-modal:not([open]){display:none}
 #md-body{flex:1 1 auto;min-height:0}
 .md-grid>section{min-width:0}
 .md-rt{width:100%;table-layout:fixed}
@@ -514,3 +517,10 @@ th .i,.uni th .i{margin-left:4px}
 table.uni .sc-n{font-size:14px}
 .ll-score .sc-n{font-size:18px;letter-spacing:-.02em}
 .pe-sc .sc-n{font-size:14px}
+.dtip{position:fixed;z-index:210;pointer-events:none;max-width:280px;background:#0a2540;color:#fff;
+      border-radius:9px;padding:9px 11px;font-size:12px;line-height:1.5;box-shadow:0 10px 28px rgba(10,37,64,.3)}
+.dtip b{display:block;font-size:12.5px;letter-spacing:-.01em}
+.dtip b span{float:right;margin-left:12px;font-weight:400;color:rgba(255,255,255,.62)}
+.dtip i{display:block;font-style:normal;color:rgba(255,255,255,.72);margin-top:3px}
+.dtip em{font-style:normal;color:#fd7e14;font-weight:600}
+.pv-charts [data-tip]{cursor:default}

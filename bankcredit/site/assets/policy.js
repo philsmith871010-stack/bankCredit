@@ -31,17 +31,26 @@
   // Anchored to where scores actually fall - the universe runs 49 to 99, quartiles at 67, 73 and 78
   // - so the ramp turns over the range a reader is comparing, rather than spending most of itself
   // on scores no bank has.
-  var RAMP=[[50,163,22,29],[62,184,69,26],[70,138,98,6],[77,79,122,31],[85,30,122,58],[95,20,102,58]];
-  function scoreColour(v){
-    if(v==null)return '#6c757d';
-    v=Math.max(0,Math.min(100,v));
+  var RAMP=[[0,163,22,29],[0.267,184,69,26],[0.444,138,98,6],[0.6,79,122,31],[0.778,30,122,58],[1,20,102,58]];
+  function rampColour(t){
+    t=Math.max(0,Math.min(1,t));
     for(var i=1;i<RAMP.length;i++){
-      if(v<=RAMP[i][0]){
-        var a=RAMP[i-1],b=RAMP[i],t=(v-a[0])/((b[0]-a[0])||1);
-        return 'rgb('+[1,2,3].map(function(k){return Math.round(a[k]+(b[k]-a[k])*t)}).join(',')+')';
+      if(t<=RAMP[i][0]){
+        var a=RAMP[i-1],b=RAMP[i],k=(t-a[0])/((b[0]-a[0])||1);
+        return 'rgb('+[1,2,3].map(function(j){return Math.round(a[j]+(b[j]-a[j])*k)}).join(',')+')';
       }
     }
     return 'rgb(20,102,58)';
+  }
+  // the counterparty score, anchored to where scores actually fall (49.5 to 99.4 across the universe)
+  function scoreColour(v){return v==null?'#6c757d':rampColour((v-50)/45)}
+  // a pillar is scored on its own nought-to-a-hundred, so it takes the whole ramp
+  function pillarColour(v){return v==null?'#adb5bd':rampColour(v/100)}
+  // a rating runs AAA to CCC; the turn sits at the investment-grade line rather than in the middle
+  function gradeColour(g){
+    var i=GRADES.indexOf(String(g||'').trim());
+    if(i<0)return '#6c757d';
+    return rampColour(1-Math.min(1,i/11));
   }
   // one number, one colour, one letter - used wherever a score is shown in a row or a card
   function scoreNum(v,band,cls){
@@ -109,17 +118,59 @@
   var BANDS=['A','B','C','D','E'];
   function svg(w,h,inner,cls){return '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" class="pv-svg'+(cls?' '+cls:'')+'" preserveAspectRatio="none" aria-hidden="true">'+inner+'</svg>'}
 
+
+  // ---- tooltips on the overview charts ------------------------------------------------------
+  // A mark is a few pixels of colour; the tooltip is where it says what it is. The content is
+  // built with the chart and kept in a registry, so nothing has to be escaped into an attribute
+  // and the DOM carries a key rather than a paragraph per mark.
+  var TIPS={}, TIPN=0, DTIP=null;
+  function tipd(html){var k='t'+(++TIPN);TIPS[k]=html;return ' data-tip="'+k+'"'}
+  var BAND_RANGE={A:'80 and above',B:'65 to 79.9',C:'50 to 64.9',D:'35 to 49.9',E:'below 35'};
+  function names(list,max){
+    var n=list.slice(0,max||6).map(function(e){return esc(e.short)}).join(', ');
+    return list.length>(max||6)?n+' and '+(list.length-(max||6))+' more':n;
+  }
+  function tipHead(t,s){return '<b>'+t+'</b>'+(s?'<span>'+s+'</span>':'')}
+  function dtip(){
+    if(DTIP)return DTIP;
+    DTIP=document.createElement('div');DTIP.className='dtip';DTIP.hidden=true;document.body.appendChild(DTIP);
+    return DTIP;
+  }
+  function showTip(el,ev){
+    var k=el.getAttribute('data-tip'), html=TIPS[k]; if(!html)return;
+    var t=dtip(); t.innerHTML=html; t.hidden=false;
+    var w=t.offsetWidth, h=t.offsetHeight, vw=innerWidth, vh=innerHeight;
+    var x=Math.max(10,Math.min(ev.clientX-w/2, vw-w-10));
+    var y=ev.clientY-h-14; if(y<10)y=ev.clientY+18;
+    t.style.left=x+'px'; t.style.top=Math.min(y,vh-h-10)+'px';
+  }
+  function hideTip(){if(DTIP)DTIP.hidden=true}
+  document.addEventListener('mouseover',function(e){
+    var el=e.target.closest&&e.target.closest('[data-tip]');
+    if(el)showTip(el,e); else if(!e.target.closest('.dtip'))hideTip();
+  });
+  document.addEventListener('mousemove',function(e){
+    var el=e.target.closest&&e.target.closest('[data-tip]');
+    if(el&&DTIP&&!DTIP.hidden)showTip(el,e);
+  });
+  addEventListener('scroll',hideTip,true);
+
   function bandMix(es){
-    var n={},tot=0;BANDS.forEach(function(b){n[b]=0});
-    es.forEach(function(e){if(e.band&&n[e.band]!=null){n[e.band]++;tot++}});
+    var n={},who={},tot=0;BANDS.forEach(function(b){n[b]=0;who[b]=[]});
+    es.forEach(function(e){if(e.band&&n[e.band]!=null){n[e.band]++;who[e.band].push(e);tot++}});
     if(!tot)return '<div class="muted small">no scored names</div>';
     var w=260,h=16,x=0,parts='',key='';
     BANDS.forEach(function(b){
       if(!n[b])return;
       var seg=n[b]/tot*w;
-      parts+='<rect x="'+x.toFixed(1)+'" y="0" width="'+Math.max(0,seg-2).toFixed(1)+'" height="'+h+'" rx="3" fill="'+BANDC[b]+'"><title>'+n[b]+' in band '+b+'</title></rect>';
+      var sc=who[b].map(function(e){return e.score}).sort(function(a,c){return a-c});
+      var tip=tipd(tipHead('Band '+b,n[b]+' of '+tot)+
+        '<i>'+Math.round(n[b]/tot*100)+'% of your scored names \u00b7 score '+BAND_RANGE[b]+'</i>'+
+        '<i>lowest here <em>'+sc[0].toFixed(1)+'</em>, highest '+sc[sc.length-1].toFixed(1)+'</i>'+
+        '<i>'+names(who[b])+'</i>');
+      parts+='<rect x="'+x.toFixed(1)+'" y="0" width="'+Math.max(0,seg-2).toFixed(1)+'" height="'+h+'" rx="3" fill="'+BANDC[b]+'"'+tip+'/>';
       x+=seg;
-      key+='<span class="pv-key"><i style="background:'+BANDC[b]+'"></i>'+b+' <b>'+n[b]+'</b></span>';
+      key+='<span class="pv-key"'+tip+'><i style="background:'+BANDC[b]+'"></i>'+b+' <b>'+n[b]+'</b></span>';
     });
     return svg(w,h,parts)+'<div class="pv-keys">'+key+'</div>';
   }
@@ -131,17 +182,34 @@
     var bins=20,w=260,h=52,base=h-14,ax=[];
     for(var i=0;i<bins;i++)ax.push(0);
     all.forEach(function(e){if(e.score!=null)ax[Math.min(bins-1,Math.floor(e.score/100*bins))]++});
-    var amax=Math.max.apply(null,ax)||1, bw=w/bins, inner='';
+    var amax=Math.max.apply(null,ax)||1, bw=w/bins, inner='', hits='';
+    var scored=all.filter(function(e){return e.score!=null});
     for(var j=0;j<bins;j++){
       var ah=ax[j]/amax*(base-4);
       if(ah>0)inner+='<rect x="'+(j*bw+.6).toFixed(1)+'" y="'+(base-ah).toFixed(1)+'" width="'+(bw-1.2).toFixed(1)+'" height="'+ah.toFixed(1)+'" rx="1.5" fill="'+(solo?'#c3ced9':'#e9ecef')+'"/>';
+      // the bar is a few pixels wide, so the thing you can point at is the whole column
+      var lo=j*100/bins, hi=(j+1)*100/bins;
+      var inBin=scored.filter(function(e){return e.score>=lo&&(e.score<hi||(j===bins-1&&e.score<=100))});
+      var yours=(mine||[]).filter(function(e){return e.score!=null&&e.score>=lo&&e.score<hi});
+      if(inBin.length)hits+='<rect x="'+(j*bw).toFixed(1)+'" y="0" width="'+bw.toFixed(1)+'" height="'+base+'" fill="transparent"'+
+        tipd(tipHead('Scores '+lo+' to '+hi,inBin.length+(inBin.length===1?' name':' names'))+
+          '<i>'+Math.round(inBin.length/scored.length*100)+'% of the '+scored.length+' scored names sit in this range</i>'+
+          '<i>'+names(inBin.sort(function(a,b){return b.score-a.score}),5)+'</i>'+
+          (yours.length?'<i>yours here: <em>'+names(yours,4)+'</em></i>':''))+'/>';
     }
-    inner+='<line x1="0" x2="'+w+'" y1="'+base+'" y2="'+base+'" stroke="#dee2e6" stroke-width="1"/>';
+    inner+='<line x1="0" x2="'+w+'" y1="'+base+'" y2="'+base+'" stroke="#dee2e6" stroke-width="1"/>'+hits;
     mine.forEach(function(e){
       if(e.score==null)return;
       var x=e.score/100*w;
+      var below=scored.filter(function(o){return o.score<e.score}).length;
+      var tip=tipd(tipHead(esc(e.short),e.score.toFixed(1)+' \u00b7 band '+esc(e.band||'?'))+
+        '<i>stronger than <em>'+Math.round(below/Math.max(1,scored.length)*100)+'%</em> of the '+scored.length+' scored names</i>'+
+        '<i>'+(e.rating_composite?'rated '+esc(e.rating_composite)+' \u00b7 ':'')+
+        (e.cet1!=null?'CET1 '+e.cet1.toFixed(1)+'% \u00b7 ':'')+(e.lcr!=null?'LCR '+Math.round(e.lcr)+'%':'')+'</i>'+
+        (e.asof?'<i>figures as at '+esc(e.asof)+'</i>':''));
       inner+='<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+(base-13)+'" y2="'+(base+4)+'" stroke="#fff" stroke-width="3.4"/>'+
-             '<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+(base-13)+'" y2="'+(base+4)+'" stroke="#fd7e14" stroke-width="2"><title>'+esc(e.short)+' '+e.score.toFixed(1)+'</title></line>';
+             '<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+(base-13)+'" y2="'+(base+4)+'" stroke="#fd7e14" stroke-width="2"/>'+
+             '<rect x="'+(x-5).toFixed(1)+'" y="'+(base-15)+'" width="10" height="21" fill="transparent"'+tip+'/>';
     });
     inner+='<text x="1" y="'+h+'" class="pv-ax">0</text><text x="'+(w/2)+'" y="'+h+'" text-anchor="middle" class="pv-ax">50</text><text x="'+w+'" y="'+h+'" text-anchor="end" class="pv-ax">100</text>';
     return svg(w,h,inner);
@@ -149,14 +217,25 @@
 
   function ratingHist(es){
     // the composite rating is an ordered scale, so the bars stay in grade order
-    var n={},tot=0;
-    es.forEach(function(e){if(e.rating_composite){n[e.rating_composite]=(n[e.rating_composite]||0)+1;tot++}});
+    var n={},who={},tot=0;
+    es.forEach(function(e){if(e.rating_composite){n[e.rating_composite]=(n[e.rating_composite]||0)+1;
+      (who[e.rating_composite]=who[e.rating_composite]||[]).push(e);tot++}});
     var present=GRADES.filter(function(g){return n[g]});
     if(!present.length)return '<div class="muted small">no rated names</div>';
+    // how common that grade is across everything covered, so your mix has something to sit against
+    var uni={},urated=0;
+    (data&&data.rows||[]).forEach(function(e){if(e.rating_composite){uni[e.rating_composite]=(uni[e.rating_composite]||0)+1;urated++}});
     var w=260,h=52,bw=w/present.length,bar=Math.min(bw-3,26),mx=Math.max.apply(null,present.map(function(g){return n[g]})),inner='';
     present.forEach(function(g,i){
       var bh=Math.max(4,n[g]/mx*(h-16));
-      inner+='<rect x="'+(i*bw+(bw-bar)/2).toFixed(1)+'" y="'+(h-16-bh).toFixed(1)+'" width="'+bar.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="2" fill="#143659"><title>'+n[g]+' rated '+g+'</title></rect>'+
+      var ig=GRADES.indexOf(g);
+      var tip=tipd(tipHead(esc(g),n[g]+' of '+tot)+
+        '<i>'+(ig<=3?'the top of investment grade':ig<=6?'the strong end of investment grade':ig<=9?'the middle of investment grade':'below investment grade')+
+        ' \u00b7 '+Math.round(n[g]/tot*100)+'% of your rated names</i>'+
+        (uni[g]?'<i><em>'+uni[g]+'</em> of the '+urated+' rated names covered carry '+esc(g)+'</i>':'')+
+        '<i>'+names(who[g])+'</i>');
+      inner+='<rect x="'+(i*bw+(bw-bar)/2).toFixed(1)+'" y="'+(h-16-bh).toFixed(1)+'" width="'+bar.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="2" fill="#143659"/>'+
+             '<rect x="'+(i*bw).toFixed(1)+'" y="0" width="'+bw.toFixed(1)+'" height="'+(h-16)+'" fill="transparent"'+tip+'/>'+
              '<text x="'+(i*bw+bw/2).toFixed(1)+'" y="'+h+'" text-anchor="middle" class="pv-ax">'+g+'</text>';
     });
     return svg(w,h,inner);
@@ -164,15 +243,26 @@
 
   function tenorScore(items){
     // the question this answers: are the longest tenors on the weakest names?
-    var pts=items.map(function(it){var e=byId[it.id];return e&&e.score!=null?{t:it.tenor,s:e.score,n:e.short,b:e.band}:null}).filter(Boolean);
+    var pts=items.map(function(it){var e=byId[it.id];return e&&e.score!=null?{t:it.tenor,s:e.score,e:e}:null}).filter(Boolean);
     if(!pts.length)return '<div class="muted small">no scored names</div>';
     var w=260,h=52,pad=14;
     var maxT=Math.max.apply(null,pts.map(function(p){return p.t}));
     var X=function(t){return maxT<=0?w/2:8+(t/maxT)*(w-20)};
     var Y=function(s){return (h-pad)-(s/100)*(h-pad-6)};
     var inner='<line x1="0" x2="'+w+'" y1="'+Y(50).toFixed(1)+'" y2="'+Y(50).toFixed(1)+'" stroke="#e9ecef" stroke-width="1"/>';
+    var weakest=Math.min.apply(null,pts.map(function(p){return p.s}));
+    var longest=Math.max.apply(null,pts.map(function(p){return p.t}));
     pts.forEach(function(p){
-      inner+='<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.s).toFixed(1)+'" r="4.5" fill="'+(BANDC[p.b]||'#7d93ad')+'" stroke="#fff" stroke-width="1.5"><title>'+esc(p.n)+': '+p.s.toFixed(1)+' at '+tenorLabel(p.t)+'</title></circle>';
+      var e=p.e, atOrAbove=pts.filter(function(o){return o.t>=p.t});
+      var minAt=Math.min.apply(null,atOrAbove.map(function(o){return o.s}));
+      var tip=tipd(tipHead(esc(e.short),e.score.toFixed(1)+' \u00b7 band '+esc(e.band||'?'))+
+        '<i>accepted to <em>'+esc(tenorLabel(p.t))+'</em>'+(p.t===longest?' \u2014 your longest':'')+
+        (p.s===weakest?' \u00b7 your weakest score':'')+'</i>'+
+        '<i>'+(e.rating_composite?'rated '+esc(e.rating_composite)+' \u00b7 ':'')+
+        (e.cet1!=null?'CET1 '+e.cet1.toFixed(1)+'% \u00b7 ':'')+(e.lcr!=null?'LCR '+Math.round(e.lcr)+'%':'')+'</i>'+
+        '<i>weakest you accept at '+esc(tenorLabel(p.t))+' or longer: '+minAt.toFixed(1)+'</i>');
+      inner+='<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.s).toFixed(1)+'" r="4.5" fill="'+(BANDC[e.band]||'#7d93ad')+'" stroke="#fff" stroke-width="1.5"/>'+
+             '<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.s).toFixed(1)+'" r="10" fill="transparent"'+tip+'/>';
     });
     inner+='<text x="0" y="'+h+'" class="pv-ax">short</text><text x="'+w+'" y="'+h+'" text-anchor="end" class="pv-ax">'+tenorLabel(maxT)+'</text>';
     return svg(w,h,inner);
@@ -228,13 +318,23 @@
     var last=pts[pts.length-1], band='', vs='';
     if(pq){
       var y1=Y(pq.p75),y2=Y(pq.p25);
-      band='<rect x="0" y="'+Math.min(y1,y2).toFixed(1)+'" width="'+w+'" height="'+Math.abs(y2-y1).toFixed(1)+'" fill="#adb5bd" fill-opacity="0.16"/>'+
-           '<line x1="0" x2="'+w+'" y1="'+Y(pq.p50).toFixed(1)+'" y2="'+Y(pq.p50).toFixed(1)+'" stroke="#adb5bd" stroke-width="1" stroke-dasharray="3 2"/>';
+      band='<rect x="0" y="'+Math.min(y1,y2).toFixed(1)+'" width="'+w+'" height="'+Math.abs(y2-y1).toFixed(1)+'" fill="#8fa3b8" fill-opacity="0.22"/>'+
+           '<line x1="0" x2="'+w+'" y1="'+Y(pq.p50).toFixed(1)+'" y2="'+Y(pq.p50).toFixed(1)+'" stroke="#7d93ad" stroke-width="1" stroke-dasharray="3 2"/>';
       var diff=last.v-pq.p50;
       if(Math.abs(diff)<0.05)diff=0;
       vs='<span class="mt-vs '+(diff>0?'up':diff<0?'dn':'lv')+'">'+(diff>0?'+':'')+diff.toFixed(1)+' vs peers</span>';
     }
-    return '<figure class="mt"><figcaption>'+esc(label)+mk(gk)+' <b>'+last.v.toFixed(1)+unit+'</b> '+vs+'</figcaption>'+
+    // one tooltip for the whole spark: at 150 by 46 there is no room to point at a single quarter,
+    // and the questions a reader has are about the run and the peer group, not one point
+    var first=pts[0], chg=last.v-first.v;
+    var tip=tipd(tipHead(esc(label),last.v.toFixed(1)+unit)+
+      '<i>'+esc(first.d.slice(0,7))+' to '+esc(last.d.slice(0,7))+' \u00b7 '+pts.length+' periods</i>'+
+      '<i>from '+first.v.toFixed(1)+unit+' \u00b7 '+(chg>=0?'+':'\u2212')+Math.abs(chg).toFixed(1)+' over the run</i>'+
+      (pq?'<i>peer group today: 25th <em>'+pq.p25.toFixed(1)+'</em> \u00b7 median <em>'+pq.p50.toFixed(1)+
+          '</em> \u00b7 75th <em>'+pq.p75.toFixed(1)+'</em></i>'+
+          '<i>the shaded band is that middle half, the dashed line its median</i>':
+          '<i>no peer band: fewer than four names in the group publish this</i>'));
+    return '<figure class="mt"'+tip+'><figcaption>'+esc(label)+mk(gk)+' <b>'+last.v.toFixed(1)+unit+'</b> '+vs+'</figcaption>'+
       '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" aria-hidden="true">'+band+
       '<path d="'+d+'V'+(h-12)+'H'+pad+'Z" fill="#0a2540" fill-opacity="0.07"/>'+
       '<path d="'+d+'" fill="none" stroke="#0a2540" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+
@@ -252,7 +352,8 @@
     var st={};((e&&e.short_ratings)||[]).forEach(function(x){st[x.letter]=x.value});
     var head=(e&&e.ratings)||[];
     var rt=head.map(function(x){
-      return '<tr><td class="ag">'+esc(AGN[x.agency]||x.agency)+'</td><td class="b">'+esc(x.value)+'</td>'+
+      return '<tr><td class="ag">'+esc(AGN[x.agency]||x.agency)+'</td>'+
+             '<td class="b" style="color:'+gradeColour(x.value)+'">'+esc(x.value)+'</td>'+
              '<td class="mono muted">'+esc(st[x.letter]||'')+'</td>'+
              '<td class="muted">'+esc(x.outlook||'')+'</td></tr>';
     }).join('')||'<tr><td colspan="5" class="muted">No agency rates this entity.</td></tr>';
@@ -260,8 +361,13 @@
     // pillars come through as [score, weight]
     var sd=(b.score_detail&&b.score_detail.pillars)||null;
     var pill=sd?Object.keys(sd).map(function(k){var v=sd[k]||[];var pc=v[0],wt=v[1];
-      return '<div class="md-pill"><span>'+esc(k.replace(/_/g,' '))+'</span>'+meter(pc,b.band||(e&&e.band),'sm')+
-             '<b>'+(pc==null?'—':pc.toFixed(0))+'</b><i>w'+(wt==null?'':wt)+'</i></div>'}).join(''):'';
+      var col=pillarColour(pc);
+      var tip=tipd(tipHead(esc(k.replace(/_/g,' ')),(pc==null?'not held':pc.toFixed(0)+' of 100'))+
+        '<i>worth <em>'+(wt==null?'0':wt)+'%</em> of the score'+(pc==null?' \u2014 re-scaled away, since this bank does not publish it':'')+'</i>'+
+        (pc!=null?'<i>'+(pc>=80?'strong':pc>=60?'middling':pc>=40?'weak':'very weak')+' against the method\u2019s thresholds</i>':''));
+      return '<div class="md-pill"'+tip+'><span>'+esc(k.replace(/_/g,' '))+'</span>'+
+             '<div class="meter meter-sm"><i style="width:'+(pc==null?0:Math.max(0,Math.min(100,pc)))+'%;background:'+col+'"></i></div>'+
+             '<b style="color:'+col+'">'+(pc==null?'—':pc.toFixed(0))+'</b><i>w'+(wt==null?'':wt)+'</i></div>'}).join(''):'';
     var ev=(b.events||(e&&e.recent)||[]).slice(0,6).map(function(x){
       var k=x.severity==='bad'?'bad':(x.severity==='warn'?'warn':'good');
       return '<div><span class="dot dot-'+k+'"></span><span class="mono muted">'+esc(x.date)+'</span><span class="hd">'+esc(x.title)+'</span></div>';
@@ -289,6 +395,7 @@
       '<div id="md-body"><div class="empty">Loading…</div></div>';
     if(!dlg.open)dlg.showModal();
     var put=function(b){var t=document.getElementById('md-body');if(t)t.innerHTML=modalBody(b,e)};
+    hideTip();
     if(MCACHE[id])return put(MCACHE[id]);
     detail(id).then(put).catch(function(){
       var t=document.getElementById('md-body');if(t)t.innerHTML='<div class="empty">Could not load this bank’s detail.</div>'});
@@ -394,6 +501,7 @@
 
   function render(){
     var p=load(); var out=document.getElementById('policy-body'); if(!out||!data)return;
+    TIPS={}; hideTip();                       // the marks are about to be rebuilt
     var html='';
     // nothing approved yet: say what to do and open the door to the table, rather than showing an
     // empty box and a share bar with nothing to share
