@@ -46,7 +46,12 @@ ls -d ~/Counterparty/data/cache/run.lock 2>/dev/null && echo "a scheduled run is
 | Review | `claude -p "/counterparty-review"` | Opens each queued PDF page, writes `data/review/resolved/<id>.json` |
 | News | `claude -p "/counterparty-news"` | Judges the fortnight's headlines; verdicts in `data/review/news_verdicts.json` are applied by every pipeline run |
 | Load | `python -m bankcredit.cli review ingest` | Answers become facts with method `pdf_manual` |
-| Publish | `git push` | The pipeline rebuilds and deploys the site |
+| Publish | `git add data/facts.parquet data/documents.parquet data/runs.parquet data/events.parquet data/review && git push` | The pipeline rebuilds and deploys the site |
+
+Stage those paths rather than `git add -A`. It is safe on a collection-only run,
+because `data/cache/` is ignored, but after a local `build` it also stages the
+rebuilt `data/json/` and `history.parquet` — which the scheduled job deliberately
+discards so the runner's copy wins, and which will then conflict on the next pull.
 
 ## Doing it interactively instead
 

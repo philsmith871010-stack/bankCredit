@@ -8,6 +8,9 @@
   python -m bankcredit.cli review list|ingest        # review queue for failed extractions
   python -m bankcredit.cli learn                     # what the reviewer's answers taught the extractor
   python -m bankcredit.cli browser [entity ...]      # bot-blocked sites: plain request, then headless Chromium
+  python -m bankcredit.cli discover <entity> [url ...] [<entity> [url ...] ...]
+                                                     # crawl from a start page and record every document-looking
+                                                     # link, to find where a bank moved its disclosures
   python -m bankcredit.cli reprocess [entity]        # re-extract cached PDFs after an extractor change
   python -m bankcredit.cli health                    # which sources have stopped working, and which never did
 """
