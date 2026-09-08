@@ -1,1 +1,391 @@
-[]
+[
+ {
+  "id": "b90c1bb70854",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/pillar-3-report-march-2014.pdf",
+  "local": "cache/pdf/nab/b90c1bb7085424d2.pdf",
+  "title": "pillar-3-report-march-2014.pdf",
+  "page": 5,
+  "reference_date": "2014-03-31",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 8.64,
+   "tier1_capital": 10.83
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-08T11:02:24"
+ },
+ {
+  "id": "76ce16be92f3",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/dec-2013-pillar3-report-final.pdf",
+  "local": "cache/pdf/nab/76ce16be92f32596.pdf",
+  "title": "dec-2013-pillar3-report-final.pdf",
+  "page": 5,
+  "reference_date": "2013-12-31",
+  "currency": "AUD",
+  "values": {
+   "rwa": 370402.0,
+   "cet1_capital": 8.21,
+   "tier1_capital": 10.54
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-08T11:02:24"
+ },
+ {
+  "id": "1da178af907c",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/pillar-3-report-september-2013.pdf",
+  "local": "cache/pdf/nab/1da178af907cb416.pdf",
+  "title": "pillar-3-report-september-2013.pdf",
+  "page": 5,
+  "reference_date": "2013-09-30",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 8.43,
+   "tier1_capital": 10.35
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-08T11:02:24"
+ },
+ {
+  "id": "f0e630ecea2e",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2018/30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/f0e630ecea2e8a24.pdf",
+  "title": "30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": 5,
+  "reference_date": "2018-06-30",
+  "currency": "AUD",
+  "values": {
+   "net_cash_outflows": 5855.2,
+   "lcr": 126.6
+  },
+  "checks": [
+   [
+    "warn",
+    "header date 2018-06-30 disagrees with expected 2030-06-30"
+   ],
+   [
+    "error",
+    "missing core row cet1_capital"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ]
+  ],
+  "reason": "warn:header date 2018-06-30 disagrees with expected 2030-06-30; error:missing core row cet1_capital; error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one)",
+  "status": "open",
+  "created": "2026-09-08T11:02:35"
+ },
+ {
+  "id": "214db219ec3b",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2018/30-june---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/214db219ec3b1123.pdf",
+  "title": "30-june---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": 4,
+  "reference_date": "2018-06-30",
+  "currency": "AUD",
+  "values": {
+   "tier1_capital": 4193.6,
+   "total_capital": 4916.0,
+   "rwa": 38256.4,
+   "cet1_capital": 8.62,
+   "tier1_ratio": 10.96,
+   "total_capital_ratio": 12.85
+  },
+  "checks": [
+   [
+    "warn",
+    "header date 2018-06-30 disagrees with expected 2030-06-30"
+   ],
+   [
+    "info",
+    "tier1_ratio derived from tier1_capital over RWA"
+   ],
+   [
+    "info",
+    "total_capital_ratio derived from total_capital over RWA"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:header date 2018-06-30 disagrees with expected 2030-06-30; info:tier1_ratio derived from tier1_capital over RWA; info:total_capital_ratio derived from total_capital over RWA; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-08T11:02:35"
+ },
+ {
+  "id": "1df37ba17cc8",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2017/30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/1df37ba17cc89f39.pdf",
+  "title": "30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-08T11:02:35"
+ },
+ {
+  "id": "fd201607013b",
+  "entity_id": "rentenbank",
+  "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-pursuant-to-Part-8-CRR-in-particular-Articles-431-to-455-CRR-and-Section-26a-KWG-in-conjunction-with-Section-64r-15-KWG-as-of-December-31-2014.pdf",
+  "local": "cache/pdf/rentenbank/fd201607013b802a.pdf",
+  "title": "Disclosure-Report-pursuant-to-Part-8-CRR-in-particular-Articles-431-to-455-CRR-and-Section-26a-KWG-in-conjunction-with-S",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-08T11:14:10"
+ },
+ {
+  "id": "111f7b59cbd0",
+  "entity_id": "standard-chartered-hk",
+  "url": "https://vpr.hkma.gov.hk/statics/assets/doc/100269/fd_int/fd_int_0923_eng.pdf",
+  "local": "cache/pdf/standard-chartered-hk/111f7b59cbd0ddad.pdf",
+  "title": "fd_int_0923_eng.pdf",
+  "page": 4,
+  "reference_date": "2023-09-30",
+  "currency": "HKD",
+  "values": {
+   "cet1_capital": 146825.0,
+   "tier1_capital": 167513.0,
+   "total_capital": 181125.0,
+   "rwa": 877931.0,
+   "cet1_ratio": 8.0,
+   "tier1_ratio": 2.0,
+   "combined_buffer": 5.0,
+   "leverage_exposure": 2616503.0,
+   "hqla": 459443.0,
+   "net_cash_outflows": 211733.0,
+   "available_stable_funding": 1406726.0,
+   "required_stable_funding": 1042507.0,
+   "nsfr": 135.0,
+   "total_capital_ratio": 20.63
+  },
+  "checks": [
+   [
+    "info",
+    "total_capital_ratio derived from total_capital over RWA"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ],
+   [
+    "error",
+    "tier1_ratio 2 outside 3..80"
+   ],
+   [
+    "error",
+    "cet1_ratio 8.00 vs implied 16.72 from capital/RWA"
+   ],
+   [
+    "error",
+    "tier1_ratio below cet1_ratio"
+   ],
+   [
+    "info",
+    "consistent with the last verified disclosure (CET1 ratio moved 8.6 points from 2023-03-31; RWA is 1.01x the last verified figure)"
+   ]
+  ],
+  "reason": "info:total_capital_ratio derived from total_capital over RWA; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read); error:tier1_ratio 2 outside 3..80; error:cet1_ratio 8.00 vs implied 16.72 from capital/RWA; error:tier1_ratio below cet1_ratio; info:consistent with the last verified disclosure (CET1 ratio moved 8.6 points from 2023-03-31; RWA is 1.01x the last verified figure)",
+  "status": "open",
+  "created": "2026-09-08T11:14:40"
+ },
+ {
+  "id": "03bf8e49f8ad",
+  "entity_id": "standard-chartered-hk",
+  "url": "https://vpr.hkma.gov.hk/statics/assets/doc/100269/fd_int/fd_int_0322_eng.pdf",
+  "local": "cache/pdf/standard-chartered-hk/03bf8e49f8ad3534.pdf",
+  "title": "fd_int_0322_eng.pdf",
+  "page": 4,
+  "reference_date": "2022-03-31",
+  "currency": "HKD",
+  "values": {
+   "cet1_capital": 138427.0,
+   "tier1_capital": 157122.0,
+   "total_capital": 171518.0,
+   "cet1_ratio": 0.0,
+   "tier1_ratio": 8.0,
+   "combined_buffer": 4.0,
+   "leverage_exposure": 2675328.0,
+   "hqla": 478819.0,
+   "net_cash_outflows": 334220.0,
+   "nsfr": 125.0,
+   "rwa": 895334.0,
+   "available_stable_funding": 1357494.0,
+   "required_stable_funding": 1087992.0,
+   "total_capital_ratio": 19.16
+  },
+  "checks": [
+   [
+    "info",
+    "total_capital_ratio derived from total_capital over RWA"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ],
+   [
+    "error",
+    "cet1_ratio 0 outside 3..80"
+   ],
+   [
+    "error",
+    "cet1_ratio 0.00 vs implied 15.46 from capital/RWA"
+   ]
+  ],
+  "reason": "info:total_capital_ratio derived from total_capital over RWA; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 0 outside 3..80; error:cet1_ratio 0.00 vs implied 15.46 from capital/RWA",
+  "status": "open",
+  "created": "2026-09-08T11:14:40"
+ },
+ {
+  "id": "a933c766f003",
+  "entity_id": "standard-chartered-hk",
+  "url": "https://vpr.hkma.gov.hk/statics/assets/doc/100269/fd_int/fd_int_0922_eng.pdf",
+  "local": "cache/pdf/standard-chartered-hk/a933c766f003e2c6.pdf",
+  "title": "fd_int_0922_eng.pdf",
+  "page": 4,
+  "reference_date": "2022-09-30",
+  "currency": "HKD",
+  "values": {
+   "cet1_capital": 137789.0,
+   "tier1_capital": 158453.0,
+   "total_capital": 171411.0,
+   "rwa": 872225.0,
+   "cet1_ratio": 6.0,
+   "tier1_ratio": 3.0,
+   "combined_buffer": 4.0,
+   "leverage_exposure": 2680079.0,
+   "hqla": 458535.0,
+   "net_cash_outflows": 300400.0,
+   "available_stable_funding": 1322171.0,
+   "required_stable_funding": 1090821.0,
+   "nsfr": 121.0,
+   "total_capital_ratio": 19.65
+  },
+  "checks": [
+   [
+    "info",
+    "total_capital_ratio derived from total_capital over RWA"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ],
+   [
+    "error",
+    "cet1_ratio 6.00 vs implied 15.80 from capital/RWA"
+   ],
+   [
+    "error",
+    "tier1_ratio below cet1_ratio"
+   ]
+  ],
+  "reason": "info:total_capital_ratio derived from total_capital over RWA; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 6.00 vs implied 15.80 from capital/RWA; error:tier1_ratio below cet1_ratio",
+  "status": "open",
+  "created": "2026-09-08T11:14:40"
+ }
+]
