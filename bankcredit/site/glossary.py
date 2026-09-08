@@ -329,9 +329,13 @@ TERMS: dict[str, tuple[str, str, str]] = {
     ),
     "unverified": (
         "Unverified",
-        "A figure read from a document that has not passed every internal check.",
-        "It is shown rather than hidden, and marked, so nothing quietly disappears. Unverified "
-        "figures do not feed the score.",
+        "Read from a PDF, with one of the extractor's own cross-checks left unsatisfied.",
+        "The usual reasons are mundane: the bank does not publish an LCR or leverage row at that "
+        "level, the column header's date needs a second look, or the table labels its rows without "
+        "numbering them. It does not mean the figure is wrong - it means it was not confirmed twice. "
+        "The mark is there instead of hiding the figure, it still counts where it is the only "
+        "reading held for that quarter, and the document it came from is one click away on the "
+        "profile.",
     ),
     "as_at": (
         "As at",

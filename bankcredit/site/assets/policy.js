@@ -115,7 +115,7 @@
       if(e.score==null)return;
       var x=e.score/100*w;
       inner+='<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+(base-13)+'" y2="'+(base+4)+'" stroke="#fff" stroke-width="3.4"/>'+
-             '<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+(base-13)+'" y2="'+(base+4)+'" stroke="'+(BANDC[e.band]||'#0a2540')+'" stroke-width="1.8"><title>'+esc(e.short)+' '+e.score.toFixed(1)+'</title></line>';
+             '<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+(base-13)+'" y2="'+(base+4)+'" stroke="#fd7e14" stroke-width="2"><title>'+esc(e.short)+' '+e.score.toFixed(1)+'</title></line>';
     });
     inner+='<text x="1" y="'+h+'" class="pv-ax">0</text><text x="'+(w/2)+'" y="'+h+'" text-anchor="middle" class="pv-ax">50</text><text x="'+w+'" y="'+h+'" text-anchor="end" class="pv-ax">100</text>';
     return svg(w,h,inner);
@@ -170,7 +170,7 @@
       '</div>'+
       '<div class="pv-charts">'+
         '<figure><figcaption>Band mix'+mk('band')+'</figcaption>'+bandMix(es)+'</figure>'+
-        '<figure><figcaption>Score against every covered name'+mk('score')+'</figcaption>'+scoreHist(es,data.rows)+'</figure>'+
+        '<figure><figcaption>Against every name'+mk('score')+'</figcaption>'+scoreHist(es,data.rows)+'</figure>'+
         '<figure><figcaption>Composite rating'+mk('composite')+'</figcaption>'+ratingHist(es)+'</figure>'+
         '<figure><figcaption>Score by tenor accepted'+mk('tenor')+'</figcaption>'+tenorScore(items)+'</figure>'+
       '</div></div>';
@@ -264,9 +264,32 @@
     if(!dlg.open)dlg.showModal();
     var put=function(b){var t=document.getElementById('md-body');if(t)t.innerHTML=modalBody(b,e)};
     if(MCACHE[id])return put(MCACHE[id]);
-    fetch(ROOT+'data/detail/'+id+'.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(b){MCACHE[id]=b;put(b)})
-      .catch(function(){var t=document.getElementById('md-body');if(t)t.innerHTML='<div class="empty">Could not load this bank’s detail.</div>'});
+    detail(id).then(put).catch(function(){
+      var t=document.getElementById('md-body');if(t)t.innerHTML='<div class="empty">Could not load this bank’s detail.</div>'});
   }
+
+  // Opening a bank costs one small file, and on Pages a first byte for a file nobody has asked for
+  // yet can take the better part of a second. So the request starts at the first sign of intent -
+  // the pointer settling on a row, a finger touching it, a key focusing it - and the click usually
+  // finds it already in flight or done. One promise per bank, so intent and click never fetch twice.
+  var INFLIGHT={};
+  function detail(id){
+    if(MCACHE[id])return Promise.resolve(MCACHE[id]);
+    if(INFLIGHT[id])return INFLIGHT[id];
+    INFLIGHT[id]=fetch(ROOT+'data/detail/'+id+'.json')
+      .then(function(r){if(!r.ok)throw 0;return r.json()})
+      .then(function(b){MCACHE[id]=b;delete INFLIGHT[id];return b})
+      .catch(function(err){delete INFLIGHT[id];throw err});
+    return INFLIGHT[id];
+  }
+  function warm(el){
+    var row=el&&el.closest&&el.closest('[data-id]'); if(!row)return;
+    var id=row.dataset.id; if(!id||MCACHE[id]||INFLIGHT[id])return;
+    detail(id).catch(function(){});
+  }
+  ['mouseover','focusin','touchstart','mousedown'].forEach(function(ev){
+    document.addEventListener(ev,function(e){warm(e.target)},{passive:true,capture:true});
+  });
 
 
   // ---- the whole universe on the same page -------------------------------------------
@@ -379,34 +402,48 @@
         var fh=fl.map(function(x){return chip(x[1],x[0]==='muted'?'muted':x[0])}).join(' ')||chip('Unchanged since approval','good');
         // a name that has moved since approval carries an edge, so a long list scans in one pass
         var moved=fl.some(function(x){return x[0]!=='muted'&&x[0]!=='good'});
+        // one row of figures per name, and the rest behind an expander: a policy of twenty names is
+        // read down a column of numbers, not by scrolling through twenty cards of prose.
+        var worst_fl=fl.filter(function(x){return x[0]!=='muted'})[0];
+        var kv=function(v,l,cls){return '<div class="ck'+(cls?' '+cls:'')+'"><b>'+v+'</b><span>'+l+'</span></div>'};
+        var num=function(v,dp,suf){return v==null?'<span class="na">\u2014</span>':Number(v).toFixed(dp)+(suf||'')};
         return '<div class="pol-card'+(moved?' pol-card-flag':'')+'" data-id="'+esc(e.id)+'">'+
           '<div class="cp-top">'+
-            '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+
-              '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+esc(e.country)+typeTag(e)+'</div></div>'+
-            '<div class="cp-tenor"><div class="cp-t">'+esc(tenorLabel(it.tenor))+mk('tenor')+'</div>'+
-              '<div class="small">approved '+esc(it.added||'?')+'</div></div>'+
+            '<button class="cp-exp" data-id="'+esc(e.id)+'" aria-expanded="false" aria-label="Show detail for '+esc(e.short)+'"></button>'+
+            '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+
+              '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div></div>'+
+            kv((e.score==null?'<span class="na">\u2014</span>':e.score.toFixed(0))+
+               (e.band?' <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>':''),'score','ck-score')+
+            kv(esc(e.rating_composite||'\u2014'),'rating')+
+            kv(num(e.cet1,1),'CET1')+
+            kv(num(e.leverage,1)+(e.leverage_basis==='us_tier1'?'\u2020':''),'leverage')+
+            kv(e.lcr==null?'<span class="na">\u2014</span>':Math.round(e.lcr)+'%','LCR')+
+            kv(esc(tenorLabel(it.tenor)),'tenor','ck-tenor')+
+            '<div class="cp-tags">'+(worst_fl?chip(worst_fl[1],worst_fl[0])
+              :((e.market&&e.market.direction!=='none')?mkt(e.market):''))+'</div>'+
             '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">\u00d7</button>'+
           '</div>'+
-          '<div class="cp-body">'+
-            '<div class="cp-cell"><h5>Counterparty score'+mk('score')+'</h5>'+
-              (e.score==null
-                ? '<div class="cp-score-row"><span class="na big">\u2014</span></div><div class="small muted">'+esc(e.unscored||'not scored')+'</div>'
-                : '<div class="cp-score-row"><span class="cp-score">'+e.score.toFixed(0)+'</span>'+
-                  '<span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span></div>'+
-                  meter(e.score,e.band)+
-                  '<div class="small muted">'+(e.coverage!=null?Math.round(e.coverage*100)+'% of the method\u2019s inputs':'')+'</div>')+
+          '<div class="cp-detail" hidden>'+
+            '<div class="cp-body">'+
+              '<div class="cp-cell"><h5>Counterparty score'+mk('score')+'</h5>'+
+                (e.score==null
+                  ? '<div class="cp-score-row"><span class="na big">\u2014</span></div><div class="small muted">'+esc(e.unscored||'not scored')+'</div>'
+                  : '<div class="cp-score-row"><span class="cp-score">'+e.score.toFixed(0)+'</span>'+
+                    '<span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span></div>'+
+                    meter(e.score,e.band)+
+                    '<div class="small muted">'+(e.coverage!=null?Math.round(e.coverage*100)+'% of the method\u2019s inputs':'')+'</div>')+
+              '</div>'+
+              '<div class="cp-cell"><h5>Key ratios</h5>'+kpis(e)+
+                '<div class="cp-asof">as of'+mk('as_at')+' '+esc(e.asof||'\u2014')+
+                (e.leverage_basis==='us_tier1'?' \u00b7 \u2020 Tier 1 leverage, US basis':'')+'</div></div>'+
+              '<div class="cp-cell"><h5>Ratings'+mk('rating')+'</h5>'+ratingGrid(e.ratings,e.short_ratings)+'</div>'+
+              '<div class="cp-cell cp-side"><h5>Market and changes'+mk('market_signal')+'</h5>'+
+                mkt(e.market)+
+                (e.market_detail&&e.market_detail.bond_change30!=null
+                  ? '<div class="small muted">bonds vs peers '+(e.market_detail.bond_change30>0?'+':'')+Math.round(e.market_detail.bond_change30)+' bp</div>':'')+
+                fh+'<div class="small muted">approved '+esc(it.added||'?')+'</div></div>'+
             '</div>'+
-            '<div class="cp-cell"><h5>Key ratios</h5>'+kpis(e)+
-              '<div class="cp-asof">as of'+mk('as_at')+' '+esc(e.asof||'\u2014')+
-              (e.leverage_basis==='us_tier1'?' \u00b7 \u2020 Tier 1 leverage, US basis':'')+'</div></div>'+
-            '<div class="cp-cell"><h5>Ratings'+mk('rating')+'</h5>'+ratingGrid(e.ratings,e.short_ratings)+'</div>'+
-            '<div class="cp-cell cp-side"><h5>Market and changes'+mk('market_signal')+'</h5>'+
-              mkt(e.market)+
-              (e.market_detail&&e.market_detail.bond_change30!=null
-                ? '<div class="small muted">bonds vs peers '+(e.market_detail.bond_change30>0?'+':'')+Math.round(e.market_detail.bond_change30)+' bp</div>':'')+
-              fh+'</div>'+
-          '</div>'+
-          '<div class="cp-news">'+recent+'</div></div>';
+            '<div class="cp-news">'+recent+'</div></div></div>';
       }).join('');
       html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Flags compare today with the day you approved each name.</span></div>';
       html+=overview(p.filter(function(it){return byId[it.id]}));
@@ -426,13 +463,16 @@
         ll+='<h4>'+esc(tenorLabel(t))+' <span class="muted small">· weakest you accept: band '+esc(w.band||'?')+', ratings '+esc(GRADES[Math.floor((w.grade||1)+0.5)-1]||'?')+', score '+(w.score!=null?w.score.toFixed(1):'?')+'</span></h4>';
         ll+=(t!==tenors[0]?'<p class="small muted">Beyond those listed at longer tenors.</p>':'')+(cands.length?'<div class="ll-grid">'+cands.slice(0,24).map(function(e){
           var vs=(w.score!=null)?(e.score-w.score):null;
+          // four rows and no meter: the action and the market read on the title line, and the score
+          // says what a bar under it would repeat. A shortlist is scanned, not studied.
+          var mp=(e.market&&e.market.direction!=='none')?mkt(e.market):'';
           return '<div class="ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+esc(e.short)+', open detail">'+
-            '<div class="ll-nm">'+esc(e.short)+typeTag(e)+'</div><div class="ll-co">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div>'+
+            '<div class="ll-top"><span class="ll-nm">'+esc(e.short)+typeTag(e)+'</span>'+
+              '<span class="ll-act">'+mp+'<button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></span></div>'+
+            '<div class="ll-co">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div>'+
             '<div class="ll-score"><b>'+e.score.toFixed(1)+'</b><span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>'+
-              (vs!=null&&vs>0?'<span class="ll-vs">+'+vs.toFixed(1)+' vs weakest</span>':'')+'</div>'+
-            meter(e.score,e.band,'sm')+
-            '<div class="ll-rt">'+ratings(e.ratings)+'</div>'+
-            '<div class="ll-foot">'+mkt(e.market)+'<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></div></div>';
+              (vs!=null&&vs>0?'<span class="ll-vs">+'+vs.toFixed(1)+'</span>':'')+'</div>'+
+            '<div class="ll-rt">'+ratings(e.ratings)+'</div></div>';
         }).join('')+'</div>':'<p class="small muted">No further covered name matches the weakest standing you accept at this tenor.</p>');
       });
       html+='<h3 style="margin-top:22px">Like-for-like</h3><p class="small muted">Covered names at least as strong as the weakest you already accept at each tenor \u2014 same or better band, ratings and score, and no widening market signal.</p>'+ll;
@@ -463,6 +503,14 @@
       if(ev.target.id==='pol-use-shared'){save(window.__shared);window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);render();return}
       if(ev.target.id==='pol-keep-mine'){window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);return}
     });
+    // the chevron opens the detail in place; a click anywhere else on the row still opens the dialog
+    document.addEventListener('click',function(ev){
+      var x=ev.target.closest('.cp-exp'); if(!x)return;
+      ev.preventDefault(); ev.stopPropagation();
+      var card=x.closest('.pol-card'), d=card&&card.querySelector('.cp-detail'); if(!d)return;
+      d.hidden=!d.hidden; x.setAttribute('aria-expanded',d.hidden?'false':'true');
+      card.classList.toggle('cp-open',!d.hidden);
+    },true);
     document.addEventListener('click',function(ev){
       if(!ev.target.closest('#pol-browse'))return;
       var t=document.querySelector('.tab[data-tab="universe"]'); if(t&&!t.classList.contains('active'))t.click();

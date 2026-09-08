@@ -129,7 +129,7 @@ def tile(metric, label, unit, dp, series, peer_median=None):
     if delta is not None and unit == "m":
         delta = (v / prev["v"] - 1) * 100 if prev["v"] else None
     src = f'{last["src"]} · {last["method"]}' + (f' · p.{int(last["page"])}' if last.get("page") else "")
-    unverified = c.chip("unverified", "warn") if (last.get("conf") or 1) < 0.9 and str(last.get("method", "")).startswith("pdf") else ""
+    unverified = (c.chip("unverified", "warn") + c.info("unverified")) if (last.get("conf") or 1) < 0.9 and str(last.get("method", "")).startswith("pdf") else ""
     if last.get("basis") == "group":
         unverified += c.chip("group figure", "navy")
     return f'''<div class="tile"><div class="tile-head"><span class="tile-label">{label}{mark}</span><span class="tile-flags">{unverified}<span class="src-dot" title="Source: {c.esc(src)}">{c.ico("doc", 13, "#b8c2cc")}</span></span></div>
@@ -235,7 +235,7 @@ def page_bank(b, generated):
         standing.append(f'<button class="sm" type="button" data-title="Published score, daily" data-def="score" data-sub="The score as published on each build since snapshots began · {len(snaps)} days" aria-label="Expand published score">'
                         f'<div class="sm-head"><span class="sm-label">Published score</span><span class="sm-val mono">{snaps[-1][1]:.0f}</span></div><div class="sm-sub"><span class="muted">since {c.esc(hist["snapshots"][0][0])}</span></div>{small}<template>{big}</template></button>')
     if standing:
-        charts.append(f'<div class="sm-group"><h4>Standing</h4><div class="sm-grid">{"".join(standing)}</div></div>')
+        charts.append(f'<div class="sm-sec"><span>Standing</span></div>{"".join(standing)}')
         n_charts += len(standing)
     for group, metrics in TREND_GROUPS:
         cards = []
@@ -284,7 +284,7 @@ def page_bank(b, generated):
                          f'<div class="sm-sub">{dchip}<span class="muted">vs {c.esc(data[-2][0])}</span>{vs}</div>{small}<template>{big}</template></button>')
             n_charts += 1
         if cards:
-            charts.append(f'<div class="sm-group"><h4>{group}</h4><div class="sm-grid">{"".join(cards)}</div></div>')
+            charts.append(f'<div class="sm-sec"><span>{group}</span></div>{"".join(cards)}')
     ratings_rows = "".join(f'<tr><td>{c.esc(r["agency"])}</td><td class="muted">{c.esc(r["type"].replace("_", " "))} · {c.esc(r["horizon"])}</td><td class="mono b">{c.esc(r["value"])}</td><td class="muted">{c.esc(r["outlook"])}</td><td class="mono muted">{c.esc(r["date"])}</td></tr>' for r in b["ratings_all"])
     ratings_html = f'<table class="plain"><thead><tr><th>Agency</th><th>Type</th><th>Rating</th><th>Outlook</th><th>Date</th></tr></thead><tbody>{ratings_rows}</tbody></table><div class="note">Source: ESMA European Rating Platform, checked daily. Symbols shown with agency attribution; histories are not redistributed.</div>' if ratings_rows else '<div class="empty">No issuer-level ratings found in the ESMA register for this entity.</div>'
     mp = b["market_public"]
@@ -334,7 +334,7 @@ def page_bank(b, generated):
 <div class="score-note">Rating anchor and public pillars with published weights (w).{c.info("pillar")}{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../admin/index.html#method">Method</a></div></div>
 <div class="tiles">{tiles}</div></div>
 <div class="card tabs-card"><div class="tabs" role="tablist"><button class="tab active" data-tab="trends">Trends</button><button class="tab" data-tab="ratings">Ratings</button><button class="tab" data-tab="market">Market</button><button class="tab" data-tab="events">Events</button><button class="tab" data-tab="sources">Sources</button>{'<button class="tab" data-tab="data">Data</button>' if b.get("debug") else ''}</div>
-<section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.{" The grey band on a ratio is where this bank" + chr(8217) + "s peer group stands today, quartile to quartile, with the median dashed — not a peer history." if b.get("peer_ratios") else ""}</div>' if n_charts else ''}{"".join(charts) or '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
+<section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.{" The grey band on a ratio is where this bank" + chr(8217) + "s peer group stands today, quartile to quartile, with the median dashed — not a peer history." if b.get("peer_ratios") else ""}</div>' if n_charts else ''}{f'<div class="sm-grid">{"".join(charts)}</div>' if charts else '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
 <section class="panel" data-panel="ratings">{ratings_html}</section>
 <section class="panel" data-panel="market">{market_html}</section>
 <section class="panel" data-panel="events">{events_rows}</section>
