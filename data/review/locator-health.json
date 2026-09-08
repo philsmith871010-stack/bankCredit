@@ -285,11 +285,11 @@
    "entity": "cumberland-bs",
    "short": "Cumberland BS",
    "region": "uk",
-   "locators": 1,
+   "locators": 2,
    "kinds": [
     "html"
    ],
-   "documents": 14,
+   "documents": 15,
    "capital_as_of": "2023-03-31",
    "age_days": 1257,
    "capital_sources": [
@@ -301,7 +301,7 @@
    "entity": "darlington-bs",
    "short": "Darlington BS",
    "region": "uk",
-   "locators": 1,
+   "locators": 2,
    "kinds": [
     "html"
    ],
@@ -317,11 +317,11 @@
    "entity": "family-bs",
    "short": "Family BS",
    "region": "uk",
-   "locators": 1,
+   "locators": 2,
    "kinds": [
     "html"
    ],
-   "documents": 2,
+   "documents": 4,
    "capital_as_of": "2023-12-31",
    "age_days": 982,
    "capital_sources": [

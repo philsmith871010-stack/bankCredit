@@ -116,6 +116,18 @@ LOCATORS: list[dict] = [
          narrative="annual report and accounts: read the capital position from the notes. The "
                    "recent years are published as web pages under media.monbs.com rather than as "
                    "PDFs on this one"),
+    dict(entity="cumberland-bs", page="https://www.cumberland.co.uk/about/results-archive",
+         match=r"Cumberland-Annual-Report\.pdf",
+         narrative="annual report: read the capital position from the notes. The named Pillar 3 "
+                   "files stop at 2023, and this is the current document"),
+    dict(entity="darlington-bs", page="https://www.darlington.co.uk/who-we-are/corporate-governance/",
+         match=r"wp-content/uploads/\d{4}/\d{2}/.*Annual-Report.*\.pdf", exclude=r"Minutes|General-Meeting",
+         narrative="annual report and accounts: read the capital position from the notes, for the "
+                   "years after the last Pillar 3"),
+    dict(entity="family-bs", page="https://www.familybuildingsociety.co.uk/about-us/corporate-and-financial-information",
+         match=r"agm-documents/.*report-20\d\d[^/]*\.pdf",
+         narrative="the society's report for the year: read the capital position from the notes, "
+                   "since the Pillar 3 disclosure stops at 2023"),
     dict(entity="co-operative-bank", page="https://www.co-operativebank.co.uk/about-us/investor-relations/financial-results/",
          match=r"investorrelations/.*" + P3 + r".*\.pdf"),
     dict(entity="metro-bank", page="https://www.metrobankonline.co.uk/investor-relations/",

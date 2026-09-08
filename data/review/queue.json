@@ -281,5 +281,65 @@
   "reason": "report and accounts: read the capital position from the notes, since Suffolk publishes no Pillar 3 disclosure of its own",
   "status": "open",
   "created": "2026-09-08T23:20:22"
+ },
+ {
+  "id": "0c1be243cbf8",
+  "entity_id": "cumberland-bs",
+  "url": "https://www.cumberland.co.uk/neon/download/file/PDFs/Cumberland-Annual-Report.pdf",
+  "local": "cache/pdf/cumberland-bs/0c1be243cbf83b20.pdf",
+  "title": "Cumberland-Annual-Report.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report: read the capital position from the notes. The named Pillar 3 files stop at 2023, and this is the current document",
+  "status": "open",
+  "created": "2026-09-08T23:31:54"
+ },
+ {
+  "id": "86e4faa2fd63",
+  "entity_id": "family-bs",
+  "url": "https://www.familybuildingsociety.co.uk/docs/librariesprovider3/pdfs/agm-documents/g008-0326-report-2025_web-spreads.pdf?sfvrsn=5e6ae3e1_1",
+  "local": "cache/pdf/family-bs/86e4faa2fd63a921.pdf",
+  "title": "g008-0326-report-2025_web-spreads.pdf?sfvrsn=5e6ae3e1_1",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "the society's report for the year: read the capital position from the notes, since the Pillar 3 disclosure stops at 2023",
+  "status": "open",
+  "created": "2026-09-08T23:32:34"
+ },
+ {
+  "id": "7f7d4d896886",
+  "entity_id": "family-bs",
+  "url": "https://www.familybuildingsociety.co.uk/docs/librariesprovider3/pdfs/agm-documents/g008-0325-report-2024_web-spreads_v2.pdf?sfvrsn=b48293e6_2",
+  "local": "cache/pdf/family-bs/7f7d4d896886ed2d.pdf",
+  "title": "g008-0325-report-2024_web-spreads_v2.pdf?sfvrsn=b48293e6_2",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "the society's report for the year: read the capital position from the notes, since the Pillar 3 disclosure stops at 2023",
+  "status": "open",
+  "created": "2026-09-08T23:32:34"
  }
 ]
