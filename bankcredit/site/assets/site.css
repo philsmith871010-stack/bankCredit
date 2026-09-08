@@ -1,6 +1,6 @@
-:root{--navy:#0a2540;--navy-mid:#143659;--navy-light:#1a4775;--orange:#fd7e14;--orange-soft:#fff5e9;--text:#243240;--muted:#6c757d;--line:#e9ecef;--line-soft:#f1f3f5;--bg:#f7f8fa;--white:#fff;--green:#1e7a3a;--red:#b04632;--grad:linear-gradient(180deg,#0a2540 0%,#143659 60%,#1a4775 100%);--shadow:0 6px 18px rgba(10,37,64,.10);--r-sm:6px;--r-md:10px;--r-lg:14px;--header:60px;--side:220px}
+:root{--navy:#0a2540;--navy-mid:#143659;--navy-light:#1a4775;--orange:#fd7e14;--orange-soft:#fff5e9;--text:#243240;--muted:#6c757d;--line:#e9ecef;--line-soft:#f1f3f5;--bg:#f7f8fa;--ground:#e7ecf2;--white:#fff;--green:#1e7a3a;--red:#b04632;--grad:linear-gradient(180deg,#0a2540 0%,#143659 60%,#1a4775 100%);--shadow:0 6px 18px rgba(10,37,64,.10);--r-sm:6px;--r-md:10px;--r-lg:14px;--header:60px;--side:220px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:15.2px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--ground);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:15.2px;line-height:1.45;-webkit-font-smoothing:antialiased}
 a{color:var(--navy);text-decoration:none}a:hover{color:var(--orange)}
 .mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}
 .b{font-weight:600}.muted{color:var(--muted)}.small{font-size:12.5px}.na{color:#adb5bd}.na.big{font-size:28px}
@@ -22,7 +22,7 @@ a{color:var(--navy);text-decoration:none}a:hover{color:var(--orange)}
 .actions{display:flex;align-items:center;gap:10px}.btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:8px;background:var(--white);border:1px solid var(--line);font:inherit;font-size:14px;font-weight:500;color:var(--text);cursor:pointer}.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600}.btn.on{background:var(--orange-soft);border-color:#ffd9b3}
 .search{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--white);width:260px}.search input{border:0;outline:0;font:inherit;font-size:14px;width:100%;background:transparent}
 .filters{display:flex;gap:8px;flex-wrap:wrap}.filter{height:32px;padding:0 13px;border-radius:999px;font:inherit;font-size:13px;font-weight:500;background:var(--white);color:var(--text);border:1px solid var(--line);cursor:pointer}.filter.active{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600}
-.card{background:var(--white);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}.card.pad{padding:18px 20px}.table-wrap{overflow-x:auto}
+.card{background:var(--white);border:1px solid #dde4ec;border-radius:12px;box-shadow:0 1px 2px rgba(10,37,64,.05),0 8px 22px rgba(10,37,64,.07);overflow:hidden}.card.pad{padding:18px 20px}.table-wrap{overflow-x:auto}
 table{border-collapse:collapse;width:100%;font-size:13px}th{text-align:left;padding:9px 8px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 .board thead{background:var(--grad);position:sticky;top:0}.board th{color:var(--orange)}.board th[data-sort]{cursor:pointer}.board th.num,.board td.num{text-align:right}
 .board tbody tr{border-bottom:1px solid var(--line-soft)}.board tbody tr:nth-child(even){background:#fbfcfd}.board tbody tr:hover{background:var(--orange-soft)}.board td{padding:8px;vertical-align:middle}
@@ -250,9 +250,9 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .ll{padding:8px 10px;gap:0;justify-content:flex-start}
 .ll:hover{box-shadow:var(--shadow)}
 .ll-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.ll .ll-nm{font-size:13.5px;font-weight:600;letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ll-act{display:flex;align-items:center;gap:6px;flex:0 0 auto;max-width:60%}
-.ll-act .chip{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10.5px;padding:1px 7px}
+.ll .ll-nm{font-size:13.5px;font-weight:600;letter-spacing:-.01em;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ll-act{display:flex;align-items:center;gap:6px;flex:0 1 auto;min-width:0}
+.ll-act .chip{min-width:0;max-width:104px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10.5px;padding:1px 7px}
 .ll .ll-add{flex:0 0 auto;padding:2px 9px;font-size:11.5px;line-height:1.5}
 .ll .ll-co{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ll .ll-score{display:flex;align-items:baseline;gap:6px;margin-top:3px}
@@ -475,3 +475,33 @@ th .i,.uni th .i{margin-left:4px}
   .cp-tags{grid-column:2/-1;justify-content:flex-start}
 }
 .ck .band{width:22px;height:19px;font-size:11.5px;border-radius:5px}
+
+/* Separation ------------------------------------------------------------------------------------
+   One white box held the portfolio summary, the approved names and the shortlist, so the eye had
+   nothing to divide them by. The summary is a tinted band, each chart on it is a tile of its own,
+   and the shortlist sits below a rule with its own heading. */
+.pv{background:var(--bg);border-color:#dde4ec;padding:12px 14px 14px}
+.pv-tiles{border-bottom:0;padding-bottom:12px}
+.pv-charts{gap:12px;padding-top:0}
+.pv-charts figure{background:var(--white);border:1px solid #e2e8ef;border-radius:10px;padding:9px 11px 7px}
+.pv-charts figure:first-child,.pv-charts figure:last-child{padding:9px 11px 7px}
+.pol-list{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.pol-card{border-color:#dde4ec}
+.ll-sec{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.ll-sec>h3{margin:0 0 2px}
+.ll-sec h4{margin:16px 0 6px;font-size:12.5px}
+/* The container is the ground and the names are the objects on it, so a row of figures reads as
+   a thing you can open rather than as another band of text in one long white box. */
+.pol-wrap{display:block;margin-top:2px}
+.pol-wrap .pv{background:var(--white);border:1px solid #dde4ec;box-shadow:0 1px 2px rgba(10,37,64,.05),0 8px 22px rgba(10,37,64,.07)}
+.pol-wrap .pv-charts figure{background:#f7f9fc;border-color:#e4e9ef}
+.pol-wrap .pol-topbar{padding:0 2px 4px}
+.pol-wrap .pol-share{margin-top:14px;padding:0 2px;justify-content:flex-end;gap:8px}
+.pol-wrap .pol-share input{flex:0 1 300px;font-size:11.5px;color:var(--muted);background:transparent;border-color:#dde4ec}
+.pol-wrap .empty,.pol-wrap .pol-empty{background:var(--white);border:1px solid #dde4ec;border-radius:12px;
+  box-shadow:0 1px 2px rgba(10,37,64,.05),0 8px 22px rgba(10,37,64,.07);padding:18px 20px}
+
+/* One accent, one meaning: an orange tick marks the head of a chart section, on the policy
+   overview, the profile's trends and the analysis panels alike. */
+.chart-head,.pc-head h3{padding-left:8px;border-left:2px solid var(--orange)}
+.pc-head h3{line-height:1.25}

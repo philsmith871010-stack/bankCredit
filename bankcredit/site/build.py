@@ -704,12 +704,12 @@ def page_policy_content(board=None) -> str:
     return f'''<div class="page-head hero"><div><h1>Counterparty</h1><div class="lede">Build your approved list, and see what moved since you approved each name.</div></div>
 <div class="hero-strip">{strip}</div></div>
 <div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>
-<div class="card pad"><div class="pol-topbar"><h3>Your counterparties</h3>
+<section class="pol-wrap"><div class="pol-topbar"><h3>Your counterparties</h3>
 <div class="pol-form"><label><span>Name{c.info("counterparty")}</span><input id="pol-name" list="pol-names" placeholder="Barclays Bank UK PLC, not Barclays PLC" autocomplete="off"><datalist id="pol-names"></datalist></label>
 <label><span>Longest tenor{c.info('tenor')}</span><select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button></div></div>
 <div id="policy-body"><div class="empty">Loading\u2026</div></div>
 <div class="pol-share" id="pol-share" hidden><button class="filter" id="pol-copy">Copy link</button><input id="pol-link" readonly placeholder="Your share link"><button class="filter" id="pol-clear">Clear all</button></div>
-<dialog id="pol-modal" class="pol-modal"></dialog></div>'''
+<dialog id="pol-modal" class="pol-modal"></dialog></section>'''
 
 
 def _panel_content(html: str) -> str:

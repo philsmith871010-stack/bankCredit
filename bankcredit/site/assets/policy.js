@@ -60,15 +60,16 @@
   function flags(item,e){
     var f=[], b=item.base||{};
     if(!e)return [['bad','No longer covered']];
-    if(e.score==null)f.push(['warn','Not enough public data for a score']);
-    if(b.score!=null&&e.score!=null&&e.score<=b.score-5)f.push(['bad','Score down '+(b.score-e.score).toFixed(1)+' since approved']);
-    if(b.band&&e.band&&bandRank(e.band)>bandRank(b.band))f.push(['bad','Band '+b.band+' → '+e.band]);
-    if(b.grade!=null&&e.rating_grade!=null&&e.rating_grade>b.grade+0.4)f.push(['bad','Ratings weaker: '+GRADES[Math.floor(b.grade+0.5)-1]+' → '+e.rating_composite]);
-    (e.negative||[]).forEach(function(n){if(!item.added||n.date>=item.added)f.push(['bad',n.date+' '+n.title])});
-    if(e.market&&e.market.direction==='down')f.push(['warn',e.market.label]);
-    if(e.news30&&e.news30.bad)f.push(['warn',e.news30.bad+' adverse headline'+(e.news30.bad>1?'s':'')+' in 30 days']);
-    if(e.age_days!=null&&e.age_days>180)f.push(['warn','Regulatory figures '+e.age_days+' days old']);
-    if(e.inherited&&e.inherited.length)f.push(['muted','Some figures from the group or lead bank']);
+    // [kind, what happened, and a short form for the collapsed row, where a chip has one line]
+    if(e.score==null)f.push(['warn','Not enough public data for a score','Not scored']);
+    if(b.score!=null&&e.score!=null&&e.score<=b.score-5)f.push(['bad','Score down '+(b.score-e.score).toFixed(1)+' since approved','Score \u2212'+(b.score-e.score).toFixed(1)]);
+    if(b.band&&e.band&&bandRank(e.band)>bandRank(b.band))f.push(['bad','Band '+b.band+' → '+e.band,'Band '+b.band+'\u2192'+e.band]);
+    if(b.grade!=null&&e.rating_grade!=null&&e.rating_grade>b.grade+0.4)f.push(['bad','Ratings weaker: '+GRADES[Math.floor(b.grade+0.5)-1]+' → '+e.rating_composite,'Rating weaker']);
+    (e.negative||[]).forEach(function(n){if(!item.added||n.date>=item.added)f.push(['bad',n.date+' '+n.title,'Adverse action'])});
+    if(e.market&&e.market.direction==='down')f.push(['warn',e.market.label,e.market.label]);
+    if(e.news30&&e.news30.bad)f.push(['warn',e.news30.bad+' adverse headline'+(e.news30.bad>1?'s':'')+' in 30 days',e.news30.bad+' adverse headline'+(e.news30.bad>1?'s':'')]);
+    if(e.age_days!=null&&e.age_days>180)f.push(['warn','Regulatory figures '+e.age_days+' days old','Figures '+e.age_days+'d old']);
+    if(e.inherited&&e.inherited.length)f.push(['muted','Some figures from the group or lead bank','Group figures']);
     return f;
   }
   function worst(items){var w={band:null,grade:null,score:null};items.forEach(function(it){var e=byId[it.id];if(!e)return;
@@ -419,7 +420,7 @@
             kv(num(e.leverage,1)+(e.leverage_basis==='us_tier1'?'\u2020':''),'leverage')+
             kv(e.lcr==null?'<span class="na">\u2014</span>':Math.round(e.lcr)+'%','LCR')+
             kv(esc(tenorLabel(it.tenor)),'tenor','ck-tenor')+
-            '<div class="cp-tags">'+(worst_fl?chip(worst_fl[1],worst_fl[0])
+            '<div class="cp-tags">'+(worst_fl?chip(worst_fl[2]||worst_fl[1],worst_fl[0])
               :((e.market&&e.market.direction!=='none')?mkt(e.market):''))+'</div>'+
             '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">\u00d7</button>'+
           '</div>'+
@@ -475,7 +476,7 @@
             '<div class="ll-rt">'+ratings(e.ratings)+'</div></div>';
         }).join('')+'</div>':'<p class="small muted">No further covered name matches the weakest standing you accept at this tenor.</p>');
       });
-      html+='<h3 style="margin-top:22px">Like-for-like</h3><p class="small muted">Covered names at least as strong as the weakest you already accept at each tenor \u2014 same or better band, ratings and score, and no widening market signal.</p>'+ll;
+      html+='<div class="ll-sec"><h3>Like-for-like</h3><p class="small muted">Covered names at least as strong as the weakest you already accept at each tenor \u2014 same or better band, ratings and score, and no widening market signal.</p>'+ll+'</div>';
     }
     out.innerHTML=html;
     renderUni();
