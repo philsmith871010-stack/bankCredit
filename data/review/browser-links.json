@@ -2114,6 +2114,10 @@
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/investor-relations/financials/annual-reports",
     "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
+    "text": ""
    }
   ]
  },
@@ -2542,7 +2546,7 @@
     "text": ""
    },
    {
-    "url": "https://login.q4inc.com/authorize?client_id=gKrDY1E9BUSWfU7DGuW2CO4rjdskiNg7&pendoQ4PId=_q4pidval_&projectId=studio&step=login&companyName=State+Street+Bank+and+Trust+Company&projectIdentifier=State+Street+Bank+and+Trust+Company&mainColor=%230F5CA3&scope=openid+profile+email&helpUrl=https%3a%2f%2fhelp.events.q4inc.com%2fen%2fir-website.html&response_type=code&response_mode=query&nonce=rmeKkPrBYzHYE1dlUSSg8GpcY&skipUrl=https%3a%2f%2finvestors.statestreet.com%2ffilings-and-reports%2fsupplemental-public-disclosure-of-basel-iii-regulatory-capital%2fdefault.aspx&userEmail=_q4lemail_&redirect_uri=https%3a%2f%2fauth.platform.q4inc.com%2fauth%2fpublicAuthRedirect%3fstate%3deyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJyZXR1cm5VcmwiOiJodHRwczovL2ludmVzdG9ycy5zdGF0ZXN0cmVldC5jb20vZmlsaW5ncy1hbmQtcmVwb3J0cy9zdXBwbGVtZW50YWwtcHVibGljLWRpc2Nsb3N1cmUtb2YtYmFzZWwtaWlpLXJlZ3VsYXRvcnktY2FwaXRhbC9kZWZhdWx0LmFzcHgiLCJleHAiOjE3OTQwNzI1NDUuMCwiaWF0IjoxNzg4ODEyOTQ1LjAsImlzcyI6IlE0LldlYi5QdWJsaWMuU2l0ZSIsImF1ZCI6InVwc3RyZWFtLmNkbi53ZWIucHJkLnE0aW5jLmNvbSJ9.7O1WZ6E_dg6jj-AcMGfc7tIgVlaTOxY9fV5KZUbJqA4",
+    "url": "https://login.q4inc.com/authorize?client_id=gKrDY1E9BUSWfU7DGuW2CO4rjdskiNg7&pendoQ4PId=_q4pidval_&projectId=studio&step=login&companyName=State+Street+Bank+and+Trust+Company&projectIdentifier=State+Street+Bank+and+Trust+Company&mainColor=%230F5CA3&scope=openid+profile+email&helpUrl=https%3a%2f%2fhelp.events.q4inc.com%2fen%2fir-website.html&response_type=code&response_mode=query&nonce=MVvHwJ68I7ZMomjYvYX2m68tthw&skipUrl=https%3a%2f%2finvestors.statestreet.com%2ffilings-and-reports%2fsupplemental-public-disclosure-of-basel-iii-regulatory-capital%2fdefault.aspx&userEmail=_q4lemail_&redirect_uri=https%3a%2f%2fauth.platform.q4inc.com%2fauth%2fpublicAuthRedirect%3fstate%3deyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJyZXR1cm5VcmwiOiJodHRwczovL2ludmVzdG9ycy5zdGF0ZXN0cmVldC5jb20vZmlsaW5ncy1hbmQtcmVwb3J0cy9zdXBwbGVtZW50YWwtcHVibGljLWRpc2Nsb3N1cmUtb2YtYmFzZWwtaWlpLXJlZ3VsYXRvcnktY2FwaXRhbC9kZWZhdWx0LmFzcHgiLCJleHAiOjE3OTQxNDAzOTQuMCwiaWF0IjoxNzg4ODgwNzk0LjAsImlzcyI6IlE0LldlYi5QdWJsaWMuU2l0ZSIsImF1ZCI6InVwc3RyZWFtLmNkbi53ZWIucHJkLnE0aW5jLmNvbSJ9.K-L5AAhvY-raQBojQy24-uOnXo1pIv0FMLVWV3uIcu8",
     "text": ""
    },
    {

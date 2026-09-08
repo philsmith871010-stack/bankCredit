@@ -1,0 +1,14 @@
+{
+ "id": "aef3ac33a408",
+ "entity_id": "lloyds-bank-corporate-markets",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-corporate-markets-plc/2025/q1/2025-lbcm-q1-pillar-3.pdf",
+ "page": 3,
+ "reference_date": "2025-03-31",
+ "currency": "GBP",
+ "values": {
+  "rwa": 21775.0,
+  "leverage_exposure": 81263.0,
+  "leverage_ratio": 4.4
+ },
+ "note": "The Lloyds group's quarterly Pillar 3 disclosures are short extracts - LR2 'Leverage ratio common disclosure' and OV1 'Overview of risk weighted exposure amounts' only, with no KM1 and no capital ratios. Total RWA is OV1 row 29; leverage is the excluding-central-bank-claims basis, the UK regime's measure, first column. GBP millions. No LCR in these extracts. Lloyds Bank Corporate Markets plc Q1 2025, dated 8 May 2025. Worth noting for anyone reading the series: LBCM's leverage ratio steps from 4.4% here to 8.2% at 30 June 2025 and 8.0% at 30 September. That is not a transcription error - both quarters were checked against their own LR2 tables, and the Q3 2025 report's comparative columns repeat 4.4% for March, so the Tier 1 position genuinely roughly doubled in the second quarter. A footnote to this table also records that the March and September positions exclude the preceding quarter's profits."
+}

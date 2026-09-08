@@ -1,0 +1,20 @@
+{
+ "id": "be5bbfd767a5",
+ "entity_id": "state-street",
+ "url": "https://s203.q4cdn.com/888565246/files/doc_downloads/2025/02/P3-Capital-December-31-2024_vFinal_2-14-25.pdf",
+ "page": 9,
+ "reference_date": "2024-12-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 13799.0,
+  "tier1_capital": 16615.0,
+  "total_capital": 18659.0,
+  "rwa": 126281.0,
+  "cet1_ratio": 10.9,
+  "tier1_ratio": 13.2,
+  "total_capital_ratio": 14.8,
+  "leverage_exposure": 269633.0,
+  "leverage_ratio": 6.2
+ },
+ "note": "State Street reports under the U.S. Basel III framework, which has no KM1 template - hence 'no CET1 ratio found'. Table 1 has four columns: State Street Advanced, State Street Standardized, State Street Bank Advanced, State Street Bank Standardized. The Standardized figures for State Street Corporation are recorded, because the Collins Amendment floor makes the lower of the two approaches binding and Standardized is the lower throughout. Total capital is paired with the RWA of the same approach. leverage_ratio is the Supplementary Leverage Ratio with its total leverage exposure. US dollar millions. Check: 13,799/126,281 = 10.93%, 18,659/126,281 = 14.78% and 16,615/269,633 = 6.16%."
+}

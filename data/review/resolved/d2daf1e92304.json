@@ -1,0 +1,19 @@
+{
+ "id": "d2daf1e92304",
+ "entity_id": "tsb",
+ "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2025/TSB-Banking-Group-ARA-2025.pdf",
+ "page": 10,
+ "reference_date": "2025-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1949.3,
+  "tier1_capital": 2199.0,
+  "total_capital": 2499.0,
+  "rwa": 11646.3,
+  "cet1_ratio": 16.7,
+  "tier1_ratio": 18.9,
+  "total_capital_ratio": 21.5,
+  "leverage_ratio": 5.5
+ },
+ "note": "TSB publishes no KM1 anywhere - its quarterly Pillar 3 disclosures carry only OV1, CR8 and LIQ1, so RWA and LCR but no capital at all. The capital position is in the Annual Report and Accounts, in the capital resources table in the risk review, and that is the only place it can be read from. These reports are not Pillar 3 documents, which is why 'no KM1 template found' is the correct verdict on them and why they had to be collected by hand. Figures are the fully loaded basis, the only one TSB presents, in GBP millions; the table's two columns are the reporting year and the prior year and the first is taken. No LCR appears in the Annual Report - the quarterly LIQ1 disclosures already in this dataset carry it. The narrative states 'a strong Common Equity Tier 1 ratio of 16.7% (2024: 15.4%)' and the table behind it gives CET1 1,949.3 over RWA 11,646.3. Leverage 5.5% is the fully loaded figure; no exposure measure is printed alongside it, so none is recorded. Check: 1,949.3/11,646.3 = 16.74% and 2,499.0/11,646.3 = 21.46%, matching the published 16.7% and 21.5%. RWA also ties to the Q1 2026 quarterly disclosure, whose OV1 prior column gives 11,646.3 for 31 December 2025."
+}

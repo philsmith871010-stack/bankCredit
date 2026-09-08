@@ -913,13 +913,11 @@
  },
  "west-brom-bs": {
   "pages_read": [
-   "https://www.westbrom.co.uk/about-us",
+   "https://www.westbrom.co.uk/",
    "https://www.westbrom.co.uk/about-us/financial-information",
    "https://www.westbrom.co.uk/about-us/corporate-governance",
-   "https://www.westbrom.co.uk/about-us/corporate-governance/modern-slavery-and-human-trafficking-statement",
-   "https://www.westbrom.co.uk/about-us/corporate-governance/overview-and-our-board",
-   "https://www.westbrom.co.uk/about-us/corporate-governance/board-committees",
-   "https://www.westbrom.co.uk/about-us/corporate-governance/society-rules-and-memorandum"
+   "https://www.westbrom.co.uk/About-us/Corporate-Governance/B-Corp-certified",
+   "https://www.westbrom.co.uk/about-us/corporate-governance/modern-slavery-and-human-trafficking-statement"
   ],
   "found": []
  },
@@ -1057,7 +1055,15 @@
   ]
  },
  "newcastle-bs": {
-  "pages_read": [],
+  "pages_read": [
+   "https://www.newcastle.co.uk/",
+   "https://newcastle.co.uk/financial-advice",
+   "https://newcastle.co.uk/financial-advice/what-to-expect-from-newcastle-financial-advisers",
+   "https://newcastle.co.uk/financial-advice/investments",
+   "https://newcastle.co.uk/financial-advice/pensions",
+   "https://newcastle.co.uk/financial-advice/inheritance-tax",
+   "https://newcastle.co.uk/financial-advice/life-protection"
+  ],
   "found": []
  },
  "al-rayan-bank": {
@@ -1151,7 +1157,13 @@
   "found": []
  },
  "saffron-bs": {
-  "pages_read": [],
+  "pages_read": [
+   "https://www.saffronbs.co.uk/",
+   "https://www.saffronbs.co.uk/financial-results",
+   "https://www.saffronbs.co.uk/savings/tips-tools-support/financial-wellbeing-reviews",
+   "https://www.saffronbs.co.uk/useful-mortgage-documents",
+   "https://www.saffronbs.co.uk/its-more-money/services/independent-financial-advice"
+  ],
   "found": []
  },
  "handelsbanken-plc": {
@@ -1221,14 +1233,32 @@
   "found": []
  },
  "icbc-london": {
-  "pages_read": [],
+  "pages_read": [
+   "https://www.icbclondon.com/"
+  ],
   "found": []
  },
  "qib-uk": {
-  "pages_read": [],
+  "pages_read": [
+   "https://www.qib-uk.com/",
+   "https://www.qib-uk.com/en/search-results?q=Form",
+   "https://www.qib-uk.com/en/search-results?q=Iban",
+   "https://www.qib-uk.com/en/search-results?q=Loan",
+   "https://www.qib-uk.com/en/search-results?q=WPS",
+   "https://www.qib-uk.com/en/financial-services-compensation-scheme",
+   "https://www.qib-uk.com/en/mission-vision-and-values/news/news-listing/2023/09/17/qib-uk-presents-the-view-from-london-report-for-h1-2023"
+  ],
   "found": []
  },
  "sbi-uk": {
+  "pages_read": [],
+  "found": []
+ },
+ "adcb": {
+  "pages_read": [],
+  "found": []
+ },
+ "qnb": {
   "pages_read": [],
   "found": []
  }

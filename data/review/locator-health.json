@@ -1,9 +1,9 @@
 {
  "generated": "2026-09-08",
  "counts": {
-  "ok": 116,
+  "ok": 117,
   "overdue": 11,
-  "never": 19,
+  "never": 18,
   "no source": 2,
   "by design": 4
  },
@@ -242,20 +242,6 @@
     "browser"
    ],
    "documents": 0,
-   "capital_as_of": null,
-   "age_days": null,
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
-   "entity": "tsb",
-   "short": "TSB",
-   "region": "uk",
-   "locators": 2,
-   "kinds": [
-    "html"
-   ],
-   "documents": 3,
    "capital_as_of": null,
    "age_days": null,
    "capital_sources": [],
@@ -674,7 +660,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 4,
+   "documents": 7,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1181,7 +1167,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 9,
+   "documents": 12,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1445,7 +1431,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 4,
+   "documents": 7,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1461,7 +1447,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 4,
+   "documents": 7,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1477,7 +1463,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 4,
+   "documents": 7,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -2125,7 +2111,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 6,
+   "documents": 9,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -2155,7 +2141,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 3,
+   "documents": 6,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -2204,6 +2190,22 @@
    "documents": 5,
    "capital_as_of": "2026-07-31",
    "age_days": 39,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "tsb",
+   "short": "TSB",
+   "region": "uk",
+   "locators": 2,
+   "kinds": [
+    "html"
+   ],
+   "documents": 6,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
    "capital_sources": [
     "pillar3"
    ],

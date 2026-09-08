@@ -194,7 +194,7 @@
   }
  },
  "tsb": {
-  "page": 2,
+  "page": 10,
   "currency": "GBP",
   "last_verified": {
    "reference_date": "2026-03-31",
@@ -568,7 +568,8 @@
   "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
   "browser_page_found": "2026-09-08",
   "skip_patterns": [
-   "\\d+\\-lbg\\-hy\\-pillar\\-\\d+\\-capital\\-instruments"
+   "\\d+\\-lbg\\-hy\\-pillar\\-\\d+\\-capital\\-instruments",
+   "\\d+\\-lbg\\-fy\\-pillar\\-\\d+\\-capital\\-instruments"
   ]
  },
  "lloyds-bank": {
@@ -1688,15 +1689,15 @@
   "browser_page_found": "2026-09-08"
  },
  "rentenbank": {
-  "page": 23,
+  "page": 27,
   "currency": "EUR",
   "last_verified": {
-   "reference_date": "2014-12-31",
+   "reference_date": "2015-12-31",
    "values": {
-    "rwa": 17906.0,
-    "cet1_ratio": 16.4,
-    "tier1_ratio": 16.4,
-    "total_capital_ratio": 19.3
+    "rwa": 15751.0,
+    "cet1_ratio": 20.2,
+    "tier1_ratio": 20.2,
+    "total_capital_ratio": 23.2
    },
    "method": "pdf_manual"
   }
@@ -1705,19 +1706,13 @@
   "last_verified": {
    "reference_date": "2026-06-30",
    "values": {
-    "cet1_capital": 11110077.0,
-    "tier1_capital": 13107941.0,
-    "total_capital": 14590739.0,
-    "rwa": 82213789.0,
-    "cet1_ratio": 13.51,
-    "tier1_ratio": 15.94,
-    "total_capital_ratio": 17.74,
-    "combined_buffer": 3.63,
-    "cet1_headroom": 9.01,
-    "leverage_ratio": 4.86
+    "lcr": 126.1,
+    "nsfr": 112.2
    },
-   "method": "pdf_rules"
-  }
+   "method": "pdf_manual"
+  },
+  "page": 1,
+  "currency": "JPY"
  },
  "handelsbanken-plc": {
   "last_verified": {

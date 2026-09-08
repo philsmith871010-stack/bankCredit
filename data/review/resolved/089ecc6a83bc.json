@@ -1,0 +1,19 @@
+{
+ "id": "089ecc6a83bc",
+ "entity_id": "tsb",
+ "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2023/ARA-2023.pdf",
+ "page": 10,
+ "reference_date": "2023-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1842.1,
+  "tier1_capital": 1842.1,
+  "total_capital": 2167.3,
+  "rwa": 11055.1,
+  "cet1_ratio": 16.7,
+  "tier1_ratio": 16.7,
+  "total_capital_ratio": 19.6,
+  "leverage_ratio": 4.6
+ },
+ "note": "TSB publishes no KM1 anywhere - its quarterly Pillar 3 disclosures carry only OV1, CR8 and LIQ1, so RWA and LCR but no capital at all. The capital position is in the Annual Report and Accounts, in the capital resources table in the risk review, and that is the only place it can be read from. These reports are not Pillar 3 documents, which is why 'no KM1 template found' is the correct verdict on them and why they had to be collected by hand. Figures are the fully loaded basis, the only one TSB presents, in GBP millions; the table's two columns are the reporting year and the prior year and the first is taken. No LCR appears in the Annual Report - the quarterly LIQ1 disclosures already in this dataset carry it. CET1 and Tier 1 are equal because TSB had no Additional Tier 1 at this date - the 249.7 of AT1 in the later years was issued during 2024. The capital amounts are read from the 2024 report's comparative column, which sets them out in full; this report states the same ratios in its narrative, 'CET1 ratio of 16.7%' and 'total capital ratio was 19.6%'. Check: 1,842.1/11,055.1 = 16.66% and 2,167.3/11,055.1 = 19.60%, matching."
+}

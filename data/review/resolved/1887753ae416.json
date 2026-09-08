@@ -1,0 +1,5 @@
+{
+ "id": "1887753ae416",
+ "skip": true,
+ "note": "Not a capital-metrics disclosure. This is the Lloyds Banking Group 'Capital instruments and eligible liabilities - main features report' for the 2025 full year, which supplements the Pillar 3 with the term-by-term features of each instrument: no KM1, no capital ratios, no RWA. It is picked up because the lloyds-banking-group locator matches any file name containing 'pillar 3'. Same cause as the June 2026 instruments report skipped earlier, and the same fix - scoping that locator by file-name prefix, as the other three Lloyds locators already are."
+}

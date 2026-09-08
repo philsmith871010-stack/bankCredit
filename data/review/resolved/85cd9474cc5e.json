@@ -1,0 +1,14 @@
+{
+ "id": "85cd9474cc5e",
+ "entity_id": "bank-of-scotland",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2025/q1/2025-bos-q1-pillar-3.pdf",
+ "page": 3,
+ "reference_date": "2025-03-31",
+ "currency": "GBP",
+ "values": {
+  "rwa": 82020.0,
+  "leverage_exposure": 314240.0,
+  "leverage_ratio": 4.4
+ },
+ "note": "The Lloyds group's quarterly Pillar 3 disclosures are short extracts - LR2 'Leverage ratio common disclosure' and OV1 'Overview of risk weighted exposure amounts' only, with no KM1 and no capital ratios. Total RWA is OV1 row 29; leverage is the excluding-central-bank-claims basis, the UK regime's measure, first column. GBP millions. No LCR in these extracts. Bank of Scotland plc Q1 2025, dated 1 May 2025; LR2's columns are 31 Mar 2025, 31 Dec 2024, 30 Sep 2024 and 30 Jun 2024."
+}

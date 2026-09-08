@@ -2789,5 +2789,167 @@
   "page_reviewer": 23,
   "date_extractor": null,
   "date_reviewer": "2014-12-31"
+ },
+ {
+  "date": "2026-09-08T19:57:07",
+  "id": "089ecc6a83bc",
+  "entity_id": "tsb",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 10,
+  "date_extractor": null,
+  "date_reviewer": "2023-12-31"
+ },
+ {
+  "date": "2026-09-08T19:57:07",
+  "id": "1887753ae416",
+  "entity_id": "lloyds-banking-group",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-08T19:57:08",
+  "id": "483e1f3c166c",
+  "entity_id": "rentenbank",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": 23,
+  "page_reviewer": 27,
+  "date_extractor": "2015-12-31",
+  "date_reviewer": "2015-12-31"
+ },
+ {
+  "date": "2026-09-08T19:57:08",
+  "id": "50bb086ef179",
+  "entity_id": "mizuho",
+  "reason": "error:missing core row cet1_capital; error:missing core row rwa; error:missing c",
+  "skip": false,
+  "compared": 2,
+  "matched": 2,
+  "mismatches": {},
+  "page_extractor": 1,
+  "page_reviewer": 1,
+  "date_extractor": "2027-03-31",
+  "date_reviewer": "2026-06-30"
+ },
+ {
+  "date": "2026-09-08T19:57:09",
+  "id": "85cd9474cc5e",
+  "entity_id": "bank-of-scotland",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2025-03-31"
+ },
+ {
+  "date": "2026-09-08T19:57:10",
+  "id": "aef3ac33a408",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2025-03-31"
+ },
+ {
+  "date": "2026-09-08T19:57:10",
+  "id": "be5bbfd767a5",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    13.2
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 9,
+  "date_extractor": "2024-12-31",
+  "date_reviewer": "2024-12-31"
+ },
+ {
+  "date": "2026-09-08T19:57:10",
+  "id": "c3bdb783172e",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    13.9
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 9,
+  "date_extractor": "2024-09-30",
+  "date_reviewer": "2024-09-30"
+ },
+ {
+  "date": "2026-09-08T19:57:11",
+  "id": "d2daf1e92304",
+  "entity_id": "tsb",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 10,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-09-08T19:57:11",
+  "id": "dca240112ac4",
+  "entity_id": "tsb",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 10,
+  "date_extractor": null,
+  "date_reviewer": "2024-12-31"
+ },
+ {
+  "date": "2026-09-08T19:57:11",
+  "id": "ffdfa44a36d5",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    13.3
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 9,
+  "date_extractor": "2024-06-30",
+  "date_reviewer": "2024-06-30"
  }
 ]
