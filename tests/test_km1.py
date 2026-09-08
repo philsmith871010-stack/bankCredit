@@ -362,3 +362,18 @@ def test_a_narrative_page_naming_the_template_is_not_read_as_one():
     prose = ("Contents\n1 Overview 3\n2 Own funds 7\nKM1 Key metrics 12\n"
              "OV1 Overview of RWA 14\nLR1 Leverage summary 20\nCR1 Credit quality 24\n")
     assert km1.looks_like_contents(prose)
+
+
+def test_a_space_after_the_decimal_point_does_not_truncate_the_value(tmp_path):
+    """The HKMA disclosure statements set every percentage as "16. 6%". Left alone the number
+    ends at the point, and the value read for the row is whatever follows it - in a numbered
+    template, the next row's number. Standard Chartered HK reported a CET1 ratio of 5.00."""
+    spaced = KM1_TEXT.replace("28.2 28.0 28.8", "28. 2% 28. 0% 28. 8%")
+    res = km1.extract(make_pdf(tmp_path, spaced, name="spaced.pdf"))
+    assert res.values["cet1_ratio"] == 28.2, res.values.get("cet1_ratio")
+
+
+def test_the_normaliser_joins_only_a_split_number():
+    assert km1._norm_text("16. 6%") == "16.6%"
+    assert km1._norm_text("2,575. 0") == "2,575.0"
+    assert km1._norm_text("Total capital ratio (%)") == "Total capital ratio (%)"

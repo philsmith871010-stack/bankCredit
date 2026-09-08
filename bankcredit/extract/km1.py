@@ -150,6 +150,10 @@ class Result:
 def _norm_text(text: str) -> str:
     text = text.replace("\xa0", " ").replace("\u2009", " ").replace("\u202f", " ").replace("\u2013", "-").replace("\u2014", "-")
     text = text.replace("\u2019", "'").replace("\u2018", "'").replace("`", "'")      # £’000 is £'000
+    # "16. 6%": the HKMA disclosure statements set a space after the decimal point in every
+    # percentage. Left alone, the number ends at the point and the row's value is read from
+    # whatever follows, which for a numbered template is the next row's number.
+    text = re.sub(r"(\d)\.\s+(?=\d)", r"\1.", text)
     return re.sub(r"(\d)\s+%", r"\1%", text)
 
 

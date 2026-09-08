@@ -17,6 +17,13 @@ from __future__ import annotations
 
 P3 = r"pillar[-_ %]?(?:3|iii)"
 
+# Lloyds publishes the group's, both banks' and LBCM's reports from one page, in two naming styles:
+# "lloyds-bank-plc-pillar-3" and the short code "2026-lb-hy-pillar-3". Each locator names its own
+# entity and refuses its siblings'; a bare Pillar 3 match on the group swept up all four.
+LBG = "https://www.lloydsbankinggroup.com/investors/financial-performance/"
+LBG_TAIL = r"[^/]*" + P3
+LBG_SIBLINGS = r"lbcm|corporate-markets|bank-of-scotland|[-_]bos[-_]|lloyds-bank-plc|[-_]lb[-_]"
+
 HKMA = "https://vpr.hkma.gov.hk/eng/regulatory-resources/registers/register-of-ais-and-lros/info/"
 # The HKMA public register carries every Hong Kong authorised institution's disclosure documents
 # at a stable address, which beats three bank sites that each redesign on their own schedule.
@@ -46,14 +53,16 @@ LOCATORS: list[dict] = [
          match=r"hsbc-uk-bank-plc/.*pillar-3.*\.pdf"),
     dict(entity="hsbc-bank", page="https://www.hsbc.com/investors/results-and-announcements/all-reporting/subsidiaries",
          match=r"hsbc-bank-plc/.*pillar-3.*\.pdf"),
-    dict(entity="lloyds-banking-group", page="https://www.lloydsbankinggroup.com/investors/financial-performance/",
-         match=P3, kind="browser", note="Akamai bot manager; not on the NSM"),
-    dict(entity="lloyds-bank", page="https://www.lloydsbankinggroup.com/investors/financial-performance/",
-         match=r"lloyds-bank-plc.*" + P3, kind="browser"),
-    dict(entity="bank-of-scotland", page="https://www.lloydsbankinggroup.com/investors/financial-performance/",
-         match=r"bank-of-scotland.*" + P3, kind="browser"),
-    dict(entity="lloyds-bank-corporate-markets", page="https://www.lloydsbankinggroup.com/investors/financial-performance/",
-         match=r"(?:lbcm|corporate-markets).*" + P3, kind="browser",
+    dict(entity="lloyds-banking-group", page=LBG,
+         match=r"(?:lbg|lloyds-banking-group)[-_]" + LBG_TAIL, exclude=LBG_SIBLINGS, kind="browser",
+         note="Akamai bot manager; not on the NSM. A bare Pillar 3 match here took Bank of Scotland's "
+              "and LBCM's quarterlies: the group, both banks and LBCM publish from this one page"),
+    dict(entity="lloyds-bank", page=LBG,
+         match=r"(?:lloyds-bank-plc|[-_]lb[-_])" + LBG_TAIL, exclude=r"lbcm|corporate-markets|bank-of-scotland|[-_]bos[-_]|lbg", kind="browser"),
+    dict(entity="bank-of-scotland", page=LBG,
+         match=r"(?:bank-of-scotland|[-_]bos[-_])" + LBG_TAIL, exclude=r"lbcm|corporate-markets|lbg", kind="browser"),
+    dict(entity="lloyds-bank-corporate-markets", page=LBG,
+         match=r"(?:lbcm|corporate-markets)" + LBG_TAIL, kind="browser",
          note="same Akamai block as the rest of the group site"),
     dict(entity="natwest-group", page="https://investors.natwestgroup.com/results-centre",
          match=r"results-center/.*/nwg-.*pillar-3.*\.pdf", exclude=r"appendix"),
