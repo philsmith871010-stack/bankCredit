@@ -304,6 +304,8 @@ LR1 Leverage ratio summary 20
 CR1 Credit quality of assets 24
 LIQ1 Liquidity coverage ratio 30
 """
+    assert km1.looks_like_contents(contents), "a listing with no figures in it"
+    assert not km1.looks_like_contents(KM1_TEXT), "a real table, whatever words are on the page"
     import fitz
     doc = fitz.open()
     for block in (contents, KM1_TEXT):
@@ -346,3 +348,17 @@ def test_a_derived_ratio_must_be_one_the_validator_would_accept(tmp_path):
     res = km1.extract(make_pdf(tmp_path, text, name="tiny.pdf"))
     assert res.values.get("cet1_ratio") is None
     assert "cet1_ratio" not in res.derived
+
+
+def test_a_real_table_is_not_a_contents_page_because_of_its_header():
+    """Scotiabank prints "Back to Table of Contents" in the running header of every page, its own
+    KM1 page included. Keying on the word rather than the shape loses the bank three quarters."""
+    header = "Back to Table of Contents\nKM1: Key metrics (at consolidated group level)\n"
+    assert not km1.looks_like_contents(header + KM1_TEXT)
+
+
+def test_a_narrative_page_naming_the_template_is_not_read_as_one():
+    """A page that mentions KM1 without tabulating it has no figures to take."""
+    prose = ("Contents\n1 Overview 3\n2 Own funds 7\nKM1 Key metrics 12\n"
+             "OV1 Overview of RWA 14\nLR1 Leverage summary 20\nCR1 Credit quality 24\n")
+    assert km1.looks_like_contents(prose)

@@ -532,6 +532,25 @@ def log_ocr(exc) -> None:
 
 # Far enough in to reach KM1 in a full annual Pillar 3 report: CBA prints it on page 116 of 137,
 # and a 40-page budget saw only the contents page, whose page numbers read as a capital table.
+CONTENTS_LINE = re.compile(r"^\s*\S.*?[a-z)]\s+\.{0,}\s*\d{1,3}\s*$", re.I)
+BARE_PAGE_NO = re.compile(r"^\s*\d{1,3}\s*$")
+VALUE_TOKEN = re.compile(r"\d[\d,]*\.\d|\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?\s*%")
+
+
+def looks_like_contents(text: str) -> bool:
+    """A contents page lists "KM1 Key metrics ... 12", so it carries the template's wording and
+    scores like it, but the number beside each entry is a page number. Read as a table it fills
+    the capital rows with them. It is told apart by shape rather than by the word "Contents",
+    which appears in the running header of every page in some reports: a listing is many entries
+    numbered with a small integer and almost no figures, whether the number sits at the end of the
+    entry's line or on a line of its own. A real table always carries plenty of figures."""
+    lines = [l for l in text.splitlines() if l.strip()]
+    listed = sum(1 for l in lines if CONTENTS_LINE.match(l) or BARE_PAGE_NO.match(l))
+    figures = len(VALUE_TOKEN.findall(text))
+    return listed >= 5 and figures < 10
+
+
+
 def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 250, currency_hint: str = "",
             year_end: str = "12-31", page_hint: int | None = None) -> Result:
     res = Result()
@@ -544,9 +563,7 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 250, 
     # best page: KM1 wording plus parsable rows; a table without wording needs a high score
     scored = []
     for i, t in enumerate(texts):
-        # A contents page lists "KM1 Key metrics ... 12" and scores like the template, but its
-        # numbers are page numbers: read as a table it puts ratios in the capital rows.
-        if re.search(r"\bContents\b", t[:400], re.I):
+        if looks_like_contents(t):
             continue
         worded = bool(re.search(r"\bKM ?1\b|key (?:prudential |regulatory )?metrics", t, re.I))
         if (worded and scores[i] >= 3) or scores[i] >= 8:
