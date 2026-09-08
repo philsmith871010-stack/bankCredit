@@ -744,6 +744,21 @@ def page_policy(generated):
 <label>Longest tenor you accept<select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button></div>
 <p class="note">Use the legal entity you actually place with: Barclays Bank UK PLC rather than Barclays PLC, HSBC UK Bank plc rather than HSBC Holdings. Each name is checked from the day you add it.</p></div>
 <div class="card pad" style="margin-top:16px"><h3>Your counterparties</h3><div id="policy-body"><div class="empty">Loading…</div></div>
+<h3 style="margin-top:26px">Every covered name</h3>
+<p class="small muted">The whole universe, with the same detail on click and the same Add. Filter it to find a name, or sort a column to see who leads on it.</p>
+<div class="uni-bar">
+  <input id="uni-q" type="search" placeholder="Search name, country or LEI" autocomplete="off">
+  <select id="uni-region"><option value="">Every region</option></select>
+  <select id="uni-type"><option value="">Every type</option></select>
+  <select id="uni-band"><option value="">Any band</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+  <label class="uni-chk"><input type="checkbox" id="uni-scored"> Scored only</label>
+  <select id="uni-tenor" title="Tenor used by the Add buttons in this table"></select>
+  <span class="uni-count small muted" id="uni-count"></span>
+</div>
+<div class="table-wrap"><table class="plain uni" id="uni-table"><thead><tr>
+  <th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score</th>
+  <th data-sort="rating_grade">Rating</th><th data-sort="cet1" class="num">CET1</th><th data-sort="lcr" class="num">LCR</th>
+  <th data-sort="asof">Figures</th><th>Market</th><th></th></tr></thead><tbody id="uni-body"></tbody></table></div>
 <div class="pol-share"><button class="filter" id="pol-copy">Copy link</button><input id="pol-link" readonly placeholder="A link that carries this policy appears here"><button class="filter" id="pol-clear">Clear all</button></div>
 <dialog id="pol-modal" class="pol-modal"></dialog>
 <p class="note">Counterparty is information, not advice. The flags say what has changed in public information since you approved a name; whether that changes your policy is for you and your adviser.</p></div>'''

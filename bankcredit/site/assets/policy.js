@@ -12,6 +12,12 @@
   function tenorLabel(d){for(var i=0;i<TENORS.length;i++)if(TENORS[i][0]===d)return TENORS[i][1];return d+' days'}
   function bandRank(b){return {A:1,B:2,C:3,D:4,E:5}[b]||9}
   function chip(t,k){return '<span class="chip chip-'+(k||'muted')+'">'+esc(t)+'</span>'}
+  var TYPE_LABEL={holding:'Holding company',bank:'Bank',building_society:'Building society',subsidiary:'Subsidiary'};
+  function typeTag(e){
+    if(!e||e.type!=='holding')return '';
+    return '<span class="tag-hold" title="A holding company, not the entity a deposit is placed with. '+
+           'Its figures are the group\u2019s.">Holding company</span>';
+  }
   var BANDC={A:'#0a2540',B:'#3f5f85',C:'#7d93ad',D:'#a9b8c9',E:'#c9d3de'};
   // A score is a ratio against a scale, so it reads as a meter on the band ramp - one hue,
   // light to dark - rather than as a one-bar chart. The track carries no meaning of its own.
@@ -207,7 +213,8 @@
     var s=b.series||{};
     var pg=(PEERS&&PEERS[b.peer_group||(e&&e.peer_group)])||{};
     var charts=TRENDS.map(function(t){return trend(s[t[0]],t[1],t[2],pg[t[0]])}).filter(Boolean).join('')
-               ||'<div class="muted small">Only one period held, so there is nothing to plot yet.</div>';
+               ||(b.series?'<div class="muted small">Only one period held, so there is nothing to plot yet.</div>'
+                          :'<div class="md-wait">'+[0,1,2,3,4,5].map(function(){return '<div class="md-sk"></div>'}).join('')+'</div>');
     // the headline rating per agency, with its short-term beside it; the rest are on the profile
     var st={};((e&&e.short_ratings)||[]).forEach(function(x){st[x.letter]=x.value});
     var head=(e&&e.ratings)||[];
@@ -222,12 +229,12 @@
     var pill=sd?Object.keys(sd).map(function(k){var v=sd[k]||[];var pc=v[0],wt=v[1];
       return '<div class="md-pill"><span>'+esc(k.replace(/_/g,' '))+'</span>'+meter(pc,b.band||(e&&e.band),'sm')+
              '<b>'+(pc==null?'—':pc.toFixed(0))+'</b><i>w'+(wt==null?'':wt)+'</i></div>'}).join(''):'';
-    var ev=(b.events||[]).slice(0,6).map(function(x){
+    var ev=(b.events||(e&&e.recent)||[]).slice(0,6).map(function(x){
       var k=x.severity==='bad'?'bad':(x.severity==='warn'?'warn':'good');
       return '<div><span class="dot dot-'+k+'"></span><span class="mono muted">'+esc(x.date)+'</span><span class="hd">'+esc(x.title)+'</span></div>';
     }).join('')||'<div class="muted small">Nothing recorded in the window.</div>';
     return '<div class="md-grid">'+
-      '<section><h4>Trends</h4><div class="md-trends">'+charts+'</div>'+
+      '<section><h4>Trends</h4><div class="md-trends" id="md-trends">'+charts+'</div>'+
         (Object.keys(pg).length?'<p class="small muted"><span class="mt-key"></span>The band is where this bank\u2019s peer group stands today, quartile to quartile, with the median dashed \u2014 not a peer history.</p>':'')+
       '</section>'+
       '<section><h4>Ratings</h4><table class="plain md-rt"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup><tbody>'+rt+'</tbody></table>'+
@@ -242,7 +249,7 @@
     var e=byId[id]||{};
     var act=tenor?'<button class="filter active pol-add-ll" data-id="'+esc(id)+'" data-tenor="'+tenor+'">Add at '+esc(tenorLabel(tenor))+'</button>':'';
     dlg.innerHTML='<div class="md-head"><div><div class="md-nm">'+esc(e.short||id)+'</div>'+
-      '<div class="small muted">'+esc(e.name||'')+' · '+esc(e.country||'')+'</div></div>'+
+      '<div class="small muted">'+esc(e.name||'')+' \u00b7 '+esc(e.country||'')+typeTag(e)+'</div></div>'+
       '<div class="md-sc">'+(e.score==null?'<span class="na">—</span>':'<span class="cp-score">'+e.score.toFixed(0)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>')+'</div>'+
       act+'<a class="filter" href="'+ROOT+'banks/'+esc(id)+'.html">Full profile</a>'+
       '<button class="filter" id="md-close" aria-label="Close">Close</button></div>'+
@@ -252,6 +259,79 @@
     if(MCACHE[id])return put(MCACHE[id]);
     fetch(ROOT+'data/detail/'+id+'.json').then(function(r){return r.json()}).then(function(b){MCACHE[id]=b;put(b)})
       .catch(function(){var t=document.getElementById('md-body');if(t)t.innerHTML='<div class="empty">Could not load this bank’s detail.</div>'});
+  }
+
+
+  // ---- the whole universe on the same page -------------------------------------------
+  // The board, the bank list and the ratings grid all showed slices of this. One table with
+  // filters and the same dialog on click does the lot, and a name can be added where it is read.
+  var REGION_LABEL={uk:'United Kingdom',eu:'Europe',us:'United States',us_ch:'US and Switzerland',
+                    asia:'Asia',gulf:'Gulf',aus_can:'Australia and Canada',ch:'Switzerland'};
+  var uniSort={key:'score',dir:-1};
+  function uniRows(){
+    var q=(document.getElementById('uni-q').value||'').trim().toLowerCase();
+    var reg=document.getElementById('uni-region').value, typ=document.getElementById('uni-type').value;
+    var bnd=document.getElementById('uni-band').value, only=document.getElementById('uni-scored').checked;
+    var have={}; load().forEach(function(it){have[it.id]=it.tenor});
+    return data.rows.filter(function(e){
+      if(reg&&e.region!==reg)return false;
+      if(typ&&e.type!==typ)return false;
+      if(bnd&&e.band!==bnd)return false;
+      if(only&&e.score==null)return false;
+      if(q&&(e.short+' '+e.name+' '+(e.country||'')+' '+(e.lei||'')).toLowerCase().indexOf(q)<0)return false;
+      return true;
+    }).map(function(e){return {e:e,tenor:have[e.id]}}).sort(function(a,b){
+      var k=uniSort.key, va=a.e[k], vb=b.e[k];
+      if(va==null&&vb==null)return 0; if(va==null)return 1; if(vb==null)return -1;
+      if(typeof va==='string')return uniSort.dir*va.localeCompare(vb);
+      return uniSort.dir*(va-vb);
+    });
+  }
+  function renderUni(){
+    var body=document.getElementById('uni-body'); if(!body||!data)return;
+    var rows=uniRows(), t=+document.getElementById('uni-tenor').value;
+    document.getElementById('uni-count').textContent=rows.length+' of '+data.rows.length+' names';
+    body.innerHTML=rows.slice(0,400).map(function(r){
+      var e=r.e;
+      return '<tr class="uni-row" data-id="'+esc(e.id)+'">'+
+        '<td><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
+        '<td class="mono small">'+esc(e.country||'')+'</td>'+
+        '<td class="num">'+(e.score==null?'<span class="na">—</span>':
+            '<span class="mono b">'+e.score.toFixed(1)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>'+meter(e.score,e.band,'sm'))+
+          (e.score==null&&e.unscored?'<div class="small muted">'+esc(e.unscored)+'</div>':'')+'</td>'+
+        '<td class="mono">'+esc(e.rating_composite||'—')+'</td>'+
+        '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1))+'</td>'+
+        '<td class="num mono">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
+        '<td class="mono small muted">'+esc(e.asof||'—')+'</td>'+
+        '<td>'+mkt(e.market)+'</td>'+
+        '<td class="num">'+(r.tenor!=null
+            ? '<span class="chip chip-good" title="already in your policy">'+esc(tenorLabel(r.tenor))+'</span>'
+            : '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button>')+'</td></tr>';
+    }).join('')||'<tr><td colspan="9" class="empty">No name matches those filters.</td></tr>';
+  }
+  function initUni(){
+    var reg=document.getElementById('uni-region'), typ=document.getElementById('uni-type'),
+        ten=document.getElementById('uni-tenor');
+    if(!reg)return;
+    var regions={},types={};
+    data.rows.forEach(function(e){if(e.region)regions[e.region]=1;if(e.type)types[e.type]=1});
+    Object.keys(regions).sort().forEach(function(r){var o=document.createElement('option');o.value=r;o.textContent=REGION_LABEL[r]||r;reg.appendChild(o)});
+    Object.keys(types).sort().forEach(function(x){var o=document.createElement('option');o.value=x;o.textContent=TYPE_LABEL[x]||x;typ.appendChild(o)});
+    TENORS.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent='Add at '+x[1];if(x[0]===365)o.selected=true;ten.appendChild(o)});
+    ['uni-q','uni-region','uni-type','uni-band','uni-scored','uni-tenor'].forEach(function(id){
+      var el=document.getElementById(id); if(el)el.addEventListener('input',renderUni);
+    });
+    document.querySelectorAll('#uni-table th[data-sort]').forEach(function(th){
+      th.addEventListener('click',function(){
+        var k=th.dataset.sort;
+        uniSort.dir=(uniSort.key===k)?-uniSort.dir:(k==='short'||k==='country'||k==='asof'?1:-1);
+        uniSort.key=k;
+        document.querySelectorAll('#uni-table th[data-sort]').forEach(function(x){x.removeAttribute('aria-sort')});
+        th.setAttribute('aria-sort',uniSort.dir>0?'ascending':'descending');
+        renderUni();
+      });
+    });
+    renderUni();
   }
 
   function render(){
@@ -274,7 +354,7 @@
         return '<div class="pol-card" data-id="'+esc(e.id)+'">'+
           '<div class="cp-top">'+
             '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+
-              '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div></div>'+
+              '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+esc(e.country)+typeTag(e)+'</div></div>'+
             '<div class="cp-tenor"><div class="cp-t">'+esc(tenorLabel(it.tenor))+'</div>'+
               '<div class="small">approved '+esc(it.added||'?')+'</div></div>'+
             '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">\u00d7</button>'+
@@ -319,7 +399,7 @@
         ll+=(t!==tenors[0]?'<p class="small muted">In addition to the names already listed at longer tenors.</p>':'')+(cands.length?'<div class="ll-grid">'+cands.slice(0,24).map(function(e){
           var vs=(w.score!=null)?(e.score-w.score):null;
           return '<div class="ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+esc(e.short)+', open detail">'+
-            '<div class="ll-nm">'+esc(e.short)+'</div><div class="ll-co">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div>'+
+            '<div class="ll-nm">'+esc(e.short)+typeTag(e)+'</div><div class="ll-co">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div>'+
             '<div class="ll-score"><b>'+e.score.toFixed(1)+'</b><span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>'+
               (vs!=null&&vs>0?'<span class="ll-vs">+'+vs.toFixed(1)+' vs weakest</span>':'')+'</div>'+
             meter(e.score,e.band,'sm')+
@@ -330,6 +410,7 @@
       html+='<h3 style="margin-top:22px">Like-for-like</h3><p class="small muted">Names whose public standing is at least as strong as the weakest counterparty you already accept at each tenor: same or better band, ratings and score, and no market signal widening. This is a comparison of public information, not a recommendation; the tenor and the list remain your policy and your adviser\'s advice.</p>'+ll;
     }
     out.innerHTML=html;
+    renderUni();
     var link=document.getElementById('pol-link');if(link){link.value=p.length?location.href.split('#')[0]+'#p='+encode(p):''}
   }
   function add(id,tenor){var p=load();var e=byId[id];if(!e)return;var ex=p.filter(function(x){return x.id===id})[0];
@@ -345,8 +426,10 @@
       var a=ev.target.closest('.pol-add-ll');if(a){add(a.dataset.id,+a.dataset.tenor);var d=document.getElementById('pol-modal');if(d&&d.open)d.close();return}
       if(ev.target.id==='md-close'){document.getElementById('pol-modal').close();return}
       // a card opens its detail; a link inside it still navigates
-      var card=ev.target.closest('.pol-card,.ll');
-      if(card&&!ev.target.closest('a,button')){openModal(card.dataset.id,card.dataset.tenor?+card.dataset.tenor:0);return}
+      var card=ev.target.closest('.pol-card,.ll,.uni-row');
+      if(card&&!ev.target.closest('a,button')){
+        var tn=card.dataset.tenor?+card.dataset.tenor:(card.classList.contains('uni-row')?+document.getElementById('uni-tenor').value:0);
+        openModal(card.dataset.id,tn);return}
       if(ev.target.id==='pol-clear'){if(confirm('Remove every counterparty from this policy?')){save([]);render()}return}
       if(ev.target.id==='pol-copy'){var l=document.getElementById('pol-link');l.select();try{document.execCommand('copy')}catch(e){}ev.target.textContent='Copied';setTimeout(function(){ev.target.textContent='Copy link'},1500);return}
       if(ev.target.id==='pol-use-shared'){save(window.__shared);window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);render();return}
@@ -359,6 +442,7 @@
     });
     var m=location.hash.match(/#p=([A-Za-z0-9_\-]+)/);if(m){var sh=decode(m[1]);if(sh&&sh.length){if(!load().length){save(sh);history.replaceState(null,'',location.pathname)}else{window.__shared=sh;var box=document.getElementById('pol-shared');box.hidden=false;box.querySelector('span').textContent='This link carries a policy of '+sh.length+' counterparties.'}}}
     render();
+    initUni();
   }
   var box=document.getElementById('policy-body');if(!box)return;
   fetch(ROOT+'data/peers.json').then(function(r){return r.json()}).then(function(j){PEERS=j}).catch(function(){});
