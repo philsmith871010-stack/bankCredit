@@ -103,8 +103,18 @@ table.coverage th{white-space:nowrap}table.coverage td{vertical-align:middle}
 .sm-intro{padding:0 0 10px}
 /* A section heading is a cell in the same flow as the charts, so a group of two does not cost a
    whole row of white space. */
-.sm-sec{display:flex;align-items:flex-end;padding:0 0 8px 8px;border-left:2px solid var(--orange);min-height:44px}
-.sm-sec span{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text)}
+/* The section label sits beside its charts, not above them: no group costs a whole row to name
+   itself, and no heading floats loose in the middle of one. */
+.sm-flow{display:grid;grid-template-columns:118px minmax(0,1fr);gap:0 18px;align-items:start}
+.sm-sec{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text);
+        padding:13px 0 4px 9px;border-left:2px solid var(--orange);align-self:start;line-height:1.35}
+.sm-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;padding:12px 0}
+.sm-flow>.sm-sec:first-child,.sm-flow>.sm-sec:first-child+.sm-cards{padding-top:2px}
+@media(max-width:760px){
+  .sm-flow{grid-template-columns:1fr;gap:0}
+  .sm-sec{border-left:0;padding:14px 0 6px 8px;border-left:2px solid var(--orange)}
+  .sm-cards{padding:0 0 8px}
+}
 .sm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .sm{display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--white);border:1px solid var(--line);border-radius:10px;padding:10px 12px 6px;font:inherit;color:var(--text);cursor:pointer;min-width:0;transition:box-shadow .15s,border-color .15s}
 .sm:hover,.sm:focus-visible{box-shadow:var(--shadow);border-color:#b9c6d6;outline:none}.sm-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.sm-label{font-size:12.5px;font-weight:600}.sm-val{font-size:18px;font-weight:600}.sm-val small{font-size:11px;font-weight:400;color:var(--muted);margin-left:1px}
