@@ -244,3 +244,105 @@ def test_a_derived_ratio_outside_the_plausible_range_is_not_taken(tmp_path):
     text = DERIVED_TEXT.replace("2,575.0 2,462.2 2,465.7", "9,000,000.0 9,000,000.0 9,000,000.0")
     res = km1.extract(make_pdf(tmp_path, text))
     assert "cet1_ratio" not in res.derived
+
+
+FOOTNOTED = KM1_TEXT.replace("Common Equity Tier 1 ratio (%)", "Common Equity Tier 1 ratio (%)3") \
+                    .replace("Tier 1 ratio (%)", "Tier 1 ratio (%)3")
+
+
+def test_a_footnote_marker_on_a_row_label_does_not_hide_the_row(tmp_path):
+    """Hong Kong KM1 prints "CET1 ratio (%)3". Stripping the bracket leaves the footnote digit
+    stranded, the anchored label pattern misses, and the ratio is quietly derived from capital
+    over RWA instead of read: a computed number published where a stated one exists."""
+    res = km1.extract(make_pdf(tmp_path, FOOTNOTED))
+    assert res.values["cet1_ratio"] == 28.2 and "cet1_ratio" not in res.derived
+    assert res.values["tier1_ratio"] == 28.2 and "tier1_ratio" not in res.derived
+
+
+def test_a_pre_floor_twin_does_not_stand_in_for_the_base_row(tmp_path):
+    """The floored ratio is the one the template asks for. Normalising a label throws the
+    qualifier away, so the two rows are indistinguishable by the time they are matched."""
+    text = KM1_TEXT.replace("""5
+Common Equity Tier 1 ratio (%)
+28.2 28.0 28.8
+""", """5
+Common Equity Tier 1 ratio (%)
+28.2 28.0 28.8
+5b
+Common Equity Tier 1 ratio (%) (pre-floor ratio)
+31.9 31.7 32.5
+""")
+    res = km1.extract(make_pdf(tmp_path, text))
+    assert res.values["cet1_ratio"] == 28.2, "the floored ratio, not the pre-floor twin"
+
+
+def test_the_pre_floor_twin_is_rejected_whichever_row_comes_first(tmp_path):
+    """First-match-wins would take whichever the bank happened to print above the other."""
+    text = KM1_TEXT.replace("""5
+Common Equity Tier 1 ratio (%)
+28.2 28.0 28.8
+""", """5b
+Common Equity Tier 1 ratio (%) (pre-floor ratio)
+31.9 31.7 32.5
+5
+Common Equity Tier 1 ratio (%)
+28.2 28.0 28.8
+""")
+    res = km1.extract(make_pdf(tmp_path, text))
+    assert res.values["cet1_ratio"] == 28.2
+
+
+def test_a_contents_page_is_never_read_as_the_template(tmp_path):
+    """A contents page lists "KM1 Key metrics ... 12" and scores like the template, but the
+    numbers beside its entries are page numbers. Read as a table it fills the capital rows with
+    them, and the ratios derived from those are nonsense."""
+    contents = """Contents
+1 Introduction 3
+KM1 Key metrics 12
+OV1 Overview of RWA 14
+LR1 Leverage ratio summary 20
+CR1 Credit quality of assets 24
+LIQ1 Liquidity coverage ratio 30
+"""
+    import fitz
+    doc = fitz.open()
+    for block in (contents, KM1_TEXT):
+        page, y = doc.new_page(), 40
+        for line in block.splitlines():
+            page.insert_text((40, y), line, fontsize=8)
+            y += 11
+    p = tmp_path / "withcontents.pdf"
+    doc.save(str(p))
+    res = km1.extract(str(p))
+    assert res.ok, res.checks
+    assert res.page == 2, "the real table, not the contents listing"
+    assert res.values["cet1_ratio"] == 28.2
+
+
+def test_the_template_is_found_deep_in_a_long_report(tmp_path):
+    """A full annual Pillar 3 report runs to well over a hundred pages and prints KM1 inside it.
+    A page budget that stops early sees only the front matter."""
+    import fitz
+    doc = fitz.open()
+    for _ in range(80):
+        page = doc.new_page()
+        page.insert_text((40, 40), "Introduction and risk management commentary", fontsize=8)
+    page = doc.new_page()
+    y = 40
+    for line in KM1_TEXT.splitlines():
+        page.insert_text((40, y), line, fontsize=8)
+        y += 11
+    p = tmp_path / "long.pdf"
+    doc.save(str(p))
+    res = km1.extract(str(p))
+    assert res.ok and res.page == 81, (res.page, res.checks)
+    assert res.values["cet1_ratio"] == 28.2
+
+
+def test_a_derived_ratio_must_be_one_the_validator_would_accept(tmp_path):
+    """A capital row misread as a percentage gives an implied ratio near zero. Deriving it turns
+    one misread row into a published figure of 0.0 and an error the document is then held for."""
+    text = DERIVED_TEXT.replace("2,575.0 2,462.2 2,465.7", "13.5 13.4 13.6")
+    res = km1.extract(make_pdf(tmp_path, text, name="tiny.pdf"))
+    assert res.values.get("cet1_ratio") is None
+    assert "cet1_ratio" not in res.derived

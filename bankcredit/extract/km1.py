@@ -153,9 +153,17 @@ def _norm_text(text: str) -> str:
     return re.sub(r"(\d)\s+%", r"\1%", text)
 
 
+# Rows printed beside a base row on a different basis. The template asks for the base row, so
+# these are never read: "fully loaded" next to the transitional figure, "pre-floor" next to the
+# floored one (the Hong Kong and Basel 3.1 layouts), the pre-IFRS 9 comparatives.
+VARIANT_RE = re.compile(r"fully[- ]loaded|fully[- ]phased|ecl accounting model|pre[- ]ifrs ?9|"
+                        r"pre[- ]?floor|floor[- ]adjusted|excluding (?:the )?(?:ifrs ?9|ecl)", re.I)
+
+
 def _norm_label(label: str) -> str:
     low = _norm_text(label).lower()
-    low = re.sub(r"\([^)]*\)", " ", low)                 # (CET1), (£m), (%), (a)
+    # (CET1), (£m), (%), (a), and a footnote marker glued to the bracket: "CET1 ratio (%)3"
+    low = re.sub(r"\([^)]*\)\d{0,2}", " ", low)
     low = re.sub(r"(?<=[a-z])(?<!cet)(?<!tier)(?<!\bat)(?<!\bt)\d\b", "", low)   # footnote digit glued to a word: capital1
     low = re.sub(r"[^a-z0-9 /-]", " ", low)
     low = re.sub(r"\s+", " ", low).strip()
@@ -430,8 +438,8 @@ def _confirm(row: str, label: str) -> str | None:
     if re.search(pat, low):
         if re.search(r"\bnotes?\b$|pillar 3|page \d|overview|key metrics|template|annex|contents", low):
             return None
-        if re.search(r"fully[- ]loaded|fully[- ]phased|ecl accounting model|pre[- ]ifrs ?9|excluding (?:the )?(?:ifrs ?9|ecl)", low):
-            return None          # the transitional base row is the one the template asks for
+        if VARIANT_RE.search(low):
+            return None          # the base row is the one the template asks for
         # disambiguate ratio rows that share words
         if metric == "tier1_ratio" and re.search(r"common equity|cet", low):
             return None
@@ -456,6 +464,8 @@ def parse_by_label(lines: list[str]) -> dict[str, list[str]]:
             cands.append(line + " " + _norm_text(lines[i + 1]).strip())
         hit, used = None, 1
         for k, cand in enumerate(cands):
+            if VARIANT_RE.search(cand):
+                continue         # normalising strips the qualifier, so it has to be caught here
             nl = _norm_label(cand)
             for metric, pat in LABEL_ROWS:
                 if metric not in out and re.search(pat, nl):
@@ -520,7 +530,9 @@ def log_ocr(exc) -> None:
     logging.getLogger("bankcredit.extract").warning("OCR unavailable or failed (%s); install tesseract-ocr to read image-only PDFs", exc)
 
 
-def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, currency_hint: str = "",
+# Far enough in to reach KM1 in a full annual Pillar 3 report: CBA prints it on page 116 of 137,
+# and a 40-page budget saw only the contents page, whose page numbers read as a capital table.
+def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 250, currency_hint: str = "",
             year_end: str = "12-31", page_hint: int | None = None) -> Result:
     res = Result()
     doc = fitz.open(pdf_path)
@@ -532,6 +544,10 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 40, c
     # best page: KM1 wording plus parsable rows; a table without wording needs a high score
     scored = []
     for i, t in enumerate(texts):
+        # A contents page lists "KM1 Key metrics ... 12" and scores like the template, but its
+        # numbers are page numbers: read as a table it puts ratios in the capital rows.
+        if re.search(r"\bContents\b", t[:400], re.I):
+            continue
         worded = bool(re.search(r"\bKM ?1\b|key (?:prudential |regulatory )?metrics", t, re.I))
         if (worded and scores[i] >= 3) or scores[i] >= 8:
             scored.append((scores[i] + (1 if worded else 0), -i, i))
@@ -708,8 +724,11 @@ def validate(res: Result) -> None:
     # ratio exactly; it is recorded as derived so a profile can say where the figure came from
     for cap, ratio in (("cet1_capital", "cet1_ratio"), ("tier1_capital", "tier1_ratio"), ("total_capital", "total_capital_ratio")):
         if ratio not in v and cap in v and v.get("rwa"):
-            implied = v[cap] / v["rwa"] * 100
-            if 0 < implied < 80:
+            implied = round(v[cap] / v["rwa"] * 100, 2)
+            lo, hi = BOUNDS.get(ratio, (3, 80))
+            # only derive a figure the validator would accept: a capital row misread as a ratio
+            # gives an implied value near zero, and deriving it manufactures an error downstream
+            if lo <= implied <= hi:
                 v[ratio] = round(implied, 2)
                 res.derived.add(ratio)
                 res.checks.append(("info", f"{ratio} derived from {cap} over RWA"))

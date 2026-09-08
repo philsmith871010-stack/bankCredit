@@ -6,7 +6,7 @@ Moody's, S&P, Fitch, DBRS, KBRA, Scope and JCR endorse their ratings into the EU
 Query notes (docs/data-sources-investigation.md, 12.3):
   type_s:parent            current state of each rating; type_s:child = action history
   ratedObjectCode:ISR      issuer-level (INT = individual instruments)
-  ratingStatusLabel        outlook / watch status; Withdrawal is excluded
+  ratingStatusLabel        outlook / watch status; withdrawn ratings are read but kept apart
   issuerRatingName         distinguishes deposit / issuer / IDR / counterparty ratings
   issuerLeiCode            LEI, the preferred match key; issuerName is a tokenised text
                            field (accented spellings do not match, plain ASCII does)
@@ -29,7 +29,10 @@ SOLR = "https://registers.esma.europa.eu/solr/esma_registers_radar/select"
 FIELDS = ("craName,ratingValueLabel,timeHorizonDescr,issuerRatingName,ratingStatusLabel,"
           "lastActionTypeLabel,racValidityDatetimeStr,issuerLeiCode,issuerName,id,"
           "localForeignCurrencyValue,solicitationStatus")
-PARENT_FQ = ["type_s:parent", "ratedObjectCode:ISR", "-ratingStatusLabel:Withdrawal"]
+PARENT_FQ = ["type_s:parent", "ratedObjectCode:ISR"]
+# A withdrawn rating is not a rating, so it never scores; but "Moody's withdrew its Baa2 in
+# October 2024" tells a treasurer far more than a bare "unrated", so it is kept and shown.
+WITHDRAWN = "Withdrawal"
 SLEEP = 0.5          # seconds between requests
 TIMEOUT = 120
 ROWS = 500
@@ -162,6 +165,7 @@ class ESMARatingsAdapter(Adapter):
 
     def parse(self, entity: Entity, raw: list[dict]) -> list[Rating]:
         candidates: dict[tuple, list[tuple]] = {}
+        withdrawn: dict[tuple, list[tuple]] = {}
         for d in raw:
             if (d.get("lastActionTypeLabel") or "").lower() == "removed from erp":
                 continue
@@ -184,15 +188,28 @@ class ESMARatingsAdapter(Adapter):
             ccy_rank = 0 if ccy.startswith("foreign") else (1 if ccy.startswith("local") else 2)
             name_rank = NAME_RANK.get((d.get("issuerRatingName") or "").lower().strip(), 1)
             sort_key = (ccy_rank, name_rank, -(rec.action_date.toordinal() if rec.action_date else 0))
-            candidates.setdefault((rec.agency, rtype, hz), []).append((sort_key, rec))
+            bucket = withdrawn if (d.get("ratingStatusLabel") or "").strip() == WITHDRAWN else candidates
+            bucket.setdefault((rec.agency, rtype, hz), []).append((sort_key, rec))
         # Foreign currency beats local; headline rating name beats debt-class variants; newest wins.
-        return [min(v, key=lambda t: t[0])[1] for v in candidates.values()]
+        pick = lambda bucket: [min(v, key=lambda t: t[0])[1] for v in bucket.values()]
+        self._withdrawn = pick(withdrawn)
+        return pick(candidates)
 
     def validate(self, records: list[Rating]) -> list[Rating]:
+        self._withdrawn = [r for r in getattr(self, "_withdrawn", []) if r.value]
         return [r for r in records if r.value]
 
     def load(self, records: list[Rating]) -> int:
-        return store.upsert("ratings", records)
+        """A rating the register now reports as withdrawn is kept apart from the live ones, and
+        never in both places: a live rating for the same agency, type and horizon always wins."""
+        n = store.upsert("ratings", records)
+        if self._withdrawn:
+            live = {(r.entity_id, r.agency, r.rating_type, r.horizon) for r in records}
+            fresh = [r for r in self._withdrawn
+                     if (r.entity_id, r.agency, r.rating_type, r.horizon) not in live]
+            store.upsert("withdrawn_ratings", fresh)
+        self._withdrawn = []
+        return n
 
     # ---- action history (events feed; not wired into run() yet) ----
     def actions(self, entity: Entity, since: date | str) -> list[dict]:

@@ -91,3 +91,44 @@ def test_mappings():
     assert outlook("Removed under negative watch") == ""
     assert outlook("Placed under evolving watch") == ""
     assert outlook("") == ""
+
+
+WITHDRAWN_DOCS = [
+    {"craName": "Moody's Investors Service Ltd", "ratingValueLabel": "Baa2",
+     "issuerRatingName": "Counterparty Risk Rating", "timeHorizonDescr": "Long Term",
+     "ratingStatusLabel": "Withdrawal", "lastActionTypeLabel": "Withdrawn",
+     "racValidityDatetimeStr": "2022-02-01T00:00:00Z", "id": "w1"},
+    {"craName": "Fitch Ratings Ltd", "ratingValueLabel": "A-",
+     "issuerRatingName": "Issuer Rating", "timeHorizonDescr": "Long Term",
+     "ratingStatusLabel": "Stable", "lastActionTypeLabel": "Affirmed",
+     "racValidityDatetimeStr": "2026-03-01T00:00:00Z", "id": "l1"},
+]
+
+
+def test_a_withdrawn_rating_is_kept_out_of_the_scored_ratings():
+    """A withdrawn rating must never reach a score. It is worth keeping and showing - an agency
+    that rated a bank and stopped says more than a bare "unrated" - but not in the same table."""
+    from bankcredit.models import Entity
+    from bankcredit.adapters.esma import ESMARatingsAdapter
+    a = ESMARatingsAdapter.__new__(ESMARatingsAdapter)
+    ent = Entity(id="somebank", name="Some Bank", short_name="Some", country="GB",
+                 type="bank", region="uk", active=True)
+    live = a.validate(a.parse(ent, WITHDRAWN_DOCS))
+    assert [r.value for r in live] == ["A-"], "only the live rating scores"
+    assert [(r.agency, r.value) for r in a._withdrawn] == [("moodys", "Baa2")]
+
+
+def test_a_live_rating_wins_over_a_withdrawn_one_of_the_same_kind():
+    """An agency that withdrew and later re-rated must not appear in both tables at once."""
+    from bankcredit.models import Entity
+    from bankcredit.adapters.esma import ESMARatingsAdapter
+    a = ESMARatingsAdapter.__new__(ESMARatingsAdapter)
+    ent = Entity(id="somebank", name="Some Bank", short_name="Some", country="GB",
+                 type="bank", region="uk", active=True)
+    docs = [dict(WITHDRAWN_DOCS[0]),
+            dict(WITHDRAWN_DOCS[0], ratingValueLabel="Baa1", ratingStatusLabel="Stable",
+                 lastActionTypeLabel="Upgraded", racValidityDatetimeStr="2026-01-01T00:00:00Z", id="l2")]
+    live = a.validate(a.parse(ent, docs))
+    keys = {(r.entity_id, r.agency, r.rating_type, r.horizon) for r in live}
+    kept = [r for r in a._withdrawn if (r.entity_id, r.agency, r.rating_type, r.horizon) not in keys]
+    assert [r.value for r in live] == ["Baa1"] and kept == []

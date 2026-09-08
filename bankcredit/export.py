@@ -431,6 +431,28 @@ def capital_not_published() -> dict:
         return {}
 
 
+AGENCY_NAME = {"moodys": "Moody's", "sp": "S&P", "fitch": "Fitch", "dbrs": "DBRS",
+               "kbra": "KBRA", "scope": "Scope", "jcr": "JCR", "creditreform": "Creditreform"}
+
+
+def withdrawn_summary() -> dict:
+    """{entity: {when, agencies}} for banks an agency rated and then stopped rating. Read from
+    its own table: a withdrawn rating must never reach a score, and keeping it out of `ratings`
+    is what guarantees that rather than a filter at each point of use."""
+    t = store.read("withdrawn_ratings")
+    if t.empty:
+        return {}
+    out = {}
+    for entity, rows in t[t.horizon == "long"].groupby("entity_id"):
+        dates = [str(d)[:10] for d in rows.action_date if d is not None and str(d) != "NaT"]
+        when = max(dates, default="")
+        agencies = sorted({AGENCY_NAME.get(a, a) for a in rows.agency})
+        out[entity] = {"when": date.fromisoformat(when).strftime("%B %Y") if when else "",
+                       "agencies": ", ".join(agencies),
+                       "ratings": sorted({str(v) for v in rows.value})}
+    return out
+
+
 def _quarter_ends(n: int, today: date) -> list[date]:
     out, y, m = [], today.year, ((today.month - 1) // 3) * 3 + 3
     d = date(y, m, calendar.monthrange(y, m)[1])
@@ -519,6 +541,7 @@ def export_json() -> None:
     snrfin = series_tbl[series_tbl.series_id == "ITRAXX_SNRFIN_5Y"] if not series_tbl.empty else None
     board, today, details, policy_rows = [], date.today(), {}, []
     NOT_PUBLISHED = capital_not_published()
+    WITHDRAWN_ALL = withdrawn_summary()
     hist_tbl = store.read("history")
     hist_all: dict[str, list] = {}
     if not hist_tbl.empty:
@@ -571,6 +594,11 @@ def export_json() -> None:
         cap_age = (today - date.fromisoformat(cap_pts[-1]["d"])).days if cap_pts else None
         if sc.final_score is not None and cap_age is not None and cap_age > STALE_DAYS:
             sc.final_score, sc.public_score, sc.band, sc.reason = None, None, "", f"capital ratios from {cap_pts[-1]['d'][:7]}"
+        wd = WITHDRAWN_ALL.get(e.id)
+        if sc.reason == "unrated" and wd:
+            # "unrated" reads as never rated. An agency that rated this bank and then withdrew
+            # is a different thing, and the more useful one for a treasurer to know.
+            sc.reason = f"rating withdrawn {wd['when']} ({wd['agencies']})"
         npub = NOT_PUBLISHED.get(e.id)
         if npub and sc.final_score is None:
             sc.reason = npub.get("short") or "does not publish Basel ratios"

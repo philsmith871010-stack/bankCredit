@@ -381,7 +381,9 @@ class Pillar3Adapter(Adapter):
                 counts["error"] = counts.get("error", 0) + 1
                 continue
             if not res.ok:
-                store.drop("facts", document=r.url, source=self.name)
+                # a re-read that now fails must not take the reviewer's answers with it: those were
+                # read by a person from this document and are the only figures it will ever yield
+                store.drop("facts", ne={"method": "pdf_manual"}, document=r.url, source=self.name)
             self.load([(r.entity_id, r.url, path, r.sha256, r.title, r.origin, res)])
             status = "loaded" if res.ok and res.confidence >= 0.9 else "unverified" if res.ok else "review" if res.values else "no_km1"
             counts[status] = counts.get(status, 0) + 1

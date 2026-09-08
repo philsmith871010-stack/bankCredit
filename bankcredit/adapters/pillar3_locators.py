@@ -17,6 +17,14 @@ from __future__ import annotations
 
 P3 = r"pillar[-_ %]?(?:3|iii)"
 
+HKMA = "https://vpr.hkma.gov.hk/eng/regulatory-resources/registers/register-of-ais-and-lros/info/"
+# The HKMA public register carries every Hong Kong authorised institution's disclosure documents
+# at a stable address, which beats three bank sites that each redesign on their own schedule.
+# fd_int is the interim disclosure statement: the March and September ones carry KM1, the June
+# and December ones are the shorter financial disclosures and do not. A new HK bank is one id away.
+HKMA_KM1 = r"/fd_int/fd_int_(?:03|09)\d\d_eng\.pdf"
+
+
 LOCATORS: list[dict] = [
     # ---- UK large banks -------------------------------------------------
     dict(entity="barclays", page="https://home.barclays/investor-relations/reports-and-events/financial-results/",
@@ -198,8 +206,11 @@ LOCATORS: list[dict] = [
     dict(entity="hsbc-hong-kong", page="https://www.hsbc.com.hk/legal/regulatory-disclosures/",
          match=r"banking-disclosure-statement-[a-z]+-20\d\d\.pdf", currency="HKD",
          note="Hong Kong files a Banking Disclosure Statement rather than a Pillar 3 report"),
-    dict(entity="bochk", page="https://www.bochk.com/en/investor/regulatory.html", kind="browser",
-         match=r"banking[- ]disclosure|regulatory[- ]disclosure|pillar", currency="HKD"),
+    dict(entity="bochk", page=HKMA + "100072", match=HKMA_KM1, currency="HKD",
+         note="its own regulatory page never yielded a document; the register does"),
+    dict(entity="standard-chartered-hk", page=HKMA + "100269", match=HKMA_KM1, currency="HKD",
+         note="the sc.com/hk investor page carries the group PLC's Hong Kong listing announcements, "
+              "not this subsidiary's disclosure statements"),
     dict(entity="dbs", page="https://www.dbs.com/investors/financials/pillar-3-disclosures",
          match=r"quarterly-financials/.*P3.*\.pdf", currency="SGD"),
     dict(entity="ocbc", page="https://www.ocbc.com/group/investors/investor-information.page",
