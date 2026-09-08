@@ -373,10 +373,13 @@ class Pillar3Adapter(Adapter):
             checks = "; ".join(f"{s}:{m}" for s, m in res.checks)
             if not res.values:
                 self._record(ent, url, sha, res.page, res.reference_date, "no_km1", 0.0, checks, title, origin, res.values, self.published_on(path))
-                loc = next((l for l in LOCATORS if l["entity"] == ent), {})
+                loc = self._locator_for(ent, url)
                 hint = infer_period(title or url, loc.get("year_end", "12-31"))
                 if (hint is None or hint >= date(2022, 1, 1)) and not learn.skip_matches(ent, url):
-                    review.add(self._queue_item(ent, url, path, sha, res, title, "no KM1 template found"))
+                    # A source the locator declares narrative has no KM1 by nature: the reviewer is
+                    # being asked to read a capital table out of prose, not to explain a failure.
+                    reason = loc.get("narrative") or "no KM1 template found"
+                    review.add(self._queue_item(ent, url, path, sha, res, title, reason))
                 continue
             if res.ok:
                 status = "loaded" if res.confidence >= 0.9 else "unverified"
@@ -531,6 +534,23 @@ class Pillar3Adapter(Adapter):
                                     basis="consolidated", source=self.name, document=url, page=res.page,
                                     method="pdf_rules_prior", confidence=min(res.confidence, 0.85)))
         return out
+
+    @staticmethod
+    def _locator_for(ent: str, url: str) -> dict:
+        """The locator this document actually came from, not merely the first one for the entity.
+
+        An entity often has several - TSB has one for its quarterly disclosures and one for its
+        annual report - and they say different things about what the document is.
+        """
+        for l in LOCATORS:
+            if l["entity"] != ent:
+                continue
+            try:
+                if re.search(l.get("match", ""), url, re.I):
+                    return l
+            except re.error:
+                continue
+        return next((l for l in LOCATORS if l["entity"] == ent), {})
 
     def _queue_item(self, ent, url, path, sha, res, title, reason) -> dict:
         return {"id": (sha or hashlib.sha1(url.encode()).hexdigest())[:12], "entity_id": ent, "url": url,

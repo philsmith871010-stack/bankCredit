@@ -84,6 +84,8 @@ LOCATORS: list[dict] = [
          note="the quarterly disclosures carry OV1 and LCR only, so no capital ratio comes from them"),
     dict(entity="tsb", page="https://www.tsb.co.uk/investors/debt-investors.html",
          match=r"financial-results-and-reports/\d{4}/TSB-Bank-ARA-\d{4}\.pdf", exclude=r"Banking-Group",
+         narrative="annual report, not a Pillar 3 disclosure: read the capital resources table "
+                   "behind the narrative (CET1, RWA and the ratio are stated there)",
          note="TSB publishes no KM1 anywhere. Its capital ratio is stated in the annual report's "
               "narrative - 16.7% at December 2025 - so the report is collected for the reviewer to "
               "read rather than left looking like a collection failure. TSB Bank plc is the entity "

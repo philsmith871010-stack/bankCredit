@@ -66,3 +66,27 @@ def test_link_text_matching_does_not_disturb_a_locator_that_has_none():
     loc = {"entity": "x", "page": "https://b.example/i", "match": r"\.pdf$"}
     body = '<a href="/a/pillar-3-2025.pdf">whatever</a><a href="/b/notes.txt">Pillar 3</a>'
     assert [u for u, _, _ in ad._matches(loc, loc["page"], body)] == ["https://b.example/a/pillar-3-2025.pdf"]
+
+
+# ---- a document belongs to the locator that found it ------------------------------------------
+def test_the_locator_matched_is_the_one_the_document_came_from():
+    """An entity has several locators - TSB has one for its quarterly disclosures and one for its
+    annual report - and they say different things about what the document is."""
+    from bankcredit.adapters.pillar3 import Pillar3Adapter
+
+    ara = ("https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/"
+           "financial-results-and-reports/2025/TSB-Bank-ARA-2025.pdf")
+    quarterly = ("https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/"
+                 "Q1-2026-Pillar-3-Quarterly-Disclosure.pdf")
+    assert Pillar3Adapter._locator_for("tsb", ara).get("narrative")
+    assert not Pillar3Adapter._locator_for("tsb", quarterly).get("narrative")
+
+
+def test_a_narrative_locator_says_what_the_reviewer_should_do():
+    """'no KM1 template found' reads as a failure. A source with no KM1 by nature is not one."""
+    from bankcredit.adapters.pillar3_locators import LOCATORS
+
+    for loc in LOCATORS:
+        note = loc.get("narrative")
+        if note:
+            assert len(note) > 30 and "read" in note.lower(), loc["entity"]
