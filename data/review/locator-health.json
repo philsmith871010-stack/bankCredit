@@ -3,9 +3,9 @@
  "counts": {
   "ok": 113,
   "overdue": 11,
-  "never": 23,
+  "never": 22,
   "no source": 2,
-  "by design": 3
+  "by design": 4
  },
  "faults": [],
  "entities": [
@@ -58,20 +58,6 @@
    "locators": 1,
    "kinds": [
     "pattern"
-   ],
-   "documents": 0,
-   "capital_as_of": null,
-   "age_days": null,
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
-   "entity": "goldman-sachs-international-bank",
-   "short": "Goldman Sachs International Bank",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "browser"
    ],
    "documents": 0,
    "capital_as_of": null,
@@ -528,6 +514,20 @@
    "age_days": null,
    "capital_sources": [],
    "state": "no source"
+  },
+  {
+   "entity": "goldman-sachs-international-bank",
+   "short": "Goldman Sachs International Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "by design"
   },
   {
    "entity": "nrw-bank",

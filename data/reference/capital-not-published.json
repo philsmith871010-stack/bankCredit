@@ -20,5 +20,12 @@
     "last_report": "2023-12-31",
     "source": "https://www.santander.co.uk/about-santander/investor-relations/santander-financial-services-plc/",
     "standing": "Santander UK Group Holdings plc is the head of the group for regulatory capital and leverage purposes, and members of the core UK group support each other's capital resources"
+  },
+  "goldman-sachs-international-bank": {
+    "short": "capital reported at group level",
+    "reason": "the PRA sets Goldman Sachs International Bank's capital requirement individually, but the key metrics are published for Goldman Sachs Group UK Limited, its parent, and the bank issues no Pillar 3 report of its own",
+    "last_report": "",
+    "source": "https://www.goldmansachs.com/disclosures",
+    "standing": "Goldman Sachs Group UK Limited reported a CET1 ratio of 12.7% at March 2026, and the PRA reviews the bank's own capital adequacy assessment within that group"
   }
 }
