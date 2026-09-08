@@ -1,0 +1,15 @@
+{
+ "id": "fd201607013b",
+ "entity_id": "rentenbank",
+ "url": "https://www.rentenbank.de/en/documents/publications/Disclosure-Report-pursuant-to-Part-8-CRR-in-particular-Articles-431-to-455-CRR-and-Section-26a-KWG-in-conjunction-with-Section-64r-15-KWG-as-of-December-31-2014.pdf",
+ "page": 23,
+ "reference_date": "2014-12-31",
+ "currency": "EUR",
+ "values": {
+  "rwa": 17906.0,
+  "cet1_ratio": 16.4,
+  "tier1_ratio": 16.4,
+  "total_capital_ratio": 19.3
+ },
+ "note": "Landwirtschaftliche Rentenbank Group's disclosure report under Part 8 CRR as of 31 December 2014. This predates the KM1 template entirely - the figures are in running prose and small tables rather than a template, which is why the extractor found none. The three capital ratios are on p.23, in a table comparing 31 December 2014 with the prior year; note the German decimal comma, so '19,3' is 19.3 per cent. Total risk exposure of EUR 17,906m is on p.22, the sum of credit risk 15,564, market risk 0, operational risk 1,575 and CVA risk 767. CET1 and Tier 1 ratios are equal because Rentenbank's own funds are almost entirely CET1. Capital amounts are deliberately not recorded: p.21 gives a reconciliation of balance-sheet items to own funds rather than a clean CRR own-funds total, and deriving them from the ratios would be inventing figures. No leverage ratio, LCR or NSFR is disclosed at this date."
+}

@@ -135,7 +135,7 @@
   }
  },
  "bendigo-and-adelaide-bank": {
-  "page": 4,
+  "page": 2,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2026-03-31",
@@ -252,7 +252,7 @@
   }
  },
  "nab": {
-  "page": 3,
+  "page": 5,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -1595,19 +1595,19 @@
   "page": 4,
   "currency": "HKD",
   "last_verified": {
-   "reference_date": "2023-03-31",
+   "reference_date": "2023-09-30",
    "values": {
-    "cet1_capital": 143900.0,
-    "tier1_capital": 164583.0,
-    "total_capital": 178391.0,
-    "rwa": 867207.0,
-    "cet1_ratio": 16.6,
-    "tier1_ratio": 19.0,
+    "cet1_capital": 146825.0,
+    "tier1_capital": 167513.0,
+    "total_capital": 181125.0,
+    "rwa": 877931.0,
+    "cet1_ratio": 16.7,
+    "tier1_ratio": 19.1,
     "total_capital_ratio": 20.6,
-    "leverage_exposure": 2620875.0,
-    "leverage_ratio": 6.3,
-    "lcr": 176.0,
-    "nsfr": 133.0
+    "leverage_exposure": 2616503.0,
+    "leverage_ratio": 6.4,
+    "lcr": 220.0,
+    "nsfr": 135.0
    },
    "method": "pdf_manual"
   }
@@ -1660,6 +1660,41 @@
     "nsfr": 115.0
    },
    "method": "pdf_rules"
+  }
+ },
+ "sumitomo-mitsui-trust": {
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 2910712.0,
+    "tier1_capital": 3249227.0,
+    "total_capital": 3603265.0,
+    "rwa": 26296576.0,
+    "cet1_ratio": 11.06,
+    "tier1_ratio": 12.35,
+    "total_capital_ratio": 13.7,
+    "combined_buffer": 3.06,
+    "cet1_headroom": 5.7,
+    "leverage_exposure": 62327402.0,
+    "leverage_ratio": 5.21
+   },
+   "method": "pdf_rules"
+  },
+  "browser_page": "https://www.smtg.jp/english/investors/report/basel",
+  "browser_page_found": "2026-09-08"
+ },
+ "rentenbank": {
+  "page": 23,
+  "currency": "EUR",
+  "last_verified": {
+   "reference_date": "2014-12-31",
+   "values": {
+    "rwa": 17906.0,
+    "cet1_ratio": 16.4,
+    "tier1_ratio": 16.4,
+    "total_capital_ratio": 19.3
+   },
+   "method": "pdf_manual"
   }
  }
 }

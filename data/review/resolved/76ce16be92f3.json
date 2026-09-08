@@ -1,0 +1,15 @@
+{
+ "id": "76ce16be92f3",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/dec-2013-pillar3-report-final.pdf",
+ "page": 3,
+ "reference_date": "2013-12-31",
+ "currency": "AUD",
+ "values": {
+  "rwa": 370402.0,
+  "cet1_ratio": 8.21,
+  "tier1_ratio": 10.54,
+  "total_capital_ratio": 11.96
+ },
+ "note": "NAB under APRA's APS 330, which has no KM1 template. Level 2 basis - the table is headed 'Capital ratios (Level 2)'. Ratios from the capital ratios table and total RWA from the capital adequacy table, which sit on different pages; that is what the extractor's missing-core-row errors are about. This vintage predates APRA's leverage ratio and LCR disclosure requirements, which took effect on 1 July 2015, so neither is recorded, and these reports carry no detailed capital disclosure of amounts. The cover reads 'First Quarter Update as at 31 December 2013'."
+}

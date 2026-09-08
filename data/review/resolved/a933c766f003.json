@@ -1,0 +1,22 @@
+{
+ "id": "a933c766f003",
+ "entity_id": "standard-chartered-hk",
+ "url": "https://vpr.hkma.gov.hk/statics/assets/doc/100269/fd_int/fd_int_0922_eng.pdf",
+ "page": 4,
+ "reference_date": "2022-09-30",
+ "currency": "HKD",
+ "values": {
+  "cet1_capital": 137789.0,
+  "tier1_capital": 158453.0,
+  "total_capital": 171411.0,
+  "rwa": 872225.0,
+  "cet1_ratio": 15.8,
+  "tier1_ratio": 18.2,
+  "total_capital_ratio": 19.7,
+  "leverage_exposure": 2680079.0,
+  "leverage_ratio": 5.9,
+  "lcr": 154.0,
+  "nsfr": 121.0
+ },
+ "note": "Standard Chartered Bank (Hong Kong) Limited's HKMA banking disclosure statement, template KM1 'Key prudential ratios' on p.4. Five columns running back from the reporting date; column (a) is taken. HK$ millions. As with the March 2023 statement resolved earlier, the extractor's ratio rows are unreliable here because the PDF prints a space inside every percentage - '16. 6%' rather than '16.6%' - so the printed ratios are read by hand; the capital amounts it read are correct. The bank is a category 1 institution, so the LMR and CFR alternative rows are NA. Check: 137,789/872,225 = 15.80% and 171,411/872,225 = 19.65%, matching the published 15.8% and 19.7%."
+}

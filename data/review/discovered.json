@@ -913,10 +913,13 @@
  },
  "west-brom-bs": {
   "pages_read": [
-   "https://www.westbrom.co.uk/about-us/investor-relations",
+   "https://www.westbrom.co.uk/about-us",
    "https://www.westbrom.co.uk/about-us/financial-information",
    "https://www.westbrom.co.uk/about-us/corporate-governance",
-   "https://www.westbrom.co.uk/about-us/corporate-governance/modern-slavery-and-human-trafficking-statement"
+   "https://www.westbrom.co.uk/about-us/corporate-governance/modern-slavery-and-human-trafficking-statement",
+   "https://www.westbrom.co.uk/about-us/corporate-governance/overview-and-our-board",
+   "https://www.westbrom.co.uk/about-us/corporate-governance/board-committees",
+   "https://www.westbrom.co.uk/about-us/corporate-governance/society-rules-and-memorandum"
   ],
   "found": []
  },
@@ -1058,7 +1061,11 @@
   "found": []
  },
  "al-rayan-bank": {
-  "pages_read": [],
+  "pages_read": [
+   "https://www.alrayanbank.co.uk/about-us",
+   "https://www.alrayanbank.co.uk/search/results",
+   "https://www.alrayanbank.co.uk/investor-relations"
+  ],
   "found": []
  },
  "goldman-sachs-international-bank": {
@@ -1137,7 +1144,10 @@
   ]
  },
  "leek-bs": {
-  "pages_read": [],
+  "pages_read": [
+   "https://www.leekbs.co.uk/about-us",
+   "https://www.leekbs.co.uk/financial-planning/wren-sterling/"
+  ],
   "found": []
  },
  "saffron-bs": {
@@ -1146,14 +1156,17 @@
  },
  "handelsbanken-plc": {
   "pages_read": [
-   "https://www.handelsbanken.co.uk/en/about-us",
-   "https://www.handelsbanken.co.uk/en/about-us/corporate-governance",
    "https://www.handelsbanken.co.uk/en/about-us/investor-relations"
   ],
   "found": []
  },
  "suffolk-bs": {
-  "pages_read": [],
+  "pages_read": [
+   "https://www.suffolkbuildingsociety.co.uk/about",
+   "https://www.suffolkbuildingsociety.co.uk/financial-education/",
+   "https://www.suffolkbuildingsociety.co.uk/about/governance/",
+   "https://www.suffolkbuildingsociety.co.uk/about/governance/annual-general-meeting/"
+  ],
   "found": []
  },
  "progressive-bs": {
@@ -1166,14 +1179,57 @@
  },
  "hinckley-and-rugby-bs": {
   "pages_read": [
-   "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
-   "https://www.hrbs.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2Fthe-society%2Fgovernance%2Fannual-report-account-summary%2F",
-   "https://www.hrbs.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2Fthe-society%2Fgovernance%2Fannual-report-account-summary%2F&format=xml",
+   "https://www.hrbs.co.uk/the-society",
    "https://www.hrbs.co.uk/savings/existing-customers/important-account-information/financial-services-compensation-scheme/",
    "https://www.hrbs.co.uk/the-society/governance/directors-people/",
    "https://www.hrbs.co.uk/the-society/governance/committees/",
-   "https://www.hrbs.co.uk/the-society/governance/"
+   "https://www.hrbs.co.uk/the-society/governance/",
+   "https://www.hrbs.co.uk/the-society/governance/agm/",
+   "https://www.hrbs.co.uk/the-society/governance/internal-audit-charter/"
   ],
+  "found": []
+ },
+ "mizuho": {
+  "pages_read": [
+   "https://www.mizuhogroup.com/investors/financial-information",
+   "https://www.mizuhogroup.com/who-we-are/governance-home",
+   "https://www.mizuhogroup.com/who-we-are/governance",
+   "https://www.mizuhogroup.com/who-we-are/governance?tab=corporate-governance-policy",
+   "https://www.mizuhogroup.com/who-we-are/governance?tab=corporate-governance-structure",
+   "https://www.mizuhogroup.com/who-we-are/governance?tab=rules-and-reports-etc",
+   "https://www.mizuhogroup.com/who-we-are/governance?tab=risk-governance"
+  ],
+  "found": [
+   {
+    "url": "https://www.mizuhogroup.com/investors/financial-information?tab=basel",
+    "text": "Basel Regulatory Disclosures",
+    "pdf": false,
+    "from": "https://www.mizuhogroup.com/who-we-are/governance-home"
+   }
+  ]
+ },
+ "bank-of-china-uk": {
+  "pages_read": [
+   "https://www.bankofchina.com/uk/en/aboutus",
+   "https://www.bankofchina.com/investor/",
+   "https://www.bankofchina.com/investor/ir1/",
+   "https://www.bankofchina.com/investor/ir2/",
+   "https://www.bankofchina.com/investor/ir5/",
+   "https://www.bankofchina.com/investor/ir3/",
+   "https://www.bankofchina.com/investor/ir9/"
+  ],
+  "found": []
+ },
+ "icbc-london": {
+  "pages_read": [],
+  "found": []
+ },
+ "qib-uk": {
+  "pages_read": [],
+  "found": []
+ },
+ "sbi-uk": {
+  "pages_read": [],
   "found": []
  }
 }

@@ -2612,5 +2612,182 @@
   "page_reviewer": 4,
   "date_extractor": "2023-03-31",
   "date_reviewer": "2023-03-31"
+ },
+ {
+  "date": "2026-09-08T14:41:08",
+  "id": "03bf8e49f8ad",
+  "entity_id": "standard-chartered-hk",
+  "reason": "info:total_capital_ratio derived from total_capital over RWA; info:no leverage r",
+  "skip": false,
+  "compared": 9,
+  "matched": 7,
+  "mismatches": {
+   "cet1_ratio": [
+    0.0,
+    15.5
+   ],
+   "tier1_ratio": [
+    8.0,
+    17.5
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2022-03-31",
+  "date_reviewer": "2022-03-31"
+ },
+ {
+  "date": "2026-09-08T14:41:08",
+  "id": "111f7b59cbd0",
+  "entity_id": "standard-chartered-hk",
+  "reason": "info:total_capital_ratio derived from total_capital over RWA; info:no leverage r",
+  "skip": false,
+  "compared": 9,
+  "matched": 7,
+  "mismatches": {
+   "cet1_ratio": [
+    8.0,
+    16.7
+   ],
+   "tier1_ratio": [
+    2.0,
+    19.1
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2023-09-30",
+  "date_reviewer": "2023-09-30"
+ },
+ {
+  "date": "2026-09-08T14:41:09",
+  "id": "1da178af907c",
+  "entity_id": "nab",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2013-09-30",
+  "date_reviewer": "2013-09-30"
+ },
+ {
+  "date": "2026-09-08T14:41:09",
+  "id": "1df37ba17cc8",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2017-09-30"
+ },
+ {
+  "date": "2026-09-08T14:41:09",
+  "id": "214db219ec3b",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2018-06-30 disagrees with expected 2030-06-30; info:tier1_ratio",
+  "skip": false,
+  "compared": 6,
+  "matched": 5,
+  "mismatches": {
+   "cet1_capital": [
+    8.62,
+    3297.7
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2018-06-30",
+  "date_reviewer": "2018-06-30"
+ },
+ {
+  "date": "2026-09-08T14:41:10",
+  "id": "76ce16be92f3",
+  "entity_id": "nab",
+  "reason": "error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 3,
+  "date_extractor": "2013-12-31",
+  "date_reviewer": "2013-12-31"
+ },
+ {
+  "date": "2026-09-08T14:41:11",
+  "id": "a933c766f003",
+  "entity_id": "standard-chartered-hk",
+  "reason": "info:total_capital_ratio derived from total_capital over RWA; info:no leverage r",
+  "skip": false,
+  "compared": 9,
+  "matched": 7,
+  "mismatches": {
+   "cet1_ratio": [
+    6.0,
+    15.8
+   ],
+   "tier1_ratio": [
+    3.0,
+    18.2
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2022-09-30",
+  "date_reviewer": "2022-09-30"
+ },
+ {
+  "date": "2026-09-08T14:41:11",
+  "id": "b90c1bb70854",
+  "entity_id": "nab",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2014-03-31",
+  "date_reviewer": "2014-03-31"
+ },
+ {
+  "date": "2026-09-08T14:41:12",
+  "id": "f0e630ecea2e",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2018-06-30 disagrees with expected 2030-06-30; error:missing co",
+  "skip": false,
+  "compared": 1,
+  "matched": 0,
+  "mismatches": {
+   "lcr": [
+    126.6,
+    126.0
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 2,
+  "date_extractor": "2018-06-30",
+  "date_reviewer": "2018-09-30"
+ },
+ {
+  "date": "2026-09-08T14:41:12",
+  "id": "fd201607013b",
+  "entity_id": "rentenbank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 23,
+  "date_extractor": null,
+  "date_reviewer": "2014-12-31"
  }
 ]

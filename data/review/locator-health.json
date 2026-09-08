@@ -1,9 +1,9 @@
 {
  "generated": "2026-09-08",
  "counts": {
-  "ok": 113,
+  "ok": 114,
   "overdue": 11,
-  "never": 22,
+  "never": 21,
   "no source": 2,
   "by design": 4
  },
@@ -265,20 +265,6 @@
    "entity": "suffolk-bs",
    "short": "Suffolk BS",
    "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "browser"
-   ],
-   "documents": 0,
-   "capital_as_of": null,
-   "age_days": null,
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
-   "entity": "sumitomo-mitsui-trust",
-   "short": "Sumitomo Mitsui Trust",
-   "region": "asia",
    "locators": 1,
    "kinds": [
     "browser"
@@ -555,7 +541,8 @@
    "capital_as_of": "2018-06-30",
    "age_days": 2992,
    "capital_sources": [
-    "eba_te"
+    "eba_te",
+    "pillar3"
    ],
    "state": "by design"
   },
@@ -715,7 +702,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 1,
+   "documents": 4,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1222,7 +1209,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 6,
+   "documents": 9,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1238,7 +1225,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 9,
+   "documents": 12,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1470,7 +1457,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 1,
+   "documents": 4,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1486,7 +1473,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 1,
+   "documents": 4,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1502,7 +1489,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 1,
+   "documents": 4,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -2134,7 +2121,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 3,
+   "documents": 6,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -2153,6 +2140,22 @@
    "age_days": 70,
    "capital_sources": [
     "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "sumitomo-mitsui-trust",
+   "short": "Sumitomo Mitsui Trust",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 3,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
    ],
    "state": "ok"
   },
