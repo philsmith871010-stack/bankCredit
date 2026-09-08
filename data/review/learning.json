@@ -2396,5 +2396,198 @@
   "page_reviewer": 5,
   "date_extractor": "2015-03-31",
   "date_reviewer": "2015-03-31"
+ },
+ {
+  "date": "2026-09-08T10:46:01",
+  "id": "2d78fa7cbf3e",
+  "entity_id": "lloyds-banking-group",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-08T10:46:01",
+  "id": "3e4106601838",
+  "entity_id": "bank-of-scotland",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2026-03-31"
+ },
+ {
+  "date": "2026-09-08T10:46:01",
+  "id": "42adde1d3e0c",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2019-06-30 disagrees with expected 2030-06-30; error:missing co",
+  "skip": false,
+  "compared": 1,
+  "matched": 0,
+  "mismatches": {
+   "lcr": [
+    128.2,
+    128.0
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 2,
+  "date_extractor": "2019-06-30",
+  "date_reviewer": "2019-09-30"
+ },
+ {
+  "date": "2026-09-08T10:46:01",
+  "id": "42ca9ef22c17",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2025-09-30"
+ },
+ {
+  "date": "2026-09-08T10:46:02",
+  "id": "736d19b50344",
+  "entity_id": "bank-of-scotland",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2025-09-30"
+ },
+ {
+  "date": "2026-09-08T10:46:03",
+  "id": "a8816b01fae8",
+  "entity_id": "nab",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 0,
+  "mismatches": {
+   "tier1_capital": [
+    10.81,
+    39758.0
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2014-09-30",
+  "date_reviewer": "2014-09-30"
+ },
+ {
+  "date": "2026-09-08T10:46:03",
+  "id": "bf6638344bcf",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2026-03-31"
+ },
+ {
+  "date": "2026-09-08T10:46:04",
+  "id": "d28cd63ccb13",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2019-06-30 disagrees with expected 2030-06-30; info:cet1_ratio ",
+  "skip": false,
+  "compared": 7,
+  "matched": 5,
+  "mismatches": {
+   "cet1_capital": [
+    8.92,
+    3344.8
+   ],
+   "cet1_ratio": [
+    0.02,
+    8.92
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2019-06-30",
+  "date_reviewer": "2019-06-30"
+ },
+ {
+  "date": "2026-09-08T10:46:04",
+  "id": "d6ed33c88282",
+  "entity_id": "nab",
+  "reason": "info:cet1_ratio derived from cet1_capital over RWA; info:tier1_ratio derived fro",
+  "skip": false,
+  "compared": 3,
+  "matched": 1,
+  "mismatches": {
+   "cet1_ratio": [
+    0.0,
+    8.74
+   ],
+   "tier1_ratio": [
+    0.0,
+    10.87
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 3,
+  "date_extractor": "2014-12-31",
+  "date_reviewer": "2014-12-31"
+ },
+ {
+  "date": "2026-09-08T10:46:04",
+  "id": "da068187547d",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2020-06-30 disagrees with expected 2030-06-30; info:cet1_ratio ",
+  "skip": false,
+  "compared": 7,
+  "matched": 5,
+  "mismatches": {
+   "cet1_capital": [
+    9.25,
+    3534.6
+   ],
+   "cet1_ratio": [
+    0.02,
+    9.25
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2020-06-30",
+  "date_reviewer": "2020-06-30"
+ },
+ {
+  "date": "2026-09-08T10:46:04",
+  "id": "e4679de800db",
+  "entity_id": "nab",
+  "reason": "info:cet1_ratio derived from cet1_capital over RWA; info:tier1_ratio derived fro",
+  "skip": false,
+  "compared": 3,
+  "matched": 1,
+  "mismatches": {
+   "cet1_ratio": [
+    0.0,
+    8.46
+   ],
+   "tier1_ratio": [
+    0.0,
+    10.63
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 3,
+  "date_extractor": "2014-06-30",
+  "date_reviewer": "2014-06-30"
  }
 ]

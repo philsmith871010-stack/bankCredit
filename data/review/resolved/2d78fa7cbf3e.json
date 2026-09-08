@@ -1,0 +1,5 @@
+{
+ "id": "2d78fa7cbf3e",
+ "skip": true,
+ "note": "Not a capital-metrics disclosure. This is the Lloyds Banking Group 'Capital instruments and eligible liabilities - main features report' at 30 June 2026, which supplements the half-year Pillar 3 with the term-by-term features of each instrument. No KM1, no capital ratios, no RWA. Same category as the Scotiabank and Bendigo instrument files skipped earlier in this queue. It is picked up because the lloyds-banking-group locator matches any file name containing 'pillar 3'."
+}

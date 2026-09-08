@@ -135,7 +135,7 @@
   }
  },
  "bendigo-and-adelaide-bank": {
-  "page": 5,
+  "page": 4,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2026-03-31",
@@ -252,7 +252,7 @@
   }
  },
  "nab": {
-  "page": 5,
+  "page": 3,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -564,7 +564,12 @@
     "nsfr": 123.0
    },
    "method": "pdf_rules"
-  }
+  },
+  "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
+  "browser_page_found": "2026-09-08",
+  "skip_patterns": [
+   "\\d+\\-lbg\\-hy\\-pillar\\-\\d+\\-capital\\-instruments"
+  ]
  },
  "lloyds-bank": {
   "last_verified": {
@@ -591,7 +596,9 @@
     "nsfr": 118.0
    },
    "method": "pdf_rules"
-  }
+  },
+  "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
+  "browser_page_found": "2026-09-08"
  },
  "santander-uk": {
   "page": 2,
@@ -1547,7 +1554,11 @@
     "nsfr": 134.0
    },
    "method": "pdf_rules"
-  }
+  },
+  "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
+  "browser_page_found": "2026-09-08",
+  "page": 3,
+  "currency": "GBP"
  },
  "furness-bs": {
   "browser_page": "https://www.furnessbs.co.uk/financial-reports/",
@@ -1564,5 +1575,20 @@
    },
    "method": "pdf_manual"
   }
+ },
+ "bank-of-scotland": {
+  "last_verified": {
+   "reference_date": "2026-03-31",
+   "values": {
+    "rwa": 83108.0,
+    "leverage_exposure": 322922.0,
+    "leverage_ratio": 4.4
+   },
+   "method": "pdf_manual"
+  },
+  "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
+  "browser_page_found": "2026-09-08",
+  "page": 3,
+  "currency": "GBP"
  }
 }

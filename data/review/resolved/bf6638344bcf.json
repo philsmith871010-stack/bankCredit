@@ -1,0 +1,14 @@
+{
+ "id": "bf6638344bcf",
+ "entity_id": "lloyds-bank-corporate-markets",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-corporate-markets-plc/2026/q1/2026-lbcm-q1-pillar-3.pdf",
+ "page": 3,
+ "reference_date": "2026-03-31",
+ "currency": "GBP",
+ "values": {
+  "rwa": 23381.0,
+  "leverage_exposure": 90883.0,
+  "leverage_ratio": 7.9
+ },
+ "note": "Recorded against the correct entity, not the one that queued it. This file was queued under lloyds-banking-group, but it is a subsidiary's report: the group, the two banks and Lloyds Bank Corporate Markets all publish from the same financial-performance page, and the lloyds-banking-group locator's match pattern is a bare 'pillar[-_ %]?(?:3|iii)', so it takes every Pillar 3 PDF on that page. The other three Lloyds locators are scoped by file-name prefix and pick up the right documents; the group one needs the same treatment. The entity_id below is the true issuer, so the figures land where they belong. The Lloyds quarterly disclosures are short extracts - LR2 'Leverage ratio common disclosure' and OV1 'Overview of risk weighted exposure amounts' only, with no KM1 and no capital ratios. Total RWA is OV1 row 29; leverage is the excluding-central-bank-claims basis, the UK regime's measure, first column. GBP millions. No LCR in these extracts. Lloyds Bank Corporate Markets plc Q1 2026."
+}
