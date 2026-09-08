@@ -3,67 +3,79 @@
     "issuer": "United Arab Emirates",
     "short": "United Arab Emirates",
     "also": [
-      "Abu Dhabi"
+      "Abu Dhabi",
+      "United Arab Emirates, Government of"
     ]
   },
   "AT": {
     "issuer": "Republic of Austria",
     "short": "Austria",
     "also": [
-      "Austria"
+      "Austria",
+      "Austria, Government of"
     ]
   },
   "AU": {
     "issuer": "Commonwealth of Australia",
     "short": "Australia",
     "also": [
-      "Australia"
+      "Australia",
+      "Australia, Government of"
     ]
   },
   "BE": {
     "issuer": "Kingdom of Belgium",
     "short": "Belgium",
     "also": [
-      "Belgium"
+      "Belgium",
+      "Belgium, Government of"
     ]
   },
   "CA": {
     "issuer": "Canada",
-    "short": "Canada"
+    "short": "Canada",
+    "also": [
+      "Canada, Government of"
+    ]
   },
   "CH": {
     "issuer": "Swiss Confederation",
     "short": "Switzerland",
     "also": [
-      "Switzerland"
+      "Switzerland",
+      "Switzerland, Government of"
     ]
   },
   "DE": {
     "issuer": "Federal Republic of Germany",
     "short": "Germany",
     "also": [
-      "Germany"
+      "Germany",
+      "Germany, Government of"
     ]
   },
   "DK": {
     "issuer": "Kingdom of Denmark",
     "short": "Denmark",
     "also": [
-      "Denmark"
+      "Denmark",
+      "Denmark, Government of"
     ]
   },
   "ES": {
     "issuer": "Kingdom of Spain",
     "short": "Spain",
     "also": [
-      "Spain"
+      "Spain",
+      "Spain, Government of"
     ]
   },
   "FI": {
     "issuer": "Republic of Finland",
     "short": "Finland",
     "also": [
-      "Finland"
+      "Finland",
+      "Finland, Government of"
     ]
   },
   "FR": {
@@ -71,82 +83,102 @@
     "short": "France",
     "also": [
       "France",
-      "Republic of France"
+      "Republic of France",
+      "France, Government of"
     ]
   },
   "GB": {
     "issuer": "United Kingdom",
-    "short": "United Kingdom"
+    "short": "United Kingdom",
+    "also": [
+      "United Kingdom, Government of",
+      "United Kingdom of Great Britain and Northern Ireland"
+    ]
   },
   "HK": {
     "issuer": "Hong Kong Special Administrative Region",
     "short": "Hong Kong SAR",
     "also": [
-      "Hong Kong"
+      "Hong Kong",
+      "Hong Kong, China"
     ]
   },
   "IE": {
     "issuer": "Ireland",
-    "short": "Ireland"
+    "short": "Ireland",
+    "also": [
+      "Ireland, Government of"
+    ]
   },
   "IT": {
     "issuer": "Republic of Italy",
     "short": "Italy",
     "also": [
-      "Italy"
+      "Italy",
+      "Italy, Government of"
     ]
   },
   "JP": {
     "issuer": "Japan",
-    "short": "Japan"
+    "short": "Japan",
+    "also": [
+      "Japan, Government of"
+    ]
   },
   "NL": {
     "issuer": "Kingdom of the Netherlands",
     "short": "Netherlands",
     "also": [
-      "Netherlands"
+      "Netherlands",
+      "Netherlands, Government of"
     ]
   },
   "NO": {
     "issuer": "Kingdom of Norway",
     "short": "Norway",
     "also": [
-      "Norway"
+      "Norway",
+      "Norway, Government of"
     ]
   },
   "QA": {
     "issuer": "State of Qatar",
     "short": "Qatar",
     "also": [
-      "Qatar"
+      "Qatar",
+      "Qatar, Government of"
     ]
   },
   "SA": {
     "issuer": "Kingdom of Saudi Arabia",
     "short": "Saudi Arabia",
     "also": [
-      "Saudi Arabia"
+      "Saudi Arabia",
+      "Saudi Arabia, Government of"
     ]
   },
   "SE": {
     "issuer": "Kingdom of Sweden",
     "short": "Sweden",
     "also": [
-      "Sweden"
+      "Sweden",
+      "Sweden, Government of"
     ]
   },
   "SG": {
     "issuer": "Republic of Singapore",
     "short": "Singapore",
     "also": [
-      "Singapore"
+      "Singapore",
+      "Singapore, Government of"
     ]
   },
   "US": {
     "issuer": "United States of America",
     "short": "United States of America",
     "also": [
-      "United States"
+      "United States",
+      "United States of America, Government of"
     ]
   }
 }

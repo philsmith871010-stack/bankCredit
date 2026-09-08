@@ -1740,5 +1740,29 @@
    },
    "method": "pdf_rules"
   }
+ },
+ "west-brom-bs": {
+  "last_verified": {
+   "reference_date": "2025-09-30",
+   "values": {
+    "cet1_capital": 416.4,
+    "tier1_capital": 416.4,
+    "total_capital": 418.4,
+    "rwa": 2534.5,
+    "cet1_ratio": 16.4,
+    "tier1_ratio": 16.4,
+    "total_capital_ratio": 16.5,
+    "total_srep_requirement": 8.6,
+    "combined_buffer": 4.5,
+    "overall_capital_requirement": 13.1,
+    "cet1_headroom": 7.9,
+    "leverage_exposure": 6362.5,
+    "leverage_ratio": 6.5,
+    "hqla": 662.7,
+    "net_cash_outflows": 396.2,
+    "lcr": 167.3
+   },
+   "method": "pdf_rules"
+  }
  }
 }

@@ -2,8 +2,8 @@
  "generated": "2026-09-08",
  "counts": {
   "ok": 117,
-  "overdue": 11,
-  "never": 18,
+  "overdue": 12,
+  "never": 17,
   "no source": 2,
   "by design": 4
  },
@@ -209,11 +209,12 @@
    "entity": "saffron-bs",
    "short": "Saffron BS",
    "region": "uk",
-   "locators": 1,
+   "locators": 2,
    "kinds": [
-    "browser"
+    "browser",
+    "html"
    ],
-   "documents": 0,
+   "documents": 1,
    "capital_as_of": null,
    "age_days": null,
    "capital_sources": [],
@@ -237,25 +238,12 @@
    "entity": "suffolk-bs",
    "short": "Suffolk BS",
    "region": "uk",
-   "locators": 1,
+   "locators": 2,
    "kinds": [
-    "browser"
+    "browser",
+    "html"
    ],
-   "documents": 0,
-   "capital_as_of": null,
-   "age_days": null,
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
-   "entity": "west-brom-bs",
-   "short": "West Brom BS",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "browser"
-   ],
-   "documents": 0,
+   "documents": 1,
    "capital_as_of": null,
    "age_days": null,
    "capital_sources": [],
@@ -345,11 +333,12 @@
    "entity": "furness-bs",
    "short": "Furness BS",
    "region": "uk",
-   "locators": 1,
+   "locators": 3,
    "kinds": [
-    "browser"
+    "browser",
+    "html"
    ],
-   "documents": 1,
+   "documents": 4,
    "capital_as_of": "2022-12-31",
    "age_days": 1347,
    "capital_sources": [
@@ -393,11 +382,11 @@
    "entity": "monmouthshire-bs",
    "short": "Monmouthshire BS",
    "region": "uk",
-   "locators": 1,
+   "locators": 2,
    "kinds": [
     "html"
    ],
-   "documents": 1,
+   "documents": 3,
    "capital_as_of": "2023-04-30",
    "age_days": 1227,
    "capital_sources": [
@@ -428,6 +417,23 @@
     "html"
    ],
    "documents": 19,
+   "capital_as_of": "2025-09-30",
+   "age_days": 343,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "west-brom-bs",
+   "short": "West Brom BS",
+   "region": "uk",
+   "locators": 2,
+   "kinds": [
+    "browser",
+    "html"
+   ],
+   "documents": 3,
    "capital_as_of": "2025-09-30",
    "age_days": 343,
    "capital_sources": [

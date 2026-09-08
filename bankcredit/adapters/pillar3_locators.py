@@ -90,6 +90,32 @@ LOCATORS: list[dict] = [
               "narrative - 16.7% at December 2025 - so the report is collected for the reviewer to "
               "read rather than left looking like a collection failure. TSB Bank plc is the entity "
               "we assess; TSB Banking Group is its parent"),
+    # ---- found by crawling the societies' own sites, September 2026 --------------------------
+    dict(entity="west-brom-bs",
+         page="https://www.westbrom.co.uk/about-us/financial-information/financial-reports-and-results",
+         match=r"pillar-3-capital-disclosures.*\.pdf", year_end="03-31",
+         note="a real Pillar 3, annual to 31 March; the investor-relations page it was pointed at "
+              "carries no documents of its own"),
+    dict(entity="furness-bs", page="https://www.furnessbs.co.uk/financial-reports/",
+         match=r"pillar-3.*\.pdf", year_end="12-31",
+         note="one Pillar 3 for 2022; the annual report below is what carries the recent years"),
+    dict(entity="furness-bs", page="https://www.furnessbs.co.uk/financial-reports/",
+         match=r"(?:annual[-_]report|annual_report).*\.pdf", exclude=r"summary",
+         narrative="annual report, not a Pillar 3 disclosure: read the capital table behind the "
+                   "narrative (Furness publishes a Pillar 3 only for 2022)"),
+    dict(entity="saffron-bs", page="https://www.saffronbs.co.uk/financial-results",
+         match=r"(?:annual%20report|annual-report|report%20and%20accounts).*\.pdf", exclude=r"members",
+         narrative="annual report and accounts: read the capital position from the notes, since "
+                   "Saffron publishes no Pillar 3 disclosure of its own"),
+    dict(entity="suffolk-bs", page="https://www.suffolkbuildingsociety.co.uk/about/governance/",
+         match=r"Report-and-Accounts-\d{4}\.pdf",
+         narrative="report and accounts: read the capital position from the notes, since Suffolk "
+                   "publishes no Pillar 3 disclosure of its own"),
+    dict(entity="monmouthshire-bs", page="https://www.monbs.com/about-us/corporate-governance/",
+         match=r"annual-report-accounts.*\.pdf",
+         narrative="annual report and accounts: read the capital position from the notes. The "
+                   "recent years are published as web pages under media.monbs.com rather than as "
+                   "PDFs on this one"),
     dict(entity="co-operative-bank", page="https://www.co-operativebank.co.uk/about-us/investor-relations/financial-results/",
          match=r"investorrelations/.*" + P3 + r".*\.pdf"),
     dict(entity="metro-bank", page="https://www.metrobankonline.co.uk/investor-relations/",

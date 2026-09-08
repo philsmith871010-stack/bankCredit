@@ -1029,16 +1029,7 @@
  "al-rayan-bank": {
   "page": "https://www.alrayanbank.co.uk/about-us/",
   "checked": "2026-09-08",
-  "links": [
-   {
-    "url": "https://apps.apple.com/gb/app/al-rayan-bank-uk/id1061102013",
-    "text": "Download on the\n\t\t\t\t\t\tApp Store"
-   },
-   {
-    "url": "https://www.alrayanbank.co.uk/mobile-banking",
-    "text": "Download the app"
-   }
-  ]
+  "links": []
  },
  "gatehouse-bank": {
   "page": "https://gatehousebank.com/about-us/corporate-governance",
@@ -2122,15 +2113,11 @@
   ]
  },
  "jpmorgan-chase": {
-  "page": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
+  "page": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-bhc",
   "checked": "2026-09-08",
   "links": [
    {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures/",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-bhc/",
     "text": ""
    },
    {
@@ -2138,67 +2125,7 @@
     "text": ""
    },
    {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/lcr-bhc",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/us-nsfr-disclosures-bank-holding-company",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-ireland",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/ireland-disclosures-jp-morgan-dublin-plc",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-luxembourg",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-germany",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-eu",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-uk",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-canada",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-hong-kong",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-hong-kong-chase-bank",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-india",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-south-africa",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-spain",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-malaysia",
-    "text": ""
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-emea",
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
     "text": ""
    },
    {
@@ -4244,16 +4171,7 @@
  "al-rayan-bank > results": {
   "page": "https://www.alrayanbank.co.uk/search/results",
   "checked": "2026-09-08",
-  "links": [
-   {
-    "url": "https://play.google.com/store/apps/details?id=com.alrayanbankuk.mobile",
-    "text": "Download the app"
-   },
-   {
-    "url": "https://www.alrayanbank.co.uk/mobile-banking",
-    "text": "Download the app"
-   }
-  ]
+  "links": []
  },
  "al-rayan-bank > investor-relations": {
   "page": "https://www.alrayanbank.co.uk/investor-relations",
@@ -4261,15 +4179,7 @@
   "links": [
    {
     "url": "https://www.alrayanbank.co.uk/sites/default/files/media/file-uploads/2026-06/al_rayan_annual_report_accounts_2025.pdf",
-    "text": "click here."
-   },
-   {
-    "url": "https://play.google.com/store/apps/details?id=com.alrayanbankuk.mobile",
-    "text": "Download the app"
-   },
-   {
-    "url": "https://www.alrayanbank.co.uk/mobile-banking",
-    "text": "Download the app"
+    "text": ""
    }
   ]
  },
@@ -5017,34 +4927,30 @@
   "links": [
    {
     "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
-    "text": "Basel Pillar 3, U.S. LCR Disclosures & U.S. NSFR Disclosures"
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/overview",
-    "text": "SEC Filings & Other Disclosures"
+    "text": ""
    },
    {
     "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/european-union-eu-disclosures-country",
-    "text": "European Union (E.U.) Disclosures by Country"
-   },
-   {
-    "url": "https://www.jpmorganchase.com/ir/annual-report/2023/ar-ceo-letters",
-    "text": "CEO Letters"
-   },
-   {
-    "url": "https://www.jpmorganchase.com/ir/annual-report",
-    "text": "Annual Report"
-   },
-   {
-    "url": "https://www.jpmorganchase.com/corporate/investor-relations/annual-report-proxy.htm",
-    "text": "Annual Report & Proxy"
-   },
-   {
-    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports",
-    "text": "CFTC Financial Reporting"
+    "text": ""
    },
    {
     "url": "https://www.chase.com/apps/chase/clientlibs/foundation/scripts/Reporting.js",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report/2023/ar-ceo-letters",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/corporate/investor-relations/annual-report-proxy.htm",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports",
     "text": ""
    }
   ]
@@ -8620,6 +8526,234 @@
    },
    {
     "url": "https://www.smtg.jp/english/-/media/tg/english/investors/basel/2512/e2512_tg_km02.pdf",
+    "text": ""
+   }
+  ]
+ },
+ "jpmorgan-chase > cftc-financial-reports": {
+  "page": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/european-union-eu-disclosures-country",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports/",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.chase.com/apps/chase/clientlibs/foundation/scripts/Reporting.js",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report/2023/ar-ceo-letters",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/corporate/investor-relations/annual-report-proxy.htm",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports/jpm-securities/annual-reports",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports/jpm-securities/monthly-reports",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports/jpm-securities/daily-reports",
+    "text": ""
+   }
+  ]
+ },
+ "jpmorgan-chase > other-us-regulatory-filings": {
+  "page": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/other-us-regulatory-filings",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/european-union-eu-disclosures-country",
+    "text": ""
+   },
+   {
+    "url": "https://www.chase.com/apps/chase/clientlibs/foundation/scripts/Reporting.js",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report/2023/ar-ceo-letters",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/corporate/investor-relations/annual-report-proxy.htm",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports",
+    "text": ""
+   }
+  ]
+ },
+ "jpmorgan-chase > basel-pillar-3-us-lcr-disclosures": {
+  "page": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures/",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-bhc",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/lcr-bhc",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/us-nsfr-disclosures-bank-holding-company",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-ireland",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/ireland-disclosures-jp-morgan-dublin-plc",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-luxembourg",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-germany",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-eu",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-uk",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-canada",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-hong-kong",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-hong-kong-chase-bank",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-india",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-south-africa",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-spain",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-malaysia",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-and-lcr-disclosures/pillar-emea",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/european-union-eu-disclosures-country",
+    "text": ""
+   },
+   {
+    "url": "https://www.chase.com/apps/chase/clientlibs/foundation/scripts/Reporting.js",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report/2023/ar-ceo-letters",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/corporate/investor-relations/annual-report-proxy.htm",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports",
+    "text": ""
+   }
+  ]
+ },
+ "jpmorgan-chase > european-union-eu-disclosures-country": {
+  "page": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/european-union-eu-disclosures-country",
+  "checked": "2026-09-08",
+  "links": [
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/basel-pillar-3-us-lcr-disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/european-union-eu-disclosures-country/",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/european-union-eu-disclosures-country",
+    "text": ""
+   },
+   {
+    "url": "https://www.chase.com/apps/chase/clientlibs/foundation/scripts/Reporting.js",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report/2023/ar-ceo-letters",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/ir/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.jpmorganchase.com/corporate/investor-relations/annual-report-proxy.htm",
+    "text": ""
+   },
+   {
+    "url": "https://jpmorganchaseco.gcs-web.com/ir/sec-other-filings/cftc-financial-reports",
     "text": ""
    }
   ]

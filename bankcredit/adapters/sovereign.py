@@ -60,14 +60,20 @@ class SovereignRatingsAdapter(ESMARatingsAdapter):
         """One country, every name the register files it under: France is "French Republic" to
         Scope and "Republic of France" to S&P, and each spelling carries different agencies."""
         cc, meta = item
-        want = {n.strip().lower() for n in _names(meta)}
-        params = {"q": "issuerName:(" + " OR ".join(_quote(n) for n in _names(meta)) + ")",
-                  "fq": PARENT_FQ, "rows": ROWS, "sort": "racValidityDatetime desc", "fl": FIELDS}
-        docs = self._select(params)["response"]["docs"]
-        time.sleep(SLEEP)
-        # The register matches loosely; keep only the issuers asked for, so "Ireland" cannot
-        # collect "Bank of Ireland" and "United Kingdom" cannot collect a UK company.
-        return [d for d in docs if (d.get("issuerName") or "").strip().lower() in want] or None
+        # One request per spelling rather than one OR-ed query: "United States of America" alone
+        # returns more than a thousand filings, and Moody's, which files under "United States of
+        # America, Government of", fell outside the row limit and was lost for every country.
+        out: list[dict] = []
+        for name in _names(meta):
+            want = name.strip().lower()
+            params = {"q": f"issuerName:{_quote(name)}", "fq": PARENT_FQ, "rows": ROWS,
+                      "sort": "racValidityDatetime desc", "fl": FIELDS}
+            docs = self._select(params)["response"]["docs"]
+            time.sleep(SLEEP)
+            # The register matches loosely; keep only the issuer asked for, so "Ireland" cannot
+            # collect "Bank of Ireland" and "United Kingdom" cannot collect a UK company.
+            out += [d for d in docs if (d.get("issuerName") or "").strip().lower() == want]
+        return out or None
 
     # A sovereign's rating is filed under names the bank mapper calls "other": Scope writes
     # "Long-term rating", JCR files no name at all, and a government's "Senior Unsecured Debt
