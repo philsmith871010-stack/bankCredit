@@ -84,44 +84,9 @@ def today_strip(board) -> str:
 <a class="tcard" href="ratings/index.html"><span class="tl">Rating actions, 7 days</span><span class="tv mono">{len(acts)}</span><span class="small"><span class="good">▲ {up} up or positive</span> · <span class="bad">▼ {down} down or negative</span></span></a>
 <a class="tcard" href="events/index.html"><span class="tl">Flagged headlines, 7 days</span><span class="tv mono">{sum(flagged.values())}</span><span class="small"><span class="bad">{flagged["bad"]} adverse</span> · <span style="color:#b35900">{flagged["warn"]} watch</span> · <span class="good">{flagged["good"]} positive</span></span></a>
 <a class="tcard" href="compare/index.html"><span class="tl">Market signal widening</span><span class="tv mono">{widening}</span><span class="small muted">names whose CDS, bonds or equity moved the wrong way in 30 days</span></a>
-<a class="tcard" href="coverage/index.html"><span class="tl">Figures as of</span><span class="tv mono">{med_age if med_age is not None else "—"}<small> days, median</small></span><span class="small {"bad" if stale > 20 else "muted"}">{stale} names older than 150 days</span></a>
+<a class="tcard" href="admin/index.html#coverage"><span class="tl">Figures as of</span><span class="tv mono">{med_age if med_age is not None else "—"}<small> days, median</small></span><span class="small {"bad" if stale > 20 else "muted"}">{stale} names older than 150 days</span></a>
 </div>'''
 
-
-def page_board(board, generated):
-    rows = sorted(board["rows"], key=lambda r: (r["score"] is None, -(r["score"] or 0), r["name"]))
-    counts = {}
-    for r in rows:
-        counts[r["region"]] = counts.get(r["region"], 0) + 1
-    filters = f'<button class="filter active" data-region="all">All · {len(rows)}</button>' + "".join(
-        f'<button class="filter" data-region="{k}">{REGION_LABEL[k]} · {counts.get(k, 0)}</button>' for k in REGION_LABEL if counts.get(k)) + \
-        '<button class="filter" data-region="watch">Watchlist</button>'
-    trs = []
-    for r in rows:
-        peer = r.get("peer") or {}
-        sub = f'{TYPE_LABEL.get(r["type"], r["type"])} · {COUNTRY.get(r["country"], r["country"])}'
-        trs.append(f'''<tr data-id="{r["id"]}" data-region="{r["region"]}" data-score="{r["score"] if r["score"] is not None else -1}" data-g="{r["rating_grade"] if r.get("rating_grade") is not None else 99}" data-name="{c.esc(r["name"])}">
-<td class="col-name"><button class="watch" data-id="{r["id"]}" aria-label="Watch">{c.use_icon("star", 15, "#cbd3dc")}</button><a href="banks/{r["id"]}.html"><span class="nm">{c.esc(r["name"])}</span><span class="sub">{sub}</span></a></td>
-<td class="col-score">{f'<span class="mono score">{sc(r)}</span>' if r["score"] is not None else f'<span class="unscored small" title="Not scored">not scored<br><span class="muted">{c.esc(r.get("unscored") or "no data")}</span></span>'}{"" if r["score"] is not None else "<!--"}{c.ribbon(r["score"], peer.get("p25"), peer.get("p50"), peer.get("p75"))}{"" if r["score"] is not None else "-->"}</td>
-<td class="col-band">{c.band_chip(r["band"]) if r["score"] is not None else '<span class="muted">—</span>'}</td>
-<td class="num">{c.fmt(r["cet1"], 1, "%")}</td><td class="num">{c.fmt(r["leverage"], 1, "%")}{'<sup class="muted" title="US Tier 1 leverage ratio on average assets, not the Basel leverage ratio">T1</sup>' if r.get("leverage_basis") == "us_tier1" else ""}</td><td class="num">{c.fmt(r["lcr"], 0, "%")}</td>
-<td>{c.agency_chips(r["ratings"])}</td><td class="col-mkt">{c.market_glyph(r["market"])}</td>
-<td class="col-asof">{age_badge(r["asof"], r["age_days"])}</td></tr>''')
-    n_scored = sum(1 for r in rows if r["score"] is not None)
-    content = f'''<div class="page-head"><div><h1>Board</h1><div class="lede">{len(rows)} banks and building societies · {n_scored} with enough data to score · figures as of the date on each row</div></div>
-<div class="actions"><label class="search">{c.ico("search", 16, c.MUTED)}<input id="q" type="search" placeholder="Search bank or country" aria-label="Search"></label></div></div>
-{today_strip(board)}
-{benchmark_strip(board)}
-<div class="filters" id="filters">{filters}</div>
-<div class="card table-card"><div class="table-wrap"><table class="board" id="board"><thead><tr>
-<th data-sort="name">Bank</th><th data-sort="score">Score · peers</th><th>Band</th><th class="num" data-sort="cet1">CET1</th><th class="num" data-sort="leverage">Lev.</th><th class="num" data-sort="lcr">LCR</th><th data-sort="rating" title="sort by composite rating">Ratings</th><th>Mkt</th><th data-sort="asof">As of</th></tr></thead>
-<tbody>{"".join(trs)}</tbody></table></div>
-<div class="table-foot"><span>Ratings from the ESMA register with agency attribution · Mkt is the 30-day direction of the market signal, never a level · a grey band means not enough data yet · Lev. marked T1 is the US Tier 1 leverage ratio, scored on its own scale</span><span class="legend">{c.ribbon(72, 52, 64, 74, 60, 8)} peer 25th to 75th percentile, median in orange</span></div></div>'''
-    return c.shell("Board", content, "board", "", generated)
-
-
-NAV_TYPES = [("bank", "Banks"), ("building_society", "Building societies"), ("holding", "Groups"), ("subsidiary", "Overseas-owned banks")]
-NAV_GRADES = [("top", "AA- and above"), ("a", "A range"), ("bbb", "BBB range"), ("sub", "Below BBB-"), ("nr", "Unrated")]
 
 
 def _grade_bucket(r) -> str:
@@ -131,51 +96,6 @@ def _grade_bucket(r) -> str:
     return "top" if g <= 4 else "a" if g <= 7 else "bbb" if g <= 10 else "sub"
 
 
-def page_banks_index(board, generated):
-    rows = board["rows"]
-    by_id = {r["id"]: r for r in rows}
-    # families: a parent first, its subsidiaries beneath it; an entity whose group is not covered stands alone
-    order = []
-    for r in sorted(rows, key=lambda r: r["name"].lower()):
-        if r["group"] and r["group"] in by_id:
-            continue
-        order.append((r, 0))
-        for ch in sorted((x for x in rows if x["group"] == r["id"]), key=lambda x: x["name"].lower()):
-            order.append((ch, 1))
-    items = []
-    for i, (r, depth) in enumerate(order):
-        rating = (f'<b>{c.esc(r["rating_composite"])}</b><span class="muted small"> {len(r["ratings"])} ag.</span>' if r["ratings"]
-                  else '<span class="muted small">unrated</span>')
-        age = r["age_days"]
-        asof = (f'<span class="age {"age-late" if age and age > 150 else ""}">{c.esc(r["asof"])}</span>' if r["asof"] else '<span class="muted">—</span>')
-        news = r.get("events90") or 0
-        items.append(
-            f'<div class="nv-row{" nv-child" if depth else ""}" data-id="{c.esc(r["id"])}" data-i="{i}" data-name="{c.esc(r["name"].lower())} {c.esc(r["short"].lower())} {c.esc(r["id"])}" '
-            f'data-region="{c.esc(r["region"])}" data-type="{c.esc(r["type"])}" data-band="{c.esc(r["band"] or "?")}" data-grade="{_grade_bucket(r)}" '
-            f'data-score="{r["score"] if r["score"] is not None else -1}" data-g="{r["rating_grade"] if r["rating_grade"] is not None else 99}" data-asof="{c.esc(r["asof"] or "")}" data-group="{c.esc(r["group"] or "")}">'
-            f'<button class="watch" data-id="{c.esc(r["id"])}" aria-label="Watch">{c.use_icon("star", 15, "#cbd3dc")}</button>'
-            f'<a class="nv-name" href="{c.esc(r["id"])}.html"><span class="nm">{c.esc(r["name"])}</span><span class="sub">{TYPE_LABEL.get(r["type"], r["type"])} · {COUNTRY.get(r["country"], r["country"])}{(" · part of " + c.esc(by_id[r["group"]]["short"])) if r["group"] in by_id else ""}</span></a>'
-            f'<span class="nv-band">{c.band_chip(r["band"])}</span><span class="nv-score mono" title="{c.esc(("Not scored: " + r["unscored"]) if r.get("unscored") else "")}">{sc(r) or "—"}</span>'
-            f'<span class="nv-rating">{rating}</span><span class="nv-mkt">{c.market_glyph(r["market"])}</span>'
-            f'<span class="nv-news mono small" title="headlines kept in 90 days">{news or ""}</span><span class="nv-asof mono small">{asof}</span></div>')
-    regions = [("all", "All regions")] + [(k, v) for k, v in REGION_LABEL.items()]
-    chips = lambda key, opts: "".join(f'<button class="filter nv-f" data-key="{key}" data-val="{k}">{c.esc(l)}<span class="cnt"></span></button>' for k, l in opts)
-    content = f'''<div class="page-head"><div><h1>Bank navigator</h1><div class="lede">Every covered entity in one list. Type to search; combine the filters; families sit together, subsidiaries beneath their parent.</div></div></div>
-<div class="card nv-card"><div class="nv-tools">
-<div class="search">{c.ico("search", 16, c.MUTED)}<input id="nvq" placeholder="Name, short name or country" autocomplete="off"></div>
-<label class="nv-sort small muted">Sort <select id="nvsort"><option value="family">Family, A to Z</option><option value="score">Score, high to low</option><option value="rating">Rating, strong to weak</option><option value="asof">Freshest figures</option><option value="name">Name</option></select></label>
-<span class="nv-count small muted" id="nvcount"></span></div>
-<div class="nv-facets">
-<div class="filters" data-facet="region">{chips("region", regions)}</div>
-<div class="filters" data-facet="type"><button class="filter nv-f" data-key="type" data-val="all">All types<span class="cnt"></span></button>{chips("type", NAV_TYPES)}</div>
-<div class="filters" data-facet="band"><button class="filter nv-f" data-key="band" data-val="all">Any band<span class="cnt"></span></button>{chips("band", [(b, "Band " + b) for b in "ABCDE"] + [("?", "No band yet")])}</div>
-<div class="filters" data-facet="grade"><button class="filter nv-f" data-key="grade" data-val="all">Any rating<span class="cnt"></span></button>{chips("grade", NAV_GRADES)}</div>
-<div class="filters" data-facet="watch"><button class="filter nv-f" data-key="watch" data-val="all">Everyone<span class="cnt"></span></button><button class="filter nv-f" data-key="watch" data-val="watch">Watching<span class="cnt"></span></button></div>
-</div>
-<div class="nv-head"><span></span><span>Entity</span><span>Band</span><span>Score</span><span>Rating</span><span>Mkt</span><span title="headlines kept in 90 days">News</span><span>As of</span></div>
-<div class="nv-list" id="nvlist">{"".join(items)}</div>
-<div class="empty" id="nvempty" hidden>Nothing matches. Clear a filter or shorten the search.</div></div>'''
-    return c.shell("Bank navigator", content, "banks", "../", generated).replace("</body>", '<script src="../assets/navigator.js"></script></body>')
 
 def tile(metric, label, unit, dp, series, peer_median=None):
     pts = series.get(metric, [])
@@ -381,7 +301,7 @@ def page_bank(b, generated):
 {c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12)}
 <div class="pillars">{prow}</div>
 {f'<div class="np-note"><b>{c.esc(b["not_published"]["reason"][0].upper() + b["not_published"]["reason"][1:])}.</b> {c.esc(b["not_published"].get("standing") or "")}. A score needs current capital ratios for this entity, so none is shown; the rating and the standing above are what to judge this name on. <a href="{c.esc(b["not_published"].get("source") or "")}" target="_blank" rel="noopener">Source</a></div>' if b.get("not_published") else ''}
-<div class="score-note">Rating anchor and public pillars with published weights (w).{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../method/index.html">Method</a></div></div>
+<div class="score-note">Rating anchor and public pillars with published weights (w).{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../admin/index.html#method">Method</a></div></div>
 <div class="tiles">{tiles}</div></div>
 <div class="card tabs-card"><div class="tabs" role="tablist"><button class="tab active" data-tab="trends">Trends</button><button class="tab" data-tab="ratings">Ratings</button><button class="tab" data-tab="market">Market</button><button class="tab" data-tab="events">Events</button><button class="tab" data-tab="sources">Sources</button>{'<button class="tab" data-tab="data">Data</button>' if b.get("debug") else ''}</div>
 <section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.{" The grey band on a ratio is where this bank" + chr(8217) + "s peer group stands today, quartile to quartile, with the median dashed — not a peer history." if b.get("peer_ratios") else ""}</div>' if n_charts else ''}{"".join(charts) or '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
@@ -528,11 +448,11 @@ def digest(board, status, generated):
     lead.append(f'{len(ratings)} rating action{"s" if len(ratings) != 1 else ""} and {len(news)} flagged headline{"s" if len(news) != 1 else ""} in the last seven days across {len(rows)} entities.')
     content = f'''<div class="card pad digest"><div class="pc-head" style="padding:0 0 8px"><h3>This week <span class="muted small">· drafted from the tables by fixed rules, not a language model · {c.esc(today.isoformat())}</span></h3></div><p class="lead">{" ".join(lead)}</p>{market_line}</div>
 <div class="grid-2 brief-grid"><div class="card pad"><h3>Watch points</h3><div class="kv"><div><span>Band D, weakest public score</span><span>{bank_links(band_d)}</span></div><div><span>Market signal widening or equity weak</span><span>{bank_links(weak_mkt)}</span></div><div><span>Regulatory figures older than 150 days</span><span>{bank_links([r for r in rows if r["age_days"] and r["age_days"] > 150][:25])}</span></div></div></div>
-<div class="card pad"><h3>New Pillar 3 documents</h3><p>{len(docs)} collected in the last seven days. {len(unverified)} loaded with warnings and shown as unverified; {len(queue)} waiting in the review queue.</p><a class="filter" href="../status/index.html">Status</a></div></div>'''
+<div class="card pad"><h3>New Pillar 3 documents</h3><p>{len(docs)} collected in the last seven days. {len(unverified)} loaded with warnings and shown as unverified; {len(queue)} waiting in the review queue.</p><a class="filter" href="../admin/index.html#status">Status</a></div></div>'''
     return content
 
 
-def page_method(generated):
+def page_method(generated, inner: bool = False):
     pillar_rows = "".join(f'<tr><td class="b">{k.replace("_", " ").title()}</td><td class="mono">{w}</td><td>{", ".join(METRICS.get(m, m) for m in ms)}</td></tr>' for k, (w, ms) in PILLARS.items())
     thr = "".join(f'<tr><td>{METRICS.get(m, m)}</td><td class="mono small">{" · ".join(f"{v}→{s}" for v, s in pts)}</td></tr>' for _, (w, ms) in PILLARS.items() for m, pts in ms.items())
     bands = " · ".join(f'<span class="b">{b}</span> {f} and above' for f, b in BANDS)
@@ -555,7 +475,7 @@ def page_method(generated):
 <h2>Market overlay</h2><p>A layer built from five-year CDS levels and 30-day changes where a CDS market exists (otherwise the 30-day change in the bank's own bond yields against peers), 30-day equity volatility and drawdown from the 52-week high. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points. Provisional weighting (September 2026): the three signals count equally, each worth at most 2.5 points either way. A CDS move is measured within one source (settlement against settlement, or trade medians on days with three or more trades) and split into the part shared with iTraxx Senior Financials and the part that is the bank's own; the label says which. The direction and size of the adjustment are shown; CDS levels themselves are not redistributed.</p>
 <h2>Limitations</h2><ul><li>US banking groups appear twice, as in the UK: the operating bank a depositor faces (Call Report figures from the FDIC, with the US Tier 1 leverage ratio scored on its own scale, and the group's LCR shown as a group figure because banks do not publish their own) and the holding company (binding Basel ratios, the lower of the standardised and advanced approaches, from its Pillar 3 report or XBRL filings, the supplementary leverage ratio, the public LCR disclosure, and asset quality and profitability inherited from its lead bank, labelled).</li><li>UK and other-region figures depend on PDF extraction; failed validations are shown as unverified rather than hidden.</li><li>Peer percentiles are computed only among entities with a score, so they are unstable while coverage is low.</li><li>Asset quality and profitability are held only for US banks so far, so those pillars are re-scaled away for most of the universe; the Coverage page shows this per bank.</li><li>Back-tests against past failures are planned.</li></ul>
 </div>'''
-    return c.shell("Method", content, "method", "../", generated)
+    return content if inner else c.shell("Method", content, "method", "../", generated)
 
 
 HEALTH_STATE = {"ok": ("good", "collecting"), "overdue": ("warn", "overdue"),
@@ -588,7 +508,7 @@ def health_card() -> str:
 {f'<ul class="small">{faults}</ul>' if faults else ''}
 {group("never")}{group("overdue")}{group("no source")}</div>'''
 
-def page_status(status, board, generated):
+def page_status(status, board, generated, inner: bool = False):
     runs = "".join(f'<tr><td class="b">{c.esc(r["source"])}</td><td>{c.chip(c.esc(r["status"]), {"ok": "good", "partial": "warn", "failed": "bad"}.get(r["status"], "muted"))}</td><td class="mono">{r["rows"]}</td><td class="mono muted">{c.esc(r["finished"][:16].replace("T", " "))}</td><td class="muted small">{c.esc(r["message"])}</td></tr>' for r in status["runs"]) or '<tr><td colspan="5" class="empty">No runs recorded yet.</td></tr>'
     rows = board["rows"]
     missing = [r for r in rows if not r["asof"]]
@@ -602,7 +522,7 @@ def page_status(status, board, generated):
 {documents_card(status)}
 {learning_card(status)}
 {audit_card()}'''
-    return c.shell("Status", content, "status", "../", generated)
+    return content if inner else c.shell("Status", content, "status", "../", generated)
 
 
 def documents_card(status):
@@ -793,14 +713,36 @@ def page_home(board, status, generated):
             .replace("<body>", '<body data-root="">'))
 
 
-def page_gone(title: str, generated: str) -> str:
-    """A page that has been folded into the one working page; its address still resolves."""
+
+def page_admin(status, board, generated):
+    """Method, coverage and data status behind one door.
+
+    None of it is the daily job: it is how the score is built, what is held for every name and
+    what ran last night. Kept together so it can be shown to someone deciding whether to trust
+    the thing, and taken away without disturbing the pages that do the work.
+    """
+    content = ('<div class="page-head"><div><h1>Method and data</h1><div class="lede">How the score is '
+               'built, what is held for every name, and what ran last night. Reference rather than daily '
+               'reading.</div></div></div>'
+               '<div class="card tabs-card"><div class="tabs" role="tablist">'
+               '<button class="tab active" data-tab="method">Method</button>'
+               '<button class="tab" data-tab="coverage">Coverage</button>'
+               '<button class="tab" data-tab="status">Status</button></div>'
+               f'<section class="panel active" data-panel="method">{_panel_content(page_method(generated, inner=True))}</section>'
+               f'<section class="panel" data-panel="coverage">{_panel_content(page_coverage(generated, inner=True))}</section>'
+               f'<section class="panel" data-panel="status">{_panel_content(page_status(status, board, generated, inner=True))}</section>'
+               '</div>')
+    return c.shell("Method and data", content, "admin", "../", generated)
+
+
+def page_gone(title: str, generated: str, target: str = "../index.html", nav: str = "home") -> str:
+    """A page that has been folded into another; its address still resolves and carries the reader
+    on, so a bookmark or a link in someone's paper trail does not break."""
     content = (f'<div class="page-head"><div><h1>{c.esc(title)}</h1>'
-               f'<div class="lede">This view now sits on the main page, so a policy can be built, watched and '
-               f'added to without leaving it. Taking you there.</div></div></div>'
-               '<meta http-equiv="refresh" content="0; url=../index.html">'
-               '<p><a class="filter" href="../index.html">Continue</a></p>')
-    return c.shell(title, content, "home", "../", generated)
+               f'<div class="lede">This view now sits on the page it belongs to. Taking you there.</div>'
+               f'</div></div><meta http-equiv="refresh" content="0; url={target}">'
+               f'<p><a class="filter" href="{target}">Continue</a></p>')
+    return c.shell(title, content, nav, "../", generated)
 
 
 def audit_card():
@@ -850,7 +792,7 @@ def _depth_cell(m: dict) -> str:
     return f'<td class="cov cov{k}" data-v="{n}"><b>{n}</b><span>{span}</span></td>'
 
 
-def page_coverage(generated):
+def page_coverage(generated, inner: bool = False):
     A = load("audit")["rows"]
     n = len(A)
 
@@ -897,7 +839,7 @@ def page_coverage(generated):
         f'<th class="num" data-sort="col" title="span of the CET1 history in years">Years</th><th>Sources</th>{heads}</tr></thead><tbody>{body}</tbody></table></div>'
         '<div class="table-foot"><span>Ratio cells: periods held, then the first and last year. Shading: light under 4 periods, mid under 12, dark 12 and over. '
         "Rating letters are the agencies holding a long-term issuer rating (F Fitch, S S&amp;P, M Moody's, D DBRS, K KBRA, Sc Scope, J JCR). Click a column heading to sort.</span></div></div>")
-    return c.shell("Coverage", content, "coverage", "../", generated)
+    return content if inner else c.shell("Coverage", content, "coverage", "../", generated)
 
 
 _WS = re.compile(r">\s+<")
@@ -1004,14 +946,16 @@ def build():
     for r in board["rows"]:
         _write(OUT / "banks" / f"{r['id']}.html", page_bank(load(f"banks/{r['id']}"), generated))
     _write(OUT / "events" / "index.html", page_gone("Events", generated))
-    _write(OUT / "method" / "index.html", page_method(generated))
+    (OUT / "admin").mkdir(exist_ok=True)
+    _write(OUT / "admin" / "index.html", page_admin(status, board, generated))
+    _write(OUT / "method" / "index.html", page_gone("Method", generated, "../admin/index.html#method", "admin"))
     (OUT / "ratings").mkdir(exist_ok=True)
     _write(OUT / "ratings" / "index.html", page_gone("Ratings", generated))
     (OUT / "compare").mkdir(exist_ok=True); (OUT / "data").mkdir(exist_ok=True)
     _write(OUT / "compare" / "index.html", page_compare(generated))
     shutil.copy(store.DATA / "json" / "compare.json", OUT / "data" / "compare.json")
     (OUT / "coverage").mkdir(exist_ok=True)
-    _write(OUT / "coverage" / "index.html", page_coverage(generated))
+    _write(OUT / "coverage" / "index.html", page_gone("Coverage", generated, "../admin/index.html#coverage", "admin"))
     (OUT / "policy").mkdir(exist_ok=True)
     _write(OUT / "policy" / "index.html", page_gone("My policy", generated))
     (OUT / "data").mkdir(exist_ok=True)
@@ -1019,6 +963,6 @@ def build():
     write_detail()
     (OUT / "brief").mkdir(exist_ok=True)
     _write(OUT / "brief" / "index.html", page_brief_redirect(generated))
-    _write(OUT / "status" / "index.html", page_status(status, board, generated))
+    _write(OUT / "status" / "index.html", page_gone("Status", generated, "../admin/index.html#status", "admin"))
     _write(OUT / ".nojekyll", "")
     print(f"built site/ with {len(board['rows'])} bank pages")

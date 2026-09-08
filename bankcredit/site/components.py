@@ -222,9 +222,7 @@ def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | 
 # stays separate because comparing several banks is the one thing a single name's dialog cannot do.
 NAV = [("home", "Counterparty", "grid", "index.html"),
        ("compare", "Analysis", "activity", "compare/index.html"),
-       ("method", "Method", "list", "method/index.html"),
-       ("coverage", "Coverage", "search", "coverage/index.html"),
-       ("status", "Status", "status", "status/index.html")]
+       ("admin", "Method and data", "list", "admin/index.html")]
 
 
 def shell(title: str, content: str, active: str, root: str = "", generated: str = "", subtitle: str = "") -> str:
@@ -247,5 +245,5 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <div class="frame"><aside class="side" id="side"><div class="side-label">Counterparty</div>{items}<div class="side-fill"></div>
 <div class="side-status">{ico("clock", 14, ORANGE)} Built {esc(generated[:16].replace("T", " "))} UTC</div></aside>
 <main class="main">{content}</main></div>
-<footer class="foot">Counterparty is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}method/index.html">Method</a> · <a href="{root}status/index.html">Data status</a></footer>
+<footer class="foot">Counterparty is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}admin/index.html#method">Method</a> · <a href="{root}admin/index.html#status">Data status</a></footer>
 <script src="{root}assets/app.js"></script></body></html>"""
