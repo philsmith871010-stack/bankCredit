@@ -1718,5 +1718,32 @@
    },
    "method": "pdf_rules"
   }
+ },
+ "handelsbanken-plc": {
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 2155.0,
+    "tier1_capital": 2155.0,
+    "total_capital": 2456.0,
+    "rwa": 12309.0,
+    "cet1_ratio": 17.5,
+    "tier1_ratio": 17.5,
+    "total_capital_ratio": 20.0,
+    "total_srep_requirement": 10.6,
+    "combined_buffer": 4.5,
+    "overall_capital_requirement": 15.1,
+    "cet1_headroom": 11.1,
+    "leverage_exposure": 23011.0,
+    "leverage_ratio": 9.4,
+    "hqla": 8039.0,
+    "net_cash_outflows": 4572.0,
+    "lcr": 180.0,
+    "available_stable_funding": 19047.0,
+    "required_stable_funding": 14676.0,
+    "nsfr": 130.0
+   },
+   "method": "pdf_rules"
+  }
  }
 }

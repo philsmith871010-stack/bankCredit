@@ -33,5 +33,44 @@
   "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
   "created": "2026-09-08T15:33:04"
+ },
+ {
+  "id": "50bb086ef179",
+  "entity_id": "mizuho",
+  "url": "https://library.mizuhogroup.com/asset/b35a526c-2179-4b8a-9ddf-3003ee04c54f/fg-investors-liquidity_data2703_fg_1q01.pdf",
+  "local": "cache/pdf/mizuho/50bb086ef1798535.pdf",
+  "title": "fg-investors-liquidity_data2703_fg_1q01.pdf",
+  "page": 1,
+  "reference_date": "2027-03-31",
+  "currency": "JPY",
+  "values": {
+   "hqla": 81865523.0,
+   "net_cash_outflows": 64907167.0,
+   "lcr": 126.1,
+   "available_stable_funding": 122564410.0,
+   "required_stable_funding": 109180340.0,
+   "nsfr": 112.2
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row cet1_capital"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ]
+  ],
+  "reason": "error:missing core row cet1_capital; error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one)",
+  "status": "open",
+  "created": "2026-09-08T17:16:09"
  }
 ]
