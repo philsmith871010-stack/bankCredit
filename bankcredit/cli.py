@@ -9,6 +9,7 @@
   python -m bankcredit.cli learn                     # what the reviewer's answers taught the extractor
   python -m bankcredit.cli browser [entity ...]      # bot-blocked sites: plain request, then headless Chromium
   python -m bankcredit.cli reprocess [entity]        # re-extract cached PDFs after an extractor change
+  python -m bankcredit.cli health                    # which sources have stopped working, and which never did
 """
 from __future__ import annotations
 
@@ -104,6 +105,20 @@ def main(argv=None):
         blocked = [k for k, v in res.items() if v.startswith("blocked")]
         print(f"{len(res)} sites tried; {len(blocked)} still need the Chrome extension: {', '.join(blocked) or 'none'}")
         return 0
+    if cmd == "health":
+        from . import health
+        rep = health.write()
+        c = rep["counts"]
+        print(f"  {c['ok']} collecting, {c['overdue']} overdue, {c['never']} never collected, "
+              f"{c['no source']} with no source, {c['by design']} not published by design")
+        for f in rep["faults"]:
+            print(f"  FAULT {f['entity']}: {f['fault']}")
+        for r in rep["entities"]:
+            if r["state"] in ("never", "overdue", "no source"):
+                age = f"{r['age_days']}d" if r["age_days"] is not None else "never"
+                print(f"  {r['state']:9} {r['short'][:30]:32} {','.join(r['kinds']) or '-':8} capital {age}")
+        print(f"  written to {health.REPORT}")
+        return 1 if rep["faults"] else 0
     if cmd == "learn":
         from .learn import summary
         import json as _json

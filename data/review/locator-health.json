@@ -1,0 +1,2319 @@
+{
+ "generated": "2026-09-08",
+ "counts": {
+  "ok": 108,
+  "overdue": 11,
+  "never": 27,
+  "no source": 3,
+  "by design": 3
+ },
+ "faults": [],
+ "entities": [
+  {
+   "entity": "adcb",
+   "short": "ADCB",
+   "region": "gulf",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "al-rayan-bank",
+   "short": "Al Rayan Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "bank-of-china-uk",
+   "short": "Bank of China UK",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "bmo",
+   "short": "BMO",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "bochk",
+   "short": "BOCHK",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "emirates-nbd",
+   "short": "Emirates NBD",
+   "region": "gulf",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "goldman-sachs-international-bank",
+   "short": "Goldman Sachs International Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "handelsbanken-plc",
+   "short": "Handelsbanken plc",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "hinckley-and-rugby-bs",
+   "short": "Hinckley and Rugby BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "icbc-london",
+   "short": "ICBC London",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "investec",
+   "short": "Investec",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "jpmorgan-chase",
+   "short": "JPMorgan Chase",
+   "region": "us_ch",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "leek-bs",
+   "short": "Leek BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "macquarie-bank",
+   "short": "Macquarie Bank",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "mizuho",
+   "short": "Mizuho",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "mufg",
+   "short": "MUFG",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "newcastle-bs",
+   "short": "Newcastle BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "progressive-bs",
+   "short": "Progressive BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "qib-uk",
+   "short": "QIB UK",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "qnb",
+   "short": "QNB",
+   "region": "gulf",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "saffron-bs",
+   "short": "Saffron BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "sbi-uk",
+   "short": "SBI UK",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "suffolk-bs",
+   "short": "Suffolk BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "sumitomo-mitsui-trust",
+   "short": "Sumitomo Mitsui Trust",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "tsb",
+   "short": "TSB",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 3,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "uob",
+   "short": "UOB",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "west-brom-bs",
+   "short": "West Brom BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "never"
+  },
+  {
+   "entity": "close-brothers",
+   "short": "Close Brothers",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "nsm"
+   ],
+   "documents": 1,
+   "capital_as_of": "2025-07-31",
+   "age_days": 404,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "credit-agricole-cib",
+   "short": "Credit Agricole CIB",
+   "region": "eu",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 3,
+   "capital_as_of": "2025-06-30",
+   "age_days": 435,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "cumberland-bs",
+   "short": "Cumberland BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 14,
+   "capital_as_of": "2023-03-31",
+   "age_days": 1257,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "darlington-bs",
+   "short": "Darlington BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 6,
+   "capital_as_of": "2023-12-31",
+   "age_days": 982,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "family-bs",
+   "short": "Family BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 2,
+   "capital_as_of": "2023-12-31",
+   "age_days": 982,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "furness-bs",
+   "short": "Furness BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 1,
+   "capital_as_of": "2022-12-31",
+   "age_days": 1347,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "gatehouse-bank",
+   "short": "Gatehouse Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 3,
+   "capital_as_of": "2024-12-31",
+   "age_days": 616,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "melton-bs",
+   "short": "Melton BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 7,
+   "capital_as_of": "2023-12-31",
+   "age_days": 982,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "monmouthshire-bs",
+   "short": "Monmouthshire BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 1,
+   "capital_as_of": "2023-04-30",
+   "age_days": 1227,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "op-corporate-bank",
+   "short": "OP Corporate Bank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2025-09-30",
+   "age_days": 343,
+   "capital_sources": [
+    "nsm_release"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "virgin-money-uk",
+   "short": "Virgin Money UK",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 19,
+   "capital_as_of": "2025-09-30",
+   "age_days": 343,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "al-rajhi-bank",
+   "short": "Al Rajhi Bank",
+   "region": "gulf",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "no source"
+  },
+  {
+   "entity": "saudi-national-bank",
+   "short": "Saudi National Bank",
+   "region": "gulf",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "no source"
+  },
+  {
+   "entity": "standard-chartered-hk",
+   "short": "Standard Chartered HK",
+   "region": "asia",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "no source"
+  },
+  {
+   "entity": "nrw-bank",
+   "short": "NRW.BANK",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2018-06-30",
+   "age_days": 2992,
+   "capital_sources": [
+    "eba_te"
+   ],
+   "state": "by design"
+  },
+  {
+   "entity": "rentenbank",
+   "short": "Rentenbank",
+   "region": "eu",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 7,
+   "capital_as_of": "2018-06-30",
+   "age_days": 2992,
+   "capital_sources": [
+    "eba_te"
+   ],
+   "state": "by design"
+  },
+  {
+   "entity": "santander-financial-services",
+   "short": "Santander Financial Services",
+   "region": "uk",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": null,
+   "age_days": null,
+   "capital_sources": [],
+   "state": "by design"
+  },
+  {
+   "entity": "abn-amro",
+   "short": "ABN AMRO",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "aib",
+   "short": "AIB",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "aldermore",
+   "short": "Aldermore",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 17,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "anz",
+   "short": "ANZ",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 5,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "banco-santander",
+   "short": "Banco Santander",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bank-of-america",
+   "short": "Bank of America",
+   "region": "us_ch",
+   "locators": 2,
+   "kinds": [
+    "html"
+   ],
+   "documents": 32,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bank-of-america-na",
+   "short": "Bank of America N.A.",
+   "region": "us_ch",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bank-of-ireland",
+   "short": "Bank of Ireland",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bank-of-new-york-mellon",
+   "short": "BNY (bank)",
+   "region": "us_ch",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bank-of-scotland",
+   "short": "Bank of Scotland",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 1,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "barclays",
+   "short": "Barclays",
+   "region": "uk",
+   "locators": 2,
+   "kinds": [
+    "html"
+   ],
+   "documents": 11,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "barclays-bank",
+   "short": "Barclays Bank",
+   "region": "uk",
+   "locators": 2,
+   "kinds": [
+    "html"
+   ],
+   "documents": 5,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba_te",
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "barclays-bank-uk",
+   "short": "Barclays Bank UK",
+   "region": "uk",
+   "locators": 2,
+   "kinds": [
+    "html"
+   ],
+   "documents": 8,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bayernlb",
+   "short": "BayernLB",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bbva",
+   "short": "BBVA",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "belfius",
+   "short": "Belfius",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bendigo-and-adelaide-bank",
+   "short": "Bendigo and Adelaide Bank",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 39,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bng-bank",
+   "short": "BNG Bank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bnp-paribas",
+   "short": "BNP Paribas",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bnp-paribas-fortis",
+   "short": "BNP Paribas Fortis",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bny",
+   "short": "BNY",
+   "region": "us_ch",
+   "locators": 1,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 6,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
+   "capital_sources": [
+    "edgar"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "bpce",
+   "short": "BPCE",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "caixabank",
+   "short": "CaixaBank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "cibc",
+   "short": "CIBC",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 11,
+   "capital_as_of": "2026-07-31",
+   "age_days": 39,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "cic",
+   "short": "CIC",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "citibank",
+   "short": "Citibank",
+   "region": "us_ch",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "citigroup",
+   "short": "Citigroup",
+   "region": "us_ch",
+   "locators": 3,
+   "kinds": [
+    "browser",
+    "pattern"
+   ],
+   "documents": 5,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "clydesdale-bank",
+   "short": "Clydesdale Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 1,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "co-operative-bank",
+   "short": "Co-operative Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 22,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "commerzbank",
+   "short": "Commerzbank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "commonwealth-bank",
+   "short": "Commonwealth Bank",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 4,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "coventry-bs",
+   "short": "Coventry BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 28,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "credit-agricole",
+   "short": "Credit Agricole",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "credit-mutuel",
+   "short": "Credit Mutuel",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "danske-bank",
+   "short": "Danske Bank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "dbs",
+   "short": "DBS",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 1,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "deutsche-bank",
+   "short": "Deutsche Bank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "dnb",
+   "short": "DNB",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "dz-bank",
+   "short": "DZ Bank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "erste-group",
+   "short": "Erste Group",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "first-abu-dhabi-bank",
+   "short": "First Abu Dhabi Bank",
+   "region": "gulf",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 6,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "goldman-sachs",
+   "short": "Goldman Sachs",
+   "region": "us_ch",
+   "locators": 2,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 9,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "edgar",
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "goldman-sachs-bank-usa",
+   "short": "GS Bank USA",
+   "region": "us_ch",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "helaba",
+   "short": "Helaba",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "hsbc-bank",
+   "short": "HSBC Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 2,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "hsbc-holdings",
+   "short": "HSBC Holdings",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 10,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba_te",
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "hsbc-hong-kong",
+   "short": "HSBC Hong Kong",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 6,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "hsbc-uk",
+   "short": "HSBC UK",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 2,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "icici-bank-uk",
+   "short": "ICICI Bank UK",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 3,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "ing",
+   "short": "ING",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "intesa-sanpaolo",
+   "short": "Intesa Sanpaolo",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "jpmorgan-chase-bank",
+   "short": "JPMorgan Chase Bank",
+   "region": "us_ch",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "kbc",
+   "short": "KBC",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "la-banque-postale",
+   "short": "La Banque Postale",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "lbbw",
+   "short": "LBBW",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "leeds-bs",
+   "short": "Leeds BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 21,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "lloyds-bank",
+   "short": "Lloyds Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 1,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "lloyds-bank-corporate-markets",
+   "short": "Lloyds Bank Corporate Markets",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 1,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "lloyds-banking-group",
+   "short": "Lloyds Banking Group",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 1,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba_te",
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "metro-bank",
+   "short": "Metro Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 14,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "monzo",
+   "short": "Monzo",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 1,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "morgan-stanley",
+   "short": "Morgan Stanley",
+   "region": "us_ch",
+   "locators": 1,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 9,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "edgar",
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "morgan-stanley-bank",
+   "short": "Morgan Stanley Bank",
+   "region": "us_ch",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "nab",
+   "short": "NAB",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 42,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "national-bank-of-canada",
+   "short": "National Bank of Canada",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 36,
+   "capital_as_of": "2026-07-31",
+   "age_days": 39,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "nationwide",
+   "short": "Nationwide",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 12,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba_te",
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "natwest-bank",
+   "short": "NatWest Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 10,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "natwest-group",
+   "short": "NatWest Group",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 15,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba_te",
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "natwest-markets",
+   "short": "NatWest Markets",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 16,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "nbk-international",
+   "short": "NBK International",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 1,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "nord-lb",
+   "short": "NORD/LB",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "nordea",
+   "short": "Nordea",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "northern-trust",
+   "short": "Northern Trust",
+   "region": "us_ch",
+   "locators": 2,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 15,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "northern-trust-company",
+   "short": "Northern Trust Co.",
+   "region": "us_ch",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "nottingham-bs",
+   "short": "Nottingham BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 16,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "nwb-bank",
+   "short": "NWB Bank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "nykredit",
+   "short": "Nykredit",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "ocbc",
+   "short": "OCBC",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 9,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "op-financial-group",
+   "short": "OP Financial Group",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "osb-group",
+   "short": "OSB Group",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 34,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "paragon",
+   "short": "Paragon",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "nsm"
+   ],
+   "documents": 1,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "principality-bs",
+   "short": "Principality BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 8,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "rabobank",
+   "short": "Rabobank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "raiffeisen-bank-international",
+   "short": "Raiffeisen Bank International",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "rbc",
+   "short": "RBC",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 11,
+   "capital_as_of": "2026-07-31",
+   "age_days": 39,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "santander-uk",
+   "short": "Santander UK",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 39,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "scotiabank",
+   "short": "Scotiabank",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 12,
+   "capital_as_of": "2026-07-31",
+   "age_days": 39,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "seb",
+   "short": "SEB",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "secure-trust-bank",
+   "short": "Secure Trust Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 4,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "shawbrook",
+   "short": "Shawbrook",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 15,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "skipton-bs",
+   "short": "Skipton BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 23,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "smbc-bank-international",
+   "short": "SMBC Bank International",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 6,
+   "capital_as_of": "2025-12-31",
+   "age_days": 251,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "smfg",
+   "short": "SMFG",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 2,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "societe-generale",
+   "short": "Societe Generale",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "standard-chartered",
+   "short": "Standard Chartered",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 52,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba_te",
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "starling",
+   "short": "Starling",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 9,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "state-street",
+   "short": "State Street",
+   "region": "us_ch",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 3,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "state-street-bank",
+   "short": "State Street Bank",
+   "region": "us_ch",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "svenska-handelsbanken",
+   "short": "Svenska Handelsbanken",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "swedbank",
+   "short": "Swedbank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "td-bank",
+   "short": "TD Bank",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 5,
+   "capital_as_of": "2026-07-31",
+   "age_days": 39,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "ubs",
+   "short": "UBS",
+   "region": "us_ch",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 2,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "unicredit",
+   "short": "UniCredit",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "vanquis",
+   "short": "Vanquis",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 10,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "wells-fargo",
+   "short": "Wells Fargo",
+   "region": "us_ch",
+   "locators": 2,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 20,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "wells-fargo-bank",
+   "short": "Wells Fargo Bank",
+   "region": "us_ch",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "fdic"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "westpac",
+   "short": "Westpac",
+   "region": "aus_can",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 8,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "yorkshire-bs",
+   "short": "Yorkshire BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 7,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  }
+ ]
+}

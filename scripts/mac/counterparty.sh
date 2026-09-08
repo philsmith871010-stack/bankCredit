@@ -43,6 +43,8 @@ fi
 # 3. load any answers and push the data; the GitHub pipeline rebuilds the site on push
 python -m bankcredit.cli review ingest || true
 python -m bankcredit.cli learn > /dev/null 2>&1 || true
+# which sources have stopped working, and which never did; the report is committed and shown on Status
+python -m bankcredit.cli health || true
 git add data/facts.parquet data/documents.parquet data/runs.parquet data/events.parquet data/review 2>/dev/null || true   # data/review includes browser-links.json and news_verdicts.json
 if ! git diff --cached --quiet; then
   # [collect] makes the push run the full daily collection too, a backstop for GitHub's schedule

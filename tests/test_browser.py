@@ -89,3 +89,28 @@ def test_fetch_document_falls_back_to_the_page_body():
             return Resp()
     data, how = B.fetch_document("https://example.org/pillar-3-report-2q26.html", Session(), None)
     assert how == "html" and data.startswith(b"%PDF")
+
+
+def test_a_body_that_is_not_html_counts_as_blocked():
+    """An undecoded content-encoding gives bytes that are long, carry no challenge text and hold
+    no links: it passes every emptiness test and reads as a page with nothing on it."""
+    noise = "\x1b\x2f\x00\x84" * 2000
+    assert B.looks_blocked(200, noise)
+    assert not B.looks_blocked(200, "<div>" + "real content " * 500 + "</div>")
+
+
+def test_only_decodable_content_encodings_are_advertised():
+    """Asking a CDN for brotli without a decoder is how a good page arrives unreadable."""
+    advertised = {c.strip() for c in B.HEADERS["Accept-Encoding"].split(",")}
+    if "br" in advertised:
+        import brotli  # noqa: F401  - advertising it means we can decode it
+    assert {"gzip", "deflate"} <= advertised
+
+
+def test_a_file_name_with_spaces_survives_the_link_scrape():
+    """OCBC publishes "Pillar 3 Disclosures.pdf". Split on whitespace it arrives as "Pillar",
+    is fetched, and is rejected as not a PDF - a collection failure that looks like a dead site."""
+    ad = Pillar3Adapter()
+    body = '<a href="/misc/Pillar 3 Disclosures.pdf">Pillar 3 Disclosures</a>'
+    links = ad._links("https://www.ocbc.com/group/investors/", body)
+    assert any(u.endswith("Pillar%203%20Disclosures.pdf") for u in links), links

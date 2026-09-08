@@ -538,6 +538,37 @@ def page_method(generated):
 </div>'''
     return c.shell("Method", content, "method", "../", generated)
 
+
+HEALTH_STATE = {"ok": ("good", "collecting"), "overdue": ("warn", "overdue"),
+                "never": ("bad", "never collected"), "no source": ("bad", "no source"),
+                "by design": ("muted", "not published")}
+
+
+def health_card() -> str:
+    """Which sources are still working. A bank redesigns its investor pages, the locator stops
+    matching, and nothing fails: the collector just returns nothing. This is where that shows."""
+    from .. import health
+    rep = health.load()
+    if not rep:
+        return ""
+    counts, rows = rep.get("counts", {}), rep.get("entities", [])
+    chips = "".join(c.chip(f"{counts.get(k, 0)} {label}", tone)
+                    for k, (tone, label) in HEALTH_STATE.items() if counts.get(k))
+    faults = "".join(f'<li class="bad">{c.esc(f["entity"])}: {c.esc(f["fault"])}</li>' for f in rep.get("faults", []))
+    def group(state):
+        xs = [r for r in rows if r["state"] == state]
+        if not xs:
+            return ""
+        items = ", ".join(f'<a href="../banks/{r["entity"]}.html">{c.esc(r["short"])}</a>'
+                          + (f' <span class="mono muted">{r["age_days"]}d</span>' if r.get("age_days") else "")
+                          for r in xs)
+        return f'<p class="small"><span class="b">{HEALTH_STATE[state][1].capitalize()}:</span> {items}</p>'
+    return f'''<div class="card pad"><h3>Source health</h3>
+<p class="small muted">Every entity\'s Pillar 3 source, checked against what it has actually delivered. "Overdue" means the source worked once and its newest capital figure is now more than 300 days old; "never collected" means a locator exists and has never yielded a document.</p>
+<div class="chips">{chips}</div>
+{f'<ul class="small">{faults}</ul>' if faults else ''}
+{group("never")}{group("overdue")}{group("no source")}</div>'''
+
 def page_status(status, board, generated):
     runs = "".join(f'<tr><td class="b">{c.esc(r["source"])}</td><td>{c.chip(c.esc(r["status"]), {"ok": "good", "partial": "warn", "failed": "bad"}.get(r["status"], "muted"))}</td><td class="mono">{r["rows"]}</td><td class="mono muted">{c.esc(r["finished"][:16].replace("T", " "))}</td><td class="muted small">{c.esc(r["message"])}</td></tr>' for r in status["runs"]) or '<tr><td colspan="5" class="empty">No runs recorded yet.</td></tr>'
     rows = board["rows"]
@@ -548,6 +579,7 @@ def page_status(status, board, generated):
 <div class="card pad"><h3>Pipeline runs</h3><div class="table-wrap"><table class="plain"><thead><tr><th>Source</th><th>Status</th><th>Rows</th><th>Finished (UTC)</th><th>Message</th></tr></thead><tbody>{runs}</tbody></table></div></div>
 <div class="card pad"><h3>Coverage</h3><p>{len(rows) - len(missing)} of {len(rows)} entities have regulatory figures; {sum(1 for r in rows if r["score"] is not None)} have enough for a score; {sum(1 for r in rows if r["ratings"])} have ratings.</p>
 <p class="small"><span class="b">No regulatory figures yet:</span> {lst(missing)}</p><p class="small"><span class="b">Older than 150 days:</span> {lst(stale)}</p></div>
+{health_card()}
 {documents_card(status)}
 {learning_card(status)}
 {audit_card()}'''

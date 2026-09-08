@@ -34,6 +34,10 @@ jobs:
       - name: Load answers from the review queue
         if: ${{ github.event_name != 'push' || contains(github.event.head_commit.message, '[collect]') }}
         run: python -m bankcredit.cli review ingest
+      - name: Source health
+        run: python -m bankcredit.cli health
+        continue-on-error: true          # the report is the point; a broken locator must not stop the publish
+
       - name: Quarterly adapters on the 1st, 15th and 25th
         if: ${{ github.event_name == 'schedule' }}
         run: |

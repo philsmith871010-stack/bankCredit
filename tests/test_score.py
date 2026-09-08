@@ -33,3 +33,38 @@ def test_rating_caps_the_band():
     assert bbb.band == "B" and bbb.final_score <= 74.9
     assert bb.band == "C" and bb.final_score <= 64.9
     assert S.compute(FULL, 0.0, 7.0).band == "A"    # A- is not capped
+
+
+def test_a_recorded_reason_replaces_the_generic_withheld_message(tmp_path, monkeypatch):
+    """Three entities have their capital measured somewhere other than at this entity. Saying
+    "no capital ratios" about them implies we are behind on collection, which is not true, and
+    "does not publish Basel ratios" is wrong for one whose group publishes them."""
+    import json
+    from bankcredit import export, store
+
+    ref = tmp_path / "reference"
+    ref.mkdir()
+    (ref / "capital-not-published.json").write_text(json.dumps({
+        "_note": "ignored",
+        "somebank": {"short": "capital reported at group level", "reason": "the group publishes them"},
+    }))
+    monkeypatch.setattr(store, "DATA", tmp_path)
+
+    npub = export.capital_not_published()
+    assert "_note" not in npub, "the note is documentation, not an entity"
+    assert npub["somebank"]["short"] == "capital reported at group level"
+
+
+def test_the_shipped_records_each_carry_a_reason_and_a_source():
+    """A withheld score that states a reason has to be able to show its working. Read from the
+    repository rather than through store.DATA, which the tests point at a scratch directory."""
+    import json
+    from pathlib import Path
+    shipped = Path(__file__).resolve().parents[1] / "data" / "reference" / "capital-not-published.json"
+    records = {k: v for k, v in json.loads(shipped.read_text()).items() if not k.startswith("_")}
+    assert records, "the file holds at least one record"
+    for entity, r in records.items():
+        assert r.get("short"), entity
+        assert r.get("reason"), entity
+        assert r.get("source", "").startswith("http"), entity
+        assert r.get("standing"), entity

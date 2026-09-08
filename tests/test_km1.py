@@ -214,3 +214,33 @@ def test_narrative_date_prefers_the_as_at_phrase():
     res = km1.extract(path, currency_hint="AUD")
     assert res.reference_date == km1.date(2017, 9, 30)
     assert res.history == {}
+
+
+DERIVED_TEXT = KM1_TEXT.replace("""5
+Common Equity Tier 1 ratio (%)
+28.2 28.0 28.8
+""", "").replace("""6
+Tier 1 ratio (%)
+28.2 28.0 28.8
+""", "")
+
+
+def test_ratio_is_derived_from_capital_over_rwa_when_the_row_is_absent(tmp_path):
+    """SMFG states capital and risk-weighted assets without a ratio row. Arithmetic supplies the
+    ratio, it is recorded as derived, and the derivation runs before the missing-core-row check
+    so the document is not rejected for the row it does not need."""
+    res = km1.extract(make_pdf(tmp_path, DERIVED_TEXT))
+    assert res.ok, res.checks
+    assert res.values["cet1_ratio"] == round(2575.0 / 9141.4 * 100, 2) == 28.17
+    assert res.values["tier1_ratio"] == 28.17
+    assert "cet1_ratio" in res.derived and "tier1_ratio" in res.derived
+    assert res.values["total_capital_ratio"] == 28.3, "a stated ratio is never overwritten"
+    assert "total_capital_ratio" not in res.derived
+
+
+def test_a_derived_ratio_outside_the_plausible_range_is_not_taken(tmp_path):
+    """The same bounds a read value gets. Capital stated in units against RWA in millions would
+    otherwise yield a ratio of nearly nothing, or of thousands."""
+    text = DERIVED_TEXT.replace("2,575.0 2,462.2 2,465.7", "9,000,000.0 9,000,000.0 9,000,000.0")
+    res = km1.extract(make_pdf(tmp_path, text))
+    assert "cet1_ratio" not in res.derived
