@@ -33,6 +33,14 @@
 
 // Profile trends: a small multiple opens its full-size chart in a dialog
 (function(){var d=document.createElement('dialog');d.className='chart-dialog';d.innerHTML='<div class="cd-head"><div><h3></h3><div class="small muted"></div></div><button class="cd-close" aria-label="Close">×</button></div><div class="cd-body"></div><div class="cd-def"></div>';
+  // Clicking the backdrop closes any dialog. The click lands on the dialog element itself, so the
+  // test is whether the point is outside its box; e.detail 0 is a keyboard activation, not a click.
+  document.addEventListener('click',function(e){
+    var dl=e.target.closest&&e.target.closest('dialog');
+    if(!dl||!dl.open||!e.detail)return;
+    var r=dl.getBoundingClientRect();
+    if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dl.close();
+  });
   document.addEventListener('click',function(e){var b=e.target.closest('.sm');if(b){if(!d.isConnected)document.body.appendChild(d);var t=b.querySelector('template');d.querySelector('h3').textContent=b.dataset.title||'';d.querySelector('.cd-head .small').textContent=b.dataset.sub||'';d.querySelector('.cd-body').innerHTML=t?t.innerHTML:'';
       var g=window.tipDef&&window.tipDef(b.dataset.def||'');            // what the measure is, beside the chart of it
       d.querySelector('.cd-def').innerHTML=g?'<b>'+g[1]+'</b> '+g[2]:'';

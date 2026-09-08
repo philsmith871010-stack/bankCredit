@@ -105,22 +105,23 @@ table.coverage th{white-space:nowrap}table.coverage td{vertical-align:middle}
    whole row of white space. */
 /* The section label sits beside its charts, not above them: no group costs a whole row to name
    itself, and no heading floats loose in the middle of one. */
-.sm-flow{display:grid;grid-template-columns:118px minmax(0,1fr);gap:0 18px;align-items:start}
+.sm-flow{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:start}
+.sm-block{display:grid;grid-template-columns:104px minmax(0,1fr);gap:0 12px;align-items:start;
+          flex:0 1 calc(var(--n,1) * 236px + 116px);min-width:min(100%,340px);max-width:100%}
 .sm-sec{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text);
-        padding:13px 0 4px 9px;border-left:2px solid var(--orange);align-self:start;line-height:1.35}
-.sm-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;padding:12px 0}
-.sm-flow>.sm-sec:first-child,.sm-flow>.sm-sec:first-child+.sm-cards{padding-top:2px}
+        padding:2px 0 4px 9px;border-left:2px solid var(--orange);align-self:start;line-height:1.35}
+.sm-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:10px}
 @media(max-width:760px){
-  .sm-flow{grid-template-columns:1fr;gap:0}
-  .sm-sec{border-left:0;padding:14px 0 6px 8px;border-left:2px solid var(--orange)}
-  .sm-cards{padding:0 0 8px}
+  .sm-block{grid-template-columns:1fr;gap:0;min-width:100%}
+  .sm-sec{padding:0 0 6px 8px}
+  .sm-cards{padding-bottom:6px}
 }
 .sm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .sm{display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--white);border:1px solid var(--line);border-radius:10px;padding:10px 12px 6px;font:inherit;color:var(--text);cursor:pointer;min-width:0;transition:box-shadow .15s,border-color .15s}
 .sm:hover,.sm:focus-visible{box-shadow:var(--shadow);border-color:#b9c6d6;outline:none}.sm-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.sm-label{font-size:12.5px;font-weight:600}.sm-val{font-size:18px;font-weight:600}.sm-val small{font-size:11px;font-weight:400;color:var(--muted);margin-left:1px}
-.sm-sub{display:flex;gap:6px;align-items:center;font-size:11px}.delta{font-family:var(--mono,ui-monospace,monospace);font-weight:600;padding:1px 6px;border-radius:999px;font-size:11px}.delta.up{background:#e6f4ea;color:var(--green)}.delta.down{background:#fbe9e7;color:var(--red)}.delta.flat{background:var(--line-soft);color:var(--muted)}
+.sm-sub{display:flex;flex-wrap:wrap;gap:3px 6px;align-items:baseline;font-size:11px;min-height:2.1em}.delta{font-family:var(--mono,ui-monospace,monospace);font-weight:600;padding:1px 6px;border-radius:999px;font-size:11px}.delta.up{background:#e6f4ea;color:var(--green)}.delta.down{background:#fbe9e7;color:var(--red)}.delta.flat{background:var(--line-soft);color:var(--muted)}
 .chart-sm{height:78px;width:100%;margin-top:4px}.chart-sm .axis{font-size:10px;fill:var(--muted)}
-dialog.chart-dialog{border:0;border-radius:14px;padding:0;width:min(820px,94vw);box-shadow:0 24px 60px rgba(10,37,64,.28)}dialog.chart-dialog::backdrop{background:rgba(10,37,64,.45)}
+dialog.chart-dialog{border:0;border-radius:14px;padding:0;width:min(820px,94vw);max-height:88vh;overflow:auto;box-shadow:0 24px 60px rgba(10,37,64,.28)}dialog.chart-dialog::backdrop{background:rgba(10,37,64,.45)}
 .cd-head{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 20px 6px}.cd-head h3{margin:0;font-size:17px}.cd-head .small{margin-top:2px}.cd-close{background:none;border:0;font-size:22px;line-height:1;cursor:pointer;color:var(--muted);padding:4px 8px}.cd-body{padding:6px 20px 18px}.cd-body svg{width:100%;height:auto}
 
 .score-note{margin-top:auto}
@@ -386,7 +387,8 @@ th .i,.uni th .i{margin-left:4px}
 .tip .lead{margin:5px 0 0;font-size:13.5px;font-weight:600;color:#0a2540;line-height:1.45}
 .tip p+p{margin:7px 0 0;color:#4a5764}
 @media (max-width:640px){.tip{font-size:13px}}
-.cd-def{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);font-size:12.5px;line-height:1.55;color:#4a5764;max-width:64ch}
+.cd-def{margin:0 20px 20px;padding-top:14px;border-top:1px solid var(--line-soft);font-size:13px;
+        line-height:1.6;color:#4a5764;max-width:70ch}
 .cd-def:empty{display:none}
 .cd-def b{color:#0a2540}
 .score-card .i,.tile-label.light .i{background:rgba(255,255,255,.2);color:#fff}
@@ -534,3 +536,11 @@ table.uni .sc-n{font-size:14px}
 .dtip i{display:block;font-style:normal;color:rgba(255,255,255,.72);margin-top:3px}
 .dtip em{font-style:normal;color:#fd7e14;font-weight:600}
 .pv-charts [data-tip]{cursor:default}
+
+/* A small multiple opens full size, which nothing on the card said. */
+.sm{position:relative}
+.sm::after{content:"\2922";position:absolute;top:8px;right:9px;font-size:12px;line-height:1;color:#c2ccd8;
+           transition:color .15s}
+.sm:hover::after,.sm:focus-visible::after{color:var(--orange)}
+.sm{cursor:zoom-in}
+.sm .sm-head{padding-right:16px}

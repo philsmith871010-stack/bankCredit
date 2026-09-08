@@ -235,7 +235,8 @@ def page_bank(b, generated):
         standing.append(f'<button class="sm" type="button" data-title="Published score, daily" data-def="score" data-sub="The score as published on each build since snapshots began · {len(snaps)} days" aria-label="Expand published score">'
                         f'<div class="sm-head"><span class="sm-label">Published score</span><span class="sm-val mono">{snaps[-1][1]:.0f}</span></div><div class="sm-sub"><span class="muted">since {c.esc(hist["snapshots"][0][0])}</span></div>{small}<template>{big}</template></button>')
     if standing:
-        charts.append(f'<div class="sm-sec">Standing</div><div class="sm-cards">{"".join(standing)}</div>')
+        charts.append(f'<div class="sm-block" style="--n:{len(standing)}"><div class="sm-sec">Standing</div>'
+                      f'<div class="sm-cards">{"".join(standing)}</div></div>')
         n_charts += len(standing)
     for group, metrics in TREND_GROUPS:
         cards = []
@@ -284,7 +285,9 @@ def page_bank(b, generated):
                          f'<div class="sm-sub">{dchip}<span class="muted">vs {c.esc(data[-2][0])}</span>{vs}</div>{small}<template>{big}</template></button>')
             n_charts += 1
         if cards:
-            charts.append(f'<div class="sm-sec">{group}</div><div class="sm-cards">{"".join(cards)}</div>')
+            # the block asks for room for its own charts, so a section of one can share a row
+            charts.append(f'<div class="sm-block" style="--n:{len(cards)}"><div class="sm-sec">{group}</div>'
+                          f'<div class="sm-cards">{"".join(cards)}</div></div>')
     ratings_rows = "".join(f'<tr><td>{c.esc(r["agency"])}</td><td class="muted">{c.esc(r["type"].replace("_", " "))} · {c.esc(r["horizon"])}</td><td class="mono b">{c.esc(r["value"])}</td><td class="muted">{c.esc(r["outlook"])}</td><td class="mono muted">{c.esc(r["date"])}</td></tr>' for r in b["ratings_all"])
     ratings_html = f'<table class="plain"><thead><tr><th>Agency</th><th>Type</th><th>Rating</th><th>Outlook</th><th>Date</th></tr></thead><tbody>{ratings_rows}</tbody></table><div class="note">Source: ESMA European Rating Platform, checked daily. Symbols shown with agency attribution; histories are not redistributed.</div>' if ratings_rows else '<div class="empty">No issuer-level ratings found in the ESMA register for this entity.</div>'
     mp = b["market_public"]
