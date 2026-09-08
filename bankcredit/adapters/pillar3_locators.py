@@ -80,7 +80,14 @@ LOCATORS: list[dict] = [
     dict(entity="clydesdale-bank", page="https://www.virginmoneyukplc.com/investor-relations/results-and-reporting/financial-results/",
          match=r"downloads/pdf/(cbplc|clydesdale).*" + P3 + r".*\.pdf", year_end="09-30"),
     dict(entity="tsb", page="https://www.tsb.co.uk/investors/regulatory-news-service.html",
-         match=r"tsb-public/.*" + P3 + r".*\.pdf", exclude=r"quarterly", note="quarterly documents carry OV1 and LCR only, no KM1"),
+         match=r"tsb-public/.*" + P3 + r".*\.pdf", exclude=r"quarterly",
+         note="the quarterly disclosures carry OV1 and LCR only, so no capital ratio comes from them"),
+    dict(entity="tsb", page="https://www.tsb.co.uk/investors/debt-investors.html",
+         match=r"financial-results-and-reports/\d{4}/TSB-Bank-ARA-\d{4}\.pdf", exclude=r"Banking-Group",
+         note="TSB publishes no KM1 anywhere. Its capital ratio is stated in the annual report's "
+              "narrative - 16.7% at December 2025 - so the report is collected for the reviewer to "
+              "read rather than left looking like a collection failure. TSB Bank plc is the entity "
+              "we assess; TSB Banking Group is its parent"),
     dict(entity="co-operative-bank", page="https://www.co-operativebank.co.uk/about-us/investor-relations/financial-results/",
          match=r"investorrelations/.*" + P3 + r".*\.pdf"),
     dict(entity="metro-bank", page="https://www.metrobankonline.co.uk/investor-relations/",
@@ -191,8 +198,12 @@ LOCATORS: list[dict] = [
                "https://www.td.com/content/dam/tdcom/canada/about-td/pdf/quarterly-results/{year}/q{q}/{year}-q{q}-supp-regulatory-disclosure-en.pdf"]),
     dict(entity="scotiabank", kind="pattern", year_end="10-31", currency="CAD",
          urls=["https://www.scotiabank.com/content/dam/scotiabank/corporate/quarterly-reports/{year}/q{q}/Q{q}{yy}_Supplementary_Regulatory_Capital_Disclosures-EN.pdf"]),
-    dict(entity="bmo", kind="pattern", urls=["https://www.bmo.com/ir/qtrinfo/1/{year}-q{q}/SuppRegCapitalDisclosure_Q{q}{yy}.pdf"],
-         year_end="10-31", currency="CAD", note="bmo.com drops connections from data-centre addresses; works from the Mac"),
+    dict(entity="bmo", page="https://www.bmo.com/main/about-bmo/investor-relations/regulatory-disclosure/",
+         match=r"/ir/qtrinfo/\d+/\d{4}-q\d/RegSupp[^/]*\.pdf", year_end="10-31", currency="CAD",
+         kind="browser",
+         note="the file was renamed from SuppRegCapitalDisclosure_Q{q}{yy} to RegSuppQ{q}{yy}, so the "
+              "URL template stopped resolving and nothing said so. bmo.com refuses the collector's "
+              "own user agent but serves a browser one, so the browser pass gets it without Chromium"),
     dict(entity="cibc", kind="pattern", year_end="10-31", currency="CAD",
          urls=["https://www.cibc.com/content/dam/cibc-public-assets/about-cibc/investor-relations/pdfs/quarterly-results/{year}/q{q}{yy}disclosure-en.pdf"]),
     dict(entity="national-bank-of-canada", page="https://www.nbc.ca/about-us/investors/quarterly-results.html",
@@ -210,8 +221,11 @@ LOCATORS: list[dict] = [
     dict(entity="smfg", page="https://www.smfg.co.jp/english/investor/financial/basel_3.html",
          match=r"/basel_3/\d+/\d+_fg_e_km101\.pdf", year_end="03-31", currency="JPY",
          note="km101 is KM1 capital metrics; km102 is the liquidity half"),
-    dict(entity="mizuho", page="https://www.mizuhogroup.com/investors/financial-information/basel", kind="browser",
-         match=r"basel.*\.pdf|pillar", year_end="03-31", currency="JPY", note="listing is script-rendered"),
+    dict(entity="mizuho", page="https://www.mizuhogroup.com/investors/financial-information/basel",
+         match=r"_fg_\dq0?1\.pdf", exclude=r"_bk_|_tb_", year_end="03-31", currency="JPY",
+         note="the Basel index links a capital-data page per fiscal year and the tables are one PDF "
+              "each on a CDN: _fg_ is the financial group, _bk_ the bank, _tb_ the trust bank, and "
+              "q01 is KM1 while q02 is CC1 composition"),
     dict(entity="sumitomo-mitsui-trust", page="https://www.smtg.jp/english/investors/report/basel",
          match=r"/basel/\d{4}/e\d{4}_tg_km01\.pdf", year_end="03-31", currency="JPY", kind="browser",
          note="smth.jp is not the group's domain. The Basel page lists one file per table and per "

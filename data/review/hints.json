@@ -1696,5 +1696,23 @@
    },
    "method": "pdf_manual"
   }
+ },
+ "mizuho": {
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 11110077.0,
+    "tier1_capital": 13107941.0,
+    "total_capital": 14590739.0,
+    "rwa": 82213789.0,
+    "cet1_ratio": 13.51,
+    "tier1_ratio": 15.94,
+    "total_capital_ratio": 17.74,
+    "combined_buffer": 3.63,
+    "cet1_headroom": 9.01,
+    "leverage_ratio": 4.86
+   },
+   "method": "pdf_rules"
+  }
  }
 }
