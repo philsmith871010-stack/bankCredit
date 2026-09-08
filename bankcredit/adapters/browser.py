@@ -32,10 +32,27 @@ from .pillar3_locators import LOCATORS
 
 log = logging.getLogger("bankcredit.browser")
 
+def _encodings() -> str:
+    """Only ask for what this interpreter can actually decode. A CDN offered brotli will send it,
+    and without a decoder the body comes back as bytes that read as a page with no links in it:
+    not blocked, not empty, just silently useless."""
+    codecs = ["gzip", "deflate"]
+    try:
+        import brotli  # noqa: F401
+        codecs.append("br")
+    except ImportError:
+        try:
+            import brotlicffi  # noqa: F401
+            codecs.append("br")
+        except ImportError:
+            log.debug("no brotli decoder; not advertising br")
+    return ", ".join(codecs)
+
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-    "Accept-Language": "en-GB,en;q=0.9", "Accept-Encoding": "gzip, deflate, br", "Upgrade-Insecure-Requests": "1",
+    "Accept-Language": "en-GB,en;q=0.9", "Accept-Encoding": _encodings(), "Upgrade-Insecure-Requests": "1",
     "Sec-Fetch-Dest": "document", "Sec-Fetch-Mode": "navigate", "Sec-Fetch-Site": "none", "Sec-Fetch-User": "?1",
     "Cache-Control": "max-age=0",
 }
@@ -45,7 +62,10 @@ PROFILE = store.DATA / "cache" / "browser-profile"
 
 
 def looks_blocked(status: int, body: str) -> bool:
-    return status != 200 or len(body) < 1500 or bool(CHALLENGE.search(body[:20000]))
+    if status != 200 or len(body) < 1500 or CHALLENGE.search(body[:20000]):
+        return True
+    # a body that decoded to noise (wrong content encoding) is not a page, whatever its length
+    return not re.search(r"<(?:html|head|body|div|a|script)\b", body[:20000], re.I)
 
 
 GENERIC = re.compile(r"pillar[-_ %]?(?:3|iii)|basel[-_ %]?(?:3|iii).*disclos", re.I)
@@ -378,17 +398,23 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
         if remembered and remembered != loc["page"]:
             loc = dict(loc, page=remembered, _fallback_page=loc["page"])     # go straight to the page that worked last time
         body, links, via = "", [], "request"
+        plain_docs = rendered_docs = None      # how many document links each route offered, for the report
         try:
             r = session.get(loc["page"], timeout=60)
             if not looks_blocked(r.status_code, r.text):
                 body = r.text
+                plain_docs = document_links(body, links, ad, loc["page"])
         except requests.RequestException as exc:
             log.info("browser: %s plain request failed (%s)", ent, exc)
         # a page that answers but offers no documents at all is a script shell or a soft challenge: render it
-        if (not body or document_links(body, links, ad, loc["page"]) == 0) and use_pw:
+        if not plain_docs and use_pw:
             status, rbody, rlinks = browser.listing(loc["page"])
-            if not looks_blocked(status, rbody) and (not body or document_links(rbody, rlinks, ad, loc["page"]) > 0):
-                body, links, via = rbody, rlinks, "playwright"
+            if not looks_blocked(status, rbody):
+                rendered_docs = document_links(rbody, rlinks, ad, loc["page"])
+                # only take the rendered page if it is actually better; a render that loses the
+                # page's links must never replace a plain body that had them
+                if rendered_docs > (plain_docs or 0):
+                    body, links, via = rbody, rlinks, "playwright"
         if not body:
             out[ent] = "blocked" if (use_pw and not browser.error) else "blocked (no Playwright)"
             print(f"      {out[ent]}", flush=True)
@@ -428,7 +454,13 @@ def collect(entity_ids: list[str] | None = None, max_new: int = MAX_NEW_PER_ENTI
                     break
         cands = [c for c in allc if c[0] not in ad.seen][:max_new]
         if not cands:
-            out[ent] = "nothing new" if allc else "no matching links (see data/review/browser-links.json)"
+            if allc:
+                out[ent] = "nothing new"
+            else:
+                seen_by = f"plain {plain_docs if plain_docs is not None else 'blocked'}"
+                if rendered_docs is not None:
+                    seen_by += f", rendered {rendered_docs}"
+                out[ent] = f"no matching links ({seen_by} document links; see data/review/browser-links.json)"
             print(f"      {out[ent]}", flush=True)
             continue
         n = 0

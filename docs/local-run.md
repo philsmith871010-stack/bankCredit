@@ -29,6 +29,14 @@ The job runs weekdays at 07:30 local time (edit the plist to change it). Run it
 by hand any time with `scripts/mac/counterparty.sh`; the log is
 `data/cache/local-run.log`.
 
+Only one run works the queue at a time: the script takes `data/cache/run.lock`
+and a second run exits rather than answering the same items twice. Before
+working the queue by hand, check whether the scheduled run holds it:
+
+```bash
+ls -d ~/Counterparty/data/cache/run.lock 2>/dev/null && echo "a scheduled run is working the queue"
+```
+
 ## What a run does
 
 | Step | Command | Notes |

@@ -13,6 +13,17 @@ LOG="$REPO/data/cache/local-run.log"
 cd "$REPO"
 mkdir -p data/cache
 exec >>"$LOG" 2>&1
+# One run at a time. Two sessions working the review queue at once answer the same items
+# twice and can write over each other's answers, so take a lock for the whole run and release
+# it however the run ends. mkdir is the atomic primitive here; macOS has no flock(1).
+# Before working the queue by hand, check whether a scheduled run holds it:
+#   ls -d ~/Counterparty/data/cache/run.lock 2>/dev/null && echo "a scheduled run is working the queue"
+LOCK="$REPO/data/cache/run.lock"
+if ! mkdir "$LOCK" 2>/dev/null; then
+  echo "==== $(date -u +%FT%TZ) skipped: another run holds $LOCK (delete it if no run is live)"
+  exit 0
+fi
+trap 'rmdir "$LOCK" 2>/dev/null || true' EXIT INT TERM
 echo "==== $(date -u +%FT%TZ) start"
 git checkout -- data/json 2>/dev/null || true   # built JSON: the runner's copy wins
 git pull --ff-only

@@ -96,9 +96,11 @@ LOCATORS: list[dict] = [
          match=r"getmedia/[0-9a-f-]+/(?:SMBC[ _-]?BI[^/]*Pillar[ _-]?3|Pillar[ _-]?3[^/]*SMBC[ _-]?BI)[^/]*\.pdf",
          exclude=r"SMBCE|Nikko|SMBC[ _-]?EU|SMBCDP", year_end="03-31",
          note="one EMEA notices page carries every SMBC entity; SMBC-BI marks the UK plc"),
-    dict(entity="credit-agricole-cib", page="https://www.ca-cib.com/en/document-search",
-         match=r"sites/default/files/[0-9-]+/(?:EN_)?Pil(?:ier|lar)[ _]3[ _]CACIB[^/]*\.pdf", kind="browser",
-         note="document list is rendered client side; the PDFs themselves are plain static files"),
+    dict(entity="credit-agricole-cib", page="https://www.ca-cib.com/en/document-search?keyword=pilier%203",
+         match=r"sites/default/files/[0-9-]+/(?:EN_)?Pil(?:ier|lar)[ _]3[ _]CACIB[^/]*\.pdf", exclude=r"UAE|Onshore",
+         note="the default document list is rendered client side and carries no Pillar 3; the keyword query "
+              "is served whole. Quarterlies are financial reviews with OV1 and EU-LIQ1 but no KM1; the "
+              "half-year carries the capital position as a simplified table, so it needs the reviewer"),
     dict(entity="nbk-international", page="https://www.nbk.com/london/disclosures.html",
          match=r"dam/jcr:[0-9a-f-]+/Pillar_III_Disclosures\.pdf",
          note="single stable URL replaced in place each year; the group's Basel III files on the Kuwait investor page are a different entity"),

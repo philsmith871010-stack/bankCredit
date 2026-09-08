@@ -12,11 +12,14 @@ on the user's subscription, no API key) can work through it offline:
 from __future__ import annotations
 
 import json
+import logging
 from datetime import date, datetime
 from pathlib import Path
 
 from . import learn, store
 from .models import Fact
+
+log = logging.getLogger("bankcredit.review")
 
 QUEUE = store.DATA / "review" / "queue.json"
 RESOLVED = store.DATA / "review" / "resolved"
@@ -32,9 +35,16 @@ def save(items: list[dict]) -> None:
 
 
 def add(item: dict) -> bool:
-    """Queue an item keyed on its id; returns False if already queued."""
+    """Queue an item keyed on its id; returns False if already queued or already answered.
+
+    The id is the document's content hash, so an answer under that id was written against these
+    exact bytes and stays true. Without this check a document whose extraction still fails the
+    rules comes back to the reviewer on every collection run, for ever; a document republished
+    with different bytes hashes differently and is queued as the new document it is."""
     items = load()
     if any(i["id"] == item["id"] for i in items):
+        return False
+    if (RESOLVED / f"{item['id']}.json").exists():
         return False
     item.setdefault("status", "open")
     item.setdefault("created", datetime.utcnow().isoformat(timespec="seconds"))
@@ -60,7 +70,16 @@ def ingest() -> int:
     by_id = {i["id"]: i for i in items}
     written = 0
     for f in sorted(RESOLVED.glob("*.json")):
-        ans = json.loads(f.read_text())
+        try:
+            ans = json.loads(f.read_text())
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            # a half-written answer must not take the other 140 down with it: an ingest that
+            # aborts here leaves every later answer unloaded and says nothing about which file
+            log.warning("review: %s is not readable (%s); skipped", f.name, exc)
+            continue
+        if not isinstance(ans, dict):
+            log.warning("review: %s is not an answer object; skipped", f.name)
+            continue
         item = by_id.get(ans.get("id") or f.stem)
         learn.record_answer(item, ans)          # hints for next time, and a record of how the rules did
         if ans.get("skip"):

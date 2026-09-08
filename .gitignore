@@ -5,3 +5,4 @@ __pycache__/
 data/cache/
 *.log
 data/bond_quotes.parquet
+data/cache/run.lock*
