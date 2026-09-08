@@ -1,9 +1,9 @@
 {
  "generated": "2026-09-08",
  "counts": {
-  "ok": 111,
+  "ok": 113,
   "overdue": 11,
-  "never": 25,
+  "never": 23,
   "no source": 2,
   "by design": 3
  },
@@ -58,20 +58,6 @@
    "locators": 1,
    "kinds": [
     "pattern"
-   ],
-   "documents": 0,
-   "capital_as_of": null,
-   "age_days": null,
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
-   "entity": "emirates-nbd",
-   "short": "Emirates NBD",
-   "region": "gulf",
-   "locators": 1,
-   "kinds": [
-    "browser"
    ],
    "documents": 0,
    "capital_as_of": null,
@@ -332,20 +318,6 @@
    "state": "never"
   },
   {
-   "entity": "uob",
-   "short": "UOB",
-   "region": "asia",
-   "locators": 1,
-   "kinds": [
-    "browser"
-   ],
-   "documents": 0,
-   "capital_as_of": null,
-   "age_days": null,
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
    "entity": "west-brom-bs",
    "short": "West Brom BS",
    "region": "uk",
@@ -579,7 +551,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 16,
+   "documents": 13,
    "capital_as_of": "2018-06-30",
    "age_days": 2992,
    "capital_sources": [
@@ -853,7 +825,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 48,
+   "documents": 45,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -929,7 +901,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 9,
+   "documents": 6,
    "capital_as_of": "2026-03-31",
    "age_days": 161,
    "capital_sources": [
@@ -1212,6 +1184,22 @@
    "state": "ok"
   },
   {
+   "entity": "emirates-nbd",
+   "short": "Emirates NBD",
+   "region": "gulf",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 3,
+   "capital_as_of": "2026-06-30",
+   "age_days": 70,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
    "entity": "erste-group",
    "short": "Erste Group",
    "region": "eu",
@@ -1329,7 +1317,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 15,
+   "documents": 12,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1610,7 +1598,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 51,
+   "documents": 48,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -1626,7 +1614,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 44,
+   "documents": 42,
    "capital_as_of": "2026-07-31",
    "age_days": 39,
    "capital_sources": [
@@ -1830,7 +1818,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 18,
+   "documents": 15,
    "capital_as_of": "2026-06-30",
    "age_days": 70,
    "capital_sources": [
@@ -2050,7 +2038,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 15,
+   "documents": 12,
    "capital_as_of": "2025-12-31",
    "age_days": 251,
    "capital_sources": [
@@ -2114,7 +2102,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 9,
+   "documents": 6,
    "capital_as_of": "2026-03-31",
    "age_days": 161,
    "capital_sources": [
@@ -2242,6 +2230,22 @@
    "capital_sources": [
     "eba",
     "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "uob",
+   "short": "UOB",
+   "region": "asia",
+   "locators": 1,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 3,
+   "capital_as_of": "2026-03-31",
+   "age_days": 161,
+   "capital_sources": [
+    "pillar3"
    ],
    "state": "ok"
   },

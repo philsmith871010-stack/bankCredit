@@ -212,8 +212,11 @@ LOCATORS: list[dict] = [
          note="km101 is KM1 capital metrics; km102 is the liquidity half"),
     dict(entity="mizuho", page="https://www.mizuhogroup.com/investors/financial-information/basel", kind="browser",
          match=r"basel.*\.pdf|pillar", year_end="03-31", currency="JPY", note="listing is script-rendered"),
-    dict(entity="sumitomo-mitsui-trust", page="https://www.smth.jp/en/investors/financial_info/index.html", kind="browser",
-         match=r"basel|pillar", year_end="03-31", currency="JPY"),
+    dict(entity="sumitomo-mitsui-trust", page="https://www.smtg.jp/english/investors/report/basel",
+         match=r"/basel/\d{4}/e\d{4}_tg_km01\.pdf", year_end="03-31", currency="JPY", kind="browser",
+         note="smth.jp is not the group's domain. The Basel page lists one file per table and per "
+              "entity: _tg_ is the group, _hd_ the holding company, _bkc_ and _bkn_ the bank "
+              "consolidated and non-consolidated. Files answer 403 to a script"),
     dict(entity="hsbc-hong-kong", page="https://www.hsbc.com.hk/legal/regulatory-disclosures/",
          match=r"banking-disclosure-statement-[a-z]+-20\d\d\.pdf", currency="HKD",
          note="Hong Kong files a Banking Disclosure Statement rather than a Pillar 3 report"),
@@ -227,9 +230,16 @@ LOCATORS: list[dict] = [
     dict(entity="ocbc", page="https://www.ocbc.com/group/investors/investor-information.page",
          match=r"capital-and-regulatory-disclosures/pillar-3/20\d\d/", currency="SGD",
          note="verified 7 Sep 2026: the investor-information page lists every Pillar 3 PDF by year"),
-    dict(entity="uob", page="https://www.uobgroup.com/investor-relations/financial/index.page", match=P3 + r".*\.pdf", currency="SGD", kind="browser"),
+    dict(entity="uob", kind="pattern", currency="SGD",
+         urls=["https://www.uobgroup.com/investor-relations/assets/pdfs/investor/financial/{year}/"
+               "regulatory-disclosures-pillar-3-disclosures-{q}q-{year}.pdf"],
+         note="the results page is rendered client side; the files themselves are at a stable address"),
     dict(entity="first-abu-dhabi-bank", page="https://www.bankfab.com/en-ae/about-fab/investor-relations", match=r"(basel|pillar).*\.pdf", currency="AED", kind="browser"),
-    dict(entity="emirates-nbd", page="https://www.emiratesnbd.com/en/investor-relations/basel-iii-pillar-3", match=r"(basel|pillar).*\.pdf", currency="AED", kind="browser"),
+    dict(entity="emirates-nbd", page="https://www.emiratesnbd.com/en/investor-relations",
+         match=r"pillar[_ -]?iii[_ -]?disclosures?[^/]*|pillar_iii_disclosure[^/]*", exclude=r"/ar/",
+         currency="AED",
+         note="files sit on cdn.emiratesnbd.com under three different paths over the years; the "
+              "investor relations page links them all"),
     dict(entity="adcb", page="https://www.adcb.com/en/about-us/investor-relations/basel-iii/", match=r"(basel|pillar).*\.pdf", currency="AED", kind="browser"),
     dict(entity="qnb", page="https://www.qnb.com/sites/qnb/qnbglobal/page/en/eninvestorrelations.html", match=r"(basel|pillar).*\.pdf", currency="QAR", kind="browser"),
 ]

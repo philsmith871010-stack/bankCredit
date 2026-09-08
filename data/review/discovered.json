@@ -910,5 +910,270 @@
     "from": "https://www.smbcgroup.com/emea/about/Notices-and-reporting"
    }
   ]
+ },
+ "west-brom-bs": {
+  "pages_read": [
+   "https://www.westbrom.co.uk/about-us/investor-relations",
+   "https://www.westbrom.co.uk/about-us/financial-information",
+   "https://www.westbrom.co.uk/about-us/corporate-governance",
+   "https://www.westbrom.co.uk/about-us/corporate-governance/modern-slavery-and-human-trafficking-statement"
+  ],
+  "found": []
+ },
+ "emirates-nbd": {
+  "pages_read": [
+   "https://www.emiratesnbd.com/en/investor-relations",
+   "https://www.emiratesnbd.com/ar/investor-relations",
+   "https://www.emiratesnbd.com/en/%20%20%20%20%20/en/about-emirates-nbd/corporate-governance",
+   "https://www.emiratesnbd.com/en/%20%20%20%20%20/en/investor-relations",
+   "https://www.emiratesnbd.com/en/investor-relations?source=quick-search",
+   "https://www.emiratesnbd.com/en/help-and-support/financial-benefits-on-your-card",
+   "https://www.emiratesnbd.com/en/business-banking/working-capital"
+  ],
+  "found": [
+   {
+    "url": "http://cdn.emiratesnbd.com/enbd/files/pdf/ir/emiratesnbd_pillariii_disclosures_2026_q2.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://cdn.emiratesnbd.com/en/assets/File/ir/quarterly/2023/pillar_iii_disclosure_2023_quarter.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://cdn.emiratesnbd.com/en/assets/File/ir/quarterly/2023/pillar_iii_disclosure_2023_second_quarter.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://cdn.emiratesnbd.com/en/assets/File/ir/quarterly/2023/pillar_iii_disclosure_2023_third_quarter.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://cdn.emiratesnbd.com/en/assets/File/ir/quarterly/2024/pillar_iii_disclosure_2024_quarter.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://cdn.emiratesnbd.com/en/assets/File/ir/quarterly/2024/pillar_iii_disclosure_2024_quarter2.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://cdn.emiratesnbd.com/en/assets/file/ir/quarterly/2024/pillar_iii_disclosure_2024_quarter3.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://cdn.emiratesnbd.com/en/assets/ir/quarterly/2023/pillar_iii_disclosure_2023_fourth_quarter.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://cdn.emiratesnbd.com/en/assets/ir/quarterly/2024/pillar_iii_disclosure_2024_fourth_quarter.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/-/media/enbd/files/investor-relations/common-pdf/emiratesnbd_pillariii_disclosures_2025.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/-/media/enbd/files/investor-relations/common-pdf/emiratesnbd_pillariii_disclosures_2025_q2.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/-/media/enbd/files/investor-relations/common-pdf/emiratesnbd_pillariii_disclosures_2025_q3.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/-/media/enbd/files/investor-relations/common-pdf/emiratesnbd_pillariii_disclosures_2025_q4.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/-/media/enbd/files/investor-relations/financial-information/quarterly-results/2022/pillar_iii_disclosure_2022_quarter.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/-/media/enbd/files/investor-relations/financial-information/quarterly-results/2022/pillar_iii_disclosure_2022_quarter_2.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/-/media/enbd/files/investor-relations/financial-information/quarterly-results/2022/pillar_iii_disclosure_2022_quarter_3.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/-/media/enbd/files/investor-relations/financial-information/quarterly-results/2022/pillar_iii_disclosure_2022_quarter_4.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/ar/-/media/enbd/files/investor-relations/common-pdf/emiratesnbd_pillariii_disclosures_2026_q1.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/ar/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/en/-/media/enbd/files/investor-relations/common-pdf/emiratesnbd_pillariii_disclosures_2026_q1.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   },
+   {
+    "url": "https://www.emiratesnbd.com/media/enbd/files/investor-relations/common-pdf/emiratesnbd_pillariii_disclosures_2026_q1.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.emiratesnbd.com/en/investor-relations"
+   }
+  ]
+ },
+ "newcastle-bs": {
+  "pages_read": [],
+  "found": []
+ },
+ "al-rayan-bank": {
+  "pages_read": [],
+  "found": []
+ },
+ "goldman-sachs-international-bank": {
+  "pages_read": [
+   "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info",
+   "https://www.goldmansachs.com/investor-relations/financials",
+   "https://www.goldmansachs.com/insights/reports",
+   "https://www.goldmansachs.com/investor-relations",
+   "https://www.goldmansachs.com/pressroom/press-releases/2026/2026-07-14-q2-results",
+   "https://www.goldmansachs.com/investor-relations/presentations/2026/broadcast-second-quarter-2026",
+   "https://www.goldmansachs.com/investor-relations/corporate-governance"
+  ],
+  "found": []
+ },
+ "uob": {
+  "pages_read": [],
+  "found": []
+ },
+ "sumitomo-mitsui-trust": {
+  "pages_read": [],
+  "found": []
+ },
+ "tsb": {
+  "pages_read": [
+   "https://www.tsb.co.uk/investors",
+   "https://www.tsb.co.uk/investors.html",
+   "https://www.tsb.co.uk/investors/our-people.html",
+   "https://www.tsb.co.uk/investors/regulatory-news-service.html",
+   "https://www.tsb.co.uk/investors/results-reports.html",
+   "https://www.tsb.co.uk/investors/our-branches.html",
+   "https://www.tsb.co.uk/investors/debt-investors.html"
+  ],
+  "found": [
+   {
+    "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2014/TSB-Pillar-3-2014,0.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.tsb.co.uk/investors/results-reports.html"
+   },
+   {
+    "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2017/tsb-banking-group-annual-report-2017.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.tsb.co.uk/investors/results-reports.html"
+   },
+   {
+    "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/Q1-2024-Pillar3-Quarterly-Disclosure-Final.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.tsb.co.uk/investors/regulatory-news-service.html"
+   },
+   {
+    "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/Q1-2026-Pillar-3-Quarterly-Disclosure.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.tsb.co.uk/investors/regulatory-news-service.html"
+   },
+   {
+    "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/Q3-2023-Pillar-3-Quarterly-Disclosure.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.tsb.co.uk/investors/regulatory-news-service.html"
+   },
+   {
+    "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/Q3-2025-Pillar-3-Quarterly-Disclosure.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.tsb.co.uk/investors/regulatory-news-service.html"
+   },
+   {
+    "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/q1-2025-pillar-3-quarterly-disclosure-final.pdf",
+    "text": "",
+    "pdf": true,
+    "from": "https://www.tsb.co.uk/investors/regulatory-news-service.html"
+   }
+  ]
+ },
+ "leek-bs": {
+  "pages_read": [],
+  "found": []
+ },
+ "saffron-bs": {
+  "pages_read": [],
+  "found": []
+ },
+ "handelsbanken-plc": {
+  "pages_read": [
+   "https://www.handelsbanken.co.uk/en/about-us",
+   "https://www.handelsbanken.co.uk/en/about-us/corporate-governance",
+   "https://www.handelsbanken.co.uk/en/about-us/investor-relations"
+  ],
+  "found": []
+ },
+ "suffolk-bs": {
+  "pages_read": [],
+  "found": []
+ },
+ "progressive-bs": {
+  "pages_read": [
+   "https://theprogressive.com/document-hub",
+   "https://theprogressive.com/about-us/governance-and-finance",
+   "https://theprogressive.com/search-results"
+  ],
+  "found": []
+ },
+ "hinckley-and-rugby-bs": {
+  "pages_read": [
+   "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
+   "https://www.hrbs.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2Fthe-society%2Fgovernance%2Fannual-report-account-summary%2F",
+   "https://www.hrbs.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2Fthe-society%2Fgovernance%2Fannual-report-account-summary%2F&format=xml",
+   "https://www.hrbs.co.uk/savings/existing-customers/important-account-information/financial-services-compensation-scheme/",
+   "https://www.hrbs.co.uk/the-society/governance/directors-people/",
+   "https://www.hrbs.co.uk/the-society/governance/committees/",
+   "https://www.hrbs.co.uk/the-society/governance/"
+  ],
+  "found": []
  }
 }

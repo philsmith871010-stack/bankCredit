@@ -1611,5 +1611,55 @@
    },
    "method": "pdf_manual"
   }
+ },
+ "emirates-nbd": {
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 132450.0,
+    "tier1_capital": 141579.0,
+    "total_capital": 152709.0,
+    "rwa": 977445.0,
+    "cet1_ratio": 13.55,
+    "tier1_ratio": 14.48,
+    "total_capital_ratio": 15.62,
+    "combined_buffer": 4.16,
+    "cet1_headroom": 5.12,
+    "leverage_exposure": 1472773.0,
+    "leverage_ratio": 9.61,
+    "hqla": 238099.0,
+    "net_cash_outflows": 161042.0,
+    "lcr": 147.85,
+    "available_stable_funding": 855559.0,
+    "required_stable_funding": 718296.0,
+    "nsfr": 119.11
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "uob": {
+  "last_verified": {
+   "reference_date": "2026-03-31",
+   "values": {
+    "cet1_capital": 42730.0,
+    "tier1_capital": 46179.0,
+    "total_capital": 49712.0,
+    "rwa": 278459.0,
+    "cet1_ratio": 15.3,
+    "tier1_ratio": 16.6,
+    "total_capital_ratio": 17.9,
+    "combined_buffer": 2.7,
+    "cet1_headroom": 7.9,
+    "leverage_exposure": 660597.0,
+    "leverage_ratio": 7.0,
+    "hqla": 108543.0,
+    "net_cash_outflows": 75341.0,
+    "lcr": 144.0,
+    "available_stable_funding": 359170.0,
+    "required_stable_funding": 312348.0,
+    "nsfr": 115.0
+   },
+   "method": "pdf_rules"
+  }
  }
 }
