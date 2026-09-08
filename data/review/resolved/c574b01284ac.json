@@ -1,0 +1,22 @@
+{
+ "id": "c574b01284ac",
+ "entity_id": "standard-chartered-hk",
+ "url": "https://vpr.hkma.gov.hk/statics/assets/doc/100269/fd_int/fd_int_0323_eng.pdf",
+ "page": 4,
+ "reference_date": "2023-03-31",
+ "currency": "HKD",
+ "values": {
+  "cet1_capital": 143900.0,
+  "tier1_capital": 164583.0,
+  "total_capital": 178391.0,
+  "rwa": 867207.0,
+  "cet1_ratio": 16.6,
+  "tier1_ratio": 19.0,
+  "total_capital_ratio": 20.6,
+  "leverage_exposure": 2620875.0,
+  "leverage_ratio": 6.3,
+  "lcr": 176.0,
+  "nsfr": 133.0
+ },
+ "note": "Standard Chartered Bank (Hong Kong) Limited's HKMA banking disclosure statement, template KM1 'Key prudential ratios' on p.4. Five columns running back from 31 March 2023; column (a) is taken. Amounts are HK$ millions. The extractor's error - cet1_ratio 5.00 against an implied 16.59 - comes from the PDF inserting a space inside every percentage, so the ratio rows read as '16. 6%' rather than '16.6%'. The parser took the fragment before the space and landed on a wrong row; the printed ratios are CET1 16.6%, Tier 1 19.0% and total capital 20.6%, and the capital amounts it read are correct. Leverage 6.3% with a 2,620,875 exposure measure is row 14, LCR 176% row 17 and NSFR 133% row 20 - the bank is a category 1 institution, so the LMR and CFR alternatives are NA. Check: 143,900/867,207 = 16.59% and 178,391/867,207 = 20.57%, both matching the published 16.6% and 20.6%."
+}

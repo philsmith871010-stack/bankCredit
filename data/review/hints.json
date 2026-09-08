@@ -1590,5 +1590,26 @@
   "browser_page_found": "2026-09-08",
   "page": 3,
   "currency": "GBP"
+ },
+ "standard-chartered-hk": {
+  "page": 4,
+  "currency": "HKD",
+  "last_verified": {
+   "reference_date": "2023-03-31",
+   "values": {
+    "cet1_capital": 143900.0,
+    "tier1_capital": 164583.0,
+    "total_capital": 178391.0,
+    "rwa": 867207.0,
+    "cet1_ratio": 16.6,
+    "tier1_ratio": 19.0,
+    "total_capital_ratio": 20.6,
+    "leverage_exposure": 2620875.0,
+    "leverage_ratio": 6.3,
+    "lcr": 176.0,
+    "nsfr": 133.0
+   },
+   "method": "pdf_manual"
+  }
  }
 }
