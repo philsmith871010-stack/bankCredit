@@ -114,3 +114,17 @@ def test_a_file_name_with_spaces_survives_the_link_scrape():
     body = '<a href="/misc/Pillar 3 Disclosures.pdf">Pillar 3 Disclosures</a>'
     links = ad._links("https://www.ocbc.com/group/investors/", body)
     assert any(u.endswith("Pillar%203%20Disclosures.pdf") for u in links), links
+
+
+def test_a_cdn_beacon_in_the_page_is_not_a_bot_wall():
+    """Lloyds embeds an Akamai RUM beacon, so its own hostname appears in every page it serves.
+    Matching the bare vendor name threw away a complete listing of 129 Pillar 3 PDFs, and did it
+    for four entities at once while reporting them as blocked by the site."""
+    served = ('<html><head><script src="//d5pa4qqxiapik2u7zmsq-f-80e443ce0-clientnsv4-s.akamaihd.net/rum.js">'
+              '</script></head><body>' + "financial performance " * 400 + "</body></html>")
+    assert not B.looks_blocked(200, served)
+
+
+def test_an_akamai_deny_page_is_still_a_bot_wall():
+    denied = "<html><body><h1>Access Denied</h1><p>Reference #18.4c2ff17.1788854987.abcdef</p></body></html>" + " " * 3000
+    assert B.looks_blocked(200, denied)

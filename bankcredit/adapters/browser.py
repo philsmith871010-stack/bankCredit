@@ -56,7 +56,13 @@ HEADERS = {
     "Sec-Fetch-Dest": "document", "Sec-Fetch-Mode": "navigate", "Sec-Fetch-Site": "none", "Sec-Fetch-User": "?1",
     "Cache-Control": "max-age=0",
 }
-CHALLENGE = re.compile(r"just a moment|cf-chl|challenge-platform|access denied|request unsuccessful|incapsula|akamai|"
+# What a bot wall says, not what a page happens to load. A bare "akamai" matched the hostname of
+# the akamaihd.net beacon script embedded in Lloyds' own pages, so a complete three-megabyte
+# listing carrying 129 Pillar 3 PDFs was thrown away as blocked, for four entities at once.
+# Akamai's deny page is recognised by its own wording instead: "Access Denied" and a reference
+# number. Every token here has to be something a served page would not otherwise contain.
+CHALLENGE = re.compile(r"just a moment|cf-chl|challenge-platform|access denied|request unsuccessful|"
+                       r"incapsula|reference\s*#\s*\d{6}|akamai (?:bot|security)|"
                        r"bot detection|verify you are human|enable javascript and cookies", re.I)
 PROFILE = store.DATA / "cache" / "browser-profile"
 
