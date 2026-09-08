@@ -1,7 +1,10 @@
 // My policy: the user's approved counterparties and tenors, kept in this browser (or carried in a share link),
 // checked every visit against the latest public standing, market signal and news. Nothing leaves the browser.
 (function(){
-  var KEY='counterparty.policy', ROOT=(document.body.dataset.root||'../');
+  // An empty data-root is the site root, not a missing one: the home page sets it to "" and
+  // a falsy test would send every fetch to ../, which escapes the project directory on Pages.
+  var _r=document.body.getAttribute('data-root');
+  var KEY='counterparty.policy', ROOT=(_r==null?'../':_r);
   var TENORS=[[100,'100 days'],[182,'6 months'],[365,'12 months'],[730,'24 months'],[1825,'5 years']];
   var GRADES=['AAA','AA+','AA','AA-','A+','A','A-','BBB+','BBB','BBB-','BB+','BB','BB-','B+','B','B-','CCC'];
   var data=null, byId={};
@@ -257,7 +260,7 @@
     if(!dlg.open)dlg.showModal();
     var put=function(b){var t=document.getElementById('md-body');if(t)t.innerHTML=modalBody(b,e)};
     if(MCACHE[id])return put(MCACHE[id]);
-    fetch(ROOT+'data/detail/'+id+'.json').then(function(r){return r.json()}).then(function(b){MCACHE[id]=b;put(b)})
+    fetch(ROOT+'data/detail/'+id+'.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(b){MCACHE[id]=b;put(b)})
       .catch(function(){var t=document.getElementById('md-body');if(t)t.innerHTML='<div class="empty">Could not load this bank’s detail.</div>'});
   }
 
@@ -445,6 +448,11 @@
     initUni();
   }
   var box=document.getElementById('policy-body');if(!box)return;
-  fetch(ROOT+'data/peers.json').then(function(r){return r.json()}).then(function(j){PEERS=j}).catch(function(){});
-  fetch(ROOT+'data/policy.json').then(function(r){return r.json()}).then(function(j){data=j;init()}).catch(function(){box.innerHTML='<div class="empty">Could not load the counterparty data.</div>'});
+  fetch(ROOT+'data/peers.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){PEERS=j}).catch(function(){});
+  function failed(){
+    box.innerHTML='<div class="empty">Could not load the counterparty data. Reload the page.</div>';
+    var u=document.getElementById('uni-body');
+    if(u)u.innerHTML='<tr><td colspan="9" class="empty">Could not load the counterparty data. Reload the page.</td></tr>';
+  }
+  fetch(ROOT+'data/policy.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){data=j;init()}).catch(failed);
 })();

@@ -162,7 +162,7 @@
   function counts(){var w=watchIds().length,p=policyIds().length;document.querySelectorAll('.cp-set').forEach(function(b){var k=b.dataset.set,n=k==='all'?D.rows.length:k==='watch'?w:k==='policy'?p:D.rows.filter(function(r){return r.peer_group===k}).length;b.querySelector('.cnt').textContent=n;b.disabled=!n})}
   function suggest(){var t=q.value.trim().toLowerCase();if(!t){sugg.hidden=true;return}var hits=D.rows.filter(function(r){return (r.name+' '+r.short+' '+r.id).toLowerCase().indexOf(t)>=0}).slice(0,8);
     sugg.innerHTML=hits.map(function(r){return '<button data-id="'+r.id+'">'+esc(r.short)+' <span class="muted small">'+esc(r.name)+'</span></button>'}).join('')||'<span class="muted small">No match</span>';sugg.hidden=false}
-  fetch('../data/compare.json').then(function(r){return r.json()}).then(function(d){D=d;d.rows.forEach(function(r){byId[r.id]=r});
+  fetch(((document.body.getAttribute('data-root')==null)?'../':document.body.getAttribute('data-root'))+'data/compare.json').then(function(r){return r.json()}).then(function(d){D=d;d.rows.forEach(function(r){byId[r.id]=r});
     d.metrics.forEach(function(m){sel.insertAdjacentHTML('beforeend','<option value="'+m[0]+'">'+esc(m[1])+'</option>');if(m[0]!=='score')sel2.insertAdjacentHTML('beforeend','<option value="'+m[0]+'">'+esc(m[1])+'</option>')});
     readHash();sel.value=state.metric;sel2.value=state.metric2;counts();render();
     document.getElementById('cp-sets').addEventListener('click',function(e){var b=e.target.closest('.cp-set');if(!b||b.disabled)return;state.set=b.dataset.set;state.extra=[];state.pins=[];userPinned=false;render()});
