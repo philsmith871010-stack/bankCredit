@@ -544,3 +544,8 @@ table.uni .sc-n{font-size:14px}
 .sm:hover::after,.sm:focus-visible::after{color:var(--orange)}
 .sm{cursor:zoom-in}
 .sm .sm-head{padding-right:16px}
+/* The country, with the state's own rating beside it. */
+.sov{display:inline-flex;align-items:baseline;gap:5px}
+.sov b{font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--muted);background:var(--line-soft);
+       border-radius:5px;padding:1px 5px;cursor:help}
+.md-nm .sov b,.cp-sub .sov b{font-size:10.5px}

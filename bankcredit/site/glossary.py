@@ -127,6 +127,15 @@ TERMS: dict[str, tuple[str, str, str]] = {
         "Written on its own scale: F1+, A-1+, P-1 and so on for the strongest. It matters most for "
         "money-market deposits, which is where a lot of local authority cash actually sits.",
     ),
+    "sovereign": (
+        "Sovereign rating",
+        "The credit rating of the country a bank is based in.",
+        "A bank is rarely judged stronger than the state behind it: the sovereign sets the terms "
+        "its banking system funds itself on, and in a crisis it is the sovereign that would or "
+        "would not stand behind the system. Shown here as the median of the agencies that rate "
+        "the country, from the same public register the bank ratings come from. It is context "
+        "beside a bank, not part of its score.",
+    ),
     "idr": (
         "Issuer default rating",
         "The rating of the institution itself, rather than of one bond it has issued.",
@@ -353,7 +362,7 @@ SECTIONS: list[tuple[str, tuple[str, ...]]] = [
     ("Capital", ("cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "rwa",
                  "overall_capital_requirement", "headroom")),
     ("Liquidity and funding", ("lcr", "nsfr", "deposits", "total_assets")),
-    ("Ratings", ("rating", "composite", "outlook", "short_term_rating", "idr", "unrated", "withdrawn")),
+    ("Ratings", ("rating", "composite", "outlook", "short_term_rating", "idr", "sovereign", "unrated", "withdrawn")),
     ("The score", ("score", "band", "percentile", "peer_group", "coverage", "pillar", "grade_cap", "not_scored")),
     ("Market signals", ("market_signal", "cds", "bond_spread")),
     ("Performance and asset quality", ("npl_ratio", "cost_of_risk", "roe", "roa", "nim", "cost_to_income")),

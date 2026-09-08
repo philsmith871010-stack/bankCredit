@@ -81,6 +81,30 @@ _SP_SCALE = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", 
 _MOODYS = ["Aaa", "Aa1", "Aa2", "Aa3", "A1", "A2", "A3", "Baa1", "Baa2", "Baa3", "Ba1", "Ba2", "Ba3", "B1", "B2", "B3", "Caa"]
 
 
+def _sovereigns(df) -> dict[str, dict]:
+    """One entry per country: the composite of its sovereign ratings, and the agencies behind it.
+
+    Context for a bank, never an input to it. A bank in a country the register does not cover
+    simply has no entry, and the profile says nothing rather than guessing.
+    """
+    if df is None or df.empty:
+        return {}
+    try:
+        meta = json.loads((store.DATA / "reference" / "sovereigns.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        meta = {}
+    out: dict[str, dict] = {}
+    for cc, g in df.groupby("entity_id"):
+        rows = [{"agency": r.agency, "value": r.value, "outlook": r.outlook or "",
+                 "date": str(r.action_date)[:10]} for r in g.sort_values("agency").itertuples()]
+        grades = [x for x in (rating_grade(r["value"]) for r in rows) if x is not None]
+        composite = round(float(pd.Series(grades).median()), 1) if grades else None
+        out[str(cc)] = {"country": str(cc), "name": (meta.get(str(cc)) or {}).get("short", str(cc)),
+                        "grade": composite, "composite": grade_letter(composite),
+                        "agencies": rows, "n": len(rows)}
+    return out
+
+
 def rating_grade(value: str | None) -> int | None:
     """Map any agency's long-term symbol to the common 1..17 scale; None when unrated or withdrawn."""
     if not value:
@@ -569,6 +593,7 @@ def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=No
 def export_json() -> None:
     entities = load_entities()
     facts, ratings, prices, cds, events, runs = (store.read(t) for t in ["facts", "ratings", "prices", "cds", "events", "runs"])
+    sov = _sovereigns(store.read("sovereign_ratings"))
     bonds_tbl, quotes_tbl = store.read("bonds"), store.read("bond_quotes")
     bond_changes = _bond_changes(bonds_tbl, quotes_tbl)
     bond_quotes_all = quotes_tbl.merge(bonds_tbl[["isin", "entity_id", "name", "currency"]], on="isin") if not quotes_tbl.empty and not bonds_tbl.empty else None
@@ -663,6 +688,7 @@ def export_json() -> None:
         }
         row["rating_grade"] = composite
         row["rating_composite"] = grade_letter(composite)
+        row["sovereign"] = sov.get(e.country or "")          # context for the country, not a score input
         row["unrated"] = sc.unrated
         back = score_history(series, composite, today)
         snaps = hist_all.get(e.id, [])
@@ -692,7 +718,7 @@ def export_json() -> None:
                     recent.append({"date": str(x.date)[:10], "type": x.type, "severity": x.severity, "title": str(x.title)[:160], "url": _clean(getattr(x, "url", "")) or ""})
         policy_rows.append({**{k: row[k] for k in ("id", "name", "short", "country", "type", "region", "group", "peer_group", "public_score", "band",
                                                     "coverage", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "ratings", "market", "asof", "age_days",
-                                                    "rating_grade", "rating_composite", "inherited")},
+                                                    "rating_grade", "rating_composite", "inherited", "sovereign")},
                             "score": row["public_score"], "short_ratings": short_ratings, "recent": recent, "negative": negative[:6], "news30": news30,
                             "market_detail": {k: market.get(k) for k in ("vol30", "drawdown52", "bond_change30", "bond_count")}})
         debug = {}

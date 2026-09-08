@@ -29,6 +29,9 @@ KEYS = {
     # Ratings an agency has withdrawn. Deliberately not in "ratings": a withdrawn rating must never
     # reach a score, and a separate table cannot leak into one by an oversight at a point of use.
     "withdrawn_ratings": ["entity_id", "agency", "rating_type", "horizon", "action_date"],
+    # Sovereign ratings, keyed by country code rather than entity: context beside a bank, never a
+    # counterparty and never an input to a score.
+    "sovereign_ratings": ["entity_id", "agency", "rating_type", "horizon", "action_date"],
 }
 
 

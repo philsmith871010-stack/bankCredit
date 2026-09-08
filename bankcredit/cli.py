@@ -22,7 +22,7 @@ import sys
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
-ADAPTER_MODULES = ["fdic", "eba", "esma", "yahoo", "pillar3", "events", "fred", "dtcc", "ice", "bonds", "edgar", "te", "esef", "fundamentals", "nsm_release"]
+ADAPTER_MODULES = ["fdic", "eba", "esma", "yahoo", "pillar3", "events", "fred", "dtcc", "ice", "bonds", "edgar", "te", "esef", "fundamentals", "nsm_release", "sovereign"]
 
 
 def _load_adapters():

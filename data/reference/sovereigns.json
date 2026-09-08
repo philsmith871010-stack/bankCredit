@@ -1,0 +1,152 @@
+{
+  "AE": {
+    "issuer": "United Arab Emirates",
+    "short": "United Arab Emirates",
+    "also": [
+      "Abu Dhabi"
+    ]
+  },
+  "AT": {
+    "issuer": "Republic of Austria",
+    "short": "Austria",
+    "also": [
+      "Austria"
+    ]
+  },
+  "AU": {
+    "issuer": "Commonwealth of Australia",
+    "short": "Australia",
+    "also": [
+      "Australia"
+    ]
+  },
+  "BE": {
+    "issuer": "Kingdom of Belgium",
+    "short": "Belgium",
+    "also": [
+      "Belgium"
+    ]
+  },
+  "CA": {
+    "issuer": "Canada",
+    "short": "Canada"
+  },
+  "CH": {
+    "issuer": "Swiss Confederation",
+    "short": "Switzerland",
+    "also": [
+      "Switzerland"
+    ]
+  },
+  "DE": {
+    "issuer": "Federal Republic of Germany",
+    "short": "Germany",
+    "also": [
+      "Germany"
+    ]
+  },
+  "DK": {
+    "issuer": "Kingdom of Denmark",
+    "short": "Denmark",
+    "also": [
+      "Denmark"
+    ]
+  },
+  "ES": {
+    "issuer": "Kingdom of Spain",
+    "short": "Spain",
+    "also": [
+      "Spain"
+    ]
+  },
+  "FI": {
+    "issuer": "Republic of Finland",
+    "short": "Finland",
+    "also": [
+      "Finland"
+    ]
+  },
+  "FR": {
+    "issuer": "French Republic",
+    "short": "France",
+    "also": [
+      "France",
+      "Republic of France"
+    ]
+  },
+  "GB": {
+    "issuer": "United Kingdom",
+    "short": "United Kingdom"
+  },
+  "HK": {
+    "issuer": "Hong Kong Special Administrative Region",
+    "short": "Hong Kong SAR",
+    "also": [
+      "Hong Kong"
+    ]
+  },
+  "IE": {
+    "issuer": "Ireland",
+    "short": "Ireland"
+  },
+  "IT": {
+    "issuer": "Republic of Italy",
+    "short": "Italy",
+    "also": [
+      "Italy"
+    ]
+  },
+  "JP": {
+    "issuer": "Japan",
+    "short": "Japan"
+  },
+  "NL": {
+    "issuer": "Kingdom of the Netherlands",
+    "short": "Netherlands",
+    "also": [
+      "Netherlands"
+    ]
+  },
+  "NO": {
+    "issuer": "Kingdom of Norway",
+    "short": "Norway",
+    "also": [
+      "Norway"
+    ]
+  },
+  "QA": {
+    "issuer": "State of Qatar",
+    "short": "Qatar",
+    "also": [
+      "Qatar"
+    ]
+  },
+  "SA": {
+    "issuer": "Kingdom of Saudi Arabia",
+    "short": "Saudi Arabia",
+    "also": [
+      "Saudi Arabia"
+    ]
+  },
+  "SE": {
+    "issuer": "Kingdom of Sweden",
+    "short": "Sweden",
+    "also": [
+      "Sweden"
+    ]
+  },
+  "SG": {
+    "issuer": "Republic of Singapore",
+    "short": "Singapore",
+    "also": [
+      "Singapore"
+    ]
+  },
+  "US": {
+    "issuer": "United States of America",
+    "short": "United States of America",
+    "also": [
+      "United States"
+    ]
+  }
+}

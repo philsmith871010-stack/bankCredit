@@ -21,6 +21,8 @@ OUT = ROOT / "site"
 ASSETS = Path(__file__).resolve().parent / "assets"
 REGION_LABEL = {"uk": "UK", "eu": "EU and EEA", "aus_can": "Australia and Canada", "asia": "Asia", "gulf": "Gulf", "us_ch": "US and Swiss"}
 TYPE_LABEL = {"bank": "Bank", "building_society": "Building society", "subsidiary": "Overseas-owned bank", "holding": "Group"}
+AGENCY_NAMES = {"fitch": "Fitch", "sp": "S&P", "moodys": "Moody's", "dbrs": "DBRS", "kbra": "KBRA",
+                "scope": "Scope", "jcr": "JCR", "capital": "Capital Intelligence", "creditreform": "Creditreform"}
 COUNTRY = {"GB": "UK", "FI": "Finland", "SE": "Sweden", "DK": "Denmark", "NO": "Norway", "NL": "Netherlands", "DE": "Germany", "FR": "France", "BE": "Belgium", "ES": "Spain", "IT": "Italy", "AT": "Austria", "IE": "Ireland", "AU": "Australia", "CA": "Canada", "SG": "Singapore", "HK": "Hong Kong", "JP": "Japan", "QA": "Qatar", "AE": "UAE", "SA": "Saudi Arabia", "US": "US", "CH": "Switzerland"}
 # Which definition belongs to which measure. A reader meeting "NSFR" for the first time should be
 # able to ask on the spot, wherever the number appears, so the mapping lives once and every surface
@@ -39,6 +41,24 @@ TILE_METRICS = [("cet1_ratio", "CET1 ratio", "%", 1), ("leverage_ratio", "Levera
 
 TYPE_GLOSS = {"holding": c.info("holding"), "subsidiary": c.info("subsidiary"),
               "building_society": c.info("building_society")}
+
+
+def sovereign_pill(b, cls: str = "") -> str:
+    """The country a bank sits in, with the state's own rating beside it.
+
+    A bank is read against the sovereign that stands behind its banking system, so the country is
+    worth more than two letters. Context only: it is not in the score, and the pill says so on
+    hover rather than in more text on the page.
+    """
+    sv = b.get("sovereign") or {}
+    country = COUNTRY.get(b.get("country"), b.get("country") or "")
+    if not sv.get("composite"):
+        return f'<span class="sov{" " + cls if cls else ""}">{c.esc(country)}</span>'
+    ags = " · ".join(f'{AGENCY_NAMES.get(a["agency"], a["agency"])} {a["value"]}'
+                     + (f' ({a["outlook"]})' if a["outlook"] else "") for a in sv["agencies"])
+    title = f'{sv["name"]} sovereign rating, {sv["n"]} agenc{"y" if sv["n"] == 1 else "ies"}: {ags}. Context, not part of the score.'
+    return (f'<span class="sov{" " + cls if cls else ""}" title="{c.esc(title)}">{c.esc(country)}'
+            f'<b>{c.esc(sv["composite"])}</b></span>')
 
 
 def sc(r):
@@ -334,7 +354,7 @@ def page_bank(b, generated):
     metric_rows = "".join(f'<tr><td>{c.esc(METRICS.get(m, m))}</td><td class="mono">{pts[-1]["v"]:,.2f}</td><td class="mono muted">{pts[-1]["d"]}</td><td class="muted">{c.esc(pts[-1]["src"])} · {c.esc(pts[-1]["method"])}</td><td class="mono muted">{pts[-1]["conf"]:.2f}{" " + c.chip("unverified", "warn") if (pts[-1]["conf"] or 1) < 0.9 and str(pts[-1]["method"]).startswith("pdf") else ""}{" " + c.chip("group figure", "navy") if pts[-1].get("basis") == "group" else ""}</td></tr>' for m, pts in series.items() if pts)
     events_rows = "".join(f'<div class="event"><span class="mono muted">{c.esc(str(e.get("date"))[:10])}</span><div><div class="b">{c.esc(e.get("title"))}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("severity") or "info"))}</div>' for e in b["events"]) or '<div class="empty">No events collected yet. Rating actions and disclosures will appear here once the events pipeline runs.</div>'
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
-<div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {COUNTRY.get(b["country"], b["country"])}{" · " + c.chip("LEI " + c.esc(b["lei"])) + c.info("lei") if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
+<div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {sovereign_pill(b)}{c.info("sovereign")}{" · " + c.chip("LEI " + c.esc(b["lei"])) + c.info("lei") if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
 <div class="actions"><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button><button class="btn primary" onclick="window.print()">{c.ico("download", 16, c.WHITE)}Counterparty report</button></div></div>
 <div class="grid-12"><div class="score-card"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span>{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</div>
 <div class="score-row">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div></div>

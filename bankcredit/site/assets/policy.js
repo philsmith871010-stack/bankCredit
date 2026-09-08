@@ -83,6 +83,16 @@
       return '<div class="cp-kpi"><b>'+(k[1]==null?'<span class="na">\u2014</span>':Number(k[1]).toFixed(k[2])+k[3])+'</b><span>'+k[0]+mk(k[4])+'</span></div>';
     }).join('')+'</div>';
   }
+  // The country a bank sits in, with the state's own rating beside it - context, never a score input.
+  var AGN_FULL={fitch:'Fitch',sp:'S&P',moodys:"Moody's",dbrs:'DBRS',kbra:'KBRA',scope:'Scope',jcr:'JCR',
+                capital:'Capital Intelligence',creditreform:'Creditreform'};
+  function sovPill(e){
+    var sv=e&&e.sovereign;
+    if(!sv||!sv.composite)return esc((e&&e.country)||'');
+    var ags=sv.agencies.map(function(a){return (AGN_FULL[a.agency]||a.agency)+' '+a.value+(a.outlook?' ('+a.outlook+')':'')}).join(' \u00b7 ');
+    return '<span class="sov" title="'+esc(sv.name+' sovereign rating, '+sv.n+(sv.n===1?' agency: ':' agencies: ')+ags+
+           '. Context, not part of the score.')+'">'+esc(e.country||'')+'<b>'+esc(sv.composite)+'</b></span>';
+  }
   function mkt(m,terse){if(!m||m.direction==='none')return terse?'<span class="na">\u2014</span>'  :'<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');return chip(m.label,k)}
   function ratings(r){return (r||[]).map(function(x){return '<span class="mono" title="'+esc(x.agency+' '+x.type+(x.outlook?' · '+x.outlook:''))+'">'+esc(x.letter)+' '+esc(x.value)+'</span>'}).join(' <span class="muted">·</span> ')||'<span class="muted">unrated</span>'}
   function shortR(r){return (r||[]).map(function(x){return '<span class="mono">'+esc(x.letter)+' '+esc(x.value)+'</span>'}).join(' <span class="muted">·</span> ')||'<span class="muted">—</span>'}
@@ -388,7 +398,7 @@
     var e=byId[id]||{};
     var act=tenor?'<button class="filter active pol-add-ll" data-id="'+esc(id)+'" data-tenor="'+tenor+'">Add at '+esc(tenorLabel(tenor))+'</button>':'';
     dlg.innerHTML='<div class="md-head"><div><div class="md-nm">'+esc(e.short||id)+'</div>'+
-      '<div class="small muted">'+esc(e.name||'')+' \u00b7 '+esc(e.country||'')+typeTag(e)+'</div></div>'+
+      '<div class="small muted">'+esc(e.name||'')+' \u00b7 '+sovPill(e)+typeTag(e)+'</div></div>'+
       '<div class="md-sc">'+(e.score==null?'<span class="na">—</span>':'<span class="cp-score" style="color:'+scoreColour(e.score)+'">'+e.score.toFixed(0)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>')+'</div>'+
       act+'<a class="filter" href="'+ROOT+'banks/'+esc(id)+'.html">Full profile</a>'+
       '<button class="filter" id="md-close" aria-label="Close">Close</button></div>'+
@@ -458,7 +468,7 @@
       var e=r.e;
       return '<tr class="uni-row" data-id="'+esc(e.id)+'">'+
         '<td><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
-        '<td class="mono small">'+esc(e.country||'')+'</td>'+
+        '<td class="mono small">'+sovPill(e)+'</td>'+
         '<td class="num">'+(e.score==null?'<span class="na">—</span>':
             // the number and its band already say where the name stands, and the table sorts on it;
             // a bar in every one of 152 rows only adds weight
@@ -544,7 +554,7 @@
           '<div class="cp-top">'+
             '<button class="cp-exp" data-id="'+esc(e.id)+'" aria-expanded="false" aria-label="Show detail for '+esc(e.short)+'"></button>'+
             '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+
-              '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div></div>'+
+              '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+sovPill(e)+'</div></div>'+
             kv(scoreNum(e.score,e.band),'score','ck-score')+
             kv(esc(e.rating_composite||'\u2014'),'rating')+
             kv(num(e.cet1,1),'CET1')+
