@@ -1,1 +1,149 @@
-[]
+[
+ {
+  "id": "f436b3687e53",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/march-2015-pillar-3.pdf",
+  "local": "cache/pdf/nab/f436b3687e534a83.pdf",
+  "title": "march-2015-pillar-3.pdf",
+  "page": 11,
+  "reference_date": "2015-03-31",
+  "currency": "AUD",
+  "values": {
+   "cet1_capital": 34894.0,
+   "tier1_capital": 43752.0,
+   "total_capital": 50355.0
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-08T08:08:23"
+ },
+ {
+  "id": "1b727d72b66f",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2022/30-september---basel-iii-pillar-3-disclosures--prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/1b727d72b66f6fc6.pdf",
+  "title": "30-september---basel-iii-pillar-3-disclosures--prudential-standard-aps-330.pdf",
+  "page": 7,
+  "reference_date": "2021-06-30",
+  "currency": "AUD",
+  "values": {
+   "net_cash_outflows": 9604.1,
+   "lcr": 143.4
+  },
+  "checks": [
+   [
+    "warn",
+    "header date 2021-06-30 disagrees with expected 2030-06-30"
+   ],
+   [
+    "error",
+    "missing core row cet1_capital"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ]
+  ],
+  "reason": "warn:header date 2021-06-30 disagrees with expected 2030-06-30; error:missing core row cet1_capital; error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one)",
+  "status": "open",
+  "created": "2026-09-08T08:08:34"
+ },
+ {
+  "id": "579998b40c60",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/fy-2021/30-june---basel-iii-pillar-3-disclosures--prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/579998b40c60cb27.pdf",
+  "title": "30-june---basel-iii-pillar-3-disclosures--prudential-standard-aps-330.pdf",
+  "page": 6,
+  "reference_date": "2021-06-30",
+  "currency": "AUD",
+  "values": {
+   "tier1_capital": 4697.2,
+   "total_capital": 5588.9,
+   "rwa": 40469.3,
+   "cet1_capital": 9.57,
+   "cet1_ratio": 0.02,
+   "tier1_ratio": 11.61,
+   "total_capital_ratio": 13.81
+  },
+  "checks": [
+   [
+    "warn",
+    "header date 2021-06-30 disagrees with expected 2030-06-30"
+   ],
+   [
+    "info",
+    "cet1_ratio derived from cet1_capital over RWA"
+   ],
+   [
+    "info",
+    "tier1_ratio derived from tier1_capital over RWA"
+   ],
+   [
+    "info",
+    "total_capital_ratio derived from total_capital over RWA"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ],
+   [
+    "error",
+    "cet1_ratio 0.02 outside 3..80"
+   ]
+  ],
+  "reason": "warn:header date 2021-06-30 disagrees with expected 2030-06-30; info:cet1_ratio derived from cet1_capital over RWA; info:tier1_ratio derived from tier1_capital over RWA; info:total_capital_ratio derived from total_capital over RWA; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read); error:cet1_ratio 0.02 outside 3..80",
+  "status": "open",
+  "created": "2026-09-08T08:08:34"
+ },
+ {
+  "id": "9a8135b66b21",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/fy-2021/30-september--basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/9a8135b66b21fdb1.pdf",
+  "title": "30-september--basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-08T08:08:34"
+ }
+]
