@@ -102,7 +102,7 @@ def spark(series: list[float], w=92, h=28, color=NAVY) -> str:
             f'<circle cx="{ex:.0f}" cy="{ey:.0f}" r="2.6" fill="{ORANGE}"/></svg>')
 
 
-def _chart_compact(pts_in, w, h, unit, req, dp, band=None, median=None) -> str:
+def _chart_compact(pts_in, w, h, unit, req, dp, band=None, median=None, on_dark=False) -> str:
     vals = [v for _, v in pts_in]
     ref = ([req] if req else []) + (list(band) if band else []) + ([median] if median is not None else [])
     lo, hi = min(vals + ref), max(vals + ref)
@@ -187,14 +187,14 @@ def chg(v: float | None, dp=1, suffix="") -> str:
 
 def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | None = None, req_label="Requirement",
           band: tuple[float, float] | None = None, median: float | None = None,
-          ymin=None, ymax=None, step=None, dp=1, compact: bool = False) -> str:
+          ymin=None, ymax=None, step=None, dp=1, compact: bool = False, on_dark: bool = False) -> str:
     """Line chart with dots, optional requirement line and peer band. series: [(label, value)] oldest first.
     compact draws a small multiple: area and line, the requirement, first and last x labels, no dots or grid."""
     pts_in = [(l, v) for l, v in series if v is not None]
     if len(pts_in) < 2:
         return '<div class="empty">Not enough history yet</div>'
     if compact:
-        return _chart_compact(pts_in, w, h, unit, req, dp, band, median)
+        return _chart_compact(pts_in, w, h, unit, req, dp, band, median, on_dark)
     vals = [v for _, v in pts_in]
     lo, hi = min(vals + ([req] if req else []) + ([band[0]] if band else [])), max(vals + ([req] if req else []) + ([band[1]] if band else []))
     if ymin is None or ymax is None:

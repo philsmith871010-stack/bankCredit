@@ -49,7 +49,7 @@
       return '<div class="cp-kpi"><b>'+(k[1]==null?'<span class="na">\u2014</span>':Number(k[1]).toFixed(k[2])+k[3])+'</b><span>'+k[0]+mk(k[4])+'</span></div>';
     }).join('')+'</div>';
   }
-  function mkt(m){if(!m||m.direction==='none')return '<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');return chip(m.label,k)}
+  function mkt(m,terse){if(!m||m.direction==='none')return terse?'<span class="na">\u2014</span>'  :'<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');return chip(m.label,k)}
   function ratings(r){return (r||[]).map(function(x){return '<span class="mono" title="'+esc(x.agency+' '+x.type+(x.outlook?' · '+x.outlook:''))+'">'+esc(x.letter)+' '+esc(x.value)+'</span>'}).join(' <span class="muted">·</span> ')||'<span class="muted">unrated</span>'}
   function shortR(r){return (r||[]).map(function(x){return '<span class="mono">'+esc(x.letter)+' '+esc(x.value)+'</span>'}).join(' <span class="muted">·</span> ')||'<span class="muted">—</span>'}
   function snapshot(e){return {score:e.score,band:e.band,grade:e.rating_grade,market:e.market&&e.market.direction,asof:e.asof}}
@@ -98,7 +98,7 @@
     return svg(w,h,parts)+'<div class="pv-keys">'+key+'</div>';
   }
 
-  function scoreHist(mine,all){
+  function scoreHist(mine,all,solo){
     // The universe is the context and your names are the point, so this is emphasis: the
     // distribution in grey behind, each of your names marked on it. Two bar series scaled to
     // their own maxima would put one name at the same height as forty.
@@ -108,7 +108,7 @@
     var amax=Math.max.apply(null,ax)||1, bw=w/bins, inner='';
     for(var j=0;j<bins;j++){
       var ah=ax[j]/amax*(base-4);
-      if(ah>0)inner+='<rect x="'+(j*bw+.6).toFixed(1)+'" y="'+(base-ah).toFixed(1)+'" width="'+(bw-1.2).toFixed(1)+'" height="'+ah.toFixed(1)+'" rx="1.5" fill="#e9ecef"/>';
+      if(ah>0)inner+='<rect x="'+(j*bw+.6).toFixed(1)+'" y="'+(base-ah).toFixed(1)+'" width="'+(bw-1.2).toFixed(1)+'" height="'+ah.toFixed(1)+'" rx="1.5" fill="'+(solo?'#c3ced9':'#e9ecef')+'"/>';
     }
     inner+='<line x1="0" x2="'+w+'" y1="'+base+'" y2="'+base+'" stroke="#dee2e6" stroke-width="1"/>';
     mine.forEach(function(e){
@@ -242,7 +242,7 @@
     }).join('')||'<div class="muted small">Nothing recorded in the window.</div>';
     return '<div class="md-grid">'+
       '<section><h4>Trends</h4><div class="md-trends" id="md-trends">'+charts+'</div>'+
-        (Object.keys(pg).length?'<p class="small muted"><span class="mt-key"></span>The band is where this bank\u2019s peer group stands today, quartile to quartile, with the median dashed \u2014 not a peer history.</p>':'')+
+        (Object.keys(pg).length?'<p class="small muted"><span class="mt-key"></span>Peer group today, quartile to quartile, median dashed.</p>':'')+
       '</section>'+
       '<section><h4>Ratings'+mk('rating')+'</h4><table class="plain md-rt"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup><tbody>'+rt+'</tbody></table>'+
         (extra>0?'<p class="small muted">'+extra+' further rating'+(extra>1?'s':'')+' by type on the full profile.</p>':'')+
@@ -304,13 +304,15 @@
         '<td><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
         '<td class="mono small">'+esc(e.country||'')+'</td>'+
         '<td class="num">'+(e.score==null?'<span class="na">—</span>':
-            '<span class="mono b">'+e.score.toFixed(1)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>'+meter(e.score,e.band,'sm'))+
+            // the number and its band already say where the name stands, and the table sorts on it;
+            // a bar in every one of 152 rows only adds weight
+            '<span class="mono b">'+e.score.toFixed(1)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>')+
           (e.score==null&&e.unscored?'<div class="small muted">'+esc(e.unscored)+'</div>':'')+'</td>'+
         '<td class="mono">'+esc(e.rating_composite||'—')+'</td>'+
         '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1))+'</td>'+
         '<td class="num mono">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
         '<td class="mono small muted">'+esc(e.asof||'—')+'</td>'+
-        '<td>'+mkt(e.market)+'</td>'+
+        '<td>'+mkt(e.market,1)+'</td>'+
         '<td class="num">'+(r.tenor!=null
             ? '<span class="chip chip-good" title="already in your policy">'+esc(tenorLabel(r.tenor))+'</span>'
             : '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button>')+'</td></tr>';
@@ -344,7 +346,24 @@
   function render(){
     var p=load(); var out=document.getElementById('policy-body'); if(!out||!data)return;
     var html='';
-    if(!p.length){html+='<div class="empty">No counterparties yet. Add the names your policy approves and the longest tenor you accept for each.</div>'}
+    // nothing approved yet: say what to do and open the door to the table, rather than showing an
+    // empty box and a share bar with nothing to share
+    var share=document.getElementById('pol-share'); if(share)share.hidden=!p.length;
+    if(!p.length){
+      // the space beside the instruction is worth more as real data than as white: the strongest
+      // published standing today, addable in one click, so the page does something on arrival
+      var top=data.rows.filter(function(e){return e.score!=null}).sort(function(a,b){return b.score-a.score}).slice(0,5);
+      html+='<div class="pol-empty"><div><p>Type a name above, or add one from any row of the table below. '+
+        'Every name is re-checked each night against its regulatory filings, its agency ratings and the news.</p>'+
+        '<button class="filter active" id="pol-browse">Browse all '+data.rows.length+' names</button>'+
+        '<figure class="pe-fig"><figcaption>Where the '+data.rows.filter(function(e){return e.score!=null}).length+
+        ' scored names sit'+mk('score')+'</figcaption>'+scoreHist([],data.rows,1)+'</figure></div>'+
+        '<div class="pe-top"><h5>Strongest published standing today</h5>'+top.map(function(e){
+          return '<div class="pe-row" data-id="'+esc(e.id)+'"><span class="pe-nm">'+esc(e.short)+'</span>'+
+                 '<span class="pe-sc mono">'+e.score.toFixed(1)+'</span>'+
+                 '<span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>'+
+                 '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="365">Add</button></div>';
+        }).join('')+'</div></div>'}
     else{
       var n_flag=0;
       var rows=p.slice().sort(function(a,b){return b.tenor-a.tenor||(byId[a.id]&&byId[a.id].short||'').localeCompare(byId[b.id]&&byId[b.id].short||'')}).map(function(it){
@@ -358,7 +377,9 @@
                  '<span class="hd">'+(x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">':'')+esc(x.title)+(x.url?'</a>':'')+'</span></div>';
         }).join('')||'<div class="muted">Nothing notable in the last 90 days.</div>';
         var fh=fl.map(function(x){return chip(x[1],x[0]==='muted'?'muted':x[0])}).join(' ')||chip('Unchanged since approval','good');
-        return '<div class="pol-card" data-id="'+esc(e.id)+'">'+
+        // a name that has moved since approval carries an edge, so a long list scans in one pass
+        var moved=fl.some(function(x){return x[0]!=='muted'&&x[0]!=='good'});
+        return '<div class="pol-card'+(moved?' pol-card-flag':'')+'" data-id="'+esc(e.id)+'">'+
           '<div class="cp-top">'+
             '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+
               '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+esc(e.country)+typeTag(e)+'</div></div>'+
@@ -379,7 +400,7 @@
               '<div class="cp-asof">as of'+mk('as_at')+' '+esc(e.asof||'\u2014')+
               (e.leverage_basis==='us_tier1'?' \u00b7 \u2020 Tier 1 leverage, US basis':'')+'</div></div>'+
             '<div class="cp-cell"><h5>Ratings'+mk('rating')+'</h5>'+ratingGrid(e.ratings,e.short_ratings)+'</div>'+
-            '<div class="cp-cell cp-side"><h5>Market'+mk('market_signal')+' and since approval</h5>'+
+            '<div class="cp-cell cp-side"><h5>Market and changes'+mk('market_signal')+'</h5>'+
               mkt(e.market)+
               (e.market_detail&&e.market_detail.bond_change30!=null
                 ? '<div class="small muted">bonds vs peers '+(e.market_detail.bond_change30>0?'+':'')+Math.round(e.market_detail.bond_change30)+' bp</div>':'')+
@@ -387,7 +408,7 @@
           '</div>'+
           '<div class="cp-news">'+recent+'</div></div>';
       }).join('');
-      html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Data built '+esc(data.generated.slice(0,16).replace('T',' '))+' UTC. Flags compare today with the day each name was approved.</span></div>';
+      html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Flags compare today with the day you approved each name.</span></div>';
       html+=overview(p.filter(function(it){return byId[it.id]}));
       html+='<div class="pol-list">'+rows+'</div>';
       // like-for-like: names at least as strong as the weakest you already accept at each tenor
@@ -402,8 +423,8 @@
           if(e.market&&e.market.direction==='down')return false;return !shown[e.id]}).sort(function(a,b){return b.score-a.score});
         cands.forEach(function(e){shown[e.id]=1});
         var names=acc.map(function(it){return byId[it.id]?byId[it.id].short:it.id});
-        ll+='<h4>'+esc(tenorLabel(t))+' <span class="muted small">· you accept '+esc(names.join(', '))+' at this tenor; weakest of them: band '+esc(w.band||'?')+', ratings '+esc(GRADES[Math.floor((w.grade||1)+0.5)-1]||'?')+', score '+(w.score!=null?w.score.toFixed(1):'?')+'</span></h4>';
-        ll+=(t!==tenors[0]?'<p class="small muted">In addition to the names already listed at longer tenors.</p>':'')+(cands.length?'<div class="ll-grid">'+cands.slice(0,24).map(function(e){
+        ll+='<h4>'+esc(tenorLabel(t))+' <span class="muted small">· weakest you accept: band '+esc(w.band||'?')+', ratings '+esc(GRADES[Math.floor((w.grade||1)+0.5)-1]||'?')+', score '+(w.score!=null?w.score.toFixed(1):'?')+'</span></h4>';
+        ll+=(t!==tenors[0]?'<p class="small muted">Beyond those listed at longer tenors.</p>':'')+(cands.length?'<div class="ll-grid">'+cands.slice(0,24).map(function(e){
           var vs=(w.score!=null)?(e.score-w.score):null;
           return '<div class="ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+esc(e.short)+', open detail">'+
             '<div class="ll-nm">'+esc(e.short)+typeTag(e)+'</div><div class="ll-co">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div>'+
@@ -414,7 +435,7 @@
             '<div class="ll-foot">'+mkt(e.market)+'<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></div></div>';
         }).join('')+'</div>':'<p class="small muted">No further covered name matches the weakest standing you accept at this tenor.</p>');
       });
-      html+='<h3 style="margin-top:22px">Like-for-like</h3><p class="small muted">Names whose public standing is at least as strong as the weakest counterparty you already accept at each tenor: same or better band, ratings and score, and no market signal widening. This is a comparison of public information, not a recommendation; the tenor and the list remain your policy and your adviser\'s advice.</p>'+ll;
+      html+='<h3 style="margin-top:22px">Like-for-like</h3><p class="small muted">Covered names at least as strong as the weakest you already accept at each tenor \u2014 same or better band, ratings and score, and no widening market signal.</p>'+ll;
     }
     out.innerHTML=html;
     renderUni();
@@ -441,6 +462,12 @@
       if(ev.target.id==='pol-copy'){var l=document.getElementById('pol-link');l.select();try{document.execCommand('copy')}catch(e){}ev.target.textContent='Copied';setTimeout(function(){ev.target.textContent='Copy link'},1500);return}
       if(ev.target.id==='pol-use-shared'){save(window.__shared);window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);render();return}
       if(ev.target.id==='pol-keep-mine'){window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);return}
+    });
+    document.addEventListener('click',function(ev){
+      if(!ev.target.closest('#pol-browse'))return;
+      var t=document.querySelector('.tab[data-tab="universe"]'); if(t&&!t.classList.contains('active'))t.click();
+      var q=document.getElementById('uni-q'); if(q)q.focus({preventScroll:true});
+      var box=document.getElementById('browse'); if(box)box.scrollIntoView({behavior:'smooth',block:'start'});
     });
     document.addEventListener('keydown',function(ev){
       if(ev.key!=='Enter'&&ev.key!==' ')return;

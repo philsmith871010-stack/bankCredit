@@ -199,6 +199,17 @@ def page_bank(b, generated):
     prow = "".join(f'<div class="pillar{" pillar-na" if pillars[k][0] is None else ""}"><span class="pl">{ {"rating": "Rating", "capital": "Capital", "liquidity": "Liquidity", "stability": "Stability", "asset_quality": "Assets", "profitability": "Profit"}[k]}</span>'
                    f'<span class="mono">{"—" if pillars[k][0] is None else f"{pillars[k][0]:.0f}"}</span><i><b style="width:{0 if pillars[k][0] is None else pillars[k][0]:.0f}%"></b></i>'
                    f'<span class="pw">w {pillars[k][1] if pillars[k][0] is not None else PILLARS.get(k, (0,))[0]}</span></div>' for k in order if k in pillars)
+    # the score card ran a third of its height empty; its own history belongs in that space
+    _sc = [(qlabel(d), v) for d, v in ((b.get("history") or {}).get("score") or []) if v is not None][-16:]
+    sc_spark = ""
+    if len(_sc) >= 3:
+        sc_spark = (f'<button class="sm sm-dark" type="button" data-title="Counterparty score, recomputed" data-def="score" '
+                    f'data-sub="Today\'s method and composite rating applied to the ratios as they stood at each quarter end '
+                    f'\u00b7 {len(_sc)} quarters" aria-label="Expand score history">'
+                    f'<div class="sm-head"><span class="sm-label">Score, recomputed</span>'
+                    f'<span class="sm-val mono">{_sc[-1][1]:.0f}</span></div>'
+                    f'{c.chart(_sc, unit="", dp=1, w=330, h=74, compact=True, on_dark=True)}'
+                    f'<template>{c.chart(_sc, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)}</template></button>')
     # trends: small multiples grouped by theme, each opening a full-size chart
     TREND_GROUPS = [("Capital", [("cet1_ratio", "CET1 ratio", "%", 1), ("tier1_ratio", "Tier 1 ratio", "%", 1), ("total_capital_ratio", "Total capital ratio", "%", 1),
                                  ("leverage_ratio", "Leverage ratio", "%", 1), ("tier1_leverage", "Tier 1 leverage (US)", "%", 1), ("rwa", "Risk-weighted assets", "m", 0)]),
@@ -216,8 +227,7 @@ def page_bank(b, generated):
         dchip = f'<span class="delta {"up" if delta >= 0 else "down"}">{"+" if delta > 0 else ("−" if delta < 0 else "")}{abs(delta):.1f}</span>' if abs(delta) > 0.05 else '<span class="delta flat">no change</span>'
         big = c.chart(sc_pts, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)
         small = c.chart(sc_pts, unit="", dp=1, w=300, h=96, compact=True)
-        standing.append(f'<button class="sm" type="button" data-title="Counterparty score, recomputed" data-def="score" data-sub="Today\'s method and composite rating applied to the ratios as they stood at each quarter end · {len(sc_pts)} quarters" aria-label="Expand score history">'
-                        f'<div class="sm-head"><span class="sm-label">Score, recomputed</span><span class="sm-val mono">{last:.0f}</span></div><div class="sm-sub">{dchip}<span class="muted">vs {c.esc(sc_pts[-2][0])}</span></div>{small}<template>{big}</template></button>')
+        # the score card at the top of the page carries this one now, with the same dialog
     snaps = [(d[5:], v) for d, v, _g in (hist.get("snapshots") or []) if v is not None]
     if len(snaps) >= 2:
         big = c.chart(snaps, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)
@@ -319,6 +329,7 @@ def page_bank(b, generated):
 <div class="score-row">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div></div>
 {c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12)}
 <div class="pillars">{prow}</div>
+{sc_spark}
 {f'<div class="np-note"><b>{c.esc(b["not_published"]["reason"][0].upper() + b["not_published"]["reason"][1:])}.</b> {c.esc(b["not_published"].get("standing") or "")}. A score needs current capital ratios for this entity, so none is shown; the rating and the standing above are what to judge this name on. <a href="{c.esc(b["not_published"].get("source") or "")}" target="_blank" rel="noopener">Source</a></div>' if b.get("not_published") else ''}
 <div class="score-note">Rating anchor and public pillars with published weights (w).{c.info("pillar")}{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../admin/index.html#method">Method</a></div></div>
 <div class="tiles">{tiles}</div></div>
@@ -389,11 +400,11 @@ def page_events(board, status, generated, inner: bool = False):
     for _, _, e in items:
         counts[e.get("type")] = counts.get(e.get("type"), 0) + 1
     filters = f'<button class="filter active" data-type="all">All · {len(items)}</button>' + "".join(f'<button class="filter" data-type="{c.esc(t)}">{c.esc(t.title())} · {n}</button>' for t, n in sorted(counts.items()))
-    shown_note = f'<span class="small muted">Latest {min(300, len(merged))} shown; a bank\'s documents from one day are folded into a line. Each profile carries its full history.</span>'
-    content = (f'<div class="page-head"><div><h1>Events</h1><div class="lede">What happened, newest first: rating actions from the ESMA register, Pillar 3 reports dated when they were published, and headlines that pass a credit-vocabulary filter. The week\'s digest sits on top; the feed is everything. Severity is rules-based; read the source before acting.</div></div></div>'
+    shown_note = f'<span class="small muted ev-shown">Latest {min(300, len(merged))} shown; one line per bank per day. Full history on each profile.</span>'
+    content = (f'<div class="page-head"><div><h1>Events</h1><div class="lede">Newest first: rating actions, Pillar 3 reports and filtered headlines. Severity is rules-based \u2014 read the source.</div></div></div>'
                + digest(board, status, generated) +
                f'<div class="toolbar ev-toolbar"><div class="filters" id="event-filters">{filters}<a class="filter" href="feed.xml" title="RSS feed of flagged events">RSS feed</a></div><div class="search">{c.ico("search", 16, c.MUTED)}<input id="evq" placeholder="Bank or headline" autocomplete="off"></div>{shown_note}</div><div class="card pad" id="events">{rows or "<div class=empty>Nothing collected yet.</div>"}</div>'
-               f'<p class="note">Headlines are refreshed every two hours on weekdays between 07:00 and 19:00 UK; rating actions from the register and new documents arrive with the morning run. The RSS feed carries the last 100 flagged events for a reader or an alerting tool.</p>')
+               f'<p class="note">Headlines refresh every two hours on weekdays, 07:00 to 19:00 UK; rating actions and new documents arrive with the morning run. The RSS feed carries the last 100 flagged events.</p>')
     return content if inner else c.shell("Events", content, "events", "../", generated)
 
 
@@ -465,7 +476,7 @@ def digest(board, status, generated):
     if not widen and not tighten and bm:
         lead.append("Benchmark spreads are little changed on the month.")
     lead.append(f'{len(ratings)} rating action{"s" if len(ratings) != 1 else ""} and {len(news)} flagged headline{"s" if len(news) != 1 else ""} in the last seven days across {len(rows)} entities.')
-    content = f'''<div class="card pad digest"><div class="pc-head" style="padding:0 0 8px"><h3>This week <span class="muted small">· drafted from the tables by fixed rules, not a language model · {c.esc(today.isoformat())}</span></h3></div><p class="lead">{" ".join(lead)}</p>{market_line}</div>
+    content = f'''<div class="card pad digest"><div class="pc-head" style="padding:0 0 8px"><h3>This week <span class="muted small">· written by fixed rules, not a model · {c.esc(today.isoformat())}</span></h3></div><p class="lead">{" ".join(lead)}</p>{market_line}</div>
 <div class="grid-2 brief-grid"><div class="card pad"><h3>Watch points</h3><div class="kv"><div><span>Band D, weakest public score</span><span>{bank_links(band_d)}</span></div><div><span>Market signal widening or equity weak</span><span>{bank_links(weak_mkt)}</span></div><div><span>Regulatory figures older than 150 days</span><span>{bank_links([r for r in rows if r["age_days"] and r["age_days"] > 150][:25])}</span></div></div></div>
 <div class="card pad"><h3>New Pillar 3 documents</h3><p>{len(docs)} collected in the last seven days. {len(unverified)} loaded with warnings and shown as unverified; {len(queue)} waiting in the review queue.</p><a class="filter" href="../admin/index.html#status">Status</a></div></div>'''
     return content
@@ -664,7 +675,7 @@ def page_ratings(generated, inner: bool = False):
         cnts = [sum(1 for g in gs if g <= 4), sum(1 for g in gs if 4 < g <= 7), sum(1 for g in gs if 7 < g <= 10), sum(1 for g in gs if g > 10)]
         segs = "".join(f'<div class="dseg" style="flex:{n};background:{col}" title="{lab}: {n}"></div>' for n, col, lab in zip(cnts, ["#0a2540", "#3f5f85", "#7d93ad", "#b04632"], ["AA- and above", "A range", "BBB range", "below BBB-"]) if n)
         dist += f'<div class="drow"><div class="dlabel">{label} <span class="muted small">{sum(cnts)} rated</span></div><div class="dbar">{segs}</div></div>'
-    content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">Who rates whom, and how. One row per entity, one tinted cell per agency: the long-term rating with its outlook, the short-term rating and month beneath. Click a band, a grade bar or a region to filter; the ESMA European Rating Platform is the source, refreshed daily.</div></div></div>
+    content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">One row per entity, one cell per agency: long-term rating and outlook, short-term and month beneath. Click a band, bar or region to filter. Source: the ESMA register, daily.</div></div></div>
 <div class="rtiles rtiles-f">{tiles}</div>
 <div class="card rgrid-card"><div class="toolbar rg-tools"><div class="filters">{filters}<button class="filter" data-region="moved">Moved in 90 days</button></div><input id="q" class="search" placeholder="Search"><span class="small muted" id="rg-count"></span></div>
 <div class="rg-hist"><span class="small muted">Composite grade{c.info("rating")}</span>{hist}<button class="filter small gclear" hidden>Clear grade</button></div>
@@ -675,17 +686,30 @@ def page_ratings(generated, inner: bool = False):
 <p class="note">Long-term issuer ratings only, one per agency per entity. Differences between the bars are mostly which banks each agency rates, not disagreement about the same bank.</p></div></div>'''
     return content if inner else c.shell("Ratings", content, "ratings", "../", generated)
 
-def page_policy_content() -> str:
-    return f'''<div class="page-head"><div><h1>My policy</h1><div class="lede">Your approved counterparties and the longest tenor you accept for each, checked against today's public standing, market signal and news. The list lives in this browser and in the share link; nothing is sent anywhere.</div></div></div>
+def page_policy_content(board=None) -> str:
+    """The front door: what this covers, then the policy itself.
+
+    A first-time reader arrives at an empty list, so the opening has to carry the scale and the
+    sources instead - 152 names, 117 of them scored, read from public filings every night. The
+    prose that used to sit here said the same thing three times over; the footer already carries
+    the "information, not advice" line, and the entity guidance belongs in the field it applies to.
+    """
+    rows = (board or {}).get("rows") or []
+    scored = sum(1 for r in rows if r.get("public_score") is not None)
+    rated = sum(1 for r in rows if r.get("rating_composite"))
+    countries = len({r["country"] for r in rows if r.get("country")})
+    facts = [(f"{len(rows)}", "names covered"), (f"{scored}", "scored"), (f"{rated}", "agency rated"),
+             (f"{countries}", "countries"), ("Nightly", "data refresh")]
+    strip = "".join(f'<div class="hs"><b>{v}</b><span>{l}</span></div>' for v, l in facts) if rows else ""
+    return f'''<div class="page-head hero"><div><h1>Counterparty</h1><div class="lede">Build your approved list, and see what moved since you approved each name.</div></div>
+<div class="hero-strip">{strip}</div></div>
 <div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>
-<div class="card pad"><h3>Add a counterparty{c.info("counterparty")}</h3>
-<div class="pol-form"><label>Name<input id="pol-name" list="pol-names" placeholder="Start typing a bank or building society" autocomplete="off"><datalist id="pol-names"></datalist></label>
-<label><span>Longest tenor you accept{c.info('tenor')}</span><select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button></div>
-<p class="note">Use the legal entity you actually place with: Barclays Bank UK PLC rather than Barclays PLC, HSBC UK Bank plc rather than HSBC Holdings. Each name is checked from the day you add it.</p></div>
-<div class="card pad" style="margin-top:16px"><h3>Your counterparties</h3><div id="policy-body"><div class="empty">Loading…</div></div>
-<div class="pol-share"><button class="filter" id="pol-copy">Copy link</button><input id="pol-link" readonly placeholder="A link that carries this policy appears here"><button class="filter" id="pol-clear">Clear all</button></div>
-<dialog id="pol-modal" class="pol-modal"></dialog>
-<p class="note">Counterparty is information, not advice. The flags say what has changed in public information since you approved a name; whether that changes your policy is for you and your adviser.</p></div>'''
+<div class="card pad"><div class="pol-topbar"><h3>Your counterparties</h3>
+<div class="pol-form"><label><span>Name{c.info("counterparty")}</span><input id="pol-name" list="pol-names" placeholder="Barclays Bank UK PLC, not Barclays PLC" autocomplete="off"><datalist id="pol-names"></datalist></label>
+<label><span>Longest tenor{c.info('tenor')}</span><select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button></div></div>
+<div id="policy-body"><div class="empty">Loading\u2026</div></div>
+<div class="pol-share" id="pol-share" hidden><button class="filter" id="pol-copy">Copy link</button><input id="pol-link" readonly placeholder="Your share link"><button class="filter" id="pol-clear">Clear all</button></div>
+<dialog id="pol-modal" class="pol-modal"></dialog></div>'''
 
 
 def _panel_content(html: str) -> str:
@@ -694,7 +718,7 @@ def _panel_content(html: str) -> str:
     return (f'<p class="small muted panel-lede">{m.group(1)}</p>' + html[m.end():]) if m else html
 
 
-UNIVERSE_PANEL = f"""<p class="small muted">The whole universe, with the same detail on click and the same Add. Filter it to find a name, or sort a column to see who leads on it. Anything marked <span class="i i-static" aria-hidden="true">i</span> explains itself.</p>
+UNIVERSE_PANEL = f"""<p class="small muted">Every name, sortable on any column, with the same detail on click. Anything marked <span class="i i-static" aria-hidden="true">i</span> explains itself.</p>
 <div class="uni-bar">
   <input id="uni-q" type="search" placeholder="Search name, country or LEI" autocomplete="off">
   <select id="uni-region"><option value="">Every region</option></select>
@@ -717,7 +741,7 @@ def page_home(board, status, generated):
     The board, the bank navigator, the ratings grid and the events feed were four pages showing
     slices of one universe. They are panels here, so nothing is lost and nothing is a journey.
     """
-    content = (page_policy_content()
+    content = (page_policy_content(board)
                + '<div class="card tabs-card" style="margin-top:16px" id="browse">'
                  '<div class="tabs" role="tablist">'
                  '<button class="tab active" data-tab="universe">Every covered name</button>'
@@ -741,8 +765,7 @@ def page_admin(status, board, generated):
     the thing, and taken away without disturbing the pages that do the work.
     """
     content = ('<div class="page-head"><div><h1>Method and data</h1><div class="lede">How the score is '
-               'built, what is held for every name, and what ran last night. Reference rather than daily '
-               'reading.</div></div></div>'
+               'built, what is held for every name, and what ran last night.</div></div></div>'
                '<div class="card tabs-card"><div class="tabs" role="tablist">'
                '<button class="tab active" data-tab="method">Method</button>'
                '<button class="tab" data-tab="coverage">Coverage</button>'
@@ -877,7 +900,7 @@ def page_compare(generated):
     def panel(pid, title, sub):
         return (f'<section class="panel-c" id="p-{pid}"><div class="pc-head"><h3>{c.esc(title)} <span class="muted small">{c.esc(sub)}</span></h3>'
                 f'<button class="pc-x" data-panel="{pid}" title="Expand or restore" aria-label="Expand {c.esc(title)}">⤢</button></div><div class="pc-body cp-chart" id="c-{pid}"><div class="empty">Loading…</div></div></section>')
-    content = f'''<div class="page-head"><div><h1>Analysis</h1><div class="lede">One peer set, one measure, every view at once. Pin up to six names and they carry the same colour in every panel; hover any name anywhere and it lights up everywhere.</div></div></div>
+    content = f'''<div class="page-head"><div><h1>Analysis</h1><div class="lede">One peer set, one measure, four views. Pin up to six names \u2014 they keep their colour in every panel.</div></div></div>
 <div class="card cp-card"><div class="cp-tools">
 <div class="filters" id="cp-sets">{chips}</div>
 <div class="cp-row"><label class="small muted">Measure <select id="cp-metric"></select></label><button type="button" class="i" id="cp-def" data-t="score" aria-expanded="false" aria-label="What is this measure?">i</button>
