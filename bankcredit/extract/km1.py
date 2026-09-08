@@ -223,6 +223,31 @@ def fiscal_quarter_end(year: int, n: int, year_end: str = "12-31") -> date:
     return d if d.day >= 15 else _month_end(d.year, d.month - 1)
 
 
+def bare_year_columns(header: str, year_end: str = "12-31") -> list[date]:
+    """Period ends for column headers that name a year and nothing else.
+
+    Only a run of two or more consecutive years counts, each on its own short line: a lone number
+    in a header is as likely to be a row count or a page number, and a table's own figures must
+    never be mistaken for its column dates.
+    """
+    years = []
+    for line in header.splitlines():
+        t = line.strip().rstrip(".")
+        if not re.fullmatch(r"(?:19|20)\d\d", t):
+            continue
+        y = int(t)
+        if 2005 <= y <= date.today().year + 1 and (not years or y != years[-1]):
+            years.append(y)
+    if len(years) < 2:
+        return []
+    step = years[1] - years[0]
+    if step not in (-1, 1) or any(b - a != step for a, b in zip(years, years[1:])):
+        return []            # not a run of consecutive years, so not a column header
+    ye_m, ye_d = (int(x) for x in year_end.split("-"))
+    return [_month_end(y, ye_m) if ye_d >= 28 else date(y, ye_m, ye_d) for y in years]
+
+
+
 def parse_dates(text: str, explicit_only: bool = False, year_end: str = "12-31") -> list[date]:
     """All period-like dates in reading order, de-duplicated, without sorting.
 
@@ -627,6 +652,13 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 250, 
     if not res.period_dates:
         standalone = [l.strip() for l in lines if len(l.strip()) <= 20 and parse_dates(l, year_end=year_end)]
         res.period_dates = parse_dates("\n".join(standalone), year_end=year_end)
+    if not res.period_dates:
+        # columns headed by a bare year, as an annual-only filer sets them: "2025  2024". Read
+        # against the year end rather than falling through to a date in the narrative, which for
+        # Handelsbanken is the board meeting that approved the dividend, three months later.
+        res.period_dates = bare_year_columns(header, year_end)
+        if res.period_dates:
+            res.checks.append(("info", "columns headed by year alone, dated to the financial year end"))
     narrative = False
     if not res.period_dates:
         found = parse_dates(header, year_end=year_end)

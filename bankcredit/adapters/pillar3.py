@@ -46,6 +46,7 @@ LINK_RE = re.compile(r"""(?:https?:)?//[^\s"'<>\\)]+|/[^\s"'<>\\)]+""")
 # an href attribute keeps its literal spaces (OCBC names files "Pillar 3 Disclosures.pdf"); those are
 # percent-encoded rather than truncated at the first space
 HREF_RE = re.compile(r"(?:href|src|data-href)\s*=\s*[\"']([^\"']+)[\"']", re.I)
+ANCHOR_RE = re.compile(r"<a\b[^>]*?href\s*=\s*[\"']([^\"']+)[\"'][^>]*>(.*?)</a>", re.I | re.S)
 SLEEP = 1.0
 
 
@@ -170,6 +171,21 @@ class Pillar3Adapter(Adapter):
                 log.warning("listing %s -> %s", url, r.status_code)
         return self._pages[url]
 
+    def _anchor_text(self, body: str) -> dict[str, str]:
+        """{href: visible text} for every anchor on the page.
+
+        Some banks give their documents opaque addresses - Handelsbanken serves them as numeric
+        ids under /contents/v1/document/, JPMorgan as static-files - so the only thing that says
+        which report a link is, is what the link says."""
+        out: dict[str, str] = {}
+        raw = html.unescape(body).replace("\\/", "/")
+        for m in ANCHOR_RE.finditer(raw):
+            href, inner = m.group(1), m.group(2)
+            text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", inner)).strip()
+            if href and text and href not in out:
+                out[href] = text[:200]
+        return out
+
     def _links(self, page_url: str, body: str) -> list[str]:
         raw = html.unescape(body).replace("\\/", "/")
         out, seen = [], set()
@@ -190,6 +206,12 @@ class Pillar3Adapter(Adapter):
     def _matches(self, loc: dict, page_url: str, body: str) -> list[tuple[str, date | None, str]]:
         mrx = re.compile(loc["match"], re.I)
         xrx = re.compile(loc["exclude"], re.I) if loc.get("exclude") else None
+        trx = re.compile(loc["text"], re.I) if loc.get("text") else None
+        ye = loc.get("year_end", "12-31")
+        texts = {}
+        if trx:
+            anchors = self._anchor_text(body)
+            texts = {urljoin(page_url, h).split("#")[0]: t for h, t in anchors.items()}
         found = []
         for u in self._links(page_url, body):
             d = unquote(u)
@@ -197,8 +219,12 @@ class Pillar3Adapter(Adapter):
                 continue
             if re.search(r"\.(jpg|png|gif|svg|css|js|xlsx?|docx?)(\?|$)", d, re.I):
                 continue
-            found.append((u, infer_period(d.rsplit("/", 1)[-1], loc.get("year_end", "12-31")) or infer_period(d, loc.get("year_end", "12-31")),
-                          d.rsplit("/", 1)[-1][:120]))
+            text = texts.get(u.split("#")[0], "")
+            if trx and not (trx.search(text) and not (xrx and xrx.search(text))):
+                continue          # an opaque address says nothing; its link text is the only label
+            name = d.rsplit("/", 1)[-1][:120]
+            found.append((u, infer_period(name, ye) or infer_period(d, ye) or infer_period(text, ye),
+                          (text[:120] if trx else name) or name))
         return found
 
     def _index_pages(self, loc: dict, body: str, limit: int = 6) -> list[str]:

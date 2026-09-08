@@ -36,3 +36,33 @@ def test_every_locator_names_an_entity_and_compiles():
     collecting nothing for a quarter."""
     from bankcredit import health
     assert health._faults() == []
+
+
+ANCHORS = '''
+<a href="/tron/gbpu/info/contents/v1/document/52-278301">Annual report (pdf 2.0 MB)</a>
+<a href="/tron/gbpu/info/contents/v1/document/52-278302">Risk and capital - information according to Pillar 3 (pdf)</a>
+<a href="/tron/gbpu/info/contents/v1/document/52-265185">Risk and capital - information according to Pillar 3 (pdf)</a>
+<a href="/en/about-us/careers">Careers</a>
+'''
+
+
+def test_a_document_with_an_opaque_address_is_identified_by_its_link_text():
+    """Handelsbanken serves its reports as numeric ids that trigger a download, so nothing in the
+    address says which report it is. The annual report sits on the identical path beside it."""
+    from bankcredit.adapters.pillar3 import Pillar3Adapter
+    ad = Pillar3Adapter()
+    loc = next(l for l in LOCATORS if l["entity"] == "handelsbanken-plc")
+    page = loc["page"]
+    got = ad._matches(loc, page, ANCHORS)
+    urls = [u for u, _, _ in got]
+    assert len(urls) == 2, got
+    assert all(u.endswith(("52-278302", "52-265185")) for u in urls)
+    assert all("Pillar 3" in title for _, _, title in got), "the title is what the link said"
+
+
+def test_link_text_matching_does_not_disturb_a_locator_that_has_none():
+    from bankcredit.adapters.pillar3 import Pillar3Adapter
+    ad = Pillar3Adapter()
+    loc = {"entity": "x", "page": "https://b.example/i", "match": r"\.pdf$"}
+    body = '<a href="/a/pillar-3-2025.pdf">whatever</a><a href="/b/notes.txt">Pillar 3</a>'
+    assert [u for u, _, _ in ad._matches(loc, loc["page"], body)] == ["https://b.example/a/pillar-3-2025.pdf"]

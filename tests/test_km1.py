@@ -377,3 +377,24 @@ def test_the_normaliser_joins_only_a_split_number():
     assert km1._norm_text("16. 6%") == "16.6%"
     assert km1._norm_text("2,575. 0") == "2,575.0"
     assert km1._norm_text("Total capital ratio (%)") == "Total capital ratio (%)"
+
+
+def test_columns_headed_by_a_year_alone_are_dated_to_the_year_end(tmp_path):
+    """An annual-only filer heads its columns "2025  2024". Read as no dates at all, the fallback
+    takes one from the narrative - for Handelsbanken the board meeting that approved the dividend,
+    three months after the period the figures describe."""
+    text = KM1_TEXT.replace("a b c\n31 Dec 25 30 Sep 25 30 Jun 25", "2025\n2024\n2023") \
+                   .replace("The Board of Directors met", "x")
+    res = km1.extract(make_pdf(tmp_path, "The Board of Directors met on 18 March 2026\n" + text, name="years.pdf"))
+    assert res.reference_date == date(2025, 12, 31), res.reference_date
+    assert not any("narrative" in m for _, m in res.checks)
+
+
+def test_a_bare_year_run_is_required_before_years_are_read_as_columns():
+    """A lone number in a header is as likely to be a row count; a table's own figures must never
+    be taken for its column dates."""
+    assert km1.bare_year_columns("2025\n2024\n") == [date(2025, 12, 31), date(2024, 12, 31)]
+    assert km1.bare_year_columns("2025\n") == [], "one year is not a run"
+    assert km1.bare_year_columns("2025\n2019\n") == [], "not consecutive"
+    assert km1.bare_year_columns("2,575\n9,141\n") == [], "figures are not years"
+    assert km1.bare_year_columns("2025\n2024\n", "03-31") == [date(2025, 3, 31), date(2024, 3, 31)]

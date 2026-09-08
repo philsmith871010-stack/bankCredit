@@ -112,8 +112,11 @@ LOCATORS: list[dict] = [
          match=r"(Monzo-MBL-Pillar-3|monzo-pillar-3).*\.pdf", year_end="03-31", note="MBL = Monzo Bank Limited; MBHG = group"),
     dict(entity="starling", page="https://www.starlingbank.com/investors/",
          match=P3 + r".*\.pdf", year_end="03-31"),
-    dict(entity="handelsbanken-plc", page="https://www.handelsbanken.co.uk/en/about-us/financial-information",
-         match=P3, kind="browser", note="extension-less document ids; check by hand"),
+    dict(entity="handelsbanken-plc", page="https://www.handelsbanken.co.uk/en/about-us/investor-relations",
+         match=r"/contents/v1/document/\d+-\d+", text=r"risk and capital.*pillar[- ]?3",
+         exclude=r"annual report", year_end="12-31",
+         note="documents are numeric ids that trigger a download, so nothing in the address says "
+              "which report it is; the link text does, and the annual report sits beside it"),
     dict(entity="goldman-sachs-international-bank", page="https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/",
          match=P3 + r".*\.pdf", kind="browser", note="Pillar 3 PDFs not linked in the page HTML"),
     dict(entity="smbc-bank-international", page="https://www.smbcgroup.com/emea/about/Notices-and-reporting",
