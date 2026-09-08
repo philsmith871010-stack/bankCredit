@@ -1,1 +1,225 @@
-[]
+[
+ {
+  "id": "020546dcc97f",
+  "entity_id": "tsb",
+  "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2025/TSB-Bank-ARA-2025.pdf",
+  "local": "cache/pdf/tsb/020546dcc97f6d19.pdf",
+  "title": "TSB-Bank-ARA-2025.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-08T20:07:29"
+ },
+ {
+  "id": "e83dd673a933",
+  "entity_id": "tsb",
+  "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2024/TSB-Bank-ARA-2024.pdf",
+  "local": "cache/pdf/tsb/e83dd673a933fba2.pdf",
+  "title": "TSB-Bank-ARA-2024.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-08T20:07:29"
+ },
+ {
+  "id": "4c3711fc59b9",
+  "entity_id": "tsb",
+  "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2022/tsb-bank-ara-2022.pdf",
+  "local": "cache/pdf/tsb/4c3711fc59b965ac.pdf",
+  "title": "tsb-bank-ara-2022.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-08T20:07:29"
+ },
+ {
+  "id": "914f0e96fe7c",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/ANZ-2026-first-quarter-trading-update-and-Pillar-3-discussion-pack.pdf",
+  "local": "cache/pdf/anz/914f0e96fe7cd585.pdf",
+  "title": "ANZ-2026-first-quarter-trading-update-and-Pillar-3-discussion-pack.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-08T20:08:46"
+ },
+ {
+  "id": "2e09aeada0b1",
+  "entity_id": "nab",
+  "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/third-quarter-pillar-3-report.pdf",
+  "local": "cache/pdf/nab/2e09aeada0b1c8e1.pdf",
+  "title": "third-quarter-pillar-3-report.pdf",
+  "page": 5,
+  "reference_date": "2017-06-30",
+  "currency": "AUD",
+  "values": {
+   "rwa": 383945.0,
+   "cet1_capital": 9.7,
+   "tier1_capital": 12.0,
+   "leverage_ratio": 5.3
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "error:missing core row cet1_ratio; info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-08T20:08:52"
+ },
+ {
+  "id": "8a8f2cb839a0",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2017/30-june---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/8a8f2cb839a08307.pdf",
+  "title": "30-june---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": 4,
+  "reference_date": "2017-06-30",
+  "currency": "AUD",
+  "values": {
+   "tier1_capital": 3991.5,
+   "total_capital": 4743.4,
+   "rwa": 38062.3,
+   "cet1_capital": 8.27,
+   "tier1_ratio": 10.49,
+   "total_capital_ratio": 12.46
+  },
+  "checks": [
+   [
+    "warn",
+    "header date 2017-06-30 disagrees with expected 2030-06-30"
+   ],
+   [
+    "info",
+    "tier1_ratio derived from tier1_capital over RWA"
+   ],
+   [
+    "info",
+    "total_capital_ratio derived from total_capital over RWA"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:header date 2017-06-30 disagrees with expected 2030-06-30; info:tier1_ratio derived from tier1_capital over RWA; info:total_capital_ratio derived from total_capital over RWA; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-08T20:09:01"
+ },
+ {
+  "id": "f666ca93afe2",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2016/30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/f666ca93afe2fff6.pdf",
+  "title": "30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-08T20:09:01"
+ },
+ {
+  "id": "d27b51d97a83",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2016/30-june---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/d27b51d97a83e4fe.pdf",
+  "title": "30-june---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": 4,
+  "reference_date": "2016-06-30",
+  "currency": "AUD",
+  "values": {
+   "tier1_capital": 3795.8,
+   "total_capital": 4455.6,
+   "rwa": 36485.5,
+   "cet1_capital": 8.09,
+   "tier1_ratio": 10.4,
+   "total_capital_ratio": 12.21
+  },
+  "checks": [
+   [
+    "warn",
+    "header date 2016-06-30 disagrees with expected 2030-06-30"
+   ],
+   [
+    "info",
+    "tier1_ratio derived from tier1_capital over RWA"
+   ],
+   [
+    "info",
+    "total_capital_ratio derived from total_capital over RWA"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:header date 2016-06-30 disagrees with expected 2030-06-30; info:tier1_ratio derived from tier1_capital over RWA; info:total_capital_ratio derived from total_capital over RWA; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-08T20:09:01"
+ }
+]
