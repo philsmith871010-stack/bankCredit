@@ -438,3 +438,44 @@ assets but omits the ratio row, as SMFG's single-table KM1 does, now yields the 
 derived and checked against the same bounds as a read one. Scored rose from 100 to 103 with OCBC, HSBC Hong Kong and
 SMFG recovered; the remaining 37 need their locators found the same way, and MUFG needs the collector to follow a
 listing that links a page per quarter rather than the files themselves.
+
+### The scheduler, 9 September 2026
+
+The pipeline was running when GitHub felt like running it. Over two days it delivered four of the
+eight scheduled pipeline events and four of the fourteen headline events, each survivor between
+three and five hours after its slot: 05:10 arrived at 09:34 and 10:10, 11:40 at 15:17 and 16:38.
+Two more were cancelled outright, because `news.yml` and `pipeline.yml` shared one concurrency group
+and GitHub keeps only a single pending run per group, so whichever queued second evicted the first.
+Push events on the same repository in the same week started within seconds, all one hundred and
+thirty-three of them. Data freshness had quietly become a side effect of whatever was pushed that
+day.
+
+Nothing in a workflow file makes that scheduler punctual, so the schedule is no longer asked to be a
+clock. Three changes:
+
+**One workflow.** `news.yml` is folded into `pipeline.yml`. Only one workflow now holds the
+`pipeline` concurrency group, so a queued run can no longer be evicted by the other, and an eviction
+between two slots of the same workflow is harmless because the newer one does whatever is owed.
+
+**A guard instead of an appointment.** `.github/scripts/decide.sh` runs first, on a shallow checkout,
+and answers one question from the clock and from two stamp files the last run committed: is the day's
+collection still owed (`full`), are the headlines over ninety minutes old (`news`), is this a code
+push that needs the site rebuilt (`build`), or is there nothing to do (`skip`)? The schedule is
+correspondingly dense - hourly at minute 17 from 05:17 to 19:17 on weekdays, five slots at the
+weekend - because a slot is now a chance rather than an appointment. A slot that arrives four hours
+late does the day's work. A slot that arrives after the work is done exits in about twenty seconds
+without touching the data or the site. A slot that never arrives costs nothing, because the next one
+covers for it. The stamps are written with the data they describe, so a run that fails before
+publishing leaves the work still owed rather than marking it done.
+
+**A push for the time of day.** `tools/kick.sh` buys punctuality with the one event GitHub does
+deliver on time. It reads the stamps from `origin/main`, and if the day's collection is owed it
+pushes a commit carrying `[collect]`, which the guard reads as "collect now". It declines if the
+collection has already happened or if a kick from earlier today is still running, so it is safe to
+run twice or on top of the scheduler. The commit is assembled in a temporary index and pushed
+straight at `origin/main`, so it neither reads nor disturbs the working tree and can be run from a
+clone that is mid-edit or behind. It is called every morning at 05:10 UTC and again at 11:40 UTC on
+weekdays; the dense slots are what catches up if a call is ever missed.
+
+Sixteen tests cover the decision, including that a commit message cannot reach the shell through it
+and that the kick and the guard agree on when the day begins.

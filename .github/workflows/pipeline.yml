@@ -3,46 +3,80 @@ on:
   push:
     branches: [main]
     paths-ignore: ["docs/**", "design/**", "research/**"]
+  # Fifteen chances a day rather than two appointments. GitHub delivered four of this repository's
+  # last eight scheduled events, three to five hours late apiece, and the two workflows that used to
+  # share this concurrency group evicted each other's queued runs on top of that. One workflow now
+  # holds the group, and the first step decides what is still owed, so a late slot does the work, an
+  # unnecessary one exits in seconds and a dropped one is covered by the next. Minute 17 because the
+  # scheduler is at its worst on the hour.
   schedule:
-    - cron: "10 5 * * *"     # daily 06:10 UK (BST) / 05:10 UTC
-    - cron: "40 11 * * 1-5"  # weekday midday backstop; GitHub's cron can skip a slot on a quiet repository
+    - cron: "17 5-19 * * 1-5"
+    - cron: "17 5-10 * * 6,0"
   workflow_dispatch:
     inputs:
+      mode:
+        description: "auto, or force one of: full, news, build"
+        default: auto
       adapters:
-        description: "Adapters to run (space separated), default all daily"
-        default: "esma yahoo pillar3 events fred dtcc ice"
+        description: "Adapters for a full run, space separated; blank for the daily set"
+        default: ""
 permissions:
   contents: write
   pages: write
   id-token: write
 concurrency: pipeline
 jobs:
-  run:
+  decide:
     runs-on: ubuntu-latest
+    outputs:
+      mode: ${{ steps.d.outputs.mode }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - id: d
+        env:                       # through the environment, never interpolated into the shell
+          EVENT: ${{ github.event_name }}
+          MESSAGE: ${{ github.event.head_commit.message }}
+          WANTED: ${{ github.event.inputs.mode }}
+        run: bash .github/scripts/decide.sh
+
+  run:
+    needs: decide
+    if: ${{ needs.decide.outputs.mode != 'skip' }}
+    runs-on: ubuntu-latest
+    env:
+      MODE: ${{ needs.decide.outputs.mode }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11", cache: pip }
       - run: pip install -r requirements.txt
       - name: OCR engine for image-only PDFs
+        if: ${{ needs.decide.outputs.mode == 'full' }}
         run: sudo apt-get install -y -qq tesseract-ocr >/dev/null
-      # A push whose commit message contains [collect] behaves like a scheduled run.
-      - name: Daily adapters (scheduled, manual, or a [collect] push)
-        if: ${{ github.event_name != 'push' || contains(github.event.head_commit.message, '[collect]') }}
+
+      - name: Daily adapters
+        if: ${{ needs.decide.outputs.mode == 'full' }}
         run: python -m bankcredit.cli run ${{ github.event.inputs.adapters || 'esma sovereign yahoo pillar3 events fred dtcc ice' }}
         continue-on-error: true      # one failing source must not stop the others from being published
       - name: Load answers from the review queue
-        if: ${{ github.event_name != 'push' || contains(github.event.head_commit.message, '[collect]') }}
+        if: ${{ needs.decide.outputs.mode == 'full' }}
         run: python -m bankcredit.cli review ingest
       - name: Source health
+        if: ${{ needs.decide.outputs.mode == 'full' }}
         run: python -m bankcredit.cli health
         continue-on-error: true          # the report is the point; a broken locator must not stop the publish
-
       - name: Quarterly adapters on the 1st, 15th and 25th
-        if: ${{ github.event_name == 'schedule' }}
+        if: ${{ needs.decide.outputs.mode == 'full' }}
         run: |
           d=$(date -u +%d); case "$d" in 01|15|25) python -m bankcredit.cli run fdic eba edgar te esef fundamentals nsm_release ;; *) echo "skip";; esac
         continue-on-error: true
+
+      - name: Headlines only (Google News per entity plus the agency sweep)
+        if: ${{ needs.decide.outputs.mode == 'news' }}
+        run: BANKCREDIT_NEWS_ONLY=1 python -m bankcredit.cli run events
+        continue-on-error: true
+
       # Bond quotes are fetched afresh for every build (45 days of history per bond) and never committed:
       # the exchange's terms allow private use, not redistribution. Only the change against peers is published.
       - name: Bond quotes (private, rebuilt each run)
@@ -52,22 +86,36 @@ jobs:
         env:
           COUNTERPARTY_OVERLAY: ${{ secrets.COUNTERPARTY_OVERLAY }}
         run: python -m bankcredit.cli build
+
       - name: Commit data
-        if: ${{ github.event_name != 'push' || contains(github.event.head_commit.message, '[collect]') }}
+        if: ${{ needs.decide.outputs.mode != 'build' }}
         run: |
+          set -euo pipefail
+          mkdir -p data/state
+          # The stamps the next run reads to decide whether anything is owed. Written here, with the
+          # data they describe, so a run that fails before publishing leaves the work still owed.
+          date -u +%FT%TZ > data/state/last-headlines
+          if [ "$MODE" = full ]; then
+            date -u +%FT%TZ > data/state/last-collect
+            git add data/
+          else
+            git add data/events.parquet data/runs.parquet data/history.parquet data/json data/state
+          fi
           git config user.name "counterparty-bot"
           git config user.email "philsmith871010@gmail.com"
-          git add data/
           git checkout -- . 2>/dev/null || true
-          git diff --cached --quiet || git commit -m "Pipeline data $(date -u +%F)"
+          git diff --cached --quiet || git commit -m "$([ "$MODE" = full ] && echo "Pipeline data $(date -u +%F)" || echo "Headlines $(date -u +%FT%H:%M)")"
           git pull --rebase -X theirs origin main   # a code push in the meantime rebuilt the same JSON; the fresh data wins
           git push
+
       - uses: actions/configure-pages@v5
         with: { enablement: true }
       - uses: actions/upload-pages-artifact@v3
         with: { path: site }
+
   deploy:
-    needs: run
+    needs: [decide, run]
+    if: ${{ needs.decide.outputs.mode != 'skip' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
