@@ -47,8 +47,11 @@ python -m bankcredit.cli learn > /dev/null 2>&1 || true
 python -m bankcredit.cli health || true
 git add data/facts.parquet data/documents.parquet data/runs.parquet data/events.parquet data/review 2>/dev/null || true   # data/review includes browser-links.json and news_verdicts.json
 if ! git diff --cached --quiet; then
-  # [collect] makes the push run the full daily collection too, a backstop for GitHub's schedule
-  git commit -m "Local run $(date -u +%F): Pillar 3 collection and review [collect]"
+  git commit -m "Local run $(date -u +%F): Pillar 3 collection and review"
   git push
 fi
+# Then ask for the day's collection, if it is still owed. The marker used to go in the message
+# above unconditionally, which now means collecting twice on any day the 05:10 kick already ran;
+# kick.sh reads the stamps on origin/main and decides, so this is a no-op when there is nothing owed.
+bash tools/kick.sh || true
 echo "==== $(date -u +%FT%TZ) done"

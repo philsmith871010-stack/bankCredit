@@ -29,6 +29,18 @@ The job runs weekdays at 07:30 local time (edit the plist to change it). Run it
 by hand any time with `scripts/mac/counterparty.sh`; the log is
 `data/cache/local-run.log`.
 
+To start the day's collection by hand at any time, from any clone:
+
+```bash
+bash tools/kick.sh              # collect if today's collection is still owed
+bash tools/kick.sh --dry-run    # say what it would do, push nothing
+```
+
+It pushes a commit carrying `[collect]`, which the GitHub pipeline reads as "collect now", and
+declines if the collection has already happened or is still running. The commit is built in a
+temporary index, so it is safe to run from a clone that is mid-edit or behind. The Mac job calls
+it at the end of every run, and a scheduled call makes it at 05:10 UTC each morning.
+
 Only one run works the queue at a time: the script takes `data/cache/run.lock`
 and a second run exits rather than answering the same items twice. Before
 working the queue by hand, check whether the scheduled run holds it:
