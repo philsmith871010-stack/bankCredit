@@ -2,7 +2,10 @@
 // Up to six names are pinned and carry fixed colours (assigned in pin order, kept while pinned); the rest
 // are thin grey context. A crosshair reads every pinned series at one date. State lives in the URL hash.
 (function(){
-  var dash=document.getElementById('dash');if(!dash)return;var chart=null;var PANELS={rank:'c-rank',trend:'c-trend',bump:'c-bump',scatter:'c-scatter'};
+  var dash=document.getElementById('dash');if(!dash)return;
+  // running as a tab, the state it writes has to keep the tab in front of it, or a reload
+  // lands on the first tab with the analysis state in the address bar
+  var panelId=((dash.closest&&dash.closest('.panel[data-panel]'))||{dataset:{}}).dataset.panel||'';var chart=null;var PANELS={rank:'c-rank',trend:'c-trend',bump:'c-bump',scatter:'c-scatter'};
   var ylab={hidden:false},side={innerHTML:''},pinsBar=document.getElementById('cp-pins'),tableEl=document.getElementById('c-table'),count=document.getElementById('cp-count'),sel=document.getElementById('cp-metric'),sel2=document.getElementById('cp-metric2'),q=document.getElementById('cp-q'),sugg=document.getElementById('cp-sugg');
   var NAVY='#0a2540',GREY='#d3dae3',MID='#7d93ad',INK='#243240',MUTED='#6c757d';
   var SLOTS=['#2a78d6','#eb6834','#1baf7a','#eda100','#e87ba4','#008300'];   // validated categorical order; never cycled past six
@@ -12,7 +15,7 @@
   function watchIds(){return ls('counterparty.watch')}
   function policyIds(){return ls('counterparty.policy').map(function(x){return x.id})}
   function readHash(){var h=location.hash.replace('#','');if(!h)return;h.split('&').forEach(function(kv){var p=kv.split('=');var k=p[0],v=decodeURIComponent(p[1]||'');if(k==='extra'||k==='pins'){state[k]=v?v.split(','):[];if(k==='pins')userPinned=true}else if(k in state&&k!=='pins'&&k!=='extra')state[k]=v})}
-  function writeHash(){var parts=['set='+state.set,'metric='+state.metric,'metric2='+state.metric2];if(state.extra.length)parts.push('extra='+state.extra.join(','));if(userPinned&&state.pins.length)parts.push('pins='+state.pins.join(','));history.replaceState(null,'','#'+parts.join('&'))}
+  function writeHash(){var parts=(panelId?[panelId]:[]).concat(['set='+state.set,'metric='+state.metric,'metric2='+state.metric2]);if(state.extra.length)parts.push('extra='+state.extra.join(','));if(userPinned&&state.pins.length)parts.push('pins='+state.pins.join(','));history.replaceState(null,'','#'+parts.join('&'))}
   // the definition marker beside the measure picker follows whatever is chosen
   var GK={score:'score',rating_grade:'composite',cet1_ratio:'cet1_ratio',leverage_ratio:'leverage_ratio',
           total_capital_ratio:'total_capital_ratio',lcr:'lcr',nsfr:'nsfr',roe:'roe',roa:'roa',nim:'nim',

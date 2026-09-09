@@ -112,10 +112,23 @@ def test_home_loads_its_data_under_a_subdirectory(page, server):
     assert not page.bad, page.bad
 
 
-def test_the_analysis_page_loads_its_own_data(page, server):
-    visit(page, server, "compare/index.html")
+def test_the_analysis_tab_loads_its_own_data(page, server):
+    """Analysis is a tab now: its markup, its script and its 444 KB of data all wait for the click."""
+    visit(page, server, "index.html")
+    assert page.eval_on_selector_all("#cp-metric option", "e => e.length") == 0
+    page.eval_on_selector('.tab[data-tab="analysis"]', "e => e.click()")
+    page.wait_for_timeout(2500)
     assert page.eval_on_selector_all("#cp-metric option", "e => e.length") > 5
+    assert page.eval_on_selector_all("#dash svg", "e => e.length") == 4
+    # the tab keeps the state the panel writes after it, so a reload comes back here
+    assert page.evaluate("location.hash").startswith("#analysis&")
     assert not page.errors, page.errors
+
+
+def test_the_old_analysis_address_carries_on(page, server):
+    visit(page, server, "compare/index.html")
+    assert page.evaluate("location.pathname").endswith("index.html")
+    assert page.eval_on_selector(".tab.active", "e => e.dataset.tab") == "analysis"
 
 
 def test_a_profile_renders_its_figures(page, server):
@@ -376,12 +389,12 @@ def test_a_heavy_panel_is_warmed_before_it_is_asked_for(page, server):
     assert page.eval_on_selector_all("#board tbody tr", "e => e.length") > 20
 
 
-# ---- five tabs, not one long page ------------------------------------------------------------
-def test_the_counterparty_page_is_five_tabs(page, server):
+# ---- tabs, not one long page -----------------------------------------------------------------
+def test_the_policy_page_is_tabs(page, server):
     """The approved names ran the length of the page with the shortlist under them."""
     _seed_many(page, server, 4)
     tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
-    assert tabs == ["policy", "likeforlike", "universe", "ratings", "events"]
+    assert tabs == ["policy", "likeforlike", "universe", "ratings", "events", "analysis"]
     assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 4
     assert page.eval_on_selector("#tn-policy", "e => e.textContent") == "4"
     page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")

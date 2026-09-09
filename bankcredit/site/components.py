@@ -240,15 +240,10 @@ def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | 
 
 # One page does the work - policy, universe, ratings, events - so the nav names it once. Analysis
 # stays separate because comparing several banks is the one thing a single name's dialog cannot do.
-NAV = [("home", "Policy", "grid", "index.html"),
-       ("compare", "Analysis", "activity", "compare/index.html"),
-       ("admin", "Method and data", "list", "admin/index.html")]
-
-
 def shell(title: str, content: str, active: str, root: str = "", generated: str = "", subtitle: str = "") -> str:
-    items = "".join(
-        f'<a class="nav{" active" if k == active else ""}" href="{root}{href}">{ico(ic, 17, ORANGE if k == active else "rgba(255,255,255,0.7)")}<span>{lab}</span></a>'
-        for k, lab, ic, href in NAV)
+    """One page, no rail. The site is one page and three tabs of it; a navigation column of three
+    links, one of them always the page you are on, spent 220px saying so. The build stamp it used to
+    carry sits in the header, where it is still the first thing a reader checks."""
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)} · Counterparty · PWLBtoday</title>
@@ -259,12 +254,9 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <script type="speculationrules">{SPECULATION}</script>
 </head><body>{symbols()}
 <header class="top"><a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>
-<button class="menu-btn" id="menuBtn" aria-label="Menu">{ico("menu", 20, NAVY)}</button>
 <div class="crumb"><span class="crumb-app">Counterparty</span>{'' if title == "Counterparty" else f'<span class="crumb-sep">/</span><span class="crumb-page">{esc(title)}</span>'}</div>
-<div class="top-right"><span class="beta">Beta</span></div></header>
-<div class="frame"><aside class="side" id="side"><div class="side-label">Counterparty</div>{items}<div class="side-fill"></div>
-<div class="side-status">{ico("clock", 14, ORANGE)} Built {esc(generated[:16].replace("T", " "))} UTC</div></aside>
-<main class="main">{content}</main></div>
+<div class="top-right"><span class="built">{ico("clock", 13, MUTED)} Built {esc(generated[:16].replace("T", " "))} UTC</span><span class="beta">Beta</span></div></header>
+<div class="frame"><main class="main">{content}</main></div>
 <dialog id="gloss-dlg" class="gloss-dlg"></dialog>
 <footer class="foot"><button type="button" class="glink" id="glink">What do these numbers mean?</button> Counterparty is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}admin/index.html#method">Method</a> · <a href="{root}admin/index.html#status">Data status</a></footer>
 <script id="gloss" type="application/json">{glossary.payload()}</script>

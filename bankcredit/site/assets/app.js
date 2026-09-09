@@ -6,9 +6,8 @@
   document.addEventListener('click',function(e){
     var b=e.target.closest('.watch,.watch-btn');if(b){e.preventDefault();var w=watch(),i=w.indexOf(b.dataset.id);if(i>=0)w.splice(i,1);else w.push(b.dataset.id);setWatch(w);paintWatch();applyFilter();return}
     var f=e.target.closest('.filter');if(f){document.querySelectorAll('.filter').forEach(function(x){x.classList.remove('active')});f.classList.add('active');applyFilter();return}
-    var t=e.target.closest('.tab');var card=t&&t.closest('.tabs-card');if(t&&card){card.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});card.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.dataset.panel===t.dataset.tab)});t.classList.add('active');history.replaceState(null,'','#'+t.dataset.tab);loadPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));return}
+    var t=e.target.closest('.tab');var card=t&&t.closest('.tabs-card');if(t&&card){card.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});card.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.dataset.panel===t.dataset.tab)});t.classList.add('active');if(location.hash.replace('#','').split('&')[0]!==t.dataset.tab)history.replaceState(null,'','#'+t.dataset.tab);loadPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));return}
     var th=e.target.closest('th[data-sort]');if(th){sortBy(th.dataset.sort,th.cellIndex);return}
-    if(e.target.closest('#menuBtn')){document.body.classList.toggle('nav-open')}
   });
   var q=document.getElementById('q');if(q)q.addEventListener('input',applyFilter);
   function applyFilter(){var tb=document.querySelector('#board tbody');if(!tb)return;var region=(document.querySelector('.filter.active')||{}).dataset||{};var term=(q&&q.value||'').toLowerCase();var w=watch();
@@ -19,7 +18,6 @@
       if(k.indexOf('col')===0){av=+((a.children[ci0]||{}).dataset||{}).v||0;bv=+((b.children[ci0]||{}).dataset||{}).v||0}else if(k==='score'){av=+a.dataset.score;bv=+b.dataset.score}else if(k==='rating'){av=-(+a.dataset.g);bv=-(+b.dataset.g);if(!dir.ratingInit){dir.ratingInit=1;dir[k]='desc'}}else if(k==='asof'){av=(a.querySelector('.age')||{}).textContent||'';bv=(b.querySelector('.age')||{}).textContent||'';return dir[k]==='asc'?av.localeCompare(bv):bv.localeCompare(av)}
       else{var ci={cet1:3,leverage:4,lcr:5}[k];av=parseFloat((a.children[ci].textContent||'').replace(/[^0-9.\-]/g,''))||-1;bv=parseFloat((b.children[ci].textContent||'').replace(/[^0-9.\-]/g,''))||-1}
       return dir[k]==='asc'?av-bv:bv-av});rows.forEach(function(r){tb.appendChild(r)})}
-  var h=location.hash.replace('#','');if(h){var t=document.querySelector('.tab[data-tab="'+h+'"]');if(t)t.click()}
   paintWatch();
   // the board arrives with a panel, so its watch marks and the current filter are painted then
   (window.__panelInit=window.__panelInit||[]).push(function(){paintWatch();applyFilter()});
@@ -51,6 +49,11 @@ function loadPanel(p){
   w.then(function(html){
     p.innerHTML=html;
     (window.__panelInit||[]).forEach(function(f){try{f()}catch(e){}});
+    // a panel may bring its own script; it runs once, after its markup is in place, and the
+    // data behind it is asked for then rather than on every visit to the page
+    if(p.dataset.js){var r=document.body.getAttribute('data-root'); r=(r==null?'../':r);
+      var sc=document.createElement('script');sc.src=r+p.dataset.js;document.body.appendChild(sc);
+      p.removeAttribute('data-js')}
   }).catch(function(){
     p.dataset.loaded='';
     p.innerHTML='<div class="empty">Could not load this panel. Reload the page.</div>';
@@ -206,4 +209,11 @@ initRatingGrid();
   });
   document.addEventListener('keydown',function(e){if(e.key==='Escape')hide()});
   addEventListener('scroll',hide,true);addEventListener('resize',hide);
+})();
+
+// The tab named in the address, opened last: a tab click reaches for the panel loader, which is
+// defined further down this file, and a var is not its value until the line that assigns it.
+(function(){
+  var h=location.hash.replace('#','').split('&')[0]; if(!h)return;
+  var t=document.querySelector('.tab[data-tab="'+h+'"]'); if(t)t.click();
 })();

@@ -756,7 +756,8 @@ def home_panels(board, status, generated) -> dict[str, str]:
     anything was drawn. They are written here instead and fetched on demand.
     """
     return {"ratings": _panel_content(page_ratings(generated, inner=True)),
-            "events": _panel_content(page_events(board, status, generated, inner=True))}
+            "events": _panel_content(page_events(board, status, generated, inner=True)),
+            "analysis": compare_content()}
 
 
 def page_home(board, status, generated):
@@ -775,7 +776,8 @@ def page_home(board, status, generated):
                  '<button class="tab" data-tab="likeforlike">Like-for-like<span class="tab-n" id="tn-ll"></span></button>'
                  '<button class="tab" data-tab="universe">Every covered name</button>'
                  '<button class="tab" data-tab="ratings">Ratings</button>'
-                 '<button class="tab" data-tab="events">Events</button></div>'
+                 '<button class="tab" data-tab="events">Events</button>'
+                 '<button class="tab" data-tab="analysis">Analysis</button></div>'
                  '<section class="panel active" data-panel="policy">'
                  '<div id="policy-body"><div class="sk-cards" aria-hidden="true">'
                  + '<span class="sk"></span>' * 4 + '</div></div>'
@@ -785,6 +787,8 @@ def page_home(board, status, generated):
                  f'<section class="panel" data-panel="universe">{UNIVERSE_PANEL}</section>'
                  '<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html"></section>'
                  '<section class="panel" data-panel="events" data-src="data/panels/events.html"></section>'
+                 '<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html"'
+                 ' data-js="assets/compare.js"></section>'
                  '</div>')
     return (c.shell("Policy", content, "home", "", generated)
             .replace('<script src="assets/app.js"></script>', '<script src="assets/app.js"></script><script src="assets/policy.js"></script>')
@@ -927,7 +931,7 @@ def _write(path, html: str) -> None:
     path.write_text(_WS.sub("><", html))
 
 
-def page_compare(generated):
+def compare_content() -> str:
     sets = [("all", "Everyone"), ("uk_large", "UK majors"), ("uk_mid", "UK mid-sized"), ("uk_small", "UK small banks"), ("uk_bs", "Building societies"),
             ("eu_large", "EU and Nordic"), ("us", "US"), ("ch", "Switzerland"), ("aus", "Australia"), ("can", "Canada"), ("asia", "Asia"), ("gulf", "Gulf"),
             ("watch", "Watching"), ("policy", "My policy")]
@@ -935,7 +939,7 @@ def page_compare(generated):
     def panel(pid, title, sub):
         return (f'<section class="panel-c" id="p-{pid}"><div class="pc-head"><h3>{c.esc(title)} <span class="muted small">{c.esc(sub)}</span></h3>'
                 f'<button class="pc-x" data-panel="{pid}" title="Expand or restore" aria-label="Expand {c.esc(title)}">⤢</button></div><div class="pc-body cp-chart" id="c-{pid}"><div class="empty">Loading…</div></div></section>')
-    content = f'''<div class="page-head"><div><h1>Analysis</h1><div class="lede">One peer set, one measure, four views. Pin up to six names \u2014 they keep their colour in every panel.</div></div></div>
+    return f'''<p class="small muted panel-lede">One peer set, one measure, four views. Pin up to six names \u2014 they keep their colour in every panel.</p>
 <div class="card cp-card"><div class="cp-tools">
 <div class="filters" id="cp-sets">{chips}</div>
 <div class="cp-row"><label class="small muted">Measure <select id="cp-metric"></select></label><button type="button" class="i" id="cp-def" data-t="score" aria-expanded="false" aria-label="What is this measure?">i</button>
@@ -951,7 +955,6 @@ def page_compare(generated):
 </div>
 <div class="card cp-card"><div class="pc-head"><h3>The set in numbers <span class="muted small">· latest reported figures; click a heading to sort, a swatch to pin</span></h3></div><div class="table-wrap" id="c-table"></div></div>
 <div class="table-foot"><span>Figures are the latest reported by each name; sources and dates are on each profile. Ranks count only names with a figure at that date. The score's history is recomputed with today's method and rating on the ratios as they stood.</span></div>'''
-    return c.shell("Analysis", content, "compare", "../", generated).replace("</body>", '<script src="../assets/compare.js"></script></body>')
 
 # What the policy page's dialog reads when a card is opened. The profile JSON carries the
 # document, page, method and confidence behind every point, which is the right record for a
@@ -1032,7 +1035,7 @@ def build():
     (OUT / "ratings").mkdir(exist_ok=True)
     _write(OUT / "ratings" / "index.html", page_gone("Ratings", generated))
     (OUT / "compare").mkdir(exist_ok=True); (OUT / "data").mkdir(exist_ok=True)
-    _write(OUT / "compare" / "index.html", page_compare(generated))
+    _write(OUT / "compare" / "index.html", page_gone("Analysis", generated, "../index.html#analysis", "home"))
     shutil.copy(store.DATA / "json" / "compare.json", OUT / "data" / "compare.json")
     (OUT / "coverage").mkdir(exist_ok=True)
     _write(OUT / "coverage" / "index.html", page_gone("Coverage", generated, "../admin/index.html#coverage", "admin"))
