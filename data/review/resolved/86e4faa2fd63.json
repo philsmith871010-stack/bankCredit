@@ -1,0 +1,17 @@
+{
+ "id": "86e4faa2fd63",
+ "entity_id": "family-bs",
+ "url": "https://www.familybuildingsociety.co.uk/docs/librariesprovider3/pdfs/agm-documents/g008-0326-report-2025_web-spreads.pdf?sfvrsn=5e6ae3e1_1",
+ "page": 60,
+ "reference_date": "2025-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 175.287,
+  "tier1_capital": 175.287,
+  "total_capital": 175.825,
+  "cet1_ratio": 17.8,
+  "leverage_ratio": 6.1,
+  "lcr": 235.0
+ },
+ "note": "Annual Report & Accounts 2025; Family's Pillar 3 disclosure stops at 2023. Capital amounts from the regulatory capital note (Group column), converted from GBP thousands - the note's prior-year comparative matches the CET1 capital already stored from the Pillar 3, so the basis is the same. CET1 ratio, leverage ratio and LCR from the strategic report. Total RWA is not stated in the annual report, so it is left out, and with it the Tier 1 and total capital ratios; Tier 1 capital equals CET1 as the note shows no AT1."
+}

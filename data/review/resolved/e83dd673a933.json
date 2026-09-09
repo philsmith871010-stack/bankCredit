@@ -1,0 +1,5 @@
+{
+ "id": "e83dd673a933",
+ "skip": true,
+ "note": "TSB Bank plc Annual Report and Accounts 2024, not a Pillar 3 disclosure. Its note 'Capital resources' gives capital amounts on the statutory basis and no RWA at all, so it is strictly poorer than what is already loaded for 2024-12-31 from TSB's own Pillar 3 disclosure (which carries RWA and the Tier 1 and total capital ratios as well). Ingesting it would replace better figures with worse ones."
+}

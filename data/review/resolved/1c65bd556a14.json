@@ -1,0 +1,15 @@
+{
+ "id": "1c65bd556a14",
+ "entity_id": "lloyds-bank-corporate-markets",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-corporate-markets-plc/2024/q1/2024-lbcm-q1-pillar-3.pdf",
+ "page": 3,
+ "reference_date": "2024-03-31",
+ "currency": "GBP",
+ "values": {
+  "rwa": 20805.0,
+  "leverage_exposure": 76908.0,
+  "leverage_ratio": 4.6,
+  "lcr": 167.0
+ },
+ "note": "Interim quarterly Pillar 3: no KM1 template by design (the PRA quarterly set is LR2/OV1 only, capital resources are disclosed half-yearly). Recorded what the document does state - total RWA from OV1, and the UK leverage ratio and exposure measure excluding claims on central banks from LR2 - which is the same set the pipeline already stores for the 2025 Q1/Q3 disclosures of these banks. LCR is the 12-month average from LIQ1."
+}

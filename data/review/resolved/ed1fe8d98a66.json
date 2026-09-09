@@ -1,0 +1,15 @@
+{
+ "id": "ed1fe8d98a66",
+ "entity_id": "furness-bs",
+ "url": "https://www.furnessbs.co.uk:443/media/yqilyc14/annual_report.pdf",
+ "page": 12,
+ "reference_date": "2025-12-31",
+ "currency": "GBP",
+ "values": {
+  "total_capital": 88.8,
+  "cet1_ratio": 16.0,
+  "total_capital_ratio": 16.1,
+  "lcr": 192.9
+ },
+ "note": "Annual Report & Accounts 2025; Furness published a Pillar 3 only for 2022. Regulatory capital \u00a388.8m and total capital ratio 16.1% from the five-year summary on page 10, CET1 ratio 16.0% and LCR 192.9% from the business review on page 12. The report states no RWA and no CET1 capital amount, and there is no leverage ratio or NSFR anywhere in it, so those are left out."
+}

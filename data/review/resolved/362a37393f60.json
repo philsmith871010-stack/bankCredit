@@ -1,0 +1,16 @@
+{
+ "id": "362a37393f60",
+ "entity_id": "suffolk-bs",
+ "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Report-and-Accounts-2025.pdf",
+ "page": 79,
+ "reference_date": "2025-11-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 46.752,
+  "tier1_capital": 46.752,
+  "total_capital": 47.113,
+  "cet1_ratio": 13.3,
+  "tier1_ratio": 13.3
+ },
+ "note": "Report and Accounts for the year ended 30 November 2025; Suffolk publishes no Pillar 3 of its own. Capital amounts from the Capital Structure note on page 79, converted from GBP thousands: CET1 46,752, Tier 2 361, total 47,113. The strategic report on page 14 states a Tier 1 capital ratio of 13.3%; the note shows no AT1 instrument, so Tier 1 is CET1 and the CET1 ratio is the same 13.3%. Total RWA, leverage and LCR are not disclosed."
+}

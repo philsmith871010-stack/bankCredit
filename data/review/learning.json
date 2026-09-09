@@ -2951,5 +2951,430 @@
   "page_reviewer": 9,
   "date_extractor": "2024-06-30",
   "date_reviewer": "2024-06-30"
+ },
+ {
+  "date": "2026-09-09T06:51:56",
+  "id": "020546dcc97f",
+  "entity_id": "tsb",
+  "reason": "annual report, not a Pillar 3 disclosure: read the capital resources table behin",
+  "skip": true
+ },
+ {
+  "date": "2026-09-09T06:51:57",
+  "id": "0c1be243cbf8",
+  "entity_id": "cumberland-bs",
+  "reason": "annual report: read the capital position from the notes. The named Pillar 3 file",
+  "skip": true
+ },
+ {
+  "date": "2026-09-09T06:51:58",
+  "id": "1c65bd556a14",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2024-03-31"
+ },
+ {
+  "date": "2026-09-09T06:51:59",
+  "id": "2e09aeada0b1",
+  "entity_id": "nab",
+  "reason": "error:missing core row cet1_ratio; info:no LCR row (not disclosed at this level,",
+  "skip": false,
+  "compared": 3,
+  "matched": 2,
+  "mismatches": {
+   "tier1_capital": [
+    12.0,
+    46051.0
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2017-06-30",
+  "date_reviewer": "2017-06-30"
+ },
+ {
+  "date": "2026-09-09T06:51:59",
+  "id": "362132c81961",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2015-06-30 disagrees with expected 2030-06-30; info:tier1_ratio",
+  "skip": false,
+  "compared": 6,
+  "matched": 5,
+  "mismatches": {
+   "cet1_capital": [
+    8.17,
+    2834.9
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 3,
+  "date_extractor": "2015-06-30",
+  "date_reviewer": "2015-06-30"
+ },
+ {
+  "date": "2026-09-09T06:51:59",
+  "id": "362a37393f60",
+  "entity_id": "suffolk-bs",
+  "reason": "report and accounts: read the capital position from the notes, since Suffolk pub",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 79,
+  "date_extractor": null,
+  "date_reviewer": "2025-11-30"
+ },
+ {
+  "date": "2026-09-09T06:51:59",
+  "id": "396296f79cd1",
+  "entity_id": "bank-of-scotland",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2024-03-31"
+ },
+ {
+  "date": "2026-09-09T06:51:59",
+  "id": "4160595c2c17",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2024-09-30"
+ },
+ {
+  "date": "2026-09-09T06:52:00",
+  "id": "4c3711fc59b9",
+  "entity_id": "tsb",
+  "reason": "annual report, not a Pillar 3 disclosure: read the capital resources table behin",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 70,
+  "date_extractor": null,
+  "date_reviewer": "2022-12-31"
+ },
+ {
+  "date": "2026-09-09T06:52:01",
+  "id": "5f787723cb31",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2014-09-30"
+ },
+ {
+  "date": "2026-09-09T06:52:01",
+  "id": "656b1aa299cc",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-09T06:52:01",
+  "id": "6d1302543c71",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    13.2
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 9,
+  "date_extractor": "2024-03-31",
+  "date_reviewer": "2024-03-31"
+ },
+ {
+  "date": "2026-09-09T06:52:02",
+  "id": "7f7d4d896886",
+  "entity_id": "family-bs",
+  "reason": "the society's report for the year: read the capital position from the notes, sin",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 58,
+  "date_extractor": null,
+  "date_reviewer": "2024-12-31"
+ },
+ {
+  "date": "2026-09-09T06:52:02",
+  "id": "86e4faa2fd63",
+  "entity_id": "family-bs",
+  "reason": "the society's report for the year: read the capital position from the notes, sin",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 60,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-09-09T06:52:02",
+  "id": "8783f3d74488",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 3,
+  "matched": 3,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 9,
+  "date_extractor": "2023-09-30",
+  "date_reviewer": "2023-09-30"
+ },
+ {
+  "date": "2026-09-09T06:52:02",
+  "id": "8a8f2cb839a0",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2017-06-30 disagrees with expected 2030-06-30; info:tier1_ratio",
+  "skip": false,
+  "compared": 6,
+  "matched": 5,
+  "mismatches": {
+   "cet1_capital": [
+    8.27,
+    3148.3
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 3,
+  "date_extractor": "2017-06-30",
+  "date_reviewer": "2017-06-30"
+ },
+ {
+  "date": "2026-09-09T06:52:03",
+  "id": "914f0e96fe7c",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-09T06:52:03",
+  "id": "a0b6402fa833",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    13.4
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 9,
+  "date_extractor": "2023-12-31",
+  "date_reviewer": "2023-12-31"
+ },
+ {
+  "date": "2026-09-09T06:52:05",
+  "id": "bd948d523321",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-09T06:52:05",
+  "id": "c86b9c8550c8",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2015-09-30"
+ },
+ {
+  "date": "2026-09-09T06:52:05",
+  "id": "cbcf7c84531d",
+  "entity_id": "bank-of-scotland",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2024-09-30"
+ },
+ {
+  "date": "2026-09-09T06:52:05",
+  "id": "d27b51d97a83",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "warn:header date 2016-06-30 disagrees with expected 2030-06-30; info:tier1_ratio",
+  "skip": false,
+  "compared": 6,
+  "matched": 5,
+  "mismatches": {
+   "cet1_capital": [
+    8.09,
+    2952.6
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 3,
+  "date_extractor": "2016-06-30",
+  "date_reviewer": "2016-06-30"
+ },
+ {
+  "date": "2026-09-09T06:52:06",
+  "id": "e83dd673a933",
+  "entity_id": "tsb",
+  "reason": "annual report, not a Pillar 3 disclosure: read the capital resources table behin",
+  "skip": true
+ },
+ {
+  "date": "2026-09-09T06:52:06",
+  "id": "ed1fe8d98a66",
+  "entity_id": "furness-bs",
+  "reason": "annual report, not a Pillar 3 disclosure: read the capital table behind the narr",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 12,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-09-09T06:52:07",
+  "id": "f666ca93afe2",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2016-09-30"
+ },
+ {
+  "date": "2026-09-09T06:52:07",
+  "id": "f9f0979417e1",
+  "entity_id": "furness-bs",
+  "reason": "annual report, not a Pillar 3 disclosure: read the capital table behind the narr",
+  "skip": true
+ },
+ {
+  "date": "2026-09-09T07:01:43",
+  "id": "3cd1840013c2",
+  "entity_id": "bank-of-scotland",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2023-09-30"
+ },
+ {
+  "date": "2026-09-09T07:01:44",
+  "id": "5c990887e574",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "total_capital_ratio": [
+    11.5,
+    16.8
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2022-12-31",
+  "date_reviewer": "2022-12-31"
+ },
+ {
+  "date": "2026-09-09T07:01:47",
+  "id": "9bba9b00f5de",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    13.8
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 9,
+  "date_extractor": "2023-03-31",
+  "date_reviewer": "2023-03-31"
+ },
+ {
+  "date": "2026-09-09T07:01:49",
+  "id": "d41026bbeac6",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 3,
+  "matched": 3,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 9,
+  "date_extractor": "2023-06-30",
+  "date_reviewer": "2023-06-30"
+ },
+ {
+  "date": "2026-09-09T07:01:51",
+  "id": "f13f0f5a40db",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2023-09-30"
  }
 ]

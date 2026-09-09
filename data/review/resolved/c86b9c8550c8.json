@@ -1,0 +1,15 @@
+{
+ "id": "c86b9c8550c8",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2015/30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 2,
+ "reference_date": "2015-09-30",
+ "currency": "AUD",
+ "values": {
+  "rwa": 34567.7,
+  "cet1_ratio": 8.04,
+  "tier1_ratio": 10.48,
+  "total_capital_ratio": 12.46
+ },
+ "note": "Quarterly APS 330 update: no common disclosure template, so no capital amounts. Table 3 Capital Adequacy gives total RWA and the three consolidated-group ratios in the current-period (left) column."
+}

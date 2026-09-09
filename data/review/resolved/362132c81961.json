@@ -1,0 +1,18 @@
+{
+ "id": "362132c81961",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2015/30-june---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 3,
+ "reference_date": "2015-06-30",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 2834.9,
+  "tier1_capital": 3678.1,
+  "total_capital": 4363.0,
+  "rwa": 34712.9,
+  "cet1_ratio": 8.17,
+  "tier1_ratio": 10.6,
+  "total_capital_ratio": 12.57
+ },
+ "note": "Full APS 330 common disclosure template. CET1 capital is row 29, Tier 1 row 45, total capital row 59, total RWA row 60, and the ratios rows 61-63; the extractor had read the row-61 ratio into cet1_capital. No LCR table in this document (APS 210 LCR reporting began 1 January 2015). Row 64 buffer requirement (7.00%) left out to keep this bank's series consistent - no other period carries it."
+}

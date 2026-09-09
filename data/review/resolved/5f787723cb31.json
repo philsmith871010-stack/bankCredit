@@ -1,0 +1,14 @@
+{
+ "id": "5f787723cb31",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2014/30-september---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 2,
+ "reference_date": "2014-09-30",
+ "currency": "AUD",
+ "values": {
+  "cet1_ratio": 7.83,
+  "tier1_ratio": 9.01,
+  "total_capital_ratio": 11.16
+ },
+ "note": "Older, shorter APS 330 format: the three consolidated-group ratios are stated, but no total RWA row - only the component risk-weighted amounts, which sum to 34,768.2m. Not recorded as RWA, since the document does not state it."
+}

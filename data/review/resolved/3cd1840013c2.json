@@ -1,0 +1,14 @@
+{
+ "id": "3cd1840013c2",
+ "entity_id": "bank-of-scotland",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2023/q3/2023-bos-q3-pillar-3.pdf",
+ "page": 3,
+ "reference_date": "2023-09-30",
+ "currency": "GBP",
+ "values": {
+  "rwa": 78569.0,
+  "leverage_exposure": 302548.0,
+  "leverage_ratio": 4.5
+ },
+ "note": "Interim quarterly Pillar 3: no KM1 template by design (the PRA quarterly set is LR2/OV1 only). Total RWA from OV1, UK leverage ratio and exposure measure excluding claims on central banks from the leverage summary - the same set already stored for these banks' other Q1/Q3 disclosures. No LIQ1 in the Bank's report - liquidity is managed at DoLSub level."
+}

@@ -1,0 +1,18 @@
+{
+ "id": "2e09aeada0b1",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/third-quarter-pillar-3-report.pdf",
+ "page": 5,
+ "reference_date": "2017-06-30",
+ "currency": "AUD",
+ "values": {
+  "rwa": 383945.0,
+  "tier1_capital": 46051.0,
+  "cet1_ratio": 9.7,
+  "tier1_ratio": 12.0,
+  "total_capital_ratio": 14.2,
+  "leverage_exposure": 866186.0,
+  "leverage_ratio": 5.3
+ },
+ "note": "APS 330 third-quarter report, as at 30 June 2017 (Level 2 Group). Section 3 gives total RWA, the three capital ratios and the leverage table. The extractor had read the ratios (9.7, 12.0) into cet1_capital and tier1_capital. CET1 capital and total capital are not stated in a quarterly report, so they are left out; Tier 1 capital comes from the leverage table and reconciles: 46,051 / 383,945 = 12.0%. No LCR at this level."
+}

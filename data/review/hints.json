@@ -194,7 +194,7 @@
   }
  },
  "tsb": {
-  "page": 10,
+  "page": 70,
   "currency": "GBP",
   "last_verified": {
    "reference_date": "2026-03-31",
@@ -203,7 +203,10 @@
     "lcr": 188.0
    },
    "method": "pdf_manual"
-  }
+  },
+  "skip_patterns": [
+   "tsb\\-bank\\-ara\\-\\d+"
+  ]
  },
  "leeds-bs": {
   "page": 6,
@@ -401,7 +404,10 @@
     "nsfr": 138.0
    },
    "method": "pdf_manual"
-  }
+  },
+  "skip_patterns": [
+   "cumberland\\-annual\\-report"
+  ]
  },
  "bank-of-baroda-uk": {
   "page": 8,
@@ -1082,7 +1088,12 @@
     "nsfr": 113.3
    },
    "method": "pdf_rules"
-  }
+  },
+  "skip_patterns": [
+   "june\\-\\d+\\-pillar\\d+\\-chart\\-pack",
+   "anz\\-\\d+\\-first\\-quarter\\-trading\\-update\\-and\\-pillar\\-\\d+\\-discussion\\-pack",
+   "new\\-pillar\\d+\\-disclosure\\-update"
+  ]
  },
  "dbs": {
   "last_verified": {
@@ -1563,7 +1574,22 @@
  },
  "furness-bs": {
   "browser_page": "https://www.furnessbs.co.uk/financial-reports/",
-  "browser_page_found": "2026-09-08"
+  "browser_page_found": "2026-09-08",
+  "page": 12,
+  "currency": "GBP",
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "total_capital": 88.8,
+    "cet1_ratio": 16.0,
+    "total_capital_ratio": 16.1,
+    "lcr": 192.9
+   },
+   "method": "pdf_manual"
+  },
+  "skip_patterns": [
+   "\\d+\\-\\d+\\-final\\-furness\\-annual\\-report\\-\\d+\\-a\\d+"
+  ]
  },
  "credit-agricole-cib": {
   "page": 4,
@@ -1763,6 +1789,37 @@
     "lcr": 167.3
    },
    "method": "pdf_rules"
+  }
+ },
+ "suffolk-bs": {
+  "page": 79,
+  "currency": "GBP",
+  "last_verified": {
+   "reference_date": "2025-11-30",
+   "values": {
+    "cet1_capital": 46.752,
+    "tier1_capital": 46.752,
+    "total_capital": 47.113,
+    "cet1_ratio": 13.3,
+    "tier1_ratio": 13.3
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "family-bs": {
+  "page": 60,
+  "currency": "GBP",
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 175.287,
+    "tier1_capital": 175.287,
+    "total_capital": 175.825,
+    "cet1_ratio": 17.8,
+    "leverage_ratio": 6.1,
+    "lcr": 235.0
+   },
+   "method": "pdf_manual"
   }
  }
 }

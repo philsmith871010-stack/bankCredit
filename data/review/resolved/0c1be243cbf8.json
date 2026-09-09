@@ -1,0 +1,5 @@
+{
+ "id": "0c1be243cbf8",
+ "skip": true,
+ "note": "The URL the locator treats as Cumberland's current annual report (cumberland.co.uk/neon/download/file/PDFs/Cumberland-Annual-Report.pdf) is still serving the Annual Report and Accounts for the year ended 31 March 2017 - checked by downloading it again today. 2017-03-31 is already loaded, and from a richer source (CET1 capital, RWA, leverage, LCR, NSFR). Nothing to add from this file; the locator needs a URL that actually resolves to the current year."
+}

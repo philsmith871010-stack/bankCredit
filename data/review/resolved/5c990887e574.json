@@ -1,0 +1,20 @@
+{
+ "id": "5c990887e574",
+ "entity_id": "state-street",
+ "url": "https://s203.q4cdn.com/888565246/files/doc_downloads/2023/02/P3-Capital-December-31-2022.pdf",
+ "page": 10,
+ "reference_date": "2022-12-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 14547.0,
+  "tier1_capital": 16523.0,
+  "total_capital": 18019.0,
+  "rwa": 107227.0,
+  "cet1_ratio": 13.6,
+  "tier1_ratio": 15.4,
+  "total_capital_ratio": 16.8,
+  "leverage_exposure": 237349.0,
+  "leverage_ratio": 7.0
+ },
+ "note": "US supplemental Basel III disclosure, not a KM1 template. Table 1 (regulatory capital structure) and Table 2 (SLR), State Street consolidated, standardized-approach column - the same basis as the rest of this bank's stored series. The extractor had picked figures out of the Minimum Requirement column (11.5 = the total capital minimum)."
+}

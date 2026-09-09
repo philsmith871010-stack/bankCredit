@@ -1,0 +1,17 @@
+{
+ "id": "4c3711fc59b9",
+ "entity_id": "tsb",
+ "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/financial-results-and-reports/2022/tsb-bank-ara-2022.pdf",
+ "page": 70,
+ "reference_date": "2022-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1780.0,
+  "tier1_capital": 1780.0,
+  "total_capital": 2106.0,
+  "cet1_ratio": 17.1,
+  "leverage_ratio": 4.2,
+  "lcr": 195.8
+ },
+ "note": "Annual report, not a Pillar 3 disclosure. Capital amounts from note 20 'Capital resources' (Bank column, not Company); the CET1 ratio 17.1%, leverage ratio 4.2% (CRD IV fully loaded) and LCR 195.8% from the strategic report on page 10. Total RWA is not stated anywhere in the document, so it is left out - the ratio implies about 10,400m but the report does not say so. Fills the 2022 gap; 2023 onwards already come from TSB's own Pillar 3 disclosures."
+}
