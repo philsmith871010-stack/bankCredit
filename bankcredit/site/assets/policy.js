@@ -92,7 +92,7 @@
   function ratings(r){return (r||[]).map(function(x){return '<span class="mono" title="'+esc(x.agency+' '+x.type+(x.outlook?' · '+x.outlook:''))+'">'+esc(x.letter)+' '+esc(x.value)+'</span>'}).join(' <span class="muted">·</span> ')||'<span class="muted">unrated</span>'}
   function shortR(r){return (r||[]).map(function(x){return '<span class="mono">'+esc(x.letter)+' '+esc(x.value)+'</span>'}).join(' <span class="muted">·</span> ')||'<span class="muted">—</span>'}
   function snapshot(e){return {score:e.score,band:e.band,grade:e.rating_grade,market:e.market&&e.market.direction,asof:e.asof}}
-  function encode(p){try{return btoa(unescape(encodeURIComponent(JSON.stringify(p)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}catch(e){return ''}}
+  // nothing makes a share link any more; a link already sent still opens one
   function decode(s){try{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))))}catch(e){return null}}
 
   // A headline is clipped to a line on a card and to two in the dialog, so the row carries the
@@ -423,7 +423,10 @@
       ((e.market&&e.market.direction!=='none')?'<div class="md-mkt">'+mkt(e.market)+'</div>':'')+
       '<div class="md-act">'+act+'<a class="filter" href="'+ROOT+'banks/'+esc(id)+'.html">Full profile</a>'+
       '<button class="filter" id="md-close" aria-label="Close">Close</button></div></div>'+
-      '<div id="md-body"><div class="empty">Loading\u2026</div></div>';
+      '<div id="md-body"><div class="md-grid">'+
+        sect('Trends','','<div class="md-wait">'+[0,1,2,3,4,5].map(function(){return '<div class="md-sk"></div>'}).join('')+'</div>','md-trend-panel')+
+        '<div class="md-col">'+sect('Ratings','',sk(4))+sect('Score make-up','',sk(5))+'</div>'+
+        sect('Events','',sk(6))+'</div></div>';
     if(!dlg.open)dlg.showModal();
     var put=function(b){var t=document.getElementById('md-body');if(t)t.innerHTML=modalBody(b,e)};
     hideTip();
@@ -556,6 +559,8 @@
     }).join('');
     return (out?out+' in 30 days':'nothing in 30 days')+' \u00b7 90-day window';
   }
+  function sk(n){var s='';for(var i=0;i<n;i++)s+='<span class="sk"></span>';
+    return '<div class="sk-rows" aria-hidden="true">'+s+'</div>'}
   function sect(title,meta,body,cls){
     return '<div class="cp-cell'+(cls?' '+cls:'')+'"><h5><span>'+title+'</span>'+
            (meta?'<em>'+meta+'</em>':'')+'</h5>'+body+'</div>';
@@ -797,7 +802,6 @@
     if(llBox)llBox.innerHTML=llHtml||'<div class="empty">Approve a name and this fills with the covered names that match the standing you accept.</div>';
     tabCount('tn-policy',p.length); tabCount('tn-ll',llN);
     renderUni();
-    var link=document.getElementById('pol-link');if(link){link.value=p.length?location.href.split('#')[0]+'#p='+encode(p):''}
   }
   function add(id,tenor){var p=load();var e=byId[id];if(!e)return;var ex=p.filter(function(x){return x.id===id})[0];
     if(ex){ex.tenor=tenor}else{p.push({id:id,tenor:tenor,added:new Date().toISOString().slice(0,10),base:snapshot(e)})}save(p);render()}
@@ -817,7 +821,6 @@
         var tn=card.dataset.tenor?+card.dataset.tenor:(card.classList.contains('uni-row')?+document.getElementById('uni-tenor').value:0);
         openModal(card.dataset.id,tn);return}
       if(ev.target.id==='pol-clear'){if(confirm('Remove every counterparty from this policy?')){save([]);render()}return}
-      if(ev.target.id==='pol-copy'){var l=document.getElementById('pol-link');l.select();try{document.execCommand('copy')}catch(e){}ev.target.textContent='Copied';setTimeout(function(){ev.target.textContent='Copy link'},1500);return}
       if(ev.target.id==='pol-use-shared'){save(window.__shared);window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);render();return}
       if(ev.target.id==='pol-keep-mine'){window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);return}
     });

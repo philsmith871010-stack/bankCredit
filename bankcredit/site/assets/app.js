@@ -28,24 +28,49 @@
 // A tab nobody has opened is not worth its HTML in the page. The heavy panels are written as
 // fragments and fetched the first time the tab is used - or when the pointer settles on it,
 // which is usually a moment earlier. Everything a fragment needs is wired again on arrival.
+function skeleton(n,cls){var s='';for(var i=0;i<(n||6);i++)s+='<span class="sk"></span>';
+  return '<div class="'+(cls||'sk-rows')+'" aria-hidden="true">'+s+'</div>'}
+// The bytes are warmed apart from the DOM: an idle browser fetches the text and holds it, and the
+// click that follows only has to insert it. Nothing is built until a tab is actually opened.
+var PANEL_TEXT={};
+function warmPanel(p){
+  if(!p||!p.dataset.src)return null;
+  var src=p.dataset.src;
+  if(!PANEL_TEXT[src]){
+    var r=document.body.getAttribute('data-root'); r=(r==null?'../':r);
+    PANEL_TEXT[src]=fetch(r+src).then(function(x){if(!x.ok)throw 0;return x.text()})
+      .catch(function(e){delete PANEL_TEXT[src];throw e});
+  }
+  return PANEL_TEXT[src];
+}
 function loadPanel(p){
-  if(!p||!p.dataset.src||p.dataset.loading)return;
-  p.dataset.loading='1';
-  var r=document.body.getAttribute('data-root'); r=(r==null?'../':r);
-  if(!p.innerHTML)p.innerHTML='<div class="empty">Loading\u2026</div>';
-  fetch(r+p.dataset.src).then(function(x){if(!x.ok)throw 0;return x.text()}).then(function(html){
+  if(!p||!p.dataset.src||p.dataset.loaded)return;
+  p.dataset.loaded='1';
+  var w=warmPanel(p); if(!w){p.dataset.loaded='';return}
+  p.innerHTML=skeleton(8);
+  w.then(function(html){
     p.innerHTML=html;
     (window.__panelInit||[]).forEach(function(f){try{f()}catch(e){}});
   }).catch(function(){
-    p.dataset.loading='';
+    p.dataset.loaded='';
     p.innerHTML='<div class="empty">Could not load this panel. Reload the page.</div>';
   });
 }
 document.addEventListener('mouseover',function(e){
   var t=e.target.closest&&e.target.closest('.tab'); if(!t)return;
   var card=t.closest('.tabs-card'); if(!card)return;
-  loadPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));
+  warmPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));
 },{passive:true});
+// once the page is done, and only on a connection that is not metered or slow
+(function(){
+  function warmAll(){
+    var c=navigator.connection||{};
+    if(c.saveData||/(^|-)2g$/.test(c.effectiveType||''))return;
+    document.querySelectorAll('.panel[data-src]').forEach(warmPanel);
+  }
+  if(window.requestIdleCallback)requestIdleCallback(warmAll,{timeout:5000});
+  else setTimeout(warmAll,2500);
+})();
 
 // Events page: type filter
 function initEventFilter(){var f=document.getElementById('event-filters');if(!f||f.dataset.init)return;f.dataset.init='1';var q=document.getElementById('evq');

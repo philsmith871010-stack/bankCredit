@@ -240,7 +240,7 @@ def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | 
 
 # One page does the work - policy, universe, ratings, events - so the nav names it once. Analysis
 # stays separate because comparing several banks is the one thing a single name's dialog cannot do.
-NAV = [("home", "Counterparty", "grid", "index.html"),
+NAV = [("home", "Policy", "grid", "index.html"),
        ("compare", "Analysis", "activity", "compare/index.html"),
        ("admin", "Method and data", "list", "admin/index.html")]
 

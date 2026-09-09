@@ -712,24 +712,14 @@ def page_ratings(generated, inner: bool = False):
     return content if inner else c.shell("Ratings", content, "ratings", "../", generated)
 
 def page_policy_content(board=None) -> str:
-    """The front door: what this covers, then the policy itself.
+    """The page opens on the work: the field that adds a name, and the tabs under it.
 
-    A first-time reader arrives at an empty list, so the opening has to carry the scale and the
-    sources instead - 152 names, 117 of them scored, read from public filings every night. The
-    prose that used to sit here said the same thing three times over; the footer already carries
-    the "information, not advice" line, and the entity guidance belongs in the field it applies to.
+    It used to open on a masthead - a title, a line of prose and a strip of counts - which said
+    what the header already says and pushed the list down the screen. The counts are on the
+    universe tab, where they are what the reader is looking at.
     """
-    rows = (board or {}).get("rows") or []
-    scored = sum(1 for r in rows if r.get("public_score") is not None)
-    rated = sum(1 for r in rows if r.get("rating_composite"))
-    countries = len({r["country"] for r in rows if r.get("country")})
-    facts = [(f"{len(rows)}", "names covered"), (f"{scored}", "scored"), (f"{rated}", "agency rated"),
-             (f"{countries}", "countries"), ("Nightly", "data refresh")]
-    strip = "".join(f'<div class="hs"><b>{v}</b><span>{l}</span></div>' for v, l in facts) if rows else ""
-    return f'''<div class="page-head hero"><div><h1>Counterparty</h1><div class="lede">Build your approved list, and see what moved since you approved each name.</div></div>
-<div class="hero-strip">{strip}</div></div>
-<div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>
-<section class="pol-wrap"><div class="pol-topbar"><h3>Add a counterparty</h3>
+    return f'''<div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>
+<section class="pol-wrap"><div class="pol-topbar">
 <div class="pol-form"><label><span>Name{c.info("counterparty")}</span><input id="pol-name" list="pol-names" placeholder="Barclays Bank UK PLC, not Barclays PLC" autocomplete="off"><datalist id="pol-names"></datalist></label>
 <label><span>Longest tenor{c.info('tenor')}</span><select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button></div></div>
 <dialog id="pol-modal" class="pol-modal"></dialog></section>'''
@@ -754,7 +744,7 @@ UNIVERSE_PANEL = f"""<p class="small muted">Every name, sortable on any column, 
 <div class="table-wrap"><table class="plain uni" id="uni-table"><thead><tr>
   <th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score{c.info("score")}</th>
   <th data-sort="rating_grade">Rating{c.info("composite")}</th><th data-sort="cet1" class="num">CET1{c.info("cet1_ratio")}</th><th data-sort="lcr" class="num">LCR{c.info("lcr")}</th>
-  <th data-sort="asof">Figures{c.info("as_at")}</th><th>Market{c.info("market_signal")}</th><th></th></tr></thead><tbody id="uni-body"></tbody></table></div>
+  <th data-sort="asof">Figures{c.info("as_at")}</th><th>Market{c.info("market_signal")}</th><th></th></tr></thead><tbody id="uni-body"><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr></tbody></table></div>
 """
 
 
@@ -787,16 +777,16 @@ def page_home(board, status, generated):
                  '<button class="tab" data-tab="ratings">Ratings</button>'
                  '<button class="tab" data-tab="events">Events</button></div>'
                  '<section class="panel active" data-panel="policy">'
-                 '<div id="policy-body"><div class="empty">Loading\u2026</div></div>'
-                 '<div class="pol-share" id="pol-share" hidden><button class="filter" id="pol-copy">Copy link</button>'
-                 '<input id="pol-link" readonly placeholder="Your share link">'
+                 '<div id="policy-body"><div class="sk-cards" aria-hidden="true">'
+                 + '<span class="sk"></span>' * 4 + '</div></div>'
+                 '<div class="pol-share" id="pol-share" hidden>'
                  '<button class="filter" id="pol-clear">Clear all</button></div></section>'
                  '<section class="panel" data-panel="likeforlike"><div id="pol-ll"></div></section>'
                  f'<section class="panel" data-panel="universe">{UNIVERSE_PANEL}</section>'
                  '<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html"></section>'
                  '<section class="panel" data-panel="events" data-src="data/panels/events.html"></section>'
                  '</div>')
-    return (c.shell("Counterparty", content, "home", "", generated)
+    return (c.shell("Policy", content, "home", "", generated)
             .replace('<script src="assets/app.js"></script>', '<script src="assets/app.js"></script><script src="assets/policy.js"></script>')
             .replace("<body>", '<body data-root="">'))
 

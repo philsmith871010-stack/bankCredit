@@ -353,6 +353,29 @@ def test_no_page_scrolls_sideways(browser, server, path, width):
         pg.close()
 
 
+# ---- something is always on screen while something is on its way ------------------------------
+def test_the_page_opens_on_a_skeleton_not_a_word(page, server):
+    """A slow connection used to get the word "Loading" in grey; it gets the shape now."""
+    html = (SITE / "index.html").read_text(encoding="utf-8")
+    assert 'class="sk-cards"' in html and "sk-tr" in html
+    assert "Loading" not in html
+    visit(page, server, "index.html")
+    assert page.eval_on_selector_all(".sk", "e => e.length") == 0, "the skeleton outstayed the data"
+
+
+def test_a_heavy_panel_is_warmed_before_it_is_asked_for(page, server):
+    """The bytes arrive on an idle browser; only the building waits for the click."""
+    seen = []
+    page.on("response", lambda r: seen.append(r.url.rsplit("/", 1)[-1]))
+    visit(page, server, "index.html")
+    page.wait_for_timeout(2500)
+    assert "ratings.html" in seen and "events.html" in seen
+    assert page.eval_on_selector_all("#board tbody tr", "e => e.length") == 0, "warming should not build"
+    page.eval_on_selector('.tab[data-tab="ratings"]', "e => e.click()")
+    page.wait_for_timeout(400)
+    assert page.eval_on_selector_all("#board tbody tr", "e => e.length") > 20
+
+
 # ---- five tabs, not one long page ------------------------------------------------------------
 def test_the_counterparty_page_is_five_tabs(page, server):
     """The approved names ran the length of the page with the shortlist under them."""
