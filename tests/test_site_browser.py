@@ -16,6 +16,7 @@ from __future__ import annotations
 import contextlib
 import functools
 import http.server
+import json
 import socketserver
 import threading
 from pathlib import Path
@@ -174,6 +175,59 @@ def test_a_definition_marker_opens_a_definition(page, server):
     page.eval_on_selector(".uni th .i", "e => e.click()")
     page.wait_for_timeout(300)
     assert len(page.inner_text(".tip")) > 40
+
+
+# ---- an open counterparty card ---------------------------------------------------------------
+# The card only exists once a policy is stored, so nothing else in the suite ever draws one. Its
+# marks are absolutely positioned against a track they must stay inside, which is a browser fact.
+def _seed_and_open(pg, server):
+    """Approve the first name that exercises every mark, then open its card."""
+    rows = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))["rows"]
+    pick = next((r for r in rows
+                 if r.get("score") is not None and len(r.get("ratings") or []) > 1
+                 and (r.get("market_detail") or {}).get("bond_change30") is not None), None)
+    if pick is None:
+        pytest.skip("no covered name carries a score, two ratings and a bond signal")
+    policy = [{"id": pick["id"], "tenor": 365, "added": "2026-01-01",
+               "base": {"score": pick["score"], "band": pick["band"], "grade": pick["rating_grade"]}}]
+    pg.goto(server + "index.html", wait_until="domcontentloaded")
+    pg.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
+    visit(pg, server, "index.html")
+    pg.eval_on_selector(".pol-card .cp-exp", "e => e.click()")
+    pg.wait_for_timeout(400)
+    return pick
+
+
+def test_an_open_card_draws_all_five_panels(page, server):
+    _seed_and_open(page, server)
+    heads = page.eval_on_selector_all(".pol-card .cp-cell > h5 > span:first-child",
+                                      "e => e.map(x => x.textContent.trim())")
+    assert len(heads) == 5, heads
+    assert page.eval_on_selector_all(".pol-card .cg-t", "e => e.length") == 3      # a gauge per ratio
+    assert page.eval_on_selector_all(".pol-card .cr-dot", "e => e.length") > 1     # an agency per dot
+    assert page.query_selector(".pol-card .cs-dist svg")                           # the distribution
+    assert page.query_selector(".pol-card .cb-b")                                  # the bond bar
+    assert not page.errors, page.errors
+
+
+def test_every_mark_stays_inside_its_own_track(page, server):
+    """left:100% on a 10px dot hangs half of it outside the panel; the scales clamp instead."""
+    _seed_and_open(page, server)
+    stray = page.evaluate("""() => {
+      const out = [];
+      const check = (mark, track, what) => {
+        const m = mark.getBoundingClientRect(), t = track.getBoundingClientRect();
+        if (m.left < t.left - 6 || m.right > t.right + 6) out.push(what);
+      };
+      document.querySelectorAll('.pol-card .cg-t').forEach(t =>
+        t.querySelectorAll('.cg-v,.cg-m,.cg-q').forEach(m => check(m, t, 'ratio ' + m.className)));
+      document.querySelectorAll('.pol-card .cr-scale').forEach(t =>
+        t.querySelectorAll('.cr-dot,.cr-c').forEach(m => check(m, t, 'rating ' + m.className)));
+      document.querySelectorAll('.pol-card .cb-t').forEach(t =>
+        t.querySelectorAll('.cb-b').forEach(m => check(m, t, 'bond ' + m.className)));
+      return out;
+    }""")
+    assert stray == [], stray
 
 
 # ---- the page fits the screen ----------------------------------------------------------------

@@ -46,11 +46,23 @@
   function scoreColour(v){return v==null?'#6c757d':rampColour((v-50)/45)}
   // a pillar is scored on its own nought-to-a-hundred, so it takes the whole ramp
   function pillarColour(v){return v==null?'#adb5bd':rampColour(v/100)}
+  // Each agency writes the same standing differently, so one 0..16 scale carries the lot and a
+  // Moody's Baa1 is placed and coloured beside an S&P BBB+. DBRS writes its notches (high)/(low).
+  var MOODYS=['Aaa','Aa1','Aa2','Aa3','A1','A2','A3','Baa1','Baa2','Baa3','Ba1','Ba2','Ba3','B1','B2','B3','Caa'];
+  function gradeIndex(v){
+    v=String(v==null?'':v).trim().replace(/\s+/g,'').replace(/\(high\)/i,'+').replace(/\(H\)/,'+')
+      .replace(/\(low\)/i,'-').replace(/\(L\)/,'-').replace(/\(hyb\)/i,'').replace(/u$/,'').split('/')[0];
+    var i=MOODYS.indexOf(v); if(i>=0)return i;
+    i=GRADES.indexOf(v); if(i>=0)return i;
+    return /^(CCC|CC|C|D|RD|SD|Ca)/.test(v)?16:-1;
+  }
   // a rating runs AAA to CCC; the turn sits at the investment-grade line rather than in the middle
+  // Spread over 14 notches rather than 11, so the turn lands at the investment-grade line: two
+  // notches inside investment grade are a small difference and should not look like a large one.
   function gradeColour(g){
-    var i=GRADES.indexOf(String(g||'').trim());
+    var i=gradeIndex(g);
     if(i<0)return '#6c757d';
-    return rampColour(1-Math.min(1,i/11));
+    return rampColour(1-Math.min(1,i/14));
   }
   // one number, one colour, one letter - used wherever a score is shown in a row or a card
   function scoreNum(v,band,cls){
@@ -65,23 +77,6 @@
     var w=Math.max(0,Math.min(100,score));
     return '<div class="meter'+(cls?' '+cls:'')+'" role="img" aria-label="score '+w.toFixed(0)+' of 100">'+
            '<i style="width:'+w.toFixed(1)+'%;background:'+(BANDC[band]||'#7d93ad')+'"></i></div>';
-  }
-  // One line per agency so they line up down the card, long-term rating first with the
-  // short-term beside it; the title keeps the type and outlook that the line cannot show.
-  function ratingGrid(r,sr){
-    if(!(r||[]).length)return '<div class="cp-rt-none">unrated</div>';
-    var st={};(sr||[]).forEach(function(x){st[x.letter]=x.value});
-    return '<div class="cp-rt">'+r.map(function(x){
-      return '<span class="ag" title="'+esc(x.agency)+'">'+esc(x.letter)+'</span>'+
-             '<span class="lt" title="'+esc(x.agency+' '+x.type+(x.outlook?' \u00b7 '+x.outlook:''))+'">'+esc(x.value)+'</span>'+
-             '<span class="st">'+(st[x.letter]?esc(st[x.letter]):'')+'</span>';
-    }).join('')+'</div>';
-  }
-  function kpis(e){
-    var t=[['CET1',e.cet1,1,'','cet1_ratio'],['Leverage',e.leverage,1,e.leverage_basis==='us_tier1'?'\u2020':'','leverage_ratio'],['LCR',e.lcr,0,'%','lcr']];
-    return '<div class="cp-kpis">'+t.map(function(k){
-      return '<div class="cp-kpi"><b>'+(k[1]==null?'<span class="na">\u2014</span>':Number(k[1]).toFixed(k[2])+k[3])+'</b><span>'+k[0]+mk(k[4])+'</span></div>';
-    }).join('')+'</div>';
   }
   // The country a bank sits in, with the state's own rating beside it - context, never a score input.
   var AGN_FULL={fitch:'Fitch',sp:'S&P',moodys:"Moody's",dbrs:'DBRS',kbra:'KBRA',scope:'Scope',jcr:'JCR',
@@ -509,6 +504,163 @@
     renderUni();
   }
 
+
+  // ---- an open card ----------------------------------------------------------------------
+  // Four panels, one question each, on a tinted ground so the sections are told apart at a
+  // glance. No figure is left bare: 14.3% CET1 is strong or thin depending on the company it
+  // keeps, so every measure is drawn against the spread of the same measure across the covered
+  // universe - middle half shaded, median marked, this bank in orange. That is the idiom the
+  // profile trends already use for a peer group, at the size of a card.
+  var UNI=null;
+  function qt(v,p){var i=(v.length-1)*p,a=Math.floor(i),b=Math.ceil(i);return v[a]+(v[b]-v[a])*(i-a)}
+  function uni(k){
+    if(!UNI){UNI={};['score','cet1','leverage','lcr','rating_grade'].forEach(function(m){
+      var v=data.rows.map(function(e){return e[m]}).filter(function(x){return x!=null}).sort(function(a,b){return a-b});
+      // the axis runs the 5th to the 95th: one LCR of 400% should not flatten every other gauge
+      UNI[m]=v.length>7?{v:v,lo:qt(v,.05),hi:qt(v,.95),p25:qt(v,.25),p50:qt(v,.5),p75:qt(v,.75),n:v.length}:null;
+    })}
+    return UNI[k];
+  }
+  function below(st,x){var n=0;for(var i=0;i<st.v.length;i++)if(st.v[i]<x)n++;return Math.round(n/st.v.length*100)}
+  // the 30-day mix, on the headline panel's own heading: how much has been said about this bank
+  // lately, and in what temper, without making the reader count the lines below
+  function newsMix(e){
+    var n=e.news30||{}, out=['bad','warn','good'].filter(function(k){return n[k]}).map(function(k){
+      return '<span class="dot dot-'+k+'"></span>'+n[k];
+    }).join('');
+    return (out?out+' in 30 days':'nothing in 30 days')+' \u00b7 90-day window';
+  }
+  function sect(title,meta,body,cls){
+    return '<div class="cp-cell'+(cls?' '+cls:'')+'"><h5><span>'+title+'</span>'+
+           (meta?'<em>'+meta+'</em>':'')+'</h5>'+body+'</div>';
+  }
+
+  // the score, its band, and where it falls among every name the site scores
+  function scoreCell(e){
+    if(e.score==null)
+      return '<div class="cp-score-row"><span class="na big">\u2014</span></div>'+
+             '<div class="small muted">'+esc(e.unscored||'not scored')+'</div>';
+    var st=uni('score');
+    return '<div class="cp-score-row"><span class="cp-score" style="color:'+scoreColour(e.score)+'">'+e.score.toFixed(0)+'</span>'+
+      '<span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span></div>'+
+      meter(e.score,e.band)+
+      '<div class="small muted">'+(e.coverage!=null?Math.round(e.coverage*100)+'% of the method\u2019s inputs':'')+'</div>'+
+      (st?'<div class="cs-dist">'+scoreHist([e],data.rows,1)+
+          '<div class="small muted">Stronger than <b>'+below(st,e.score)+'%</b> of the '+st.n+' scored names</div></div>':'');
+  }
+
+  // one ratio: the figure, how far it sits from the median of every covered name, and the gauge
+  var RATIOS=[['cet1','CET1',1,'','cet1_ratio'],['leverage','Leverage',1,'','leverage_ratio'],['lcr','LCR',0,'%','lcr']];
+  function gauge(e,r){
+    var k=r[0], val=e[k], dp=r[2], suf=r[3], st=uni(k),
+        dag=(k==='leverage'&&e.leverage_basis==='us_tier1')?'\u2020':'';
+    var txt=val==null?'<span class="na">\u2014</span>':Number(val).toFixed(dp)+suf+dag;
+    var head='<div class="cg-h"><span class="cg-l">'+r[1]+mk(r[4])+'</span><b>'+txt+'</b>';
+    if(val==null||!st)return '<div class="cg">'+head+'</div></div>';
+    var lo=Math.min(st.lo,val), hi=Math.max(st.hi,val), rng=(hi-lo)||1;
+    var X=function(x){return Math.max(2,Math.min(98,(x-lo)/rng*100))};
+    var d=val-st.p50, kd=d>0.05?'up':(d<-0.05?'dn':'lv');
+    var tip=tipd(tipHead(esc(r[1]),Number(val).toFixed(dp)+suf)+
+      '<i>'+(kd==='lv'?'at the median of the covered names'
+            :'<em>'+Math.abs(d).toFixed(dp)+suf+'</em> '+(d>0?'above':'below')+' the median of the covered names')+'</i>'+
+      '<i>covered: 25th <em>'+st.p25.toFixed(dp)+suf+'</em> \u00b7 median <em>'+st.p50.toFixed(dp)+suf+
+      '</em> \u00b7 75th <em>'+st.p75.toFixed(dp)+suf+'</em></i>'+
+      '<i>higher than <em>'+below(st,val)+'%</em> of the '+st.n+' names that publish it</i>');
+    return '<div class="cg"'+tip+'>'+head+'<i class="cg-d '+kd+'">'+(d>0?'+':(d<0?'\u2212':''))+Math.abs(d).toFixed(dp)+'</i></div>'+
+      '<div class="cg-t"><span class="cg-q" style="left:'+X(st.p25).toFixed(1)+'%;right:'+(100-X(st.p75)).toFixed(1)+'%"></span>'+
+      '<span class="cg-m" style="left:'+X(st.p50).toFixed(1)+'%"></span>'+
+      '<span class="cg-v" style="left:'+X(val).toFixed(1)+'%"></span></div></div>';
+  }
+  function ratioCell(e){
+    return RATIOS.map(function(r){return gauge(e,r)}).join('')+
+      '<div class="cg-key"><span class="cg-kq"></span>the middle half of covered names, median marked'+
+      (e.leverage_basis==='us_tier1'?' \u00b7 \u2020 Tier 1 leverage, US basis':'')+'</div>';
+  }
+
+  // ratings: the composite, the agencies laid on the scale so any disagreement shows, then one
+  // line each with its outlook - an agency on negative outlook is the thing a treasurer looks for
+  var OUTLOOK={positive:['\u25b2','up','positive outlook'],negative:['\u25bc','dn','negative outlook'],
+               stable:['\u2013','lv','stable outlook'],developing:['\u25c7','lv','developing outlook'],
+               evolving:['\u25c7','lv','evolving outlook']};
+  function ratingCell(e){
+    var r=(e.ratings||[]);
+    if(!r.length)return '<div class="cp-rt-none">No agency rates this entity.</div>';
+    var sh={};(e.short_ratings||[]).forEach(function(x){sh[x.letter]=x.value});
+    var ix=r.map(function(x){return gradeIndex(x.value)}).filter(function(i){return i>=0}), strip='';
+    if(ix.length){
+      // the axis is the range the covered universe occupies, not AAA to default, so the notches
+      // that separate one bank from another are the ones that get the width
+      var st=uni('rating_grade');
+      var lo=Math.min(st?Math.floor(st.lo)-1:2,Math.min.apply(null,ix)),
+          hi=Math.max(st?Math.ceil(st.hi)-1:12,Math.max.apply(null,ix));
+      if(hi-lo<3)hi=lo+3;
+      var X=function(i){return Math.max(2,Math.min(98,(i-lo)/(hi-lo)*100))};
+      // two agencies at the same grade would be one dot, and the reader would count three where
+      // there are four: they stack upwards from the axis instead, so agreement is visible as height
+      var n={}, stack=1;
+      ix.forEach(function(i){n[i]=(n[i]||0)+1; if(n[i]>stack)stack=n[i]});
+      var base=8*Math.min(stack-1,2), axT=5+base, seen={};
+      var dots=r.map(function(x){
+        var i=gradeIndex(x.value); if(i<0)return '';
+        var k=Math.min((seen[i]=(seen[i]||0)+1)-1,2);
+        return '<span class="cr-dot" style="left:'+X(i).toFixed(1)+'%;top:'+(2+base-8*k)+'px;background:'+gradeColour(x.value)+'"></span>';
+      }).join('');
+      var spread=Math.max.apply(null,ix)-Math.min.apply(null,ix);
+      var tip=tipd(tipHead('On the scale',e.rating_composite?'composite '+esc(e.rating_composite):'')+
+        '<i>'+r.map(function(x){return esc((AGN_FULL[x.agency]||x.agency)+' '+x.value)}).join(' \u00b7 ')+'</i>'+
+        '<i>'+(spread?'the agencies differ by <em>'+spread+' notch'+(spread>1?'es':'')+'</em>':'<em>every agency agrees</em>')+
+        ', and the orange mark is the median they make</i>'+
+        '<i>the axis spans the covered names, '+esc(GRADES[Math.max(0,lo)])+' to '+esc(GRADES[Math.min(16,hi)])+'</i>');
+      strip='<div class="cr-scale" style="height:'+(25+base)+'px"'+tip+'>'+
+        '<span class="cr-ax" style="top:'+axT+'px"></span>'+
+        ((lo<=9&&hi>=10)?'<span class="cr-ig" style="left:'+X(9.5).toFixed(1)+'%;top:'+(axT-4)+'px"></span>':'')+dots+
+        (e.rating_grade!=null?'<span class="cr-c" style="left:'+X(e.rating_grade-1).toFixed(1)+
+          '%;height:'+(axT+9)+'px"></span>':'')+
+        '<span class="cr-e cr-e1">'+esc(GRADES[Math.max(0,lo)])+'</span>'+
+        '<span class="cr-e cr-e2">'+esc(GRADES[Math.min(16,hi)])+'</span></div>';
+    }
+    var rows=r.map(function(x){
+      var o=OUTLOOK[String(x.outlook||'').toLowerCase()]||['','lv','no outlook published'];
+      return '<div class="cr" title="'+esc((AGN_FULL[x.agency]||x.agency)+' '+x.type+' rating'+
+             (x.date?', '+x.date:'')+(x.outlook?' \u00b7 '+x.outlook+' outlook':''))+'">'+
+        '<span class="cr-a">'+esc(AGN_FULL[x.agency]||x.agency)+'</span>'+
+        '<b class="cr-g" style="color:'+gradeColour(x.value)+'">'+esc(x.value)+'</b>'+
+        '<span class="cr-o '+o[1]+'">'+o[0]+'</span>'+
+        '<span class="cr-s mono">'+esc(sh[x.letter]||'')+'</span></div>';
+    }).join('');
+    return '<div class="cr-top"><span class="cr-comp" style="color:'+gradeColour(e.rating_composite)+'">'+
+      esc(e.rating_composite||'\u2014')+'</span><span class="small muted">composite of '+r.length+
+      ' agenc'+(r.length>1?'ies':'y')+'</span></div>'+strip+'<div class="cr-rows">'+rows+'</div>';
+  }
+
+  // market, then what has moved since the name was approved
+  function marketCell(e,it,fl){
+    var md=e.market_detail||{}, out=mkt(e.market);
+    if(md.bond_change30!=null){
+      // a move against the bank's own currency peers, so the bar diverges from nothing at the
+      // centre; the turn is at 20 bp either way, which is where the published signal changes
+      var b=md.bond_change30, cap=30, x=Math.max(-cap,Math.min(cap,b)),
+          w=Math.abs(x)/cap*50, kd=b>20?'dn':(b<-20?'up':'lv');
+      var tip=tipd(tipHead('Bonds against peers',(b>0?'+':'')+b.toFixed(1)+' bp')+
+        '<i>the median 30-day move in this bank\u2019s bond yields, less the move in every bond of the same currency</i>'+
+        '<i>'+(md.bond_count||0)+' quoted line'+((md.bond_count||0)===1?'':'s')+' \u00b7 the signal turns beyond \u00b120 bp</i>'+
+        '<i>'+(b>0?'yields rose <em>more</em> than peers: the market is asking a little more to hold it'
+              :(b<0?'yields rose <em>less</em> than peers, or fell further':'moving with its peers'))+'</i>');
+      out+='<div class="cb"'+tip+'><div class="cb-t"><span class="cb-z"></span>'+
+        '<span class="cb-b '+kd+'" style="left:'+(x<0?50-w:50).toFixed(1)+'%;width:'+w.toFixed(1)+'%"></span></div>'+
+        '<div class="cb-l"><span>tighter</span><b class="'+kd+'">'+(b>0?'+':'')+b.toFixed(1)+' bp vs peers</b><span>wider</span></div></div>';
+    }
+    var d=(it.base&&it.base.score!=null&&e.score!=null)?e.score-it.base.score:null;
+    // the drop is already the figure on this line, so the flag that says it again is dropped
+    var chips=fl.filter(function(x){return !(d!=null&&/^Score down /.test(x[1]))})
+                .map(function(x){return chip(x[1],x[0]==='muted'?'muted':x[0])}).join(' ')
+                ||chip('Unchanged since approval','good');
+    return out+'<div class="cc"><div class="cc-h"><span>Since approved '+esc(it.added||'?')+'</span>'+
+      (d==null?'':'<b class="'+(d>0.05?'up':(d<-0.05?'dn':'lv'))+'" title="the score then was '+
+        it.base.score.toFixed(1)+'">'+(d>0?'+':(d<0?'\u2212':''))+Math.abs(d).toFixed(1)+' score</b>')+
+      '</div>'+chips+'</div>';
+  }
+
   function render(){
     var p=load(); var out=document.getElementById('policy-body'); if(!out||!data)return;
     TIPS={}; hideTip();                       // the marks are about to be rebuilt
@@ -542,7 +694,6 @@
                  '<span class="mono muted">'+esc(x.date)+'</span>'+
                  '<span class="hd">'+(x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">':'')+esc(x.title)+(x.url?'</a>':'')+'</span></div>';
         }).join('')||'<div class="muted">Nothing notable in the last 90 days.</div>';
-        var fh=fl.map(function(x){return chip(x[1],x[0]==='muted'?'muted':x[0])}).join(' ')||chip('Unchanged since approval','good');
         // a name that has moved since approval carries an edge, so a long list scans in one pass
         var moved=fl.some(function(x){return x[0]!=='muted'&&x[0]!=='good'});
         // one row of figures per name, and the rest behind an expander: a policy of twenty names is
@@ -556,7 +707,7 @@
             '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+
               '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+sovPill(e)+'</div></div>'+
             kv(scoreNum(e.score,e.band),'score','ck-score')+
-            kv(esc(e.rating_composite||'\u2014'),'rating')+
+            kv('<span style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'\u2014')+'</span>','rating')+
             kv(num(e.cet1,1),'CET1')+
             kv(num(e.leverage,1)+(e.leverage_basis==='us_tier1'?'\u2020':''),'leverage')+
             kv(e.lcr==null?'<span class="na">\u2014</span>':Math.round(e.lcr)+'%','LCR')+
@@ -567,25 +718,13 @@
           '</div>'+
           '<div class="cp-detail" hidden>'+
             '<div class="cp-body">'+
-              '<div class="cp-cell"><h5>Counterparty score'+mk('score')+'</h5>'+
-                (e.score==null
-                  ? '<div class="cp-score-row"><span class="na big">\u2014</span></div><div class="small muted">'+esc(e.unscored||'not scored')+'</div>'
-                  : '<div class="cp-score-row"><span class="cp-score" style="color:'+scoreColour(e.score)+'">'+e.score.toFixed(0)+'</span>'+
-                    '<span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span></div>'+
-                    meter(e.score,e.band)+
-                    '<div class="small muted">'+(e.coverage!=null?Math.round(e.coverage*100)+'% of the method\u2019s inputs':'')+'</div>')+
-              '</div>'+
-              '<div class="cp-cell"><h5>Key ratios</h5>'+kpis(e)+
-                '<div class="cp-asof">as of'+mk('as_at')+' '+esc(e.asof||'\u2014')+
-                (e.leverage_basis==='us_tier1'?' \u00b7 \u2020 Tier 1 leverage, US basis':'')+'</div></div>'+
-              '<div class="cp-cell"><h5>Ratings'+mk('rating')+'</h5>'+ratingGrid(e.ratings,e.short_ratings)+'</div>'+
-              '<div class="cp-cell cp-side"><h5>Market and changes'+mk('market_signal')+'</h5>'+
-                mkt(e.market)+
-                (e.market_detail&&e.market_detail.bond_change30!=null
-                  ? '<div class="small muted">bonds vs peers '+(e.market_detail.bond_change30>0?'+':'')+Math.round(e.market_detail.bond_change30)+' bp</div>':'')+
-                fh+'<div class="small muted">approved '+esc(it.added||'?')+'</div></div>'+
+              sect('Counterparty score'+mk('score'),'',scoreCell(e))+
+              sect('Key ratios','as at'+mk('as_at')+' '+esc(e.asof||'\u2014'),ratioCell(e))+
+              sect('Ratings'+mk('rating'),'',ratingCell(e))+
+              sect('Market and changes'+mk('market_signal'),'',marketCell(e,it,fl),'cp-side')+
             '</div>'+
-            '<div class="cp-news">'+recent+'</div></div></div>';
+            sect('Recent events',newsMix(e),'<div class="cp-news">'+recent+'</div>','cp-newsc')+
+          '</div></div>';
       }).join('');
       html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Flags compare today with the day you approved each name.</span></div>';
       html+=overview(p.filter(function(it){return byId[it.id]}));
