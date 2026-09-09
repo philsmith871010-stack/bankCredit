@@ -324,8 +324,27 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 @container (max-width:440px){.cp-body{grid-template-columns:1fr}}
 
 /* like-for-like: equal cards, the button always on the same line at the foot */
-.ll-grid{grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:10px}
-.ll{padding:8px 10px;gap:0;justify-content:flex-start}
+/* A shortlist is scanned, so each card carries the same marks the rest of the site uses: the band
+   on its edge and under its score, the score and the composite rating in the ramp's colour, and
+   the four ratios one name is chosen over another on. */
+.ll-grid{grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:10px}
+.ll{padding:9px 12px 10px;gap:0;justify-content:flex-start;border-left:3px solid var(--band,#c9d3de)}
+.ll:hover{box-shadow:var(--shadow)}
+     .ll-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:9px;padding-bottom:8px;
+         border-bottom:1px solid var(--line-soft)}
+.ll-k.ll-low b,.ll-k.ll-low{color:#b35900}
+.ll-k{display:flex;flex-direction:column;line-height:1.1;font-size:9px;letter-spacing:.05em;
+      text-transform:uppercase;color:var(--muted);min-width:0}
+.ll-k b{font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--text);font-variant-numeric:tabular-nums}
+.ll-ag{font-size:9.5px;font-weight:600;letter-spacing:.04em;color:var(--muted);margin-right:3px}
+.ll-rt .mono{margin-right:9px;font-size:11.5px;font-weight:600}
+/* the tenor group, and the standing every card in it is measured against */
+.ll-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:18px 0 8px}
+.ll-head h4{margin:0;font-size:14px}
+.ll-n{font-size:11px;font-weight:600;color:var(--muted);background:var(--line-soft);border-radius:999px;padding:1px 8px}
+.ll-bar{display:inline-flex;align-items:center;gap:7px;margin-left:auto;font-size:11px;color:var(--muted)}
+.ll-bar b{font-size:12.5px;font-variant-numeric:tabular-nums}
+.ll-bar .band{font-size:11px;padding:0 7px;min-width:0}
 .ll:hover{box-shadow:var(--shadow)}
 .ll-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .ll .ll-nm{font-size:13.5px;font-weight:600;letter-spacing:-.01em;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -333,13 +352,14 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 /* the market chip gives way before the Add button does, and ends in an ellipsis, not mid-word */
 .ll-act .chip{min-width:0;overflow:hidden;text-overflow:ellipsis;flex:0 1 auto}
 .ll-act .ll-add{flex:0 0 auto}
-.ll-act .chip{min-width:0;max-width:104px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10.5px;padding:1px 7px}
+/* a flex box does not ellipsis its own text, and a clipped label reads as a typo */
+.ll-act .chip{display:inline-block;min-width:0;max-width:104px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10.5px;padding:1px 7px;line-height:18px}
 .ll .ll-add{flex:0 0 auto;padding:2px 9px;font-size:11.5px;line-height:1.5}
 .ll .ll-co{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ll .ll-score{display:flex;align-items:baseline;gap:6px;margin-top:3px}
-.ll .ll-score b{font-size:18px;font-weight:600;line-height:1.1;letter-spacing:-.01em}
-.ll .ll-vs{font-size:11px;color:var(--green);font-weight:600}
-.ll .ll-rt{font-size:11px;color:var(--text);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ll .ll-score{display:flex;align-items:baseline;gap:7px;margin-top:5px}
+.ll .ll-score .ll-cp{font-size:13px;font-weight:600;line-height:1.1;letter-spacing:-.01em}
+.ll .ll-vs{margin-left:auto;font-size:10.5px;color:var(--green);font-weight:600;white-space:nowrap}
+.ll .ll-rt{display:flex;flex-wrap:wrap;align-items:baseline;margin-top:7px;min-height:15px}
 
 /* ---- policy overview: dense small multiples, one question each ----------------------- */
 .pv{border:1px solid var(--line);border-radius:var(--r-md);background:var(--white);padding:12px 14px;margin-bottom:12px}
@@ -623,7 +643,6 @@ th .i,.uni th .i{margin-left:4px}
 .pol-card{border-color:#dde4ec}
 .ll-sec{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
 .ll-sec>h3{margin:0 0 2px}
-.ll-sec h4{margin:16px 0 6px;font-size:12.5px}
 /* The container is the ground and the names are the objects on it, so a row of figures reads as
    a thing you can open rather than as another band of text in one long white box. */
 .pol-wrap{display:block;margin-top:2px}

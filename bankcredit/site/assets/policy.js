@@ -16,7 +16,7 @@
   function fmt(v,dp,suf){return v==null?'<span class="na">—</span>':'<span class="mono">'+Number(v).toFixed(dp==null?1:dp)+(suf||'')+'</span>'}
   function tenorLabel(d){for(var i=0;i<TENORS.length;i++)if(TENORS[i][0]===d)return TENORS[i][1];return d+' days'}
   function bandRank(b){return {A:1,B:2,C:3,D:4,E:5}[b]||9}
-  function chip(t,k){return '<span class="chip chip-'+(k||'muted')+'">'+esc(t)+'</span>'}
+  function chip(t,k,ti){return '<span class="chip chip-'+(k||'muted')+'"'+(ti?' title="'+esc(ti)+'"':'')+'>'+esc(t)+'</span>'}
   var TYPE_LABEL={holding:'Holding company',bank:'Bank',building_society:'Building society',subsidiary:'Subsidiary'};
   function typeTag(e){
     if(!e||e.type!=='holding')return '';
@@ -88,7 +88,7 @@
     return '<span class="sov" title="'+esc(sv.name+' sovereign rating, '+sv.n+(sv.n===1?' agency: ':' agencies: ')+ags+
            '. Context, not part of the score.')+'">'+esc(e.country||'')+'<b>'+esc(sv.composite)+'</b></span>';
   }
-  function mkt(m,terse){if(!m||m.direction==='none')return terse?'<span class="na">\u2014</span>'  :'<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');return chip(m.label,k)}
+  function mkt(m,terse){if(!m||m.direction==='none')return terse?'<span class="na">\u2014</span>'  :'<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');return chip(m.label,k,m.label)}
   function ratings(r){return (r||[]).map(function(x){return '<span class="mono" title="'+esc(x.agency+' '+x.type+(x.outlook?' · '+x.outlook:''))+'">'+esc(x.letter)+' '+esc(x.value)+'</span>'}).join(' <span class="muted">·</span> ')||'<span class="muted">unrated</span>'}
   function shortR(r){return (r||[]).map(function(x){return '<span class="mono">'+esc(x.letter)+' '+esc(x.value)+'</span>'}).join(' <span class="muted">·</span> ')||'<span class="muted">—</span>'}
   function snapshot(e){return {score:e.score,band:e.band,grade:e.rating_grade,market:e.market&&e.market.direction,asof:e.asof}}
@@ -550,7 +550,7 @@
   var UNI=null;
   function qt(v,p){var i=(v.length-1)*p,a=Math.floor(i),b=Math.ceil(i);return v[a]+(v[b]-v[a])*(i-a)}
   function uni(k){
-    if(!UNI){UNI={};['score','cet1','leverage','lcr','rating_grade'].forEach(function(m){
+    if(!UNI){UNI={};['score','cet1','leverage','lcr','nsfr','rating_grade'].forEach(function(m){
       var v=data.rows.map(function(e){return e[m]}).filter(function(x){return x!=null}).sort(function(a,b){return a-b});
       // the axis runs the 5th to the 95th: one LCR of 400% should not flatten every other gauge
       UNI[m]=v.length>7?{v:v,lo:qt(v,.05),hi:qt(v,.95),p25:qt(v,.25),p50:qt(v,.5),p75:qt(v,.75),n:v.length}:null;
@@ -787,19 +787,39 @@
         cands=cands.slice(0,24);                       // the count on the tab is what is drawn
         cands.forEach(function(e){shown[e.id]=1});
         var names=acc.map(function(it){return byId[it.id]?byId[it.id].short:it.id});
-        ll+='<h4>'+esc(tenorLabel(t))+' <span class="muted small">· weakest you accept: band '+esc(w.band||'?')+', ratings '+esc(GRADES[Math.floor((w.grade||1)+0.5)-1]||'?')+', score '+(w.score!=null?w.score.toFixed(1):'?')+'</span></h4>';
+        var wg=GRADES[Math.floor((w.grade||1)+0.5)-1]||'?';
+        ll+='<div class="ll-head"><h4>'+esc(tenorLabel(t))+'</h4>'+
+          '<span class="ll-n">'+cands.length+' name'+(cands.length===1?'':'s')+'</span>'+
+          '<span class="ll-bar">the weakest you accept at this tenor'+
+            '<b class="band mono band-'+esc(w.band||'')+'">'+esc(w.band||'?')+'</b>'+
+            '<b style="color:'+gradeColour(wg)+'">'+esc(wg)+'</b>'+
+            '<b style="color:'+scoreColour(w.score)+'">'+(w.score!=null?w.score.toFixed(1):'?')+'</b></span></div>';
         ll+=(t!==tenors[0]?'<p class="small muted">Beyond those listed at longer tenors.</p>':'')+(cands.length?'<div class="ll-grid">'+cands.map(function(e){
           var vs=(w.score!=null)?(e.score-w.score):null;
-          // four rows and no meter: the action and the market read on the title line, and the score
-          // says what a bar under it would repeat. A shortlist is scanned, not studied.
+          // A shortlist is scanned before it is studied, so a card carries the marks the rest of
+          // the site uses: the band on its edge and under the score, the score and the composite
+          // rating in the ramp's colour, and the four ratios one name is chosen over another on.
           var mp=(e.market&&e.market.direction!=='none')?mkt(e.market):'';
-          return '<div class="ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+esc(e.short)+', open detail">'+
+          // a ratio is marked only where it is in the bottom quarter of every covered name: on a
+          // shortlist of strong names, the useful colour is the one that says where the weak spot is
+          var kpi=function(k,v,dp,suf,l){
+            var st=uni(k), low=(v!=null&&st&&v<st.p25);
+            return '<span class="ll-k'+(low?' ll-low':'')+'"'+(low?' title="in the bottom quarter of every covered name"':'')+
+              '><b>'+(v==null?'<span class="na">\u2014</span>':Number(v).toFixed(dp)+(suf||''))+'</b>'+l+'</span>';
+          };
+          return '<div class="ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+esc(e.short)+', open detail"'+
+            ' style="--band:'+(BANDC[e.band]||'#c9d3de')+'">'+
             '<div class="ll-top"><span class="ll-nm">'+esc(e.short)+typeTag(e)+'</span>'+
               '<span class="ll-act">'+mp+'<button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></span></div>'+
-            '<div class="ll-co">'+esc(e.name)+' \u00b7 '+esc(e.country)+'</div>'+
+            '<div class="ll-co">'+esc(e.name)+' \u00b7 '+sovPill(e)+'</div>'+
             '<div class="ll-score">'+scoreNum(e.score,e.band,'sc-1')+
-              (vs!=null&&vs>0?'<span class="ll-vs">+'+vs.toFixed(1)+'</span>':'')+'</div>'+
-            '<div class="ll-rt">'+ratings(e.ratings)+'</div></div>';
+              '<b class="ll-cp" style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'\u2014')+'</b>'+
+              (vs!=null&&vs>0?'<span class="ll-vs">+'+vs.toFixed(1)+' vs your weakest</span>':'')+'</div>'+
+            '<div class="ll-kpis">'+kpi('cet1',e.cet1,1,'','CET1')+kpi('leverage',e.leverage,1,'','LEV')+
+              kpi('lcr',e.lcr,0,'%','LCR')+kpi('nsfr',e.nsfr,0,'%','NSFR')+'</div>'+
+            '<div class="ll-rt">'+(e.ratings||[]).map(function(x){
+              return '<span class="ll-ag">'+esc(x.letter)+'</span><span class="mono" style="color:'+gradeColour(x.value)+'">'+esc(x.value)+'</span>';
+            }).join('')+'</div></div>';
         }).join('')+'</div>':'<p class="small muted">No further covered name matches the weakest standing you accept at this tenor.</p>');
       });
       llN=Object.keys(shown).length;
