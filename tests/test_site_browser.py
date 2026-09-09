@@ -429,8 +429,38 @@ def test_the_policy_page_is_tabs(page, server):
     page.wait_for_timeout(400)
     drawn = page.eval_on_selector_all("#pol-ll .ll", "e => e.length")
     assert drawn > 0
-    # the count on the tab is what is drawn, not what was considered
-    assert page.eval_on_selector("#tn-ll", "e => e.textContent") == str(drawn)
+    # the count on the tab is every distinct name the shortlist turns up, so never fewer than one
+    # tenor's worth of cards
+    assert int(page.eval_on_selector("#tn-ll", "e => e.textContent")) >= drawn
+    assert not page.errors, page.errors
+
+
+def test_the_shortlist_shows_one_tenor_at_a_time(page, server):
+    """Four tenors ran down one page, each list defined by what the one above had already used."""
+    rows = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))["rows"]
+    pick = [r for r in rows if r.get("score") is not None][:3]
+    if len(pick) < 3:
+        pytest.skip("not enough scored names to seed three tenors")
+    policy = [{"id": r["id"], "tenor": t, "added": "2026-01-01",
+               "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}
+              for r, t in zip(pick, (90, 365, 730))]
+    page.goto(server + "index.html", wait_until="domcontentloaded")
+    page.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
+    visit(page, server, "index.html")
+    page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
+    page.wait_for_timeout(400)
+    chips = page.eval_on_selector_all("#pol-ll .ll-t", "e => e.map(x => x.dataset.t)")
+    assert chips == ["730", "365", "90"], chips
+    shown = page.eval_on_selector_all("#pol-ll .ll-pane:not([hidden])", "e => e.map(x => x.dataset.t)")
+    assert shown == ["730"], "one tenor is on screen, not all of them"
+    # a shorter tenor accepts a weaker name, so its list can only be the longer one's or larger
+    counts = page.eval_on_selector_all("#pol-ll .ll-t .cnt", "e => e.map(x => +x.textContent)")
+    assert counts == sorted(counts), counts
+    page.eval_on_selector('#pol-ll .ll-t[data-t="90"]', "e => e.click()")
+    page.wait_for_timeout(200)
+    assert page.eval_on_selector_all("#pol-ll .ll-pane:not([hidden])", "e => e.map(x => x.dataset.t)") == ["90"]
+    assert page.eval_on_selector_all("#pol-ll .ll-t.active", "e => e.map(x => x.dataset.t)") == ["90"]
+    assert page.eval_on_selector_all("#pol-ll .ll-pane:not([hidden]) .ll", "e => e.length") > 0
     assert not page.errors, page.errors
 
 

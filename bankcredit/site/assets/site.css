@@ -338,8 +338,11 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .ll-k b{font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--text);font-variant-numeric:tabular-nums}
 .ll-ag{font-size:9.5px;font-weight:600;letter-spacing:.04em;color:var(--muted);margin-right:3px}
 .ll-rt .mono{margin-right:9px;font-size:11.5px;font-weight:600}
-/* the tenor group, and the standing every card in it is measured against */
-.ll-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:18px 0 8px}
+/* one tenor at a time: the chips choose the list, the bar states what it is measured against */
+.ll-tenors{margin:14px 0 0;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.ll-t .cnt{margin-left:7px;font-weight:600;font-size:11px;opacity:.55;font-variant-numeric:tabular-nums}
+.ll-t.active .cnt{opacity:.75}
+.ll-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:12px 0 10px}
 .ll-head h4{margin:0;font-size:14px}
 .ll-n{font-size:11px;font-weight:600;color:var(--muted);background:var(--line-soft);border-radius:999px;padding:1px 8px}
 .ll-bar{display:inline-flex;align-items:center;gap:7px;margin-left:auto;font-size:11px;color:var(--muted)}

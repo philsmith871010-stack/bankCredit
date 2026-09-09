@@ -775,54 +775,70 @@
       html+=overview(p.filter(function(it){return byId[it.id]}));
       html+='<div class="pol-list">'+rows+'</div>';
       // like-for-like: names at least as strong as the weakest you already accept at each tenor
+      // One tenor at a time, chosen from a row of chips rather than four lists down a page. Each
+      // one now stands alone: it shows every covered name that clears the bar at that tenor, not
+      // the ones a longer tenor did not already list. A name that qualifies at 24 months qualifies
+      // at 12, and reading the 12-month list should not depend on having read the other.
       var tenors=[];p.forEach(function(it){if(tenors.indexOf(it.tenor)<0)tenors.push(it.tenor)});tenors.sort(function(a,b){return b-a});
-      var ll='', shown={};
-      tenors.forEach(function(t){var acc=p.filter(function(it){return it.tenor>=t});var w=worst(acc);if(w.grade==null&&w.score==null)return;
+      var chips='', panes='', union={}, first=null;
+      tenors.forEach(function(t){
+        var acc=p.filter(function(it){return it.tenor>=t}), w=worst(acc);
+        if(w.grade==null&&w.score==null)return;
         var have={};p.forEach(function(it){have[it.id]=1});
-        var cands=data.rows.filter(function(e){if(have[e.id]||e.score==null)return false;
+        var cands=data.rows.filter(function(e){
+          if(have[e.id]||e.score==null)return false;
           if(w.band&&bandRank(e.band)>bandRank(w.band))return false;
           if(w.grade!=null&&(e.rating_grade==null||e.rating_grade>w.grade))return false;
           if(w.score!=null&&e.score<w.score)return false;
-          if(e.market&&e.market.direction==='down')return false;return !shown[e.id]}).sort(function(a,b){return b.score-a.score});
-        cands=cands.slice(0,24);                       // the count on the tab is what is drawn
-        cands.forEach(function(e){shown[e.id]=1});
-        var names=acc.map(function(it){return byId[it.id]?byId[it.id].short:it.id});
+          if(e.market&&e.market.direction==='down')return false;
+          return true;
+        }).sort(function(a,b){return b.score-a.score});
+        // the chip counts every match; the grid draws the 24 strongest of them
+        var total=cands.length;
+        // the tab badge counts every distinct name any tenor turns up, not just the ones drawn
+        cands.forEach(function(e){union[e.id]=1}); cands=cands.slice(0,24);
+        if(first==null)first=t;
         var wg=GRADES[Math.floor((w.grade||1)+0.5)-1]||'?';
-        ll+='<div class="ll-head"><h4>'+esc(tenorLabel(t))+'</h4>'+
-          '<span class="ll-n">'+cands.length+' name'+(cands.length===1?'':'s')+'</span>'+
-          '<span class="ll-bar">the weakest you accept at this tenor'+
+        chips+='<button class="filter ll-t'+(t===first?' active':'')+'" data-t="'+t+'">'+esc(tenorLabel(t))+
+               '<span class="cnt">'+total+'</span></button>';
+        panes+='<div class="ll-pane" data-t="'+t+'"'+(t===first?'':' hidden')+'>'+
+          '<div class="ll-head">'+(total>cands.length?'<span class="ll-n">the '+cands.length+' strongest of '+total+'</span>':'')+
+          '<span class="ll-bar">the weakest you accept at '+esc(tenorLabel(t))+
             '<b class="band mono band-'+esc(w.band||'')+'">'+esc(w.band||'?')+'</b>'+
             '<b style="color:'+gradeColour(wg)+'">'+esc(wg)+'</b>'+
-            '<b style="color:'+scoreColour(w.score)+'">'+(w.score!=null?w.score.toFixed(1):'?')+'</b></span></div>';
-        ll+=(t!==tenors[0]?'<p class="small muted">Beyond those listed at longer tenors.</p>':'')+(cands.length?'<div class="ll-grid">'+cands.map(function(e){
-          var vs=(w.score!=null)?(e.score-w.score):null;
-          // A shortlist is scanned before it is studied, so a card carries the marks the rest of
-          // the site uses: the band on its edge and under the score, the score and the composite
-          // rating in the ramp's colour, and the four ratios one name is chosen over another on.
-          var mp=(e.market&&e.market.direction!=='none')?mkt(e.market):'';
-          // a ratio is marked only where it is in the bottom quarter of every covered name: on a
-          // shortlist of strong names, the useful colour is the one that says where the weak spot is
-          var kpi=function(k,v,dp,suf,l){
-            var st=uni(k), low=(v!=null&&st&&v<st.p25);
-            return '<span class="ll-k'+(low?' ll-low':'')+'"'+(low?' title="in the bottom quarter of every covered name"':'')+
-              '><b>'+(v==null?'<span class="na">\u2014</span>':Number(v).toFixed(dp)+(suf||''))+'</b>'+l+'</span>';
-          };
-          return '<div class="ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+esc(e.short)+', open detail"'+
-            ' style="--band:'+(BANDC[e.band]||'#c9d3de')+'">'+
-            '<div class="ll-top"><span class="ll-nm">'+esc(e.short)+typeTag(e)+'</span>'+
-              '<span class="ll-act">'+mp+'<button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></span></div>'+
-            '<div class="ll-co">'+esc(e.name)+' \u00b7 '+sovPill(e)+'</div>'+
-            '<div class="ll-score">'+scoreNum(e.score,e.band,'sc-1')+
-              '<b class="ll-cp" style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'\u2014')+'</b>'+
-              (vs!=null&&vs>0?'<span class="ll-vs">+'+vs.toFixed(1)+' vs your weakest</span>':'')+'</div>'+
-            '<div class="ll-kpis">'+kpi('cet1',e.cet1,1,'','CET1')+kpi('leverage',e.leverage,1,'','LEV')+
-              kpi('lcr',e.lcr,0,'%','LCR')+kpi('nsfr',e.nsfr,0,'%','NSFR')+'</div>'+
-            '<div class="ll-rt">'+(e.ratings||[]).map(function(x){
-              return '<span class="ll-ag">'+esc(x.letter)+'</span><span class="mono" style="color:'+gradeColour(x.value)+'">'+esc(x.value)+'</span>';
-            }).join('')+'</div></div>';
-        }).join('')+'</div>':'<p class="small muted">No further covered name matches the weakest standing you accept at this tenor.</p>');
+            '<b style="color:'+scoreColour(w.score)+'">'+(w.score!=null?w.score.toFixed(1):'?')+'</b></span></div>'+
+          (cands.length?'<div class="ll-grid">'+cands.map(function(e){
+            var vs=(w.score!=null)?(e.score-w.score):null;
+            // A shortlist is scanned before it is studied, so a card carries the marks the rest of
+            // the site uses: the band on its edge, the score and the composite rating in the ramp's
+            // colour, and the four ratios one name is chosen over another on.
+            var mp=(e.market&&e.market.direction!=='none')?mkt(e.market):'';
+            // a ratio is marked only where it is in the bottom quarter of every covered name: on a
+            // shortlist of strong names, the useful colour says where the weak spot is
+            var kpi=function(k,v,dp,suf,l){
+              var st=uni(k), low=(v!=null&&st&&v<st.p25);
+              return '<span class="ll-k'+(low?' ll-low':'')+'"'+(low?' title="in the bottom quarter of every covered name"':'')+
+                '><b>'+(v==null?'<span class="na">—</span>':Number(v).toFixed(dp)+(suf||''))+'</b>'+l+'</span>';
+            };
+            return '<div class="ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+esc(e.short)+', open detail"'+
+              ' style="--band:'+(BANDC[e.band]||'#c9d3de')+'">'+
+              '<div class="ll-top"><span class="ll-nm">'+esc(e.short)+typeTag(e)+'</span>'+
+                '<span class="ll-act">'+mp+'<button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></span></div>'+
+              '<div class="ll-co">'+esc(e.name)+' · '+sovPill(e)+'</div>'+
+              '<div class="ll-score">'+scoreNum(e.score,e.band,'sc-1')+
+                '<b class="ll-cp" style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
+                (vs!=null&&vs>0?'<span class="ll-vs">+'+vs.toFixed(1)+' vs your weakest</span>':'')+'</div>'+
+              '<div class="ll-kpis">'+kpi('cet1',e.cet1,1,'','CET1')+kpi('leverage',e.leverage,1,'','LEV')+
+                kpi('lcr',e.lcr,0,'%','LCR')+kpi('nsfr',e.nsfr,0,'%','NSFR')+'</div>'+
+              '<div class="ll-rt">'+(e.ratings||[]).map(function(x){
+                return '<span class="ll-ag">'+esc(x.letter)+'</span><span class="mono" style="color:'+gradeColour(x.value)+'">'+esc(x.value)+'</span>';
+              }).join('')+'</div></div>';
+          }).join('')+'</div>'
+           :'<p class="small muted">No covered name outside your policy matches the standing you accept at this tenor.</p>')+
+        '</div>';
       });
-      llN=Object.keys(shown).length;
+      ll=(tenors.length>1?'<div class="ll-tenors filters">'+chips+'</div>':'')+panes;
+      llN=Object.keys(union).length;
       llHtml='<p class="panel-lede small muted">Covered names at least as strong as the weakest you already accept at each tenor \u2014 same or better band, ratings and score, and no widening market signal.</p>'+ll;
     }
     out.innerHTML=html;
@@ -843,6 +859,12 @@
       if(!id){sel.classList.add('err');return}sel.classList.remove('err');add(id,+ten.value);sel.value=''});
     document.addEventListener('click',function(ev){var b=ev.target.closest('.pol-rm');if(b){var p=load().filter(function(x){return x.id!==b.dataset.id});save(p);render();return}
       var a=ev.target.closest('.pol-add-ll');if(a){add(a.dataset.id,+a.dataset.tenor);var d=document.getElementById('pol-modal');if(d&&d.open)d.close();return}
+      // one tenor at a time: the chips swap the pane rather than scroll four lists past you
+      var tc=ev.target.closest('.ll-t');
+      if(tc){var box=document.getElementById('pol-ll')||document;
+        [].forEach.call(box.querySelectorAll('.ll-t'),function(b){b.classList.toggle('active',b===tc)});
+        [].forEach.call(box.querySelectorAll('.ll-pane'),function(q){q.hidden=q.dataset.t!==tc.dataset.t});
+        return}
       if(ev.target.id==='md-close'){document.getElementById('pol-modal').close();return}
       // a card opens its detail; a link inside it still navigates
       var card=ev.target.closest('.pol-card,.ll,.uni-row');
