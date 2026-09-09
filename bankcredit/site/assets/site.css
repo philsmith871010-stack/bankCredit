@@ -368,13 +368,14 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 /* The head is one line of identity, one stat and the actions, all on the same centre line, and
    the body is the same four panels an open card uses - a ruled heading on a white box, on a
    tinted ground - so a dialog is not a second thing to learn. */
-.md-head{display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid var(--line);
-         position:sticky;top:0;background:var(--white);z-index:2;flex-wrap:wrap}
+.md-head{display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid #dde5ee;
+         position:sticky;top:0;z-index:2;flex-wrap:wrap;
+         background:linear-gradient(180deg,#e8eff8 0%,#f1f6fb 100%)}   /* a tint of the page's own blue */
 .md-id{flex:1 1 240px;min-width:0}
 .md-head .md-nm{display:flex;align-items:baseline;gap:8px;font-size:19px;font-weight:600;letter-spacing:-.01em}
 .md-head .md-sub{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .md-head .md-sc{display:flex;flex-direction:column;align-items:flex-end;gap:2px;line-height:1;
-                padding-right:14px;border-right:1px solid var(--line)}
+                padding-right:14px;border-right:1px solid #d7e0ea}
 .md-scn{display:flex;align-items:center;gap:7px}
 .md-sc .cp-score{font-size:28px}
 .md-scl{font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}

@@ -95,6 +95,22 @@
   function encode(p){try{return btoa(unescape(encodeURIComponent(JSON.stringify(p)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}catch(e){return ''}}
   function decode(s){try{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))))}catch(e){return null}}
 
+  // A headline is clipped to a line on a card and to two in the dialog, so the row carries the
+  // whole of it in a tooltip, with the date, what kind of event it is and where it came from.
+  var EV_WORD={bad:'adverse',warn:'one to watch',good:'positive'};
+  function evRow(x){
+    var k=x.severity==='bad'?'bad':(x.severity==='warn'?'warn':'good'), w=EV_WORD[k];
+    var tip=tipd(tipHead(esc(x.date||''),w)+'<i>'+esc(x.title||'')+'</i>'+
+      // a headline usually ends in its own publication, so the source is only worth a line of its own
+      // when it is not already there
+      ((x.source&&String(x.title||'').toLowerCase().indexOf(String(x.source).toLowerCase())<0)?'<i>'+esc(x.source)+'</i>':'')+
+      (x.type?'<i>'+esc(x.type==='news'?'headline':x.type+' action')+'</i>':''));
+    var t=esc(x.title||'');
+    return '<div'+tip+'><span class="dot dot-'+k+'" title="'+w+'"></span>'+
+      '<span class="mono muted">'+esc(x.date||'')+'</span><span class="hd">'+
+      (x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+t+'</a>':t)+'</span></div>';
+  }
+
   // ---- what changed since the name was approved, and what needs a look now
   function flags(item,e){
     var f=[], b=item.base||{};
@@ -144,6 +160,11 @@
   function showTip(el,ev){
     var k=el.getAttribute('data-tip'), html=TIPS[k]; if(!html)return;
     var t=dtip(); t.innerHTML=html; t.hidden=false;
+    // A dialog is painted in the browser's top layer, above every z-index on the page, so a
+    // tooltip left on the body sits behind it. It moves into the dialog while one is open; it
+    // is positioned against the viewport either way, so the coordinates do not change.
+    var host=el.closest('dialog')||document.body;
+    if(t.parentNode!==host)host.appendChild(t);
     var w=t.offsetWidth, h=t.offsetHeight, vw=innerWidth, vh=innerHeight;
     var x=Math.max(10,Math.min(ev.clientX-w/2, vw-w-10));
     var y=ev.clientY-h-14; if(y<10)y=ev.clientY+18;
@@ -366,10 +387,8 @@
       return '<div class="md-pill"'+tip+'><span>'+esc(k.replace(/_/g,' '))+'</span>'+
              '<div class="meter meter-sm"><i style="width:'+(pc==null?0:Math.max(0,Math.min(100,pc)))+'%;background:'+col+'"></i></div>'+
              '<b style="color:'+col+'">'+(pc==null?'\u2014':pc.toFixed(0))+'</b><i>w'+(wt==null?'':wt)+'</i></div>'}).join(''):'';
-    var ev=(b.events||(e&&e.recent)||[]).slice(0,7).map(function(x){
-      var k=x.severity==='bad'?'bad':(x.severity==='warn'?'warn':'good');
-      return '<div><span class="dot dot-'+k+'"></span><span class="mono muted">'+esc(x.date)+'</span><span class="hd">'+esc(x.title)+'</span></div>';
-    }).join('')||'<div class="muted small">Nothing recorded in the window.</div>';
+    var ev=(b.events||(e&&e.recent)||[]).slice(0,7).map(evRow).join('')
+           ||'<div class="muted small">Nothing recorded in the window.</div>';
     // The same panels the open card uses: a ruled heading on a white box, four of them on a
     // tinted ground. A dialog that looks like the row it came from is one thing to learn, not two.
     return '<div class="md-grid">'+
@@ -694,13 +713,8 @@
       var rows=p.slice().sort(function(a,b){return b.tenor-a.tenor||(byId[a.id]&&byId[a.id].short||'').localeCompare(byId[b.id]&&byId[b.id].short||'')}).map(function(it){
         var e=byId[it.id]; var fl=flags(it,e); if(fl.some(function(x){return x[0]!=='muted'}))n_flag++;
         if(!e)return '<div class="pol-row"><div class="pr-name"><span class="b">'+esc(it.id)+'</span></div><div class="pr-flags">'+chip('No longer covered','bad')+'</div><button class="pol-rm" data-id="'+esc(it.id)+'" title="Remove">×</button></div>';
-        var recent=(e.recent||[]).slice(0,3).map(function(x){
-          var k=x.severity==='bad'?'bad':(x.severity==='warn'?'warn':'good');
-          var w=x.severity==='bad'?'adverse':(x.severity==='warn'?'watch':'positive');
-          return '<div><span class="dot dot-'+k+'" title="'+w+'"></span>'+
-                 '<span class="mono muted">'+esc(x.date)+'</span>'+
-                 '<span class="hd">'+(x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">':'')+esc(x.title)+(x.url?'</a>':'')+'</span></div>';
-        }).join('')||'<div class="muted">Nothing notable in the last 90 days.</div>';
+        var recent=(e.recent||[]).slice(0,3).map(evRow).join('')
+                   ||'<div class="muted">Nothing notable in the last 90 days.</div>';
         // a name that has moved since approval carries an edge, so a long list scans in one pass
         var moved=fl.some(function(x){return x[0]!=='muted'&&x[0]!=='good'});
         // one row of figures per name, and the rest behind an expander: a policy of twenty names is

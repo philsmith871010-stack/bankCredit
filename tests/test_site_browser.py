@@ -172,6 +172,24 @@ def test_the_dialog_is_built_from_panels(page, server):
     assert not page.errors, page.errors
 
 
+def test_an_event_in_the_dialog_shows_its_whole_headline(page, server):
+    """A dialog paints in the top layer, so a tooltip left on the body sits behind it."""
+    visit(page, server, "index.html")
+    _open_first_bank(page)
+    row = page.query_selector("#md-body .md-news > div[data-tip]")
+    if row is None:
+        pytest.skip("the first bank has no events")
+    headline = page.eval_on_selector("#md-body .md-news > div[data-tip] .hd", "e => e.textContent.trim()")
+    row.hover()
+    page.wait_for_timeout(350)
+    tip = page.evaluate("""() => {
+      const t = document.querySelector('.dtip');
+      return {host: t.parentElement.tagName, hidden: t.hidden, text: t.textContent || ''};
+    }""")
+    assert tip["host"] == "DIALOG" and not tip["hidden"], tip
+    assert headline[:40] in tip["text"], tip["text"]
+
+
 def test_the_dialog_fills_from_the_detail_file(page, server):
     visit(page, server, "index.html")
     _open_first_bank(page)
