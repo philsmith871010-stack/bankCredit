@@ -704,14 +704,23 @@
         return '<div class="pol-card'+(moved?' pol-card-flag':'')+'" data-id="'+esc(e.id)+'">'+
           '<div class="cp-top">'+
             '<button class="cp-exp" data-id="'+esc(e.id)+'" aria-expanded="false" aria-label="Show detail for '+esc(e.short)+'"></button>'+
+            // The country and its rating are drawn twice and shown once: on the second line with the
+            // legal name where there is room for a second line, and up beside the name where there
+            // is not, which is a card in a two-column list. A pill is a dozen bytes; a layout that
+            // has to choose between the country and a third line of wrapping is not.
             '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+
+              '<span class="cp-sov">'+sovPill(e)+'</span>'+
               '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+sovPill(e)+'</div></div>'+
-            kv(scoreNum(e.score,e.band),'score','ck-score ck-sep')+
-            kv('<span style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'\u2014')+'</span>','rating')+
-            kv(num(e.cet1,1),'CET1','ck-sep')+
-            kv(num(e.leverage,1)+(e.leverage_basis==='us_tier1'?'\u2020':''),'leverage')+
-            kv(e.lcr==null?'<span class="na">\u2014</span>':Math.round(e.lcr)+'%','LCR')+
-            kv(esc(tenorLabel(it.tenor)),'tenor','ck-tenor ck-sep')+
+            // the figures are one block, so they can fold under the name as a block when the
+            // card is half the width of the list
+            '<div class="cp-stats">'+
+              kv(scoreNum(e.score,e.band),'score','ck-score ck-sep')+
+              kv('<span style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'\u2014')+'</span>','rating')+
+              kv(num(e.cet1,1),'CET1','ck-cet1 ck-sep')+
+              kv(num(e.leverage,1)+(e.leverage_basis==='us_tier1'?'\u2020':''),'leverage','ck-lev')+
+              kv(e.lcr==null?'<span class="na">\u2014</span>':Math.round(e.lcr)+'%','LCR','ck-lcr')+
+              kv(esc(tenorLabel(it.tenor)),'tenor','ck-tenor ck-sep')+
+            '</div>'+
             '<div class="cp-tags">'+(worst_fl?chip(worst_fl[2]||worst_fl[1],worst_fl[0])
               :((e.market&&e.market.direction!=='none')?mkt(e.market):''))+'</div>'+
             '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">\u00d7</button>'+

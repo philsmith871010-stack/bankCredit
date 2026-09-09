@@ -203,6 +203,45 @@ def _seed_and_open(pg, server):
     return pick
 
 
+def _seed_many(pg, server, n=6):
+    """Approve the first n scored names, so the list has something to lay out."""
+    rows = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))["rows"]
+    pick = [r for r in rows if r.get("score") is not None][:n]
+    policy = [{"id": r["id"], "tenor": 365, "added": "2026-01-01",
+               "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}} for r in pick]
+    pg.goto(server + "index.html", wait_until="domcontentloaded")
+    pg.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
+    visit(pg, server, "index.html")
+    return policy
+
+
+@pytest.mark.parametrize(("width", "columns"), [(1440, 2), (1180, 1)])
+def test_the_list_runs_in_two_columns_where_there_is_room(browser, server, width, columns):
+    """A council with forty names wants them two abreast; a narrow window still gets one."""
+    pg = browser.new_page(viewport={"width": width, "height": 900})
+    try:
+        _seed_many(pg, server)
+        tops = pg.eval_on_selector_all(".pol-card", "e => e.map(c => Math.round(c.getBoundingClientRect().top))")
+        assert len(tops) - len(set(tops)) == (len(tops) // 2 if columns == 2 else 0)
+    finally:
+        pg.close()
+
+
+@pytest.mark.parametrize("width", [1920, 1440, 1280, 900, 560, 390])
+def test_the_figures_stay_inside_their_card(browser, server, width):
+    """Below the fold width the figures take the line beneath the name rather than the pavement."""
+    pg = browser.new_page(viewport={"width": width, "height": 900})
+    try:
+        _seed_many(pg, server)
+        over = pg.eval_on_selector_all(".pol-card", """e => e.map(c => {
+          const s = c.querySelector('.cp-stats').getBoundingClientRect(), r = c.getBoundingClientRect();
+          return Math.round(Math.max(s.right - r.right, r.left - s.left));
+        })""")
+        assert max(over) <= 0, f"figures overflow the card by {max(over)}px at {width}px"
+    finally:
+        pg.close()
+
+
 @pytest.mark.parametrize("width", [1440, 1100, 900, 560])
 def test_the_closed_row_keeps_remove_on_the_name_line(browser, server, width):
     """A grid rule meant for another row put remove in column three, on a row of its own."""
