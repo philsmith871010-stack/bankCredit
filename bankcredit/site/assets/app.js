@@ -6,7 +6,7 @@
   document.addEventListener('click',function(e){
     var b=e.target.closest('.watch,.watch-btn');if(b){e.preventDefault();var w=watch(),i=w.indexOf(b.dataset.id);if(i>=0)w.splice(i,1);else w.push(b.dataset.id);setWatch(w);paintWatch();applyFilter();return}
     var f=e.target.closest('.filter');if(f){document.querySelectorAll('.filter').forEach(function(x){x.classList.remove('active')});f.classList.add('active');applyFilter();return}
-    var t=e.target.closest('.tab');var card=t&&t.closest('.tabs-card');if(t&&card){card.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});card.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.dataset.panel===t.dataset.tab)});t.classList.add('active');history.replaceState(null,'','#'+t.dataset.tab);return}
+    var t=e.target.closest('.tab');var card=t&&t.closest('.tabs-card');if(t&&card){card.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});card.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.dataset.panel===t.dataset.tab)});t.classList.add('active');history.replaceState(null,'','#'+t.dataset.tab);loadPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));return}
     var th=e.target.closest('th[data-sort]');if(th){sortBy(th.dataset.sort,th.cellIndex);return}
     if(e.target.closest('#menuBtn')){document.body.classList.toggle('nav-open')}
   });
@@ -21,15 +21,41 @@
       return dir[k]==='asc'?av-bv:bv-av});rows.forEach(function(r){tb.appendChild(r)})}
   var h=location.hash.replace('#','');if(h){var t=document.querySelector('.tab[data-tab="'+h+'"]');if(t)t.click()}
   paintWatch();
+  // the board arrives with a panel, so its watch marks and the current filter are painted then
+  (window.__panelInit=window.__panelInit||[]).push(function(){paintWatch();applyFilter()});
 })();
 
+// A tab nobody has opened is not worth its HTML in the page. The heavy panels are written as
+// fragments and fetched the first time the tab is used - or when the pointer settles on it,
+// which is usually a moment earlier. Everything a fragment needs is wired again on arrival.
+function loadPanel(p){
+  if(!p||!p.dataset.src||p.dataset.loading)return;
+  p.dataset.loading='1';
+  var r=document.body.getAttribute('data-root'); r=(r==null?'../':r);
+  if(!p.innerHTML)p.innerHTML='<div class="empty">Loading\u2026</div>';
+  fetch(r+p.dataset.src).then(function(x){if(!x.ok)throw 0;return x.text()}).then(function(html){
+    p.innerHTML=html;
+    (window.__panelInit||[]).forEach(function(f){try{f()}catch(e){}});
+  }).catch(function(){
+    p.dataset.loading='';
+    p.innerHTML='<div class="empty">Could not load this panel. Reload the page.</div>';
+  });
+}
+document.addEventListener('mouseover',function(e){
+  var t=e.target.closest&&e.target.closest('.tab'); if(!t)return;
+  var card=t.closest('.tabs-card'); if(!card)return;
+  loadPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));
+},{passive:true});
+
 // Events page: type filter
-(function(){var f=document.getElementById('event-filters');if(!f)return;var q=document.getElementById('evq');
+function initEventFilter(){var f=document.getElementById('event-filters');if(!f||f.dataset.init)return;f.dataset.init='1';var q=document.getElementById('evq');
   function apply(){var a=(f.querySelector('.filter.active')||{}).dataset||{},t=(q&&q.value||'').trim().toLowerCase();
     document.querySelectorAll('#events .event').forEach(function(e){e.hidden=!((!a.type||a.type==='all'||e.dataset.type===a.type)&&(!t||e.textContent.toLowerCase().indexOf(t)>=0))});
     document.querySelectorAll('#events .ev-day').forEach(function(h){var n=h.nextElementSibling,any=false;while(n&&!n.classList.contains('ev-day')){if(!n.hidden)any=true;n=n.nextElementSibling}h.hidden=!any})}
   f.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;f.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b)});apply()});
-  if(q)q.addEventListener('input',apply);})();
+  if(q)q.addEventListener('input',apply);}
+initEventFilter();
+(window.__panelInit=window.__panelInit||[]).push(initEventFilter);
 
 // Profile trends: a small multiple opens its full-size chart in a dialog
 (function(){var d=document.createElement('dialog');d.className='chart-dialog';d.innerHTML='<div class="cd-head"><div><h3></h3><div class="small muted"></div></div><button class="cd-close" aria-label="Close">×</button></div><div class="cd-body"></div><div class="cd-def"></div>';
@@ -49,14 +75,16 @@
 })();
 
 // Ratings grid: band tiles, grade bars and the "moved" chip filter the rows alongside region and search
-(function(){var tb=document.querySelector('table.rgrid tbody');if(!tb)return;var grade=null,band=null,cnt=document.getElementById('rg-count'),clear=document.querySelector('.gclear');
+function initRatingGrid(){var tb=document.querySelector('table.rgrid tbody');if(!tb||tb.dataset.init)return;tb.dataset.init='1';var grade=null,band=null,cnt=document.getElementById('rg-count'),clear=document.querySelector('.gclear');
   function apply(){var region=(document.querySelector('.filter.active[data-region]')||{}).dataset||{},term=((document.getElementById('q')||{}).value||'').toLowerCase(),w=[];try{w=JSON.parse(localStorage.getItem('counterparty.watch')||'[]')}catch(e){}
     var n=0;tb.querySelectorAll('tr').forEach(function(tr){var d=tr.dataset,ok=true;
       if(region.region&&region.region!=='all'){ok=region.region==='watch'?w.indexOf(d.id)>=0:region.region==='moved'?d.moved==='1':d.region===region.region}
       if(ok&&grade)ok=d.grade===grade;if(ok&&band)ok=d.band===band;if(ok&&term)ok=tr.textContent.toLowerCase().indexOf(term)>=0;tr.style.display=ok?'':'none';if(ok)n++});
     if(cnt)cnt.textContent=n+' shown';document.querySelectorAll('.gfilter').forEach(function(b){b.classList.toggle('active',b.dataset.grade===grade)});document.querySelectorAll('.bfilter').forEach(function(b){b.classList.toggle('active',b.dataset.band===band)});if(clear)clear.hidden=!grade&&!band}
   document.addEventListener('click',function(e){var g=e.target.closest('.gfilter');if(g){grade=grade===g.dataset.grade?null:g.dataset.grade;band=null;apply();return}var b=e.target.closest('.bfilter');if(b){band=band===b.dataset.band?null:b.dataset.band;grade=null;apply();return}if(e.target.closest('.gclear')){grade=null;band=null;apply();return}if(e.target.closest('.filter[data-region]'))setTimeout(apply,0)});
-  var q=document.getElementById('q');if(q)q.addEventListener('input',apply);apply()})();
+  var q=document.getElementById('q');if(q)q.addEventListener('input',apply);apply()}
+initRatingGrid();
+(window.__panelInit=window.__panelInit||[]).push(initRatingGrid);
 
 // Definitions: every number on the site can say what it is, in a sentence a first-time reader gets.
 // The glossary is embedded once per page as JSON; a single popover is moved to whichever marker was

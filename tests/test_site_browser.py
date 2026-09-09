@@ -353,6 +353,33 @@ def test_no_page_scrolls_sideways(browser, server, path, width):
         pg.close()
 
 
+# ---- the home page is not the whole universe three times over --------------------------------
+def test_the_home_page_stays_small():
+    """Two tabs nobody had clicked were 426 KB of the home page's 441 KB."""
+    kb = (SITE / "index.html").stat().st_size / 1024
+    assert kb < 60, f"index.html is {kb:.0f} KB; the heavy panels belong in data/panels"
+    for name in ("ratings", "events"):
+        assert (SITE / "data" / "panels" / f"{name}.html").exists()
+
+
+@pytest.mark.parametrize(("tab", "rows"), [("ratings", "#board tbody tr"), ("events", "#events .event")])
+def test_a_deferred_panel_fills_and_still_filters(page, server, tab, rows):
+    visit(page, server, "index.html")
+    assert page.eval_on_selector_all(rows, "e => e.length") == 0
+    page.eval_on_selector(f'.tab[data-tab="{tab}"]', "e => e.click()")
+    page.wait_for_timeout(900)
+    assert page.eval_on_selector_all(rows, "e => e.length") > 20
+    # the wiring runs again on arrival, so the panel's own filters work
+    button = page.query_selector(".gfilter" if tab == "ratings" else "#event-filters button:nth-child(2)")
+    assert button is not None
+    button.click()
+    page.wait_for_timeout(300)
+    shown = page.eval_on_selector_all(rows, "e => e.filter(x => !x.hidden && x.style.display !== 'none').length")
+    assert 0 < shown < page.eval_on_selector_all(rows, "e => e.length")
+    assert not page.errors, page.errors
+    assert not page.bad, page.bad
+
+
 # ---- nothing ships its own source ------------------------------------------------------------
 @pytest.mark.parametrize("name", ["index.html", "compare/index.html", "admin/index.html", "banks/barclays.html"])
 def test_no_page_ships_an_unrendered_placeholder(name):

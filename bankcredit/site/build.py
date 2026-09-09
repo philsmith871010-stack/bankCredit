@@ -760,6 +760,17 @@ UNIVERSE_PANEL = f"""<p class="small muted">Every name, sortable on any column, 
 """
 
 
+def home_panels(board, status, generated) -> dict[str, str]:
+    """The two heavy panels of the home page, as fragments fetched when their tab is first used.
+
+    Four pages became three tabs, and the two nobody has clicked were still 426 KB of the home
+    page's 441 KB: every rating of every name, and every event, parsed into the document before
+    anything was drawn. They are written here instead and fetched on demand.
+    """
+    return {"ratings": _panel_content(page_ratings(generated, inner=True)),
+            "events": _panel_content(page_events(board, status, generated, inner=True))}
+
+
 def page_home(board, status, generated):
     """One page for the whole job: build a policy, watch it, and find the next name.
 
@@ -773,8 +784,8 @@ def page_home(board, status, generated):
                  '<button class="tab" data-tab="ratings">Ratings</button>'
                  '<button class="tab" data-tab="events">Events</button></div>'
                  f'<section class="panel active" data-panel="universe">{UNIVERSE_PANEL}</section>'
-                 f'<section class="panel" data-panel="ratings">{_panel_content(page_ratings(generated, inner=True))}</section>'
-                 f'<section class="panel" data-panel="events">{_panel_content(page_events(board, status, generated, inner=True))}</section>'
+                 '<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html"></section>'
+                 '<section class="panel" data-panel="events" data-src="data/panels/events.html"></section>'
                  '</div>')
     return (c.shell("Counterparty", content, "home", "", generated)
             .replace('<script src="assets/app.js"></script>', '<script src="assets/app.js"></script><script src="assets/policy.js"></script>')
@@ -1009,6 +1020,9 @@ def build():
     css = OUT / "assets" / "site.css"
     css.write_text(faces + css.read_text())        # one stylesheet: the faces first, then everything that uses them
     _write(OUT / "index.html", page_home(board, status, generated))
+    (OUT / "data" / "panels").mkdir(parents=True, exist_ok=True)
+    for name, html in home_panels(board, status, generated).items():
+        _write(OUT / "data" / "panels" / f"{name}.html", html)
     _write(OUT / "banks" / "index.html", page_gone("Banks", generated))
     for r in board["rows"]:
         _write(OUT / "banks" / f"{r['id']}.html", page_bank(load(f"banks/{r['id']}"), generated))
