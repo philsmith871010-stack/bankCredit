@@ -431,7 +431,7 @@
     var put=function(b){var t=document.getElementById('md-body');if(t)t.innerHTML=modalBody(b,e)};
     hideTip();
     if(MCACHE[id])return put(MCACHE[id]);
-    detail(id).then(put).catch(function(){
+    detail(id,1).then(put).catch(function(){
       var t=document.getElementById('md-body');if(t)t.innerHTML='<div class="empty">Could not load this bank’s detail.</div>'});
   }
 
@@ -440,10 +440,11 @@
   // the pointer settling on a row, a finger touching it, a key focusing it - and the click usually
   // finds it already in flight or done. One promise per bank, so intent and click never fetch twice.
   var INFLIGHT={};
-  function detail(id){
+  function detail(id,eager){
     if(MCACHE[id])return Promise.resolve(MCACHE[id]);
     if(INFLIGHT[id])return INFLIGHT[id];
-    INFLIGHT[id]=fetch(ROOT+'data/detail/'+id+'.json')
+    // a click is waiting on this one; a warm-up is not
+    INFLIGHT[id]=(eager||!window.lowFetch?fetch(ROOT+'data/detail/'+id+'.json'):lowFetch(ROOT+'data/detail/'+id+'.json'))
       .then(function(r){if(!r.ok)throw 0;return r.json()})
       .then(function(b){MCACHE[id]=b;delete INFLIGHT[id];return b})
       .catch(function(err){delete INFLIGHT[id];throw err});
@@ -456,6 +457,13 @@
   }
   ['mouseover','focusin','touchstart','mousedown'].forEach(function(ev){
     document.addEventListener(ev,function(e){warm(e.target)},{passive:true,capture:true});
+  });
+  // The names in your own policy are the ones you open. Their files are small - 5 KB each over
+  // the wire - and an idle browser fetches them, so the dialog has nothing to wait for. Skipped
+  // on a metered or slow connection, and never more than a dozen.
+  (window.whenIdle||function(f){setTimeout(f,3000)})(function(){
+    if(window.sparingConnection&&sparingConnection())return;
+    load().slice(0,12).forEach(function(it){detail(it.id).catch(function(){})});
   });
 
 
@@ -802,6 +810,8 @@
     if(llBox)llBox.innerHTML=llHtml||'<div class="empty">Approve a name and this fills with the covered names that match the standing you accept.</div>';
     tabCount('tn-policy',p.length); tabCount('tn-ll',llN);
     renderUni();
+    // the list is on screen: anything speculative may start now
+    if(!render.said){render.said=1;dispatchEvent(new Event('cp:ready'))}
   }
   function add(id,tenor){var p=load();var e=byId[id];if(!e)return;var ex=p.filter(function(x){return x.id===id})[0];
     if(ex){ex.tenor=tenor}else{p.push({id:id,tenor:tenor,added:new Date().toISOString().slice(0,10),base:snapshot(e)})}save(p);render()}
@@ -850,6 +860,7 @@
   var box=document.getElementById('policy-body');if(!box)return;
   fetch(ROOT+'data/peers.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){PEERS=j}).catch(function(){});
   function failed(){
+    dispatchEvent(new Event('cp:ready'));
     box.innerHTML='<div class="empty">Could not load the counterparty data. Reload the page.</div>';
     var u=document.getElementById('uni-body');
     if(u)u.innerHTML='<tr><td colspan="9" class="empty">Could not load the counterparty data. Reload the page.</td></tr>';

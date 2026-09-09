@@ -790,7 +790,9 @@ def page_home(board, status, generated):
                  f'<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html?v={c.stamp(generated)}"'
                  f' data-js="assets/compare.js?v={c.stamp(generated)}"></section>'
                  '</div>')
-    return (c.shell("Policy", content, "home", "", generated)
+    # the list is drawn from this file, and asking for it only after two scripts have been
+    # fetched and run is a round trip the reader spends looking at an empty box
+    return (c.shell("Policy", content, "home", "", generated, preload=("data/policy.json",))
             .replace(f'<script src="assets/app.js?v={c.stamp(generated)}"></script>',
                      f'<script src="assets/app.js?v={c.stamp(generated)}"></script>'
                      f'<script src="assets/policy.js?v={c.stamp(generated)}"></script>')

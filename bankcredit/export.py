@@ -714,12 +714,14 @@ def export_json() -> None:
                     news30[x.severity] += 1
                 if x.type == "rating" and re.search(r"downgrade|negative|under review for downgrade|withdraw", str(x.title), re.I):
                     negative.append({"date": str(x.date)[:10], "title": str(x.title)[:140]})
-                if x.severity != "info" and len(recent) < 8:
+                # three is what a card draws, and the dialog has the bank's own file; a fourth
+                # headline is a 178-character news URL nobody follows from here
+                if x.severity != "info" and len(recent) < 3:
                     recent.append({"date": str(x.date)[:10], "type": x.type, "severity": x.severity, "title": str(x.title)[:160], "url": _clean(getattr(x, "url", "")) or ""})
         policy_rows.append({**{k: row[k] for k in ("id", "name", "short", "country", "type", "region", "group", "peer_group", "public_score", "band",
                                                     "coverage", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "ratings", "market", "asof", "age_days",
                                                     "rating_grade", "rating_composite", "inherited", "sovereign")},
-                            "score": row["public_score"], "short_ratings": short_ratings, "recent": recent, "negative": negative[:6], "news30": news30,
+                            "score": row["public_score"], "short_ratings": short_ratings, "recent": recent, "negative": negative[:3], "news30": news30,
                             "market_detail": {k: market.get(k) for k in ("vol30", "drawdown52", "bond_change30", "bond_count")}})
         debug = {}
         if DEBUG_DATA:

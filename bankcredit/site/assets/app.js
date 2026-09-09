@@ -36,7 +36,7 @@ function warmPanel(p){
   var src=p.dataset.src;
   if(!PANEL_TEXT[src]){
     var r=document.body.getAttribute('data-root'); r=(r==null?'../':r);
-    PANEL_TEXT[src]=fetch(r+src).then(function(x){if(!x.ok)throw 0;return x.text()})
+    PANEL_TEXT[src]=lowFetch(r+src).then(function(x){if(!x.ok)throw 0;return x.text()})
       .catch(function(e){delete PANEL_TEXT[src];throw e});
   }
   return PANEL_TEXT[src];
@@ -64,16 +64,34 @@ document.addEventListener('mouseover',function(e){
   var card=t.closest('.tabs-card'); if(!card)return;
   warmPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));
 },{passive:true});
-// once the page is done, and only on a connection that is not metered or slow
-(function(){
-  function warmAll(){
-    var c=navigator.connection||{};
-    if(c.saveData||/(^|-)2g$/.test(c.effectiveType||''))return;
-    document.querySelectorAll('.panel[data-src]').forEach(warmPanel);
-  }
-  if(window.requestIdleCallback)requestIdleCallback(warmAll,{timeout:5000});
-  else setTimeout(warmAll,2500);
-})();
+// Warming waits for the page to have what the reader came for. Neither the load event nor an
+// idle callback is enough on their own: load fires when the document's own subresources are done,
+// which on a slow line is long before a 50 KB list has arrived, and the main thread is idle the
+// whole time it waits for the network. Measured on a throttled line, warming from load pushed the
+// list itself from two seconds to six by taking the pipe. So the page says when it is ready, and
+// everything speculative is fetched at low priority behind it.
+var READY=!document.getElementById('policy-body');     // a page with no list of its own is ready at load
+addEventListener('cp:ready',function(){READY=1},{once:true});
+function whenIdle(fn){
+  var fired=false;
+  var go=function(){
+    if(fired)return; fired=true;
+    window.requestIdleCallback?requestIdleCallback(fn,{timeout:8000}):setTimeout(fn,2000);
+  };
+  var when=function(){
+    if(READY)return go();
+    addEventListener('cp:ready',go,{once:true});
+    setTimeout(go,12000);                              // the list never came; warm anyway
+  };
+  if(document.readyState==='complete')when(); else addEventListener('load',when,{once:true});
+}
+// a speculative fetch never competes with one the reader is waiting for
+function lowFetch(u){try{return fetch(u,{priority:'low'})}catch(e){return fetch(u)}}
+function sparingConnection(){var c=navigator.connection||{};return !!(c.saveData||/(^|-)2g$/.test(c.effectiveType||''))}
+whenIdle(function(){
+  if(sparingConnection())return;
+  document.querySelectorAll('.panel[data-src]').forEach(warmPanel);
+});
 
 // Events page: type filter
 function initEventFilter(){var f=document.getElementById('event-filters');if(!f||f.dataset.init)return;f.dataset.init='1';var q=document.getElementById('evq');

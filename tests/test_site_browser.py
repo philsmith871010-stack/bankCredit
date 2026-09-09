@@ -384,6 +384,26 @@ def test_the_page_opens_on_a_skeleton_not_a_word(page, server):
     assert page.eval_on_selector_all(".sk", "e => e.length") == 0, "the skeleton outstayed the data"
 
 
+def test_nothing_speculative_starts_before_the_list_is_drawn(page, server):
+    """Warming from the load event took the pipe: on a throttled line the list itself went from
+    two seconds to six, because 430 KB of panels nobody had asked for were downloading first."""
+    _seed_many(page, server, 4)
+    # measured in the page, at the instant the first card lands: asking from here would be a
+    # round trip later, by which time the warming has run whatever the order was
+    page.goto(server + "index.html", wait_until="commit")
+    early = page.evaluate("""async () => {
+      let w = 0;
+      while (!document.querySelector('.pol-card') && w < 20000) { await new Promise(r => setTimeout(r, 8)); w += 8; }
+      return performance.getEntriesByType('resource').map(e => e.name)
+        .filter(n => n.includes('/panels/') || n.includes('/detail/'));
+    }""")
+    assert early == [], f"speculative fetches began before the list: {early}"
+    page.wait_for_timeout(2500)
+    late = page.evaluate("""() => performance.getEntriesByType('resource')
+        .map(e => e.name).filter(n => n.includes('/panels/'))""")
+    assert late, "the panels were never warmed"
+
+
 def test_a_heavy_panel_is_warmed_before_it_is_asked_for(page, server):
     """The bytes arrive on an idle browser; only the building waits for the click."""
     seen = []

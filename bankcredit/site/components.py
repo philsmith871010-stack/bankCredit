@@ -251,7 +251,8 @@ def stamp(generated: str) -> str:
     return "".join(ch for ch in generated[:16] if ch.isdigit())
 
 
-def shell(title: str, content: str, active: str, root: str = "", generated: str = "", subtitle: str = "") -> str:
+def shell(title: str, content: str, active: str, root: str = "", generated: str = "", subtitle: str = "",
+          preload: tuple[str, ...] = ()) -> str:
     """One page, no rail. The site is one page and three tabs of it; a navigation column of three
     links, one of them always the page you are on, spent 220px saying so. The build stamp it used to
     carry sits in the header, where it is still the first thing a reader checks."""
@@ -259,6 +260,7 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)} · Counterparty · PWLBtoday</title>
 <meta name="color-scheme" content="light">
+{"".join(f'<link rel="preload" href="{root}{p}" as="fetch" crossorigin>' for p in preload)}
 <link rel="preload" href="{root}assets/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{root}assets/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{root}assets/site.css?v={stamp(generated)}">
