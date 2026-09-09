@@ -366,6 +366,14 @@ def test_no_page_scrolls_sideways(browser, server, path, width):
         pg.close()
 
 
+def test_every_asset_the_page_names_carries_the_build():
+    """New HTML with yesterday's script is how a tab arrived with nothing behind it."""
+    html = (SITE / "index.html").read_text(encoding="utf-8")
+    for ref in ("assets/site.css", "assets/app.js", "assets/policy.js",
+                "data/panels/analysis.html", "assets/compare.js"):
+        assert f'{ref}?v=' in html, f"{ref} is named without the build it belongs to"
+
+
 # ---- something is always on screen while something is on its way ------------------------------
 def test_the_page_opens_on_a_skeleton_not_a_word(page, server):
     """A slow connection used to get the word "Loading" in grey; it gets the shape now."""
@@ -379,7 +387,7 @@ def test_the_page_opens_on_a_skeleton_not_a_word(page, server):
 def test_a_heavy_panel_is_warmed_before_it_is_asked_for(page, server):
     """The bytes arrive on an idle browser; only the building waits for the click."""
     seen = []
-    page.on("response", lambda r: seen.append(r.url.rsplit("/", 1)[-1]))
+    page.on("response", lambda r: seen.append(r.url.rsplit("/", 1)[-1].split("?")[0]))
     visit(page, server, "index.html")
     page.wait_for_timeout(2500)
     assert "ratings.html" in seen and "events.html" in seen

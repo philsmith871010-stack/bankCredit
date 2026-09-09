@@ -240,6 +240,17 @@ def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | 
 
 # One page does the work - policy, universe, ratings, events - so the nav names it once. Analysis
 # stays separate because comparing several banks is the one thing a single name's dialog cannot do.
+def stamp(generated: str) -> str:
+    """This build, as a query a browser treats as a different file.
+
+    A page and the script that runs it are cached separately for ten minutes each, so a reader can
+    hold a new page and yesterday's script - which is how a tab arrived with nothing behind it.
+    Every asset the shell names carries the build it belongs to, so new HTML always fetches the
+    scripts and styles it was built against.
+    """
+    return "".join(ch for ch in generated[:16] if ch.isdigit())
+
+
 def shell(title: str, content: str, active: str, root: str = "", generated: str = "", subtitle: str = "") -> str:
     """One page, no rail. The site is one page and three tabs of it; a navigation column of three
     links, one of them always the page you are on, spent 220px saying so. The build stamp it used to
@@ -250,7 +261,7 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <meta name="color-scheme" content="light">
 <link rel="preload" href="{root}assets/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{root}assets/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{root}assets/site.css">
+<link rel="stylesheet" href="{root}assets/site.css?v={stamp(generated)}">
 <script type="speculationrules">{SPECULATION}</script>
 </head><body>{symbols()}
 <header class="top"><a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>
@@ -260,4 +271,4 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <dialog id="gloss-dlg" class="gloss-dlg"></dialog>
 <footer class="foot"><button type="button" class="glink" id="glink">What do these numbers mean?</button> Counterparty is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}admin/index.html#method">Method</a> · <a href="{root}admin/index.html#status">Data status</a></footer>
 <script id="gloss" type="application/json">{glossary.payload()}</script>
-<script src="{root}assets/app.js"></script></body></html>"""
+<script src="{root}assets/app.js?v={stamp(generated)}"></script></body></html>"""

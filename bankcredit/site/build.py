@@ -785,13 +785,15 @@ def page_home(board, status, generated):
                  '<button class="filter" id="pol-clear">Clear all</button></div></section>'
                  '<section class="panel" data-panel="likeforlike"><div id="pol-ll"></div></section>'
                  f'<section class="panel" data-panel="universe">{UNIVERSE_PANEL}</section>'
-                 '<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html"></section>'
-                 '<section class="panel" data-panel="events" data-src="data/panels/events.html"></section>'
-                 '<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html"'
-                 ' data-js="assets/compare.js"></section>'
+                 f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={c.stamp(generated)}"></section>'
+                 f'<section class="panel" data-panel="events" data-src="data/panels/events.html?v={c.stamp(generated)}"></section>'
+                 f'<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html?v={c.stamp(generated)}"'
+                 f' data-js="assets/compare.js?v={c.stamp(generated)}"></section>'
                  '</div>')
     return (c.shell("Policy", content, "home", "", generated)
-            .replace('<script src="assets/app.js"></script>', '<script src="assets/app.js"></script><script src="assets/policy.js"></script>')
+            .replace(f'<script src="assets/app.js?v={c.stamp(generated)}"></script>',
+                     f'<script src="assets/app.js?v={c.stamp(generated)}"></script>'
+                     f'<script src="assets/policy.js?v={c.stamp(generated)}"></script>')
             .replace("<body>", '<body data-root="">'))
 
 
@@ -938,7 +940,9 @@ def compare_content() -> str:
     chips = "".join(f'<button class="filter cp-set" data-set="{k}">{c.esc(l)}<span class="cnt"></span></button>' for k, l in sets)
     def panel(pid, title, sub):
         return (f'<section class="panel-c" id="p-{pid}"><div class="pc-head"><h3>{c.esc(title)} <span class="muted small">{c.esc(sub)}</span></h3>'
-                f'<button class="pc-x" data-panel="{pid}" title="Expand or restore" aria-label="Expand {c.esc(title)}">⤢</button></div><div class="pc-body cp-chart" id="c-{pid}"><div class="empty">Loading…</div></div></section>')
+                f'<button class="pc-x" data-panel="{pid}" title="Expand or restore" aria-label="Expand {c.esc(title)}">⤢</button></div>'
+                f'<div class="pc-body cp-chart" id="c-{pid}"><div class="sk-rows" aria-hidden="true">'
+                + '<span class="sk"></span>' * 5 + '</div></div></section>')
     return f'''<p class="small muted panel-lede">One peer set, one measure, four views. Pin up to six names \u2014 they keep their colour in every panel.</p>
 <div class="card cp-card"><div class="cp-tools">
 <div class="filters" id="cp-sets">{chips}</div>
