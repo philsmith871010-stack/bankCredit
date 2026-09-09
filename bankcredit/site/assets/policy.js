@@ -706,12 +706,12 @@
             '<button class="cp-exp" data-id="'+esc(e.id)+'" aria-expanded="false" aria-label="Show detail for '+esc(e.short)+'"></button>'+
             '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+
               '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+sovPill(e)+'</div></div>'+
-            kv(scoreNum(e.score,e.band),'score','ck-score')+
+            kv(scoreNum(e.score,e.band),'score','ck-score ck-sep')+
             kv('<span style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'\u2014')+'</span>','rating')+
-            kv(num(e.cet1,1),'CET1')+
+            kv(num(e.cet1,1),'CET1','ck-sep')+
             kv(num(e.leverage,1)+(e.leverage_basis==='us_tier1'?'\u2020':''),'leverage')+
             kv(e.lcr==null?'<span class="na">\u2014</span>':Math.round(e.lcr)+'%','LCR')+
-            kv(esc(tenorLabel(it.tenor)),'tenor','ck-tenor')+
+            kv(esc(tenorLabel(it.tenor)),'tenor','ck-tenor ck-sep')+
             '<div class="cp-tags">'+(worst_fl?chip(worst_fl[2]||worst_fl[1],worst_fl[0])
               :((e.market&&e.market.direction!=='none')?mkt(e.market):''))+'</div>'+
             '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">\u00d7</button>'+

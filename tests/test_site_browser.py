@@ -180,8 +180,8 @@ def test_a_definition_marker_opens_a_definition(page, server):
 # ---- an open counterparty card ---------------------------------------------------------------
 # The card only exists once a policy is stored, so nothing else in the suite ever draws one. Its
 # marks are absolutely positioned against a track they must stay inside, which is a browser fact.
-def _seed_and_open(pg, server):
-    """Approve the first name that exercises every mark, then open its card."""
+def _seed(pg, server):
+    """Approve the first name that exercises every mark, and leave its card closed."""
     rows = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))["rows"]
     pick = next((r for r in rows
                  if r.get("score") is not None and len(r.get("ratings") or []) > 1
@@ -193,9 +193,40 @@ def _seed_and_open(pg, server):
     pg.goto(server + "index.html", wait_until="domcontentloaded")
     pg.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
     visit(pg, server, "index.html")
+    return pick
+
+
+def _seed_and_open(pg, server):
+    pick = _seed(pg, server)
     pg.eval_on_selector(".pol-card .cp-exp", "e => e.click()")
     pg.wait_for_timeout(400)
     return pick
+
+
+@pytest.mark.parametrize("width", [1440, 1100, 900, 560])
+def test_the_closed_row_keeps_remove_on_the_name_line(browser, server, width):
+    """A grid rule meant for another row put remove in column three, on a row of its own."""
+    pg = browser.new_page(viewport={"width": width, "height": 900})
+    try:
+        _seed(pg, server)
+        box = pg.evaluate("""() => {
+          const top = document.querySelector('.pol-card .cp-top');
+          const r = e => e.getBoundingClientRect();
+          return {rm: r(top.querySelector('.pol-rm')).top, name: r(top.querySelector('.cp-id')).bottom};
+        }""")
+        assert box["rm"] < box["name"], f"remove dropped below the name at {width}px"
+    finally:
+        pg.close()
+
+
+def test_a_card_starts_closed_and_the_chevron_opens_it(page, server):
+    """A display on .cp-detail overrides the browser's own [hidden] rule and opens every card."""
+    _seed_and_open(page, server)
+    assert page.eval_on_selector(".pol-card .cp-detail", "e => e.getBoundingClientRect().height") > 100
+    page.eval_on_selector(".pol-card .cp-exp", "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector(".pol-card .cp-detail", "e => getComputedStyle(e).display") == "none"
+    assert page.eval_on_selector(".pol-card .cp-detail", "e => e.getBoundingClientRect().height") == 0
 
 
 def test_an_open_card_draws_all_five_panels(page, server):

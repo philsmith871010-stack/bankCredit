@@ -129,7 +129,7 @@ dialog.chart-dialog{border:0;border-radius:14px;padding:0;width:min(820px,94vw);
 .pol-row{padding:12px 8px;border-bottom:1px solid var(--line-soft);font-size:13px}.pol-row:hover{background:var(--bg)}.pr-kpi{display:flex;gap:12px;flex-wrap:wrap}.pr-kpi>span{display:flex;flex-direction:column}.pr-kpi i{font-style:normal;font-size:10.5px;color:var(--muted)}.pr-kpi .small{flex-basis:100%}
 .pr-flags .chip{margin:0 4px 4px 0}.pol-rm{background:none;border:0;font-size:18px;color:var(--muted);cursor:pointer;line-height:1}.pol-rm:hover{color:var(--red)}
 .pr-recent{grid-column:1/-1;padding:6px 0 0 0;display:flex;flex-wrap:wrap;gap:4px 18px;color:var(--text)}.pr-recent>div{display:flex;gap:6px;align-items:center}
-@media(max-width:1100px){.pol-row{grid-template-columns:1fr 1fr 1fr;grid-auto-rows:auto}.pr-name{grid-column:1/3}.pol-rm{grid-column:3;justify-self:end}.pr-recent{grid-column:1/-1}}
+@media(max-width:1100px){.pol-row{grid-template-columns:1fr 1fr 1fr;grid-auto-rows:auto}.pr-name{grid-column:1/3}.pol-row .pol-rm{grid-column:3;justify-self:end}.pr-recent{grid-column:1/-1}}
 .ev-toolbar{align-items:center;margin-bottom:12px}.ev-toolbar .small{margin-left:auto}
 .lead{font-size:16px;font-weight:600;line-height:1.45;margin:0 0 12px}.brief-bm{margin:0}.brief-bm .rtile-n small{font-size:12px;font-weight:400;color:var(--muted);margin-left:2px}.brief-grid{margin-top:16px}.brief-grid .card h3{margin-top:0}.brief-grid .event{padding:8px 0}
 .bad{color:var(--red)}.good{color:var(--green)}
@@ -228,6 +228,7 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
    about whether 14.3 is a lot. Colour is spent on three things only: the band ramp (score and
    rating, one hue), the orange that means "this bank, here", and green or red for a move that
    went the reader's way or against it. */
+.cp-detail[hidden]{display:none}          /* an author display beats the browser's own [hidden] rule */
 .cp-detail{background:var(--bg);border-top:1px solid var(--line);padding:11px;display:flex;flex-direction:column;gap:9px}
 .cp-body{display:grid;grid-template-columns:minmax(195px,1fr) minmax(225px,1.15fr) minmax(195px,1fr) minmax(185px,1fr);gap:9px;padding:0}
 .cp-cell{background:var(--white);border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 11px 10px;min-width:0;display:flex;flex-direction:column}
@@ -522,8 +523,14 @@ th .i,.uni th .i{margin-left:4px}
 .cp-id{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;min-width:0}
 .cp-id .cp-nm{font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
 .cp-id .cp-sub{flex:1 0 100%;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Six figures in a row with nothing between them read as one long number. A hairline before each
+   group - the standing, the regulatory ratios, the tenor you allow - separates them without
+   ruling the row into a table. Every value line is the same height, taller band pill and larger
+   score included, so the labels beneath them share one baseline across the row. */
 .ck{display:flex;flex-direction:column;line-height:1.15;white-space:nowrap}
-.ck b{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:5px}
+.ck-sep{border-left:1px solid var(--line-soft);padding-left:13px}
+.ck b{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:5px;
+      height:20px;line-height:20px}
 .ck span{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .ck-score b{font-size:17px}
 .ck-tenor b{font-size:12.5px;font-weight:600}
@@ -539,6 +546,9 @@ th .i,.uni th .i{margin-left:4px}
   .cp-top{grid-template-columns:20px 1fr auto auto 20px;gap:10px;row-gap:6px}
   .cp-top .ck:not(.ck-score):not(.ck-tenor){display:none}
   .cp-tags{grid-column:2/-1;justify-content:flex-start}
+  /* the tag takes a row of its own here, so remove stays on the name's line rather than being
+     pushed to a third row and landing under the chevron */
+  .cp-top .pol-rm{grid-column:5;grid-row:1}
 }
 .ck .band{width:22px;height:19px;font-size:11.5px;border-radius:5px}
 
