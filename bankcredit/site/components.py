@@ -97,7 +97,6 @@ def spark(series: list[float], w=92, h=28, color=NAVY) -> str:
     path = "M" + "L".join(f"{x:.0f} {y:.0f}" for x, y in pts)
     ex, ey = pts[-1]
     return (f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" aria-hidden="true">'
-            f'<path d="{path}V{h-pad}H{pad}Z" fill="{color}" fill-opacity="0.08"/>'
             f'<path d="{path}" fill="none" stroke="{color}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>'
             f'<circle cx="{ex:.0f}" cy="{ey:.0f}" r="2.6" fill="{ORANGE}"/></svg>')
 
@@ -125,7 +124,7 @@ def _chart_compact(pts_in, w, h, unit, req, dp, band=None, median=None, on_dark=
     marks = "".join(f'<text x="{min(max(X(i), 18), w - 18):.0f}" y="{(Y(v) - 5) if k == "max" else (Y(v) + 11):.0f}" text-anchor="middle" class="axis">{v:.{dp}f}{unit}</text>'
                     for k, i, v in (("max", imax, vals[imax]), ("min", imin, vals[imin])) if i not in (0, n - 1))
     return (f'<svg viewBox="0 0 {w} {h}" width="100%" class="chart chart-sm" preserveAspectRatio="none" aria-hidden="true">'
-            f'{peer}<path d="{path}V{Y(ymin):.0f}H{padl}Z" fill="{NAVY}" fill-opacity="0.07"/>{reqline}'
+            f'{peer}{reqline}'
             f'<path d="{path}" fill="none" stroke="{NAVY}" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'
             f'<circle cx="{X(n-1):.0f}" cy="{Y(last):.0f}" r="3.2" fill="{ORANGE}"/>{marks}'
             f'<text x="{padl}" y="{h-4}" class="axis">{esc(pts_in[0][0])}</text><text x="{w-padr}" y="{h-4}" text-anchor="end" class="axis">{esc(pts_in[-1][0])}</text></svg>')
@@ -224,7 +223,7 @@ def chart(series: list[tuple[str, float]], w=560, h=200, unit="%", req: float | 
     reqline = (f'<line x1="{padl}" x2="{w-padr}" y1="{Y(req):.0f}" y2="{Y(req):.0f}" stroke="{ORANGE}" stroke-width="1.5" stroke-dasharray="4 4"/>'
                f'<text x="{padl+6}" y="{Y(req)-6:.0f}" class="axis" fill="#b35900">{req_label} {req:.{dp}f}{unit}</text>') if req else ""
     pts = " ".join(f"{X(i):.0f},{Y(v):.0f}" for i, (_, v) in enumerate(pts_in))
-    area = f'<polygon points="{X(0):.0f},{Y(ymin):.0f} {pts} {X(n-1):.0f},{Y(ymin):.0f}" fill="{NAVY}" fill-opacity="0.06"/>'
+    area = ""      # a shaded region on this site is the peer range; a line does not shade under itself
     dots = "".join(f'<circle cx="{X(i):.0f}" cy="{Y(v):.0f}" r="3" fill="{WHITE}" stroke="{NAVY}" stroke-width="2"><title>{esc(l)}: {v:.{dp}f}{unit}</title></circle>' for i, (l, v) in enumerate(pts_in))
     last = pts_in[-1][1]
     end = f'<circle cx="{X(n-1):.0f}" cy="{Y(last):.0f}" r="4" fill="{ORANGE}"/><text x="{X(n-1)-10:.0f}" y="{Y(last)-10:.0f}" text-anchor="end" class="mono" font-size="12" font-weight="600" fill="{TEXT}">{last:.{dp}f}{unit}</text>'

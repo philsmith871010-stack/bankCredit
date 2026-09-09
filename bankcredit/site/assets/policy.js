@@ -363,7 +363,6 @@
     return '<figure class="mt"'+tip+'><figcaption><span class="mt-l">'+esc(label)+mk(gk)+'</span>'+
       '<b>'+last.v.toFixed(1)+unit+'</b></figcaption>'+(vs?'<div class="mt-sub">'+vs+'</div>':'')+
       '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" aria-hidden="true">'+band+
-      '<path d="'+d+'V'+(h-12)+'H'+pad+'Z" fill="#0a2540" fill-opacity="0.07"/>'+
       '<path d="'+d+'" fill="none" stroke="#0a2540" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+
       '<circle cx="'+X(pts.length-1).toFixed(1)+'" cy="'+Y(last.v).toFixed(1)+'" r="3" fill="#fd7e14"/>'+
       '<text x="'+pad+'" y="'+h+'" class="pv-ax">'+esc(pts[0].d.slice(0,7))+'</text>'+
