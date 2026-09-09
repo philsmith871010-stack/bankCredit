@@ -464,6 +464,50 @@ def test_the_shortlist_shows_one_tenor_at_a_time(page, server):
     assert not page.errors, page.errors
 
 
+# ---- the rating history the register publishes ------------------------------------------------
+def _with_history():
+    """A bank whose profile carries a rebuilt rating history, or a reason to skip."""
+    for f in sorted((SITE / "data" / "detail").glob("*.json")):
+        b = json.loads(f.read_text(encoding="utf-8"))
+        h = b.get("rating_history") or {}
+        if len(h.get("composite") or []) >= 2:
+            return f.stem
+    pytest.skip("no rating history in this build (python -m bankcredit.cli ratings-history)")
+
+
+def test_a_profile_draws_the_ladder_the_ratings_climbed(page, server):
+    """The register holds every action back to 2015 and the site was keeping only today's state."""
+    who = _with_history()
+    visit(page, server, f"banks/{who}.html")
+    page.eval_on_selector('.tab[data-tab="ratings"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector_all(".ladder", "e => e.length") == 1
+    # a step per agency plus the composite, and every one of them a step, not a straight line
+    paths = page.eval_on_selector_all(".ladder path", "e => e.map(x => x.getAttribute('d'))")
+    assert paths and all("H" in d for d in paths), paths
+    assert page.eval_on_selector_all(".rl-key .rl-k", "e => e.length") >= 2
+    assert page.eval_on_selector_all(".rh-list li", "e => e.length") >= 1
+    assert not page.errors, page.errors
+
+
+def test_the_dialog_carries_the_path_the_composite_took(page, server):
+    who = _with_history()
+    rows = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))["rows"]
+    r = next((x for x in rows if x["id"] == who), None)
+    if r is None:
+        pytest.skip("that name is not on the policy list")
+    policy = [{"id": who, "tenor": 365, "added": "2026-01-01",
+               "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}]
+    page.goto(server + "index.html", wait_until="domcontentloaded")
+    page.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
+    visit(page, server, "index.html")
+    page.eval_on_selector(".pol-card", "e => e.click()")
+    page.wait_for_timeout(700)
+    assert page.eval_on_selector_all("dialog .rp", "e => e.length") == 1
+    assert "since 20" in page.eval_on_selector("dialog .rp-t", "e => e.textContent")
+    assert not page.errors, page.errors
+
+
 # ---- the home page is not the whole universe three times over --------------------------------
 def test_the_home_page_stays_small():
     """Two tabs nobody had clicked were 426 KB of the home page's 441 KB."""

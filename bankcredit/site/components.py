@@ -273,3 +273,139 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <footer class="foot"><button type="button" class="glink" id="glink">What do these numbers mean?</button> Counterparty is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}admin/index.html#method">Method</a> · <a href="{root}admin/index.html#status">Data status</a></footer>
 <script id="gloss" type="application/json">{glossary.payload()}</script>
 <script src="{root}assets/app.js?v={stamp(generated)}"></script></body></html>"""
+
+
+# ---- rating history -----------------------------------------------------------------------------
+# One colour per agency, none of them the navy the composite is drawn in: seven lines on one ladder
+# only work if the eye can tell them apart at a glance and still find the median under them.
+AGENCY_COLOUR = {"fitch": "#2f6fd0", "sp": "#fd7e14", "moodys": "#7d5ba6", "dbrs": "#1e7a3a",
+                 "kbra": "#2d8f9e", "scope": "#b04632", "jcr": "#8a6d3b"}
+AGENCY_NAME = {"fitch": "Fitch", "sp": "S&P", "moodys": "Moody's", "dbrs": "DBRS", "kbra": "KBRA",
+               "scope": "Scope", "jcr": "JCR"}
+# Where the ladder is labelled. The scale runs 1 = AAA to 17 = CCC and below; a rung every notch
+# would be unreadable, so the letter grades get the lines and the notches sit between them.
+LADDER = [(1, "AAA"), (3, "AA"), (6, "A"), (9, "BBB"), (12, "BB"), (15, "B"), (17, "CCC")]
+SCALE = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-",
+         "B+", "B", "B-", "CCC"]
+INVESTMENT_GRADE = 10.5      # between BBB- and BB+: the line a treasurer's policy is written around
+
+
+def _step_path(pts, X, Y):
+    """A rating holds its value until the day it changes, so the line between two actions is flat."""
+    d, prev = "", None
+    for x, y in pts:
+        d += (f"M{x:.0f},{y:.0f}" if prev is None else f"H{x:.0f}V{y:.0f}")
+        prev = (x, y)
+    return d
+
+
+def rating_ladder(hist: dict, w: int = 760, h: int = 330, today: str = "") -> str:
+    """Every agency's long-term rating since the register opened, on one ladder.
+
+    A stepped line each, the composite median under them in navy, and the investment-grade line
+    across. The y axis is the rating itself, so the shape of the chart is the credit story.
+    """
+    agencies = [a for a in (hist or {}).get("agencies") or [] if a.get("steps")]
+    comp = (hist or {}).get("composite") or []
+    if not agencies:
+        return ""
+    start = hist.get("start") or "2015-07-01"
+    end = today or max([s[0] for a in agencies for s in a["steps"]] + [c[0] for c in comp])
+    y0, y1 = int(start[:4]), int(end[:4])
+    padl, padr, padt, padb = 46, 54, 16, 30
+    def frac(d):
+        yy, mm, dd = int(d[:4]), int(d[5:7]), int(d[8:10])
+        return yy + (mm - 1) / 12 + (dd - 1) / 365
+    lo, hi = frac(start), max(frac(end), frac(start) + 1)
+    X = lambda d: padl + (frac(d) - lo) / (hi - lo) * (w - padl - padr)
+    # the axis covers the ratings this bank has held, not AAA to default: a bank that has never
+    # left the A range spent most of a full ladder showing empty rungs
+    seen = [g for a in agencies for _d, _v, g in a["steps"] if g is not None] + [c[1] for c in comp]
+    gmin, gmax = min(seen) - 1.0, max(seen) + 1.0
+    if gmax - gmin < 4:
+        pad = (4 - (gmax - gmin)) / 2
+        gmin, gmax = gmin - pad, gmax + pad
+    gmin, gmax = max(0.4, gmin), min(17.6, gmax)
+    Y = lambda g: padt + (g - gmin) / (gmax - gmin) * (h - padt - padb)
+    rungs = ([(g, SCALE[g - 1]) for g in range(1, 18) if gmin <= g <= gmax]
+             if gmax - gmin <= 7 else [(g, lab) for g, lab in LADDER if gmin <= g <= gmax])
+    grid = "".join(
+        f'<line x1="{padl}" x2="{w-padr}" y1="{Y(g):.0f}" y2="{Y(g):.0f}" stroke="{LINE}"/>'
+        f'<text x="{padl-8}" y="{Y(g)+4:.0f}" text-anchor="end" class="axis">{lab}</text>'
+        for g, lab in rungs)
+    # everything below the line is outside most treasury policies, and it is worth seeing at a glance
+    subs = ""
+    if gmax > INVESTMENT_GRADE:
+        top = Y(max(INVESTMENT_GRADE, gmin))
+        subs = (f'<rect x="{padl}" y="{top:.0f}" width="{w-padl-padr}" height="{h-padb-top:.0f}" '
+                f'fill="{MUTED}" fill-opacity="0.09"/>'
+                + (f'<line x1="{padl}" x2="{w-padr}" y1="{top:.0f}" y2="{top:.0f}" stroke="{MUTED}" '
+                   f'stroke-dasharray="3 3" stroke-opacity="0.7"/>' if gmin < INVESTMENT_GRADE else "")
+                + f'<text x="{w-padr-4}" y="{h-padb-6:.0f}" text-anchor="end" class="axis">sub-investment grade</text>')
+    years = [y for y in range(y0, y1 + 1) if (y - y0) % max(1, (y1 - y0) // 6 or 1) == 0]
+    xl = "".join(f'<text x="{X(f"{y}-01-01"):.0f}" y="{h-9}" text-anchor="middle" class="axis">{y}</text>'
+                 for y in years if X(f"{y}-01-01") >= padl - 2)
+    # the composite first, wide and pale, so the agency lines read on top of it rather than against it
+    cline = ""
+    if len(comp) >= 1:
+        pts = [(X(d), Y(g)) for d, g in comp] + [(X(end), Y(comp[-1][1]))]
+        cline = (f'<path d="{_step_path(pts, X, Y)}" fill="none" stroke="{NAVY}" stroke-width="7" '
+                 f'stroke-opacity="0.13" stroke-linejoin="round" stroke-linecap="round"/>'
+                 f'<path d="{_step_path(pts, X, Y)}" fill="none" stroke="{NAVY}" stroke-width="1.6" '
+                 f'stroke-dasharray="5 3" stroke-opacity="0.65" stroke-linejoin="round"/>')
+    lines, dots, ends = "", "", []
+    for a in agencies:
+        col = AGENCY_COLOUR.get(a["agency"], MUTED)
+        who = esc(AGENCY_NAME.get(a["agency"], a["agency"]))
+        # an agency that withdrew and later rated the bank again has two spells on the ladder, and
+        # a line drawn straight across the gap would claim a rating that did not exist
+        spells, cur = [], []
+        for d, v, g in a["steps"]:
+            if g is None:
+                if cur:
+                    spells.append((cur, d))
+                cur = []
+            else:
+                cur.append((d, v, g))
+        if cur:
+            spells.append((cur, ""))
+        for steps, stop in spells:
+            pts = [(X(d), Y(g)) for d, _v, g in steps] + [(X(stop or end), Y(steps[-1][2]))]
+            lines += (f'<path d="{_step_path(pts, X, Y)}" fill="none" stroke="{col}" stroke-width="2" '
+                      f'stroke-linejoin="round" stroke-linecap="round"/>')
+            for i, (d, v, g) in enumerate(steps):
+                what = "rated" if i == 0 else "moved to"
+                dots += (f'<circle cx="{X(d):.0f}" cy="{Y(g):.0f}" r="3.2" fill="{WHITE}" stroke="{col}" stroke-width="2">'
+                         f'<title>{who} {what} {esc(v)} on {esc(d)}</title></circle>')
+            if stop:
+                dots += (f'<circle cx="{X(stop):.0f}" cy="{Y(steps[-1][2]):.0f}" r="3.2" fill="{WHITE}" '
+                         f'stroke="{MUTED}" stroke-width="2">'
+                         f'<title>{who} withdrew its rating on {esc(stop)}</title></circle>')
+            else:
+                ends.append((Y(steps[-1][2]), col, steps[-1][1]))
+    # two agencies on the same rung would print their labels on top of each other
+    ends.sort()
+    for i in range(1, len(ends)):
+        if ends[i][0] - ends[i - 1][0] < 13:
+            ends[i] = (ends[i - 1][0] + 13, ends[i][1], ends[i][2])
+    lab = "".join(f'<text x="{w-padr+6}" y="{y+4:.0f}" class="mono" font-size="11.5" font-weight="600" fill="{col}">{esc(v)}</text>'
+                  for y, col, v in ends)
+    return (f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" class="chart ladder" '
+            f'role="img" aria-label="Long-term ratings since {esc(start)}">'
+            f'{"".join(grid)}{subs}{cline}{lines}{dots}{lab}{xl}</svg>')
+
+
+def rating_legend(hist: dict) -> str:
+    """Who is who on the ladder, and where each of them stands now."""
+    out = []
+    for a in (hist or {}).get("agencies") or []:
+        live = [s for s in a["steps"] if s[2] is not None]
+        if not live:
+            continue
+        gone = a["steps"][-1][2] is None
+        col = AGENCY_COLOUR.get(a["agency"], MUTED)
+        out.append(f'<span class="rl-k"><i style="background:{col}"></i>{esc(AGENCY_NAME.get(a["agency"], a["agency"]))}'
+                   f'<b class="mono"{"" if gone else f" style=color:{col}"}>{esc("withdrawn" if gone else live[-1][1])}</b></span>')
+    if (hist or {}).get("composite"):
+        out.append('<span class="rl-k rl-c"><i></i>Composite<b class="mono">median of the above</b></span>')
+    return '<div class="rl-key">' + "".join(out) + "</div>" if out else ""

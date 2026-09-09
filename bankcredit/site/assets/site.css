@@ -690,3 +690,38 @@ table.uni .sc-n{font-size:14px}
 .sov b{font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--muted);background:var(--line-soft);
        border-radius:5px;padding:1px 5px;cursor:help}
 .md-nm .sov b,.md-sub .sov b,.cp-sub .sov b{font-size:10.5px}
+
+/* ---- rating history: the ladder, what it adds up to, and the moves behind it ---- */
+.rh{margin:0 0 26px}
+.rh-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:12px}
+.rh-head h3{margin:0 0 3px}
+.rh-tally{display:flex;gap:8px;flex:0 0 auto}
+.rh-n{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:74px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:var(--white)}
+.rh-n b{font-size:19px;font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.rh-n span{font-size:10.5px;color:var(--muted);letter-spacing:.02em;white-space:nowrap}
+.rh-body{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:8px 30px;align-items:start}
+.rh-chart{min-width:0}
+.ladder{display:block;width:100%;height:auto;margin:2px 0 6px}
+.rl-key{display:flex;flex-wrap:wrap;gap:6px 16px;padding:9px 0 2px;border-top:1px solid var(--line)}
+.rl-k{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.rl-k i{width:16px;height:3px;border-radius:2px;background:var(--muted);flex:0 0 auto}
+.rl-k b{font-weight:600;color:var(--text)}
+.rl-c i{background:transparent;border-top:2px dashed rgba(10,37,64,.65)}
+.rh-mh{margin:16px 0 6px;font-size:13px}
+.rh-mh:first-child{margin-top:2px}
+.rh-list{list-style:none;margin:0;padding:0}
+.rh-list li{display:flex;align-items:baseline;gap:9px;padding:5px 0;border-bottom:1px solid var(--line-soft);font-size:12.5px}
+.rh-d{color:var(--muted);font-size:11.5px;flex:0 0 auto;font-variant-numeric:tabular-nums}
+.rh-a{font-size:14px;font-weight:700;line-height:1;flex:0 0 auto;width:11px;text-align:center}
+.rh-w{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rh-w b{font-weight:600}
+@media (max-width:900px){.rh-body{grid-template-columns:1fr}}
+
+/* the composite's path through the register's action log, in a card or a dialog */
+.rp{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line-soft)}
+.rp-svg{width:100%;height:34px;display:block;overflow:visible}
+.rp-e{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:-.01em}
+.rp-t{grid-column:1/-1;font-size:11px;color:var(--muted);letter-spacing:.01em}
+.rp-t b{font-weight:600;font-variant-numeric:tabular-nums}
+.rp-u{color:#1e7a3a}
+.rp-d{color:#b04632}

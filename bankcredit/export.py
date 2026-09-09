@@ -16,7 +16,7 @@ from datetime import date, datetime, timedelta
 
 import pandas as pd
 
-from . import store
+from . import store, timeline
 from .entities import load as load_entities
 from .models import METRICS
 from .score import compute
@@ -74,6 +74,23 @@ def _ratings_summary(r: pd.DataFrame) -> list[dict]:
             out.append({"agency": ag, "letter": AGENCY_LETTER.get(ag, ag[:1].upper()), "value": row.value,
                         "type": row.rating_type, "outlook": row.outlook or "", "date": str(row.action_date)[:10]})
     return out
+
+
+def _rating_history(book) -> dict | None:
+    """Eleven years of rating actions, as the profile draws them: a step per agency, the composite
+    under them, and the moves worth naming."""
+    if not book:
+        return None
+    steps = [{"agency": r["agency"], "letter": AGENCY_LETTER.get(r["agency"], r["agency"][:1].upper()),
+              "steps": r["steps"]} for r in book.agency_steps()]
+    comp = book.composite_steps()
+    if not steps or len(comp) < 1:
+        return None
+    moves = book.moves()
+    return {"start": timeline.START, "agencies": steps, "composite": comp,
+            "moves": moves[:40], "records": len(book.records),
+            "ups": sum(1 for m in moves if m["action"] == "upgrade"),
+            "downs": sum(1 for m in moves if m["action"] == "downgrade")}
 
 
 # One numeric scale across agencies (1 = AAA/Aaa ... 10 = BBB-/Baa3 ... 17 = CCC and below), lower is stronger.
@@ -418,7 +435,7 @@ COMPARE_METRICS = [("score", "Counterparty score", "", 1, True), ("rating_grade"
 COMPARE_POINTS = 32
 
 
-def compare_rows(board: list[dict], series_all: dict) -> list[dict]:
+def compare_rows(board: list[dict], series_all: dict, books: dict | None = None) -> list[dict]:
     """Compact per-entity series for the Compare page: the last COMPARE_POINTS periods of each metric."""
     rows = []
     for r in board:
@@ -435,7 +452,9 @@ def compare_rows(board: list[dict], series_all: dict) -> list[dict]:
         sc_series += [[d, v] for d, v, _g in (h.get("snapshots") or []) if d > last_back and v is not None]
         if len(sc_series) >= 2:
             ser["score"] = sc_series[-COMPARE_POINTS:]
-        grades = [[d, g] for d, _v, g in (h.get("snapshots") or []) if g is not None]
+        # the composite as the register has it, not three days of our own snapshots
+        book = (books or {}).get(r["id"])
+        grades = book.composite_steps() if book else [[d, g] for d, _v, g in (h.get("snapshots") or []) if g is not None]
         if len({d for d, _ in grades}) >= 2:
             ser["rating_grade"] = grades[-COMPARE_POINTS:]
         rows.append({"id": r["id"], "short": r["short"], "name": r["name"], "region": r["region"], "type": r["type"], "country": r["country"],
@@ -495,11 +514,19 @@ def _quarter_ends(n: int, today: date) -> list[date]:
     return sorted(out)
 
 
-def score_history(series: dict, composite: float | None, today: date) -> list[dict]:
+def score_history(series: dict, composite: float | None, today: date, book=None) -> list[dict]:
     """The score recomputed at each of the last quarter ends on the ratios as they stood then, with today's
-    method and today's composite rating: a like-for-like path of the ratio pillars through time."""
+    method: a like-for-like path through time.
+
+    The rating pillar used to be pinned to today's composite for want of anything better, so a bank
+    whose ratings had moved carried a line that never showed the move. Where the register holds the
+    action log, each quarter now takes the composite that stood at the end of it.
+    """
     out = []
     for q in _quarter_ends(BACKCAST_QUARTERS, today):
+        comp = (book.composite_at(q) if book else None)
+        if comp is None:
+            comp = composite
         latest = {}
         for m, pts in series.items():
             for p in reversed(pts):
@@ -509,10 +536,11 @@ def score_history(series: dict, composite: float | None, today: date) -> list[di
                     break
         if not latest:
             continue
-        sc = compute(latest, 0.0, composite)
+        sc = compute(latest, 0.0, comp)
         if sc.public_score is None or sc.coverage < 0.5:          # a half-empty quarter is not a comparable point
             continue
-        out.append({"date": q.isoformat(), "score": sc.public_score, "band": sc.band, "coverage": sc.coverage})
+        out.append({"date": q.isoformat(), "score": sc.public_score, "band": sc.band, "coverage": sc.coverage,
+                    "grade": comp})
     return out
 
 
@@ -602,6 +630,8 @@ def export_json() -> None:
     board, today, details, policy_rows = [], date.today(), {}, []
     NOT_PUBLISHED = capital_not_published()
     WITHDRAWN_ALL = withdrawn_summary()
+    # the register's own action log, read back as the state on every day it changed
+    books = timeline.by_entity(store.read("rating_actions"))
     hist_tbl = store.read("history")
     hist_all: dict[str, list] = {}
     if not hist_tbl.empty:
@@ -690,7 +720,8 @@ def export_json() -> None:
         row["rating_composite"] = grade_letter(composite)
         row["sovereign"] = sov.get(e.country or "")          # context for the country, not a score input
         row["unrated"] = sc.unrated
-        back = score_history(series, composite, today)
+        book = books.get(e.id)
+        back = score_history(series, composite, today, book)
         snaps = hist_all.get(e.id, [])
         row["history"] = {"score": [[h["date"], h["score"]] for h in back],
                           "snapshots": [[h["date"], h["score"], h["rating_grade"]] for h in snaps]}
@@ -741,6 +772,7 @@ def export_json() -> None:
             }
         details[e.id] = (row, {
             "debug": debug,
+            "rating_history": _rating_history(book),
             "series": {m: series[m] for m in series if m in SITE_METRICS},
             "metric_labels": {m: METRICS.get(m, m) for m in series},
             "score_detail": {"pillars": sc.pillars, "inputs": sc.inputs},
@@ -795,7 +827,7 @@ def export_json() -> None:
     store.write_json("board", {"generated": generated, "rows": [{k: v for k, v in r.items() if k != "history"} for r in board], "benchmarks": benchmarks})
     store.write_json("policy", {"generated": generated, "rows": policy_rows})
     store.write_json("audit", {"generated": generated, "rows": data_audit(active, facts, ratings, prices, cds, store.read("bonds"), events, board)})
-    store.write_json("compare", {"generated": generated, "metrics": COMPARE_METRICS, "rows": compare_rows(board, series_all)})
+    store.write_json("compare", {"generated": generated, "metrics": COMPARE_METRICS, "rows": compare_rows(board, series_all, books)})
     store.write_json("ratings", {"generated": generated, **ratings_summary(active, ratings, events)})
     status = []
     if not runs.empty:

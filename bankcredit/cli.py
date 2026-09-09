@@ -12,6 +12,7 @@
                                                      # crawl from a start page and record every document-looking
                                                      # link, to find where a bank moved its disclosures
   python -m bankcredit.cli reprocess [entity]        # re-extract cached PDFs after an extractor change
+  python -m bankcredit.cli ratings-history [entity ...]  # backfill every rating action ESMA holds, to July 2015
   python -m bankcredit.cli health                    # which sources have stopped working, and which never did
 """
 from __future__ import annotations
@@ -73,6 +74,15 @@ def main(argv=None):
         for sev, msg in res.checks:
             print(f"  [{sev}] {msg}")
         return 0 if status in ("loaded", "unverified") else 1
+    if cmd == "ratings-history":
+        from .adapters.esma import backfill
+        res = backfill(args or None)
+        print(f"{res['actions']} actions across {res['entities']} names")
+        if res["empty"]:
+            print(f"  no rating records: {', '.join(res['empty'])}")
+        if res["failed"]:
+            print(f"  failed: {', '.join(res['failed'])}")
+        return 1 if res["failed"] else 0
     if cmd == "prune-news":
         from .adapters.events import prune_news
         print(f"dropped {prune_news()} rows")

@@ -27,6 +27,9 @@ KEYS = {
     "bond_quotes": ["isin", "date"],
     "runs": ["run_id"],
     "history": ["entity_id", "date", "kind"],          # score and composite grade: daily snapshots and a quarterly backcast
+    # Every rating action the European Rating Platform holds, back to its first day in July 2015.
+    # The "ratings" table is the state today; this is how each of those ratings got there.
+    "rating_actions": ["entity_id", "event_id"],
     # Ratings an agency has withdrawn. Deliberately not in "ratings": a withdrawn rating must never
     # reach a score, and a separate table cannot leak into one by an oversight at a point of use.
     "withdrawn_ratings": ["entity_id", "agency", "rating_type", "horizon", "action_date"],

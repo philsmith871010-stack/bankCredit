@@ -36,6 +36,7 @@ WITHDRAWN = "Withdrawal"
 SLEEP = 0.5          # seconds between requests
 TIMEOUT = 120
 ROWS = 500
+PAGE = 2000        # child docs per request when reading a full history
 
 # Extra spellings tried (OR-ed into the same query) when an entity has no LEI and
 # the name in entities.csv differs from what ESMA holds.
@@ -211,21 +212,31 @@ class ESMARatingsAdapter(Adapter):
         self._withdrawn = []
         return n
 
-    # ---- action history (events feed; not wired into run() yet) ----
-    def actions(self, entity: Entity, since: date | str) -> list[dict]:
-        """Rating actions on the entity's live issuer-level ratings since `since` (child docs)."""
-        since_s = since.isoformat() if isinstance(since, date) else str(since)[:10]
-        parents = self.fetch(entity) or []
-        by_id = {p["id"]: p for p in parents}
-        if not by_id:
-            return []
-        params = {"q": "*:*",
-                  "fq": ["type_s:child", "{!terms f=_root_}" + ",".join(by_id),
-                         f"actionsRacValidityDatetime:[{since_s}T00:00:00Z TO *]"],
-                  "rows": 1000, "sort": "actionsRacValidityDatetime desc",
-                  "fl": "id,parent_id,actionsActionTypeLabel,actionsRatingValueLabel,actionsRacValidityDatetimeStr"}
-        docs = self._select(params, post=True)["response"]["docs"]
-        time.sleep(SLEEP)
+    # ---- action history ----
+    def _children(self, by_id: dict, since: str = "") -> list[dict]:
+        """Every child doc under these parent records, paged. Solr caps a page, the history does not.
+
+        Rabobank alone carries 3,600 actions across 267 rating records, so a single page was never
+        going to hold a full history; the events feed only ever asked for a year of it.
+        """
+        fq = ["type_s:child", "{!terms f=_root_}" + ",".join(by_id)]
+        if since:
+            fq.append(f"actionsRacValidityDatetime:[{since}T00:00:00Z TO *]")
+        out, start = [], 0
+        while True:
+            params = {"q": "*:*", "fq": fq, "rows": PAGE, "start": start,
+                      "sort": "actionsRacValidityDatetime asc, id asc",
+                      "fl": ("id,parent_id,actionsActionType,actionsActionTypeLabel,"
+                             "actionsRatingValueLabel,actionsRacValidityDatetimeStr,actionsDefaultFlag")}
+            res = self._select(params, post=True)["response"]
+            out.extend(res["docs"])
+            time.sleep(SLEEP)
+            start += PAGE
+            if start >= res["numFound"] or not res["docs"]:
+                return out
+
+    def _rows(self, entity: Entity, by_id: dict, docs: list[dict]) -> list[dict]:
+        """Child docs joined to the rating record they belong to."""
         out = []
         for c in docs:
             p = by_id.get(c.get("parent_id") or "", {})
@@ -234,11 +245,81 @@ class ESMARatingsAdapter(Adapter):
                 "event_id": c.get("id", ""),
                 "date": parse_date(c.get("actionsRacValidityDatetimeStr", "")),
                 "action": c.get("actionsActionTypeLabel") or "",
+                "action_code": c.get("actionsActionType") or "",
                 "value": c.get("actionsRatingValueLabel") or "",
                 "agency": agency_code(p.get("craName", "")),
                 "rating_type": rating_type(p.get("issuerRatingName", "")),
                 "horizon": horizon(p.get("timeHorizonDescr", "")),
                 "rating_name": p.get("issuerRatingName", ""),
+                "currency": p.get("localForeignCurrencyValue") or "",
                 "parent_id": c.get("parent_id", ""),
             })
         return out
+
+    _known: set | None = None
+
+    def _record(self, rows: list[dict]) -> list[dict]:
+        """Keep what was fetched. A fetch is allowed to record what it found, and the history is
+        the same read either way: the events feed's yearly window tops the table up for free.
+
+        An action never changes once the register has published it, so only ids the table does not
+        already hold are written. On a normal day that is a handful of rows across the universe,
+        not a rewrite of the whole table once per bank.
+        """
+        if not rows:
+            return rows
+        if self._known is None:
+            held = store.read("rating_actions")
+            self._known = set(held.event_id) if not held.empty else set()
+        fresh = [r for r in rows if r["event_id"] not in self._known]
+        if fresh:
+            store.upsert("rating_actions", [dict(r, loaded_at=datetime.utcnow()) for r in fresh])
+            self._known.update(r["event_id"] for r in fresh)
+        return rows
+
+    def actions(self, entity: Entity, since: date | str) -> list[dict]:
+        """Rating actions on the entity's live issuer-level ratings since `since` (child docs)."""
+        since_s = since.isoformat() if isinstance(since, date) else str(since)[:10]
+        parents = self.fetch(entity) or []
+        by_id = {p["id"]: p for p in parents}
+        if not by_id:
+            return []
+        return self._record(self._rows(entity, by_id, self._children(by_id, since_s)))
+
+    def history(self, entity: Entity) -> list[dict]:
+        """Every action the register holds on this entity, back to the platform's first day.
+
+        The European Rating Platform opened on 1 July 2015 and the agencies loaded their live books
+        into it that day, so this reaches eleven years back for most names. It is the whole record
+        for the rating tracks that are still registered; one an agency has removed from the platform
+        takes its history with it, and nothing before July 2015 is here at all.
+        """
+        parents = self.fetch(entity) or []
+        by_id = {p["id"]: p for p in parents}
+        if not by_id:
+            return []
+        return self._record(self._rows(entity, by_id, self._children(by_id)))
+
+
+def backfill(only: list[str] | None = None) -> dict:
+    """Read every entity's full action history into `rating_actions`.
+
+    Slow and idempotent: about two requests a name, and re-running it rewrites the same rows. The
+    daily events run keeps the last year topped up, so this is for the first load and for a name
+    whose rating records have churned.
+    """
+    from ..entities import load as load_entities
+    ents = [e for e in load_entities() if e.active and (not only or e.id in only)]
+    a = ESMARatingsAdapter()
+    got, failed = {}, []
+    for e in ents:
+        try:
+            rows = a.history(e)
+        except Exception as exc:                       # one unreachable name must not lose the rest
+            log.warning("esma history %s: %s", e.id, exc)
+            failed.append(e.id)
+            continue
+        got[e.id] = len(rows)
+        log.info("esma history %s: %d actions", e.id, len(rows))
+    return {"entities": len(got), "actions": sum(got.values()), "failed": failed,
+            "empty": [k for k, v in got.items() if not v]}

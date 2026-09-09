@@ -183,6 +183,49 @@ def debug_panel(b) -> str:
             f'<h3>Facts ({len(facts)} rows)</h3>{tbl(["metric", "date", "value", "unit", "basis", "source", "method", "confidence", "page", "document"], facts)}</section>')
 
 
+def rating_history_block(b) -> str:
+    """The ladder, what it adds up to, and the moves behind it.
+
+    The register keeps every action under every live rating record, so this is the whole path the
+    ratings took, not a line drawn between where they started and where they are.
+    """
+    h = b["rating_history"]
+    moves = h.get("moves") or []
+    ups = [m for m in moves if m["action"] == "upgrade"]
+    downs = [m for m in moves if m["action"] == "downgrade"]
+    comp = h.get("composite") or []
+    net = (comp[0][1] - comp[-1][1]) if len(comp) > 1 else 0     # a lower grade is a stronger rating
+    since = (h.get("start") or "")[:4]
+    def tally(n, word, colour):
+        return (f'<div class="rh-n"><b style="color:{colour}">{n}</b><span>{word}{"s" if n != 1 else ""}</span></div>'
+                if n else '')
+    arrow = {"upgrade": ("&uarr;", c.GREEN), "downgrade": ("&darr;", c.RED),
+             "withdrawal": ("&times;", c.MUTED), "new": ("&bull;", c.NAVY)}
+    def move_row(m):
+        glyph, colour = arrow[m["action"]]
+        what = "rated" if m["action"] == "new" else m["action"]
+        if m["from"] and m["value"]:
+            what += f' {c.esc(m["from"])} &rarr; {c.esc(m["value"])}'
+        elif m["value"]:
+            what += f' at {c.esc(m["value"])}'
+        elif m["from"]:
+            what += f' of {c.esc(m["from"])}'
+        n = m.get("notches")
+        notch = f' &middot; {n} notch{"es" if n != 1 else ""}' if n else ""
+        return (f'<li><span class="rh-d mono">{c.esc(m["date"])}</span>'
+                f'<span class="rh-a" style="color:{colour}">{glyph}</span>'
+                f'<span class="rh-w"><b>{c.esc(c.AGENCY_NAME.get(m["agency"], m["agency"]))}</b> {what}{notch}</span></li>')
+    rows = "".join(move_row(m) for m in moves[:8])
+    net_txt = ("no net change" if not net else
+               f'{abs(net):.1f} notch{"es" if abs(net) != 1 else ""} {"stronger" if net > 0 else "weaker"}')
+    return f'''<div class="rh">
+<div class="rh-head"><div><h3>Rating history</h3><div class="small muted">Every action the European Rating Platform holds, since {c.esc(since)}. The composite is the median of the agencies on the day.</div></div>
+<div class="rh-tally">{tally(len(ups), "upgrade", c.GREEN)}{tally(len(downs), "downgrade", c.RED)}<div class="rh-n"><b>{c.esc(net_txt.split(" ")[0])}</b><span>{c.esc(" ".join(net_txt.split(" ")[1:]) or "net")}</span></div></div></div>
+<div class="rh-body"><div class="rh-chart">{c.rating_ladder(h)}{c.rating_legend(h)}</div>
+{f'<div class="rh-moves"><h4 class="rh-mh">Every move since {c.esc(since)}</h4><ul class="rh-list">{rows}</ul></div>' if rows else ''}</div>
+</div>'''
+
+
 def ratings_tile(b) -> str:
     """Agency ratings as the first tile of the profile: long-term rating, outlook, short-term rating, date, per agency,
     with the composite grade and the market direction alongside the regulatory KPIs."""
@@ -303,7 +346,10 @@ def page_bank(b, generated):
             charts.append(f'<div class="sm-block" style="--n:{len(cards)}"><div class="sm-sec">{group}</div>'
                           f'<div class="sm-cards">{"".join(cards)}</div></div>')
     ratings_rows = "".join(f'<tr><td>{c.esc(r["agency"])}</td><td class="muted">{c.esc(r["type"].replace("_", " "))} · {c.esc(r["horizon"])}</td><td class="mono b">{c.esc(r["value"])}</td><td class="muted">{c.esc(r["outlook"])}</td><td class="mono muted">{c.esc(r["date"])}</td></tr>' for r in b["ratings_all"])
-    ratings_html = f'<table class="plain"><thead><tr><th>Agency</th><th>Type</th><th>Rating</th><th>Outlook</th><th>Date</th></tr></thead><tbody>{ratings_rows}</tbody></table><div class="note">Source: ESMA European Rating Platform, checked daily. Symbols shown with agency attribution; histories are not redistributed.</div>' if ratings_rows else '<div class="empty">No issuer-level ratings found in the ESMA register for this entity.</div>'
+    ratings_html = ((rating_history_block(b) if b.get("rating_history") else "")
+                    + f'<h3>Every rating held today</h3><table class="plain"><thead><tr><th>Agency</th><th>Type</th><th>Rating</th><th>Outlook</th><th>Date</th></tr></thead><tbody>{ratings_rows}</tbody></table>'
+                    + '<div class="note">Source: ESMA European Rating Platform, checked daily, with agency attribution.</div>'
+                    ) if ratings_rows else '<div class="empty">No issuer-level ratings found in the ESMA register for this entity.</div>'
     mp = b["market_public"]
     bond_line = ""
     if mp.get("bond_change30") is not None:
@@ -526,7 +572,7 @@ def page_method(generated, inner: bool = False):
 <h3>Bands</h3><p>{bands}. Bands carry hysteresis in later versions so they do not flicker at boundaries.</p>
 <h3>What changed from version 1</h3><p>Version 1 scored ratios alone against absolute thresholds and kept ratings in the private overlay. That put small, young or narrowly focused banks with very high capital and liquidity ratios at the top of the table, some of them unrated, and large diversified banks with A+ ratings and leaner ratios in band C. Version 2 (7 September 2026) makes the rating the anchor, moves ratings out of the overlay so they are not counted twice, and withholds the score from unrated banks and from banks without current capital ratios. Scoring ratios relative to each peer group rather than to absolute thresholds is the next candidate change.</p>
 <h2>My policy</h2><p>A page for the treasurer's own approved list. You enter the counterparties you accept and the longest tenor for each; the page keeps the list in your browser (and in a link you can share with colleagues) and checks it on every visit against the current score, band, ratings, market signal, news and data age, flagging what has changed since the day each name was approved. Like-for-like shows the other covered names whose public standing is at least as strong as the weakest counterparty you already accept at each tenor. It compares public information; it does not suggest a tenor, a limit or a list, which remain the treasurer's policy and the adviser's advice.</p>
-<h2>Ratings</h2><p>The Ratings page shows each entity's latest long-term rating by agency (issuer or issuer default rating where it exists, otherwise deposit or counterparty), its outlook, the short-term rating, and the composite. Ratings come from the ESMA European Rating Platform and are shown with agency attribution, refreshed daily; rating histories are not redistributed.</p>
+<h2>Ratings</h2><p>The Ratings page shows each entity's latest long-term rating by agency (issuer or issuer default rating where it exists, otherwise deposit or counterparty), its outlook, the short-term rating, and the composite. Ratings come from the ESMA European Rating Platform and are shown with agency attribution, refreshed daily. Each profile also carries the rating history the register publishes under every live rating record, back to the platform's first day on 1 July 2015: the agencies' own actions, with the composite rebuilt as the median of whatever stood on the day. Nothing before July 2015 is on the platform, and a rating record an agency has removed from it takes its actions with it.</p>
 <h2>Market overlay</h2><p>A layer built from five-year CDS levels and 30-day changes where a CDS market exists (otherwise the 30-day change in the bank's own bond yields against peers), 30-day equity volatility and drawdown from the 52-week high. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points. Provisional weighting (September 2026): the three signals count equally, each worth at most 2.5 points either way. A CDS move is measured within one source (settlement against settlement, or trade medians on days with three or more trades) and split into the part shared with iTraxx Senior Financials and the part that is the bank's own; the label says which. The direction and size of the adjustment are shown; CDS levels themselves are not redistributed.</p>
 <h2>Limitations</h2><ul><li>US banking groups appear twice, as in the UK: the operating bank a depositor faces (Call Report figures from the FDIC, with the US Tier 1 leverage ratio scored on its own scale, and the group's LCR shown as a group figure because banks do not publish their own) and the holding company (binding Basel ratios, the lower of the standardised and advanced approaches, from its Pillar 3 report or XBRL filings, the supplementary leverage ratio, the public LCR disclosure, and asset quality and profitability inherited from its lead bank, labelled).</li><li>UK and other-region figures depend on PDF extraction; failed validations are shown as unverified rather than hidden.</li><li>Peer percentiles are computed only among entities with a score, so they are unstable while coverage is low.</li><li>Asset quality and profitability are held only for US banks so far, so those pillars are re-scaled away for most of the universe; the Coverage page shows this per bank.</li><li>Back-tests against past failures are planned.</li></ul>
 </div>'''
@@ -1011,6 +1057,12 @@ def write_detail(limit: int = 40) -> int:
         out["ratings_all"] = b.get("ratings_all") or b.get("ratings") or []
         out["score_detail"] = (b.get("score_detail") or {}).get("pillars") and {"pillars": b["score_detail"]["pillars"]} or None
         out["events"] = (b.get("events") or [])[:8]
+        rh = b.get("rating_history")
+        if rh:
+            # the dialog draws the composite path and says what moved it; the full ladder, every
+            # agency and every action, is a click away on the profile
+            out["rating_history"] = {"start": rh["start"], "composite": rh["composite"],
+                                     "ups": rh["ups"], "downs": rh["downs"], "moves": rh["moves"][:5]}
         (dst / f.name).write_text(json.dumps(out, separators=(",", ":")))
         n += 1
     peers = {g: {m: q for m, vals in ms.items() if (q := _quartiles(vals))} for g, ms in groups.items()}

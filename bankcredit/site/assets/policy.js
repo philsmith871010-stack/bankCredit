@@ -396,7 +396,7 @@
         (n&&Object.keys(pg).length?'<p class="mt-legend"><span class="mt-key"></span>The band is where this bank\u2019s peer group stands today, quartile to quartile, median dashed.</p>':''),
         'md-trend-panel')+
       '<div class="md-col">'+
-        sect('Ratings'+mk('rating'),'',ratingCell(e)+
+        sect('Ratings'+mk('rating'),'',ratingCell(e)+ratingPath(b)+
           (extra>0?'<p class="md-foot">'+extra+' further rating'+(extra>1?'s':'')+' by type on the full profile.</p>':''))+
         sect('Score make-up'+mk('pillar'),(e.score==null?'':'score '+e.score.toFixed(0)),
           (pill?'<div class="md-pills">'+pill+'</div>':'<div class="muted small">No public score for this entity.</div>')+
@@ -620,6 +620,48 @@
   var OUTLOOK={positive:['\u25b2','up','positive outlook'],negative:['\u25bc','dn','negative outlook'],
                stable:['\u2013','lv','stable outlook'],developing:['\u25c7','lv','developing outlook'],
                evolving:['\u25c7','lv','evolving outlook']};
+  // ---- the path the ratings took, from the register's own action log ----
+  // The dialog gets the composite only: one line, where it started, where it is, and what moved
+  // it. Every agency's own steps are the ladder on the full profile.
+  function gradeLetter(g){return GRADES[Math.min(16,Math.max(0,Math.round(g)-1))]}
+  function ratingPath(e){
+    var h=e.rating_history, c=h&&h.composite;
+    if(!c||c.length<2)return '';
+    var w=100, ht=34, pad=4, t0=+new Date(c[0][0]), t1=Date.now();
+    if(t1<=t0)return '';
+    var gs=c.map(function(p){return p[1]});
+    var lo=Math.min.apply(null,gs)-0.6, hi=Math.max.apply(null,gs)+0.6;
+    var X=function(d){return ((+new Date(d)-t0)/(t1-t0)*w).toFixed(2)};
+    var Y=function(g){return (pad+(g-lo)/(hi-lo)*(ht-2*pad)).toFixed(2)};   // a lower grade is a stronger rating
+    var d='', prev=null;
+    c.forEach(function(p){
+      var x=X(p[0]), y=Y(p[1]);
+      d+=(prev===null?'M'+x+','+y:'H'+x+'V'+y); prev=y;
+    });
+    d+='H'+w;
+    var dots=c.map(function(p,i){
+      if(!i)return '';
+      var up=p[1]<c[i-1][1];
+      return '<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="1.9" fill="'+(up?'#1e7a3a':'#b04632')+'"/>';
+    }).join('');
+    var a=gradeLetter(c[0][1]), b=gradeLetter(c[c.length-1][1]);
+    var bits=[];
+    if(h.ups)bits.push('<b class="rp-u">'+h.ups+'</b> upgrade'+(h.ups>1?'s':''));
+    if(h.downs)bits.push('<b class="rp-d">'+h.downs+'</b> downgrade'+(h.downs>1?'s':''));
+    var last=(h.moves||[])[0];
+    return '<div class="rp"'+tipd(tipHead('The path it took',esc(a)+' → '+esc(b))+
+        '<i>the composite rating on every day it changed, from the register’s own action log</i>'+
+        (last?'<i>last move: '+esc(AGN_FULL[last.agency]||last.agency)+' '+
+          esc(last.action)+(last.value?' to '+esc(last.value):'')+' on '+esc(last.date)+'</i>':'')+
+        '<i>green marks a step up, red a step down; nothing before July 2015 is on the platform</i>')+'>'+
+      '<span class="rp-e" style="color:'+gradeColour(a)+'">'+esc(a)+'</span>'+
+      '<svg viewBox="0 0 '+w+' '+ht+'" preserveAspectRatio="none" class="rp-svg" aria-hidden="true">'+
+        '<path d="'+d+'" fill="none" stroke="#0a2540" stroke-width="2" stroke-opacity=".85" '+
+        'vector-effect="non-scaling-stroke" stroke-linejoin="round"/>'+dots+'</svg>'+
+      '<span class="rp-e" style="color:'+gradeColour(b)+'">'+esc(b)+'</span>'+
+      '<span class="rp-t">'+(bits.join(' · ')||'no change')+'<span class="muted"> since '+
+        esc(String(h.start||'').slice(0,4))+'</span></span></div>';
+  }
   function ratingCell(e){
     var r=(e.ratings||[]);
     if(!r.length)return '<div class="cp-rt-none">No agency rates this entity.</div>';
