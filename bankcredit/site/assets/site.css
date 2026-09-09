@@ -334,6 +334,9 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .ll-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .ll .ll-nm{font-size:13.5px;font-weight:600;letter-spacing:-.01em;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ll-act{display:flex;align-items:center;gap:6px;flex:0 1 auto;min-width:0}
+/* the market chip gives way before the Add button does, and ends in an ellipsis, not mid-word */
+.ll-act .chip{min-width:0;overflow:hidden;text-overflow:ellipsis;flex:0 1 auto}
+.ll-act .ll-add{flex:0 0 auto}
 .ll-act .chip{min-width:0;max-width:104px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10.5px;padding:1px 7px}
 .ll .ll-add{flex:0 0 auto;padding:2px 9px;font-size:11.5px;line-height:1.5}
 .ll .ll-co{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -526,7 +529,12 @@ th .i,.uni th .i{margin-left:4px}
 .ev-shown{flex-basis:100%}
 .brief-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
 @media(max-width:900px){.brief-grid{grid-template-columns:1fr}}
-.pol-topbar{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:10px}
+.pol-topbar{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:10px}
+/* a tab carries its own count, so the click is worth making or worth skipping */
+.tab-n{display:inline-block;margin-left:6px;padding:0 5px;border-radius:999px;background:var(--line);
+       color:var(--muted);font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums;line-height:16px;vertical-align:1px}
+.tab-n:empty{display:none}
+.tab.active .tab-n{background:var(--orange-soft);color:#b35900}
 .pol-topbar h3{margin:0}
 .pol-topbar .pol-form{margin:0}
 @media(max-width:820px){.pol-topbar{align-items:stretch}.pol-topbar .pol-form{width:100%}}

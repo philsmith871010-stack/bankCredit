@@ -353,6 +353,23 @@ def test_no_page_scrolls_sideways(browser, server, path, width):
         pg.close()
 
 
+# ---- five tabs, not one long page ------------------------------------------------------------
+def test_the_counterparty_page_is_five_tabs(page, server):
+    """The approved names ran the length of the page with the shortlist under them."""
+    _seed_many(page, server, 4)
+    tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
+    assert tabs == ["policy", "likeforlike", "universe", "ratings", "events"]
+    assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 4
+    assert page.eval_on_selector("#tn-policy", "e => e.textContent") == "4"
+    page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
+    page.wait_for_timeout(400)
+    drawn = page.eval_on_selector_all("#pol-ll .ll", "e => e.length")
+    assert drawn > 0
+    # the count on the tab is what is drawn, not what was considered
+    assert page.eval_on_selector("#tn-ll", "e => e.textContent") == str(drawn)
+    assert not page.errors, page.errors
+
+
 # ---- the home page is not the whole universe three times over --------------------------------
 def test_the_home_page_stays_small():
     """Two tabs nobody had clicked were 426 KB of the home page's 441 KB."""

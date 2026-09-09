@@ -729,11 +729,9 @@ def page_policy_content(board=None) -> str:
     return f'''<div class="page-head hero"><div><h1>Counterparty</h1><div class="lede">Build your approved list, and see what moved since you approved each name.</div></div>
 <div class="hero-strip">{strip}</div></div>
 <div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>
-<section class="pol-wrap"><div class="pol-topbar"><h3>Your counterparties</h3>
+<section class="pol-wrap"><div class="pol-topbar"><h3>Add a counterparty</h3>
 <div class="pol-form"><label><span>Name{c.info("counterparty")}</span><input id="pol-name" list="pol-names" placeholder="Barclays Bank UK PLC, not Barclays PLC" autocomplete="off"><datalist id="pol-names"></datalist></label>
 <label><span>Longest tenor{c.info('tenor')}</span><select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button></div></div>
-<div id="policy-body"><div class="empty">Loading\u2026</div></div>
-<div class="pol-share" id="pol-share" hidden><button class="filter" id="pol-copy">Copy link</button><input id="pol-link" readonly placeholder="Your share link"><button class="filter" id="pol-clear">Clear all</button></div>
 <dialog id="pol-modal" class="pol-modal"></dialog></section>'''
 
 
@@ -777,13 +775,24 @@ def page_home(board, status, generated):
     The board, the bank navigator, the ratings grid and the events feed were four pages showing
     slices of one universe. They are panels here, so nothing is lost and nothing is a journey.
     """
+    # Five tabs rather than one page: the approved names, the shortlist that follows from them,
+    # and the three views of the universe behind both. The list used to run the length of the page
+    # with the shortlist under it, so reaching the universe was a scroll past everything.
     content = (page_policy_content(board)
                + '<div class="card tabs-card" style="margin-top:16px" id="browse">'
                  '<div class="tabs" role="tablist">'
-                 '<button class="tab active" data-tab="universe">Every covered name</button>'
+                 '<button class="tab active" data-tab="policy">Your counterparties<span class="tab-n" id="tn-policy"></span></button>'
+                 '<button class="tab" data-tab="likeforlike">Like-for-like<span class="tab-n" id="tn-ll"></span></button>'
+                 '<button class="tab" data-tab="universe">Every covered name</button>'
                  '<button class="tab" data-tab="ratings">Ratings</button>'
                  '<button class="tab" data-tab="events">Events</button></div>'
-                 f'<section class="panel active" data-panel="universe">{UNIVERSE_PANEL}</section>'
+                 '<section class="panel active" data-panel="policy">'
+                 '<div id="policy-body"><div class="empty">Loading\u2026</div></div>'
+                 '<div class="pol-share" id="pol-share" hidden><button class="filter" id="pol-copy">Copy link</button>'
+                 '<input id="pol-link" readonly placeholder="Your share link">'
+                 '<button class="filter" id="pol-clear">Clear all</button></div></section>'
+                 '<section class="panel" data-panel="likeforlike"><div id="pol-ll"></div></section>'
+                 f'<section class="panel" data-panel="universe">{UNIVERSE_PANEL}</section>'
                  '<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html"></section>'
                  '<section class="panel" data-panel="events" data-src="data/panels/events.html"></section>'
                  '</div>')

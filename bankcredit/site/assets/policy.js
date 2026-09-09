@@ -687,8 +687,11 @@
       '</div>'+chips+'</div>';
   }
 
+  // a tab says how much is behind it, so a reader knows whether it is worth the click
+  function tabCount(id,n){var el=document.getElementById(id); if(el)el.textContent=n?String(n):''}
   function render(){
     var p=load(); var out=document.getElementById('policy-body'); if(!out||!data)return;
+    var llBox=document.getElementById('pol-ll'), llHtml='', llN=0;
     TIPS={}; hideTip();                       // the marks are about to be rebuilt
     var html='';
     // nothing approved yet: say what to do and open the door to the table, rather than showing an
@@ -769,10 +772,11 @@
           if(w.grade!=null&&(e.rating_grade==null||e.rating_grade>w.grade))return false;
           if(w.score!=null&&e.score<w.score)return false;
           if(e.market&&e.market.direction==='down')return false;return !shown[e.id]}).sort(function(a,b){return b.score-a.score});
+        cands=cands.slice(0,24);                       // the count on the tab is what is drawn
         cands.forEach(function(e){shown[e.id]=1});
         var names=acc.map(function(it){return byId[it.id]?byId[it.id].short:it.id});
         ll+='<h4>'+esc(tenorLabel(t))+' <span class="muted small">· weakest you accept: band '+esc(w.band||'?')+', ratings '+esc(GRADES[Math.floor((w.grade||1)+0.5)-1]||'?')+', score '+(w.score!=null?w.score.toFixed(1):'?')+'</span></h4>';
-        ll+=(t!==tenors[0]?'<p class="small muted">Beyond those listed at longer tenors.</p>':'')+(cands.length?'<div class="ll-grid">'+cands.slice(0,24).map(function(e){
+        ll+=(t!==tenors[0]?'<p class="small muted">Beyond those listed at longer tenors.</p>':'')+(cands.length?'<div class="ll-grid">'+cands.map(function(e){
           var vs=(w.score!=null)?(e.score-w.score):null;
           // four rows and no meter: the action and the market read on the title line, and the score
           // says what a bar under it would repeat. A shortlist is scanned, not studied.
@@ -786,9 +790,12 @@
             '<div class="ll-rt">'+ratings(e.ratings)+'</div></div>';
         }).join('')+'</div>':'<p class="small muted">No further covered name matches the weakest standing you accept at this tenor.</p>');
       });
-      html+='<div class="ll-sec"><h3>Like-for-like</h3><p class="small muted">Covered names at least as strong as the weakest you already accept at each tenor \u2014 same or better band, ratings and score, and no widening market signal.</p>'+ll+'</div>';
+      llN=Object.keys(shown).length;
+      llHtml='<p class="panel-lede small muted">Covered names at least as strong as the weakest you already accept at each tenor \u2014 same or better band, ratings and score, and no widening market signal.</p>'+ll;
     }
     out.innerHTML=html;
+    if(llBox)llBox.innerHTML=llHtml||'<div class="empty">Approve a name and this fills with the covered names that match the standing you accept.</div>';
+    tabCount('tn-policy',p.length); tabCount('tn-ll',llN);
     renderUni();
     var link=document.getElementById('pol-link');if(link){link.value=p.length?location.href.split('#')[0]+'#p='+encode(p):''}
   }
