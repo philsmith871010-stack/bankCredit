@@ -122,6 +122,10 @@ def rating_severity(action: str, value: str = "") -> str:
 class EventsAdapter(Adapter):
     name = "events"
     cadence = "daily"
+    # One news feed, so this is the one place concurrency is a courtesy question rather than an
+    # arithmetic one. Three at a time, with the per-request pause kept, is a fraction of what the
+    # feed serves a browser opening a few tabs.
+    workers = 3
 
     def __init__(self):
         super().__init__()

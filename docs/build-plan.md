@@ -479,3 +479,29 @@ weekdays; the dense slots are what catches up if a call is ever missed.
 
 Sixteen tests cover the decision, including that a commit message cannot reach the shell through it
 and that the kick and the guard agree on when the day begins.
+
+### Fetching several things at once, 9 September 2026
+
+Twenty-eight of the daily run's thirty-five minutes were spent waiting. A hundred and fifty bank
+websites, a news feed and a data API were each asked one question at a time, and the pipeline sat
+idle between answers. The fetch step now runs several items at once, and nothing else does: parse,
+validate and load stay on the calling thread, taken in the order results arrive so a slow site holds
+nothing else up.
+
+Two things had to be true first, and neither was. A `requests` Session is not safe to share between
+threads, so `self.session` is now a per-thread session behind one object, with the headers held on
+the object so an adapter that sets a browser user agent in its `__init__` still has it applied to
+every worker. And a store write rewrites its whole table, so two at once lose one of them: with
+twenty threads writing unguarded, one row of twenty survived. Writes are now held to one at a time
+in `store`, which also covers the Pillar 3 fetch, the one fetch that records what it found.
+
+Concurrency is opt-in per adapter, defaulting to one, so a source is only asked for more when its
+items are genuinely independent requests: Pillar 3 at six, because six at a time is six different
+banks' websites rather than six knocks on one door; the news feed at three, with the per-request
+pause kept, which is the one place this is a courtesy question rather than an arithmetic one; FRED
+and Yahoo at four. `BANKCREDIT_WORKERS=1` forces the old behaviour when chasing a fault in a source.
+
+Measured against the live sources, concurrent run first so the warm cache works against the claim:
+Yahoo 12.3s to 3.6s, the news feed 22.5s to 10.3s over fourteen banks with no throttled response.
+Ten tests cover it, including that every item is loaded exactly once, that an unreachable source
+does not take the rest of the run with it, and that concurrent writes lose nothing.

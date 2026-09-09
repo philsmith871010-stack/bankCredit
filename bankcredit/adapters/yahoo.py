@@ -104,6 +104,7 @@ HOME_MARKETS = {
 class YahooPriceAdapter(Adapter):
     name = "yahoo"
     cadence = "daily"
+    workers = 4                 # one chart request per ticker, and the endpoint is built for volume
     regions: tuple[str, ...] = ()
 
     def __init__(self):

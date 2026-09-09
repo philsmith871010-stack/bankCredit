@@ -29,6 +29,8 @@ SERIES = {
 class FredAdapter(Adapter):
     name = "fred"
     cadence = "daily"
+    # A public data API, one small CSV per series, and it is slow to first byte rather than busy.
+    workers = 4
 
     def discover(self):
         # one request per series: smaller responses, and one slow series does not sink the rest

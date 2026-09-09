@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import os
+import threading
 from dataclasses import fields
 from datetime import datetime
 from pathlib import Path
@@ -35,6 +36,12 @@ KEYS = {
 }
 
 
+# Every write rewrites its whole table, so two at once would lose one of them. Adapters now fetch
+# several items at a time, and a fetch is allowed to record what it found, so the writes are held
+# to one at a time here rather than in each caller. Costs nothing when nothing else is running.
+_WRITING = threading.RLock()
+
+
 def path(table: str) -> Path:
     return DATA / f"{table}.parquet"
 
@@ -46,6 +53,11 @@ def read(table: str) -> pd.DataFrame:
 
 def upsert(table: str, rows: list | pd.DataFrame) -> int:
     """Append rows, replacing any existing row with the same natural key. Returns rows written."""
+    with _WRITING:
+        return _upsert(table, rows)
+
+
+def _upsert(table: str, rows: list | pd.DataFrame) -> int:
     if isinstance(rows, list):
         if not rows:
             return 0
@@ -73,6 +85,11 @@ def upsert(table: str, rows: list | pd.DataFrame) -> int:
 
 def drop(table: str, ne: dict | None = None, **eq) -> int:
     """Delete rows whose columns equal the given values (and differ from any in ne). Returns rows removed."""
+    with _WRITING:
+        return _drop(table, ne, **eq)
+
+
+def _drop(table: str, ne: dict | None = None, **eq) -> int:
     df = read(table)
     if df.empty:
         return 0

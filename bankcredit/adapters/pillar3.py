@@ -119,6 +119,9 @@ def infer_period(text: str, year_end: str = "12-31") -> date | None:
 class Pillar3Adapter(Adapter):
     name = "pillar3"
     cadence = "daily"
+    # One request per bank, and each bank is a different website: six at a time is six different
+    # hosts, not six knocks on one door. This is where the daily run spends most of its time.
+    workers = 6
 
     def __init__(self):
         super().__init__()
