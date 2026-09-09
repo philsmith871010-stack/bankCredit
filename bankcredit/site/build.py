@@ -207,7 +207,7 @@ def ratings_tile(b) -> str:
 
 def page_bank(b, generated):
     series = b["series"]
-    tiles = ratings_tile(b) + "".join(tile(m, l, u, dp, series) for m, l, u, dp in TILE_METRICS)
+    tiles = "".join(tile(m, l, u, dp, series) for m, l, u, dp in TILE_METRICS)
     peer = b.get("peer") or {}
     score = b["score"]
     score_html = f'<span class="mono huge">{score:.0f}</span>' if score is not None else '<span class="mono huge muted">—</span>'
@@ -219,17 +219,6 @@ def page_bank(b, generated):
     prow = "".join(f'<div class="pillar{" pillar-na" if pillars[k][0] is None else ""}"><span class="pl">{ {"rating": "Rating", "capital": "Capital", "liquidity": "Liquidity", "stability": "Stability", "asset_quality": "Assets", "profitability": "Profit"}[k]}</span>'
                    f'<span class="mono">{"—" if pillars[k][0] is None else f"{pillars[k][0]:.0f}"}</span><i><b style="width:{0 if pillars[k][0] is None else pillars[k][0]:.0f}%"></b></i>'
                    f'<span class="pw">w {pillars[k][1] if pillars[k][0] is not None else PILLARS.get(k, (0,))[0]}</span></div>' for k in order if k in pillars)
-    # the score card ran a third of its height empty; its own history belongs in that space
-    _sc = [(qlabel(d), v) for d, v in ((b.get("history") or {}).get("score") or []) if v is not None][-16:]
-    sc_spark = ""
-    if len(_sc) >= 3:
-        sc_spark = (f'<button class="sm sm-dark" type="button" data-title="Counterparty score, recomputed" data-def="score" '
-                    f'data-sub="Today\'s method and composite rating applied to the ratios as they stood at each quarter end '
-                    f'\u00b7 {len(_sc)} quarters" aria-label="Expand score history">'
-                    f'<div class="sm-head"><span class="sm-label">Score, recomputed</span>'
-                    f'<span class="sm-val mono">{_sc[-1][1]:.0f}</span></div>'
-                    f'{c.chart(_sc, unit="", dp=1, w=330, h=74, compact=True, on_dark=True)}'
-                    f'<template>{c.chart(_sc, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)}</template></button>')
     # trends: small multiples grouped by theme, each opening a full-size chart
     TREND_GROUPS = [("Capital", [("cet1_ratio", "CET1 ratio", "%", 1), ("tier1_ratio", "Tier 1 ratio", "%", 1), ("total_capital_ratio", "Total capital ratio", "%", 1),
                                  ("leverage_ratio", "Leverage ratio", "%", 1), ("tier1_leverage", "Tier 1 leverage (US)", "%", 1), ("rwa", "Risk-weighted assets", "m", 0)]),
@@ -245,9 +234,14 @@ def page_bank(b, generated):
     if len(sc_pts) >= 2:
         last, prev = sc_pts[-1][1], sc_pts[-2][1]; delta = last - prev
         dchip = f'<span class="delta {"up" if delta >= 0 else "down"}">{"+" if delta > 0 else ("−" if delta < 0 else "")}{abs(delta):.1f}</span>' if abs(delta) > 0.05 else '<span class="delta flat">no change</span>'
-        big = c.chart(sc_pts, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)
-        small = c.chart(sc_pts, unit="", dp=1, w=300, h=96, compact=True)
-        # the score card at the top of the page carries this one now, with the same dialog
+        standing.append(f'<button class="sm" type="button" data-title="Counterparty score, recomputed" data-def="score" '
+                        f'data-sub="Today\'s method and composite rating applied to the ratios as they stood at each quarter end '
+                        f'\u00b7 {len(sc_pts)} quarters" aria-label="Expand score history">'
+                        f'<div class="sm-head"><span class="sm-label">Score, recomputed</span>'
+                        f'<span class="sm-val mono">{last:.0f}</span></div>'
+                        f'<div class="sm-sub">{dchip}<span class="muted">vs {c.esc(sc_pts[-2][0])}</span></div>'
+                        f'{c.chart(sc_pts, unit="", dp=1, w=300, h=96, compact=True)}'
+                        f'<template>{c.chart(sc_pts, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)}</template></button>')
     snaps = [(d[5:], v) for d, v, _g in (hist.get("snapshots") or []) if v is not None]
     if len(snaps) >= 2:
         big = c.chart(snaps, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)
@@ -356,14 +350,14 @@ def page_bank(b, generated):
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
 <div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {sovereign_pill(b)}{c.info("sovereign")}{" · " + c.chip("LEI " + c.esc(b["lei"])) + c.info("lei") if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
 <div class="actions"><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button><button class="btn primary" onclick="window.print()">{c.ico("download", 16, c.WHITE)}Counterparty report</button></div></div>
-<div class="grid-12"><div class="score-card"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span>{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</div>
-<div class="score-row">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div></div>
-{c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12)}
-<div class="pillars">{prow}</div>
-{sc_spark}
+<div class="grid-12"><div class="score-card"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span><span class="score-band">{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</span></div>
+<div class="score-main"><div class="score-fig">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div>
+{c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12, fluid=True)}</div>
+<div class="pillars">{prow}</div></div>
 {f'<div class="np-note"><b>{c.esc(b["not_published"]["reason"][0].upper() + b["not_published"]["reason"][1:])}.</b> {c.esc(b["not_published"].get("standing") or "")}. A score needs current capital ratios for this entity, so none is shown; the rating and the standing above are what to judge this name on. <a href="{c.esc(b["not_published"].get("source") or "")}" target="_blank" rel="noopener">Source</a></div>' if b.get("not_published") else ''}
 <div class="score-note">Rating anchor and public pillars with published weights (w).{c.info("pillar")}{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../admin/index.html#method">Method</a></div></div>
-<div class="tiles">{tiles}</div></div>
+{ratings_tile(b)}</div>
+<div class="tiles">{tiles}</div>
 <div class="card tabs-card"><div class="tabs" role="tablist"><button class="tab active" data-tab="trends">Trends</button><button class="tab" data-tab="ratings">Ratings</button><button class="tab" data-tab="market">Market</button><button class="tab" data-tab="events">Events</button><button class="tab" data-tab="sources">Sources</button>{'<button class="tab" data-tab="data">Data</button>' if b.get("debug") else ''}</div>
 <section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.{" The grey band on a ratio is where this bank" + chr(8217) + "s peer group stands today, quartile to quartile, with the median dashed — not a peer history." if b.get("peer_ratios") else ""}</div>' if n_charts else ''}{f'<div class="sm-flow">{"".join(charts)}</div>' if charts else '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
 <section class="panel" data-panel="ratings">{ratings_html}</section>

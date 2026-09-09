@@ -339,7 +339,8 @@
           '</em> \u00b7 75th <em>'+pq.p75.toFixed(1)+'</em></i>'+
           '<i>the shaded band is that middle half, the dashed line its median</i>':
           '<i>no peer band: fewer than four names in the group publish this</i>'));
-    return '<figure class="mt"'+tip+'><figcaption>'+esc(label)+mk(gk)+' <b>'+last.v.toFixed(1)+unit+'</b> '+vs+'</figcaption>'+
+    return '<figure class="mt"'+tip+'><figcaption><span class="mt-l">'+esc(label)+mk(gk)+'</span>'+
+      '<b>'+last.v.toFixed(1)+unit+'</b></figcaption>'+(vs?'<div class="mt-sub">'+vs+'</div>':'')+
       '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" aria-hidden="true">'+band+
       '<path d="'+d+'V'+(h-12)+'H'+pad+'Z" fill="#0a2540" fill-opacity="0.07"/>'+
       '<path d="'+d+'" fill="none" stroke="#0a2540" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+
@@ -353,16 +354,8 @@
     var charts=TRENDS.map(function(t){return trend(s[t[0]],t[1],t[2],pg[t[0]],t[3])}).filter(Boolean).join('')
                ||(b.series?'<div class="muted small">Only one period held, so there is nothing to plot yet.</div>'
                           :'<div class="md-wait">'+[0,1,2,3,4,5].map(function(){return '<div class="md-sk"></div>'}).join('')+'</div>');
-    // the headline rating per agency, with its short-term beside it; the rest are on the profile
-    var st={};((e&&e.short_ratings)||[]).forEach(function(x){st[x.letter]=x.value});
-    var head=(e&&e.ratings)||[];
-    var rt=head.map(function(x){
-      return '<tr><td class="ag">'+esc(AGN[x.agency]||x.agency)+'</td>'+
-             '<td class="b" style="color:'+gradeColour(x.value)+'">'+esc(x.value)+'</td>'+
-             '<td class="mono muted">'+esc(st[x.letter]||'')+'</td>'+
-             '<td class="muted">'+esc(x.outlook||'')+'</td></tr>';
-    }).join('')||'<tr><td colspan="5" class="muted">No agency rates this entity.</td></tr>';
-    var extra=(b.ratings_all||[]).length-head.length;
+    var n=(TRENDS.map(function(t){return (s[t[0]]||[]).length>1}).filter(Boolean)).length;
+    var extra=(b.ratings_all||[]).length-(((e&&e.ratings)||[]).length);
     // pillars come through as [score, weight]
     var sd=(b.score_detail&&b.score_detail.pillars)||null;
     var pill=sd?Object.keys(sd).map(function(k){var v=sd[k]||[];var pc=v[0],wt=v[1];
@@ -372,32 +365,46 @@
         (pc!=null?'<i>'+(pc>=80?'strong':pc>=60?'middling':pc>=40?'weak':'very weak')+' against the method\u2019s thresholds</i>':''));
       return '<div class="md-pill"'+tip+'><span>'+esc(k.replace(/_/g,' '))+'</span>'+
              '<div class="meter meter-sm"><i style="width:'+(pc==null?0:Math.max(0,Math.min(100,pc)))+'%;background:'+col+'"></i></div>'+
-             '<b style="color:'+col+'">'+(pc==null?'—':pc.toFixed(0))+'</b><i>w'+(wt==null?'':wt)+'</i></div>'}).join(''):'';
-    var ev=(b.events||(e&&e.recent)||[]).slice(0,6).map(function(x){
+             '<b style="color:'+col+'">'+(pc==null?'\u2014':pc.toFixed(0))+'</b><i>w'+(wt==null?'':wt)+'</i></div>'}).join(''):'';
+    var ev=(b.events||(e&&e.recent)||[]).slice(0,7).map(function(x){
       var k=x.severity==='bad'?'bad':(x.severity==='warn'?'warn':'good');
       return '<div><span class="dot dot-'+k+'"></span><span class="mono muted">'+esc(x.date)+'</span><span class="hd">'+esc(x.title)+'</span></div>';
     }).join('')||'<div class="muted small">Nothing recorded in the window.</div>';
+    // The same panels the open card uses: a ruled heading on a white box, four of them on a
+    // tinted ground. A dialog that looks like the row it came from is one thing to learn, not two.
     return '<div class="md-grid">'+
-      '<section><h4>Trends</h4><div class="md-trends" id="md-trends">'+charts+'</div>'+
-        (Object.keys(pg).length?'<p class="small muted"><span class="mt-key"></span>Peer group today, quartile to quartile, median dashed.</p>':'')+
-      '</section>'+
-      '<section><h4>Ratings'+mk('rating')+'</h4><table class="plain md-rt"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup><tbody>'+rt+'</tbody></table>'+
-        (extra>0?'<p class="small muted">'+extra+' further rating'+(extra>1?'s':'')+' by type on the full profile.</p>':'')+
-        (pill?'<h4>Score make-up'+mk('pillar')+'</h4><div class="md-pills">'+pill+'</div>':'')+
-        (b.percentile!=null?'<p class="small muted">Stronger than '+Math.round(b.percentile)+'% of its peer group'+mk('percentile')+' ('+esc(String(b.peer_group||'').replace(/_/g,' '))+').</p>':'')+
-      '</section>'+
-      '<section><h4>Events</h4><div class="cp-news md-news">'+ev+'</div></section></div>';
+      sect('Trends',(n?n+' series held':''),
+        '<div class="md-trends" id="md-trends">'+charts+'</div>'+
+        (n&&Object.keys(pg).length?'<p class="mt-legend"><span class="mt-key"></span>The band is where this bank\u2019s peer group stands today, quartile to quartile, median dashed.</p>':''),
+        'md-trend-panel')+
+      '<div class="md-col">'+
+        sect('Ratings'+mk('rating'),'',ratingCell(e)+
+          (extra>0?'<p class="md-foot">'+extra+' further rating'+(extra>1?'s':'')+' by type on the full profile.</p>':''))+
+        sect('Score make-up'+mk('pillar'),(e.score==null?'':'score '+e.score.toFixed(0)),
+          (pill?'<div class="md-pills">'+pill+'</div>':'<div class="muted small">No public score for this entity.</div>')+
+          (b.percentile!=null?'<p class="md-foot">Stronger than <b>'+Math.round(b.percentile)+'%</b> of its peer group'+
+            mk('percentile')+' ('+esc(String(b.peer_group||'').replace(/_/g,' '))+').</p>':''))+
+      '</div>'+
+      sect('Events',(e.news30&&(e.news30.bad+e.news30.warn+e.news30.good)?newsMix(e):''),
+        '<div class="cp-news md-news">'+ev+'</div>')+
+    '</div>';
   }
   function openModal(id,tenor){
     var dlg=document.getElementById('pol-modal');if(!dlg)return;
     var e=byId[id]||{};
     var act=tenor?'<button class="filter active pol-add-ll" data-id="'+esc(id)+'" data-tenor="'+tenor+'">Add at '+esc(tenorLabel(tenor))+'</button>':'';
-    dlg.innerHTML='<div class="md-head"><div><div class="md-nm">'+esc(e.short||id)+'</div>'+
-      '<div class="small muted">'+esc(e.name||'')+' \u00b7 '+sovPill(e)+typeTag(e)+'</div></div>'+
-      '<div class="md-sc">'+(e.score==null?'<span class="na">—</span>':'<span class="cp-score" style="color:'+scoreColour(e.score)+'">'+e.score.toFixed(0)+'</span> <span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span>')+'</div>'+
-      act+'<a class="filter" href="'+ROOT+'banks/'+esc(id)+'.html">Full profile</a>'+
-      '<button class="filter" id="md-close" aria-label="Close">Close</button></div>'+
-      '<div id="md-body"><div class="empty">Loading…</div></div>';
+    dlg.innerHTML='<div class="md-head">'+
+      '<div class="md-id"><div class="md-nm">'+esc(e.short||id)+typeTag(e)+'</div>'+
+        '<div class="md-sub">'+esc(e.name||'')+' \u00b7 '+sovPill(e)+'</div></div>'+
+      '<div class="md-sc">'+(e.score==null
+        ? '<span class="na big">\u2014</span><span class="md-scl">not scored</span>'
+        : '<span class="md-scn"><span class="cp-score" style="color:'+scoreColour(e.score)+'">'+e.score.toFixed(0)+'</span>'+
+          '<span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span></span>'+
+          '<span class="md-scl">counterparty score</span>')+'</div>'+
+      ((e.market&&e.market.direction!=='none')?'<div class="md-mkt">'+mkt(e.market)+'</div>':'')+
+      '<div class="md-act">'+act+'<a class="filter" href="'+ROOT+'banks/'+esc(id)+'.html">Full profile</a>'+
+      '<button class="filter" id="md-close" aria-label="Close">Close</button></div></div>'+
+      '<div id="md-body"><div class="empty">Loading\u2026</div></div>';
     if(!dlg.open)dlg.showModal();
     var put=function(b){var t=document.getElementById('md-body');if(t)t.innerHTML=modalBody(b,e)};
     hideTip();

@@ -131,7 +131,7 @@ def _chart_compact(pts_in, w, h, unit, req, dp, band=None, median=None, on_dark=
             f'<text x="{padl}" y="{h-4}" class="axis">{esc(pts_in[0][0])}</text><text x="{w-padr}" y="{h-4}" text-anchor="end" class="axis">{esc(pts_in[-1][0])}</text></svg>')
 
 
-def ribbon(score, p25=None, p50=None, p75=None, w=96, h=10) -> str:
+def ribbon(score, p25=None, p50=None, p75=None, w=96, h=10, fluid: bool = False) -> str:
     """The band scale with the peer quartile band, the peer median and this bank's marker.
     One element, no children: every layer is a background gradient, so a 152-row table
     carries 152 nodes rather than 800."""
@@ -140,7 +140,8 @@ def ribbon(score, p25=None, p50=None, p75=None, w=96, h=10) -> str:
     pc = lambda v: f"{max(0.0, min(100.0, v)):.1f}%"
     r = 4.6                                        # the marker travels inside the bar so it never clips at either end
     mark = (r + max(0.0, min(100.0, score)) / 100 * (w - 2 * r)) / w * 100
-    style = f"width:{w}px;height:{h}px;--s:{mark:.1f}%"
+    # fluid keeps the marker's inset proportional to w while the bar itself fills its box
+    style = f"width:{'100%' if fluid else f'{w}px'};height:{h}px;--s:{mark:.1f}%"
     cls = "ribbon"
     if p25 is not None and p75 is not None:
         style += f";--a:{pc(p25)};--b:{pc(p75)}"

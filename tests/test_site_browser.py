@@ -151,6 +151,27 @@ def test_clicking_outside_a_dialog_closes_it(page, server):
     assert not page.eval_on_selector("#pol-modal", "e => e.open")
 
 
+def test_the_dialog_head_sits_on_one_centre_line(page, server):
+    """A pill with a height needs a box that centres its text; an anchor was not one."""
+    visit(page, server, "index.html")
+    _open_first_bank(page)
+    mids = page.evaluate("""() => ['#md-close', '.md-head a.filter', '.md-sc'].map(s => {
+      const r = document.querySelector(s).getBoundingClientRect();
+      return Math.round(r.top + r.height / 2);
+    })""")
+    assert max(mids) - min(mids) <= 2, mids
+
+
+def test_the_dialog_is_built_from_panels(page, server):
+    visit(page, server, "index.html")
+    _open_first_bank(page)
+    heads = page.eval_on_selector_all("#md-body .cp-cell > h5 > span:first-child",
+                                      "e => e.map(x => x.textContent.trim())")
+    assert len(heads) == 4, heads
+    assert page.query_selector("#md-body .cr-scale") or page.query_selector("#md-body .cp-rt-none")
+    assert not page.errors, page.errors
+
+
 def test_the_dialog_fills_from_the_detail_file(page, server):
     visit(page, server, "index.html")
     _open_first_bank(page)
