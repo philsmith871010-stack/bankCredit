@@ -81,13 +81,13 @@ def _rating_history(book) -> dict | None:
     under them, and the moves worth naming."""
     if not book:
         return None
-    steps = [{"agency": r["agency"], "letter": AGENCY_LETTER.get(r["agency"], r["agency"][:1].upper()),
-              "steps": r["steps"]} for r in book.agency_steps()]
+    spells = [{"agency": r["agency"], "letter": AGENCY_LETTER.get(r["agency"], r["agency"][:1].upper()),
+               "blocks": r["blocks"], "marks": r["marks"]} for r in book.spells()]
     comp = book.composite_steps()
-    if not steps or len(comp) < 1:
+    if not spells or not comp:
         return None
     moves = book.moves()
-    return {"start": timeline.START, "agencies": steps, "composite": comp,
+    return {"start": timeline.START, "agencies": spells, "composite": comp,
             "moves": moves[:40], "records": len(book.records),
             "ups": sum(1 for m in moves if m["action"] == "upgrade"),
             "downs": sum(1 for m in moves if m["action"] == "downgrade")}

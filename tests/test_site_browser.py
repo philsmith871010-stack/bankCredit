@@ -475,17 +475,23 @@ def _with_history():
     pytest.skip("no rating history in this build (python -m bankcredit.cli ratings-history)")
 
 
-def test_a_profile_draws_the_ladder_the_ratings_climbed(page, server):
-    """The register holds every action back to 2015 and the site was keeping only today's state."""
+def test_a_profile_draws_the_ratings_it_held_and_the_tone_under_them(page, server):
+    """Five step lines on one notch axis was spaghetti: most banks live inside two notches, so the
+    agencies sat on top of each other and the composite disappeared beneath them."""
     who = _with_history()
     visit(page, server, f"banks/{who}.html")
     page.eval_on_selector('.tab[data-tab="ratings"]', "e => e.click()")
     page.wait_for_timeout(300)
     assert page.eval_on_selector_all(".ladder", "e => e.length") == 1
-    # a step per agency plus the composite, and every one of them a step, not a straight line
+    # one line only, and it is a step rather than a line drawn between two points
     paths = page.eval_on_selector_all(".ladder path", "e => e.map(x => x.getAttribute('d'))")
-    assert paths and all("H" in d for d in paths), paths
-    assert page.eval_on_selector_all(".rl-key .rl-k", "e => e.length") >= 2
+    steps = [d for d in paths if "H" in d]
+    assert len(steps) == 1, paths
+    # a block per rating held, each one carrying the dates it was held between
+    blocks = page.eval_on_selector_all(".ladder g title", "e => e.map(x => x.textContent)")
+    assert sum(1 for t in blocks if " from " in t) >= 2, blocks
+    assert any("outlook from" in t for t in blocks), "the outlook is the point of the second layer"
+    assert page.eval_on_selector_all(".rl-key .rl-k", "e => e.length") >= 5
     assert page.eval_on_selector_all(".rh-list li", "e => e.length") >= 1
     assert not page.errors, page.errors
 

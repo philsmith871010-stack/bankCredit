@@ -30,6 +30,7 @@ from .adapters.esma import NAME_RANK
 # a change of tone on a rating that stays where it was.
 SETS = {"AF", "UP", "DG", "NW", "OR"}
 ENDS = {"WD"}
+TONE = {"OT", "WR"}        # outlook and watch: the tone of a rating that has not itself moved
 # Preference between rating types when an agency publishes several, as on the profile today.
 TYPE_PREF = {"idr": 0, "issuer": 1, "deposit": 2, "counterparty": 3, "resolution_counterparty": 4}
 AGENCY_ORDER = ["fitch", "sp", "moodys", "dbrs", "kbra", "scope", "jcr"]
@@ -50,6 +51,8 @@ class Book:
         self.dates: list[str] = []
         self.states: list[dict] = []           # agency -> {value, type, date}
         self.composites: list[float | None] = []
+        self._actions = actions
+        self._spells: list[dict] | None = None
         if actions is not None and not actions.empty:
             self._build(actions)
 
@@ -174,6 +177,82 @@ class Book:
                             "action": "upgrade" if (notches or 0) > 0 else "downgrade",
                             "from": prev, "value": value, "notches": abs(notches) if notches else None})
         return sorted(out, key=lambda x: x["date"], reverse=True)
+
+
+    # ---- the shape a timeline is drawn from ----
+    def spells(self) -> list[dict]:
+        """Per agency, the stretches it held each rating, and the outlook that ran under them.
+
+        A block is a rating and a mark is a tone, kept apart on purpose. Drawn as one thing, an
+        outlook change ends a block, and four blocks reading BBB in a row look like four downgrades
+        the agency never made.
+
+        The rating sweep above ignores outlook, because an outlook does not move a composite. This
+        second pass over the same log is what the chart needs, and it is only done when asked.
+        """
+        if self._spells is not None:
+            return self._spells
+        from .export import rating_grade
+        from .adapters.esma import outlook as parse_tone
+        acts = self._actions
+        self._spells = []
+        if acts is None or acts.empty:
+            return self._spells
+        recs, byday = {}, {}
+        for r in acts.sort_values(["date", "event_id"]).itertuples():
+            if (r.horizon or "") != "long" or not r.agency:
+                continue
+            code, day = (r.action_code or ""), str(r.date)[:10]
+            if code not in SETS and code not in ENDS and code not in TONE:
+                continue
+            if r.parent_id not in recs:
+                recs[r.parent_id] = {"agency": r.agency,
+                                     "pref": TYPE_PREF.get(r.rating_type, 9),
+                                     "rank": _rank(getattr(r, "currency", ""), getattr(r, "rating_name", ""))}
+            if code in SETS and r.value:
+                byday.setdefault(day, []).append((r.parent_id, "value", r.value))
+            elif code in ENDS:
+                byday.setdefault(day, []).append((r.parent_id, "end", ""))
+            elif code in TONE:
+                label = r.action or ""
+                # "Removed under negative outlook" ends the negative outlook, it does not set one
+                tone = "" if label.lower().startswith("removed") else parse_tone(label)
+                byday.setdefault(day, []).append((r.parent_id, "tone", tone))
+        live: dict[str, dict] = {}
+        blocks: dict[str, list] = {}
+        marks: dict[str, list] = {}
+        for day in sorted(byday):
+            for rid, kind, val in byday[day]:
+                if kind == "end":
+                    live.pop(rid, None)
+                    continue
+                st = live.setdefault(rid, {"value": "", "tone": "", "seen": day})
+                st["value" if kind == "value" else "tone"] = val
+                st["seen"] = day
+            best: dict[str, tuple] = {}
+            for rid, st in live.items():
+                if not st["value"]:
+                    continue
+                rec = recs[rid]
+                key = (rec["pref"], rec["rank"][0], rec["rank"][1], _desc(st["seen"]))
+                if rec["agency"] not in best or key < best[rec["agency"]][0]:
+                    best[rec["agency"]] = (key, st)
+            for ag in AGENCY_ORDER:
+                bl, mk = blocks.setdefault(ag, []), marks.setdefault(ag, [])
+                st = best.get(ag, (None, None))[1]
+                value = st["value"] if st else ""
+                tone = st["tone"] if st else ""
+                if bl and bl[-1][1] is None and bl[-1][2] != value:
+                    bl[-1][1] = day
+                if value and not (bl and bl[-1][1] is None):
+                    bl.append([day, None, value, rating_grade(value)])
+                if mk and mk[-1][1] is None and mk[-1][2] != tone:
+                    mk[-1][1] = day
+                if tone and not (mk and mk[-1][1] is None):
+                    mk.append([day, None, tone])
+        self._spells = [{"agency": a, "blocks": blocks.get(a) or [], "marks": marks.get(a) or []}
+                        for a in AGENCY_ORDER if blocks.get(a)]
+        return self._spells
 
 
 def _desc(d: str) -> str:

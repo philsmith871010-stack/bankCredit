@@ -284,128 +284,144 @@ AGENCY_NAME = {"fitch": "Fitch", "sp": "S&P", "moodys": "Moody's", "dbrs": "DBRS
                "scope": "Scope", "jcr": "JCR"}
 # Where the ladder is labelled. The scale runs 1 = AAA to 17 = CCC and below; a rung every notch
 # would be unreadable, so the letter grades get the lines and the notches sit between them.
-LADDER = [(1, "AAA"), (3, "AA"), (6, "A"), (9, "BBB"), (12, "BB"), (15, "B"), (17, "CCC")]
 SCALE = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-",
          "B+", "B", "B-", "CCC"]
-INVESTMENT_GRADE = 10.5      # between BBB- and BB+: the line a treasurer's policy is written around
+# The bands the rest of the site colours a rating by, so a block on the timeline and a cell on the
+# ratings grid say the same thing in the same colour.
+GRADE_BANDS = [(4, "#0a2540"), (7, "#3f5f85"), (10, "#7d93ad"), (13, "#c77d1a"), (99, "#b04632")]
+TONE_COLOUR = {"positive": GREEN, "negative": RED, "stable": "#9aa7b4",
+               "watch positive": GREEN, "watch negative": RED, "watch": MUTED}
 
 
-def _step_path(pts, X, Y):
-    """A rating holds its value until the day it changes, so the line between two actions is flat."""
-    d, prev = "", None
-    for x, y in pts:
-        d += (f"M{x:.0f},{y:.0f}" if prev is None else f"H{x:.0f}V{y:.0f}")
-        prev = (x, y)
-    return d
+def GRADE_BAND(g):
+    if g is None:
+        return "#dfe5eb"
+    for upper, col in GRADE_BANDS:
+        if g <= upper:
+            return col
+    return RED
 
 
-def rating_ladder(hist: dict, w: int = 760, h: int = 330, today: str = "") -> str:
-    """Every agency's long-term rating since the register opened, on one ladder.
+def _letter(g):
+    return SCALE[max(0, min(16, int((g or 1) + 0.5) - 1))]
 
-    A stepped line each, the composite median under them in navy, and the investment-grade line
-    across. The y axis is the rating itself, so the shape of the chart is the credit story.
+
+def _frac(d: str) -> float:
+    """A date as a year and a fraction of one, which is all a time axis needs."""
+    return int(d[:4]) + (int(d[5:7]) - 1) / 12 + (int(d[8:10]) - 1) / 365
+
+
+def _today() -> str:
+    from datetime import date as _d
+    return _d.today().isoformat()
+
+
+def rating_timeline(hist: dict, w: int = 1000, today: str = "") -> str:
+    """Eleven years of ratings as what they are: a state each agency held, and the tone under it.
+
+    Five step lines on one notch axis was spaghetti - most banks live inside two notches, so the
+    lines sat on top of each other and the composite disappeared beneath them. A rating is a state,
+    not a measurement, so each agency gets a band of blocks, one block per rating it held, coloured
+    by the range it sits in and labelled with the symbol. The composite keeps a line, alone, above
+    them: one line cannot tangle, and it carries the shape of the story.
+
+    Under each band runs the outlook, which the register has published all along and this site was
+    throwing away. It is the most forward-looking thing here: S&P held Barclays on negative through
+    2016, went negative again in 2020, turned positive in 2022 and upgraded in 2023.
     """
-    agencies = [a for a in (hist or {}).get("agencies") or [] if a.get("steps")]
+    ags = [a for a in (hist or {}).get("agencies") or [] if a.get("blocks")]
     comp = (hist or {}).get("composite") or []
-    if not agencies:
+    if not ags:
         return ""
-    start = hist.get("start") or "2015-07-01"
-    end = today or max([s[0] for a in agencies for s in a["steps"]] + [c[0] for c in comp])
-    y0, y1 = int(start[:4]), int(end[:4])
-    padl, padr, padt, padb = 46, 54, 16, 30
-    def frac(d):
-        yy, mm, dd = int(d[:4]), int(d[5:7]), int(d[8:10])
-        return yy + (mm - 1) / 12 + (dd - 1) / 365
-    lo, hi = frac(start), max(frac(end), frac(start) + 1)
-    X = lambda d: padl + (frac(d) - lo) / (hi - lo) * (w - padl - padr)
-    # the axis covers the ratings this bank has held, not AAA to default: a bank that has never
-    # left the A range spent most of a full ladder showing empty rungs
-    seen = [g for a in agencies for _d, _v, g in a["steps"] if g is not None] + [c[1] for c in comp]
-    gmin, gmax = min(seen) - 1.0, max(seen) + 1.0
-    if gmax - gmin < 4:
-        pad = (4 - (gmax - gmin)) / 2
-        gmin, gmax = gmin - pad, gmax + pad
-    gmin, gmax = max(0.4, gmin), min(17.6, gmax)
-    Y = lambda g: padt + (g - gmin) / (gmax - gmin) * (h - padt - padb)
-    rungs = ([(g, SCALE[g - 1]) for g in range(1, 18) if gmin <= g <= gmax]
-             if gmax - gmin <= 7 else [(g, lab) for g, lab in LADDER if gmin <= g <= gmax])
-    grid = "".join(
-        f'<line x1="{padl}" x2="{w-padr}" y1="{Y(g):.0f}" y2="{Y(g):.0f}" stroke="{LINE}"/>'
-        f'<text x="{padl-8}" y="{Y(g)+4:.0f}" text-anchor="end" class="axis">{lab}</text>'
-        for g, lab in rungs)
-    # everything below the line is outside most treasury policies, and it is worth seeing at a glance
-    subs = ""
-    if gmax > INVESTMENT_GRADE:
-        top = Y(max(INVESTMENT_GRADE, gmin))
-        subs = (f'<rect x="{padl}" y="{top:.0f}" width="{w-padl-padr}" height="{h-padb-top:.0f}" '
-                f'fill="{MUTED}" fill-opacity="0.09"/>'
-                + (f'<line x1="{padl}" x2="{w-padr}" y1="{top:.0f}" y2="{top:.0f}" stroke="{MUTED}" '
-                   f'stroke-dasharray="3 3" stroke-opacity="0.7"/>' if gmin < INVESTMENT_GRADE else "")
-                + f'<text x="{w-padr-4}" y="{h-padb-6:.0f}" text-anchor="end" class="axis">sub-investment grade</text>')
-    years = [y for y in range(y0, y1 + 1) if (y - y0) % max(1, (y1 - y0) // 6 or 1) == 0]
-    xl = "".join(f'<text x="{X(f"{y}-01-01"):.0f}" y="{h-9}" text-anchor="middle" class="axis">{y}</text>'
-                 for y in years if X(f"{y}-01-01") >= padl - 2)
-    # the composite first, wide and pale, so the agency lines read on top of it rather than against it
-    cline = ""
-    if len(comp) >= 1:
-        pts = [(X(d), Y(g)) for d, g in comp] + [(X(end), Y(comp[-1][1]))]
-        cline = (f'<path d="{_step_path(pts, X, Y)}" fill="none" stroke="{NAVY}" stroke-width="7" '
-                 f'stroke-opacity="0.13" stroke-linejoin="round" stroke-linecap="round"/>'
-                 f'<path d="{_step_path(pts, X, Y)}" fill="none" stroke="{NAVY}" stroke-width="1.6" '
-                 f'stroke-dasharray="5 3" stroke-opacity="0.65" stroke-linejoin="round"/>')
-    lines, dots, ends = "", "", []
-    for a in agencies:
-        col = AGENCY_COLOUR.get(a["agency"], MUTED)
+    end = today or _today()
+    starts = [b[0] for a in ags for b in a["blocks"]]
+    lane, gap, padl, padr, padt, padb = 32, 9, 76, 56, 18, 24
+    cg = [c[1] for c in comp] or [1]
+    # a bank that has travelled eleven notches needs more room than one that has not moved
+    ch = int(min(168, max(96, 74 + 8 * (max(cg) - min(cg))))) if comp else 0
+    h = padt + ch + len(ags) * (lane + gap) + padb
+    lo = _frac(min(starts))
+    hi = max(_frac(end), lo + 1)
+    X = lambda d: padl + (_frac(d) - lo) / (hi - lo) * (w - padl - padr)
+    out = ""
+    for y in range(int(lo) + 1, int(hi) + 1):
+        x = X(f"{y}-01-01")
+        out += (f'<line x1="{x:.0f}" x2="{x:.0f}" y1="{padt}" y2="{h-padb:.0f}" stroke="{LINE}"/>'
+                f'<text x="{x:.0f}" y="{h-8}" text-anchor="middle" class="axis">{y}</text>')
+    # ---- the composite, one line, above everything ----
+    if comp:
+        cmin, cmax = min(cg) - 0.9, max(cg) + 0.9
+        Y = lambda g: padt + 8 + (g - cmin) / (cmax - cmin) * (ch - 34)
+        rungs = list(range(int(cmin) + 1, int(cmax) + 1))
+        per = (ch - 34) / max(0.001, cmax - cmin)
+        step = max(1, int(-(-13 // per)))
+        if len(rungs) > 9:
+            step = max(step, 2)
+        for g in rungs:
+            out += f'<line x1="{padl}" x2="{w-padr}" y1="{Y(g):.0f}" y2="{Y(g):.0f}" stroke="{LINE}"/>'
+            if rungs and (g - rungs[0]) % step == 0:
+                out += f'<text x="{padl-8}" y="{Y(g)+4:.0f}" text-anchor="end" class="axis">{SCALE[g-1]}</text>'
+        pth, prev = "", None
+        for d, g in comp:
+            x, y = X(d), Y(g)
+            pth += (f"M{x:.0f},{y:.0f}" if prev is None else f"H{x:.0f}V{y:.0f}")
+            prev = y
+        pth += f"H{X(end):.0f}"
+        out += (f'<path d="{pth}" fill="none" stroke="{NAVY}" stroke-width="2.5" '
+                f'stroke-linejoin="round" stroke-linecap="round"/>')
+        for d, g in comp:
+            out += (f'<circle cx="{X(d):.0f}" cy="{Y(g):.0f}" r="3.4" fill="{WHITE}" stroke="{NAVY}" '
+                    f'stroke-width="2"><title>composite {esc(_letter(g))} from {esc(d)}</title></circle>')
+        out += (f'<text x="{X(end)+6:.0f}" y="{Y(comp[-1][1])+4:.0f}" class="mono" font-size="12.5" '
+                f'font-weight="700" fill="{NAVY}">{esc(_letter(comp[-1][1]))}</text>'
+                f'<text x="{padl-8}" y="{padt}" text-anchor="end" class="axis" font-weight="600">COMPOSITE</text>')
+    # ---- a band per agency ----
+    for i, a in enumerate(ags):
+        top = padt + ch + i * (lane + gap)
         who = esc(AGENCY_NAME.get(a["agency"], a["agency"]))
-        # an agency that withdrew and later rated the bank again has two spells on the ladder, and
-        # a line drawn straight across the gap would claim a rating that did not exist
-        spells, cur = [], []
-        for d, v, g in a["steps"]:
-            if g is None:
-                if cur:
-                    spells.append((cur, d))
-                cur = []
-            else:
-                cur.append((d, v, g))
-        if cur:
-            spells.append((cur, ""))
-        for steps, stop in spells:
-            pts = [(X(d), Y(g)) for d, _v, g in steps] + [(X(stop or end), Y(steps[-1][2]))]
-            lines += (f'<path d="{_step_path(pts, X, Y)}" fill="none" stroke="{col}" stroke-width="2" '
-                      f'stroke-linejoin="round" stroke-linecap="round"/>')
-            for i, (d, v, g) in enumerate(steps):
-                what = "rated" if i == 0 else "moved to"
-                dots += (f'<circle cx="{X(d):.0f}" cy="{Y(g):.0f}" r="3.2" fill="{WHITE}" stroke="{col}" stroke-width="2">'
-                         f'<title>{who} {what} {esc(v)} on {esc(d)}</title></circle>')
-            if stop:
-                dots += (f'<circle cx="{X(stop):.0f}" cy="{Y(steps[-1][2]):.0f}" r="3.2" fill="{WHITE}" '
-                         f'stroke="{MUTED}" stroke-width="2">'
-                         f'<title>{who} withdrew its rating on {esc(stop)}</title></circle>')
-            else:
-                ends.append((Y(steps[-1][2]), col, steps[-1][1]))
-    # two agencies on the same rung would print their labels on top of each other
-    ends.sort()
-    for i in range(1, len(ends)):
-        if ends[i][0] - ends[i - 1][0] < 13:
-            ends[i] = (ends[i - 1][0] + 13, ends[i][1], ends[i][2])
-    lab = "".join(f'<text x="{w-padr+6}" y="{y+4:.0f}" class="mono" font-size="11.5" font-weight="600" fill="{col}">{esc(v)}</text>'
-                  for y, col, v in ends)
-    return (f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" class="chart ladder" '
-            f'role="img" aria-label="Long-term ratings since {esc(start)}">'
-            f'{"".join(grid)}{subs}{cline}{lines}{dots}{lab}{xl}</svg>')
+        out += (f'<text x="{padl-8}" y="{top+lane/2+4:.0f}" text-anchor="end" font-size="11.5" '
+                f'font-weight="600" fill="{TEXT}">{who}</text>'
+                # the years before an agency first rated the bank, and any gap after a withdrawal
+                f'<line x1="{padl}" x2="{w-padr}" y1="{top+lane/2:.0f}" y2="{top+lane/2:.0f}" '
+                f'stroke="#dfe5eb" stroke-width="1.5" stroke-dasharray="2 4"/>')
+        for start, stop, value, grade in a["blocks"]:
+            x1, x2 = X(start), X(stop or end)
+            col = GRADE_BAND(grade)
+            held = f"from {esc(start)}" + (f" to {esc(stop)}" if stop else ", still")
+            out += (f'<g><title>{who} {esc(value)} {held}</title>'
+                    f'<rect x="{x1:.0f}" y="{top}" width="{max(2, x2-x1):.0f}" height="{lane}" fill="{col}" rx="3"/>')
+            if x2 - x1 > 32:
+                out += (f'<text x="{(x1+x2)/2:.0f}" y="{top+lane/2+4:.0f}" text-anchor="middle" class="mono" '
+                        f'font-size="11" font-weight="600" fill="{"#fff" if (grade or 99) <= 10 else "#3a2a10"}">'
+                        f'{esc(value)}</text>')
+            out += "</g>"
+        for start, stop, tone in a["marks"]:
+            x1, x2 = X(start), X(stop or end)
+            col = TONE_COLOUR.get(tone, MUTED)
+            out += (f'<g><title>{who}: {esc(tone)} outlook from {esc(start)}</title>'
+                    f'<rect x="{x1:.0f}" y="{top+lane+2}" width="{max(2, x2-x1):.0f}" height="3.5" '
+                    f'fill="{col}" rx="1.75"/>')
+            if tone.startswith("watch"):
+                out += f'<path d="M{x1:.0f},{top-3} l4,-5 l4,5 z" fill="{col}"/>'
+            out += "</g>"
+        last = a["blocks"][-1]
+        if last[1] is None:
+            out += (f'<text x="{X(end)+6:.0f}" y="{top+lane/2+4:.0f}" class="mono" font-size="11.5" '
+                    f'font-weight="600" fill="{GRADE_BAND(last[3])}">{esc(last[2])}</text>')
+    return (f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" class="chart ladder" role="img" '
+            f'aria-label="Ratings and outlooks since {esc((hist or {}).get("start") or "2015")}">{out}</svg>')
 
 
 def rating_legend(hist: dict) -> str:
-    """Who is who on the ladder, and where each of them stands now."""
-    out = []
-    for a in (hist or {}).get("agencies") or []:
-        live = [s for s in a["steps"] if s[2] is not None]
-        if not live:
-            continue
-        gone = a["steps"][-1][2] is None
-        col = AGENCY_COLOUR.get(a["agency"], MUTED)
-        out.append(f'<span class="rl-k"><i style="background:{col}"></i>{esc(AGENCY_NAME.get(a["agency"], a["agency"]))}'
-                   f'<b class="mono"{"" if gone else f" style=color:{col}"}>{esc("withdrawn" if gone else live[-1][1])}</b></span>')
-    if (hist or {}).get("composite"):
-        out.append('<span class="rl-k rl-c"><i></i>Composite<b class="mono">median of the above</b></span>')
-    return '<div class="rl-key">' + "".join(out) + "</div>" if out else ""
+    """What the colours mean, and where each agency stands now."""
+    if not (hist or {}).get("agencies"):
+        return ""
+    bands = "".join(f'<span class="rl-k"><i style="background:{col}"></i>{esc(lab)}</span>'
+                    for lab, col in (("AA- and above", "#0a2540"), ("A range", "#3f5f85"),
+                                     ("BBB range", "#7d93ad"), ("BB range", "#c77d1a"),
+                                     ("B and below", "#b04632")))
+    tones = "".join(f'<span class="rl-k rl-o"><i style="background:{col}"></i>{esc(lab)}</span>'
+                    for lab, col in (("positive outlook", GREEN), ("stable", "#9aa7b4"),
+                                     ("negative", RED)))
+    tones += f'<span class="rl-k rl-w"><i></i>went on watch</span>'
+    return f'<div class="rl-key">{bands}<span class="rl-sep"></span>{tones}</div>'

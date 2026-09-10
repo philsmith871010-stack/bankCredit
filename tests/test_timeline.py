@@ -112,3 +112,53 @@ def test_a_short_term_rating_is_not_on_the_long_term_ladder():
 def test_every_action_that_carries_a_rating_sets_one(code):
     b = timeline.Book(acts([("p1", "sp", "2015-07-01", code, "AA-")]))
     assert [x["value"] for x in b.state_at("2020-01-01")] == ["AA-"]
+
+
+# ---- the spells a timeline is drawn from ------------------------------------------------------
+def test_a_block_is_a_rating_and_a_mark_is_a_tone():
+    """Drawn as one thing, an outlook change ends a block, and four blocks reading BBB in a row
+    look like four downgrades the agency never made."""
+    rows = acts([("p1", "sp", "2015-07-01", "OR", "A"),
+                 ("p1", "sp", "2016-01-01", "OT", ""),
+                 ("p1", "sp", "2018-01-01", "OT", ""),
+                 ("p1", "sp", "2020-01-01", "UP", "A+")])
+    rows.loc[1, "action"] = "Placed under negative outlook"
+    rows.loc[2, "action"] = "Placed under stable outlook"
+    sp = timeline.Book(rows).spells()
+    assert len(sp) == 1 and sp[0]["agency"] == "sp"
+    blocks = sp[0]["blocks"]
+    assert [b[2] for b in blocks] == ["A", "A+"], "an outlook change is not a new rating"
+    assert blocks[0][0] == "2015-07-01" and blocks[0][1] == "2020-01-01"
+    assert [m[2] for m in sp[0]["marks"]] == ["negative", "stable"]
+    assert sp[0]["marks"][0][:2] == ["2016-01-01", "2018-01-01"]
+
+
+def test_an_outlook_that_is_removed_is_not_an_outlook():
+    rows = acts([("p1", "sp", "2015-07-01", "OR", "A"),
+                 ("p1", "sp", "2016-01-01", "OT", ""),
+                 ("p1", "sp", "2017-01-01", "OT", "")])
+    rows.loc[1, "action"] = "Placed under negative outlook"
+    rows.loc[2, "action"] = "Removed under negative outlook"
+    marks = timeline.Book(rows).spells()[0]["marks"]
+    assert [m[2] for m in marks] == ["negative"]
+    assert marks[0][1] == "2017-01-01", "the stripe ends the day the outlook was removed"
+
+
+def test_a_watch_is_carried_as_its_own_tone():
+    rows = acts([("p1", "fitch", "2015-07-01", "OR", "A"),
+                 ("p1", "fitch", "2019-03-01", "WR", "")])
+    rows.loc[1, "action"] = "Placed under negative watch"
+    assert [m[2] for m in timeline.Book(rows).spells()[0]["marks"]] == ["watch negative"]
+
+
+def test_a_withdrawal_ends_the_block_and_a_new_rating_starts_another():
+    rows = acts([("p1", "sp", "2015-07-01", "OR", "A"),
+                 ("p1", "sp", "2020-01-01", "WD", ""),
+                 ("p2", "sp", "2023-01-01", "NW", "BBB")])
+    blocks = timeline.Book(rows).spells()[0]["blocks"]
+    assert [(b[0], b[1], b[2]) for b in blocks] == [
+        ("2015-07-01", "2020-01-01", "A"), ("2023-01-01", None, "BBB")]
+
+
+def test_spells_are_empty_when_nothing_is_held():
+    assert timeline.Book(pd.DataFrame()).spells() == []

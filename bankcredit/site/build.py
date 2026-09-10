@@ -221,7 +221,7 @@ def rating_history_block(b) -> str:
     return f'''<div class="rh">
 <div class="rh-head"><div><h3>Rating history</h3><div class="small muted">Every action the European Rating Platform holds, since {c.esc(since)}. The composite is the median of the agencies on the day.</div></div>
 <div class="rh-tally">{tally(len(ups), "upgrade", c.GREEN)}{tally(len(downs), "downgrade", c.RED)}<div class="rh-n"><b>{c.esc(net_txt.split(" ")[0])}</b><span>{c.esc(" ".join(net_txt.split(" ")[1:]) or "net")}</span></div></div></div>
-<div class="rh-body"><div class="rh-chart">{c.rating_ladder(h)}{c.rating_legend(h)}</div>
+<div class="rh-body"><div class="rh-chart">{c.rating_timeline(h)}{c.rating_legend(h)}</div>
 {f'<div class="rh-moves"><h4 class="rh-mh">Every move since {c.esc(since)}</h4><ul class="rh-list">{rows}</ul></div>' if rows else ''}</div>
 </div>'''
 
