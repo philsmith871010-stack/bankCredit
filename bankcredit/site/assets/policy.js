@@ -511,25 +511,19 @@
       return uniSort.dir*(va-vb);
     });
   }
-  var uniN=50;
+  var uniPage=1;
   function renderUni(){
     var body=document.getElementById('uni-body'); if(!body||!data)return;
     var rows=uniRows(), t=+document.getElementById('uni-tenor').value;
-    document.getElementById('uni-count').textContent=rows.length+' of '+data.rows.length+' names';
-    // a hundred and fifty rows is nine thousand pixels of table; the filters above are how a
-    // reader gets to a name, and the rest arrives on request
+    // the count above the table is about the filter; the strip below it is about the page
+    var cnt=document.getElementById('uni-count');
+    if(cnt)cnt.textContent=rows.length===data.rows.length?data.rows.length+' names'
+      :rows.length+' of '+data.rows.length+' names match';
+    var pages=pageCount(rows.length);
+    if(uniPage>pages)uniPage=pages;
     var foot=document.getElementById('uni-more');
-    if(foot){
-      if(!foot.dataset.init){foot.dataset.init='1';
-        foot.innerHTML='<button class="more" type="button"></button><span class="pg-of small muted"></span>';
-        foot.querySelector('.more').addEventListener('click',function(){uniN+=50;renderUni();this.focus()});}
-      var left=rows.length-Math.min(uniN,rows.length),btn=foot.querySelector('.more');
-      btn.hidden=left<=0;btn.textContent='Show '+Math.min(50,left)+' more';
-      foot.querySelector('.pg-of').textContent=!rows.length?''
-        :left>0?Math.min(uniN,rows.length)+' of '+rows.length+' names':'all '+rows.length+' names shown';
-      foot.hidden=!rows.length;
-    }
-    body.innerHTML=rows.slice(0,uniN).map(function(r){
+    if(foot)foot.innerHTML=pageNav(uniPage,rows.length,'names');
+    body.innerHTML=rows.slice((uniPage-1)*PAGE_SIZE,uniPage*PAGE_SIZE).map(function(r){
       var e=r.e;
       return '<tr class="uni-row" data-id="'+esc(e.id)+'">'+
         '<td><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
@@ -559,8 +553,8 @@
     Object.keys(types).sort().forEach(function(x){var o=document.createElement('option');o.value=x;o.textContent=TYPE_LABEL[x]||x;typ.appendChild(o)});
     TENORS.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent='Add at '+x[1];if(x[0]===365)o.selected=true;ten.appendChild(o)});
     ['uni-q','uni-region','uni-type','uni-band','uni-scored','uni-tenor'].forEach(function(id){
-      // a change of filter starts the list at the top again
-      var el=document.getElementById(id); if(el)el.addEventListener('input',function(){uniN=50;renderUni()});
+      // a change of filter starts the list at page one again
+      var el=document.getElementById(id); if(el)el.addEventListener('input',function(){uniPage=1;renderUni()});
     });
     document.querySelectorAll('#uni-table th[data-sort]').forEach(function(th){
       th.addEventListener('click',function(){
@@ -569,7 +563,7 @@
         uniSort.key=k;
         document.querySelectorAll('#uni-table th[data-sort]').forEach(function(x){x.removeAttribute('aria-sort')});
         th.setAttribute('aria-sort',uniSort.dir>0?'ascending':'descending');
-        renderUni();
+        uniPage=1; renderUni();
       });
     });
     renderUni();
@@ -657,11 +651,30 @@
       '<span class="rp-t">'+(bits.join(' · ')||'no change')+'<span class="muted"> since '+
         esc(String(h.start||'').slice(0,4))+'</span></span></div>';
   }
+  // The shortlist, one tenor and one page at a time. Kept apart from the pane around it so a
+  // page change redraws the table and nothing else: the tenor chips, the counts and the bar
+  // saying what the weakest accepted name is are all unchanged by turning a page.
+  var PAGE_SIZE=window.PAGE_SIZE, pageCount=window.pageCount, pageNav=window.pageNav;
+  var llSets=[], llPage={}, llFirst=null;
+  function llBody(x){
+    var t=x.t, total=x.total;
+    if(!total)
+      return '<p class="ll-none">Nothing outside your policy is as strong as the weakest name you '+
+        'already accept at '+esc(tenorLabel(t))+'.'+
+        (llFirst!=null&&llFirst!==t?' Shorter tenors accept a weaker name, so <button class="linky '+
+          'll-jump" data-t="'+llFirst+'">'+esc(tenorLabel(llFirst))+'</button> has matches.':'')+'</p>';
+    var pages=pageCount(total), cur=llPage[t]||1;
+    if(cur>pages)cur=llPage[t]=pages;
+    var off=(cur-1)*PAGE_SIZE;
+    return llTable(x.cands.slice(off,off+PAGE_SIZE),x.w,t,off)+pageNav(cur,total,'names');
+  }
+
   // ---- the shortlist ----
   // Twenty-four cards carrying the same eight figures in the same eight places is a table that has
   // been taken apart: nothing lines up, so nothing can be compared down a column, and the eye has
   // to find each number again in every card. One row a name, and the columns do the comparing.
-  function llTable(cands,w,t){
+  function llTable(cands,w,t,off){
+    off=off||0;
     var span=1;
     cands.forEach(function(e){ if(w.score!=null&&e.score-w.score>span)span=e.score-w.score; });
     // a ratio is marked only where it is in the bottom quarter of every covered name: on a
@@ -678,7 +691,7 @@
         '%;background:'+(BANDC[e.band]||'#c9d3de')+'" title="'+vs.toFixed(1)+' points above the weakest name you accept at this tenor"></span>':'';
       return '<tr class="ll-r" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+
           esc(e.short)+', open detail" style="--band:'+(BANDC[e.band]||'#c9d3de')+'">'+
-        '<td class="ll-rank mono">'+(i+1)+'</td>'+
+        '<td class="ll-rank mono">'+(off+i+1)+'</td>'+
         '<td class="ll-name"><span class="ll-nm">'+esc(e.short)+typeTag(e)+'</span>'+
           '<span class="ll-co">'+esc(e.name)+' · '+sovPill(e)+'</span></td>'+
         '<td class="ll-sc">'+scoreNum(e.score,e.band,'sc-2')+
@@ -816,6 +829,7 @@
       // at 12, and reading the 12-month list should not depend on having read the other.
       var tenors=[];p.forEach(function(it){if(tenors.indexOf(it.tenor)<0)tenors.push(it.tenor)});tenors.sort(function(a,b){return b-a});
       var chips='', panes='', union={}, first=null, sets=[];
+      llPage={};
       tenors.forEach(function(t){
         var acc=p.filter(function(it){return it.tenor>=t}), w=worst(acc);
         if(w.grade==null&&w.score==null)return;
@@ -830,28 +844,26 @@
         }).sort(function(a,b){return b.score-a.score});
         // the tab badge counts every distinct name any tenor turns up, not just the ones drawn
         cands.forEach(function(e){union[e.id]=1});
-        sets.push({t:t,w:w,total:cands.length,cands:cands.slice(0,24)});
+        sets.push({t:t,w:w,total:cands.length,cands:cands});
       });
       // The longest tenor is the strictest, and on a strong list nothing clears it. Opening there
       // showed a page whose whole content was a sentence saying there was nothing to show, so the
       // tab opens on the longest tenor that actually turns something up.
       sets.forEach(function(x){if(first==null&&x.total)first=x.t});
       if(first==null&&sets.length)first=sets[0].t;
+      llSets=sets; llFirst=first;
       sets.forEach(function(x){
-        var t=x.t, w=x.w, total=x.total, cands=x.cands;
+        var t=x.t, w=x.w, total=x.total;
         var wg=GRADES[Math.floor((w.grade||1)+0.5)-1]||'?';
         chips+='<button class="filter ll-t'+(t===first?' active':'')+'" data-t="'+t+'">'+esc(tenorLabel(t))+
                '<span class="cnt">'+total+'</span></button>';
         panes+='<div class="ll-pane" data-t="'+t+'"'+(t===first?'':' hidden')+'>'+
-          '<div class="ll-head">'+(total>cands.length?'<span class="ll-n">the '+cands.length+' strongest of '+total+'</span>':'')+
+          '<div class="ll-head">'+
           '<span class="ll-bar">the weakest you accept at '+esc(tenorLabel(t))+
             '<b class="band mono band-'+esc(w.band||'')+'">'+esc(w.band||'?')+'</b>'+
             '<b style="color:'+gradeColour(wg)+'">'+esc(wg)+'</b>'+
             '<b style="color:'+scoreColour(w.score)+'">'+(w.score!=null?w.score.toFixed(1):'?')+'</b></span></div>'+
-          (cands.length?llTable(cands,w,t)
-           :'<p class="ll-none">Nothing outside your policy is as strong as the weakest name you already accept at '+esc(tenorLabel(t))+'.'+
-             (first!=null&&first!==t?' Shorter tenors accept a weaker name, so <button class="linky ll-jump" data-t="'+first+'">'+esc(tenorLabel(first))+'</button> has matches.':'')+'</p>')+
-        '</div>';
+          '<div class="ll-body">'+llBody(x)+'</div></div>';
       });
       ll=(tenors.length>1?'<div class="ll-tenors filters">'+chips+'</div>':'')+panes;
       llN=Object.keys(union).length;
@@ -1000,6 +1012,20 @@
       if(!id){sel.classList.add('err');return}sel.classList.remove('err');add(id,+ten.value);sel.value=''});
     document.addEventListener('click',function(ev){var b=ev.target.closest('.pol-rm');if(b){var p=load().filter(function(x){return x.id!==b.dataset.id});save(p);render();return}
       var a=ev.target.closest('.pol-add-ll');if(a){add(a.dataset.id,+a.dataset.tenor);var d=document.getElementById('pol-modal');if(d&&d.open)d.close();return}
+      // a page strip: the universe table redraws itself, a shortlist pane redraws only its table
+      var pg=ev.target.closest('.pgnav button[data-p]');
+      if(pg&&!pg.disabled){
+        var n=+pg.dataset.p, pane=pg.closest('.ll-pane');
+        if(pane){
+          var tn=+pane.dataset.t;
+          llPage[tn]=n;
+          var set=null; llSets.forEach(function(x){if(x.t===tn)set=x});
+          if(set)pane.querySelector('.ll-body').innerHTML=llBody(set);
+        }else if(pg.closest('#uni-more')){
+          uniPage=n; renderUni();
+        }
+        return;
+      }
       // one tenor at a time: the chips swap the pane rather than scroll four lists past you
       var tc=ev.target.closest('.ll-t')||ev.target.closest('.ll-jump');
       if(tc){var box=document.getElementById('pol-ll')||document;

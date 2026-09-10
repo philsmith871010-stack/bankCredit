@@ -860,3 +860,23 @@ table.uni .sc-n{font-size:14px}
 .brief-side{display:flex;flex-direction:column;gap:14px;min-width:0}
 .brief-side .card h3{margin-top:0}
 .brief-side .kv{margin-bottom:12px}
+
+/* A numbered page strip. The current page is the only filled one; the arrows go dim at the ends
+   rather than disappearing, so the strip does not change width as a reader moves along it. */
+.pgnav{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;
+  margin:12px 0 2px;padding-top:10px;border-top:1px solid var(--line-soft)}
+.pgnav .pg-n,.pgnav .pg-a{display:inline-flex;align-items:center;justify-content:center;
+  min-width:32px;height:32px;padding:0 8px;border:1px solid var(--line);border-radius:8px;
+  background:var(--white);color:var(--text);font:inherit;font-size:13px;font-weight:500;
+  font-variant-numeric:tabular-nums;cursor:pointer}
+.pgnav .pg-a{font-size:17px;line-height:1;color:var(--muted)}
+.pgnav .pg-n:hover,.pgnav .pg-a:not(:disabled):hover{border-color:var(--navy);background:var(--line-soft)}
+.pgnav .pg-n.on{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600}
+.pgnav button:disabled{opacity:.35;cursor:default}
+.pgnav button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.pgnav .pg-gap{color:var(--muted);padding:0 2px}
+.pgnav .pg-of{margin-left:10px;font-variant-numeric:tabular-nums}
+@media(max-width:560px){.pgnav .pg-of{width:100%;text-align:center;margin:4px 0 0}}
+
+/* A chart that has had to simplify itself says so, under the drawing rather than over it. */
+.pc-note{padding:2px 4px 0;line-height:1.45}

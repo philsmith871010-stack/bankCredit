@@ -1,3 +1,32 @@
+// ---- a numbered pager -----------------------------------------------------------------
+// A reveal button suits a feed read newest-first, where the reader wants the next few and then
+// stops. A table they sort and scan wants a place in it: ten rows to a page, and a strip that
+// says which page this is. Sixteen pages of the covered universe is too many to print, so the
+// strip carries the first, the last and the ones either side of here, and elides the rest.
+var PAGE_SIZE=10;
+function pageCount(n){return Math.max(1,Math.ceil(n/PAGE_SIZE))}
+function pageNav(cur,total,label){
+  var pages=pageCount(total), lo=(cur-1)*PAGE_SIZE+1, hi=Math.min(cur*PAGE_SIZE,total), strip='';
+  if(pages>1){
+    var want={},last=0;
+    [1,2,pages-1,pages,cur-2,cur-1,cur,cur+1,cur+2].forEach(function(i){if(i>=1&&i<=pages)want[i]=1});
+    for(var i=1;i<=pages;i++){
+      if(!want[i])continue;
+      if(i-last>1)strip+='<span class="pg-gap">\u2026</span>';
+      strip+='<button type="button" class="pg-n'+(i===cur?' on':'')+'" data-p="'+i+'"'+
+             (i===cur?' aria-current="page"':'')+'>'+i+'</button>';
+      last=i;
+    }
+    strip='<button type="button" class="pg-a" data-p="'+(cur-1)+'"'+(cur<=1?' disabled':'')+
+            ' aria-label="Previous page">\u2039</button>'+strip+
+          '<button type="button" class="pg-a" data-p="'+(cur+1)+'"'+(cur>=pages?' disabled':'')+
+            ' aria-label="Next page">\u203a</button>';
+  }
+  return '<div class="pgnav">'+strip+'<span class="pg-of small muted">'+
+    (total?lo+'\u2013'+hi+' of '+total+' '+label:'no '+label)+'</span></div>';
+}
+window.PAGE_SIZE=PAGE_SIZE;window.pageCount=pageCount;window.pageNav=pageNav;
+
 // ---- Long lists stand a page at a time --------------------------------------------------------
 // The filter above a list decides what qualifies; this decides how much of it is on the page. Three
 // hundred events rendered at once is thirty thousand pixels, and the oldest one is unreachable.
