@@ -290,9 +290,9 @@ SCALE = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+
 # deep green at AAA through to red below CCC. It replaced five buckets of navy and blue, which put
 # almost every covered bank in the same one or two shades - the grid was a wall of blue, and AAA
 # and A- were the same colour on a page whose whole job is telling them apart.
-RAMP = [(0, 163, 22, 29), (0.267, 184, 69, 26), (0.444, 138, 98, 6), (0.6, 79, 122, 31),
-        (0.778, 30, 122, 58), (1, 20, 102, 58)]
-
+RAMP = [(0.00, 122, 31, 40), (0.12, 156, 43, 40), (0.25, 193, 70, 42), (0.38, 210, 118, 42),
+        (0.50, 208, 160, 47), (0.62, 127, 174, 73), (0.75, 63, 148, 85), (0.88, 29, 122, 94),
+        (1.00, 18, 87, 74)]
 
 def ramp_colour(t: float) -> str:
     t = max(0.0, min(1.0, t))
@@ -301,25 +301,47 @@ def ramp_colour(t: float) -> str:
             a, b = RAMP[i - 1], RAMP[i]
             k = (t - a[0]) / ((b[0] - a[0]) or 1)
             return "#%02x%02x%02x" % tuple(round(a[j] + (b[j] - a[j]) * k) for j in (1, 2, 3))
-    return "#14663a"
+    return "#12574a"
+
+
+INVESTMENT_GRADE = 10.5      # between BBB- and BB+, the one line a treasury policy is written around
 
 
 def grade_colour(grade) -> str:
-    """A rating's own colour on the 1 = AAA to 17 = CCC scale. Continuous, so the notch between
-    AA- and A+ is visible; the site's other pages colour the same grade the same way."""
+    """A rating's own colour on the 1 = AAA to 17 = CCC scale.
+
+    The ramp's turn from green to amber is pinned to the investment-grade line rather than to the
+    middle of the alphabet, so every name a treasurer can hold reads as a green and only the ones
+    below the line go warm. Spread evenly instead, A came out the colour of a warning and the ten
+    investment-grade notches shared the top third of the ramp, which is what made a page of banks
+    look like one flat colour.
+    """
     if grade is None:
         return "#dfe5eb"
-    return ramp_colour(1 - min(1.0, (max(1.0, min(17.0, float(grade))) - 1) / 14))
+    g = max(1.0, min(17.0, float(grade)))
+    t = (1 - (g - 1) / (INVESTMENT_GRADE - 1) * 0.5 if g <= INVESTMENT_GRADE
+         else 0.5 - (g - INVESTMENT_GRADE) / (17 - INVESTMENT_GRADE) * 0.5)
+    return ramp_colour(t)
 
 
 def on_colour(hex_colour: str) -> str:
-    """Text that can be read on that fill. The ramp runs light through its middle, so white type
-    that works at AAA disappears at BBB."""
+    """Whichever of light or dark type reads better on that fill.
+
+    The ramp runs light through its middle, so white that works on the teal at AAA is barely there
+    on the gold at BBB. Picked on contrast rather than a lightness threshold, because the two are
+    not the same question and a threshold gets the oranges wrong either way it is set.
+    """
+    def lum(rgb):
+        c = [v / 255 for v in rgb]
+        c = [v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4 for v in c]
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
     try:
-        r, g, b = (int(hex_colour[i:i + 2], 16) for i in (1, 3, 5))
+        fill = lum([int(hex_colour[i:i + 2], 16) for i in (1, 3, 5)])
     except (ValueError, IndexError):
         return TEXT
-    return "#fff" if (0.299 * r + 0.587 * g + 0.114 * b) < 150 else "#1d2b16"
+    on_light = (fill + 0.05) / (lum((29, 43, 22)) + 0.05)
+    on_white = (1.0 + 0.05) / (fill + 0.05)
+    return "#fff" if on_white >= on_light else "#1d2b16"
 TONE_COLOUR = {"positive": GREEN, "negative": RED, "stable": "#9aa7b4",
                "watch positive": GREEN, "watch negative": RED, "watch": MUTED}
 
