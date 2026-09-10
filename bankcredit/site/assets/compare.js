@@ -5,17 +5,17 @@
   var dash=document.getElementById('dash');if(!dash)return;
   // running as a tab, the state it writes has to keep the tab in front of it, or a reload
   // lands on the first tab with the analysis state in the address bar
-  var panelId=((dash.closest&&dash.closest('.panel[data-panel]'))||{dataset:{}}).dataset.panel||'';var chart=null;var PANELS={rank:'c-rank',trend:'c-trend',bump:'c-bump',scatter:'c-scatter'};
-  var ylab={hidden:false},side={innerHTML:''},pinsBar=document.getElementById('cp-pins'),tableEl=document.getElementById('c-table'),count=document.getElementById('cp-count'),sel=document.getElementById('cp-metric'),sel2=document.getElementById('cp-metric2'),q=document.getElementById('cp-q'),sugg=document.getElementById('cp-sugg');
+  var panelId=((dash.closest&&dash.closest('.panel[data-panel]'))||{dataset:{}}).dataset.panel||'';var chart=null;var PANELS={rank:'c-rank',trend:'c-trend',bump:'c-bump'};
+  var ylab={hidden:false},side={innerHTML:''},pinsBar=document.getElementById('cp-pins'),tableEl=document.getElementById('c-table'),count=document.getElementById('cp-count'),sel=document.getElementById('cp-metric'),q=document.getElementById('cp-q'),sugg=document.getElementById('cp-sugg');
   var NAVY='#0a2540',GREY='#d3dae3',MID='#7d93ad',INK='#243240',MUTED='#6c757d';
   var SLOTS=['#2a78d6','#eb6834','#1baf7a','#eda100','#e87ba4','#008300'];   // validated categorical order; never cycled past six
-  var D=null,byId={},state={set:'uk_large',extra:[],metric:'score',metric2:'cet1_ratio',view:'rank',pins:[],sort:'score',dir:'desc'},userPinned=false,tipEl=null;
+  var D=null,byId={},state={set:'uk_large',extra:[],metric:'score',view:'rank',pins:[],sort:'score',dir:'desc'},userPinned=false,tipEl=null;
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function ls(k){try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}}
   function watchIds(){return ls('counterparty.watch')}
   function policyIds(){return ls('counterparty.policy').map(function(x){return x.id})}
   function readHash(){var h=location.hash.replace('#','');if(!h)return;h.split('&').forEach(function(kv){var p=kv.split('=');var k=p[0],v=decodeURIComponent(p[1]||'');if(k==='extra'||k==='pins'){state[k]=v?v.split(','):[];if(k==='pins')userPinned=true}else if(k in state&&k!=='pins'&&k!=='extra')state[k]=v})}
-  function writeHash(){var parts=(panelId?[panelId]:[]).concat(['set='+state.set,'metric='+state.metric,'metric2='+state.metric2]);if(state.extra.length)parts.push('extra='+state.extra.join(','));if(userPinned&&state.pins.length)parts.push('pins='+state.pins.join(','));history.replaceState(null,'','#'+parts.join('&'))}
+  function writeHash(){var parts=(panelId?[panelId]:[]).concat(['set='+state.set,'metric='+state.metric]);if(state.extra.length)parts.push('extra='+state.extra.join(','));if(userPinned&&state.pins.length)parts.push('pins='+state.pins.join(','));history.replaceState(null,'','#'+parts.join('&'))}
   // the definition marker beside the measure picker follows whatever is chosen
   var GK={score:'score',rating_grade:'composite',cet1_ratio:'cet1_ratio',leverage_ratio:'leverage_ratio',
           total_capital_ratio:'total_capital_ratio',lcr:'lcr',nsfr:'nsfr',roe:'roe',roa:'roa',nim:'nim',
@@ -119,53 +119,45 @@
     var out=svgOpen(w,H)+xLabels(bs,X,H-8,w);
     var path=function(rk){var d='',on=false;rk.forEach(function(v,i){if(v==null){on=false;return}d+=(on?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1);on=true});return d};
     var lastR=function(l){for(var i=l.rank.length-1;i>=0;i--)if(l.rank[i]!=null)return l.rank[i];return null};
+    var dense=n>40, placed=[];
     lines.filter(function(l){return !colourOf(l.r.id)}).concat(lines.filter(function(l){return colourOf(l.r.id)})).forEach(function(l){var c=colourOf(l.r.id),lr=lastR(l);
+      if(dense&&!c){out+='<path class="cp-line" data-id="'+l.r.id+'" d="'+path(l.rank)+'" fill="none" stroke="'+GREY+'" stroke-width="1" stroke-opacity=".28" stroke-linejoin="round"><title>'+esc(l.r.name)+'</title></path>';return}
       out+='<path class="cp-line'+(c?' on':'')+'" data-id="'+l.r.id+'" d="'+path(l.rank)+'" fill="none" stroke="'+(c||GREY)+'" stroke-width="'+(c?2.4:1.4)+'" stroke-linejoin="round"><title>'+esc(l.r.name)+'</title></path>';
       l.rank.forEach(function(rk,i){if(rk!=null)out+='<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(rk).toFixed(1)+'" r="'+(c?4:2.5)+'" fill="'+(c||GREY)+'"'+(c?' stroke="#fff" stroke-width="1.5"':'')+'><title>'+esc(l.r.short)+' #'+rk+' at '+bs[i]+' ('+fmt(l.pts[i],m)+')</title></circle>'});
-      if(lr!=null&&(c||lr<=8||lr>n-2))out+='<text x="'+(w-R+8)+'" y="'+(Y(lr)+4).toFixed(0)+'" fill="'+(c||MUTED)+'" font-weight="'+(c?'600':'400')+'" font-size="11.5">#'+lr+' '+esc(l.r.short.slice(0,16))+'</text>'});
-    chart.innerHTML=out+'</svg>';
+      if(lr!=null&&(c||(!dense&&(lr<=8||lr>n-2)))){
+        var ly=Y(lr)+4;
+        if(!c){for(var k=0;k<placed.length;k++)if(Math.abs(placed[k]-ly)<13){ly=null;break}}
+        if(ly!=null){placed.push(ly);
+          out+='<text x="'+(w-R+8)+'" y="'+ly.toFixed(0)+'" fill="'+(c||MUTED)+'" font-weight="'+(c?'600':'400')+'" font-size="11.5">#'+lr+' '+esc(l.r.short.slice(0,16))+'</text>'}}});
+    chart.innerHTML=out+'</svg>'+(dense?'<div class="pc-note small muted">'+n+
+      ' names: the pinned ones are drawn in full and the rest as the band they move within. '+
+      'Pick a smaller set to follow individual lines.</div>':'');
     var moves=lines.map(function(l){var f=null,la=null;l.rank.forEach(function(v){if(v!=null){if(f==null)f=v;la=v}});return{r:l.r,v:la,sub:f!=null&&la!=null?('#'+f+' → #'+la+(f-la>0?' · up '+(f-la):f-la<0?' · down '+(la-f):' · level')):'',cls:f!=null&&la!=null?(f-la>0?'good':f-la<0?'bad':'muted'):'muted',ch:(f!=null&&la!=null)?f-la:0}}).sort(function(a,b){return (a.v||99)-(b.v||99)});
-    }
-
-  // ---------- two measures ----------
-  function renderScatter(rows,m,m2){var pts=rows.map(function(r){return{r:r,a:latest(r,m2[0]),b:latest(r,m[0])}}).filter(function(p){return p.a&&p.b&&p.a.v!=null&&p.b.v!=null});
-    if(pts.length<2){chart.innerHTML='<div class="empty">Fewer than two names carry both measures.</div>';side.innerHTML='';return}
-    var xs=pts.map(function(p){return p.a.v}),ys=pts.map(function(p){return p.b.v});
-    var tx=niceTicks(Math.min.apply(null,xs),Math.max.apply(null,xs),6),ty=niceTicks(Math.min.apply(null,ys),Math.max.apply(null,ys),6);
-    var xlo=tx[0],xhi=tx[tx.length-1],ylo=ty[0],yhi=ty[ty.length-1];
-    var w=W(),H=Math.max(360,Math.min(520,Math.round(w*0.42))),L=60,R=24,T=26,B=44,X=function(v){return L+(v-xlo)/(xhi-xlo)*(w-L-R)},Y=function(v){return T+(yhi-v)/(yhi-ylo)*(H-T-B)};
-    var amax=Math.max.apply(null,pts.map(function(p){return p.r.assets||0}))||1;
-    var out=svgOpen(w,H);
-    ty.forEach(function(v){out+='<line x1="'+L+'" x2="'+(w-R)+'" y1="'+Y(v).toFixed(0)+'" y2="'+Y(v).toFixed(0)+'" stroke="#eef1f4"/><text x="'+(L-8)+'" y="'+(Y(v)+4).toFixed(0)+'" text-anchor="end" fill="'+MUTED+'" font-size="11">'+fmt(v,m)+'</text>'});
-    // on a narrow chart six labels run into one another, so only those that clear the last one
-    // are drawn: a gap is easier to read than a smudge
-    var lastTx=-999;
-    tx.forEach(function(u){var x=X(u);if(x-lastTx<46)return;lastTx=x;
-      out+='<text x="'+x.toFixed(0)+'" y="'+(H-24)+'" text-anchor="middle" fill="'+MUTED+'" font-size="11">'+fmt(u,m2)+'</text>'});
-    out+='<text x="'+((L+w-R)/2).toFixed(0)+'" y="'+(H-6)+'" text-anchor="middle" fill="'+INK+'" font-weight="600" font-size="12">'+esc(m2[1])+' →</text><text x="'+L+'" y="'+(T-3)+'" fill="'+INK+'" font-weight="600" font-size="12">↑ '+esc(m[1])+'</text>';
-    var mx=median(xs),my=median(ys);out+='<line x1="'+X(mx).toFixed(0)+'" x2="'+X(mx).toFixed(0)+'" y1="'+T+'" y2="'+(H-B)+'" stroke="'+INK+'" stroke-dasharray="4 4" opacity=".35"/><line x1="'+L+'" x2="'+(w-R)+'" y1="'+Y(my).toFixed(0)+'" y2="'+Y(my).toFixed(0)+'" stroke="'+INK+'" stroke-dasharray="4 4" opacity=".35"/>';
-    pts.sort(function(a,b){return (colourOf(a.r.id)?1:0)-(colourOf(b.r.id)?1:0)}).forEach(function(p){var c=colourOf(p.r.id),rad=p.r.assets?5+10*Math.sqrt(p.r.assets/amax):6;
-      out+='<a href="../banks/'+p.r.id+'.html"><circle class="cp-dot" data-id="'+p.r.id+'" cx="'+X(p.a.v).toFixed(1)+'" cy="'+Y(p.b.v).toFixed(1)+'" r="'+rad.toFixed(1)+'" fill="'+(c||MID)+'" fill-opacity="'+(c?0.9:0.35)+'" stroke="#fff" stroke-width="1.5"><title>'+esc(p.r.name)+': '+esc(m2[1])+' '+fmt(p.a.v,m2)+', '+esc(m[1])+' '+fmt(p.b.v,m)+'</title></circle></a>';
-      if(c||pts.length<=12){var right=X(p.a.v)>w-R-110;out+='<text x="'+(right?X(p.a.v)-rad-4:X(p.a.v)+rad+4).toFixed(0)+'" y="'+(Y(p.b.v)+4).toFixed(0)+'" text-anchor="'+(right?'end':'start')+'" fill="'+(c||MUTED)+'" font-weight="'+(c?'600':'400')+'" font-size="11.5">'+esc(p.r.short.slice(0,18))+'</text>'}});
-    chart.innerHTML=out+'</svg>';
     }
 
   function pinsBarHtml(rows,m){var mk=marked();return '<span class="small muted">Pinned</span>'+state.pins.map(function(id){var r=byId[id];if(!r)return '';var p=latest(r,m[0]);return '<span class="pinchip" data-id="'+id+'" style="--c:'+colourOf(id)+'"><i class="sw" style="background:'+colourOf(id)+'"></i>'+link(r)+'<span class="mono">'+fmt(p&&p.v,m)+'</span>'+(mk[id]?'<span title="watched or in My policy">★</span>':'')+'<button class="pin" data-id="'+id+'" title="Unpin">×</button></span>'}).join('')+(state.pins.length<SLOTS.length?'<span class="small muted">· click any name, bar, line or dot to pin (up to six)</span>':'')}
   var COLS=[['score','Score',1],['band','Band',0],['rating','Rating',0],['cet1_ratio','CET1',1],['leverage_ratio','Leverage',1],['lcr','LCR',0],['nsfr','NSFR',0],['roe','ROE',1],['efficiency_ratio','Cost/income',0],['npl_ratio','NPL',2],['total_assets','Assets',0]];
   function cell(r,code){if(code==='band')return '<td><span class="band mono band-'+esc(r.band||'x')+'">'+esc(r.band||'?')+'</span></td>';if(code==='rating')return '<td>'+(r.rating?'<b>'+esc(r.rating)+'</b>':'<span class="muted">unrated</span>')+'</td>';var p=latest(r,code),m=metric(code);return '<td class="num mono" data-v="'+(p?p.v:-1e9)+'">'+(p?fmt(p.v,m):'<span class="na">—</span>')+'</td>'}
   function sortVal(r,code){if(code==='name')return r.short.toLowerCase();if(code==='band')return r.band||'Z';if(code==='rating')return r.grade==null?99:r.grade;var p=latest(r,code);return p?p.v:-1e9}
+  // "Everyone" is 152 rows, and the set below the charts is read a page at a time like every
+  // other table on the site. A pinned name is never off the page it is pinned from: the sort
+  // decides where it sits, and the strip says where the reader is.
+  var tablePage=1;
   function renderTable(rows){var rs=rows.slice().sort(function(a,b){var x=sortVal(a,state.sort),y=sortVal(b,state.sort);if(typeof x==='string')return state.dir==='asc'?x.localeCompare(y):y.localeCompare(x);return state.dir==='asc'?x-y:y-x});
+    var pages=window.pageCount(rs.length); if(tablePage>pages)tablePage=pages;
+    var page=rs.slice((tablePage-1)*window.PAGE_SIZE,tablePage*window.PAGE_SIZE);
     var head='<tr><th data-sort="name">Name</th>'+COLS.map(function(c){return '<th class="'+(c[0]==='band'||c[0]==='rating'?'':'num')+(state.sort===c[0]?' sorted':'')+'" data-sort="'+c[0]+'">'+esc(c[1])+(state.sort===c[0]?(state.dir==='asc'?' ▲':' ▼'):'')+'</th>'}).join('')+'</tr>';
-    var body=rs.map(function(r){var c=colourOf(r.id);return '<tr data-id="'+r.id+'"'+(c?' class="on" style="--c:'+c+'"':'')+'><td><button class="pin" data-id="'+r.id+'" title="'+(c?'Unpin':'Pin')+'">'+swatch(r.id)+'</button> '+link(r)+'<span class="small muted"> '+esc(r.country)+'</span></td>'+COLS.map(function(c2){return cell(r,c2[0])}).join('')+'</tr>'}).join('');
-    tableEl.innerHTML='<table class="plain cp-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table>'}
-  function render(){var rows=members(),m=metric(state.metric);if(state.metric2===state.metric){state.metric2=state.metric==='roe'?'cet1_ratio':'roe';sel2.value=state.metric2}var m2=metric(state.metric2);
+    var body=page.map(function(r){var c=colourOf(r.id);return '<tr data-id="'+r.id+'"'+(c?' class="on" style="--c:'+c+'"':'')+'><td><button class="pin" data-id="'+r.id+'" title="'+(c?'Unpin':'Pin')+'">'+swatch(r.id)+'</button> '+link(r)+'<span class="small muted"> '+esc(r.country)+'</span></td>'+COLS.map(function(c2){return cell(r,c2[0])}).join('')+'</tr>'}).join('');
+    tableEl.innerHTML='<table class="plain cp-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table>'+
+      window.pageNav(tablePage,rs.length,'names')}
+  function render(){var rows=members(),m=metric(state.metric);
     count.textContent=rows.length+' in the set';
     document.querySelectorAll('.cp-set').forEach(function(b){b.classList.toggle('active',b.dataset.set===state.set)});
     var ids={};rows.forEach(function(r){ids[r.id]=1});state.pins=state.pins.filter(function(id){return ids[id]});
     if(!rows.length){var msg='<div class="empty">'+(state.set==='watch'?'You are not watching anyone yet. The star on any profile or board row adds a name.':state.set==='policy'?'My policy is empty. Add counterparties there and they appear here.':'Nothing in this set.')+'</div>';Object.keys(PANELS).forEach(function(k){document.getElementById(PANELS[k]).innerHTML=msg});pinsBar.innerHTML='';tableEl.innerHTML='';writeHash();return}
     defaultPins(rows,m);
     pinsBar.innerHTML=pinsBarHtml(rows,m[0]==='score'?m:m);
-    var draws={rank:function(){renderRank(rows,m)},trend:function(){renderTrend(rows,m)},bump:function(){renderBump(rows,m)},scatter:function(){renderScatter(rows,m,m2)}};
+    var draws={rank:function(){renderRank(rows,m)},trend:function(){renderTrend(rows,m)},bump:function(){renderBump(rows,m)}};
     Object.keys(PANELS).forEach(function(k){chart=document.getElementById(PANELS[k]);chart.onmousemove=null;chart.onmouseleave=null;chart.innerHTML='';draws[k]()});
     renderTable(rows);writeHash()}
   // hover sync: anything carrying data-id lights its counterparts in every panel and the table
@@ -176,14 +168,17 @@
   function suggest(){var t=q.value.trim().toLowerCase();if(!t){sugg.hidden=true;return}var hits=D.rows.filter(function(r){return (r.name+' '+r.short+' '+r.id).toLowerCase().indexOf(t)>=0}).slice(0,8);
     sugg.innerHTML=hits.map(function(r){return '<button data-id="'+r.id+'">'+esc(r.short)+' <span class="muted small">'+esc(r.name)+'</span></button>'}).join('')||'<span class="muted small">No match</span>';sugg.hidden=false}
   fetch(((document.body.getAttribute('data-root')==null)?'../':document.body.getAttribute('data-root'))+'data/compare.json').then(function(r){return r.json()}).then(function(d){D=d;d.rows.forEach(function(r){byId[r.id]=r});
-    d.metrics.forEach(function(m){sel.insertAdjacentHTML('beforeend','<option value="'+m[0]+'">'+esc(m[1])+'</option>');if(m[0]!=='score')sel2.insertAdjacentHTML('beforeend','<option value="'+m[0]+'">'+esc(m[1])+'</option>')});
+    d.metrics.forEach(function(m){sel.insertAdjacentHTML('beforeend','<option value="'+m[0]+'">'+esc(m[1])+'</option>')});
     markMeasure(state.metric||(d.metrics[0]||[])[0]);
-    readHash();sel.value=state.metric;sel2.value=state.metric2;counts();render();
-    document.getElementById('cp-sets').addEventListener('click',function(e){var b=e.target.closest('.cp-set');if(!b||b.disabled)return;state.set=b.dataset.set;state.extra=[];state.pins=[];userPinned=false;render()});
-    sel.addEventListener('change',function(){state.metric=sel.value;markMeasure(sel.value);if(!userPinned)state.pins=[];render()});sel2.addEventListener('change',function(){state.metric2=sel2.value;render()});
+    readHash();sel.value=state.metric;counts();render();
+    document.getElementById('cp-sets').addEventListener('click',function(e){var b=e.target.closest('.cp-set');if(!b||b.disabled)return;state.set=b.dataset.set;state.extra=[];state.pins=[];userPinned=false;tablePage=1;render()});
+    sel.addEventListener('change',function(){state.metric=sel.value;markMeasure(sel.value);if(!userPinned)state.pins=[];render()});
     document.addEventListener('click',function(e){var b=e.target.closest('.pin');if(b){togglePin(b.dataset.id);return}
       var x=e.target.closest('.pc-x');if(x){var pnl=document.getElementById('p-'+x.dataset.panel);var was=pnl.classList.contains('wide');document.querySelectorAll('.panel-c.wide').forEach(function(q2){q2.classList.remove('wide')});if(!was)pnl.classList.add('wide');render();return}
-      var th=e.target.closest('#c-table th[data-sort]');if(th){var k=th.dataset.sort;if(state.sort===k)state.dir=state.dir==='asc'?'desc':'asc';else{state.sort=k;state.dir=(k==='name'||k==='band'||k==='rating'||k==='efficiency_ratio'||k==='npl_ratio')?'asc':'desc'}renderTable(members());return}
+      var pg=e.target.closest('#c-table .pgnav button[data-p]');
+      if(pg&&!pg.disabled){tablePage=+pg.dataset.p;renderTable(members());return}
+      // a change of sort is a different order, so it starts at page one again
+      var th=e.target.closest('#c-table th[data-sort]');if(th){var k=th.dataset.sort;if(state.sort===k)state.dir=state.dir==='asc'?'desc':'asc';else{state.sort=k;state.dir=(k==='name'||k==='band'||k==='rating'||k==='efficiency_ratio'||k==='npl_ratio')?'asc':'desc'}tablePage=1;renderTable(members());return}
       var p=e.target.closest('.cp-line,.cp-bar,.cp-dot,.cp-lbl');if(p&&p.dataset.id&&!e.target.closest('a[href]')){togglePin(p.dataset.id)}else if(p&&p.dataset.id&&e.target.closest('a[href]')&&e.target.closest('svg')){e.preventDefault();togglePin(p.dataset.id)}});
     q.addEventListener('input',suggest);sugg.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(state.extra.indexOf(b.dataset.id)<0)state.extra.push(b.dataset.id);if(state.pins.length<SLOTS.length&&state.pins.indexOf(b.dataset.id)<0){state.pins.push(b.dataset.id);userPinned=true}q.value='';sugg.hidden=true;render()});
     document.addEventListener('click',function(e){if(!e.target.closest('.cp-add'))sugg.hidden=true});

@@ -1159,24 +1159,22 @@ def compare_content() -> str:
             ("eu_large", "EU and Nordic"), ("us", "US"), ("ch", "Switzerland"), ("aus", "Australia"), ("can", "Canada"), ("asia", "Asia"), ("gulf", "Gulf"),
             ("watch", "Watching"), ("policy", "My policy")]
     chips = "".join(f'<button class="filter cp-set" data-set="{k}">{c.esc(l)}<span class="cnt"></span></button>' for k, l in sets)
-    def panel(pid, title, sub):
-        return (f'<section class="panel-c" id="p-{pid}"><div class="pc-head"><h3>{c.esc(title)} <span class="muted small">{c.esc(sub)}</span></h3>'
+    def panel(pid, title, sub, wide: bool = False):
+        return (f'<section class="panel-c{" wide" if wide else ""}" id="p-{pid}"><div class="pc-head"><h3>{c.esc(title)} <span class="muted small">{c.esc(sub)}</span></h3>'
                 f'<button class="pc-x" data-panel="{pid}" title="Expand or restore" aria-label="Expand {c.esc(title)}">⤢</button></div>'
                 f'<div class="pc-body cp-chart" id="c-{pid}"><div class="sk-rows" aria-hidden="true">'
                 + '<span class="sk"></span>' * 5 + '</div></div></section>')
-    return f'''<p class="small muted panel-lede">One peer set, one measure, four views. Pin up to six names \u2014 they keep their colour in every panel.</p>
+    return f'''<p class="small muted panel-lede">One peer set, one measure, three views: where the names stand today, where the measure has been, and how the order between them has changed. Pin up to six names \u2014 they keep their colour in every panel and in the table.</p>
 <div class="card cp-card"><div class="cp-tools">
 <div class="filters" id="cp-sets">{chips}</div>
 <div class="cp-row"><label class="small muted">Measure <select id="cp-metric"></select></label><button type="button" class="i" id="cp-def" data-t="score" aria-expanded="false" aria-label="What is this measure?">i</button>
-<label class="small muted">against <select id="cp-metric2"></select></label>
 <div class="search cp-add">{c.ico("search", 16, c.MUTED)}<input id="cp-q" placeholder="Add a name to the set" autocomplete="off"><div class="cp-sugg" id="cp-sugg" hidden></div></div>
 <span class="small muted" id="cp-count"></span></div>
 <div class="cp-pins" id="cp-pins"></div></div></div>
 <div class="dash" id="dash">
 {panel("rank", "Ranking now", "latest figure, set median")}
 {panel("trend", "Trend", "quarter ends, set median dashed")}
-{panel("bump", "Rank over time", "position within the set")}
-{panel("scatter", "Two measures", "bubble size follows total assets")}
+{panel("bump", "Rank over time", "position within the set", wide=True)}
 </div>
 <div class="card cp-card"><div class="pc-head"><h3>The set in numbers <span class="muted small">· latest reported figures; click a heading to sort, a swatch to pin</span></h3></div><div class="table-wrap" id="c-table"></div></div>
 <div class="table-foot"><span>Figures are the latest reported by each name; sources and dates are on each profile. Ranks count only names with a figure at that date. The score's history is recomputed with today's method and rating on the ratios as they stood.</span></div>'''

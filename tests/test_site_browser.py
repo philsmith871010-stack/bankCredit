@@ -114,8 +114,8 @@ def test_home_loads_its_data_under_a_subdirectory(page, server):
     """The fault that emptied the live site: data-root="" is the root, not a missing root."""
     visit(page, server, "index.html")
     # the table pages, so a full first page is the sign the data arrived
-    assert page.eval_on_selector_all("#uni-body tr", "e => e.length") == 50
-    assert "of 152 names" in page.inner_text("#uni-more")
+    assert page.eval_on_selector_all("#uni-body tr", "e => e.length") == 10
+    assert "1\u201310 of 152 names" in page.inner_text("#uni-more")
     assert "Loading" not in page.inner_text("#policy-body")
     assert not page.errors, page.errors
     assert not page.bad, page.bad
@@ -128,7 +128,9 @@ def test_the_analysis_tab_loads_its_own_data(page, server):
     page.eval_on_selector('.tab[data-tab="analysis"]', "e => e.click()")
     page.wait_for_timeout(2500)
     assert page.eval_on_selector_all("#cp-metric option", "e => e.length") > 5
-    assert page.eval_on_selector_all("#dash svg", "e => e.length") == 4
+    # three panels: where the names stand today, where the measure has been, how the order moved
+    assert page.eval_on_selector_all("#dash svg", "e => e.length") == 3
+    assert page.query_selector("#cp-metric2") is None, "the second measure and its bubble chart are gone"
     # the tab keeps the state the panel writes after it, so a reload comes back here
     assert page.evaluate("location.hash").startswith("#analysis&")
     assert not page.errors, page.errors
@@ -772,4 +774,49 @@ def test_the_shortlist_opens_on_a_tenor_that_has_something_to_show(page, server)
     active = page.eval_on_selector_all("#pol-ll .ll-t.active", "e => e.map(x => +x.querySelector('.cnt').textContent)")
     if any(counts):
         assert active and active[0] > 0, "the open tenor is one that turns something up"
+    assert not page.errors, page.errors
+
+
+# ---- the tables a reader sorts and scans are paged, not revealed ------------------------------
+def test_a_sorted_table_gives_the_reader_a_place_in_it(page, server):
+    """A reveal button suits a feed read newest-first. A table a reader sorts wants a page number,
+    and turning the page must not silently restart the numbering."""
+    visit(page, server, "index.html")
+    page.eval_on_selector('.tab[data-tab="universe"]', "e => e.click()")
+    page.wait_for_timeout(600)
+    assert page.eval_on_selector_all("#uni-body tr", "e => e.length") == 10
+    first = page.eval_on_selector("#uni-body tr .b", "e => e.textContent")
+    page.eval_on_selector('#uni-more .pg-n[data-p="2"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    assert "11–20 of 152 names" in page.inner_text("#uni-more")
+    assert page.eval_on_selector("#uni-body tr .b", "e => e.textContent") != first
+    # a change of filter is a different list, so it starts at page one again
+    page.eval_on_selector("#uni-q", "e => { e.value = 'bank'; e.dispatchEvent(new Event('input')) }")
+    page.wait_for_timeout(300)
+    assert page.inner_text("#uni-more").startswith("‹") or "1–" in page.inner_text("#uni-more")
+    assert not page.errors, page.errors
+
+
+def test_the_shortlist_numbers_its_rows_across_pages(page, server):
+    """Rank eleven is on page two and still reads eleven; a page that restarts at one says the
+    eleventh strongest name is the strongest."""
+    rows = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))["rows"]
+    weak = [r for r in rows if r.get("score") is not None][-40:]
+    if not weak:
+        pytest.skip("not enough scored names")
+    r = weak[0]
+    policy = [{"id": r["id"], "tenor": 365, "added": "2026-01-01",
+               "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}]
+    page.goto(server + "index.html", wait_until="domcontentloaded")
+    page.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
+    visit(page, server, "index.html")
+    page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
+    page.wait_for_timeout(600)
+    shown = page.eval_on_selector_all(".ll-pane:not([hidden]) .ll-r", "e => e.length")
+    if shown < 10 or not page.query_selector('.ll-pane:not([hidden]) .pg-n[data-p="2"]'):
+        pytest.skip("this policy does not turn up more than one page")
+    assert shown == 10
+    page.eval_on_selector('.ll-pane:not([hidden]) .pg-n[data-p="2"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector(".ll-pane:not([hidden]) .ll-rank", "e => e.textContent") == "11"
     assert not page.errors, page.errors
