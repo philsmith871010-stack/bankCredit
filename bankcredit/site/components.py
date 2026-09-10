@@ -260,8 +260,10 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <title>{esc(title)} · Counterparty · PWLBtoday</title>
 <meta name="color-scheme" content="light">
 {"".join(f'<link rel="preload" href="{root}{p}" as="fetch" crossorigin>' for p in preload)}
-<link rel="preload" href="{root}assets/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{root}assets/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!-- The two Inter faces used to be preloaded here. On a slow line that put 50 KB of typeface in the
+     same queue as the 18 KB of data the page is drawn from, and the reader waited a second longer to
+     see anything at all. Every face carries font-display:swap, so the page is readable in the
+     fallback from the first paint and changes typeface when the font lands. -->
 <link rel="stylesheet" href="{root}assets/site.css?v={stamp(generated)}">
 <script type="speculationrules">{SPECULATION}</script>
 </head><body>{symbols()}

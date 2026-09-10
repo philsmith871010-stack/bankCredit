@@ -268,14 +268,15 @@ def _seed_many(pg, server, n=6):
     return policy
 
 
-@pytest.mark.parametrize(("width", "columns"), [(1440, 2), (1180, 1)])
-def test_the_list_runs_in_two_columns_where_there_is_room(browser, server, width, columns):
-    """A council with forty names wants them two abreast; a narrow window still gets one."""
+@pytest.mark.parametrize(("width", "columns"), [(1600, 4), (1100, 3), (760, 2), (420, 1)])
+def test_the_list_runs_in_as_many_columns_as_fit(browser, server, width, columns):
+    """A council holds plenty of names and a row is now only a name, a score, a rating and a
+    tenor, so it takes about 300px: four abreast on a desk, one on a phone."""
     pg = browser.new_page(viewport={"width": width, "height": 900})
     try:
-        _seed_many(pg, server)
-        tops = pg.eval_on_selector_all(".pol-card", "e => e.map(c => Math.round(c.getBoundingClientRect().top))")
-        assert len(tops) - len(set(tops)) == (len(tops) // 2 if columns == 2 else 0)
+        _seed_many(pg, server, 8)
+        lefts = pg.eval_on_selector_all(".pol-card", "e => e.map(c => Math.round(c.getBoundingClientRect().left))")
+        assert len(set(lefts)) == columns, sorted(set(lefts))
     finally:
         pg.close()
 
@@ -319,7 +320,8 @@ def test_a_counterparty_is_one_line(page, server):
     assert page.eval_on_selector_all(".cp-exp, .cp-detail", "e => e.length") == 0
     labels = page.eval_on_selector_all(".pol-card .ck > span", "e => e.map(x => x.textContent.trim())")
     assert set(labels) == {"score", "rating"}, labels
-    assert page.eval_on_selector(".pol-card", "e => e.getBoundingClientRect().height") < 100
+    # a row in a column of four, matched to the tallest card beside it; the open card was 400
+    assert page.eval_on_selector(".pol-card", "e => e.getBoundingClientRect().height") < 130
     page.eval_on_selector(".pol-card", "e => e.click()")
     page.wait_for_timeout(700)
     assert page.evaluate("!!document.querySelector('dialog[open]')")
@@ -555,6 +557,47 @@ def test_the_ratings_grid_plots_the_register_not_our_snapshots(page, server):
     assert sum(1 for p in paths if "notch" in p or p == "flat") > 40, paths[:6]
     assert not any("4d" in p for p in paths)
     assert not page.errors, page.errors
+
+
+# ---- a shared link opens on something ---------------------------------------------------------
+def test_a_first_visit_opens_on_an_example_portfolio(page, server):
+    """An empty page is a poor demonstration of a tool for reading a list."""
+    visit(page, server, "index.html")
+    page.wait_for_timeout(1000)
+    cards = page.eval_on_selector_all(".pol-card", "e => e.length")
+    assert cards >= 12, cards
+    assert page.eval_on_selector_all(".pol-demo", "e => e.length") == 1, "it has to say it is an example"
+    tenors = page.eval_on_selector_all(".cp-ten select", "e => [...new Set(e.map(x => x.value))]")
+    assert len(tenors) >= 4, tenors
+    # every tenor offered is one the dropdown itself lists, or the row reads "730 days"
+    offered = page.eval_on_selector_all("#pol-tenor option", "e => e.map(x => x.value)")
+    assert set(tenors) <= set(offered), (tenors, offered)
+    assert not page.errors, page.errors
+
+
+def test_clearing_the_example_clears_it_for_good(page, server):
+    """Seeding on every visit would put back the names a reader had just removed."""
+    visit(page, server, "index.html")
+    page.wait_for_timeout(1000)
+    page.eval_on_selector("#pol-demo-x", "e => e.click()")
+    page.wait_for_timeout(400)
+    assert page.eval_on_selector_all(".pol-card", "e => e.length") == 0
+    visit(page, server, "index.html")
+    page.wait_for_timeout(1000)
+    assert page.eval_on_selector_all(".pol-card", "e => e.length") == 0, "the seed was laid twice"
+    # and it can be put back, for showing the thing to somebody
+    page.eval_on_selector("#pol-demo", "e => e.click()")
+    page.wait_for_timeout(500)
+    assert page.eval_on_selector_all(".pol-card", "e => e.length") >= 12
+    assert not page.errors, page.errors
+
+
+def test_no_typeface_is_preloaded_ahead_of_the_data(page, server):
+    """50 KB of Inter in the same queue as the 18 KB the list is drawn from cost a second on a
+    slow line, and every face carries font-display:swap, so nothing waits to be readable."""
+    html = (SITE / "index.html").read_text(encoding="utf-8")
+    assert 'as="font"' not in html, "a typeface is preloaded ahead of the data again"
+    assert "font-display:swap" in (SITE / "assets" / "site.css").read_text(encoding="utf-8")
 
 
 # ---- whose judgement the score is -------------------------------------------------------------

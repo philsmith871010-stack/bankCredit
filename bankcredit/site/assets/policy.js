@@ -101,7 +101,8 @@
   var AGN_FULL={fitch:'Fitch',sp:'S&P',moodys:"Moody's",dbrs:'DBRS',kbra:'KBRA',scope:'Scope',jcr:'JCR',
                 capital:'Capital Intelligence',creditreform:'Creditreform'};
   function sovPill(e){
-    var sv=e&&e.sovereign;
+    // one entry a country, held once at the top of the file rather than copied onto every bank
+    var sv=e&&((data&&data.sovereigns||{})[e.country]);
     if(!sv||!sv.composite)return esc((e&&e.country)||'');
     var ags=sv.agencies.map(function(a){return (AGN_FULL[a.agency]||a.agency)+' '+a.value+(a.outlook?' ('+a.outlook+')':'')}).join(' \u00b7 ');
     return '<span class="sov" title="'+esc(sv.name+' sovereign rating, '+sv.n+(sv.n===1?' agency: ':' agencies: ')+ags+
@@ -405,7 +406,7 @@
       return '<div class="md-pill"'+tip+'><span>'+esc(k.replace(/_/g,' '))+'</span>'+
              '<div class="meter meter-sm"><i style="width:'+(pc==null?0:Math.max(0,Math.min(100,pc)))+'%;background:'+col+'"></i></div>'+
              '<b style="color:'+col+'">'+(pc==null?'\u2014':pc.toFixed(0))+'</b><i>w'+(wt==null?'':wt)+'</i></div>'}).join(''):'';
-    var ev=(b.events||(e&&e.recent)||[]).slice(0,7).map(evRow).join('')
+    var ev=(b.events||[]).slice(0,7).map(evRow).join('')
            ||'<div class="muted small">Nothing recorded in the window.</div>';
     // The same panels the open card uses: a ruled heading on a white box, four of them on a
     // tinted ground. A dialog that looks like the row it came from is one thing to learn, not two.
@@ -785,6 +786,11 @@
             '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">×</button>'+
           '</div></div>';
       }).join('');
+      if(isDemo(p))html='<div class="pol-demo">'+
+        '<b>This is an example portfolio.</b> Eighteen names shaped like a local authority\u2019s list, with '+
+        'tenors graded by standing rather than set uniformly. Change a tenor, remove a name or clear the lot: '+
+        'it is your list from here, kept in this browser only.'+
+        '<button class="filter" id="pol-demo-x">Clear it and start mine</button></div>'+html;
       html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Flags compare today with the day you approved each name.</span></div>';
       html+=overview(p.filter(function(it){return byId[it.id]}));
       html+='<div class="pol-list">'+rows+'</div>';
@@ -847,6 +853,41 @@
       opts.map(function(t){return '<option value="'+t[0]+'"'+(t[0]===it.tenor?' selected':'')+'>'+esc(t[1])+'</option>'}).join('')+
       '</select></label>';
   }
+  // ---- an example portfolio -------------------------------------------------------------------
+  // A shared link opens on an empty page, and an empty page is a poor demonstration of a tool for
+  // reading a list. So a first visit is seeded with a list shaped like a local authority's: the
+  // clearing banks it settles through, a few building societies, a few overseas names, and tenors
+  // graded by standing rather than uniform. It is an example and the page says so. Clearing it
+  // leaves it cleared - the seed is laid once, not every time the tab is opened.
+  var SEEDED='counterparty.seeded';
+  var DEMO=[
+    ['nwb-bank',1825],['bng-bank',1825],['rabobank',730],['handelsbanken-plc',730],
+    ['dz-bank',730],['td-bank',730],
+    ['yorkshire-bs',730],['skipton-bs',730],['leeds-bs',365],['coventry-bs',365],
+    ['nationwide',365],['hsbc-uk',365],['barclays-bank-uk',365],['santander-uk',365],
+    ['lloyds-bank',182],['natwest-bank',182],['bank-of-scotland',182],['close-brothers',100]
+  ];
+  function demoPolicy(){
+    var out=[];
+    DEMO.forEach(function(d){
+      var e=byId[d[0]]; if(!e)return;
+      out.push({id:d[0],tenor:d[1],added:new Date().toISOString().slice(0,10),base:snapshot(e)});
+    });
+    return out;
+  }
+  function isDemo(p){
+    if(!p||p.length!==DEMO.length)return false;
+    var want={};DEMO.forEach(function(d){want[d[0]]=d[1]});
+    return p.every(function(x){return want[x.id]===x.tenor});
+  }
+  function seedIfEmpty(){
+    try{if(localStorage.getItem(SEEDED))return}catch(e){return}
+    if(load().length)return;
+    var p=demoPolicy(); if(!p.length)return;
+    save(p);
+    try{localStorage.setItem(SEEDED,'1')}catch(e){}
+    window.__demo=true;
+  }
   function add(id,tenor){var p=load();var e=byId[id];if(!e)return;var ex=p.filter(function(x){return x.id===id})[0];
     if(ex){ex.tenor=tenor}else{p.push({id:id,tenor:tenor,added:new Date().toISOString().slice(0,10),base:snapshot(e)})}save(p);render()}
   // ---- the weighting panel ------------------------------------------------------------------
@@ -900,6 +941,7 @@
   function init(){
     var sel=document.getElementById('pol-name');var dl=document.getElementById('pol-names');
     data.rows.forEach(function(e){byId[e.id]=e;var o=document.createElement('option');o.value=e.short+' — '+e.name;o.dataset.id=e.id;dl.appendChild(o)});
+    seedIfEmpty();
     var ten=document.getElementById('pol-tenor');TENORS.forEach(function(t){var o=document.createElement('option');o.value=t[0];o.textContent=t[1];if(t[0]===365)o.selected=true;ten.appendChild(o)});
     document.getElementById('pol-add').addEventListener('click',function(){var v=sel.value;var id=null;for(var i=0;i<dl.options.length;i++)if(dl.options[i].value===v){id=dl.options[i].dataset.id;break}
       if(!id){var q=v.toLowerCase();data.rows.some(function(e){if(e.short.toLowerCase()===q||e.name.toLowerCase()===q){id=e.id;return true}})}
@@ -918,6 +960,8 @@
       if(card&&!ev.target.closest('a,button,select,label')){
         var tn=card.dataset.tenor?+card.dataset.tenor:(card.classList.contains('uni-row')?+document.getElementById('uni-tenor').value:0);
         openModal(card.dataset.id,tn);return}
+      if(ev.target.id==='pol-demo-x'){save([]);render();return}
+      if(ev.target.id==='pol-demo'){save(demoPolicy());render();return}
       if(ev.target.id==='pol-clear'){if(confirm('Remove every counterparty from this policy?')){save([]);render()}return}
       if(ev.target.id==='pol-use-shared'){save(window.__shared);window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);render();return}
       if(ev.target.id==='pol-keep-mine'){window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);return}
