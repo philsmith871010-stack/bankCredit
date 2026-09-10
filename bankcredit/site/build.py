@@ -885,7 +885,9 @@ def page_home(board, status, generated):
                  '<div id="policy-body"><div class="sk-cards" aria-hidden="true">'
                  + '<span class="sk"></span>' * 4 + '</div></div>'
                  '<div class="pol-share" id="pol-share" hidden>'
-                 '<button class="filter" id="pol-clear">Clear all</button></div></section>'
+                 '<button class="filter" id="pol-clear">Clear all</button>'
+                 # for showing the thing to somebody: puts the example list back as it was
+                 '<button class="filter" id="pol-demo">Load the example portfolio</button></div></section>'
                  '<section class="panel" data-panel="likeforlike"><div id="pol-ll"></div></section>'
                  f'<section class="panel" data-panel="universe">{UNIVERSE_PANEL}</section>'
                  f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={c.stamp(generated)}"></section>'

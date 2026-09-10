@@ -754,8 +754,8 @@ def export_json() -> None:
                     recent.append({"date": str(x.date)[:10], "type": x.type, "severity": x.severity, "title": str(x.title)[:160], "url": _clean(getattr(x, "url", "")) or ""})
         policy_rows.append({**{k: row[k] for k in ("id", "name", "short", "country", "type", "region", "group", "peer_group", "public_score", "band",
                                                     "coverage", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "ratings", "market", "asof", "age_days",
-                                                    "rating_grade", "rating_composite", "inherited", "sovereign")},
-                            "score": row["public_score"], "short_ratings": short_ratings, "recent": recent, "negative": negative[:3], "news30": news30,
+                                                    "rating_grade", "rating_composite", "inherited")},
+                            "score": row["public_score"], "short_ratings": short_ratings, "negative": negative[:3], "news30": news30,
                             # The six pillar sub-scores and the market overlay, so the browser can
                             # weigh them the reader's own way rather than ours. An array, in the
                             # order PILLAR_ORDER names, because six keys a row is 18 KB of JSON on
@@ -834,7 +834,10 @@ def export_json() -> None:
     if new_hist:
         store.upsert("history", pd.DataFrame(new_hist))
     store.write_json("board", {"generated": generated, "rows": [{k: v for k, v in r.items() if k != "history"} for r in board], "benchmarks": benchmarks})
-    store.write_json("policy", {"generated": generated, "rows": policy_rows})
+    # The sovereign block is a fact about a country, not about a bank, and 152 banks share 25 of
+    # them: repeating it per row was 65 KB of the file the page waits for. The headlines went the
+    # same way - the dialog reads them from the name's own detail file, which every name has.
+    store.write_json("policy", {"generated": generated, "sovereigns": sov, "rows": policy_rows})
     store.write_json("audit", {"generated": generated, "rows": data_audit(active, facts, ratings, prices, cds, store.read("bonds"), events, board)})
     store.write_json("compare", {"generated": generated, "metrics": COMPARE_METRICS, "rows": compare_rows(board, series_all, books)})
     store.write_json("ratings", {"generated": generated, **ratings_summary(active, ratings, events)})

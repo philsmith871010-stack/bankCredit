@@ -614,11 +614,16 @@ th .i,.uni th .i{margin-left:4px}
 .pv-charts{gap:12px;padding-top:0}
 .pv-charts figure{background:var(--white);border:1px solid #e2e8ef;border-radius:10px;padding:9px 11px 7px}
 .pv-charts figure:first-child,.pv-charts figure:last-child{padding:9px 11px 7px}
-.pol-list{display:flex;flex-direction:column;gap:9px;margin-top:14px}
-@media(min-width:1240px){
-  .pol-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
-  .pol-list .pol-card{margin-bottom:0}
-}
+/* A row is a name, a score, a rating and a tenor, so it needs about 300px and no more. Councils
+   hold plenty of names: four abreast on a desk, two on a laptop, one on a phone, and the card's
+   own container query lays each one out for the width it actually gets. */
+.pol-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:9px;
+  margin-top:14px;align-items:stretch}
+/* a holding company's tag wraps its name onto a second line, so a row of cards would otherwise
+   step up and down across the page */
+.pol-list .pol-card{display:flex;flex-direction:column}
+.pol-list .cp-top{flex:1}
+.pol-list .pol-card{margin-bottom:0}
 .pol-card{border-color:#dde4ec}
 .ll-sec{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
 .ll-sec>h3{margin:0 0 2px}
@@ -755,3 +760,10 @@ table.uni .sc-n{font-size:14px}
 @media (max-width:640px){.wt-row{grid-template-columns:1fr 40px;gap:6px 12px}.wt-s{grid-column:1/-1}}
 .score-yours{margin-left:8px;padding:1px 7px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:.04em;
   text-transform:uppercase;background:rgba(253,126,20,.22);color:#ffd9b3}
+
+/* the example a first visit opens on, and the way out of it */
+.pol-demo{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:12px 0 0;padding:10px 13px;
+  border:1px solid #dbe3ec;border-left:3px solid var(--orange);border-radius:10px;background:var(--bg);
+  font-size:12.5px;line-height:1.5;color:var(--muted)}
+.pol-demo b{color:var(--text);font-weight:600}
+.pol-demo .filter{margin-left:auto;flex:0 0 auto;height:28px;font-size:12px}
