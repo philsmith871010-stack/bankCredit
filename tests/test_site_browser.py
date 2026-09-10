@@ -23,6 +23,13 @@ from pathlib import Path
 
 import pytest
 
+from bankcredit.site.build import HOME_TABS_HIDDEN
+
+# Two tabs are held back while their scope is settled. Their tests go with them rather than being
+# deleted: flipping the flag in build.py brings back the coverage along with the pages.
+held = lambda tab: pytest.mark.skipif(tab in HOME_TABS_HIDDEN,
+                                      reason=f"the {tab} tab is held back; see HOME_TABS_HIDDEN")
+
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
 ASSETS = ROOT / "bankcredit" / "site" / "assets"
@@ -421,11 +428,11 @@ def test_a_heavy_panel_is_warmed_before_it_is_asked_for(page, server):
     page.on("response", lambda r: seen.append(r.url.rsplit("/", 1)[-1].split("?")[0]))
     visit(page, server, "index.html")
     page.wait_for_timeout(2500)
-    assert "ratings.html" in seen and "events.html" in seen
-    assert page.eval_on_selector_all("#board tbody tr", "e => e.length") == 0, "warming should not build"
-    page.eval_on_selector('.tab[data-tab="ratings"]', "e => e.click()")
-    page.wait_for_timeout(400)
-    assert page.eval_on_selector_all("#board tbody tr", "e => e.length") > 20
+    assert "analysis.html" in seen
+    assert page.eval_on_selector_all("#cp-metric option", "e => e.length") == 0, "warming should not build"
+    page.eval_on_selector('.tab[data-tab="analysis"]', "e => e.click()")
+    page.wait_for_timeout(2000)
+    assert page.eval_on_selector_all("#cp-metric option", "e => e.length") > 0
 
 
 # ---- tabs, not one long page -----------------------------------------------------------------
@@ -433,7 +440,9 @@ def test_the_policy_page_is_tabs(page, server):
     """The approved names ran the length of the page with the shortlist under them."""
     _seed_many(page, server, 4)
     tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
-    assert tabs == ["policy", "likeforlike", "universe", "ratings", "events", "analysis", "weights"]
+    expected = [t for t in ["policy", "likeforlike", "universe", "ratings", "events", "analysis", "weights"]
+                if t not in HOME_TABS_HIDDEN]
+    assert tabs == expected
     assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 4
     assert page.eval_on_selector("#tn-policy", "e => e.textContent") == "4"
     page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
@@ -545,6 +554,7 @@ def test_the_profile_links_to_its_own_rating_history(page, server):
     assert not page.errors, page.errors
 
 
+@held("ratings")
 def test_the_ratings_grid_plots_the_register_not_our_snapshots(page, server):
     """The last column plotted the composite on each daily build. Snapshots began four days
     earlier, so all 152 rows carried the same flat line and the same "4d"."""
@@ -670,10 +680,16 @@ def test_the_home_page_stays_small():
     kb = (SITE / "index.html").stat().st_size / 1024
     assert kb < 60, f"index.html is {kb:.0f} KB; the heavy panels belong in data/panels"
     for name in ("ratings", "events"):
-        assert (SITE / "data" / "panels" / f"{name}.html").exists()
+        fragment = SITE / "data" / "panels" / f"{name}.html"
+        if name in HOME_TABS_HIDDEN:
+            assert not fragment.exists(), "a tab that is held back publishes nothing, not even a fragment"
+        else:
+            assert fragment.exists()
 
 
-@pytest.mark.parametrize(("tab", "rows"), [("ratings", "#board tbody tr"), ("events", "#events .event")])
+@pytest.mark.parametrize(("tab", "rows"), [
+    pytest.param("ratings", "#board tbody tr", marks=held("ratings")),
+    pytest.param("events", "#events .event", marks=held("events"))])
 def test_a_deferred_panel_fills_and_still_filters(page, server, tab, rows):
     visit(page, server, "index.html")
     assert page.eval_on_selector_all(rows, "e => e.length") == 0
@@ -701,6 +717,7 @@ def test_no_page_ships_an_unrendered_placeholder(name):
 
 
 # ---- long lists stand a page at a time -------------------------------------------------------
+@held("events")
 def test_a_long_feed_stands_a_page_at_a_time(page, server):
     """Three hundred events rendered at once was thirty thousand pixels, and the oldest was
     unreachable. The rows are all in the page; only a page of them stands on it."""
@@ -719,6 +736,7 @@ def test_a_long_feed_stands_a_page_at_a_time(page, server):
     assert not page.errors, page.errors
 
 
+@held("events")
 def test_a_change_of_filter_starts_the_list_at_the_top_again(page, server):
     """Otherwise a reader who has paged deep into 'All' meets a filtered list already exhausted."""
     visit(page, server, "index.html")
