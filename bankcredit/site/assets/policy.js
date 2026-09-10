@@ -573,47 +573,7 @@
            (meta?'<em>'+meta+'</em>':'')+'</h5>'+body+'</div>';
   }
 
-  // the score, its band, and where it falls among every name the site scores
-  function scoreCell(e){
-    if(e.score==null)
-      return '<div class="cp-score-row"><span class="na big">\u2014</span></div>'+
-             '<div class="small muted">'+esc(e.unscored||'not scored')+'</div>';
-    var st=uni('score');
-    return '<div class="cp-score-row"><span class="cp-score" style="color:'+scoreColour(e.score)+'">'+e.score.toFixed(0)+'</span>'+
-      '<span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span></div>'+
-      meter(e.score,e.band)+
-      '<div class="small muted">'+(e.coverage!=null?Math.round(e.coverage*100)+'% of the method\u2019s inputs':'')+'</div>'+
-      (st?'<div class="cs-dist">'+scoreHist([e],data.rows,1)+
-          '<div class="small muted">Stronger than <b>'+below(st,e.score)+'%</b> of the '+st.n+' scored names</div></div>':'');
-  }
 
-  // one ratio: the figure, how far it sits from the median of every covered name, and the gauge
-  var RATIOS=[['cet1','CET1',1,'','cet1_ratio'],['leverage','Leverage',1,'','leverage_ratio'],['lcr','LCR',0,'%','lcr']];
-  function gauge(e,r){
-    var k=r[0], val=e[k], dp=r[2], suf=r[3], st=uni(k),
-        dag=(k==='leverage'&&e.leverage_basis==='us_tier1')?'\u2020':'';
-    var txt=val==null?'<span class="na">\u2014</span>':Number(val).toFixed(dp)+suf+dag;
-    var head='<div class="cg-h"><span class="cg-l">'+r[1]+mk(r[4])+'</span><b>'+txt+'</b>';
-    if(val==null||!st)return '<div class="cg">'+head+'</div></div>';
-    var lo=Math.min(st.lo,val), hi=Math.max(st.hi,val), rng=(hi-lo)||1;
-    var X=function(x){return Math.max(2,Math.min(98,(x-lo)/rng*100))};
-    var d=val-st.p50, kd=d>0.05?'up':(d<-0.05?'dn':'lv');
-    var tip=tipd(tipHead(esc(r[1]),Number(val).toFixed(dp)+suf)+
-      '<i>'+(kd==='lv'?'at the median of the covered names'
-            :'<em>'+Math.abs(d).toFixed(dp)+suf+'</em> '+(d>0?'above':'below')+' the median of the covered names')+'</i>'+
-      '<i>covered: 25th <em>'+st.p25.toFixed(dp)+suf+'</em> \u00b7 median <em>'+st.p50.toFixed(dp)+suf+
-      '</em> \u00b7 75th <em>'+st.p75.toFixed(dp)+suf+'</em></i>'+
-      '<i>higher than <em>'+below(st,val)+'%</em> of the '+st.n+' names that publish it</i>');
-    return '<div class="cg"'+tip+'>'+head+'<i class="cg-d '+kd+'">'+(d>0?'+':(d<0?'\u2212':''))+Math.abs(d).toFixed(dp)+'</i></div>'+
-      '<div class="cg-t"><span class="cg-q" style="left:'+X(st.p25).toFixed(1)+'%;right:'+(100-X(st.p75)).toFixed(1)+'%"></span>'+
-      '<span class="cg-m" style="left:'+X(st.p50).toFixed(1)+'%"></span>'+
-      '<span class="cg-v" style="left:'+X(val).toFixed(1)+'%"></span></div></div>';
-  }
-  function ratioCell(e){
-    return RATIOS.map(function(r){return gauge(e,r)}).join('')+
-      '<div class="cg-key"><span class="cg-kq"></span>the middle half of covered names, median marked'+
-      (e.leverage_basis==='us_tier1'?' \u00b7 \u2020 Tier 1 leverage, US basis':'')+'</div>';
-  }
 
   // ratings: the composite, the agencies laid on the scale so any disagreement shows, then one
   // line each with its outlook - an agency on negative outlook is the thing a treasurer looks for
@@ -750,33 +710,6 @@
       ' agenc'+(r.length>1?'ies':'y')+'</span></div>'+strip+'<div class="cr-rows">'+rows+'</div>';
   }
 
-  // market, then what has moved since the name was approved
-  function marketCell(e,it,fl){
-    var md=e.market_detail||{}, out=mkt(e.market);
-    if(md.bond_change30!=null){
-      // a move against the bank's own currency peers, so the bar diverges from nothing at the
-      // centre; the turn is at 20 bp either way, which is where the published signal changes
-      var b=md.bond_change30, cap=30, x=Math.max(-cap,Math.min(cap,b)),
-          w=Math.abs(x)/cap*50, kd=b>20?'dn':(b<-20?'up':'lv');
-      var tip=tipd(tipHead('Bonds against peers',(b>0?'+':'')+b.toFixed(1)+' bp')+
-        '<i>the median 30-day move in this bank\u2019s bond yields, less the move in every bond of the same currency</i>'+
-        '<i>'+(md.bond_count||0)+' quoted line'+((md.bond_count||0)===1?'':'s')+' \u00b7 the signal turns beyond \u00b120 bp</i>'+
-        '<i>'+(b>0?'yields rose <em>more</em> than peers: the market is asking a little more to hold it'
-              :(b<0?'yields rose <em>less</em> than peers, or fell further':'moving with its peers'))+'</i>');
-      out+='<div class="cb"'+tip+'><div class="cb-t"><span class="cb-z"></span>'+
-        '<span class="cb-b '+kd+'" style="left:'+(x<0?50-w:50).toFixed(1)+'%;width:'+w.toFixed(1)+'%"></span></div>'+
-        '<div class="cb-l"><span>tighter</span><b class="'+kd+'">'+(b>0?'+':'')+b.toFixed(1)+' bp vs peers</b><span>wider</span></div></div>';
-    }
-    var d=(it.base&&it.base.score!=null&&e.score!=null)?e.score-it.base.score:null;
-    // the drop is already the figure on this line, so the flag that says it again is dropped
-    var chips=fl.filter(function(x){return !(d!=null&&/^Score down /.test(x[1]))})
-                .map(function(x){return chip(x[1],x[0]==='muted'?'muted':x[0])}).join(' ')
-                ||chip('Unchanged since approval','good');
-    return out+'<div class="cc"><div class="cc-h"><span>Since approved '+esc(it.added||'?')+'</span>'+
-      (d==null?'':'<b class="'+(d>0.05?'up':(d<-0.05?'dn':'lv'))+'" title="the score then was '+
-        it.base.score.toFixed(1)+'">'+(d>0?'+':(d<0?'\u2212':''))+Math.abs(d).toFixed(1)+' score</b>')+
-      '</div>'+chips+'</div>';
-  }
 
   // a tab says how much is behind it, so a reader knows whether it is worth the click
   function tabCount(id,n){var el=document.getElementById(id); if(el)el.textContent=n?String(n):''}
@@ -807,47 +740,30 @@
       var rows=p.slice().sort(function(a,b){return b.tenor-a.tenor||(byId[a.id]&&byId[a.id].short||'').localeCompare(byId[b.id]&&byId[b.id].short||'')}).map(function(it){
         var e=byId[it.id]; var fl=flags(it,e); if(fl.some(function(x){return x[0]!=='muted'}))n_flag++;
         if(!e)return '<div class="pol-row"><div class="pr-name"><span class="b">'+esc(it.id)+'</span></div><div class="pr-flags">'+chip('No longer covered','bad')+'</div><button class="pol-rm" data-id="'+esc(it.id)+'" title="Remove">×</button></div>';
-        var recent=(e.recent||[]).slice(0,3).map(evRow).join('')
-                   ||'<div class="muted">Nothing notable in the last 90 days.</div>';
         // a name that has moved since approval carries an edge, so a long list scans in one pass
         var moved=fl.some(function(x){return x[0]!=='muted'&&x[0]!=='good'});
-        // one row of figures per name, and the rest behind an expander: a policy of twenty names is
-        // read down a column of numbers, not by scrolling through twenty cards of prose.
+        // A row, not a card: the name, what it is worth, what it is rated, and how long you accept
+        // it for. The four ratios and the events that used to sit here are all in the dialog a
+        // click away, and a policy of twenty names is a column of numbers rather than a scroll.
         var worst_fl=fl.filter(function(x){return x[0]!=='muted'})[0];
         var kv=function(v,l,cls){return '<div class="ck'+(cls?' '+cls:'')+'"><b>'+v+'</b><span>'+l+'</span></div>'};
-        var num=function(v,dp,suf){return v==null?'<span class="na">\u2014</span>':Number(v).toFixed(dp)+(suf||'')};
         return '<div class="pol-card'+(moved?' pol-card-flag':'')+'" data-id="'+esc(e.id)+'">'+
           '<div class="cp-top">'+
-            '<button class="cp-exp" data-id="'+esc(e.id)+'" aria-expanded="false" aria-label="Show detail for '+esc(e.short)+'"></button>'+
             // The country and its rating are drawn twice and shown once: on the second line with the
             // legal name where there is room for a second line, and up beside the name where there
             // is not, which is a card in a two-column list. A pill is a dozen bytes; a layout that
             // has to choose between the country and a third line of wrapping is not.
             '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+
               '<span class="cp-sov">'+sovPill(e)+'</span>'+
-              '<div class="cp-sub">'+esc(e.name)+' \u00b7 '+sovPill(e)+'</div></div>'+
-            // the figures are one block, so they can fold under the name as a block when the
-            // card is half the width of the list
+              '<div class="cp-sub">'+esc(e.name)+' · '+sovPill(e)+'</div></div>'+
             '<div class="cp-stats">'+
               kv(scoreNum(e.score,e.band),'score','ck-score ck-sep')+
-              kv('<span style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'\u2014')+'</span>','rating')+
-              kv(num(e.cet1,1),'CET1','ck-cet1 ck-sep')+
-              kv(num(e.leverage,1)+(e.leverage_basis==='us_tier1'?'\u2020':''),'leverage','ck-lev')+
-              kv(e.lcr==null?'<span class="na">\u2014</span>':Math.round(e.lcr)+'%','LCR','ck-lcr')+
-              kv(esc(tenorLabel(it.tenor)),'tenor','ck-tenor ck-sep')+
+              kv('<span style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</span>','rating')+
             '</div>'+
+            tenorPick(it)+
             '<div class="cp-tags">'+(worst_fl?chip(worst_fl[2]||worst_fl[1],worst_fl[0])
               :((e.market&&e.market.direction!=='none')?mkt(e.market):''))+'</div>'+
-            '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">\u00d7</button>'+
-          '</div>'+
-          '<div class="cp-detail" hidden>'+
-            '<div class="cp-body">'+
-              sect('Counterparty score'+mk('score'),'',scoreCell(e))+
-              sect('Key ratios','as at'+mk('as_at')+' '+esc(e.asof||'\u2014'),ratioCell(e))+
-              sect('Ratings'+mk('rating'),'',ratingCell(e))+
-              sect('Market and changes'+mk('market_signal'),'',marketCell(e,it,fl),'cp-side')+
-            '</div>'+
-            sect('Recent events',newsMix(e),'<div class="cp-news">'+recent+'</div>','cp-newsc')+
+            '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">×</button>'+
           '</div></div>';
       }).join('');
       html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Flags compare today with the day you approved each name.</span></div>';
@@ -901,6 +817,17 @@
     // the list is on screen: anything speculative may start now
     if(!render.said){render.said=1;dispatchEvent(new Event('cp:ready'))}
   }
+  // The tenor you accept a name for is the one thing on this list that is your decision rather
+  // than a fact about the bank, and it was printed as if it were a fact: to change it you had to
+  // remove the name and add it again. It is a select now, and choosing writes straight through.
+  function tenorPick(it){
+    var opts=TENORS.slice();
+    if(!opts.some(function(t){return t[0]===it.tenor}))opts.push([it.tenor,tenorLabel(it.tenor)]);
+    opts.sort(function(a,b){return a[0]-b[0]});
+    return '<label class="cp-ten"><span>tenor</span><select data-id="'+esc(it.id)+'" aria-label="Longest tenor">'+
+      opts.map(function(t){return '<option value="'+t[0]+'"'+(t[0]===it.tenor?' selected':'')+'>'+esc(t[1])+'</option>'}).join('')+
+      '</select></label>';
+  }
   function add(id,tenor){var p=load();var e=byId[id];if(!e)return;var ex=p.filter(function(x){return x.id===id})[0];
     if(ex){ex.tenor=tenor}else{p.push({id:id,tenor:tenor,added:new Date().toISOString().slice(0,10),base:snapshot(e)})}save(p);render()}
   function init(){
@@ -921,21 +848,18 @@
       if(ev.target.id==='md-close'){document.getElementById('pol-modal').close();return}
       // a card opens its detail; a link inside it still navigates
       var card=ev.target.closest('.pol-card,.ll-r,.uni-row');
-      if(card&&!ev.target.closest('a,button')){
+      if(card&&!ev.target.closest('a,button,select,label')){
         var tn=card.dataset.tenor?+card.dataset.tenor:(card.classList.contains('uni-row')?+document.getElementById('uni-tenor').value:0);
         openModal(card.dataset.id,tn);return}
       if(ev.target.id==='pol-clear'){if(confirm('Remove every counterparty from this policy?')){save([]);render()}return}
       if(ev.target.id==='pol-use-shared'){save(window.__shared);window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);render();return}
       if(ev.target.id==='pol-keep-mine'){window.__shared=null;document.getElementById('pol-shared').hidden=true;history.replaceState(null,'',location.pathname);return}
     });
-    // the chevron opens the detail in place; a click anywhere else on the row still opens the dialog
-    document.addEventListener('click',function(ev){
-      var x=ev.target.closest('.cp-exp'); if(!x)return;
-      ev.preventDefault(); ev.stopPropagation();
-      var card=x.closest('.pol-card'), d=card&&card.querySelector('.cp-detail'); if(!d)return;
-      d.hidden=!d.hidden; x.setAttribute('aria-expanded',d.hidden?'false':'true');
-      card.classList.toggle('cp-open',!d.hidden);
-    },true);
+    // choosing a tenor is a policy change, so it is written the moment it is made
+    document.addEventListener('change',function(ev){
+      var sel=ev.target.closest('.cp-ten select'); if(!sel)return;
+      add(sel.dataset.id,+sel.value);
+    });
     document.addEventListener('click',function(ev){
       if(!ev.target.closest('#pol-browse'))return;
       var t=document.querySelector('.tab[data-tab="universe"]'); if(t&&!t.classList.contains('active'))t.click();

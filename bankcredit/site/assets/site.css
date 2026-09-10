@@ -242,9 +242,6 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
    about whether 14.3 is a lot. Colour is spent on three things only: the band ramp (score and
    rating, one hue), the orange that means "this bank, here", and green or red for a move that
    went the reader's way or against it. */
-.cp-detail[hidden]{display:none}          /* an author display beats the browser's own [hidden] rule */
-.cp-detail{background:var(--bg);border-top:1px solid var(--line);padding:11px;display:flex;flex-direction:column;gap:9px}
-.cp-body{display:grid;grid-template-columns:minmax(195px,1fr) minmax(225px,1.15fr) minmax(195px,1fr) minmax(185px,1fr);gap:9px;padding:0}
 .cp-cell{background:var(--white);border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 11px 10px;min-width:0;display:flex;flex-direction:column}
 .cp-cell>h5{display:flex;align-items:baseline;gap:8px;margin:0 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line-soft);
             font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--navy-mid)}
@@ -262,21 +259,7 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .cs-dist{margin-top:auto;padding-top:9px;border-top:1px solid var(--line-soft)}
 .cs-dist .pv-svg{display:block}
 
-/* key ratios: the figure, its distance from the median, and a gauge on the covered spread */
-.cg{margin-bottom:11px}
-.cg-h{display:flex;align-items:baseline;gap:6px}
-.cg-l{flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
-.cg-h b{font-size:17px;font-weight:600;line-height:1;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-.cg-d{font-style:normal;font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;min-width:32px;text-align:right}
-.cg-d.up{color:var(--green)}.cg-d.dn{color:var(--red)}.cg-d.lv{color:var(--muted)}
-.cg-t{position:relative;height:8px;margin:7px 5px 0;border-radius:4px;background:var(--line-soft)}
-.cg-q{position:absolute;top:0;bottom:0;background:#c3d0de;border-radius:4px}
-.cg-m{position:absolute;top:-3px;bottom:-3px;width:1.5px;margin-left:-.75px;background:#7d93ad}
-.cg-v{position:absolute;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--orange);
-      box-shadow:0 0 0 2px var(--white)}
-.cg-key{display:flex;align-items:center;gap:6px;margin-top:auto;padding-top:2px;font-size:10.5px;color:var(--muted);line-height:1.3}
-.cg-kq{flex:0 0 auto;width:16px;height:8px;border-radius:3px;
-       background:linear-gradient(90deg,#c3d0de 0 44%,#7d93ad 44% 56%,#c3d0de 56% 100%)}
+
 
 /* ratings: the composite, the agencies on the scale so disagreement shows, then a line each */
 .cr-top{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
@@ -298,8 +281,6 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .cp-rt-none{font-size:12.5px;color:var(--muted)}
 
 /* market: the signal, the bonds against their own currency peers, then what has moved since */
-.cp-side{gap:9px}
-.cp-side>.chip{align-self:flex-start;white-space:normal;height:auto;line-height:1.35;padding:3px 8px}
 .cb-t{position:relative;height:8px;border-radius:4px;background:var(--line-soft);margin:0 2px}
 .cb-z{position:absolute;left:50%;top:-3px;bottom:-3px;width:1.5px;margin-left:-.75px;background:#adb5bd}
 .cb-b{position:absolute;top:0;bottom:0;border-radius:3px;min-width:2px}
@@ -574,26 +555,18 @@ th .i,.uni th .i{margin-left:4px}
 .sm-dark .sm-label{color:rgba(255,255,255,.62);font-weight:500}
 .sm-dark .sm-val{color:#fff}
 
-/* A counterparty is one row of figures ---------------------------------------------------------
-   Twenty approved names are read down a column of numbers. The card body that used to be always
-   open is behind the chevron, where it is looked at one name at a time. */
-.cp-top{display:grid;grid-template-columns:20px minmax(120px,1.5fr) auto minmax(90px,1fr) 20px;
-        align-items:center;gap:14px;padding:9px 12px;border-bottom:0}
+/* A counterparty is one line -------------------------------------------------------------------
+   The name, what it is worth, what it is rated and how long you accept it for. Everything else is
+   in the dialog a click opens, so twenty approved names are twenty lines rather than a scroll. */
+.cp-top{display:grid;grid-template-columns:minmax(120px,1.6fr) auto auto minmax(80px,1fr) 20px;
+        align-items:center;gap:14px;padding:8px 12px;border-bottom:0}
 .cp-stats{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(52px,auto);gap:14px;align-items:center}
-.pol-card.cp-open .cp-top{border-bottom:1px solid var(--line-soft)}
-.cp-exp{width:20px;height:20px;padding:0;border:0;background:none;cursor:pointer;color:var(--muted);
-        display:flex;align-items:center;justify-content:center}
-.cp-exp::before{content:"";width:6px;height:6px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;
-                transform:rotate(-45deg);margin-left:-2px;transition:transform .15s}
-.cp-exp[aria-expanded="true"]::before{transform:rotate(45deg);margin:-3px 0 0 0}
-.cp-exp:hover{color:var(--orange)}
 .cp-id{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;min-width:0}
 .cp-id .cp-nm{font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
 .cp-id .cp-sub{flex:1 0 100%;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cp-id .cp-sov{display:none;font-size:11px;color:var(--muted)}
-/* Six figures in a row with nothing between them read as one long number. A hairline before each
-   group - the standing, the regulatory ratios, the tenor you allow - separates them without
-   ruling the row into a table. Every value line is the same height, taller band pill and larger
+/* The score and the rating read as one long number with nothing between them, so a hairline
+   stands before the pair. Every value line is the same height, the taller band pill and the larger
    score included, so the labels beneath them share one baseline across the row. */
 .ck{display:flex;flex-direction:column;line-height:1.15;white-space:nowrap}
 .ck-sep{border-left:1px solid var(--line-soft);padding-left:13px}
@@ -601,7 +574,14 @@ th .i,.uni th .i{margin-left:4px}
       height:20px;line-height:20px}
 .ck span{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .ck-score b{font-size:17px}
-.ck-tenor b{font-size:12.5px;font-weight:600}
+/* the one field on the row that is your decision rather than the bank's figure */
+.cp-ten{display:flex;flex-direction:column;line-height:1.15;gap:1px}
+.cp-ten>span{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);order:2}
+.cp-ten select{height:20px;padding:0 18px 0 6px;margin-left:-6px;border:1px solid transparent;border-radius:6px;
+  background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236c757d' stroke-width='1.6'/%3E%3C/svg%3E") right 5px center/8px no-repeat;
+  font:inherit;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;appearance:none}
+.cp-ten select:hover{border-color:var(--line);background-color:var(--white)}
+.cp-ten select:focus-visible{outline:2px solid var(--navy);outline-offset:1px}
 .cp-tags{display:flex;align-items:center;gap:6px;justify-content:flex-end;min-width:0;overflow:hidden}
 .cp-tags .chip{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;flex:0 1 auto}
 .pol-card .pol-rm{font-size:17px;justify-self:end}
@@ -609,23 +589,19 @@ th .i,.uni th .i{margin-left:4px}
    to the name, and nothing is dropped. Placement is spelled out because auto-placement would put
    the block that spans the row ahead of the tag and the remove button. */
 @container (max-width:780px){
-  .cp-top{grid-template-columns:20px minmax(0,1fr) auto 20px;gap:12px;row-gap:6px;padding:8px 12px}
+  .cp-top{grid-template-columns:minmax(0,1fr) auto 20px;gap:12px;row-gap:6px;padding:8px 12px}
   /* the legal name is the line that goes: the short name, what kind of entity it is and the
      country are all still here, and the card opens on the rest */
   .cp-id .cp-sub{display:none}
   .cp-id .cp-sov{display:inline}
-  .cp-exp{grid-area:1/1}
-  .cp-id{grid-area:1/2}
-  .cp-tags{grid-area:1/3;justify-content:flex-end}
-  .cp-top .pol-rm{grid-area:1/4}
-  .cp-stats{grid-area:2/2/auto/-1;justify-content:start}
+  .cp-id{grid-area:1/1}
+  .cp-tags{grid-area:1/2;justify-content:flex-end}
+  .cp-top .pol-rm{grid-area:1/3}
+  .cp-stats{grid-area:2/1;justify-content:start}
+  .cp-ten{grid-area:2/2/auto/-1;align-items:flex-end}
 }
-/* narrower than the six will go: leverage and the tenor step out, the tenor returning when the
-   card is open, where it is the line the reader came for */
 @container (max-width:430px){
   .cp-stats{gap:12px}
-  .ck-lev,.ck-tenor{display:none}
-  .pol-card.cp-open .ck-tenor{display:flex}
 }
 .ck .band{width:22px;height:19px;font-size:11.5px;border-radius:5px}
 

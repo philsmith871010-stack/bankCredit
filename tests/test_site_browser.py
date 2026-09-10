@@ -249,9 +249,10 @@ def _seed(pg, server):
 
 
 def _seed_and_open(pg, server):
+    """The card opened in place once; everything it held is in the dialog now."""
     pick = _seed(pg, server)
-    pg.eval_on_selector(".pol-card .cp-exp", "e => e.click()")
-    pg.wait_for_timeout(400)
+    pg.eval_on_selector(".pol-card", "e => e.click()")
+    pg.wait_for_timeout(700)
     return pick
 
 
@@ -310,25 +311,35 @@ def test_the_closed_row_keeps_remove_on_the_name_line(browser, server, width):
         pg.close()
 
 
-def test_a_card_starts_closed_and_the_chevron_opens_it(page, server):
-    """A display on .cp-detail overrides the browser's own [hidden] rule and opens every card."""
-    _seed_and_open(page, server)
-    assert page.eval_on_selector(".pol-card .cp-detail", "e => e.getBoundingClientRect().height") > 100
-    page.eval_on_selector(".pol-card .cp-exp", "e => e.click()")
-    page.wait_for_timeout(300)
-    assert page.eval_on_selector(".pol-card .cp-detail", "e => getComputedStyle(e).display") == "none"
-    assert page.eval_on_selector(".pol-card .cp-detail", "e => e.getBoundingClientRect().height") == 0
+def test_a_counterparty_is_one_line(page, server):
+    """The card carried six figures and an expander holding five more panels, all of which the
+    dialog now shows on a click. What is left is the name, what it is worth, what it is rated and
+    how long you accept it for."""
+    _seed_many(page, server, 4)
+    assert page.eval_on_selector_all(".cp-exp, .cp-detail", "e => e.length") == 0
+    labels = page.eval_on_selector_all(".pol-card .ck > span", "e => e.map(x => x.textContent.trim())")
+    assert set(labels) == {"score", "rating"}, labels
+    assert page.eval_on_selector(".pol-card", "e => e.getBoundingClientRect().height") < 100
+    page.eval_on_selector(".pol-card", "e => e.click()")
+    page.wait_for_timeout(700)
+    assert page.evaluate("!!document.querySelector('dialog[open]')")
+    assert not page.errors, page.errors
 
 
-def test_an_open_card_draws_all_five_panels(page, server):
-    _seed_and_open(page, server)
-    heads = page.eval_on_selector_all(".pol-card .cp-cell > h5 > span:first-child",
-                                      "e => e.map(x => x.textContent.trim())")
-    assert len(heads) == 5, heads
-    assert page.eval_on_selector_all(".pol-card .cg-t", "e => e.length") == 3      # a gauge per ratio
-    assert page.eval_on_selector_all(".pol-card .cr-dot", "e => e.length") > 1     # an agency per dot
-    assert page.query_selector(".pol-card .cs-dist svg")                           # the distribution
-    assert page.query_selector(".pol-card .cb-b")                                  # the bond bar
+def test_the_tenor_can_be_changed_on_a_name_already_approved(page, server):
+    """It was printed as if it were a fact about the bank. It is the one thing on the row that is
+    the treasurer's own decision, and changing it meant removing the name and adding it again."""
+    policy = _seed_many(page, server, 3)
+    first = policy[0]["id"]
+    sel = f'.pol-card[data-id="{first}"] .cp-ten select'
+    assert page.eval_on_selector(sel, "e => e.value") == "365"
+    page.select_option(sel, "1825")
+    page.wait_for_timeout(500)
+    stored = json.loads(page.evaluate("localStorage.getItem('counterparty.policy')"))
+    assert [x["tenor"] for x in stored if x["id"] == first] == [1825]
+    # the row is redrawn from what was stored, and the click did not open the dialog behind it
+    assert page.eval_on_selector(sel, "e => e.value") == "1825"
+    assert not page.evaluate("!!document.querySelector('dialog[open]')")
     assert not page.errors, page.errors
 
 
@@ -341,12 +352,8 @@ def test_every_mark_stays_inside_its_own_track(page, server):
         const m = mark.getBoundingClientRect(), t = track.getBoundingClientRect();
         if (m.left < t.left - 6 || m.right > t.right + 6) out.push(what);
       };
-      document.querySelectorAll('.pol-card .cg-t').forEach(t =>
-        t.querySelectorAll('.cg-v,.cg-m,.cg-q').forEach(m => check(m, t, 'ratio ' + m.className)));
-      document.querySelectorAll('.pol-card .cr-scale').forEach(t =>
+      document.querySelectorAll('dialog .cr-scale').forEach(t =>
         t.querySelectorAll('.cr-dot,.cr-c').forEach(m => check(m, t, 'rating ' + m.className)));
-      document.querySelectorAll('.pol-card .cb-t').forEach(t =>
-        t.querySelectorAll('.cb-b').forEach(m => check(m, t, 'bond ' + m.className)));
       return out;
     }""")
     assert stray == [], stray
