@@ -77,7 +77,7 @@ td.num sup{font-size:9px;margin-left:2px}
 .rtiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 16px}.rtile{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}.rtile-n{font-size:26px;font-weight:600;line-height:1.1}.rtile-l{font-size:12px;color:var(--muted);margin-top:4px}
 .racts{display:flex;flex-direction:column;gap:6px}.ract{display:grid;grid-template-columns:90px 160px 1fr auto;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line-soft);font-size:13px}
 table.ratings td{font-size:13px;vertical-align:top}table.ratings .band{display:inline-block;min-width:46px;text-align:center;padding:2px 8px;border-radius:999px;font-weight:600;font-size:12px}
-@media (max-width:800px){.ract{grid-template-columns:80px 1fr;grid-auto-rows:auto}}
+@media (max-width:800px){.ract{grid-template-columns:74px 1fr;grid-auto-rows:auto;gap:2px 8px;font-size:12.5px;padding:7px 0}.ract .chip{justify-self:start}}
 .rgrid{margin-bottom:16px;grid-template-columns:3fr 2fr}.ladder{display:flex;flex-direction:column;gap:5px}.lrow{display:grid;grid-template-columns:52px 90px 28px 1fr;align-items:center;gap:8px;min-height:24px}
 .lgrade{color:#fff;font-size:11px;font-weight:600;text-align:center;border-radius:6px;padding:3px 0}.lbar{height:8px;border-radius:4px;opacity:.85}.lcount{font-size:11px;text-align:right}
 .lchips{display:flex;flex-wrap:wrap;gap:4px}.lchip{font-size:11px;font-weight:500;border:1px solid;border-radius:999px;padding:1px 7px;background:var(--white);white-space:nowrap}.lchip:hover{background:var(--line-soft)}
@@ -88,7 +88,7 @@ table.ratings td{font-size:13px;vertical-align:top}table.ratings .band{display:i
 .tile-ratings .tile-foot{flex-wrap:wrap}
 .tile-ratings .rcells{flex:1 1 auto;align-content:center}
 .rcells{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}.rcell{border-left:3px solid var(--line);padding-left:10px}.ragency{font-size:11.5px;font-weight:600;color:var(--muted);letter-spacing:.04em}.rlt .big{font-size:24px}.tile-ratings .band{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:600}
-table.coverage td.cov{text-align:center;white-space:nowrap;padding:6px 6px}table.coverage td.cov b{display:block;font-family:var(--mono,ui-monospace,monospace);font-size:12px}table.coverage td.cov span{font-size:10px;color:var(--muted)}
+table.coverage td.cov{text-align:center;white-space:nowrap;padding:6px 6px}table.coverage td.cov b{display:block;font-family:var(--mono,ui-monospace,monospace);font-size:12px}table.coverage td.cov span{font-size:11px;color:var(--muted)}
 table.coverage td.cov0{color:#c4ccd6}table.coverage td.cov1{background:#f3f6fa}table.coverage td.cov2{background:#dfe7f1}table.coverage td.cov3{background:#c3d2e4}
 table.coverage th{white-space:nowrap}table.coverage td{vertical-align:middle}
 
@@ -317,7 +317,7 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .ll-k{display:flex;flex-direction:column;line-height:1.1;font-size:9px;letter-spacing:.05em;
       text-transform:uppercase;color:var(--muted);min-width:0}
 .ll-k b{font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--text);font-variant-numeric:tabular-nums}
-.ll-ag{font-size:9.5px;font-weight:600;letter-spacing:.04em;color:var(--muted);margin-right:3px}
+.ll-ag{font-size:10px;font-weight:600;letter-spacing:.04em;color:var(--muted);margin-right:3px}
 .ll-rt .mono{margin-right:9px;font-size:11.5px;font-weight:600}
 /* one tenor at a time: the chips choose the list, the bar states what it is measured against */
 .ll-tenors{margin:14px 0 0;padding-bottom:10px;border-bottom:1px solid var(--line)}
@@ -359,7 +359,7 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .pv-charts figcaption{font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;
                       padding-left:7px;border-left:2px solid var(--orange)}
 .pv-svg{display:block;overflow:visible}
-.pv-ax{font-size:8.5px;fill:var(--muted);font-family:"IBM Plex Mono",ui-monospace,monospace}
+.pv-ax{font-size:10px;fill:var(--muted);font-family:"IBM Plex Mono",ui-monospace,monospace}
 .pv-keys{display:flex;flex-wrap:wrap;gap:3px 10px;margin-top:5px}
 .pv-key{font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:4px}
 .pv-key i{width:8px;height:8px;border-radius:2px;display:inline-block}
@@ -381,7 +381,7 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
                 padding-right:14px;border-right:1px solid #d7e0ea}
 .md-scn{display:flex;align-items:center;gap:7px}
 .md-sc .cp-score{font-size:28px}
-.md-scl{font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.md-scl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 .md-mkt .chip{white-space:nowrap}
 .md-act{display:flex;align-items:center;gap:8px}
 #md-body{padding:11px;overflow:auto;background:var(--bg)}
@@ -445,7 +445,7 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 @media(prefers-reduced-motion:reduce){.md-sk,.sk{animation:none}}
 /* a holding company is not the entity a deposit is placed with, and its ratios are the group's */
 .tag-hold{display:inline-block;margin-left:7px;padding:1px 6px;border:1px solid var(--line);border-radius:4px;
-  background:var(--line-soft);color:var(--muted);font-size:10px;font-weight:600;letter-spacing:.03em;
+  background:var(--line-soft);color:var(--muted);font-size:10.5px;font-weight:600;letter-spacing:.03em;
   text-transform:uppercase;vertical-align:1px;white-space:nowrap}
 
 /* ---- the universe, on the same page ---------------------------------------------------- */
@@ -572,11 +572,11 @@ th .i,.uni th .i{margin-left:4px}
 .ck-sep{border-left:1px solid var(--line-soft);padding-left:13px}
 .ck b{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:5px;
       height:20px;line-height:20px}
-.ck span{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ck span{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .ck-score b{font-size:17px}
 /* the one field on the row that is your decision rather than the bank's figure */
 .cp-ten{display:flex;flex-direction:column;line-height:1.15;gap:1px}
-.cp-ten>span{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);order:2}
+.cp-ten>span{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);order:2}
 .cp-ten select{height:20px;padding:0 18px 0 6px;margin-left:-6px;border:1px solid transparent;border-radius:6px;
   background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236c757d' stroke-width='1.6'/%3E%3C/svg%3E") right 5px center/8px no-repeat;
   font:inherit;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;appearance:none}
@@ -713,7 +713,7 @@ table.uni .sc-n{font-size:14px}
 
 /* ---- the shortlist: one row a name, so the columns do the comparing ---- */
 .ll-t2{font-size:12.5px}
-.ll-t2 thead th{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap}
+.ll-t2 thead th{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap}
 .ll-t2 th:nth-child(n+5):nth-child(-n+8),.ll-t2 .ll-v{text-align:right}
 .ll-t2 tbody tr{cursor:pointer}
 .ll-t2 tbody tr:hover{background:var(--line-soft)}
@@ -727,7 +727,7 @@ table.uni .sc-n{font-size:14px}
 .ll-bar2{display:block;height:3px;border-radius:2px}
 .ll-cpc{white-space:nowrap}
 .ll-cpc b{font-family:var(--mono);font-size:12.5px;font-weight:600}
-.ll-ags{margin-left:7px;font-size:9.5px;font-weight:600;letter-spacing:.14em;color:var(--muted)}
+.ll-ags{margin-left:7px;font-size:10.5px;font-weight:600;letter-spacing:.1em;color:var(--muted)}
 .ll-v{font-variant-numeric:tabular-nums;white-space:nowrap}
 .ll-t2 .sc-n{font-size:15px;letter-spacing:-.02em}
 .ll-t2 .ll-low{color:#b26a00;font-weight:600}
@@ -744,16 +744,21 @@ table.uni .sc-n{font-size:14px}
 .wt-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:16px}
 .wt-head h3{margin:0 0 3px}
 .wt-head p{margin:0;max-width:62ch}
-.wt-grid{display:grid;gap:2px}
+.wt-grid{display:grid;gap:2px;max-width:820px}
 .wt-row{display:grid;grid-template-columns:minmax(180px,1fr) minmax(140px,2fr) 46px;align-items:center;gap:16px;
   padding:9px 10px;border-radius:8px}
 .wt-row:hover{background:var(--line-soft)}
 .wt-row label{display:flex;flex-direction:column;gap:1px;min-width:0;cursor:pointer}
 .wt-row label b{font-size:13px;font-weight:600}
-.wt-row label span{font-size:11.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wt-row label span{font-size:11.5px;color:var(--muted);line-height:1.35}
 .wt-s{width:100%;accent-color:var(--navy);cursor:pointer}
 .wt-o{font-family:var(--mono);font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
-.wt-foot{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);max-width:78ch}
+/* The sliders and what they are allowed to mean, side by side: the disclosure is not a footnote
+   under a long page, it is beside the control it qualifies. */
+.wt-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,340px);gap:28px;align-items:start}
+@media (max-width:1000px){.wt-body{grid-template-columns:1fr;gap:18px}}
+.wt-foot{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+@media (max-width:1000px){.wt-foot{margin-top:4px}}
 .wt-foot p{margin:0 0 9px;font-size:12.5px;line-height:1.55;color:var(--text)}
 .wt-foot p.muted{color:var(--muted)}
 .wt-foot b{font-weight:600}
@@ -767,3 +772,91 @@ table.uni .sc-n{font-size:14px}
   font-size:12.5px;line-height:1.5;color:var(--muted)}
 .pol-demo b{color:var(--text);font-weight:600}
 .pol-demo .filter{margin-left:auto;flex:0 0 auto;height:28px;font-size:12px}
+
+/* Long lists stand a page at a time. The control that reveals the rest sits where the list stops,
+   with the count beside it, so the reader always knows how much of the list they are looking at. */
+.pager{display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 4px}
+.pager .more{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 20px;
+  border-radius:999px;font:inherit;font-size:13.5px;font-weight:600;background:var(--white);
+  color:var(--navy);border:1px solid var(--line);cursor:pointer;box-shadow:var(--shadow)}
+.pager .more:hover{border-color:var(--navy);background:var(--navy);color:#fff}
+.pager .more:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.pager .pg-of{font-variant-numeric:tabular-nums}
+
+/* A reference document stands beside its own contents. The rail is sticky, the reading column keeps
+   a measure, and on a phone the rail becomes a strip of chips above the text. */
+.docpage{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;align-items:start;max-width:1140px}
+.doc-nav{position:sticky;top:16px;display:flex;flex-direction:column;gap:1px;
+  border-left:2px solid var(--line);padding-left:2px}
+.doc-nav-head{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);padding:2px 10px 8px}
+.doc-nav a{display:block;padding:6px 10px;font-size:13px;color:var(--muted);text-decoration:none;
+  border-left:2px solid transparent;margin-left:-4px;border-radius:0 6px 6px 0}
+.doc-nav a:hover{color:var(--text);background:var(--line-soft)}
+.doc-nav a.on{color:var(--navy);font-weight:600;border-left-color:var(--orange);background:var(--white)}
+.prose h2{scroll-margin-top:16px}
+@media(max-width:900px){
+  .docpage{grid-template-columns:1fr;gap:10px}
+  .doc-nav{position:static;flex-direction:row;flex-wrap:wrap;gap:6px;border-left:0;padding:0}
+  .doc-nav-head{width:100%;padding:0 0 2px}
+  .doc-nav a{border:1px solid var(--line);border-radius:999px;background:var(--white);padding:4px 11px;
+    margin-left:0;font-size:12.5px}
+  .doc-nav a.on{border-color:var(--navy);border-left-color:var(--navy)}
+}
+
+/* An empty result says what would not be empty, and the way there is a word in the sentence. */
+.ll-none{font-size:13px;color:var(--muted);margin:14px 2px;max-width:70ch}
+.linky{background:none;border:0;padding:0;font:inherit;color:var(--navy);font-weight:600;
+  text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.linky:hover{color:var(--orange)}
+
+/* What a slider actually did. Abstract weights, concrete names. */
+.wt-effect{margin-top:16px;padding:12px 14px;border:1px solid var(--line);border-left:3px solid var(--orange);
+  border-radius:10px;background:var(--white)}
+.wt-effect.wt-flat{border-left-color:var(--line);color:var(--muted);font-size:12.5px}
+.wt-eh{font-size:13px;line-height:1.55}
+.wt-eh b{font-weight:600;font-variant-numeric:tabular-nums}
+.wt-movers{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.wt-mv{display:inline-flex;align-items:baseline;gap:7px;padding:3px 9px;border-radius:999px;
+  border:1px solid var(--line);background:var(--white);font-size:12px;white-space:nowrap}
+.wt-mv b{font-weight:600}
+.wt-mv i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.wt-mv em{font-style:normal;font-family:var(--mono);font-size:11.5px;font-weight:600;
+  font-variant-numeric:tabular-nums}
+.wt-mv.up{border-color:#bfe3cc}.wt-mv.up em{color:var(--green)}
+.wt-mv.down{border-color:#f3ccc6}.wt-mv.down em{color:var(--red)}
+
+/* What a severity chip means, said once above the feed rather than left to be inferred. */
+.sev-key{margin-top:8px;max-width:96ch;color:var(--muted);line-height:1.9}
+.sev-key .chip{margin:0 1px}
+
+/* The bar that adds a name used to float on the page ground with no edge and no explanation of
+   what it did. It is a panel now, sitting on the card it feeds, and it says where the list goes. */
+.pol-wrap .pol-topbar{padding:14px 16px 12px;background:var(--white);border:1px solid var(--line);
+  border-radius:14px;box-shadow:var(--shadow);margin-bottom:14px}
+.pol-hint{align-self:center;max-width:44ch;line-height:1.45;padding-bottom:2px}
+@media(max-width:820px){.pol-hint{max-width:none}}
+
+/* A strip that scrolls sideways says so. On a phone the tab row and the wide tables run past the
+   screen with nothing at the edge to suggest it, so a reader stops at whatever the screen ends on.
+   An inset shadow on the side that still holds content is the whole affordance. */
+.sc-r{box-shadow:inset -22px 0 14px -14px rgba(10,37,64,.28)}
+.sc-l{box-shadow:inset 22px 0 14px -14px rgba(10,37,64,.28)}
+.sc-l.sc-r{box-shadow:inset 22px 0 14px -14px rgba(10,37,64,.28),inset -22px 0 14px -14px rgba(10,37,64,.28)}
+
+/* The definition marker is a 14px dot on a phone, where a finger is nearer 40. The dot stays the
+   size it is; what a thumb has to hit grows around it, without moving anything beside it. */
+.i{position:relative}
+.i::after{content:"";position:absolute;top:50%;left:50%;width:34px;height:34px;
+  transform:translate(-50%,-50%)}
+@media (hover:hover){.i::after{width:22px;height:22px}}
+
+/* A row hidden by a filter or a pager must actually go. .ract and .event set display themselves,
+   which outranks the user agent's [hidden] rule and left them on the page taking their full height. */
+[hidden]{display:none!important}
+
+/* The brief's second column carried one short card and a quarter of the page in white under it. */
+.brief-side{display:flex;flex-direction:column;gap:14px;min-width:0}
+.brief-side .card h3{margin-top:0}
+.brief-side .kv{margin-bottom:12px}

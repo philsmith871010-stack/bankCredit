@@ -137,7 +137,11 @@
     var amax=Math.max.apply(null,pts.map(function(p){return p.r.assets||0}))||1;
     var out=svgOpen(w,H);
     ty.forEach(function(v){out+='<line x1="'+L+'" x2="'+(w-R)+'" y1="'+Y(v).toFixed(0)+'" y2="'+Y(v).toFixed(0)+'" stroke="#eef1f4"/><text x="'+(L-8)+'" y="'+(Y(v)+4).toFixed(0)+'" text-anchor="end" fill="'+MUTED+'" font-size="11">'+fmt(v,m)+'</text>'});
-    tx.forEach(function(u){out+='<text x="'+X(u).toFixed(0)+'" y="'+(H-24)+'" text-anchor="middle" fill="'+MUTED+'" font-size="11">'+fmt(u,m2)+'</text>'});
+    // on a narrow chart six labels run into one another, so only those that clear the last one
+    // are drawn: a gap is easier to read than a smudge
+    var lastTx=-999;
+    tx.forEach(function(u){var x=X(u);if(x-lastTx<46)return;lastTx=x;
+      out+='<text x="'+x.toFixed(0)+'" y="'+(H-24)+'" text-anchor="middle" fill="'+MUTED+'" font-size="11">'+fmt(u,m2)+'</text>'});
     out+='<text x="'+((L+w-R)/2).toFixed(0)+'" y="'+(H-6)+'" text-anchor="middle" fill="'+INK+'" font-weight="600" font-size="12">'+esc(m2[1])+' →</text><text x="'+L+'" y="'+(T-3)+'" fill="'+INK+'" font-weight="600" font-size="12">↑ '+esc(m[1])+'</text>';
     var mx=median(xs),my=median(ys);out+='<line x1="'+X(mx).toFixed(0)+'" x2="'+X(mx).toFixed(0)+'" y1="'+T+'" y2="'+(H-B)+'" stroke="'+INK+'" stroke-dasharray="4 4" opacity=".35"/><line x1="'+L+'" x2="'+(w-R)+'" y1="'+Y(my).toFixed(0)+'" y2="'+Y(my).toFixed(0)+'" stroke="'+INK+'" stroke-dasharray="4 4" opacity=".35"/>';
     pts.sort(function(a,b){return (colourOf(a.r.id)?1:0)-(colourOf(b.r.id)?1:0)}).forEach(function(p){var c=colourOf(p.r.id),rad=p.r.assets?5+10*Math.sqrt(p.r.assets/amax):6;
