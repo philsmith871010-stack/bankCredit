@@ -33,9 +33,19 @@ headlined=$(stamp last-headlines)
 mode=auto
 case "${EVENT:-}" in
   push)
-    # A code push republishes the site from committed data. [collect] in the message is the
-    # explicit override, and is how the on-time kick asks for the day's collection.
-    case "${MESSAGE:-}" in *"[collect]"*) mode=full ;; *) mode=build ;; esac ;;
+    # A code push republishes the site from committed data - unless the day's collection has not
+    # happened yet, in which case it does that too. A push is the only event GitHub delivers
+    # reliably: 151 of this pipeline's first 158 runs came from one, within seconds, against 7 of
+    # the 45 scheduled events expected over the same three weekdays. So every push is a chance to
+    # catch up, and the day's first push after 05:00 UTC collects. [collect] asks regardless, and
+    # is what the kick pushes.
+    #
+    # This cannot loop: the workflow commits its data with GITHUB_TOKEN, and GitHub does not raise
+    # workflow events for a push made with it.
+    case "${MESSAGE:-}" in
+      *"[collect]"*) mode=full ;;
+      *) if [ "$now" -ge "$owed_from" ] && [ "$collected" -lt "$owed_from" ]; then mode=full; else mode=build; fi ;;
+    esac ;;
   workflow_dispatch)
     mode="${WANTED:-auto}" ;;
 esac
