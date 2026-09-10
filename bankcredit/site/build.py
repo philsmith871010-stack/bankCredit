@@ -432,7 +432,7 @@ def page_bank(b, generated):
     events_rows = "".join(f'<div class="event"><span class="mono muted">{c.esc(str(e.get("date"))[:10])}</span><div><div class="b">{c.esc(e.get("title"))}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("severity") or "info"))}</div>' for e in b["events"]) or '<div class="empty">No events collected yet. Rating actions and disclosures will appear here once the events pipeline runs.</div>'
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
 <div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {sovereign_pill(b)}{c.info("sovereign")}{" · " + c.chip("LEI " + c.esc(b["lei"])) + c.info("lei") if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
-<div class="actions"><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button><button class="btn primary" onclick="window.print()">{c.ico("download", 16, c.WHITE)}Counterparty report</button></div></div>
+<div class="actions"><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button></div></div>
 <div class="grid-12"><div class="score-card" data-pw="{c.esc(json.dumps([b["score_detail"]["pillars"].get(k, (None,))[0] for k in c.PILLAR_KEYS]))}" data-overlay="{overlay if overlay is not None else 0}" data-grade="{b.get("rating_grade") if b.get("rating_grade") is not None else ""}" data-coverage="{cov}"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span><span class="score-band">{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</span></div>
 <div class="score-main"><div class="score-fig">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div>
 {c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12, fluid=True)}</div>
@@ -455,7 +455,16 @@ def page_brief_redirect(generated):
     return '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../events/index.html"><title>Brief moved</title><p>The brief now opens the <a href="../events/index.html">Events</a> page.</p>'
 
 
-def page_events(board, status, generated, inner: bool = False):
+# Two tabs held back while their scope is settled: the universe-wide ratings grid and the events
+# feed. Both are the most complete public reproduction on the site of what the agencies and the
+# press have said, and neither answers a question the covered-name table and a bank's own page do
+# not answer better. Nothing behind them is torn out - the profile pages, the RSS feed and the
+# flags on a reader's own list all still build - so bringing them back is this line.
+HOME_TABS_HIDDEN = ("ratings", "events")
+
+
+def event_items(board):
+    """Every event held for every covered name, newest first. The feed and the page share it."""
     items = []
     recent = (datetime.utcnow() - timedelta(days=45)).date().isoformat()
     for r in board["rows"]:
@@ -466,6 +475,22 @@ def page_events(board, status, generated, inner: bool = False):
                 continue
             items.append((d, r, e))
     items.sort(key=lambda x: x[0], reverse=True)
+    return items
+
+
+def write_events_feed(board, generated) -> None:
+    """The RSS feed outlives the page. Someone subscribed to it should not lose it because a tab
+    was put away, so it is written from the build rather than as a side effect of drawing the page."""
+    items = event_items(board)
+    flagged = [(d, r, e) for d, r, e in items
+               if e.get("severity") in ("bad", "warn", "good")
+               or (e.get("type") == "rating" and "affirm" not in str(e.get("title", "")).lower())][:100]
+    (OUT / "events").mkdir(exist_ok=True)
+    _write(OUT / "events" / "feed.xml", events_feed(flagged, generated))
+
+
+def page_events(board, status, generated, inner: bool = False):
+    items = event_items(board)
     tone = {"bad": "bad", "warn": "warn", "good": "good", "info": "muted"}
     def row(d, r, e):
         url = e.get("url") or ""
@@ -501,9 +526,6 @@ def page_events(board, status, generated, inner: bool = False):
             rows += f'<div class="ev-day"><span>{d}</span></div>'
             last_day = d
         rows += row2(d, r, e)
-    flagged = [(d, r, e) for d, r, e in items if e.get("severity") in ("bad", "warn", "good") or (e.get("type") == "rating" and "affirm" not in str(e.get("title", "")).lower())][:100]
-    (OUT / "events").mkdir(exist_ok=True)
-    _write(OUT / "events" / "feed.xml", events_feed(flagged, generated))
     counts = {}
     for _, _, e in items:
         counts[e.get("type")] = counts.get(e.get("type"), 0) + 1
@@ -941,9 +963,14 @@ def home_panels(board, status, generated) -> dict[str, str]:
     page's 441 KB: every rating of every name, and every event, parsed into the document before
     anything was drawn. They are written here instead and fetched on demand.
     """
-    return {"ratings": _panel_content(page_ratings(generated, inner=True)),
-            "events": _panel_content(page_events(board, status, generated, inner=True)),
-            "analysis": compare_content()}
+    out = {"analysis": compare_content()}
+    # a tab that is held back publishes nothing: the fragment is not written either, so the grid
+    # and the feed are not sitting at a guessable URL for anyone who looks
+    if "ratings" not in HOME_TABS_HIDDEN:
+        out["ratings"] = _panel_content(page_ratings(generated, inner=True))
+    if "events" not in HOME_TABS_HIDDEN:
+        out["events"] = _panel_content(page_events(board, status, generated, inner=True))
+    return out
 
 
 def page_home(board, status, generated):
@@ -961,9 +988,9 @@ def page_home(board, status, generated):
                  '<button class="tab active" data-tab="policy">Your counterparties<span class="tab-n" id="tn-policy"></span></button>'
                  '<button class="tab" data-tab="likeforlike">Like-for-like<span class="tab-n" id="tn-ll"></span></button>'
                  '<button class="tab" data-tab="universe">Every covered name</button>'
-                 '<button class="tab" data-tab="ratings">Ratings</button>'
-                 '<button class="tab" data-tab="events">Events</button>'
-                 '<button class="tab" data-tab="analysis">Analysis</button>'
+                 + ('<button class="tab" data-tab="ratings">Ratings</button>' if "ratings" not in HOME_TABS_HIDDEN else '')
+                 + ('<button class="tab" data-tab="events">Events</button>' if "events" not in HOME_TABS_HIDDEN else '')
+                 + '<button class="tab" data-tab="analysis">Analysis</button>'
                  '<button class="tab" data-tab="weights">Weightings</button></div>'
                  '<section class="panel active" data-panel="policy">'
                  '<div id="policy-body"><div class="sk-cards" aria-hidden="true">'
@@ -974,9 +1001,9 @@ def page_home(board, status, generated):
                  '<button class="filter" id="pol-demo">Load the example portfolio</button></div></section>'
                  '<section class="panel" data-panel="likeforlike"><div id="pol-ll"></div></section>'
                  f'<section class="panel" data-panel="universe">{UNIVERSE_PANEL}</section>'
-                 f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={c.stamp(generated)}"></section>'
-                 f'<section class="panel" data-panel="events" data-src="data/panels/events.html?v={c.stamp(generated)}"></section>'
-                 f'<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html?v={c.stamp(generated)}"'
+                 + (f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={c.stamp(generated)}"></section>' if "ratings" not in HOME_TABS_HIDDEN else '')
+                 + (f'<section class="panel" data-panel="events" data-src="data/panels/events.html?v={c.stamp(generated)}"></section>' if "events" not in HOME_TABS_HIDDEN else '')
+                 + f'<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html?v={c.stamp(generated)}"'
                  f' data-js="assets/compare.js?v={c.stamp(generated)}"></section>'
                  # how much each pillar counts for is the reader's judgement, so it is a tab of its
                  # own rather than a setting tucked behind a cog, and the disclosure lives with it
@@ -1229,6 +1256,7 @@ def build():
     (OUT / "data" / "panels").mkdir(parents=True, exist_ok=True)
     for name, html in home_panels(board, status, generated).items():
         _write(OUT / "data" / "panels" / f"{name}.html", html)
+    write_events_feed(board, generated)
     _write(OUT / "banks" / "index.html", page_gone("Banks", generated))
     for r in board["rows"]:
         _write(OUT / "banks" / f"{r['id']}.html", page_bank(load(f"banks/{r['id']}"), generated))
