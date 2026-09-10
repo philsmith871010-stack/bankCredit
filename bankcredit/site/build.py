@@ -949,10 +949,10 @@ UNIVERSE_PANEL = f"""<p class="small muted">Every name, sortable on any column, 
   <select id="uni-tenor" title="Tenor used by the Add buttons in this table"></select>
   <span class="uni-count small muted" id="uni-count"></span>
 </div>
-<div class="table-wrap"><table class="plain uni" id="uni-table"><thead><tr>
+<div class="table-wrap scrollbox"><table class="plain uni" id="uni-table"><thead><tr>
   <th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score{c.info("score")}</th>
   <th data-sort="rating_grade">Rating{c.info("composite")}</th><th data-sort="cet1" class="num">CET1{c.info("cet1_ratio")}</th><th data-sort="lcr" class="num">LCR{c.info("lcr")}</th>
-  <th data-sort="asof">Figures{c.info("as_at")}</th><th>Market{c.info("market_signal")}</th><th></th></tr></thead><tbody id="uni-body"><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr></tbody></table></div><div class="pager" id="uni-more" data-step="50"></div>
+  <th data-sort="asof">Figures{c.info("as_at")}</th><th>Market{c.info("market_signal")}</th><th></th></tr></thead><tbody id="uni-body"><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr></tbody></table></div><div class="tfoot small muted" id="uni-count2"></div>
 """
 
 
@@ -1176,7 +1176,7 @@ def compare_content() -> str:
 {panel("trend", "Trend", "quarter ends, set median dashed")}
 {panel("bump", "Rank over time", "position within the set", wide=True)}
 </div>
-<div class="card cp-card"><div class="pc-head"><h3>The set in numbers <span class="muted small">· latest reported figures; click a heading to sort, a swatch to pin</span></h3></div><div class="table-wrap" id="c-table"></div></div>
+<div class="card cp-card"><div class="pc-head"><h3>The set in numbers <span class="muted small">· latest reported figures; click a heading to sort, a swatch to pin</span></h3></div><div class="table-wrap scrollbox" id="c-table"></div></div>
 <div class="table-foot"><span>Figures are the latest reported by each name; sources and dates are on each profile. Ranks count only names with a figure at that date. The score's history is recomputed with today's method and rating on the ratios as they stood.</span></div>'''
 
 # What the policy page's dialog reads when a card is opened. The profile JSON carries the

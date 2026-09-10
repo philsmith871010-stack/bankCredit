@@ -113,9 +113,8 @@ def visit(pg, server, path):
 def test_home_loads_its_data_under_a_subdirectory(page, server):
     """The fault that emptied the live site: data-root="" is the root, not a missing root."""
     visit(page, server, "index.html")
-    # the table pages, so a full first page is the sign the data arrived
-    assert page.eval_on_selector_all("#uni-body tr", "e => e.length") == 10
-    assert "1\u201310 of 152 names" in page.inner_text("#uni-more")
+    assert page.eval_on_selector_all("#uni-body tr", "e => e.length") > 50
+    assert "names" in page.inner_text("#uni-count2")
     assert "Loading" not in page.inner_text("#policy-body")
     assert not page.errors, page.errors
     assert not page.bad, page.bad
@@ -777,46 +776,57 @@ def test_the_shortlist_opens_on_a_tenor_that_has_something_to_show(page, server)
     assert not page.errors, page.errors
 
 
-# ---- the tables a reader sorts and scans are paged, not revealed ------------------------------
-def test_a_sorted_table_gives_the_reader_a_place_in_it(page, server):
-    """A reveal button suits a feed read newest-first. A table a reader sorts wants a page number,
-    and turning the page must not silently restart the numbering."""
+# ---- the tables a reader sorts and scans scroll in a window ----------------------------------
+def test_a_long_table_scrolls_in_its_own_window(page, server):
+    """Paging a sorted list meant clicking through sixteen pages to read it, and the column
+    headings left the screen on the way. Every row is here; the window is what moves."""
     visit(page, server, "index.html")
     page.eval_on_selector('.tab[data-tab="universe"]', "e => e.click()")
-    page.wait_for_timeout(600)
-    assert page.eval_on_selector_all("#uni-body tr", "e => e.length") == 10
-    first = page.eval_on_selector("#uni-body tr .b", "e => e.textContent")
-    page.eval_on_selector('#uni-more .pg-n[data-p="2"]', "e => e.click()")
-    page.wait_for_timeout(300)
-    assert "11–20 of 152 names" in page.inner_text("#uni-more")
-    assert page.eval_on_selector("#uni-body tr .b", "e => e.textContent") != first
-    # a change of filter is a different list, so it starts at page one again
-    page.eval_on_selector("#uni-q", "e => { e.value = 'bank'; e.dispatchEvent(new Event('input')) }")
-    page.wait_for_timeout(300)
-    assert page.inner_text("#uni-more").startswith("‹") or "1–" in page.inner_text("#uni-more")
+    page.wait_for_timeout(700)
+    rows = page.eval_on_selector_all("#uni-body tr", "e => e.length")
+    assert rows > 100, "the whole list is in the page, not a page of it"
+    box = page.eval_on_selector("#uni-body", """e => {
+      const b = e.closest('.scrollbox');
+      return b ? [Math.round(b.clientHeight), Math.round(b.scrollHeight)] : null }""")
+    assert box, "the table sits in a scrolling window"
+    assert box[1] > box[0] * 2, f"the window is shorter than what it holds: {box}"
+    # and the page itself stays short
+    assert page.evaluate("document.documentElement.scrollHeight") < 1800
+    assert "scroll for the rest" in page.inner_text("#uni-count2")
     assert not page.errors, page.errors
 
 
-def test_the_shortlist_numbers_its_rows_across_pages(page, server):
-    """Rank eleven is on page two and still reads eleven; a page that restarts at one says the
-    eleventh strongest name is the strongest."""
+def test_the_column_headings_stay_while_the_rows_move(page, server):
+    """A heading that scrolls away takes the meaning of every column with it."""
+    visit(page, server, "index.html")
+    page.eval_on_selector('.tab[data-tab="universe"]', "e => e.click()")
+    page.wait_for_timeout(700)
+    top = page.eval_on_selector("#uni-table thead th", "e => Math.round(e.getBoundingClientRect().top)")
+    page.eval_on_selector("#uni-body", "e => { e.closest('.scrollbox').scrollTop = 1400 }")
+    page.wait_for_timeout(250)
+    moved = page.eval_on_selector("#uni-body tr", "e => Math.round(e.getBoundingClientRect().top)")
+    after = page.eval_on_selector("#uni-table thead th", "e => Math.round(e.getBoundingClientRect().top)")
+    assert abs(after - top) <= 2, f"the heading moved from {top} to {after}"
+    assert moved < top, "the rows did move"
+    assert not page.errors, page.errors
+
+
+def test_the_shortlist_shows_every_name_that_clears_the_bar(page, server):
+    """It used to stop at the 24 strongest, so the rest were unreachable at any tenor."""
     rows = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))["rows"]
     weak = [r for r in rows if r.get("score") is not None][-40:]
-    if not weak:
+    if len(weak) < 2:
         pytest.skip("not enough scored names")
-    r = weak[0]
-    policy = [{"id": r["id"], "tenor": 365, "added": "2026-01-01",
-               "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}]
+    policy = [{"id": r["id"], "tenor": t, "added": "2026-01-01",
+               "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}
+              for r, t in zip(weak[:2], (365, 90))]      # two tenors, so the chips carry counts
     page.goto(server + "index.html", wait_until="domcontentloaded")
     page.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
     visit(page, server, "index.html")
     page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
     page.wait_for_timeout(600)
-    shown = page.eval_on_selector_all(".ll-pane:not([hidden]) .ll-r", "e => e.length")
-    if shown < 10 or not page.query_selector('.ll-pane:not([hidden]) .pg-n[data-p="2"]'):
-        pytest.skip("this policy does not turn up more than one page")
-    assert shown == 10
-    page.eval_on_selector('.ll-pane:not([hidden]) .pg-n[data-p="2"]', "e => e.click()")
-    page.wait_for_timeout(300)
-    assert page.eval_on_selector(".ll-pane:not([hidden]) .ll-rank", "e => e.textContent") == "11"
+    drawn = page.eval_on_selector_all(".ll-pane:not([hidden]) .ll-r", "e => e.length")
+    counted = page.eval_on_selector(".ll-t.active .cnt", "e => +e.textContent")
+    assert drawn == counted, f"the chip counts {counted} and the table draws {drawn}"
+    assert page.query_selector(".ll-pane:not([hidden]) .scrollbox"), "and it scrolls in a window"
     assert not page.errors, page.errors

@@ -861,22 +861,19 @@ table.uni .sc-n{font-size:14px}
 .brief-side .card h3{margin-top:0}
 .brief-side .kv{margin-bottom:12px}
 
-/* A numbered page strip. The current page is the only filled one; the arrows go dim at the ends
-   rather than disappearing, so the strip does not change width as a reader moves along it. */
-.pgnav{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;
-  margin:12px 0 2px;padding-top:10px;border-top:1px solid var(--line-soft)}
-.pgnav .pg-n,.pgnav .pg-a{display:inline-flex;align-items:center;justify-content:center;
-  min-width:32px;height:32px;padding:0 8px;border:1px solid var(--line);border-radius:8px;
-  background:var(--white);color:var(--text);font:inherit;font-size:13px;font-weight:500;
-  font-variant-numeric:tabular-nums;cursor:pointer}
-.pgnav .pg-a{font-size:17px;line-height:1;color:var(--muted)}
-.pgnav .pg-n:hover,.pgnav .pg-a:not(:disabled):hover{border-color:var(--navy);background:var(--line-soft)}
-.pgnav .pg-n.on{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600}
-.pgnav button:disabled{opacity:.35;cursor:default}
-.pgnav button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
-.pgnav .pg-gap{color:var(--muted);padding:0 2px}
-.pgnav .pg-of{margin-left:10px;font-variant-numeric:tabular-nums}
-@media(max-width:560px){.pgnav .pg-of{width:100%;text-align:center;margin:4px 0 0}}
 
 /* A chart that has had to simplify itself says so, under the drawing rather than over it. */
 .pc-note{padding:2px 4px 0;line-height:1.45}
+
+/* A long table scrolls inside a window rather than growing the page under it. Paging a sorted
+   list meant clicking through sixteen pages to read it, and the column headings left the screen
+   on the way; here they stay put and the whole list is one scroll. Sized against the viewport, so
+   the page still fits a laptop and a phone still shows the filters above the table. */
+.scrollbox{max-height:min(560px,62vh);overflow:auto;overscroll-behavior:contain;
+  border-bottom:1px solid var(--line)}
+.scrollbox thead th{position:sticky;top:0;z-index:2;background:var(--white);
+  box-shadow:inset 0 -1px 0 var(--line)}
+.scrollbox table{border-collapse:separate;border-spacing:0}
+@media(max-width:760px){.scrollbox{max-height:min(460px,68vh)}}
+/* what the window is holding, said under it where the scrollbar ends */
+.tfoot{padding:9px 2px 2px;text-align:right;font-variant-numeric:tabular-nums}

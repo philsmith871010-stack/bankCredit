@@ -139,17 +139,13 @@
   var COLS=[['score','Score',1],['band','Band',0],['rating','Rating',0],['cet1_ratio','CET1',1],['leverage_ratio','Leverage',1],['lcr','LCR',0],['nsfr','NSFR',0],['roe','ROE',1],['efficiency_ratio','Cost/income',0],['npl_ratio','NPL',2],['total_assets','Assets',0]];
   function cell(r,code){if(code==='band')return '<td><span class="band mono band-'+esc(r.band||'x')+'">'+esc(r.band||'?')+'</span></td>';if(code==='rating')return '<td>'+(r.rating?'<b>'+esc(r.rating)+'</b>':'<span class="muted">unrated</span>')+'</td>';var p=latest(r,code),m=metric(code);return '<td class="num mono" data-v="'+(p?p.v:-1e9)+'">'+(p?fmt(p.v,m):'<span class="na">—</span>')+'</td>'}
   function sortVal(r,code){if(code==='name')return r.short.toLowerCase();if(code==='band')return r.band||'Z';if(code==='rating')return r.grade==null?99:r.grade;var p=latest(r,code);return p?p.v:-1e9}
-  // "Everyone" is 152 rows, and the set below the charts is read a page at a time like every
-  // other table on the site. A pinned name is never off the page it is pinned from: the sort
-  // decides where it sits, and the strip says where the reader is.
-  var tablePage=1;
+  // "Everyone" is 152 rows. The set below the charts scrolls in a window of its own like every
+  // other long table on the site, so the page does not grow with the peer group and the column
+  // headings stay put while a reader scans down a sort.
   function renderTable(rows){var rs=rows.slice().sort(function(a,b){var x=sortVal(a,state.sort),y=sortVal(b,state.sort);if(typeof x==='string')return state.dir==='asc'?x.localeCompare(y):y.localeCompare(x);return state.dir==='asc'?x-y:y-x});
-    var pages=window.pageCount(rs.length); if(tablePage>pages)tablePage=pages;
-    var page=rs.slice((tablePage-1)*window.PAGE_SIZE,tablePage*window.PAGE_SIZE);
     var head='<tr><th data-sort="name">Name</th>'+COLS.map(function(c){return '<th class="'+(c[0]==='band'||c[0]==='rating'?'':'num')+(state.sort===c[0]?' sorted':'')+'" data-sort="'+c[0]+'">'+esc(c[1])+(state.sort===c[0]?(state.dir==='asc'?' ▲':' ▼'):'')+'</th>'}).join('')+'</tr>';
-    var body=page.map(function(r){var c=colourOf(r.id);return '<tr data-id="'+r.id+'"'+(c?' class="on" style="--c:'+c+'"':'')+'><td><button class="pin" data-id="'+r.id+'" title="'+(c?'Unpin':'Pin')+'">'+swatch(r.id)+'</button> '+link(r)+'<span class="small muted"> '+esc(r.country)+'</span></td>'+COLS.map(function(c2){return cell(r,c2[0])}).join('')+'</tr>'}).join('');
-    tableEl.innerHTML='<table class="plain cp-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table>'+
-      window.pageNav(tablePage,rs.length,'names')}
+    var body=rs.map(function(r){var c=colourOf(r.id);return '<tr data-id="'+r.id+'"'+(c?' class="on" style="--c:'+c+'"':'')+'><td><button class="pin" data-id="'+r.id+'" title="'+(c?'Unpin':'Pin')+'">'+swatch(r.id)+'</button> '+link(r)+'<span class="small muted"> '+esc(r.country)+'</span></td>'+COLS.map(function(c2){return cell(r,c2[0])}).join('')+'</tr>'}).join('');
+    tableEl.innerHTML='<table class="plain cp-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table>'}
   function render(){var rows=members(),m=metric(state.metric);
     count.textContent=rows.length+' in the set';
     document.querySelectorAll('.cp-set').forEach(function(b){b.classList.toggle('active',b.dataset.set===state.set)});
@@ -171,14 +167,11 @@
     d.metrics.forEach(function(m){sel.insertAdjacentHTML('beforeend','<option value="'+m[0]+'">'+esc(m[1])+'</option>')});
     markMeasure(state.metric||(d.metrics[0]||[])[0]);
     readHash();sel.value=state.metric;counts();render();
-    document.getElementById('cp-sets').addEventListener('click',function(e){var b=e.target.closest('.cp-set');if(!b||b.disabled)return;state.set=b.dataset.set;state.extra=[];state.pins=[];userPinned=false;tablePage=1;render()});
+    document.getElementById('cp-sets').addEventListener('click',function(e){var b=e.target.closest('.cp-set');if(!b||b.disabled)return;state.set=b.dataset.set;state.extra=[];state.pins=[];userPinned=false;render()});
     sel.addEventListener('change',function(){state.metric=sel.value;markMeasure(sel.value);if(!userPinned)state.pins=[];render()});
     document.addEventListener('click',function(e){var b=e.target.closest('.pin');if(b){togglePin(b.dataset.id);return}
       var x=e.target.closest('.pc-x');if(x){var pnl=document.getElementById('p-'+x.dataset.panel);var was=pnl.classList.contains('wide');document.querySelectorAll('.panel-c.wide').forEach(function(q2){q2.classList.remove('wide')});if(!was)pnl.classList.add('wide');render();return}
-      var pg=e.target.closest('#c-table .pgnav button[data-p]');
-      if(pg&&!pg.disabled){tablePage=+pg.dataset.p;renderTable(members());return}
-      // a change of sort is a different order, so it starts at page one again
-      var th=e.target.closest('#c-table th[data-sort]');if(th){var k=th.dataset.sort;if(state.sort===k)state.dir=state.dir==='asc'?'desc':'asc';else{state.sort=k;state.dir=(k==='name'||k==='band'||k==='rating'||k==='efficiency_ratio'||k==='npl_ratio')?'asc':'desc'}tablePage=1;renderTable(members());return}
+      var th=e.target.closest('#c-table th[data-sort]');if(th){var k=th.dataset.sort;if(state.sort===k)state.dir=state.dir==='asc'?'desc':'asc';else{state.sort=k;state.dir=(k==='name'||k==='band'||k==='rating'||k==='efficiency_ratio'||k==='npl_ratio')?'asc':'desc'}renderTable(members());return}
       var p=e.target.closest('.cp-line,.cp-bar,.cp-dot,.cp-lbl');if(p&&p.dataset.id&&!e.target.closest('a[href]')){togglePin(p.dataset.id)}else if(p&&p.dataset.id&&e.target.closest('a[href]')&&e.target.closest('svg')){e.preventDefault();togglePin(p.dataset.id)}});
     q.addEventListener('input',suggest);sugg.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(state.extra.indexOf(b.dataset.id)<0)state.extra.push(b.dataset.id);if(state.pins.length<SLOTS.length&&state.pins.indexOf(b.dataset.id)<0){state.pins.push(b.dataset.id);userPinned=true}q.value='';sugg.hidden=true;render()});
     document.addEventListener('click',function(e){if(!e.target.closest('.cp-add'))sugg.hidden=true});

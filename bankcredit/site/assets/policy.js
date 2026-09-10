@@ -511,19 +511,18 @@
       return uniSort.dir*(va-vb);
     });
   }
-  var uniPage=1;
+  var PEEK=8;    // rows a scrolling window shows before there is anything below its fold
   function renderUni(){
     var body=document.getElementById('uni-body'); if(!body||!data)return;
     var rows=uniRows(), t=+document.getElementById('uni-tenor').value;
-    // the count above the table is about the filter; the strip below it is about the page
+    // Every row is here; the table scrolls inside a window rather than growing the page. Paging a
+    // sorted list meant clicking through sixteen pages to read it, and the column headings went
+    // off the top of the screen on the way. They stay put now, and the whole list is one scroll.
     var cnt=document.getElementById('uni-count');
     if(cnt)cnt.textContent=rows.length===data.rows.length?data.rows.length+' names'
       :rows.length+' of '+data.rows.length+' names match';
-    var pages=pageCount(rows.length);
-    if(uniPage>pages)uniPage=pages;
-    var foot=document.getElementById('uni-more');
-    if(foot)foot.innerHTML=pageNav(uniPage,rows.length,'names');
-    body.innerHTML=rows.slice((uniPage-1)*PAGE_SIZE,uniPage*PAGE_SIZE).map(function(r){
+    var foot=document.getElementById('uni-count2');
+    body.innerHTML=rows.map(function(r){
       var e=r.e;
       return '<tr class="uni-row" data-id="'+esc(e.id)+'">'+
         '<td><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
@@ -542,6 +541,11 @@
             ? '<span class="chip chip-good" title="already in your policy">'+esc(tenorLabel(r.tenor))+'</span>'
             : '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button>')+'</td></tr>';
     }).join('')||'<tr><td colspan="9" class="empty">No name matches those filters.</td></tr>';
+    // Measuring the box is no good here: renderUni first runs while this tab is still closed, a
+    // hidden box measures nothing, and the answer would stick. The row count asks the same
+    // question of the data rather than of the layout, and it cannot go stale.
+    if(foot)foot.textContent=!rows.length?''
+      :rows.length+(rows.length===1?' name':' names')+(rows.length>PEEK?' \u00b7 scroll for the rest':'');
   }
   function initUni(){
     var reg=document.getElementById('uni-region'), typ=document.getElementById('uni-type'),
@@ -553,8 +557,7 @@
     Object.keys(types).sort().forEach(function(x){var o=document.createElement('option');o.value=x;o.textContent=TYPE_LABEL[x]||x;typ.appendChild(o)});
     TENORS.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent='Add at '+x[1];if(x[0]===365)o.selected=true;ten.appendChild(o)});
     ['uni-q','uni-region','uni-type','uni-band','uni-scored','uni-tenor'].forEach(function(id){
-      // a change of filter starts the list at page one again
-      var el=document.getElementById(id); if(el)el.addEventListener('input',function(){uniPage=1;renderUni()});
+      var el=document.getElementById(id); if(el)el.addEventListener('input',renderUni);
     });
     document.querySelectorAll('#uni-table th[data-sort]').forEach(function(th){
       th.addEventListener('click',function(){
@@ -563,7 +566,7 @@
         uniSort.key=k;
         document.querySelectorAll('#uni-table th[data-sort]').forEach(function(x){x.removeAttribute('aria-sort')});
         th.setAttribute('aria-sort',uniSort.dir>0?'ascending':'descending');
-        uniPage=1; renderUni();
+        renderUni();
       });
     });
     renderUni();
@@ -654,8 +657,7 @@
   // The shortlist, one tenor and one page at a time. Kept apart from the pane around it so a
   // page change redraws the table and nothing else: the tenor chips, the counts and the bar
   // saying what the weakest accepted name is are all unchanged by turning a page.
-  var PAGE_SIZE=window.PAGE_SIZE, pageCount=window.pageCount, pageNav=window.pageNav;
-  var llSets=[], llPage={}, llFirst=null;
+  var llSets=[], llFirst=null;
   function llBody(x){
     var t=x.t, total=x.total;
     if(!total)
@@ -663,10 +665,9 @@
         'already accept at '+esc(tenorLabel(t))+'.'+
         (llFirst!=null&&llFirst!==t?' Shorter tenors accept a weaker name, so <button class="linky '+
           'll-jump" data-t="'+llFirst+'">'+esc(tenorLabel(llFirst))+'</button> has matches.':'')+'</p>';
-    var pages=pageCount(total), cur=llPage[t]||1;
-    if(cur>pages)cur=llPage[t]=pages;
-    var off=(cur-1)*PAGE_SIZE;
-    return llTable(x.cands.slice(off,off+PAGE_SIZE),x.w,t,off)+pageNav(cur,total,'names');
+    return llTable(x.cands,x.w,t,0)+
+      '<div class="tfoot small muted">'+total+(total===1?' name':' names')+' clear the bar at this tenor'+
+      (total>PEEK?' \u00b7 scroll for the rest':'')+'</div>';
   }
 
   // ---- the shortlist ----
@@ -702,7 +703,7 @@
         '<td class="ll-mkt">'+mp+'</td>'+
         '<td class="ll-addc"><button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></td></tr>';
     }).join('');
-    return '<div class="table-wrap"><table class="plain ll-t2"><thead><tr>'+
+    return '<div class="table-wrap scrollbox"><table class="plain ll-t2"><thead><tr>'+
       '<th></th><th>Name</th><th>Score'+mk('score')+'</th><th>Rating</th>'+
       '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Market</th><th></th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
@@ -829,7 +830,6 @@
       // at 12, and reading the 12-month list should not depend on having read the other.
       var tenors=[];p.forEach(function(it){if(tenors.indexOf(it.tenor)<0)tenors.push(it.tenor)});tenors.sort(function(a,b){return b-a});
       var chips='', panes='', union={}, first=null, sets=[];
-      llPage={};
       tenors.forEach(function(t){
         var acc=p.filter(function(it){return it.tenor>=t}), w=worst(acc);
         if(w.grade==null&&w.score==null)return;
@@ -1012,20 +1012,6 @@
       if(!id){sel.classList.add('err');return}sel.classList.remove('err');add(id,+ten.value);sel.value=''});
     document.addEventListener('click',function(ev){var b=ev.target.closest('.pol-rm');if(b){var p=load().filter(function(x){return x.id!==b.dataset.id});save(p);render();return}
       var a=ev.target.closest('.pol-add-ll');if(a){add(a.dataset.id,+a.dataset.tenor);var d=document.getElementById('pol-modal');if(d&&d.open)d.close();return}
-      // a page strip: the universe table redraws itself, a shortlist pane redraws only its table
-      var pg=ev.target.closest('.pgnav button[data-p]');
-      if(pg&&!pg.disabled){
-        var n=+pg.dataset.p, pane=pg.closest('.ll-pane');
-        if(pane){
-          var tn=+pane.dataset.t;
-          llPage[tn]=n;
-          var set=null; llSets.forEach(function(x){if(x.t===tn)set=x});
-          if(set)pane.querySelector('.ll-body').innerHTML=llBody(set);
-        }else if(pg.closest('#uni-more')){
-          uniPage=n; renderUni();
-        }
-        return;
-      }
       // one tenor at a time: the chips swap the pane rather than scroll four lists past you
       var tc=ev.target.closest('.ll-t')||ev.target.closest('.ll-jump');
       if(tc){var box=document.getElementById('pol-ll')||document;
