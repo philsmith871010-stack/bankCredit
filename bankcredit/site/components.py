@@ -286,9 +286,40 @@ AGENCY_NAME = {"fitch": "Fitch", "sp": "S&P", "moodys": "Moody's", "dbrs": "DBRS
 # would be unreadable, so the letter grades get the lines and the notches sit between them.
 SCALE = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-",
          "B+", "B", "B-", "CCC"]
-# The bands the rest of the site colours a rating by, so a block on the timeline and a cell on the
-# ratings grid say the same thing in the same colour.
-GRADE_BANDS = [(4, "#0a2540"), (7, "#3f5f85"), (10, "#7d93ad"), (13, "#c77d1a"), (99, "#b04632")]
+# One ramp for every rating on the site, the same one the policy page has always used for a score:
+# deep green at AAA through to red below CCC. It replaced five buckets of navy and blue, which put
+# almost every covered bank in the same one or two shades - the grid was a wall of blue, and AAA
+# and A- were the same colour on a page whose whole job is telling them apart.
+RAMP = [(0, 163, 22, 29), (0.267, 184, 69, 26), (0.444, 138, 98, 6), (0.6, 79, 122, 31),
+        (0.778, 30, 122, 58), (1, 20, 102, 58)]
+
+
+def ramp_colour(t: float) -> str:
+    t = max(0.0, min(1.0, t))
+    for i in range(1, len(RAMP)):
+        if t <= RAMP[i][0]:
+            a, b = RAMP[i - 1], RAMP[i]
+            k = (t - a[0]) / ((b[0] - a[0]) or 1)
+            return "#%02x%02x%02x" % tuple(round(a[j] + (b[j] - a[j]) * k) for j in (1, 2, 3))
+    return "#14663a"
+
+
+def grade_colour(grade) -> str:
+    """A rating's own colour on the 1 = AAA to 17 = CCC scale. Continuous, so the notch between
+    AA- and A+ is visible; the site's other pages colour the same grade the same way."""
+    if grade is None:
+        return "#dfe5eb"
+    return ramp_colour(1 - min(1.0, (max(1.0, min(17.0, float(grade))) - 1) / 14))
+
+
+def on_colour(hex_colour: str) -> str:
+    """Text that can be read on that fill. The ramp runs light through its middle, so white type
+    that works at AAA disappears at BBB."""
+    try:
+        r, g, b = (int(hex_colour[i:i + 2], 16) for i in (1, 3, 5))
+    except (ValueError, IndexError):
+        return TEXT
+    return "#fff" if (0.299 * r + 0.587 * g + 0.114 * b) < 150 else "#1d2b16"
 TONE_COLOUR = {"positive": GREEN, "negative": RED, "stable": "#9aa7b4",
                "watch positive": GREEN, "watch negative": RED, "watch": MUTED}
 
@@ -386,13 +417,13 @@ def rating_timeline(hist: dict, w: int = 1000, today: str = "") -> str:
                 f'stroke="#dfe5eb" stroke-width="1.5" stroke-dasharray="2 4"/>')
         for start, stop, value, grade in a["blocks"]:
             x1, x2 = X(start), X(stop or end)
-            col = GRADE_BAND(grade)
+            col = grade_colour(grade)
             held = f"from {esc(start)}" + (f" to {esc(stop)}" if stop else ", still")
             out += (f'<g><title>{who} {esc(value)} {held}</title>'
                     f'<rect x="{x1:.0f}" y="{top}" width="{max(2, x2-x1):.0f}" height="{lane}" fill="{col}" rx="3"/>')
             if x2 - x1 > 32:
                 out += (f'<text x="{(x1+x2)/2:.0f}" y="{top+lane/2+4:.0f}" text-anchor="middle" class="mono" '
-                        f'font-size="11" font-weight="600" fill="{"#fff" if (grade or 99) <= 10 else "#3a2a10"}">'
+                        f'font-size="11" font-weight="600" fill="{on_colour(col)}">'
                         f'{esc(value)}</text>')
             out += "</g>"
         for start, stop, tone in a["marks"]:
@@ -407,7 +438,7 @@ def rating_timeline(hist: dict, w: int = 1000, today: str = "") -> str:
         last = a["blocks"][-1]
         if last[1] is None:
             out += (f'<text x="{X(end)+6:.0f}" y="{top+lane/2+4:.0f}" class="mono" font-size="11.5" '
-                    f'font-weight="600" fill="{GRADE_BAND(last[3])}">{esc(last[2])}</text>')
+                    f'font-weight="600" fill="{grade_colour(last[3])}">{esc(last[2])}</text>')
     return (f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" class="chart ladder" role="img" '
             f'aria-label="Ratings and outlooks since {esc((hist or {}).get("start") or "2015")}">{out}</svg>')
 
@@ -416,10 +447,8 @@ def rating_legend(hist: dict) -> str:
     """What the colours mean, and where each agency stands now."""
     if not (hist or {}).get("agencies"):
         return ""
-    bands = "".join(f'<span class="rl-k"><i style="background:{col}"></i>{esc(lab)}</span>'
-                    for lab, col in (("AA- and above", "#0a2540"), ("A range", "#3f5f85"),
-                                     ("BBB range", "#7d93ad"), ("BB range", "#c77d1a"),
-                                     ("B and below", "#b04632")))
+    steps = "".join(f'<i style="background:{grade_colour(g)}"></i>' for g in range(1, 18))
+    bands = (f'<span class="rl-k rl-ramp">AAA<span class="rl-scale">{steps}</span>CCC</span>')
     tones = "".join(f'<span class="rl-k rl-o"><i style="background:{col}"></i>{esc(lab)}</span>'
                     for lab, col in (("positive outlook", GREEN), ("stable", "#9aa7b4"),
                                      ("negative", RED)))

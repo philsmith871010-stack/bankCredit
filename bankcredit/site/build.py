@@ -243,7 +243,7 @@ def ratings_tile(b) -> str:
         f'<div class="rst small muted">{("ST " + c.esc(short[r["agency"]])) if r["agency"] in short else ""}{(" · " if r["agency"] in short else "") + c.esc(str(r.get("type") or "").replace("_", " ")) if r.get("type") not in ("idr", "issuer") else ""}</div>'
         f'<div class="rdate mono small muted">{c.esc(r.get("date") or "")}</div></div>' for r in rs)
     grade = b.get("rating_grade")
-    comp = f'<span class="band mono" style="background:{grade_colour(grade)};color:{"#fff" if grade is not None and grade <= 10 else "#243240"}">{c.esc(b.get("rating_composite") or "NR")}</span>'
+    comp = f'<span class="band mono" style="background:{grade_colour(grade)};color:{c.on_colour(grade_colour(grade))}">{c.esc(b.get("rating_composite") or "NR")}</span>'
     return (f'<div class="tile tile-ratings"><div class="tile-head"><span class="tile-label">Agency ratings{c.info("rating")}</span><span class="tile-flags">composite{c.info("composite")} {comp} {c.market_glyph(b.get("market") or {})} <span class="small muted">{c.esc((b.get("market") or {}).get("label") or "")}</span></span></div>'
             f'<div class="rcells">{cells}</div><div class="tile-foot"><span>ESMA European Rating Platform, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span><span><a href="#ratings">Rating history</a></span></div></div>')
 
@@ -642,16 +642,10 @@ def documents_card(status):
 <h4>Latest collected</h4><div class="table-wrap"><table class="plain"><thead><tr><th>Entity</th><th>Outcome</th><th>Reference</th><th>Confidence</th><th>Document</th><th>Fetched</th></tr></thead><tbody>{rows}</tbody></table></div></div>'''
 
 
-GRADE_COLOURS = [(4, "#0a2540"), (7, "#3f5f85"), (10, "#7d93ad"), (13, "#c77d1a"), (99, "#b04632")]     # upper grade -> colour
-
-
-def grade_colour(grade):
-    if grade is None:
-        return "#dfe5eb"
-    for upper, col in GRADE_COLOURS:
-        if grade <= upper:
-            return col
-    return "#b04632"
+# One ramp for a rating everywhere on the site, in components. Five buckets of navy and blue put
+# almost every covered bank in the same one or two shades: 120 of the 130 rated names sit between
+# AAA and A-, so the grid was a wall of blue on a page whose whole job is telling them apart.
+grade_colour = c.grade_colour
 
 
 def outlook_glyph(o: str) -> str:
@@ -736,8 +730,12 @@ def page_ratings(generated, inner: bool = False):
     mx = max(counts.values()) or 1
     hist = "".join(f'<button class="gbar gfilter" data-grade="{i}" title="{GR[i-1]}: {counts[i]}" {"disabled" if not counts[i] else ""}><span class="gcount mono">{counts[i] or ""}</span><i style="height:{max(3, counts[i] / mx * 64):.0f}px;background:{grade_colour(i)}"></i><span class="glabel">{GR[i-1]}</span></button>' for i in range(1, 14))
     hist += f'<button class="gbar gfilter" data-grade="nr" title="Unrated: {len(rows) - len(rated)}"><span class="gcount mono">{len(rows) - len(rated)}</span><i style="height:{max(3, (len(rows) - len(rated)) / mx * 64):.0f}px;background:#dfe5eb"></i><span class="glabel">NR</span></button>'
-    band_tiles = [("AA- and above", sum(1 for r in rated if r["grade"] <= 4), "#0a2540"), ("A range", sum(1 for r in rated if 4 < r["grade"] <= 7), "#3f5f85"),
-                  ("BBB range", sum(1 for r in rated if 7 < r["grade"] <= 10), "#7d93ad"), ("Below BBB-", sum(1 for r in rated if r["grade"] > 10), "#b04632"),
+    # a group takes the colour of a rating in the middle of it, so the tiles, the bars and the
+    # grid are all reading off the same ramp
+    band_tiles = [("AA- and above", sum(1 for r in rated if r["grade"] <= 4), grade_colour(3)),
+                  ("A range", sum(1 for r in rated if 4 < r["grade"] <= 7), grade_colour(6)),
+                  ("BBB range", sum(1 for r in rated if 7 < r["grade"] <= 10), grade_colour(9)),
+                  ("Below BBB-", sum(1 for r in rated if r["grade"] > 10), grade_colour(13)),
                   ("Unrated", len(rows) - len(rated), "#6c757d")]
     tiles = "".join(f'<button class="rtile bfilter" data-band="{k}"><div class="rtile-n mono" style="color:{col}">{n}</div><div class="rtile-l">{c.esc(k)}</div></button>' for k, n, col in band_tiles)
     tiles += f'<a class="rtile" href="#actions"><div class="rtile-n mono"><span style="color:#1e7a3a">{ups}▲</span> <span style="color:#b04632">{downs}▼</span></div><div class="rtile-l">Actions, 30 days</div></a>'
@@ -785,7 +783,7 @@ def page_ratings(generated, inner: bool = False):
         f'<tr data-id="{c.esc(r["id"])}" data-region="{c.esc(r["region"])}" data-name="{c.esc(r["short"].lower())} {c.esc(r["name"].lower())}" data-score="{100 - (r["grade"] or 99)}" '
         f'data-grade="{max(1, min(17, int(r["grade"] + 0.5))) if r["grade"] is not None else "nr"}" data-band="{band_key(r["grade"])}" data-moved="{1 if r["id"] in moved else 0}">'
         f'<td><a class="b" href="../banks/{c.esc(r["id"])}.html">{c.esc(r["short"])}</a><div class="small muted">{c.esc(COUNTRY.get(r["country"], r["country"]))} · {c.esc(TYPE_LABEL.get(r["type"], r["type"]))}</div></td>'
-        f'<td class="rc rc-comp" style="--g:{grade_colour(r["grade"])}"><span class="band mono" style="background:{grade_colour(r["grade"])};color:{"#fff" if r["grade"] is not None and r["grade"] <= 10 else "#243240"}">{c.esc(r["composite"] or "NR")}</span><span class="rc-sub small muted">{len([1 for k, _ in used if r["agencies"].get(k, {}).get("lt")])} agenc{"y" if len([1 for k, _ in used if r["agencies"].get(k, {}).get("lt")]) == 1 else "ies"}</span></td>'
+        f'<td class="rc rc-comp" style="--g:{grade_colour(r["grade"])}"><span class="band mono" style="background:{grade_colour(r["grade"])};color:{c.on_colour(grade_colour(r["grade"]))}">{c.esc(r["composite"] or "NR")}</span><span class="rc-sub small muted">{len([1 for k, _ in used if r["agencies"].get(k, {}).get("lt")])} agenc{"y" if len([1 for k, _ in used if r["agencies"].get(k, {}).get("lt")]) == 1 else "ies"}</span></td>'
         + "".join(cell(r["agencies"].get(k)) for k, _ in used)
         + other_cell(r)
         + f'<td class="small">{moved_dot(r["id"] in moved)}<span class="mono muted">{c.esc(r["last_action"] or "—")}</span></td><td>{grade_trend(r)}</td></tr>'
@@ -802,7 +800,7 @@ def page_ratings(generated, inner: bool = False):
         if not gs:
             continue
         cnts = [sum(1 for g in gs if g <= 4), sum(1 for g in gs if 4 < g <= 7), sum(1 for g in gs if 7 < g <= 10), sum(1 for g in gs if g > 10)]
-        segs = "".join(f'<div class="dseg" style="flex:{n};background:{col}" title="{lab}: {n}"></div>' for n, col, lab in zip(cnts, ["#0a2540", "#3f5f85", "#7d93ad", "#b04632"], ["AA- and above", "A range", "BBB range", "below BBB-"]) if n)
+        segs = "".join(f'<div class="dseg" style="flex:{n};background:{col}" title="{lab}: {n}"></div>' for n, col, lab in zip(cnts, [grade_colour(3), grade_colour(6), grade_colour(9), grade_colour(13)], ["AA- and above", "A range", "BBB range", "below BBB-"]) if n)
         dist += f'<div class="drow"><div class="dlabel">{label} <span class="muted small">{sum(cnts)} rated</span></div><div class="dbar">{segs}</div></div>'
     content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">One row per entity, one cell per agency: long-term rating and outlook, short-term and month beneath. Click a band, bar or region to filter. Source: the ESMA register, daily.</div></div></div>
 <div class="rtiles rtiles-f">{tiles}</div>
@@ -811,7 +809,7 @@ def page_ratings(generated, inner: bool = False):
 <div class="table-wrap"><table id="board" class="plain rgrid"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Composite{c.info("composite")}</th>{"".join(f"<th>{n}</th>" for _, n in used)}{'<th title="an agency that rates only a handful of these banks: KBRA, Scope, JCR, Capital Intelligence or Creditreform">Other</th>' if has_other else ''}<th>Last action</th><th title="the composite grade at each year end, from the register\'s own action log">Path since 2015</th></tr></thead><tbody>{trs}</tbody></table></div>
 <div class="table-foot"><span><b>Last action</b> is the date of the most recent action by any agency, and an orange dot beside it means one of them moved this rating within 90 days rather than merely affirming it. <b>Path</b> is the composite grade at each year end since the register opened, and how far it has travelled. ▲ positive outlook · ▼ negative · ◆ on watch · ▶ stable · cell tint follows the grade · symbols are the agencies' own and are shown with attribution.</span></div></div>
 <div class="grid-2 rgrid2"><div class="card pad" id="actions"><h3>Latest rating actions <span class="muted small">· 90 days, affirmations excluded</span></h3><div class="racts">{acts}</div></div>
-<div class="card pad"><h3>How each agency sees the universe</h3><div class="dist">{dist}</div><div class="dlegend"><span><i style="background:#0a2540"></i>AA- and above</span><span><i style="background:#3f5f85"></i>A range</span><span><i style="background:#7d93ad"></i>BBB range</span><span><i style="background:#b04632"></i>below BBB-</span></div>
+<div class="card pad"><h3>How each agency sees the universe</h3><div class="dist">{dist}</div><div class="dlegend"><span><i style="background:{grade_colour(3)}"></i>AA- and above</span><span><i style="background:{grade_colour(6)}"></i>A range</span><span><i style="background:{grade_colour(9)}"></i>BBB range</span><span><i style="background:{grade_colour(13)}"></i>below BBB-</span></div>
 <p class="note">Long-term issuer ratings only, one per agency per entity. Differences between the bars are mostly which banks each agency rates, not disagreement about the same bank.</p></div></div>'''
     return content if inner else c.shell("Ratings", content, "ratings", "../", generated)
 
