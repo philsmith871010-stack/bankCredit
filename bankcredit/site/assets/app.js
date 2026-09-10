@@ -231,7 +231,12 @@ initRatingGrid();
 
 // The tab named in the address, opened last: a tab click reaches for the panel loader, which is
 // defined further down this file, and a var is not its value until the line that assigns it.
-(function(){
+// Also on every later change of the address, so a link to #ratings from elsewhere on the page
+// opens that tab rather than only working on a fresh load.
+function openNamedTab(){
   var h=location.hash.replace('#','').split('&')[0]; if(!h)return;
-  var t=document.querySelector('.tab[data-tab="'+h+'"]'); if(t)t.click();
-})();
+  var t=document.querySelector('.tab[data-tab="'+h+'"]');
+  if(t&&!t.classList.contains('active'))t.click();
+}
+openNamedTab();
+addEventListener('hashchange',openNamedTab);

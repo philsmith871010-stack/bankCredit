@@ -508,6 +508,36 @@ def test_the_dialog_carries_the_path_the_composite_took(page, server):
     assert not page.errors, page.errors
 
 
+def test_the_profile_links_to_its_own_rating_history(page, server):
+    """"All ratings" pointed at a page that had been retired, so it landed the reader back on the
+    policy page with no rating history anywhere on the site."""
+    who = _with_history()
+    visit(page, server, f"banks/{who}.html")
+    href = page.eval_on_selector(".tile-ratings .tile-foot a", "e => e.getAttribute('href')")
+    assert href == "#ratings", href
+    page.eval_on_selector(".tile-ratings .tile-foot a", "e => e.click()")
+    page.wait_for_timeout(400)
+    assert page.eval_on_selector_all(".panel.active", "e => e.map(x => x.dataset.panel)") == ["ratings"]
+    assert page.eval_on_selector_all(".ladder", "e => e.length") == 1
+    assert not page.errors, page.errors
+
+
+def test_the_ratings_grid_plots_the_register_not_our_snapshots(page, server):
+    """The last column plotted the composite on each daily build. Snapshots began four days
+    earlier, so all 152 rows carried the same flat line and the same "4d"."""
+    visit(page, server, "index.html")
+    page.eval_on_selector('.tab[data-tab="ratings"]', "e => e.click()")
+    page.wait_for_timeout(900)
+    heads = page.eval_on_selector_all("#board thead th", "e => e.map(x => x.textContent.trim())")
+    assert heads[-1].startswith("Path"), heads
+    # one column per agency that rates a meaningful share, then one for all the rest
+    assert "KBRA" not in heads and "Scope" not in heads, heads
+    paths = page.eval_on_selector_all("#board tbody td:last-child", "e => e.map(x => x.textContent.trim())")
+    assert sum(1 for p in paths if "notch" in p or p == "flat") > 40, paths[:6]
+    assert not any("4d" in p for p in paths)
+    assert not page.errors, page.errors
+
+
 # ---- the home page is not the whole universe three times over --------------------------------
 def test_the_home_page_stays_small():
     """Two tabs nobody had clicked were 426 KB of the home page's 441 KB."""

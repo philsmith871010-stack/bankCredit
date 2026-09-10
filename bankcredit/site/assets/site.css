@@ -725,3 +725,4 @@ table.uni .sc-n{font-size:14px}
 .rp-t b{font-weight:600;font-variant-numeric:tabular-nums}
 .rp-u{color:#1e7a3a}
 .rp-d{color:#b04632}
+.gpath{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}

@@ -78,8 +78,25 @@ def test_fresh_headlines_are_left_alone(tmp_path):
 
 
 # ---- pushes ----------------------------------------------------------------------------------
-def test_a_code_push_rebuilds_the_site_without_collecting(tmp_path):
-    assert decide(tmp_path, EVENT="push", MESSAGE="Tidy the glossary wording") == "build"
+def test_a_code_push_rebuilds_the_site_once_the_day_is_collected(tmp_path):
+    now = datetime.now(timezone.utc)
+    assert decide(tmp_path, collect=now, headlines=now,
+                  EVENT="push", MESSAGE="Tidy the glossary wording") == "build"
+
+
+def test_a_code_push_collects_when_the_day_still_owes_one(tmp_path):
+    """A push is the only event GitHub delivers reliably, so it is also the catch-up.
+
+    On 10 September 2026 every other route failed at once: GitHub dropped all fifteen slots, the
+    routine that exists to be punctual could not push, and the Mac was asleep. Twenty pushes went
+    in that day and not one of them collected, because a push only rebuilt.
+    """
+    assert decide(tmp_path, collect=at(8, days=1), EVENT="push",
+                  MESSAGE="Tidy the glossary wording") == "full"
+
+
+def test_a_push_on_a_repository_that_has_never_collected_collects(tmp_path):
+    assert decide(tmp_path, EVENT="push", MESSAGE="Tidy the glossary wording") == "full"
 
 
 def test_a_push_carrying_the_marker_collects_whatever_the_clock_says(tmp_path):

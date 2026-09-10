@@ -245,7 +245,7 @@ def ratings_tile(b) -> str:
     grade = b.get("rating_grade")
     comp = f'<span class="band mono" style="background:{grade_colour(grade)};color:{"#fff" if grade is not None and grade <= 10 else "#243240"}">{c.esc(b.get("rating_composite") or "NR")}</span>'
     return (f'<div class="tile tile-ratings"><div class="tile-head"><span class="tile-label">Agency ratings{c.info("rating")}</span><span class="tile-flags">composite{c.info("composite")} {comp} {c.market_glyph(b.get("market") or {})} <span class="small muted">{c.esc((b.get("market") or {}).get("label") or "")}</span></span></div>'
-            f'<div class="rcells">{cells}</div><div class="tile-foot"><span>ESMA European Rating Platform, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span><span><a href="../ratings/index.html">All ratings</a></span></div></div>')
+            f'<div class="rcells">{cells}</div><div class="tile-foot"><span>ESMA European Rating Platform, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span><span><a href="#ratings">Rating history</a></span></div></div>')
 
 
 def page_bank(b, generated):
@@ -672,15 +672,46 @@ def rating_grade_site(value):
     return rating_grade(value)
 
 
+def _at_year_ends(steps, first_year: int, last_year: int) -> list[float]:
+    """A step series read at each year end, so a sparkline's x axis is time rather than event count."""
+    out, i, cur = [], 0, None
+    for y in range(first_year, last_year + 1):
+        end = f"{y}-12-31"
+        while i < len(steps) and steps[i][0] <= end:
+            cur = steps[i][1]; i += 1
+        out.append(cur)
+    while out and out[0] is None:
+        out.pop(0)
+    return [v for v in out if v is not None]
+
+
 def grade_trend(r) -> str:
-    """Composite grade through the daily snapshots: a sparkline once there are two, the held-since date before that."""
+    """The composite grade's own path, from the register's action log rather than our snapshots.
+
+    This column used to plot the composite on each daily build. Snapshots began four days before
+    anyone looked at it, so every row on the page carried the same flat line and the same "4d".
+    The register holds eleven years of actions, so the line is now the real one.
+    """
     try:
-        h = load(f"banks/{r['id']}").get("history") or {}
+        b = load(f"banks/{r['id']}")
     except Exception:
-        h = {}
-    pts = [g for _d, _v, g in (h.get("snapshots") or []) if g is not None]
-    if len(pts) >= 2 and len({d for d, _v, g in h["snapshots"] if g is not None}) >= 2:
-        return c.spark([-g for g in pts], w=72, h=20) + f'<span class="small muted"> {len(pts)}d</span>'
+        b = {}
+    h = b.get("rating_history") or {}
+    steps = h.get("composite") or []
+    if len(steps) >= 2:
+        first, last = int(steps[0][0][:4]), datetime.utcnow().year
+        pts = _at_year_ends(steps, first, last)
+        if len(pts) >= 2:
+            net = steps[0][1] - steps[-1][1]              # a lower grade is a stronger rating
+            # a composite is a median, so it moves in half notches as often as whole ones
+            n = f"{abs(net):.1f}".rstrip("0").rstrip(".")
+            lab = "flat" if not net else f'{n} notch{"es" if abs(net) != 1 else ""} {"up" if net > 0 else "down"}'
+            col = c.MUTED if not net else (c.GREEN if net > 0 else c.RED)
+            # the start year is the same for nearly every row, so it belongs on the cell rather
+            # than under it, where it would cost a line of height on 150 rows
+            return (f'<span class="gpath" title="the composite grade at each year end from '
+                    f'{c.esc(steps[0][0][:4])} to today">' + c.spark([-g for g in pts], w=72, h=20)
+                    + f'<span class="small" style="color:{col}">{c.esc(lab)}</span></span>')
     since = min((a.get("date") or "9999" for a in (r.get("agencies") or {}).values() if a.get("date")), default=None)
     return f'<span class="small muted">held since {c.esc(since)}</span>' if since and since != "9999" else '<span class="muted">—</span>'
 
@@ -711,8 +742,21 @@ def page_ratings(generated, inner: bool = False):
     tiles = "".join(f'<button class="rtile bfilter" data-band="{k}"><div class="rtile-n mono" style="color:{col}">{n}</div><div class="rtile-l">{c.esc(k)}</div></button>' for k, n, col in band_tiles)
     tiles += f'<a class="rtile" href="#actions"><div class="rtile-n mono"><span style="color:#1e7a3a">{ups}▲</span> <span style="color:#b04632">{downs}▼</span></div><div class="rtile-l">Actions, 30 days</div></a>'
     # the grid: one row per entity, one tinted cell per agency
-    AG = [("fitch", "Fitch"), ("sp", "S&amp;P"), ("moodys", "Moody's"), ("dbrs", "DBRS"), ("kbra", "KBRA"), ("scope", "Scope")]
+    # A column each for the agencies that rate a meaningful share of the universe, and one column
+    # for the rest. KBRA rates four of these banks and Scope three, so a column apiece was 150 rows
+    # of an em dash; JCR rates nine and had no column at all while still counting in the composite.
+    AG = [("fitch", "Fitch"), ("sp", "S&amp;P"), ("moodys", "Moody's"), ("dbrs", "DBRS")]
     used = [(k, n) for k, n in AG if any(r["agencies"].get(k, {}).get("lt") for r in rows)]
+    NAMED = {k for k, _ in AG}
+    OTHER = {"kbra": "KBRA", "scope": "Scope", "jcr": "JCR", "capital": "Capital Intelligence",
+             "creditreform": "Creditreform"}
+    def other_of(r):
+        """The strongest-preference rating from an agency without a column of its own."""
+        for k, a in (r.get("agencies") or {}).items():
+            if k not in NAMED and a.get("lt"):
+                return k, a
+        return None, None
+    has_other = any(other_of(r)[1] for r in rows)
     def cell(a):
         if not a or not a.get("lt"):
             return '<td class="rc rc-na">—</td>'
@@ -722,6 +766,19 @@ def page_ratings(generated, inner: bool = False):
         typ = "" if a.get("lt_type") in ("idr", "issuer") else f' <span class="rc-typ" title="rating type">{c.esc(str(a.get("lt_type") or "")[:3])}</span>'
         return (f'<td class="rc" style="--g:{col}"><span class="rc-lt mono">{c.esc(a["lt"])}</span>{outlook_glyph(a.get("outlook"))}{typ}'
                 f'<span class="rc-sub small">{c.esc(a.get("st") or "")}<span class="muted"> {c.esc((a.get("date") or "")[:7])}</span></span></td>')
+    DOT = ('<span class="chip-dot" title="an agency moved this rating within 90 days: an upgrade, '
+           'downgrade, outlook or watch change, not an affirmation"></span> ')
+    def moved_dot(yes):
+        return DOT if yes else ""
+    def other_cell(r):
+        k, a = other_of(r)
+        if not a:
+            return '<td class="rc rc-na">—</td>' if has_other else ''
+        g = rating_grade_site(a["lt"])
+        return (f'<td class="rc" style="--g:{grade_colour(g)}" title="{c.esc(OTHER.get(k, k))}">'
+                f'<span class="rc-lt mono">{c.esc(a["lt"])}</span>{outlook_glyph(a.get("outlook"))}'
+                f'<span class="rc-sub small"><span class="rc-ag">{c.esc(OTHER.get(k, k))}</span>'
+                f'<span class="muted"> {c.esc((a.get("date") or "")[:7])}</span></span></td>')
     def band_key(g):
         return "Unrated" if g is None else "AA- and above" if g <= 4 else "A range" if g <= 7 else "BBB range" if g <= 10 else "Below BBB-"
     trs = "".join(
@@ -730,7 +787,8 @@ def page_ratings(generated, inner: bool = False):
         f'<td><a class="b" href="../banks/{c.esc(r["id"])}.html">{c.esc(r["short"])}</a><div class="small muted">{c.esc(COUNTRY.get(r["country"], r["country"]))} · {c.esc(TYPE_LABEL.get(r["type"], r["type"]))}</div></td>'
         f'<td class="rc rc-comp" style="--g:{grade_colour(r["grade"])}"><span class="band mono" style="background:{grade_colour(r["grade"])};color:{"#fff" if r["grade"] is not None and r["grade"] <= 10 else "#243240"}">{c.esc(r["composite"] or "NR")}</span><span class="rc-sub small muted">{len([1 for k, _ in used if r["agencies"].get(k, {}).get("lt")])} agenc{"y" if len([1 for k, _ in used if r["agencies"].get(k, {}).get("lt")]) == 1 else "ies"}</span></td>'
         + "".join(cell(r["agencies"].get(k)) for k, _ in used)
-        + f'<td class="small">{("<span class=chip-dot></span> " if r["id"] in moved else "")}<span class="mono muted">{c.esc(r["last_action"] or "—")}</span></td><td>{grade_trend(r)}</td></tr>'
+        + other_cell(r)
+        + f'<td class="small">{moved_dot(r["id"] in moved)}<span class="mono muted">{c.esc(r["last_action"] or "—")}</span></td><td>{grade_trend(r)}</td></tr>'
         for r in sorted(rows, key=lambda r: (r["grade"] is None, r["grade"] or 99, r["short"])))
     regions = [("all", "All"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
     filters = "".join(f'<button class="filter{" active" if k == "all" else ""}" data-region="{k}">{c.esc(l)}</button>' for k, l in regions)
@@ -750,8 +808,8 @@ def page_ratings(generated, inner: bool = False):
 <div class="rtiles rtiles-f">{tiles}</div>
 <div class="card rgrid-card"><div class="toolbar rg-tools"><div class="filters">{filters}<button class="filter" data-region="moved">Moved in 90 days</button></div><input id="q" class="search" placeholder="Search"><span class="small muted" id="rg-count"></span></div>
 <div class="rg-hist"><span class="small muted">Composite grade{c.info("rating")}</span>{hist}<button class="filter small gclear" hidden>Clear grade</button></div>
-<div class="table-wrap"><table id="board" class="plain rgrid"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Composite{c.info("composite")}</th>{"".join(f"<th>{n}</th>" for _, n in used)}<th>Last action</th><th title="composite grade on each build since snapshots began">Since</th></tr></thead><tbody>{trs}</tbody></table></div>
-<div class="table-foot"><span>▲ positive outlook · ▼ negative · ◆ on watch · ▶ stable · cell tint follows the grade · a dot marks an action in 90 days · symbols are the agencies' and are shown with attribution; histories are not redistributed</span></div></div>
+<div class="table-wrap"><table id="board" class="plain rgrid"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Composite{c.info("composite")}</th>{"".join(f"<th>{n}</th>" for _, n in used)}{'<th title="an agency that rates only a handful of these banks: KBRA, Scope, JCR, Capital Intelligence or Creditreform">Other</th>' if has_other else ''}<th>Last action</th><th title="the composite grade at each year end, from the register\'s own action log">Path since 2015</th></tr></thead><tbody>{trs}</tbody></table></div>
+<div class="table-foot"><span><b>Last action</b> is the date of the most recent action by any agency, and an orange dot beside it means one of them moved this rating within 90 days rather than merely affirming it. <b>Path</b> is the composite grade at each year end since the register opened, and how far it has travelled. ▲ positive outlook · ▼ negative · ◆ on watch · ▶ stable · cell tint follows the grade · symbols are the agencies' own and are shown with attribution.</span></div></div>
 <div class="grid-2 rgrid2"><div class="card pad" id="actions"><h3>Latest rating actions <span class="muted small">· 90 days, affirmations excluded</span></h3><div class="racts">{acts}</div></div>
 <div class="card pad"><h3>How each agency sees the universe</h3><div class="dist">{dist}</div><div class="dlegend"><span><i style="background:#0a2540"></i>AA- and above</span><span><i style="background:#3f5f85"></i>A range</span><span><i style="background:#7d93ad"></i>BBB range</span><span><i style="background:#b04632"></i>below BBB-</span></div>
 <p class="note">Long-term issuer ratings only, one per agency per entity. Differences between the bars are mostly which banks each agency rates, not disagreement about the same bank.</p></div></div>'''
