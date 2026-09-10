@@ -1,16 +1,21 @@
 ---
 name: counterparty-review
-description: Work through the Counterparty review queue on this machine - read Pillar 3 PDFs that the rules-based extractor could not verify, fill in the KM1 figures, collect PDFs from bot-blocked bank sites, and push the answers. Runs on the maintainer's Claude Code subscription; no API key anywhere.
+description: Work through the Counterparty review queue - read Pillar 3 PDFs that the rules-based extractor could not verify, fill in the KM1 figures, and push the answers. Runs unattended in a scheduled cloud session, or on the maintainer's machine when a bot-blocked site needs a browser. Claude Code subscription; no API key anywhere.
 ---
 
-# Counterparty review (local)
+# Counterparty review
 
-You are running inside a clone of the `bankCredit` repository on the maintainer's Mac.
-The GitHub Actions pipeline collects Pillar 3 PDFs and reads the KM1 key-metrics
-template with fixed rules. Whatever it cannot verify lands in
-`data/review/queue.json`. Your job is to resolve those items and to fetch the
-handful of documents that scripted collection cannot reach. Nothing here calls
-an AI API: you are the reviewer, using your own reading of the PDF.
+You are running inside a clone of the `bankCredit` repository. The GitHub Actions
+pipeline collects Pillar 3 PDFs and reads the KM1 key-metrics template with fixed
+rules. Whatever it cannot verify lands in `data/review/queue.json`. Your job is to
+resolve those items. Nothing here calls an AI API: you are the reviewer, using your
+own reading of the PDF.
+
+Sections 1, 2 and 4 need nothing but the repository and the open web, so they run
+unattended in a scheduled cloud session. Section 3 is the exception: a handful of
+bank sites refuse everything but a real browser, and those need the maintainer at a
+machine with Claude in Chrome, about once a quarter. If you are not that session,
+do sections 1, 2 and 4 and say in your reply which firms section 3 is waiting on.
 
 ## 0. Prepare
 
@@ -78,7 +83,10 @@ from you for this.
 Open `site/banks/<entity_id>.html` for one or two of the entities you touched
 and confirm the figures and reference dates look right.
 
-## 3. Browser-only firms
+## 3. Browser-only firms (the maintainer's machine, about once a quarter)
+
+Skip this section unless you are an interactive session with a browser. An unattended
+run cannot do it and must not pretend otherwise: name the firms that are due and move on.
 
 `bankcredit/adapters/pillar3_locators.py` marks some firms `kind="browser"`
 (Lloyds Banking Group and its banks, Investec, Handelsbanken plc, the small
@@ -124,10 +132,13 @@ Status page shows them older than 150 days:
 ## 4. Push
 
 ```bash
-git add data/facts.parquet data/documents.parquet data/review
-git commit -m "Review queue: <n> items resolved, <m> documents added"
-git push
+bash tools/push-data.sh "Review queue: <n> items resolved, <m> documents added"
 ```
+
+That commits the answers and nothing else, and says so when there is nothing to push.
+It exists because an open-ended `git push` is refused in an unattended session, which
+is how a run can finish, report success and change nothing. If the script itself is
+refused, say so plainly rather than working around it.
 
 The push triggers the pipeline, which rebuilds and republishes the site. Do
 not commit anything under `data/cache/`. Do not touch the overlay secret or any

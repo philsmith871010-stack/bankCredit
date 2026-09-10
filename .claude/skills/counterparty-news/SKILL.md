@@ -1,9 +1,9 @@
 ---
 name: counterparty-news
-description: Judge the collected headlines for the Counterparty site, the whole stored back book first and then each day's new ones - keep what tells a treasurer something about a bank's credit standing, drop the rest, correct severities - and write the verdicts the pipeline applies. Runs on the maintainer's Claude Code subscription; no API key anywhere.
+description: Judge the collected headlines for the Counterparty site, the whole stored back book first and then each day's new ones - keep what tells a treasurer something about a bank's credit standing, drop the rest, correct severities - and write the verdicts the pipeline applies. Runs unattended in a scheduled cloud session or on any machine with the repository. Claude Code subscription; no API key anywhere.
 ---
 
-# Counterparty news review (local)
+# Counterparty news review
 
 The pipeline collects headlines through a rules-based filter. Rules cannot tell a
 share buy-back notice from a capital problem, or a bank's own analyst call from news
@@ -68,10 +68,13 @@ it if missing), one entry per row:
 ```bash
 python3 -m bankcredit.cli prune-news
 python3 -m bankcredit.cli build
-git add data/review/news_verdicts.json data/events.parquet
-git commit -m "News review: <kept> kept, <dropped> dropped"
-git push
+bash tools/push-data.sh "News review: <kept> kept, <dropped> dropped"
 ```
+
+`push-data.sh` commits the verdicts and nothing else, and says so when there is nothing
+to push. It exists because an open-ended `git push` is refused in an unattended session,
+which is how a run can finish, report success and change nothing. If the script itself is
+refused, say so plainly rather than working around it.
 
 Open `site/events/index.html` and confirm the feed reads like a credit desk's morning
 list. Report what you dropped most often; recurring kinds become rules.

@@ -1,16 +1,21 @@
 # Running Counterparty on your Mac (no API key)
 
-Two things run without any Anthropic API key:
+Three things run without any Anthropic API key:
 
 1. **The pipeline on GitHub Actions** collects Pillar 3 PDFs (bank sites plus the
    FCA National Storage Mechanism), reads the KM1 key-metrics template with fixed
    rules (`bankcredit/extract/km1.py`), validates every figure against the
    template's own arithmetic, and publishes the site. Figures that pass with
    warnings are shown as *unverified*; failures go to `data/review/queue.json`.
-2. **A local run on your Mac** resolves the queue and reaches the sites that block
-   scripts. The reading is done by Claude Code under your subscription login
-   (`claude login`), driven by the repository skill
-   `.claude/skills/counterparty-review/SKILL.md`. No key is stored anywhere.
+2. **Scheduled cloud sessions** resolve the review queue and judge the headlines every
+   morning. They are Claude Code routines running the same two repository skills,
+   `.claude/skills/counterparty-review/SKILL.md` and `counterparty-news`, and they push
+   their answers with `tools/push-data.sh`. Nothing on your machine has to be awake.
+3. **A local run on your Mac** is now needed for one thing only: the handful of bank
+   sites that refuse everything but a real browser, which is section 3 of the review
+   skill and about a quarterly job. The Mac job below still does the whole run if you
+   want it to, and it is harmless to leave in place; it takes the same lock and pushes
+   through the same script, so it cannot collide with the cloud runs.
 
 ## Setup (once)
 
