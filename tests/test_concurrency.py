@@ -131,12 +131,16 @@ def test_each_thread_gets_its_own_session_carrying_the_same_headers():
     seen = {}
 
     def grab(n):
-        seen[n] = (id(s._session()), s._session().headers["User-Agent"])
+        # hold the object, not its id: a thread's local storage is released when it exits, so a
+        # later Session can be allocated at the address an earlier one had and the test fails on
+        # its own bookkeeping rather than on anything ThreadSession did
+        ses = s._session()
+        seen[n] = (ses, ses.headers["User-Agent"])
 
     threads = [threading.Thread(target=grab, args=(i,)) for i in range(4)]
     [t.start() for t in threads]
     [t.join() for t in threads]
-    ids = {v[0] for v in seen.values()}
+    ids = {id(v[0]) for v in seen.values()}
     assert len(ids) == 4, "a Session was shared between threads"
     assert {v[1] for v in seen.values()} == {"test agent"}
 

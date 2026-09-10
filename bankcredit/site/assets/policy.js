@@ -8,6 +8,25 @@
   var TENORS=[[100,'100 days'],[182,'6 months'],[365,'12 months'],[730,'24 months'],[1825,'5 years']];
   var GRADES=['AAA','AA+','AA','AA-','A+','A','A-','BBB+','BBB','BBB-','BB+','BB','BB-','B+','B','B-','CCC'];
   var data=null, byId={};
+
+  // The weighting model lives in app.js, because a profile page carries no policy.js and must
+  // still show the reader's own weights rather than ours.
+  var CPW=window.CPW, PILLARS=CPW.PILLARS;
+  function weights(){return CPW.weights()}
+  function saveWeights(w){CPW.save(w)}
+  function rescore(e,w){return CPW.rescore(e,w)}
+  // Every score the site shows is read off e.score, so the weights are applied once, here, and
+  // every table, card, shortlist and dialog follows without knowing about them.
+  function applyWeights(){
+    var w=weights();
+    (data&&data.rows||[]).forEach(function(e){
+      if(e.pw0===undefined){e.pw0=e.score;e.band0=e.band}
+      var r=rescore(e,w);
+      e.score=r.score; e.band=r.band;
+    });
+    return w;
+  }
+
   function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
   function save(p){try{localStorage.setItem(KEY,JSON.stringify(p))}catch(e){}}
   // the definition marker, drawn from the glossary every page carries
@@ -830,6 +849,54 @@
   }
   function add(id,tenor){var p=load();var e=byId[id];if(!e)return;var ex=p.filter(function(x){return x.id===id})[0];
     if(ex){ex.tenor=tenor}else{p.push({id:id,tenor:tenor,added:new Date().toISOString().slice(0,10),base:snapshot(e)})}save(p);render()}
+  // ---- the weighting panel ------------------------------------------------------------------
+  function pct(w){var t=0;PILLARS.forEach(function(p){t+=w[p[0]]});return t}
+  function weightPanel(){
+    var box=document.getElementById('pol-weights'); if(!box)return;
+    var w=weights(), total=pct(w)||1;
+    var rows=PILLARS.map(function(p){
+      var k=p[0], v=w[k];
+      return '<div class="wt-row"><label for="wt-'+k+'"><b>'+esc(p[1])+'</b><span>'+esc(p[3])+'</span></label>'+
+        '<input id="wt-'+k+'" class="wt-s" type="range" min="0" max="60" step="1" value="'+v+'" data-k="'+k+'" '+
+          'aria-label="'+esc(p[1])+' weight">'+
+        '<output class="wt-o" for="wt-'+k+'">'+(v/total*100).toFixed(0)+'%</output></div>';
+    }).join('');
+    box.innerHTML=
+      '<div class="wt-head"><div><h3>Your weightings</h3>'+
+        '<p class="small muted">These are yours, not ours. Move a slider and every score on this site is '+
+        'recomputed from the figures using your weights, on this device, at once. Nothing is sent anywhere.</p></div>'+
+        '<button class="filter" id="wt-reset"'+(w.__custom?'':' disabled')+'>Back to the starting point</button></div>'+
+      '<div class="wt-grid">'+rows+'</div>'+
+      '<div class="wt-foot">'+
+        '<p><b>This is not a credit rating.</b> It is arithmetic on figures the banks publish themselves and on '+
+        'the ratings their agencies publish, combined the way you have chosen to combine them. It is not issued '+
+        'by a registered credit rating agency and it is not a credit rating within the meaning of the UK or EU '+
+        'Credit Rating Agency Regulations.</p>'+
+        '<p><b>This is not advice.</b> Nothing here is investment advice, a recommendation, or a suggestion that '+
+        'you should or should not deal with any counterparty, at any tenor, for any amount. Your counterparty '+
+        'policy, your limits and your tenors remain yours, and your adviser’s.</p>'+
+        '<p><b>The judgement is yours.</b> How much capital counts for against liquidity, or ratios against the '+
+        'agencies, is a policy question with no correct answer. The starting point is one reasonable set of '+
+        'weights and is deliberately not called a house view, a model or a recommendation. It carries no more '+
+        'authority than any other set, including yours.</p>'+
+        '<p class="muted">Figures come from each bank’s own regulatory disclosures and from the ESMA European '+
+        'Rating Platform, with their dates shown. They can be wrong, late or missing, and a score computed from '+
+        'them can be too. Check anything you rely on against the source, which every figure on this site names.</p>'+
+      '</div>';
+  }
+  function bindWeights(){
+    var box=document.getElementById('pol-weights'); if(!box)return;
+    box.addEventListener('input',function(ev){
+      var s=ev.target.closest('.wt-s'); if(!s)return;
+      var w=weights(); delete w.__custom; w[s.dataset.k]=+s.value; saveWeights(w);
+      weightPanel(); applyWeights(); render();
+    });
+    box.addEventListener('click',function(ev){
+      if(!ev.target.closest('#wt-reset'))return;
+      saveWeights({}); weightPanel(); applyWeights(); render();
+    });
+  }
+
   function init(){
     var sel=document.getElementById('pol-name');var dl=document.getElementById('pol-names');
     data.rows.forEach(function(e){byId[e.id]=e;var o=document.createElement('option');o.value=e.short+' — '+e.name;o.dataset.id=e.id;dl.appendChild(o)});
@@ -874,6 +941,7 @@
     var m=location.hash.match(/#p=([A-Za-z0-9_\-]+)/);if(m){var sh=decode(m[1]);if(sh&&sh.length){if(!load().length){save(sh);history.replaceState(null,'',location.pathname)}else{window.__shared=sh;var box=document.getElementById('pol-shared');box.hidden=false;box.querySelector('span').textContent='This link carries a policy of '+sh.length+' counterparties.'}}}
     render();
     initUni();
+    weightPanel(); bindWeights();
   }
   var box=document.getElementById('policy-body');if(!box)return;
   fetch(ROOT+'data/peers.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){PEERS=j}).catch(function(){});
@@ -883,5 +951,5 @@
     var u=document.getElementById('uni-body');
     if(u)u.innerHTML='<tr><td colspan="9" class="empty">Could not load the counterparty data. Reload the page.</td></tr>';
   }
-  fetch(ROOT+'data/policy.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){data=j;init()}).catch(failed);
+  fetch(ROOT+'data/policy.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){data=j;applyWeights();init()}).catch(failed);
 })();

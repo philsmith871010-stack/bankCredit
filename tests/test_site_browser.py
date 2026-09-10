@@ -429,7 +429,7 @@ def test_the_policy_page_is_tabs(page, server):
     """The approved names ran the length of the page with the shortlist under them."""
     _seed_many(page, server, 4)
     tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
-    assert tabs == ["policy", "likeforlike", "universe", "ratings", "events", "analysis"]
+    assert tabs == ["policy", "likeforlike", "universe", "ratings", "events", "analysis", "weights"]
     assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 4
     assert page.eval_on_selector("#tn-policy", "e => e.textContent") == "4"
     page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
@@ -554,6 +554,68 @@ def test_the_ratings_grid_plots_the_register_not_our_snapshots(page, server):
     paths = page.eval_on_selector_all("#board tbody td:last-child", "e => e.map(x => x.textContent.trim())")
     assert sum(1 for p in paths if "notch" in p or p == "flat") > 40, paths[:6]
     assert not any("4d" in p for p in paths)
+    assert not page.errors, page.errors
+
+
+# ---- whose judgement the score is -------------------------------------------------------------
+def test_the_starting_weights_reproduce_the_published_score(page, server):
+    """The browser recomputes every score from the pillar sub-scores. Left alone it must agree with
+    what the pipeline published, to the decimal, or the weighting panel is quietly rewriting the
+    site rather than handing it over."""
+    visit(page, server, "index.html")
+    page.wait_for_timeout(900)
+    off = page.evaluate("""() => fetch('data/policy.json').then(r => r.json()).then(j => {
+      const w = window.CPW.weights();
+      return j.rows.filter(e => e.score != null)
+        .map(e => [e.id, e.score, window.CPW.rescore(e, w).score])
+        .filter(([id, was, now]) => Math.abs(was - now) > 0.05);
+    })""")
+    assert off == [], off[:5]
+
+
+def test_a_weight_the_reader_sets_moves_every_score_on_the_site(page, server):
+    _seed_many(page, server, 3)
+    page.eval_on_selector('.tab[data-tab="weights"]', "e => e.click()")
+    page.wait_for_timeout(400)
+    assert page.eval_on_selector_all(".wt-s", "e => e.map(x => x.dataset.k)") == [
+        "capital", "liquidity", "asset_quality", "profitability", "stability", "rating"]
+    page.eval_on_selector('.tab[data-tab="policy"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    before = page.eval_on_selector_all(".pol-card .ck-score b", "e => e.map(x => x.textContent.trim())")
+    page.eval_on_selector('.tab[data-tab="weights"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    page.eval_on_selector("#wt-rating", "e => { e.value = 0; e.dispatchEvent(new Event('input', {bubbles: true})) }")
+    page.wait_for_timeout(600)
+    page.eval_on_selector('.tab[data-tab="policy"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    after = page.eval_on_selector_all(".pol-card .ck-score b", "e => e.map(x => x.textContent.trim())")
+    assert after != before, (before, after)
+    assert json.loads(page.evaluate("localStorage.getItem('counterparty.weights')"))["rating"] == 0
+    assert not page.errors, page.errors
+
+
+def test_the_panel_says_what_this_is_not(page, server):
+    visit(page, server, "index.html")
+    page.eval_on_selector('.tab[data-tab="weights"]', "e => e.click()")
+    page.wait_for_timeout(400)
+    said = page.eval_on_selector(".wt-foot", "e => e.textContent").lower()
+    for phrase in ("not a credit rating", "not advice", "the judgement is yours",
+                   "credit rating agency regulations"):
+        assert phrase in said, phrase
+
+
+def test_a_profile_shows_the_readers_weights_not_ours(page, server):
+    """A profile is built once for everyone, so it carries the starting weights in its HTML. It has
+    to follow the reader's, or the number on the name disagrees with the number on the list."""
+    visit(page, server, "banks/barclays.html")
+    built = page.eval_on_selector(".score-fig .huge", "e => e.textContent")
+    assert page.eval_on_selector_all(".score-yours", "e => e.length") == 0, "nothing to say by default"
+    page.evaluate("""localStorage.setItem('counterparty.weights', JSON.stringify(
+        {capital: 60, liquidity: 15, asset_quality: 5, profitability: 5, stability: 10, rating: 5}))""")
+    visit(page, server, "banks/barclays.html")
+    assert page.eval_on_selector(".score-fig .huge", "e => e.textContent") != built
+    assert page.eval_on_selector(".score-yours", "e => e.textContent") == "your weights"
+    assert "w 60" in page.eval_on_selector_all(".pillar .pw", "e => e.map(x => x.textContent)")
     assert not page.errors, page.errors
 
 

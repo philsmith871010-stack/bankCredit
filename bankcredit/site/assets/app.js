@@ -1,4 +1,90 @@
 (function(){
+  // ---- whose judgement this is -------------------------------------------------------------
+  // The site publishes a number built from published regulatory figures and the agencies' own
+  // ratings. How much each of those counts for is a policy judgement, not a fact, and it is the
+  // reader's to make: the weights below are a starting point, they live in this browser, and every
+  // score on the site is computed from whatever they are set to. Nothing here is a credit rating
+  // and nothing here is advice.
+  var WKEY='counterparty.weights';
+  var PILLARS=[['capital','Capital',25,'CET1, leverage and total capital against Basel thresholds'],
+               ['liquidity','Liquidity',15,'LCR and NSFR'],
+               ['asset_quality','Asset quality',5,'non-performing loan ratio'],
+               ['profitability','Profitability',5,'return on equity and assets, cost-income'],
+               ['stability','Capital headroom',10,'CET1 over the overall requirement'],
+               ['rating','Agency ratings',40,'the median long-term grade of the agencies that rate it']];
+  var DEFAULTW={};PILLARS.forEach(function(p){DEFAULTW[p[0]]=p[2]});
+  // the thresholds and caps the published method uses; the weights are the only part you set
+  var SCORE_BANDS=[[80,'A'],[65,'B'],[50,'C'],[35,'D'],[0,'E']];   // not BANDS: this file already had one
+  var GRADE_CAPS=[[7,100],[10,74.9],[17,64.9]];
+  var UNRATED_CAP=74.9, OVERLAY_CAP=10, RATING_SCORE=[100,95,91,87,81,75,69,60,52,44,33,25,17,10,5,2,0];
+  function weights(){
+    var w={};try{w=JSON.parse(localStorage.getItem(WKEY)||'{}')||{}}catch(e){w={}}
+    var out={},any=false;
+    PILLARS.forEach(function(p){
+      var v=Number(w[p[0]]);
+      if(isFinite(v)&&v>=0&&v<=100){out[p[0]]=v;if(v!==p[2])any=true}else out[p[0]]=p[2];
+    });
+    out.__custom=any;
+    return out;
+  }
+  function bandFor(v){for(var i=0;i<SCORE_BANDS.length;i++)if(v>=SCORE_BANDS[i][0])return SCORE_BANDS[i][1];return 'E'}
+  function scoreCap(g){
+    if(g==null)return UNRATED_CAP;
+    var n=Math.round(g);
+    for(var i=0;i<GRADE_CAPS.length;i++)if(n<=GRADE_CAPS[i][0])return GRADE_CAPS[i][1];
+    return GRADE_CAPS[GRADE_CAPS.length-1][1];
+  }
+  // The published method, with the reader's weights in place of ours. A pillar the bank does not
+  // report is not a zero: the ratio weight is shared out over what it does report, exactly as the
+  // site's own figures are computed, and the coverage is carried so a thin name still says so.
+  function rescore(e,w){
+    var pw=e.pw; if(!pw)return {score:e.score,band:e.band,coverage:e.coverage};
+    if(pw[0]==null||e.rating_grade==null)return {score:null,band:'',coverage:e.coverage};
+    var total=0,used=0,weighted=0;
+    for(var i=0;i<5;i++){
+      var k=PILLARS[i][0]; total+=w[k];
+      if(pw[i]!=null){used+=w[k];weighted+=pw[i]*w[k]}
+    }
+    var rw=w.rating, rs=pw[5];
+    if(total+rw<=0)return {score:null,band:'',coverage:e.coverage};
+    var ratios=used?weighted/used:0;
+    var pub=(ratios*total+rs*rw)/(total+rw);
+    var ov=Math.max(-OVERLAY_CAP,Math.min(OVERLAY_CAP,e.overlay||0));
+    var cap=scoreCap(e.rating_grade);
+    var fin=Math.min(cap,Math.max(0,Math.min(100,pub+ov)));
+    return {score:Math.round(Math.min(pub,cap)*10)/10,band:(e.coverage>=0.5?bandFor(fin):'?'),
+            coverage:e.coverage,final:Math.round(fin*10)/10};
+  }
+  function save(w){try{localStorage.setItem(WKEY,JSON.stringify(w))}catch(e){}}
+
+  // A profile page is built with the starting weights, because it is built once for everyone. If
+  // this reader has set their own, the number, the band and the pillar weights on it are redrawn
+  // from theirs, so no page on the site shows a score the reader did not ask for.
+  function dressProfile(){
+    var card=document.querySelector('.score-card[data-pw]'); if(!card)return;
+    var w=weights(); if(!w.__custom)return;
+    var e;
+    try{e={pw:JSON.parse(card.dataset.pw),overlay:+card.dataset.overlay||0,
+           rating_grade:card.dataset.grade===''?null:+card.dataset.grade,
+           coverage:+card.dataset.coverage||0}}catch(err){return}
+    var r=rescore(e,w); if(r.score==null)return;
+    var fig=card.querySelector('.score-fig .huge'); if(fig)fig.textContent=r.score.toFixed(0);
+    var band=card.querySelector('.score-band .chip');
+    if(band&&r.band&&r.band!=='?')band.textContent='Band '+r.band;
+    card.querySelectorAll('.pillar[data-k]').forEach(function(el){
+      var k=el.dataset.k, out=el.querySelector('.pw');
+      if(out&&w[k]!=null)out.textContent='w '+w[k];
+    });
+    var head=card.querySelector('.score-head .tile-label');
+    if(head&&!card.querySelector('.score-yours'))
+      head.insertAdjacentHTML('afterend','<span class="score-yours" title="computed from the weights you set on the Policy page">your weights</span>');
+  }
+  window.CPW={PILLARS:PILLARS,DEFAULT:DEFAULTW,weights:weights,save:save,rescore:rescore,
+              bandFor:bandFor,scoreCap:scoreCap};
+  addEventListener('DOMContentLoaded',dressProfile);
+  if(document.readyState!=='loading')dressProfile();
+})();
+(function(){
   var KEY='counterparty.watch';
   function watch(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
   function setWatch(w){try{localStorage.setItem(KEY,JSON.stringify(w))}catch(e){}}
