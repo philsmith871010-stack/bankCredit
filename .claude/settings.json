@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash tools/kick.sh)",
+      "Bash(bash tools/kick.sh:*)"
+    ]
+  }
+}
