@@ -106,7 +106,9 @@ def visit(pg, server, path):
 def test_home_loads_its_data_under_a_subdirectory(page, server):
     """The fault that emptied the live site: data-root="" is the root, not a missing root."""
     visit(page, server, "index.html")
-    assert page.eval_on_selector_all("#uni-body tr", "e => e.length") > 50
+    # the table pages, so a full first page is the sign the data arrived
+    assert page.eval_on_selector_all("#uni-body tr", "e => e.length") == 50
+    assert "of 152 names" in page.inner_text("#uni-more")
     assert "Loading" not in page.inner_text("#policy-body")
     assert not page.errors, page.errors
     assert not page.bad, page.bad
@@ -696,3 +698,60 @@ def test_no_page_ships_an_unrendered_placeholder(name):
     html = (SITE / name).read_text(encoding="utf-8")
     for tell in ['{c.', '{e.', '{esc(', 'None</', '>undefined<']:
         assert tell not in html, f"{name} contains {tell!r}"
+
+
+# ---- long lists stand a page at a time -------------------------------------------------------
+def test_a_long_feed_stands_a_page_at_a_time(page, server):
+    """Three hundred events rendered at once was thirty thousand pixels, and the oldest was
+    unreachable. The rows are all in the page; only a page of them stands on it."""
+    visit(page, server, "index.html")
+    page.eval_on_selector('.tab[data-tab="events"]', "e => e.click()")
+    page.wait_for_timeout(900)
+    held = page.eval_on_selector_all("#events .event", "e => e.length")
+    assert held > 100, "the feed still carries every event it was built with"
+    shown = lambda: page.eval_on_selector_all("#events .event", "e => e.filter(x => !x.hidden).length")
+    first = shown()
+    assert 0 < first < held, "only a page of them is on screen"
+    assert f"{first} of {held}" in page.inner_text("#ev-more")
+    page.eval_on_selector("#ev-more .more", "e => e.click()")
+    page.wait_for_timeout(300)
+    assert shown() > first, "the control reveals the next page"
+    assert not page.errors, page.errors
+
+
+def test_a_change_of_filter_starts_the_list_at_the_top_again(page, server):
+    """Otherwise a reader who has paged deep into 'All' meets a filtered list already exhausted."""
+    visit(page, server, "index.html")
+    page.eval_on_selector('.tab[data-tab="events"]', "e => e.click()")
+    page.wait_for_timeout(900)
+    step = page.eval_on_selector("#ev-more", "e => +e.dataset.step")
+    page.eval_on_selector("#ev-more .more", "e => e.click()")
+    page.wait_for_timeout(250)
+    page.eval_on_selector("#event-filters button:nth-child(2)", "e => e.click()")
+    page.wait_for_timeout(300)
+    shown = page.eval_on_selector_all("#events .event", "e => e.filter(x => !x.hidden).length")
+    assert shown <= step, "the reveal count resets when what qualifies changes"
+    assert not page.errors, page.errors
+
+
+def test_the_shortlist_opens_on_a_tenor_that_has_something_to_show(page, server):
+    """The longest tenor is the strictest; on a strong list nothing clears it, and the tab used to
+    open on a page whose whole content was a sentence saying there was nothing to show."""
+    rows = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))["rows"]
+    pick = [r for r in rows if r.get("score") is not None]
+    if len(pick) < 3:
+        pytest.skip("not enough scored names")
+    best, mid = pick[0], pick[len(pick) // 2]          # the strongest name at the longest tenor
+    policy = [{"id": r["id"], "tenor": t, "added": "2026-01-01",
+               "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}
+              for r, t in ((best, 1825), (mid, 365))]
+    page.goto(server + "index.html", wait_until="domcontentloaded")
+    page.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
+    visit(page, server, "index.html")
+    page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
+    page.wait_for_timeout(500)
+    counts = page.eval_on_selector_all("#pol-ll .ll-t", "e => e.map(x => +x.querySelector('.cnt').textContent)")
+    active = page.eval_on_selector_all("#pol-ll .ll-t.active", "e => e.map(x => +x.querySelector('.cnt').textContent)")
+    if any(counts):
+        assert active and active[0] > 0, "the open tenor is one that turns something up"
+    assert not page.errors, page.errors

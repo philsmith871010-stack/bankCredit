@@ -7,3 +7,4 @@ data/cache/
 data/bond_quotes.parquet
 data/cache/run.lock*
 .scratch/
+.browser-test-root/

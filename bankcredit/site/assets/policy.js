@@ -511,11 +511,25 @@
       return uniSort.dir*(va-vb);
     });
   }
+  var uniN=50;
   function renderUni(){
     var body=document.getElementById('uni-body'); if(!body||!data)return;
     var rows=uniRows(), t=+document.getElementById('uni-tenor').value;
     document.getElementById('uni-count').textContent=rows.length+' of '+data.rows.length+' names';
-    body.innerHTML=rows.slice(0,400).map(function(r){
+    // a hundred and fifty rows is nine thousand pixels of table; the filters above are how a
+    // reader gets to a name, and the rest arrives on request
+    var foot=document.getElementById('uni-more');
+    if(foot){
+      if(!foot.dataset.init){foot.dataset.init='1';
+        foot.innerHTML='<button class="more" type="button"></button><span class="pg-of small muted"></span>';
+        foot.querySelector('.more').addEventListener('click',function(){uniN+=50;renderUni();this.focus()});}
+      var left=rows.length-Math.min(uniN,rows.length),btn=foot.querySelector('.more');
+      btn.hidden=left<=0;btn.textContent='Show '+Math.min(50,left)+' more';
+      foot.querySelector('.pg-of').textContent=!rows.length?''
+        :left>0?Math.min(uniN,rows.length)+' of '+rows.length+' names':'all '+rows.length+' names shown';
+      foot.hidden=!rows.length;
+    }
+    body.innerHTML=rows.slice(0,uniN).map(function(r){
       var e=r.e;
       return '<tr class="uni-row" data-id="'+esc(e.id)+'">'+
         '<td><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
@@ -545,7 +559,8 @@
     Object.keys(types).sort().forEach(function(x){var o=document.createElement('option');o.value=x;o.textContent=TYPE_LABEL[x]||x;typ.appendChild(o)});
     TENORS.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent='Add at '+x[1];if(x[0]===365)o.selected=true;ten.appendChild(o)});
     ['uni-q','uni-region','uni-type','uni-band','uni-scored','uni-tenor'].forEach(function(id){
-      var el=document.getElementById(id); if(el)el.addEventListener('input',renderUni);
+      // a change of filter starts the list at the top again
+      var el=document.getElementById(id); if(el)el.addEventListener('input',function(){uniN=50;renderUni()});
     });
     document.querySelectorAll('#uni-table th[data-sort]').forEach(function(th){
       th.addEventListener('click',function(){
@@ -800,7 +815,7 @@
       // the ones a longer tenor did not already list. A name that qualifies at 24 months qualifies
       // at 12, and reading the 12-month list should not depend on having read the other.
       var tenors=[];p.forEach(function(it){if(tenors.indexOf(it.tenor)<0)tenors.push(it.tenor)});tenors.sort(function(a,b){return b-a});
-      var chips='', panes='', union={}, first=null;
+      var chips='', panes='', union={}, first=null, sets=[];
       tenors.forEach(function(t){
         var acc=p.filter(function(it){return it.tenor>=t}), w=worst(acc);
         if(w.grade==null&&w.score==null)return;
@@ -813,11 +828,17 @@
           if(e.market&&e.market.direction==='down')return false;
           return true;
         }).sort(function(a,b){return b.score-a.score});
-        // the chip counts every match; the grid draws the 24 strongest of them
-        var total=cands.length;
         // the tab badge counts every distinct name any tenor turns up, not just the ones drawn
-        cands.forEach(function(e){union[e.id]=1}); cands=cands.slice(0,24);
-        if(first==null)first=t;
+        cands.forEach(function(e){union[e.id]=1});
+        sets.push({t:t,w:w,total:cands.length,cands:cands.slice(0,24)});
+      });
+      // The longest tenor is the strictest, and on a strong list nothing clears it. Opening there
+      // showed a page whose whole content was a sentence saying there was nothing to show, so the
+      // tab opens on the longest tenor that actually turns something up.
+      sets.forEach(function(x){if(first==null&&x.total)first=x.t});
+      if(first==null&&sets.length)first=sets[0].t;
+      sets.forEach(function(x){
+        var t=x.t, w=x.w, total=x.total, cands=x.cands;
         var wg=GRADES[Math.floor((w.grade||1)+0.5)-1]||'?';
         chips+='<button class="filter ll-t'+(t===first?' active':'')+'" data-t="'+t+'">'+esc(tenorLabel(t))+
                '<span class="cnt">'+total+'</span></button>';
@@ -828,7 +849,8 @@
             '<b style="color:'+gradeColour(wg)+'">'+esc(wg)+'</b>'+
             '<b style="color:'+scoreColour(w.score)+'">'+(w.score!=null?w.score.toFixed(1):'?')+'</b></span></div>'+
           (cands.length?llTable(cands,w,t)
-           :'<p class="small muted">No covered name outside your policy matches the standing you accept at this tenor.</p>')+
+           :'<p class="ll-none">Nothing outside your policy is as strong as the weakest name you already accept at '+esc(tenorLabel(t))+'.'+
+             (first!=null&&first!==t?' Shorter tenors accept a weaker name, so <button class="linky ll-jump" data-t="'+first+'">'+esc(tenorLabel(first))+'</button> has matches.':'')+'</p>')+
         '</div>';
       });
       ll=(tenors.length>1?'<div class="ll-tenors filters">'+chips+'</div>':'')+panes;
@@ -905,10 +927,11 @@
     box.innerHTML=
       '<div class="wt-head"><div><h3>Your weightings</h3>'+
         '<p class="small muted">These are yours, not ours. Move a slider and every score on this site is '+
-        'recomputed from the figures using your weights, on this device, at once. Nothing is sent anywhere.</p></div>'+
+        'recomputed from the figures using your weights, on this device, at once. Nothing is sent anywhere. '+
+        'The six are scaled to 100 percent between them, so what matters is their size against each other.</p></div>'+
         '<button class="filter" id="wt-reset"'+(w.__custom?'':' disabled')+'>Back to the starting point</button></div>'+
-      '<div class="wt-grid">'+rows+'</div>'+
-      '<div class="wt-foot">'+
+      '<div class="wt-body"><div><div class="wt-grid">'+rows+'</div>'+weightEffect()+'</div>'+
+      '<aside class="wt-foot">'+
         '<p><b>This is not a credit rating.</b> It is arithmetic on figures the banks publish themselves and on '+
         'the ratings their agencies publish, combined the way you have chosen to combine them. It is not issued '+
         'by a registered credit rating agency and it is not a credit rating within the meaning of the UK or EU '+
@@ -923,18 +946,47 @@
         '<p class="muted">Figures come from each bank’s own regulatory disclosures and from the ESMA European '+
         'Rating Platform, with their dates shown. They can be wrong, late or missing, and a score computed from '+
         'them can be too. Check anything you rely on against the source, which every figure on this site names.</p>'+
-      '</div>';
+      '</aside></div>';
+  }
+
+  // Moving a slider is abstract until you see what it did. This is the answer to "and so?": how far
+  // the reader's own weights carry the names on their own list away from the starting point.
+  function weightEffect(){
+    var pool=((data&&data.rows)||[]).filter(function(e){return e.pw0!=null&&e.score!=null});
+    if(!pool.length)return '';
+    var mine={}; load().forEach(function(it){mine[it.id]=1});
+    var yours=pool.filter(function(e){return mine[e.id]});
+    var use=yours.length?yours:pool,
+        what=yours.length?'your '+yours.length+' counterparties':pool.length+' covered names';
+    var moved=use.filter(function(e){return e.band!==e.band0});
+    var deltas=use.map(function(e){return {e:e,d:e.score-e.pw0}}).sort(function(a,b){return b.d-a.d});
+    var big=deltas[0], small=deltas[deltas.length-1];
+    var spread=Math.max(Math.abs(big?big.d:0),Math.abs(small?small.d:0));
+    if(spread<0.05)
+      return '<div class="wt-effect wt-flat">These are the starting weights, so every score is the published one. '+
+             'Move a slider and this line says what changed.</div>';
+    function mover(x,cls){
+      if(!x||Math.abs(x.d)<0.05)return '';
+      return '<span class="wt-mv '+cls+'"><b>'+esc(x.e.short)+'</b>'+
+             '<i>'+x.e.pw0.toFixed(1)+' \u2192 '+x.e.score.toFixed(1)+'</i>'+
+             '<em>'+(x.d>0?'+':'')+x.d.toFixed(1)+'</em></span>';
+    }
+    return '<div class="wt-effect"><div class="wt-eh">Against the starting point, across '+what+
+      ': <b>'+(moved.length||'no')+'</b> change band, and the largest move is <b>'+spread.toFixed(1)+'</b> points.</div>'+
+      '<div class="wt-movers">'+deltas.slice(0,3).map(function(x){return mover(x,'up')}).join('')+
+        deltas.slice(-3).reverse().map(function(x){return mover(x,'down')}).join('')+'</div></div>';
   }
   function bindWeights(){
     var box=document.getElementById('pol-weights'); if(!box)return;
     box.addEventListener('input',function(ev){
       var s=ev.target.closest('.wt-s'); if(!s)return;
       var w=weights(); delete w.__custom; w[s.dataset.k]=+s.value; saveWeights(w);
-      weightPanel(); applyWeights(); render();
+      // the panel reports what the weights did, so the scores are recomputed before it is drawn
+      applyWeights(); weightPanel(); render();
     });
     box.addEventListener('click',function(ev){
       if(!ev.target.closest('#wt-reset'))return;
-      saveWeights({}); weightPanel(); applyWeights(); render();
+      saveWeights({}); applyWeights(); weightPanel(); render();
     });
   }
 
@@ -949,8 +1001,9 @@
     document.addEventListener('click',function(ev){var b=ev.target.closest('.pol-rm');if(b){var p=load().filter(function(x){return x.id!==b.dataset.id});save(p);render();return}
       var a=ev.target.closest('.pol-add-ll');if(a){add(a.dataset.id,+a.dataset.tenor);var d=document.getElementById('pol-modal');if(d&&d.open)d.close();return}
       // one tenor at a time: the chips swap the pane rather than scroll four lists past you
-      var tc=ev.target.closest('.ll-t');
+      var tc=ev.target.closest('.ll-t')||ev.target.closest('.ll-jump');
       if(tc){var box=document.getElementById('pol-ll')||document;
+        if(tc.classList.contains('ll-jump'))tc=box.querySelector('.ll-t[data-t="'+tc.dataset.t+'"]')||tc;
         [].forEach.call(box.querySelectorAll('.ll-t'),function(b){b.classList.toggle('active',b===tc)});
         [].forEach.call(box.querySelectorAll('.ll-pane'),function(q){q.hidden=q.dataset.t!==tc.dataset.t});
         return}

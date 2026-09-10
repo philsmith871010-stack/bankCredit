@@ -1,3 +1,36 @@
+// ---- Long lists stand a page at a time --------------------------------------------------------
+// The filter above a list decides what qualifies; this decides how much of it is on the page. Three
+// hundred events rendered at once is thirty thousand pixels, and the oldest one is unreachable.
+// id is the footer element, rows is everything that passed the filter in order, hide(el) is how
+// this particular list hides a row, and again() re-runs the owner's filter after "show more".
+(function(){
+  var seen={};
+  window.pageRows=function(id,rows,hide,noun,again){
+    var foot=document.getElementById(id);if(!foot)return rows.length;
+    var step=+foot.dataset.step||50;
+    if(innerWidth<700)step=Math.max(15,Math.round(step/2));
+    var s=seen[id]||(seen[id]={n:step});
+    s.again=again;
+    if(!foot.dataset.init){
+      foot.dataset.init='1';
+      foot.innerHTML='<button class="more" type="button"></button><span class="pg-of small muted"></span>';
+      foot.querySelector('.more').addEventListener('click',function(){
+        s.n+=step;if(s.again)s.again();this.focus()});
+    }
+    for(var i=step===0?rows.length:s.n;i<rows.length;i++)hide(rows[i]);
+    var shown=Math.min(s.n,rows.length),left=rows.length-shown,btn=foot.querySelector('.more');
+    btn.hidden=left<=0;
+    btn.textContent='Show '+Math.min(step,left)+' more';
+    foot.querySelector('.pg-of').textContent=!rows.length?''
+      :left>0?shown+' of '+rows.length+' '+noun:'all '+rows.length+' '+noun+' shown';
+    foot.hidden=!rows.length;
+    return shown;
+  };
+  // a change of filter starts the list at the top again
+  window.pageReset=function(id){var s=seen[id],f=document.getElementById(id);
+    if(s&&f)s.n=innerWidth<700?Math.max(15,Math.round((+f.dataset.step||50)/2)):(+f.dataset.step||50)};
+})();
+
 (function(){
   // ---- whose judgement this is -------------------------------------------------------------
   // The site publishes a number built from published regulatory figures and the agencies' own
@@ -91,20 +124,21 @@
   function paintWatch(){var w=watch();document.querySelectorAll('.watch,.watch-btn').forEach(function(b){var on=w.indexOf(b.dataset.id)>=0;b.classList.toggle('on',on);var s=b.querySelector('span');if(s)s.textContent=on?'Watching':'Watch'})}
   document.addEventListener('click',function(e){
     var b=e.target.closest('.watch,.watch-btn');if(b){e.preventDefault();var w=watch(),i=w.indexOf(b.dataset.id);if(i>=0)w.splice(i,1);else w.push(b.dataset.id);setWatch(w);paintWatch();applyFilter();return}
-    var f=e.target.closest('.filter');if(f){document.querySelectorAll('.filter').forEach(function(x){x.classList.remove('active')});f.classList.add('active');applyFilter();return}
+    var f=e.target.closest('.filter');if(f){document.querySelectorAll('.filter').forEach(function(x){x.classList.remove('active')});f.classList.add('active');window.pageReset('cov-more');applyFilter();return}
     var t=e.target.closest('.tab');var card=t&&t.closest('.tabs-card');if(t&&card){card.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});card.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.dataset.panel===t.dataset.tab)});t.classList.add('active');if(location.hash.replace('#','').split('&')[0]!==t.dataset.tab)history.replaceState(null,'','#'+t.dataset.tab);loadPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));return}
     var th=e.target.closest('th[data-sort]');if(th){sortBy(th.dataset.sort,th.cellIndex);return}
   });
-  var q=document.getElementById('q');if(q)q.addEventListener('input',applyFilter);
-  function applyFilter(){var tb=document.querySelector('#board tbody');if(!tb)return;var region=(document.querySelector('.filter.active')||{}).dataset||{};var term=(q&&q.value||'').toLowerCase();var w=watch();
+  var q=document.getElementById('q');if(q)q.addEventListener('input',function(){window.pageReset('cov-more');applyFilter()});
+  function applyFilter(){var tb=document.querySelector('#board tbody');if(!tb)return;var region=(document.querySelector('.filter.active')||{}).dataset||{};var term=(q&&q.value||'').toLowerCase();var w=watch();var keep=[];
     tb.querySelectorAll('tr').forEach(function(tr){var ok=true;if(region.region&&region.region!=='all'){ok=region.region==='watch'?w.indexOf(tr.dataset.id)>=0:tr.dataset.region===region.region}
-      if(ok&&term)ok=tr.textContent.toLowerCase().indexOf(term)>=0;tr.style.display=ok?'':'none'})}
+      if(ok&&term)ok=tr.textContent.toLowerCase().indexOf(term)>=0;tr.style.display=ok?'':'none';if(ok)keep.push(tr)});
+    window.pageRows('cov-more',keep,function(tr){tr.style.display='none'},'entities',applyFilter)}
   var dir={};function sortBy(k,ci0){var tb=document.querySelector('#board tbody');if(!tb)return;if(k==='col')k='col'+ci0;dir[k]=dir[k]==='asc'?'desc':'asc';var rows=[].slice.call(tb.querySelectorAll('tr'));
     rows.sort(function(a,b){var av,bv;if(k==='name'){av=a.dataset.name;bv=b.dataset.name;return dir[k]==='asc'?av.localeCompare(bv):bv.localeCompare(av)}
       if(k.indexOf('col')===0){av=+((a.children[ci0]||{}).dataset||{}).v||0;bv=+((b.children[ci0]||{}).dataset||{}).v||0}else if(k==='score'){av=+a.dataset.score;bv=+b.dataset.score}else if(k==='rating'){av=-(+a.dataset.g);bv=-(+b.dataset.g);if(!dir.ratingInit){dir.ratingInit=1;dir[k]='desc'}}else if(k==='asof'){av=(a.querySelector('.age')||{}).textContent||'';bv=(b.querySelector('.age')||{}).textContent||'';return dir[k]==='asc'?av.localeCompare(bv):bv.localeCompare(av)}
       else{var ci={cet1:3,leverage:4,lcr:5}[k];av=parseFloat((a.children[ci].textContent||'').replace(/[^0-9.\-]/g,''))||-1;bv=parseFloat((b.children[ci].textContent||'').replace(/[^0-9.\-]/g,''))||-1}
       return dir[k]==='asc'?av-bv:bv-av});rows.forEach(function(r){tb.appendChild(r)})}
-  paintWatch();
+  paintWatch();applyFilter();
   // the board arrives with a panel, so its watch marks and the current filter are painted then
   (window.__panelInit=window.__panelInit||[]).push(function(){paintWatch();applyFilter()});
 })();
@@ -181,13 +215,28 @@ whenIdle(function(){
 
 // Events page: type filter
 function initEventFilter(){var f=document.getElementById('event-filters');if(!f||f.dataset.init)return;f.dataset.init='1';var q=document.getElementById('evq');
-  function apply(){var a=(f.querySelector('.filter.active')||{}).dataset||{},t=(q&&q.value||'').trim().toLowerCase();
-    document.querySelectorAll('#events .event').forEach(function(e){e.hidden=!((!a.type||a.type==='all'||e.dataset.type===a.type)&&(!t||e.textContent.toLowerCase().indexOf(t)>=0))});
+  function apply(){var a=(f.querySelector('.filter.active')||{}).dataset||{},t=(q&&q.value||'').trim().toLowerCase(),keep=[];
+    document.querySelectorAll('#events .event').forEach(function(e){
+      var ok=(!a.type||a.type==='all'||e.dataset.type===a.type)&&(!t||e.textContent.toLowerCase().indexOf(t)>=0);
+      e.hidden=!ok;if(ok)keep.push(e)});
+    window.pageRows('ev-more',keep,function(e){e.hidden=true},'events',apply);
+    // a date heading belongs to the lines under it, so it goes when the last of them does
     document.querySelectorAll('#events .ev-day').forEach(function(h){var n=h.nextElementSibling,any=false;while(n&&!n.classList.contains('ev-day')){if(!n.hidden)any=true;n=n.nextElementSibling}h.hidden=!any})}
-  f.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;f.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b)});apply()});
-  if(q)q.addEventListener('input',apply);}
+  function refilter(){window.pageReset('ev-more');apply()}
+  f.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;f.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b)});refilter()});
+  if(q)q.addEventListener('input',refilter);apply();}
 initEventFilter();
 (window.__panelInit=window.__panelInit||[]).push(initEventFilter);
+
+// A profile's event list has no filter above it, only a length: eight years of a big bank's
+// rating actions and documents is a panel nobody reaches the bottom of.
+function initProfileEvents(){var box=document.getElementById('pevents');if(!box||box.dataset.init)return;box.dataset.init='1';
+  var rows=[].slice.call(box.querySelectorAll('.event'));
+  function apply(){rows.forEach(function(e){e.hidden=false});
+    window.pageRows('pe-more',rows,function(e){e.hidden=true},'events',apply)}
+  apply()}
+initProfileEvents();
+(window.__panelInit=window.__panelInit||[]).push(initProfileEvents);
 
 // Profile trends: a small multiple opens its full-size chart in a dialog
 (function(){var d=document.createElement('dialog');d.className='chart-dialog';d.innerHTML='<div class="cd-head"><div><h3></h3><div class="small muted"></div></div><button class="cd-close" aria-label="Close">×</button></div><div class="cd-body"></div><div class="cd-def"></div>';
@@ -207,16 +256,27 @@ initEventFilter();
 })();
 
 // Ratings grid: band tiles, grade bars and the "moved" chip filter the rows alongside region and search
+// Ninety days of rating actions is thirty rows, and on a phone each one wraps to four lines.
+function initRatingActions(){var box=document.getElementById('racts');if(!box||box.dataset.init)return;box.dataset.init='1';
+  var rows=[].slice.call(box.querySelectorAll('.ract'));
+  function apply(){rows.forEach(function(e){e.hidden=false});
+    window.pageRows('ract-more',rows,function(e){e.hidden=true},'actions',apply)}
+  apply()}
+
 function initRatingGrid(){var tb=document.querySelector('table.rgrid tbody');if(!tb||tb.dataset.init)return;tb.dataset.init='1';var grade=null,band=null,cnt=document.getElementById('rg-count'),clear=document.querySelector('.gclear');
   function apply(){var region=(document.querySelector('.filter.active[data-region]')||{}).dataset||{},term=((document.getElementById('q')||{}).value||'').toLowerCase(),w=[];try{w=JSON.parse(localStorage.getItem('counterparty.watch')||'[]')}catch(e){}
-    var n=0;tb.querySelectorAll('tr').forEach(function(tr){var d=tr.dataset,ok=true;
+    var keep=[];tb.querySelectorAll('tr').forEach(function(tr){var d=tr.dataset,ok=true;
       if(region.region&&region.region!=='all'){ok=region.region==='watch'?w.indexOf(d.id)>=0:region.region==='moved'?d.moved==='1':d.region===region.region}
-      if(ok&&grade)ok=d.grade===grade;if(ok&&band)ok=d.band===band;if(ok&&term)ok=tr.textContent.toLowerCase().indexOf(term)>=0;tr.style.display=ok?'':'none';if(ok)n++});
-    if(cnt)cnt.textContent=n+' shown';document.querySelectorAll('.gfilter').forEach(function(b){b.classList.toggle('active',b.dataset.grade===grade)});document.querySelectorAll('.bfilter').forEach(function(b){b.classList.toggle('active',b.dataset.band===band)});if(clear)clear.hidden=!grade&&!band}
-  document.addEventListener('click',function(e){var g=e.target.closest('.gfilter');if(g){grade=grade===g.dataset.grade?null:g.dataset.grade;band=null;apply();return}var b=e.target.closest('.bfilter');if(b){band=band===b.dataset.band?null:b.dataset.band;grade=null;apply();return}if(e.target.closest('.gclear')){grade=null;band=null;apply();return}if(e.target.closest('.filter[data-region]'))setTimeout(apply,0)});
-  var q=document.getElementById('q');if(q)q.addEventListener('input',apply);apply()}
-initRatingGrid();
+      if(ok&&grade)ok=d.grade===grade;if(ok&&band)ok=d.band===band;if(ok&&term)ok=tr.textContent.toLowerCase().indexOf(term)>=0;tr.style.display=ok?'':'none';if(ok)keep.push(tr)});
+    var n=keep.length,all=tb.querySelectorAll('tr').length;
+    window.pageRows('rg-more',keep,function(tr){tr.style.display='none'},'entities',apply);
+    if(cnt)cnt.textContent=n===all?all+' entities':n+' of '+all+' match';document.querySelectorAll('.gfilter').forEach(function(b){b.classList.toggle('active',b.dataset.grade===grade)});document.querySelectorAll('.bfilter').forEach(function(b){b.classList.toggle('active',b.dataset.band===band)});if(clear)clear.hidden=!grade&&!band}
+  function refilter(){window.pageReset('rg-more');apply()}
+  document.addEventListener('click',function(e){var g=e.target.closest('.gfilter');if(g){grade=grade===g.dataset.grade?null:g.dataset.grade;band=null;refilter();return}var b=e.target.closest('.bfilter');if(b){band=band===b.dataset.band?null:b.dataset.band;grade=null;refilter();return}if(e.target.closest('.gclear')){grade=null;band=null;refilter();return}if(e.target.closest('.filter[data-region]'))setTimeout(refilter,0)});
+  var q=document.getElementById('q');if(q)q.addEventListener('input',refilter);apply()}
+initRatingGrid();initRatingActions();
 (window.__panelInit=window.__panelInit||[]).push(initRatingGrid);
+(window.__panelInit=window.__panelInit||[]).push(initRatingActions);
 
 // Definitions: every number on the site can say what it is, in a sentence a first-time reader gets.
 // The glossary is embedded once per page as JSON; a single popover is moved to whichever marker was
@@ -326,3 +386,50 @@ function openNamedTab(){
 }
 openNamedTab();
 addEventListener('hashchange',openNamedTab);
+
+// The contents rail says which section is under the reader's eye. An observer on the headings is
+// enough: whichever one last crossed the top of the window is the one they are in.
+(function(){
+  function wire(){
+    var nav=document.querySelector('.doc-nav');if(!nav||nav.dataset.init)return;nav.dataset.init='1';
+    var hs=[].slice.call(document.querySelectorAll('.prose h2[id]'));if(!hs.length)return;
+    function paint(){
+      var top=null;
+      hs.forEach(function(h){if(h.getBoundingClientRect().top<120)top=h.id});
+      if(!top)top=hs[0].id;
+      nav.querySelectorAll('a').forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+top)});
+    }
+    addEventListener('scroll',paint,{passive:true});paint();
+  }
+  wire();
+  (window.__panelInit=window.__panelInit||[]).push(wire);
+})();
+
+// A row that scrolls sideways says so. Without an edge, a phone reader has no way to know the tab
+// strip or a wide table carries on past the screen, and stops at whatever the screen ended on.
+(function(){
+  var SEL='.table-wrap,.tabs,.ll-tenors,.filters';
+  function mark(el){
+    var over=el.scrollWidth-el.clientWidth;
+    el.classList.toggle('sc-r',over>4&&el.scrollLeft<over-4);
+    el.classList.toggle('sc-l',el.scrollLeft>4);
+  }
+  function all(){document.querySelectorAll(SEL).forEach(mark)}
+  window.scrollMarks=all;
+  addEventListener('resize',all);
+  document.addEventListener('scroll',function(e){
+    var el=e.target;if(el&&el.classList&&el.matches&&el.matches(SEL))mark(el);
+  },true);
+  // Most of these strips are written by script long after load, so the check follows the DOM. It
+  // runs twice: once on the frame the rows arrive, and once after layout and the fonts have
+  // settled, because a table measured mid-reflow reports no overflow it will have a moment later.
+  var q=0;
+  function soon(){if(q)return;q=1;requestAnimationFrame(function(){q=0;all();setTimeout(all,300)})}
+  new MutationObserver(soon).observe(document.documentElement,{childList:true,subtree:true});
+  // a panel written while its tab was closed measures nothing, so opening one is also a trigger
+  document.addEventListener('click',soon,true);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(all);
+  all();
+  (window.__panelInit=window.__panelInit||[]).push(all);
+  addEventListener('load',all);
+})();
