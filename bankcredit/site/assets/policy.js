@@ -662,6 +662,43 @@
       '<span class="rp-t">'+(bits.join(' · ')||'no change')+'<span class="muted"> since '+
         esc(String(h.start||'').slice(0,4))+'</span></span></div>';
   }
+  // ---- the shortlist ----
+  // Twenty-four cards carrying the same eight figures in the same eight places is a table that has
+  // been taken apart: nothing lines up, so nothing can be compared down a column, and the eye has
+  // to find each number again in every card. One row a name, and the columns do the comparing.
+  function llTable(cands,w,t){
+    var span=1;
+    cands.forEach(function(e){ if(w.score!=null&&e.score-w.score>span)span=e.score-w.score; });
+    // a ratio is marked only where it is in the bottom quarter of every covered name: on a
+    // shortlist of strong names, the useful colour says where the weak spot is
+    var kpi=function(k,v,dp,suf){
+      var st=uni(k), low=(v!=null&&st&&v<st.p25);
+      return '<td class="ll-v'+(low?' ll-low':'')+'"'+(low?' title="in the bottom quarter of every covered name"':'')+'>'+
+        (v==null?'<span class="na">—</span>':Number(v).toFixed(dp)+(suf||''))+'</td>';
+    };
+    var rows=cands.map(function(e,i){
+      var vs=(w.score!=null)?(e.score-w.score):null;
+      var mp=(e.market&&e.market.direction!=='none')?mkt(e.market):'';
+      var bar=(vs!=null&&vs>0)?'<span class="ll-bar2" style="width:'+Math.max(3,vs/span*100).toFixed(0)+
+        '%;background:'+(BANDC[e.band]||'#c9d3de')+'" title="'+vs.toFixed(1)+' points above the weakest name you accept at this tenor"></span>':'';
+      return '<tr class="ll-r" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+
+          esc(e.short)+', open detail" style="--band:'+(BANDC[e.band]||'#c9d3de')+'">'+
+        '<td class="ll-rank mono">'+(i+1)+'</td>'+
+        '<td class="ll-name"><span class="ll-nm">'+esc(e.short)+typeTag(e)+'</span>'+
+          '<span class="ll-co">'+esc(e.name)+' · '+sovPill(e)+'</span></td>'+
+        '<td class="ll-sc">'+scoreNum(e.score,e.band,'sc-2')+
+          '<span class="ll-track">'+bar+'</span></td>'+
+        '<td class="ll-cpc"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
+          '<span class="ll-ags">'+(e.ratings||[]).map(function(x){return esc(x.letter)}).join('')+'</span></td>'+
+        kpi('cet1',e.cet1,1)+kpi('leverage',e.leverage,1)+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
+        '<td class="ll-mkt">'+mp+'</td>'+
+        '<td class="ll-addc"><button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></td></tr>';
+    }).join('');
+    return '<div class="table-wrap"><table class="plain ll-t2"><thead><tr>'+
+      '<th></th><th>Name</th><th>Score'+mk('score')+'</th><th>Rating</th>'+
+      '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Market</th><th></th>'+
+      '</tr></thead><tbody>'+rows+'</tbody></table></div>';
+  }
   function ratingCell(e){
     var r=(e.ratings||[]);
     if(!r.length)return '<div class="cp-rt-none">No agency rates this entity.</div>';
@@ -849,33 +886,7 @@
             '<b class="band mono band-'+esc(w.band||'')+'">'+esc(w.band||'?')+'</b>'+
             '<b style="color:'+gradeColour(wg)+'">'+esc(wg)+'</b>'+
             '<b style="color:'+scoreColour(w.score)+'">'+(w.score!=null?w.score.toFixed(1):'?')+'</b></span></div>'+
-          (cands.length?'<div class="ll-grid">'+cands.map(function(e){
-            var vs=(w.score!=null)?(e.score-w.score):null;
-            // A shortlist is scanned before it is studied, so a card carries the marks the rest of
-            // the site uses: the band on its edge, the score and the composite rating in the ramp's
-            // colour, and the four ratios one name is chosen over another on.
-            var mp=(e.market&&e.market.direction!=='none')?mkt(e.market):'';
-            // a ratio is marked only where it is in the bottom quarter of every covered name: on a
-            // shortlist of strong names, the useful colour says where the weak spot is
-            var kpi=function(k,v,dp,suf,l){
-              var st=uni(k), low=(v!=null&&st&&v<st.p25);
-              return '<span class="ll-k'+(low?' ll-low':'')+'"'+(low?' title="in the bottom quarter of every covered name"':'')+
-                '><b>'+(v==null?'<span class="na">—</span>':Number(v).toFixed(dp)+(suf||''))+'</b>'+l+'</span>';
-            };
-            return '<div class="ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+esc(e.short)+', open detail"'+
-              ' style="--band:'+(BANDC[e.band]||'#c9d3de')+'">'+
-              '<div class="ll-top"><span class="ll-nm">'+esc(e.short)+typeTag(e)+'</span>'+
-                '<span class="ll-act">'+mp+'<button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></span></div>'+
-              '<div class="ll-co">'+esc(e.name)+' · '+sovPill(e)+'</div>'+
-              '<div class="ll-score">'+scoreNum(e.score,e.band,'sc-1')+
-                '<b class="ll-cp" style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
-                (vs!=null&&vs>0?'<span class="ll-vs">+'+vs.toFixed(1)+' vs your weakest</span>':'')+'</div>'+
-              '<div class="ll-kpis">'+kpi('cet1',e.cet1,1,'','CET1')+kpi('leverage',e.leverage,1,'','LEV')+
-                kpi('lcr',e.lcr,0,'%','LCR')+kpi('nsfr',e.nsfr,0,'%','NSFR')+'</div>'+
-              '<div class="ll-rt">'+(e.ratings||[]).map(function(x){
-                return '<span class="ll-ag">'+esc(x.letter)+'</span><span class="mono" style="color:'+gradeColour(x.value)+'">'+esc(x.value)+'</span>';
-              }).join('')+'</div></div>';
-          }).join('')+'</div>'
+          (cands.length?llTable(cands,w,t)
            :'<p class="small muted">No covered name outside your policy matches the standing you accept at this tenor.</p>')+
         '</div>';
       });
@@ -909,7 +920,7 @@
         return}
       if(ev.target.id==='md-close'){document.getElementById('pol-modal').close();return}
       // a card opens its detail; a link inside it still navigates
-      var card=ev.target.closest('.pol-card,.ll,.uni-row');
+      var card=ev.target.closest('.pol-card,.ll-r,.uni-row');
       if(card&&!ev.target.closest('a,button')){
         var tn=card.dataset.tenor?+card.dataset.tenor:(card.classList.contains('uni-row')?+document.getElementById('uni-tenor').value:0);
         openModal(card.dataset.id,tn);return}
@@ -933,7 +944,7 @@
     });
     document.addEventListener('keydown',function(ev){
       if(ev.key!=='Enter'&&ev.key!==' ')return;
-      var card=ev.target.closest&&ev.target.closest('.ll,.pol-card');
+      var card=ev.target.closest&&ev.target.closest('.ll-r,.pol-card');
       if(card&&!ev.target.closest('a,button')){ev.preventDefault();openModal(card.dataset.id,card.dataset.tenor?+card.dataset.tenor:0)}
     });
     var m=location.hash.match(/#p=([A-Za-z0-9_\-]+)/);if(m){var sh=decode(m[1]);if(sh&&sh.length){if(!load().length){save(sh);history.replaceState(null,'',location.pathname)}else{window.__shared=sh;var box=document.getElementById('pol-shared');box.hidden=false;box.querySelector('span').textContent='This link carries a policy of '+sh.length+' counterparties.'}}}

@@ -427,8 +427,14 @@ def test_the_policy_page_is_tabs(page, server):
     assert page.eval_on_selector("#tn-policy", "e => e.textContent") == "4"
     page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
     page.wait_for_timeout(400)
-    drawn = page.eval_on_selector_all("#pol-ll .ll", "e => e.length")
+    drawn = page.eval_on_selector_all("#pol-ll .ll-r", "e => e.length")
     assert drawn > 0
+    # a shortlist of like things is a table: the same eight figures in the same eight places
+    assert page.eval_on_selector_all("#pol-ll table.ll-t2", "e => e.length") == 1
+    heads = page.eval_on_selector_all("#pol-ll .ll-t2 thead th", "e => e.map(x => x.textContent.trim())")
+    named = [h for h in heads if h]
+    assert named[0] == "Name" and named[1].startswith("Score"), heads
+    assert named[2:6] == ["Rating", "CET1", "LEV", "LCR"], heads
     # the count on the tab is every distinct name the shortlist turns up, so never fewer than one
     # tenor's worth of cards
     assert int(page.eval_on_selector("#tn-ll", "e => e.textContent")) >= drawn
@@ -460,7 +466,7 @@ def test_the_shortlist_shows_one_tenor_at_a_time(page, server):
     page.wait_for_timeout(200)
     assert page.eval_on_selector_all("#pol-ll .ll-pane:not([hidden])", "e => e.map(x => x.dataset.t)") == ["90"]
     assert page.eval_on_selector_all("#pol-ll .ll-t.active", "e => e.map(x => x.dataset.t)") == ["90"]
-    assert page.eval_on_selector_all("#pol-ll .ll-pane:not([hidden]) .ll", "e => e.length") > 0
+    assert page.eval_on_selector_all("#pol-ll .ll-pane:not([hidden]) .ll-r", "e => e.length") > 0
     assert not page.errors, page.errors
 
 
