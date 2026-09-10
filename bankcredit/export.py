@@ -427,6 +427,9 @@ AUDIT_METRICS = ["cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_r
                  "overall_capital_requirement", "npl_ratio", "roe", "roa", "efficiency_ratio", "total_assets"]
 
 
+# The order the pillar sub-scores are exported in, and the order the weighting panel lists them.
+PILLAR_ORDER = ("capital", "liquidity", "asset_quality", "profitability", "stability", "rating")
+
 COMPARE_METRICS = [("score", "Counterparty score", "", 1, True), ("rating_grade", "Composite rating (grade, 1 = AAA)", "", 1, False), ("cet1_ratio", "CET1 ratio", "%", 1, True), ("leverage_ratio", "Leverage ratio", "%", 1, True),
                    ("total_capital_ratio", "Total capital ratio", "%", 1, True), ("lcr", "LCR", "%", 0, True), ("nsfr", "NSFR", "%", 0, True),
                    ("roe", "Return on equity", "%", 1, True), ("roa", "Return on assets", "%", 2, True), ("nim", "Net interest margin", "%", 2, True),
@@ -753,6 +756,12 @@ def export_json() -> None:
                                                     "coverage", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "ratings", "market", "asof", "age_days",
                                                     "rating_grade", "rating_composite", "inherited", "sovereign")},
                             "score": row["public_score"], "short_ratings": short_ratings, "recent": recent, "negative": negative[:3], "news30": news30,
+                            # The six pillar sub-scores and the market overlay, so the browser can
+                            # weigh them the reader's own way rather than ours. An array, in the
+                            # order PILLAR_ORDER names, because six keys a row is 18 KB of JSON on
+                            # the file the page waits for.
+                            "pw": [_clean(sc.pillars.get(k, (None,))[0]) for k in PILLAR_ORDER],
+                            "overlay": _clean(sc.overlay),
                             "market_detail": {k: market.get(k) for k in ("vol30", "drawdown52", "bond_change30", "bond_count")}})
         debug = {}
         if DEBUG_DATA:

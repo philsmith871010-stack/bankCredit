@@ -133,7 +133,9 @@ def compute(latest: dict[str, float], overlay: float = 0.0, rating_grade: float 
                 inputs[alt] = (latest[alt], round(s))
         if subs:
             p = sum(subs) / len(subs)
-            pillars[name] = (round(p, 1), weight)
+            # three places, not one: the site hands these to the browser so a reader can weigh them
+            # their own way, and a sub-score rounded to a tenth re-weighs to a different total
+            pillars[name] = (round(p, 3), weight)
             weighted += p * weight
             weight_used += weight
         else:
@@ -141,7 +143,7 @@ def compute(latest: dict[str, float], overlay: float = 0.0, rating_grade: float 
     total_weight = sum(w for w, _ in PILLARS.values())
     coverage = weight_used / total_weight
     rs = rating_score(rating_grade)
-    pillars["rating"] = (round(rs, 1), RATING_WEIGHT)
+    pillars["rating"] = (round(rs, 3), RATING_WEIGHT)
     if weight_used == 0 or pillars.get("capital", (None,))[0] is None:
         return ScoreResult(None, round(coverage, 2), pillars, 0.0, None, "", inputs, unrated=rating_grade is None, reason="no capital ratios")
     if rating_grade is None:

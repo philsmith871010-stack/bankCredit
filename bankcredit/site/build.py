@@ -259,7 +259,7 @@ def page_bank(b, generated):
     overlay = b.get("overlay")
     pillars = b["score_detail"]["pillars"]
     order = ["rating", "capital", "liquidity", "stability", "asset_quality", "profitability"]
-    prow = "".join(f'<div class="pillar{" pillar-na" if pillars[k][0] is None else ""}"><span class="pl">{ {"rating": "Rating", "capital": "Capital", "liquidity": "Liquidity", "stability": "Stability", "asset_quality": "Assets", "profitability": "Profit"}[k]}</span>'
+    prow = "".join(f'<div class="pillar{" pillar-na" if pillars[k][0] is None else ""}" data-k="{k}"><span class="pl">{ {"rating": "Rating", "capital": "Capital", "liquidity": "Liquidity", "stability": "Stability", "asset_quality": "Assets", "profitability": "Profit"}[k]}</span>'
                    f'<span class="mono">{"—" if pillars[k][0] is None else f"{pillars[k][0]:.0f}"}</span><i><b style="width:{0 if pillars[k][0] is None else pillars[k][0]:.0f}%"></b></i>'
                    f'<span class="pw">w {pillars[k][1] if pillars[k][0] is not None else PILLARS.get(k, (0,))[0]}</span></div>' for k in order if k in pillars)
     # trends: small multiples grouped by theme, each opening a full-size chart
@@ -396,7 +396,7 @@ def page_bank(b, generated):
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
 <div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {sovereign_pill(b)}{c.info("sovereign")}{" · " + c.chip("LEI " + c.esc(b["lei"])) + c.info("lei") if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
 <div class="actions"><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button><button class="btn primary" onclick="window.print()">{c.ico("download", 16, c.WHITE)}Counterparty report</button></div></div>
-<div class="grid-12"><div class="score-card"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span><span class="score-band">{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</span></div>
+<div class="grid-12"><div class="score-card" data-pw="{c.esc(json.dumps([b["score_detail"]["pillars"].get(k, (None,))[0] for k in c.PILLAR_KEYS]))}" data-overlay="{overlay if overlay is not None else 0}" data-grade="{b.get("rating_grade") if b.get("rating_grade") is not None else ""}" data-coverage="{cov}"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span><span class="score-band">{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</span></div>
 <div class="score-main"><div class="score-fig">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div>
 {c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12, fluid=True)}</div>
 <div class="pillars">{prow}</div></div>
@@ -879,7 +879,8 @@ def page_home(board, status, generated):
                  '<button class="tab" data-tab="universe">Every covered name</button>'
                  '<button class="tab" data-tab="ratings">Ratings</button>'
                  '<button class="tab" data-tab="events">Events</button>'
-                 '<button class="tab" data-tab="analysis">Analysis</button></div>'
+                 '<button class="tab" data-tab="analysis">Analysis</button>'
+                 '<button class="tab" data-tab="weights">Weightings</button></div>'
                  '<section class="panel active" data-panel="policy">'
                  '<div id="policy-body"><div class="sk-cards" aria-hidden="true">'
                  + '<span class="sk"></span>' * 4 + '</div></div>'
@@ -891,6 +892,9 @@ def page_home(board, status, generated):
                  f'<section class="panel" data-panel="events" data-src="data/panels/events.html?v={c.stamp(generated)}"></section>'
                  f'<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html?v={c.stamp(generated)}"'
                  f' data-js="assets/compare.js?v={c.stamp(generated)}"></section>'
+                 # how much each pillar counts for is the reader's judgement, so it is a tab of its
+                 # own rather than a setting tucked behind a cog, and the disclosure lives with it
+                 '<section class="panel" data-panel="weights"><div id="pol-weights"></div></section>'
                  '</div>')
     # the list is drawn from this file, and asking for it only after two scripts have been
     # fetched and run is a round trip the reader spends looking at an empty box

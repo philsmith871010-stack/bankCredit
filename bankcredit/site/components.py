@@ -284,6 +284,9 @@ AGENCY_NAME = {"fitch": "Fitch", "sp": "S&P", "moodys": "Moody's", "dbrs": "DBRS
                "scope": "Scope", "jcr": "JCR"}
 # Where the ladder is labelled. The scale runs 1 = AAA to 17 = CCC and below; a rung every notch
 # would be unreadable, so the letter grades get the lines and the notches sit between them.
+# The order the weighting model reads a bank's pillar sub-scores in, shared with export.PILLAR_ORDER.
+PILLAR_KEYS = ("capital", "liquidity", "asset_quality", "profitability", "stability", "rating")
+
 SCALE = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-",
          "B+", "B", "B-", "CCC"]
 # One ramp for every rating on the site, the same one the policy page has always used for a score:
