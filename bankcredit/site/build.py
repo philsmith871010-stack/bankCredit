@@ -81,49 +81,6 @@ def age_badge(asof, age):
     return f'<span class="age{" age-late" if late else ""}" title="Reference date of the latest regulatory figures">{c.esc(asof)}</span>'
 
 
-def benchmark_strip(board):
-    bm = board.get("benchmarks") or []
-    if not bm:
-        return ""
-    cells = "".join(f'<div class="bm"><div class="bm-label">{c.esc(b["label"])}</div><div class="bm-val"><span class="mono big-sm">{b["value"]:.0f}</span><span class="unit">bp</span>{c.chg(b["change30"], 0, "bp") if b.get("change30") is not None else ""}</div>{c.spark(b["spark"])}<div class="muted small mono">{c.esc(b["date"])}</div></div>' for b in bm)
-    return f'<div class="card pad bm-strip"><div class="bm-head"><h3>Credit benchmarks</h3><span class="muted small">ICE BofA option-adjusted spreads via FRED · 30-day change</span></div><div class="bm-grid">{cells}</div></div>'
-
-
-def today_strip(board) -> str:
-    """The board's opening row: what the universe looks like today and what moved this week."""
-    rows = board["rows"]
-    today = datetime.utcnow().date()
-    since7 = (today - timedelta(days=7)).isoformat()
-    bands = {b: sum(1 for r in rows if r["band"] == b) for b in "ABCDE"}
-    bands["?"] = sum(1 for r in rows if r["score"] is not None and r["band"] in ("?", ""))
-    scored = sum(bands.values())
-    bar = "".join(f'<i class="band-{b if b != "?" else "x"}" style="flex:{n}" title="{"Band " + b if b != "?" else "Provisional, no band"}: {n}"></i>' for b, n in bands.items() if n)
-    legend = " ".join(f'<span><b class="band-{b if b != "?" else "x"}"></b>{b if b != "?" else "no band"} {n}</span>' for b, n in bands.items() if n)
-    try:
-        acts = [a for a in load("ratings").get("actions", []) if str(a.get("date", ""))[:10] >= since7]
-    except Exception:
-        acts = []
-    up = sum(1 for a in acts if a.get("severity") == "good")
-    down = sum(1 for a in acts if a.get("severity") == "bad")
-    flagged = {"bad": 0, "warn": 0, "good": 0}
-    for r in rows:
-        for e in (load(f"banks/{r['id']}").get("events") or []):
-            if e.get("type") == "news" and str(e.get("date"))[:10] >= since7 and e.get("severity") in flagged:
-                flagged[e["severity"]] += 1
-    ages = sorted(r["age_days"] for r in rows if r.get("age_days") is not None)
-    med_age = ages[len(ages) // 2] if ages else None
-    stale = sum(1 for a in ages if a > 150)
-    widening = sum(1 for r in rows if (r.get("market") or {}).get("direction") == "down")
-    return f'''<div class="today">
-<a class="tcard" href="#board"><span class="tl">Scored</span><span class="tv mono">{scored}<small> of {len(rows)}</small></span><span class="tbar">{bar}</span><span class="tlegend small">{legend}</span></a>
-<a class="tcard" href="ratings/index.html"><span class="tl">Rating actions, 7 days</span><span class="tv mono">{len(acts)}</span><span class="small"><span class="good">▲ {up} up or positive</span> · <span class="bad">▼ {down} down or negative</span></span></a>
-<a class="tcard" href="events/index.html"><span class="tl">Flagged headlines, 7 days</span><span class="tv mono">{sum(flagged.values())}</span><span class="small"><span class="bad">{flagged["bad"]} adverse</span> · <span style="color:#b35900">{flagged["warn"]} watch</span> · <span class="good">{flagged["good"]} positive</span></span></a>
-<a class="tcard" href="compare/index.html"><span class="tl">Market signal widening</span><span class="tv mono">{widening}</span><span class="small muted">names whose CDS, bonds or equity moved the wrong way in 30 days</span></a>
-<a class="tcard" href="admin/index.html#coverage"><span class="tl">Figures as of</span><span class="tv mono">{med_age if med_age is not None else "—"}<small> days, median</small></span><span class="small {"bad" if stale > 20 else "muted"}">{stale} names older than 150 days</span></a>
-</div>'''
-
-
-
 def _grade_bucket(r) -> str:
     g = r.get("rating_grade")
     if g is None:
@@ -641,7 +598,7 @@ def page_method(generated, inner: bool = False):
     grade_cells = "".join(f'<td class="mono small">{c.esc(l)}<br>{RATING_SCORE[i + 1]}</td>' for i, l in enumerate(GRADE_LETTERS))
     ratio_weight = sum(w for w, _ in PILLARS.values())
     body = f'''<div class="card pad prose" id="method-prose">
-<h2>Sources</h2><p>Regulatory figures come from the FDIC API (US banks, lead bank subsidiary), the EBA Pillar 3 Data Hub and Transparency Exercises (EU and EEA banks, consolidated), and each firm's own Pillar 3 disclosures (UK and other regions, read from PDF by a rules-based KM1 extractor with arithmetic validation; no AI service). Ratings and rating actions come from the ESMA European Rating Platform. Prices come from public market data. Bond quotes come from Börse Frankfurt's public price pages for each bank's senior fixed-rate bonds (two to eight years to run); they stay private and only the 30-day yield change against other bank bonds in the same currency is shown. CDS levels are medians of the day's reported trades in DTCC's public swap-data files (indicative, inferred from upfront payments) and iTraxx and CDX index prints from the same source; benchmark bond spreads are ICE BofA option-adjusted spread indices from FRED. Headlines are discovered through Google News and kept only when they pass a credit vocabulary and noise filter. Every figure on a profile carries its source, method and reference date.</p>
+<h2>Sources</h2><p>Regulatory figures come from the FDIC API (US banks, lead bank subsidiary), the EBA Pillar 3 Data Hub and Transparency Exercises (EU and EEA banks, consolidated), and each firm's own Pillar 3 disclosures (UK and other regions, read from PDF by a rules-based KM1 extractor with arithmetic validation; no AI service). Ratings and rating actions come from the ESMA European Rating Platform. Prices come from public market data. Bond quotes come from Börse Frankfurt's public price pages for each bank's senior fixed-rate bonds (two to eight years to run); they stay private and only the 30-day yield change against other bank bonds in the same currency is shown. CDS levels are medians of the day's reported trades in DTCC's public swap-data files (indicative, inferred from upfront payments), and the iTraxx and CDX index levels shown as credit benchmarks are index prints from the same source. The ICE BofA option-adjusted spread indices published by FRED are collected only where a FRED API key is configured, and nothing on this site is currently built from them. Headlines are discovered through Google News and kept only when they pass a credit vocabulary and noise filter. Every figure on a profile carries its source, method and reference date.</p>
 <h2>Score</h2><p>Two parts. The <span class="b">rating anchor</span> is {RATING_WEIGHT} percent of the score: the composite agency rating (the median of the long-term ratings held by the agencies that rate the bank, on a common scale from AAA to CCC) converted to a sub-score by the table below. The <span class="b">ratio pillars</span> are the other {ratio_weight} percent: each regulatory metric is converted to a 0 to 100 sub-score by straight-line interpolation between the thresholds below, averaged within its pillar and weighted. Missing metrics do not score zero: the ratio weights are re-scaled over what is available and the coverage percentage is shown. A band is only assigned when coverage is at least 50 percent.</p>
 <p>A score needs three things, and is withheld with the reason stated when any is missing: an agency rating (ratios alone say too little, and a young or small bank's ratios are often high because its balance sheet is small or immature), a capital ratio (a rating alone says nothing about today's balance sheet), and capital figures no older than eighteen months. Unrated banks and banks whose latest Pillar 3 figures are stale therefore show "not scored" rather than a number, and they can still be sorted and compared on the ratios and ratings they do have. A bank rated in the BBB range is capped at 74.9 (band B) and a bank rated below investment grade at 64.9 (band C): strong ratios can lift a bank at most one band above what its rating says.</p>
 <div class="wbar" aria-hidden="true"><span style="flex:{RATING_WEIGHT}" class="w-rating">Rating {RATING_WEIGHT}</span>{"".join(f'<span style="flex:{w}" class="w-{k}" title="{k.replace("_", " ").title()} {w}">{ {"capital": "Capital", "liquidity": "Liquidity", "stability": "Stability", "asset_quality": "Assets", "profitability": "Profit"}[k]} {w}</span>' for k, (w, _) in PILLARS.items())}</div>
@@ -715,7 +672,7 @@ def health_card() -> str:
 {group("never")}{group("overdue")}{group("no source")}</div>'''
 
 def page_status(status, board, generated, inner: bool = False):
-    runs = "".join(f'<tr><td class="b">{c.esc(r["source"])}</td><td>{c.chip(c.esc(r["status"]), {"ok": "good", "partial": "warn", "failed": "bad"}.get(r["status"], "muted"))}</td><td class="mono">{r["rows"]}</td><td class="mono muted">{c.esc(r["finished"][:16].replace("T", " "))}</td><td class="muted small">{c.esc(r["message"])}</td></tr>' for r in status["runs"]) or '<tr><td colspan="5" class="empty">No runs recorded yet.</td></tr>'
+    runs = "".join(f'<tr><td class="b">{c.esc(r["source"])}</td><td>{c.chip(c.esc(r["status"]), {"ok": "good", "partial": "warn", "failed": "bad", "skipped": "muted"}.get(r["status"], "muted"))}</td><td class="mono">{r["rows"]}</td><td class="mono muted">{c.esc(r["finished"][:16].replace("T", " "))}</td><td class="muted small">{c.esc(r["message"])}</td></tr>' for r in status["runs"]) or '<tr><td colspan="5" class="empty">No runs recorded yet.</td></tr>'
     rows = board["rows"]
     missing = [r for r in rows if not r["asof"]]
     stale = [r for r in rows if r["age_days"] and r["age_days"] > 150]

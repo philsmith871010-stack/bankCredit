@@ -125,8 +125,22 @@ class Adapter:
                 except Exception as exc:                        # noqa: BLE001 - reported per item
                     yield item, None, exc
 
+    def skip(self) -> str | None:
+        """Why this adapter cannot run today, or None if it can.
+
+        A source that needs a credential nobody has configured is not a failure. Reported as one it
+        prints a red line every morning, and a red line that is always there is the one nobody
+        reads - which is how a real failure goes unnoticed.
+        """
+        return None
+
     def run(self) -> tuple[int, str]:
         started = datetime.utcnow()
+        why = self.skip()
+        if why:
+            log.info("%s skipped: %s", self.name, why)
+            store.log_run(self.name, "skipped", 0, why, started)
+            return 0, "skipped"
         total, errors = 0, []
         for item, raw, failure in self._fetched(list(self.discover())):
             name = getattr(item, "id", item)

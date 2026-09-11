@@ -15,6 +15,11 @@
 #   bash tools/kick.sh --force      collect regardless
 #   bash tools/kick.sh --dry-run    say what it would do, push nothing
 #
+# Exit 0 means a kick went out, 3 means none was owed, 1 means one was owed and could not be sent.
+# A caller that cannot tell those apart reports success for a morning on which nothing happened,
+# which is how 11 September went: the routine succeeded, no kick was pushed, and the collection
+# waited four and a half hours for GitHub's own scheduler to turn up.
+#
 # The commit is assembled in a temporary index and pushed straight at origin/main, so it neither
 # reads nor disturbs the working tree: safe to run from a clone that is mid-edit, and safe to run
 # from a clone that is behind.
@@ -39,15 +44,15 @@ requested=$(at requested)
 
 if [ -z "$force" ]; then
   if [ "$now" -lt "$owed_from" ]; then
-    echo "nothing owed: the day's collection is not due until 05:00 UTC"; exit 0
+    echo "nothing owed: the day's collection is not due until 05:00 UTC"; exit 3
   fi
   if [ "$collected" -ge "$owed_from" ]; then
-    echo "nothing owed: collected $(( (now - collected) / 60 )) minutes ago"; exit 0
+    echo "nothing owed: collected $(( (now - collected) / 60 )) minutes ago"; exit 3
   fi
   # A kick that has already gone out today is still working; two collections would fight over the
   # same commit. Ninety minutes is longer than a full run has ever taken.
   if [ "$requested" -ge "$owed_from" ] && [ $((now - requested)) -lt 5400 ]; then
-    echo "already kicked $(( (now - requested) / 60 )) minutes ago and still running"; exit 0
+    echo "already kicked $(( (now - requested) / 60 )) minutes ago and still running"; exit 3
   fi
 fi
 

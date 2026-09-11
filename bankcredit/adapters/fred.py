@@ -1,20 +1,26 @@
-"""Benchmark credit spreads from FRED (ICE BofA option-adjusted spread indices), no key.
+"""Benchmark credit spreads from FRED (ICE BofA option-adjusted spread indices).
 
-The fredgraph CSV endpoint serves several series in one request. Values are in
-percent; stored as basis points in the `series` table (key: series_id + date).
+The keyless fredgraph CSV endpoint works from a laptop and not from a data centre: from a hosted
+runner it hangs and then closes the connection, so every scheduled run logged this adapter as
+failed and collected nothing. There are no FRED rows in the store at all, and there never were.
+
+The supported route is the FRED API, which needs a free key. Set FRED_API_KEY (a repository
+secret in the pipeline) and this collects; without one it skips and says so, rather than printing
+a red line every morning for a source nobody has turned on.
+
+Values are in percent; stored as basis points in the `series` table (key: series_id + date).
 """
 from __future__ import annotations
 
-import csv
-import io
 import logging
+import os
 
 from .. import store
 from .base import Adapter, register
 
 log = logging.getLogger("bankcredit.fred")
 
-URL = "https://fred.stlouisfed.org/graph/fredgraph.csv"
+API = "https://api.stlouisfed.org/fred/series/observations"
 SERIES = {
     "BAMLC0A0CM": ("US IG corporate", "ICE BofA US Corporate OAS"),
     "BAMLH0A0HYM2": ("US high yield", "ICE BofA US High Yield OAS"),
@@ -32,33 +38,31 @@ class FredAdapter(Adapter):
     # A public data API, one small CSV per series, and it is slow to first byte rather than busy.
     workers = 4
 
+    def skip(self) -> str | None:
+        if not os.environ.get("FRED_API_KEY"):
+            return ("no FRED_API_KEY: the ICE BofA spread indices are not collected. The keyless "
+                    "CSV endpoint does not answer a hosted runner; a free key at "
+                    "fred.stlouisfed.org/docs/api/api_key.html turns this on.")
+        return None
+
     def discover(self):
         # one request per series: smaller responses, and one slow series does not sink the rest
         yield from SERIES
 
     def fetch(self, item):
-        last = None
-        for attempt in range(1):        # FRED refuses data-centre traffic; one short try keeps the run moving
-            try:
-                r = self.session.get(URL, params={"id": item}, timeout=(15, 30),
-                                     headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 Chrome/128 Safari/537.36"})
-                r.raise_for_status()
-                return r.text
-            except Exception as exc:          # FRED is slow to first byte at times; retry with a pause
-                last = exc
-                import time
-                time.sleep(3)
-        raise RuntimeError(f"{item}: {last}")
+        r = self.session.get(API, timeout=(15, 30), params={
+            "series_id": item, "api_key": os.environ["FRED_API_KEY"], "file_type": "json",
+            "observation_start": "2015-01-01"})
+        r.raise_for_status()
+        return r.json()
 
     def parse(self, item, raw) -> list[dict]:
         rows = []
-        for rec in csv.DictReader(io.StringIO(raw)):
-            d = rec.get("observation_date") or rec.get("DATE")
-            for sid in SERIES:
-                v = rec.get(sid)
-                if v and v != ".":
-                    rows.append({"series_id": sid, "date": d, "value": round(float(v) * 100, 1), "unit": "bp",
-                                 "label": SERIES[sid][0], "source": "FRED"})
+        for rec in (raw or {}).get("observations", []):
+            v, d = rec.get("value"), rec.get("date")
+            if v and v != "." and d:
+                rows.append({"series_id": item, "date": d, "value": round(float(v) * 100, 1),
+                             "unit": "bp", "label": SERIES[item][0], "source": "FRED"})
         return rows
 
     def validate(self, records):

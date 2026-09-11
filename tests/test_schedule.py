@@ -139,3 +139,37 @@ def test_the_kick_never_touches_the_working_tree():
     assert "GIT_INDEX_FILE" in text and "commit-tree" in text
     for forbidden in ("git add", "git checkout", "git commit -m", "git reset", "git stash"):
         assert forbidden not in text, f"kick.sh uses {forbidden!r}"
+
+
+def test_a_kick_that_went_nowhere_does_not_look_like_one_that_went_out():
+    """On 11 September the 05:10 routine reported success and no kick was pushed, so the day's
+    collection waited four and a half hours for GitHub's own scheduler. A caller that reads only
+    an exit code has to be able to tell a kick from a decline: 0 sent, 3 none owed, 1 could not."""
+    text = KICK.read_text()
+    assert "exit 3" in text, "a decline has its own code"
+    declines = [ln for ln in text.splitlines() if "nothing owed" in ln or "already kicked" in ln]
+    assert declines, "the decline paths are still there"
+    for line in declines:
+        assert "exit 3" in line, f"a decline still exits 0: {line.strip()}"
+    assert 'echo "kicked:' in text and "exit 0" in text, "and a kick still exits 0"
+
+
+def test_the_kick_declines_when_the_day_is_already_collected(tmp_path):
+    """Run for real against a throwaway repository, so the decision is tested and not the text."""
+    origin, clone = tmp_path / "origin.git", tmp_path / "clone"
+    subprocess.run(["git", "init", "--quiet", "--bare", "-b", "main", origin], check=True)
+    subprocess.run(["git", "clone", "--quiet", str(origin), str(clone)], check=True)
+    state = clone / "data" / "state"
+    state.mkdir(parents=True)
+    (state / "last-collect").write_text(datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
+    tools = clone / "tools"
+    tools.mkdir()
+    (tools / "kick.sh").write_text(KICK.read_text())
+    git = ["git", "-C", str(clone), "-c", "user.name=t", "-c", "user.email=t@t"]
+    subprocess.run(git + ["add", "-A"], check=True)
+    subprocess.run(git + ["commit", "--quiet", "-m", "state"], check=True)
+    subprocess.run(git + ["push", "--quiet", "origin", "main"], check=True)
+    done = subprocess.run(["bash", str(tools / "kick.sh"), "--dry-run"],
+                          capture_output=True, text=True)
+    assert done.returncode == 3, done.stdout + done.stderr
+    assert "nothing owed" in done.stdout

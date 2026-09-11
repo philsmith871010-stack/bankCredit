@@ -61,6 +61,10 @@ jobs:
         if: ${{ needs.decide.outputs.mode == 'full' }}
         run: python -m bankcredit.cli run ${{ github.event.inputs.adapters || 'esma sovereign yahoo pillar3 events fred dtcc ice' }}
         continue-on-error: true      # one failing source must not stop the others from being published
+        env:
+          # FRED's keyless CSV endpoint does not answer a hosted runner. Add this repository secret
+          # and the ICE BofA spread indices collect; without it the adapter skips and says so.
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
       - name: Load answers from the review queue
         if: ${{ needs.decide.outputs.mode == 'full' }}
         run: python -m bankcredit.cli review ingest
