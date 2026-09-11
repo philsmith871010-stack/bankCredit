@@ -242,5 +242,129 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-09-10T09:00:31"
+ },
+ {
+  "id": "08e66c38bc1d",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2011/30-june---basel-ii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/08e66c38bc1d0e45.pdf",
+  "title": "30-june---basel-ii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "warn",
+    "text recovered by OCR from an image-only document"
+   ],
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-11T09:43:14"
+ },
+ {
+  "id": "af6d329d13c6",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2027/3-september-basel-iii-pillar-3-disclosures-prudential-standard-aps330-attachment-b-main-features-of-capital-instruments.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/af6d329d13c6cd9a.pdf",
+  "title": "3-september-basel-iii-pillar-3-disclosures-prudential-standard-aps330-attachment-b-main-features-of-capital-instruments.",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-11T09:43:14"
+ },
+ {
+  "id": "2f9799d3b8ed",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2024/27-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330---attachment-b---main-features-of-capital-instruments.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/2f9799d3b8ed2f26.pdf",
+  "title": "27-march---basel-iii-pillar-3-disclosures-prudential-standard-aps-330---attachment-b---main-features-of-capital-instrume",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-11T09:43:14"
+ },
+ {
+  "id": "011a4b80b34b",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/2024-march-pillar-3-disclosure.pdf",
+  "local": "cache/pdf/anz/011a4b80b34bfab4.pdf",
+  "title": "2024-march-pillar-3-disclosure.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-11T09:43:16"
+ },
+ {
+  "id": "f881611fc8a9",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/2023-december-pillar-3-disclosure.pdf",
+  "local": "cache/pdf/anz/f881611fc8a90d0e.pdf",
+  "title": "2023-december-pillar-3-disclosure.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-11T09:43:16"
+ },
+ {
+  "id": "a3caa709c6df",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/ANZ-December-2023-Pillar3-chart-pack.pdf",
+  "local": "cache/pdf/anz/a3caa709c6dfd52b.pdf",
+  "title": "ANZ-December-2023-Pillar3-chart-pack.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-11T09:43:16"
  }
 ]
