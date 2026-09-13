@@ -490,5 +490,125 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-09-12T09:26:47"
+ },
+ {
+  "id": "56f5b18e8904",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2023/basel-iii-pillar-3-annual-remuneration-disclosure-as-at-30-june-2023.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/56f5b18e8904d3b1.pdf",
+  "title": "basel-iii-pillar-3-annual-remuneration-disclosure-as-at-30-june-2023.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-13T10:21:17"
+ },
+ {
+  "id": "19ec4e00e9aa",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/fy-2021/22-june---basel-iii-pillar-3-disclosures-prudential-standard-aps-330---attachment-b---main-features-of-capital-instruments2.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/19ec4e00e9aacce2.pdf",
+  "title": "22-june---basel-iii-pillar-3-disclosures-prudential-standard-aps-330---attachment-b---main-features-of-capital-instrumen",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-13T10:21:17"
+ },
+ {
+  "id": "dae15630e332",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2022/basel-iii-pillar-3-annual-remuneration-disclosure-as-at-30-june-2022.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/dae15630e3320d1a.pdf",
+  "title": "basel-iii-pillar-3-annual-remuneration-disclosure-as-at-30-june-2022.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-13T10:21:17"
+ },
+ {
+  "id": "9d6b2ecfd438",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/2023-June-Pillar3-chart-pack.pdf",
+  "local": "cache/pdf/anz/9d6b2ecfd438e5a4.pdf",
+  "title": "2023-June-Pillar3-chart-pack.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-13T10:21:22"
+ },
+ {
+  "id": "aebc96fed8e4",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/2023-march-pillar-3-disclosure.pdf",
+  "local": "cache/pdf/anz/aebc96fed8e4fbc8.pdf",
+  "title": "2023-march-pillar-3-disclosure.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-13T10:21:22"
+ },
+ {
+  "id": "2c690a403581",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/2022-december-pillar-3-disclosure.pdf",
+  "local": "cache/pdf/anz/2c690a4035815f5d.pdf",
+  "title": "2022-december-pillar-3-disclosure.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-13T10:21:22"
  }
 ]
