@@ -1,0 +1,7 @@
+# These files are not text and not really binary either: each is a set of records with a natural
+# key, rewritten whole every time anything in it changes. Two runs that collected different banks
+# still conflict, and git's only offer is to keep one side. tools/merge-data.py unions them the way
+# the store would. A clone has to be told where the driver lives - `python3 tools/merge-data.py
+# --install` - which the Mac job and the workflow both do before they pull.
+data/*.parquet      merge=counterparty -diff
+data/review/*.json  merge=counterparty
