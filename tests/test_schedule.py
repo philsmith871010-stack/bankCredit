@@ -298,3 +298,14 @@ def test_the_local_run_never_discards_work_to_get_its_pull():
     text = MAC.read_text()
     for forbidden in ("git reset --hard", "git clean", "git checkout -- .", "git checkout ."):
         assert forbidden not in text, f"the local run uses {forbidden!r}"
+
+
+def test_a_run_started_by_hand_is_not_silent():
+    """It sent everything to the log, so a manual run printed nothing at all and could not be told
+    from a hung one. launchd still has nowhere but the log; a terminal gets both."""
+    text = MAC.read_text()
+    assert "[ -t 1 ]" in text, "the script does not notice whether a terminal is attached"
+    assert 'tee -a "$LOG"' in text, "a terminal should see the log as it is written"
+    assert 'exec >>"$LOG" 2>&1' in text, "and launchd should still get the plain redirect"
+    steps = [ln for ln in text.splitlines() if ln.strip().startswith('echo "-- ')]
+    assert len(steps) >= 4, f"the slow steps should say what they are, found {len(steps)}"

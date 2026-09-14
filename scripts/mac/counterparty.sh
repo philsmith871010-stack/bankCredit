@@ -12,7 +12,10 @@ REPO="${COUNTERPARTY_REPO:-$HOME/Counterparty}"
 LOG="$REPO/data/cache/local-run.log"
 cd "$REPO"
 mkdir -p data/cache
-exec >>"$LOG" 2>&1
+# Everything goes to the log, because launchd has nowhere else to put it. A run started by hand
+# printed nothing at all, though, which is indistinguishable from a hung one - so when a terminal
+# is attached the log is mirrored to it as well.
+if [ -t 1 ]; then exec > >(tee -a "$LOG") 2>&1; else exec >>"$LOG" 2>&1; fi
 # One run at a time. Two sessions working the review queue at once answer the same items
 # twice and can write over each other's answers, so take a lock for the whole run and release
 # it however the run ends. mkdir is the atomic primitive here; macOS has no flock(1).
@@ -38,15 +41,19 @@ if ! git pull --ff-only; then
 fi
 source .venv/bin/activate
 # 1. collect from bank sites and the FCA NSM from this network (residential IP), extract, queue
+echo "-- collecting Pillar 3 from bank sites and the FCA NSM"
 python -m bankcredit.cli run pillar3 || true
 # 1b. the sites that block scripts: browser headers first, then headless Chromium (playwright) if installed
+echo "-- retrying the sites that block scripts"
 python -m bankcredit.cli browser || true
 # 2. work the review queue with Claude Code (subscription login, no API key)
 if command -v claude >/dev/null 2>&1; then
+  echo "-- working the review queue (this is the slow one)"
   claude -p "/counterparty-review" --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --max-turns 80 || echo "claude review step failed"
 fi
 # 2b. judge the fortnight's headlines (subscription login, no API key); verdicts are applied by every pipeline run
 if command -v claude >/dev/null 2>&1; then
+  echo "-- judging the headlines"
   claude -p "/counterparty-news" --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --max-turns 40 || echo "claude news step failed"
 fi
 # 3. load any answers and push the data; the GitHub pipeline rebuilds the site on push
@@ -56,6 +63,7 @@ python -m bankcredit.cli learn > /dev/null 2>&1 || true
 python -m bankcredit.cli health || true
 # One push path for every runner: the same script the cloud routines call, which commits the
 # answers and nothing else. data/review includes browser-links.json and news_verdicts.json.
+echo "-- pushing the answers"
 bash tools/push-data.sh "Local run $(date -u +%F): Pillar 3 collection and review" || true
 # Then ask for the day's collection, if it is still owed. The marker used to go in the message
 # above unconditionally, which now means collecting twice on any day the 05:10 kick already ran;
