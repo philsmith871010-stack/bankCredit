@@ -4,4 +4,4 @@
 # the store would. A clone has to be told where the driver lives - `python3 tools/merge-data.py
 # --install` - which the Mac job and the workflow both do before they pull.
 data/*.parquet      merge=counterparty -diff
-data/review/*.json  merge=counterparty
+data/review/**/*.json  merge=counterparty
