@@ -182,3 +182,20 @@ def test_every_table_the_driver_covers_has_a_key(repo):
     from bankcredit.store import KEYS
     for p in sorted((ROOT / "data").glob("*.parquet")):
         assert p.stem in KEYS, f"data/{p.name} would conflict with nothing to merge it on"
+
+
+def test_a_copy_of_the_driver_outside_the_clone_still_finds_the_store(repo, tmp_path):
+    """A clone too far behind to have the driver yet has to get one from somewhere, and the
+    somewhere is a copy outside the work tree. Git runs a merge driver from the top of the clone,
+    so that is where the keys come from - not from wherever the copy happens to sit."""
+    outside = tmp_path / "elsewhere" / "merge-data.py"
+    outside.parent.mkdir()
+    outside.write_text(DRIVER.read_text())
+    git(repo, "config", "merge.counterparty.driver", f"python3 {outside} %O %A %B %P")
+    p = repo / "data" / "runs.parquet"
+    done = two_ways(repo,
+                    lambda r: runs("esma-1").to_parquet(p, index=False),
+                    lambda r: runs("esma-1", "mine").to_parquet(p, index=False),
+                    lambda r: runs("esma-1", "theirs").to_parquet(p, index=False))
+    assert done.returncode == 0, done.stdout + done.stderr
+    assert set(pd.read_parquet(p)["run_id"]) == {"esma-1", "mine", "theirs"}
