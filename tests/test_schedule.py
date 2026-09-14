@@ -309,3 +309,93 @@ def test_a_run_started_by_hand_is_not_silent():
     assert 'exec >>"$LOG" 2>&1' in text, "and launchd should still get the plain redirect"
     steps = [ln for ln in text.splitlines() if ln.strip().startswith('echo "-- ')]
     assert len(steps) >= 4, f"the slow steps should say what they are, found {len(steps)}"
+
+
+def _push_repo(tmp_path):
+    """A bare origin, a clone of it wired to push, and a second clone to play the runner.
+
+    push-data.sh works on the repository it lives in, so it is copied into the clone: the point is
+    to watch the real script make real commits against a real remote.
+    """
+    origin, clone, other = tmp_path / "origin.git", tmp_path / "clone", tmp_path / "other"
+    subprocess.run(["git", "init", "--quiet", "--bare", "-b", "main", str(origin)], check=True)
+    cfg = ["-c", "user.name=t", "-c", "user.email=t@t"]
+
+    def git(where, *args, **kw):
+        return subprocess.run(["git", "-C", str(where), *cfg, *args],
+                              capture_output=True, text=True, **kw)
+
+    subprocess.run(["git", "clone", "--quiet", str(origin), str(clone)], check=True)
+    (clone / "data" / "review").mkdir(parents=True)
+    # Every path the script stages has to exist: one `git add` with a missing pathspec adds nothing.
+    for name in ("facts.parquet", "documents.parquet", "runs.parquet", "events.parquet"):
+        (clone / "data" / name).write_bytes(b"start\n")
+    (clone / "data" / "review" / "queue.json").write_text("[]\n")
+    for where in (clone,):
+        git(where, "config", "user.name", "t", check=True)
+        git(where, "config", "user.email", "t@t", check=True)
+    (clone / "tools").mkdir()
+    (clone / "tools" / "push-data.sh").write_text(PUSH.read_text())
+    git(clone, "add", "-A", check=True)
+    git(clone, "commit", "--quiet", "-m", "base", check=True)
+    git(clone, "push", "--quiet", "-u", "origin", "main", check=True)
+    subprocess.run(["git", "clone", "--quiet", str(origin), str(other)], check=True)
+    git(other, "config", "user.name", "t", check=True)
+    git(other, "config", "user.email", "t@t", check=True)
+    return clone, other, git
+
+
+def run_push(clone, message):
+    return subprocess.run(["bash", str(clone / "tools" / "push-data.sh"), message],
+                          capture_output=True, text=True)
+
+
+def test_the_push_script_commits_before_it_pulls(tmp_path):
+    """The Mac run of 14 September ended with six answer files staged and nothing said. The pull
+    is what refuses - the pipeline had rewritten runs.parquet too - and a pull that refuses with
+    the work merely staged loses the run. Commit first and the work survives the refusal."""
+    clone, other, git = _push_repo(tmp_path)
+
+    # The pipeline rewrites the run log upstream, in the same place this run wrote its own.
+    (other / "data" / "runs.parquet").write_bytes(b"pipeline\n")
+    git(other, "commit", "--quiet", "-am", "Pipeline data", check=True)
+    git(other, "push", "--quiet", check=True)
+
+    (clone / "data" / "facts.parquet").write_bytes(b"answers\n")
+    (clone / "data" / "runs.parquet").write_bytes(b"local\n")
+    done = run_push(clone, "Local run: answers")
+
+    assert done.returncode == 1, f"a conflicted merge should not look like a success\n{done.stdout}"
+    assert "committed locally and safe" in done.stderr, done.stderr
+    log = git(clone, "log", "--format=%s", "-n", "3").stdout
+    assert "Local run: answers" in log, f"the run's work was never committed:\n{log}"
+    staged = git(clone, "diff", "--cached", "--name-only").stdout.split()
+    assert "data/facts.parquet" not in staged, f"answers left staged and unpushed: {staged}"
+
+
+def test_the_push_script_pushes_when_the_merge_goes_through(tmp_path):
+    """The ordinary day: nothing upstream touches the answers, so they merge and go out."""
+    clone, other, git = _push_repo(tmp_path)
+
+    (other / "data" / "elsewhere.txt").write_text("unrelated\n")
+    git(other, "add", "-A", check=True)
+    git(other, "commit", "--quiet", "-m", "Pipeline data", check=True)
+    git(other, "push", "--quiet", check=True)
+
+    (clone / "data" / "facts.parquet").write_bytes(b"answers\n")
+    done = run_push(clone, "Local run: answers")
+
+    assert done.returncode == 0, f"{done.stdout}\n{done.stderr}"
+    assert "pushed: Local run: answers" in done.stdout, done.stdout
+    assert "data/facts.parquet" in done.stdout, "it should say what it sent"
+    git(other, "pull", "--quiet", check=True)
+    assert (other / "data" / "facts.parquet").read_bytes() == b"answers\n"
+
+
+def test_the_push_script_says_so_and_stops_when_there_is_nothing_to_send(tmp_path):
+    """A run that found no new answers must not commit an empty change or fail the caller."""
+    clone, _, git = _push_repo(tmp_path)
+    done = run_push(clone, "Local run: answers")
+    assert done.returncode == 0, done.stderr
+    assert "nothing to push" in done.stdout, done.stdout
+    assert "Local run" not in git(clone, "log", "--format=%s", "-n", "3").stdout
