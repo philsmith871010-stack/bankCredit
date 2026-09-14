@@ -26,7 +26,7 @@ if git diff --cached --quiet; then
   echo "nothing to push"
   exit 0
 fi
-git status --short --cached | sed 's/^/  /'
+git diff --cached --name-status | sed 's/^/  /'
 git commit -q -m "$MESSAGE"
 
 for wait in 2 4 8 16 0; do

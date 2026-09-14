@@ -17,6 +17,7 @@ import pytest
 
 SCRIPT = Path(__file__).resolve().parent.parent / ".github" / "scripts" / "decide.sh"
 KICK = Path(__file__).resolve().parent.parent / "tools" / "kick.sh"
+PUSH = Path(__file__).resolve().parent.parent / "tools" / "push-data.sh"
 
 
 def decide(tmp_path, *, collect=None, headlines=None, when=None, **env) -> str:
@@ -127,9 +128,49 @@ def test_a_dispatch_left_on_auto_decides_for_itself(tmp_path):
 # ---- the kick ---------------------------------------------------------------------------------
 def test_the_kick_and_the_guard_agree_on_when_the_day_starts():
     """Two scripts, one rule: the day's collection is owed from 05:00 UTC. If they drift apart the
-    kick pushes work the guard then declines to do, or the other way about."""
+    kick pushes work the guard then declines to do, or the other way about. They no longer share a
+    line of shell, because the kick also runs on a Mac and BSD date has no -d."""
     for path in (SCRIPT, KICK):
-        assert "date -u -d 'today 05:00' +%s" in path.read_text()
+        text = path.read_text()
+        assert "05:00" in text, f"{path.name} does not name the hour the day starts"
+        for wrong in ("04:00", "06:00", "00:00"):
+            assert f"'today {wrong}'" not in text and f"T{wrong}:00Z" not in text, \
+                f"{path.name} uses {wrong}, not 05:00"
+
+
+def test_the_kick_reads_a_timestamp_on_a_mac_as_well_as_a_runner():
+    """date -u -d is a GNU extension. On the Mac it printed "date: illegal option -- d" and, under
+    set -e, ended there, so the kick has never once gone out from a Mac."""
+    text = KICK.read_text()
+    assert "date -u -j -f" in text, "no BSD fallback for reading a timestamp"
+    assert "epoch()" in text, "the two forms are behind one helper"
+    bare = [ln for ln in text.splitlines()
+            if "date -u -d" in ln and "epoch()" not in ln and not ln.strip().startswith("#")]
+    assert len(bare) == 1, f"GNU-only date calls outside the helper: {bare}"
+
+
+def test_the_push_script_shows_what_it_staged_with_a_command_that_exists(tmp_path):
+    """`git status --cached` is not a thing. It printed a usage message, and under pipefail that
+    ended push-data.sh before the commit and the push: every run said done and pushed nothing.
+
+    Run for real against a throwaway repository, because the point is that the command works, not
+    that it is spelled some particular way."""
+    import subprocess
+    text = PUSH.read_text()
+    assert "set -euo pipefail" in text, "which is why an invalid command there is fatal"
+    shows = [ln.strip() for ln in text.splitlines()
+             if ln.strip().startswith("git ") and "sed 's/^/  /'" in ln]
+    assert len(shows) == 1, f"expected one line that lists what was staged, got {shows}"
+    repo = tmp_path / "r"
+    repo.mkdir()
+    git = ["git", "-C", str(repo), "-c", "user.name=t", "-c", "user.email=t@t"]
+    subprocess.run(["git", "init", "--quiet", "-b", "main", str(repo)], check=True)
+    (repo / "a.txt").write_text("one\n")
+    subprocess.run(git + ["add", "a.txt"], check=True)
+    done = subprocess.run(["bash", "-c", f"cd {repo} && set -euo pipefail && {shows[0]}"],
+                          capture_output=True, text=True)
+    assert done.returncode == 0, done.stderr
+    assert "a.txt" in done.stdout, done.stdout
 
 
 def test_the_kick_never_touches_the_working_tree():

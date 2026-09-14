@@ -31,20 +31,32 @@ for a in "$@"; do case "$a" in --force) force=1 ;; --dry-run) dry=1 ;;
   *) echo "unknown option: $a" >&2; exit 2 ;; esac; done
 
 git fetch --quiet origin main
+
+# GNU date and BSD date agree about almost nothing, and -d is a GNU extension. The Mac runs this
+# script at the end of every local run, where it printed "date: illegal option -- d" and, under
+# set -e, ended there - so the kick has never once gone out from a Mac. epoch() tries GNU first,
+# then BSD, and yields 0 rather than failing, because an unreadable stamp means "not collected".
+epoch() {
+  date -u -d "$1" +%s 2>/dev/null && return 0
+  date -u -j -f "%Y-%m-%dT%H:%M:%SZ" "$1" +%s 2>/dev/null && return 0
+  echo 0
+}
+
 now=$(date -u +%s)
-owed_from=$(date -u -d 'today 05:00' +%s)
+DUE=05:00                                  # the hour the guard uses too; they must not drift apart
+owed_from=$(epoch "$(date -u +%F)T${DUE}:00Z")
 
 # The stamps as origin/main holds them, not as this clone happens to have them.
 at() {
   local t; t=$(git show "origin/main:data/state/$1" 2>/dev/null) || { echo 0; return; }
-  date -u -d "$t" +%s 2>/dev/null || echo 0
+  epoch "$t"
 }
 collected=$(at last-collect)
 requested=$(at requested)
 
 if [ -z "$force" ]; then
   if [ "$now" -lt "$owed_from" ]; then
-    echo "nothing owed: the day's collection is not due until 05:00 UTC"; exit 3
+    echo "nothing owed: the day's collection is not due until ${DUE} UTC"; exit 3
   fi
   if [ "$collected" -ge "$owed_from" ]; then
     echo "nothing owed: collected $(( (now - collected) / 60 )) minutes ago"; exit 3
