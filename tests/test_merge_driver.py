@@ -244,3 +244,19 @@ def test_two_runs_that_read_different_figures_still_collide(repo):
     assert done.returncode == 0, done.stdout + done.stderr
     assert "1 record(s) written by both runs" in done.stdout + done.stderr, done.stdout + done.stderr
     assert pd.read_parquet(p).loc[0, "value"] == 2, "this run's reading is the one it keeps"
+
+
+def test_the_same_document_queued_by_both_runs_is_one_item(repo):
+    """Both runs crawled Bendigo an hour apart and queued the same three PDFs. Neither had them
+    before, so nothing in the ancestor could settle it - but they are the same three items, and
+    the queue should say the earlier of the two times it first saw them."""
+    p = repo / "data" / "review" / "queue.json"
+    item = lambda when: {"id": "65415abc", "entity_id": "bendigo", "status": "open", "created": when}
+    done = two_ways(repo,
+                    lambda r: p.write_text(json.dumps([], indent=1)),
+                    lambda r: p.write_text(json.dumps([item("2026-09-14T12:50:00")], indent=1)),
+                    lambda r: p.write_text(json.dumps([item("2026-09-14T13:47:00")], indent=1)))
+    assert done.returncode == 0, done.stdout + done.stderr
+    assert "both runs" not in done.stdout + done.stderr, "the same item twice is not a dispute"
+    got = json.loads(p.read_text())
+    assert len(got) == 1 and got[0]["created"] == "2026-09-14T12:50:00", got

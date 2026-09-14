@@ -78,7 +78,9 @@ def norm(v):
 # When a row was last written, not what it says. Two runs that both re-collected the same
 # unchanged figure differ here and nowhere else, and calling that a collision buries the ones that
 # matter: the first real merge reported 1,540 of them in data/facts.parquet, every one a timestamp.
-STAMPS = ("loaded_at", "fetched_at")
+LAST_SEEN = ("loaded_at", "fetched_at")     # when a row was last written down
+FIRST_SEEN = ("created",)                   # when a review item was first put in the queue
+STAMPS = LAST_SEEN + FIRST_SEEN
 
 
 def substance(rec):
@@ -87,14 +89,15 @@ def substance(rec):
 
 
 def freshest(keep, other):
-    """`keep`, but stamped with the later of the two sightings: if both runs saw this row, the row
-    was last seen at the later of the two times, whichever run's version of it won."""
+    """`keep`, with each stamp taken from whichever run is telling the truth about it: the later
+    sighting of a row that both runs saw, the earlier queueing of an item both runs found."""
     if not isinstance(keep, dict) or not isinstance(other, dict):
         return keep
     out = dict(keep)
-    for s in STAMPS:
-        if s in out and other.get(s) is not None and out[s] is not None:
-            out[s] = max(str(out[s]), str(other[s]))
+    for pick, names in ((max, LAST_SEEN), (min, FIRST_SEEN)):
+        for s in names:
+            if out.get(s) is not None and other.get(s) is not None:
+                out[s] = pick(str(out[s]), str(other[s]))
     return out
 
 
