@@ -199,3 +199,14 @@ def test_a_copy_of_the_driver_outside_the_clone_still_finds_the_store(repo, tmp_
                     lambda r: runs("esma-1", "theirs").to_parquet(p, index=False))
     assert done.returncode == 0, done.stdout + done.stderr
     assert set(pd.read_parquet(p)["run_id"]) == {"esma-1", "mine", "theirs"}
+
+
+def test_installing_pins_the_interpreter_that_has_pandas(repo):
+    """Git resolves the stored driver command against the puller's PATH, so "python3" is whichever
+    python3 that shell finds - on a Mac, the system one, which has no pandas. The merge would then
+    fail on the day it was most needed."""
+    import sys
+    subprocess.run([sys.executable, str(repo / "tools" / "merge-data.py"), "--install"],
+                   cwd=repo, check=True)
+    got = git(repo, "config", "merge.counterparty.driver").stdout.strip()
+    assert got.startswith(sys.executable + " "), got
