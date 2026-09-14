@@ -31,17 +31,28 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT))
+HERE = Path(__file__).resolve().parent.parent
+
+
+def root() -> Path:
+    """The clone being merged. Git runs a merge driver from the top of the work tree, which is the
+    answer even when the driver itself is being run from somewhere else - a copy in /tmp, say, when
+    a clone is too far behind to have one of its own yet."""
+    try:
+        top = subprocess.run(["git", "rev-parse", "--show-toplevel"],
+                             capture_output=True, text=True, check=True).stdout.strip()
+        return Path(top) if top else HERE
+    except (OSError, subprocess.CalledProcessError):
+        return HERE
 
 
 def install() -> int:
     """Teach this clone the driver. The name matches .gitattributes; the config is per-clone, so
     every runner has to do this once - the Mac job and the workflow both call it before they pull."""
     subprocess.run(["git", "config", "merge.counterparty.name",
-                    "union data records on their natural key"], cwd=ROOT, check=True)
+                    "union data records on their natural key"], cwd=HERE, check=True)
     subprocess.run(["git", "config", "merge.counterparty.driver",
-                    f"python3 {ROOT / 'tools' / 'merge-data.py'} %O %A %B %P"], cwd=ROOT, check=True)
+                    f"python3 {HERE / 'tools' / 'merge-data.py'} %O %A %B %P"], cwd=HERE, check=True)
     return 0
 
 
@@ -100,6 +111,7 @@ def keyed(df, key: list[str]) -> dict:
 
 def merge_parquet(o: Path, a: Path, b: Path, table: str) -> int:
     import pandas as pd
+    sys.path.insert(0, str(root()))
     from bankcredit.store import KEYS
     key = KEYS[table]
     base, ours, theirs = (keyed(frame(p), key) for p in (o, a, b))
