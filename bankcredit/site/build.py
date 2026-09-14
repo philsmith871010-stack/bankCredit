@@ -671,6 +671,46 @@ def health_card() -> str:
 {f'<ul class="small">{faults}</ul>' if faults else ''}
 {group("never")}{group("overdue")}{group("no source")}</div>'''
 
+
+# The day's collection is due from 05:00 UTC. Whether it arrived, and how late, has until now been
+# knowable only from a routine's chat reply that nobody reads - which is how eight consecutive
+# mornings went by with the punctuality layer doing nothing and reporting success. It is on the
+# page now, so a late morning is visible to anyone who looks at the site.
+DUE_HOUR = 5
+LATE_HOURS = 2
+
+
+def punctuality(generated: str) -> str:
+    """When the day's collection ran, against when it was due."""
+    stamp = (store.DATA / "state" / "last-collect")
+    try:
+        ran = datetime.fromisoformat(stamp.read_text().strip().replace("Z", ""))
+    except Exception:
+        return ('<div class="punct bad"><b>No collection recorded.</b> The pipeline has not written '
+                'a collection stamp, so nothing on this page can be assumed current.</div>')
+    now = datetime.fromisoformat(str(generated)[:19].replace("Z", ""))
+    due = ran.replace(hour=DUE_HOUR, minute=0, second=0, microsecond=0)
+    if ran.date() < now.date():
+        days = (now.date() - ran.date()).days
+        return (f'<div class="punct bad"><b>No collection today.</b> The last one finished '
+                f'{ran:%Y-%m-%d %H:%M} UTC, {days} day{"s" if days != 1 else ""} ago. Every figure '
+                f'below is from that run.</div>')
+    late = (ran - due).total_seconds() / 3600
+    when = f'{ran:%H:%M} UTC'
+    if late <= LATE_HOURS:
+        return (f'<div class="punct good">Today\'s collection finished at <b>{when}</b>, '
+                f'{_hm(late)} after the 05:00 target.</div>')
+    return (f'<div class="punct warn">Today\'s collection finished at <b>{when}</b>, '
+            f'<b>{_hm(late)}</b> after the 05:00 target. The morning kick is what makes it '
+            f'punctual; when it does not fire, the day waits for GitHub\'s own scheduler.</div>')
+
+
+def _hm(hours: float) -> str:
+    m = max(0, int(round(hours * 60)))
+    h, m = divmod(m, 60)
+    return f"{h}h {m:02d}m" if h else f"{m} minutes"
+
+
 def page_status(status, board, generated, inner: bool = False):
     runs = "".join(f'<tr><td class="b">{c.esc(r["source"])}</td><td>{c.chip(c.esc(r["status"]), {"ok": "good", "partial": "warn", "failed": "bad", "skipped": "muted"}.get(r["status"], "muted"))}</td><td class="mono">{r["rows"]}</td><td class="mono muted">{c.esc(r["finished"][:16].replace("T", " "))}</td><td class="muted small">{c.esc(r["message"])}</td></tr>' for r in status["runs"]) or '<tr><td colspan="5" class="empty">No runs recorded yet.</td></tr>'
     rows = board["rows"]
@@ -678,7 +718,7 @@ def page_status(status, board, generated, inner: bool = False):
     stale = [r for r in rows if r["age_days"] and r["age_days"] > 150]
     lst = lambda xs: ", ".join(f'<a href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a>' for r in xs) or "none"
     content = f'''<div class="page-head"><div><h1>Status</h1><div class="lede">What ran, when, and what needs a look. Auto-publish with spot checks.</div></div></div>
-<div class="card pad"><h3>Pipeline runs</h3><div class="table-wrap"><table class="plain"><thead><tr><th>Source</th><th>Status</th><th>Rows</th><th>Finished (UTC)</th><th>Message</th></tr></thead><tbody>{runs}</tbody></table></div></div>
+<div class="card pad"><h3>Pipeline runs</h3>{punctuality(generated)}<div class="table-wrap"><table class="plain"><thead><tr><th>Source</th><th>Status</th><th>Rows</th><th>Finished (UTC)</th><th>Message</th></tr></thead><tbody>{runs}</tbody></table></div></div>
 <div class="card pad"><h3>Coverage</h3><p>{len(rows) - len(missing)} of {len(rows)} entities have regulatory figures; {sum(1 for r in rows if r["score"] is not None)} have enough for a score; {sum(1 for r in rows if r["ratings"])} have ratings.</p>
 <p class="small"><span class="b">No regulatory figures yet:</span> {lst(missing)}</p><p class="small"><span class="b">Older than 150 days:</span> {lst(stale)}</p></div>
 {health_card()}

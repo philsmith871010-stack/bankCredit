@@ -877,3 +877,12 @@ table.uni .sc-n{font-size:14px}
 @media(max-width:760px){.scrollbox{max-height:min(460px,68vh)}}
 /* what the window is holding, said under it where the scrollbar ends */
 .tfoot{padding:9px 2px 2px;text-align:right;font-variant-numeric:tabular-nums}
+
+/* Whether the day's collection arrived, and how late. A line on the page rather than a sentence in
+   a chat reply nobody reads. */
+.punct{margin:2px 0 14px;padding:10px 13px;border-radius:10px;font-size:13px;line-height:1.55;
+  border:1px solid var(--line);border-left:3px solid var(--line)}
+.punct.good{background:var(--bg);border-left-color:var(--green);color:var(--muted)}
+.punct.warn{background:var(--orange-soft);border-left-color:var(--orange);color:var(--text)}
+.punct.bad{background:#fbe9e7;border-left-color:var(--red);color:var(--text)}
+.punct b{font-weight:600;color:var(--text)}

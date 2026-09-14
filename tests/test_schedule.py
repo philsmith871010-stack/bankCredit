@@ -173,3 +173,41 @@ def test_the_kick_declines_when_the_day_is_already_collected(tmp_path):
                           capture_output=True, text=True)
     assert done.returncode == 3, done.stdout + done.stderr
     assert "nothing owed" in done.stdout
+
+
+# ---- whether the day's collection arrived, said on the page ------------------------------------
+def punct(collect_stamp, generated):
+    """Render the Status page's punctuality line against a given collection stamp."""
+    from bankcredit import store
+    from bankcredit.site import build
+    state = store.DATA / "state"
+    state.mkdir(parents=True, exist_ok=True)
+    if collect_stamp is None:
+        (state / "last-collect").unlink(missing_ok=True)
+    else:
+        (state / "last-collect").write_text(collect_stamp)
+    return build.punctuality(generated)
+
+
+def test_a_collection_on_time_reads_as_a_quiet_line():
+    out = punct("2026-09-14T05:40:00Z", "2026-09-14T06:00:00Z")
+    assert "punct good" in out and "05:40 UTC" in out and "40 minutes" in out
+
+
+def test_a_collection_hours_late_says_so_and_says_why():
+    """Eight mornings running, the kick did not fire and the day waited for GitHub. Nobody saw it,
+    because the only place it was said was a routine's chat reply."""
+    out = punct("2026-09-14T10:50:00Z", "2026-09-14T11:30:00Z")
+    assert "punct warn" in out
+    assert "5h 50m" in out, out
+    assert "morning kick" in out
+
+
+def test_a_day_with_no_collection_is_not_a_quiet_line():
+    out = punct("2026-09-12T09:34:00Z", "2026-09-14T11:30:00Z")
+    assert "punct bad" in out and "No collection today" in out and "2 days ago" in out
+
+
+def test_no_stamp_at_all_says_nothing_can_be_assumed_current():
+    out = punct(None, "2026-09-14T11:30:00Z")
+    assert "punct bad" in out and "No collection recorded" in out
