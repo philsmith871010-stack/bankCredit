@@ -312,14 +312,16 @@ def test_a_run_started_by_hand_is_not_silent():
 
 
 def _push_repo(tmp_path):
-    """A bare origin, a clone of it wired to push, and a second clone to play the runner.
+    """A bare origin, a clone of it wired to push, and a second clone to play the other runner.
 
-    push-data.sh works on the repository it lives in, so it is copied into the clone: the point is
-    to watch the real script make real commits against a real remote.
+    push-data.sh works on the repository it lives in, so the pieces it needs are copied into the
+    clone: the point is to watch the real script make real commits against a real remote.
     """
+    import pandas as pd
     origin, clone, other = tmp_path / "origin.git", tmp_path / "clone", tmp_path / "other"
     subprocess.run(["git", "init", "--quiet", "--bare", "-b", "main", str(origin)], check=True)
     cfg = ["-c", "user.name=t", "-c", "user.email=t@t"]
+    root = Path(__file__).resolve().parent.parent
 
     def git(where, *args, **kw):
         return subprocess.run(["git", "-C", str(where), *cfg, *args],
@@ -328,14 +330,19 @@ def _push_repo(tmp_path):
     subprocess.run(["git", "clone", "--quiet", str(origin), str(clone)], check=True)
     (clone / "data" / "review").mkdir(parents=True)
     # Every path the script stages has to exist: one `git add` with a missing pathspec adds nothing.
-    for name in ("facts.parquet", "documents.parquet", "runs.parquet", "events.parquet"):
-        (clone / "data" / name).write_bytes(b"start\n")
+    for name in ("facts", "documents", "runs", "events"):
+        rows(f"{name}-base").to_parquet(clone / "data" / f"{name}.parquet", index=False)
     (clone / "data" / "review" / "queue.json").write_text("[]\n")
+    (clone / "tools").mkdir()
+    (clone / "tools" / "push-data.sh").write_text(PUSH.read_text())
+    (clone / "tools" / "merge-data.py").write_text((root / "tools" / "merge-data.py").read_text())
+    (clone / ".gitattributes").write_text((root / ".gitattributes").read_text())
+    (clone / "bankcredit").mkdir()
+    (clone / "bankcredit" / "__init__.py").write_text("")
+    (clone / "bankcredit" / "store.py").write_text((root / "bankcredit" / "store.py").read_text())
     for where in (clone,):
         git(where, "config", "user.name", "t", check=True)
         git(where, "config", "user.email", "t@t", check=True)
-    (clone / "tools").mkdir()
-    (clone / "tools" / "push-data.sh").write_text(PUSH.read_text())
     git(clone, "add", "-A", check=True)
     git(clone, "commit", "--quiet", "-m", "base", check=True)
     git(clone, "push", "--quiet", "-u", "origin", "main", check=True)
@@ -345,24 +352,59 @@ def _push_repo(tmp_path):
     return clone, other, git
 
 
+def rows(*ids):
+    """A run log, the table both runners write to on any day they both run."""
+    import pandas as pd
+    return pd.DataFrame([{"run_id": i, "source": i, "status": "ok", "rows": 1, "message": "",
+                          "started": "2026-09-14T00:00:00", "finished": "2026-09-14T00:01:00"}
+                         for i in ids])
+
+
 def run_push(clone, message):
     return subprocess.run(["bash", str(clone / "tools" / "push-data.sh"), message],
                           capture_output=True, text=True)
 
 
+def test_the_push_script_keeps_what_both_runs_wrote(tmp_path):
+    """The 14 September case, end to end: the pipeline rewrote the run log while a local run was
+    collecting, and both had rows the other did not. It has to merge and go out unattended."""
+    clone, other, git = _push_repo(tmp_path)
+    rows("runs-base", "cloud").to_parquet(other / "data" / "runs.parquet", index=False)
+    git(other, "commit", "--quiet", "-am", "Pipeline data", check=True)
+    git(other, "push", "--quiet", check=True)
+
+    rows("runs-base", "local").to_parquet(clone / "data" / "runs.parquet", index=False)
+    done = run_push(clone, "Local run: answers")
+
+    assert done.returncode == 0, f"{done.stdout}\n{done.stderr}"
+    git(other, "pull", "--quiet", check=True)
+    import pandas as pd
+    got = set(pd.read_parquet(other / "data" / "runs.parquet")["run_id"])
+    assert got == {"runs-base", "cloud", "local"}, got
+
+
 def test_the_push_script_commits_before_it_pulls(tmp_path):
     """The Mac run of 14 September ended with six answer files staged and nothing said. The pull
-    is what refuses - the pipeline had rewritten runs.parquet too - and a pull that refuses with
-    the work merely staged loses the run. Commit first and the work survives the refusal."""
+    is what refuses, and a pull that refuses with the work merely staged loses the run. The merge
+    driver settles the ordinary collision now, so this is the day it cannot: commit first and the
+    work survives the refusal either way."""
     clone, other, git = _push_repo(tmp_path)
-
-    # The pipeline rewrites the run log upstream, in the same place this run wrote its own.
-    (other / "data" / "runs.parquet").write_bytes(b"pipeline\n")
+    (clone / "tools" / "merge-data.py").write_text(
+        'import subprocess, sys\n'
+        'if "--install" in sys.argv:\n'
+        '    subprocess.run(["git", "config", "merge.counterparty.driver",\n'
+        '                    "python3 " + __file__ + " %O %A %B %P"])\n'
+        '    raise SystemExit(0)\n'
+        'raise SystemExit(1)\n')
+    git(clone, "commit", "--quiet", "-am", "a driver that cannot", check=True)
+    git(clone, "push", "--quiet", check=True)
+    git(other, "pull", "--quiet", check=True)
+    rows("runs-base", "cloud").to_parquet(other / "data" / "runs.parquet", index=False)
     git(other, "commit", "--quiet", "-am", "Pipeline data", check=True)
     git(other, "push", "--quiet", check=True)
 
     (clone / "data" / "facts.parquet").write_bytes(b"answers\n")
-    (clone / "data" / "runs.parquet").write_bytes(b"local\n")
+    rows("runs-base", "local").to_parquet(clone / "data" / "runs.parquet", index=False)
     done = run_push(clone, "Local run: answers")
 
     assert done.returncode == 1, f"a conflicted merge should not look like a success\n{done.stdout}"

@@ -111,7 +111,12 @@ jobs:
           git config user.email "philsmith871010@gmail.com"
           git checkout -- . 2>/dev/null || true
           git diff --cached --quiet || git commit -m "$([ "$MODE" = full ] && echo "Pipeline data $(date -u +%F)" || echo "Headlines $(date -u +%FT%H:%M)")"
-          git pull --rebase -X theirs origin main   # a code push in the meantime rebuilt the same JSON; the fresh data wins
+          # -X theirs settles the rebuilt JSON, where the fresh data wins. It must not settle the
+          # tables: a local run's answers, pushed while this one was collecting, are not stale and
+          # -X theirs would drop them. .gitattributes sends those through merge-data.py instead,
+          # which unions them; the driver has to be installed into this clone to be found.
+          python3 tools/merge-data.py --install
+          git pull --rebase -X theirs origin main
           git push
 
       - uses: actions/configure-pages@v5
