@@ -75,6 +75,29 @@ def norm(v):
     return v
 
 
+# When a row was last written, not what it says. Two runs that both re-collected the same
+# unchanged figure differ here and nowhere else, and calling that a collision buries the ones that
+# matter: the first real merge reported 1,540 of them in data/facts.parquet, every one a timestamp.
+STAMPS = ("loaded_at", "fetched_at")
+
+
+def substance(rec):
+    """A record without its bookkeeping, which is the part two runs can actually disagree about."""
+    return {k: v for k, v in rec.items() if k not in STAMPS} if isinstance(rec, dict) else rec
+
+
+def freshest(keep, other):
+    """`keep`, but stamped with the later of the two sightings: if both runs saw this row, the row
+    was last seen at the later of the two times, whichever run's version of it won."""
+    if not isinstance(keep, dict) or not isinstance(other, dict):
+        return keep
+    out = dict(keep)
+    for s in STAMPS:
+        if s in out and other.get(s) is not None and out[s] is not None:
+            out[s] = max(str(out[s]), str(other[s]))
+    return out
+
+
 def three_way(base: dict, ours: dict, theirs: dict) -> tuple[dict, list]:
     """Union three keyed collections. Returns the merged records, in order, and the keys both
     sides changed - incoming order first, so a file stays stable across runs."""
@@ -85,12 +108,14 @@ def three_way(base: dict, ours: dict, theirs: dict) -> tuple[dict, list]:
         o, t = ours.get(k), theirs.get(k)
         if o is None or t is None:
             out[k] = o if t is None else t
-        elif o == t or base.get(k) == t:
-            out[k] = o
-        elif base.get(k) == o:
-            out[k] = t
+            continue
+        so, st, sb = substance(o), substance(t), substance(base.get(k))
+        if so == st or sb == st:
+            out[k] = freshest(o, t)
+        elif sb == so:
+            out[k] = freshest(t, o)
         else:
-            out[k] = o
+            out[k] = freshest(o, t)
             fought.append(k)
     return out, fought
 
