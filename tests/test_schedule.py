@@ -231,3 +231,29 @@ def test_a_news_only_run_is_not_mistaken_for_the_day_s_collection():
     collection that was nine hours late."""
     out = punct("2026-09-14T14:00:00", "2026-09-14T14:10:00", source="events")
     assert "No collection recorded" in out
+
+
+# ---- the Mac job survives a dirty working tree --------------------------------------------------
+MAC = Path(__file__).resolve().parent.parent / "scripts" / "mac" / "counterparty.sh"
+
+
+def test_a_generated_file_left_dirty_cannot_end_the_local_run():
+    """What actually happened: the build appends to data/history.parquet, it was left modified on
+    9 September, and from the 10th every run died on `git pull --ff-only` under set -e - taking the
+    review queue and the headline judging with it, silently, for five days."""
+    text = MAC.read_text()
+    assert "set -euo pipefail" in text, "the script does stop on error, which is why this matters"
+    assert "data/history.parquet" in text, "the generated table is discarded before the pull"
+    pull = [ln for ln in text.splitlines() if "git pull --ff-only" in ln]
+    assert pull, "the script still pulls"
+    assert any("if ! git pull --ff-only" in ln for ln in pull), \
+        "a refused fast-forward must be caught, not left to end the run"
+    assert "git stash push" in text, "and whatever is local is parked rather than discarded"
+
+
+def test_the_local_run_never_discards_work_to_get_its_pull():
+    """Stash, never reset or clean: a run that eats the maintainer's uncommitted work to unblock
+    itself is worse than one that stops."""
+    text = MAC.read_text()
+    for forbidden in ("git reset --hard", "git clean", "git checkout -- .", "git checkout ."):
+        assert forbidden not in text, f"the local run uses {forbidden!r}"

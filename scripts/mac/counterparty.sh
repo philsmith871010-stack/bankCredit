@@ -25,8 +25,17 @@ if ! mkdir "$LOCK" 2>/dev/null; then
 fi
 trap 'rmdir "$LOCK" 2>/dev/null || true' EXIT INT TERM
 echo "==== $(date -u +%FT%TZ) start"
-git checkout -- data/json 2>/dev/null || true   # built JSON: the runner's copy wins
-git pull --ff-only
+# Generated artefacts: the runner's copy wins. history.parquet belongs here too - the build
+# appends to it, it was left dirty on 9 September, and every run from the 10th died on the pull.
+git checkout -- data/json data/history.parquet 2>/dev/null || true
+# A dirty tree used to end the run right here, under set -e, taking the review queue and the
+# headline judging with it - silently, for five days. A refused fast-forward now parks whatever is
+# local and retries once, and says so in the log.
+if ! git pull --ff-only; then
+  echo "!! fast-forward refused; stashing local changes and retrying"
+  git stash push --include-untracked -m "local-run $(date -u +%FT%TZ)" || true
+  git pull --ff-only
+fi
 source .venv/bin/activate
 # 1. collect from bank sites and the FCA NSM from this network (residential IP), extract, queue
 python -m bankcredit.cli run pillar3 || true
