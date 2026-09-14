@@ -441,3 +441,86 @@ def test_the_push_script_says_so_and_stops_when_there_is_nothing_to_send(tmp_pat
     assert done.returncode == 0, done.stderr
     assert "nothing to push" in done.stdout, done.stdout
     assert "Local run" not in git(clone, "log", "--format=%s", "-n", "3").stdout
+
+
+CHECK = Path(__file__).resolve().parent.parent / "scripts" / "mac" / "check.sh"
+
+
+def _checkable(tmp_path):
+    """A clone with an origin, a log and the check script, so the script can be run for real."""
+    clone, other, git = _push_repo(tmp_path)
+    (clone / "scripts" / "mac").mkdir(parents=True)
+    (clone / "scripts" / "mac" / "check.sh").write_text(CHECK.read_text())
+    (clone / "data" / "cache").mkdir(parents=True, exist_ok=True)
+    (clone / "data" / "state").mkdir(parents=True, exist_ok=True)
+    return clone, other, git
+
+
+def run_check(clone):
+    return subprocess.run(["bash", str(clone / "scripts" / "mac" / "check.sh")],
+                          capture_output=True, text=True,
+                          env={"PATH": "/usr/bin:/bin", "HOME": str(clone.parent),
+                               "COUNTERPARTY_REPO": str(clone)})
+
+
+def test_the_weekly_check_says_all_well_when_everything_ran(tmp_path):
+    """It has to be readable in three seconds on a Monday, or it will not be read at all."""
+    clone, _, git = _checkable(tmp_path)
+    (clone / "data" / "cache" / "local-run.log").write_text("==== 2026-09-15T06:31:02Z start\n"
+                                                            "==== 2026-09-15T07:04:55Z done\n")
+    (clone / "data" / "state" / "last-collect").write_text("2026-09-15T05:11:00Z\n")
+    git(clone, "add", "-A", check=True)
+    git(clone, "commit", "--quiet", "-m", "Local run 2026-09-15: Pillar 3 collection and review", check=True)
+    git(clone, "push", "--quiet", check=True)
+
+    done = run_check(clone)
+    assert done.returncode == 0, done.stdout + done.stderr
+    assert "All well." in done.stdout, done.stdout
+    assert "2026-09-15T07:04:55Z done" in done.stdout
+    assert "Local run 2026-09-15" in done.stdout, "it should name the last push"
+
+
+def test_the_weekly_check_catches_a_run_that_started_and_never_finished(tmp_path):
+    """The five-day failure looked exactly like this in the log and like nothing at all elsewhere."""
+    clone, _, _ = _checkable(tmp_path)
+    (clone / "data" / "cache" / "local-run.log").write_text("==== 2026-09-15T06:31:02Z start\n")
+    done = run_check(clone)
+    assert done.returncode == 1
+    assert "did not finish" in done.stdout, done.stdout
+
+
+def test_the_weekly_check_notices_work_that_never_left_the_mac(tmp_path):
+    """A run that collects and cannot push has achieved nothing, and says so nowhere else."""
+    clone, _, git = _checkable(tmp_path)
+    (clone / "data" / "cache" / "local-run.log").write_text("==== 2026-09-15T07:04:55Z done\n")
+    (clone / "data" / "facts.parquet").write_bytes(b"answers\n")
+    git(clone, "add", "-A", check=True)
+    git(clone, "commit", "--quiet", "-m", "Local run 2026-09-15: Pillar 3 collection and review", check=True)
+
+    done = run_check(clone)
+    assert done.returncode == 1
+    assert "unpushed commits" in done.stdout and "1 here" in done.stdout, done.stdout
+    assert "git push" in done.stdout, "and it should say what to do about it"
+
+
+def test_the_weekly_check_reports_a_lock_nobody_is_holding(tmp_path):
+    """mkdir is the lock and the trap releases it, but a killed run leaves it and every later run
+    then exits saying 'another run holds the lock' - which reads like working, forever."""
+    clone, _, _ = _checkable(tmp_path)
+    (clone / "data" / "cache" / "local-run.log").write_text("==== 2026-09-15T07:04:55Z done\n")
+    (clone / "data" / "cache" / "run.lock").mkdir()
+    done = run_check(clone)
+    assert done.returncode == 1
+    assert "rmdir" in done.stdout, done.stdout
+
+
+def test_the_weekly_check_surfaces_what_the_run_itself_flagged(tmp_path):
+    """The Mac job prints its own troubles with a !! prefix. Nobody reads a 4,000-line log."""
+    clone, _, _ = _checkable(tmp_path)
+    (clone / "data" / "cache" / "local-run.log").write_text(
+        "==== 2026-09-15T06:31:02Z start\n"
+        "!! fast-forward refused; stashing local changes and retrying\n"
+        "==== 2026-09-15T07:04:55Z done\n")
+    done = run_check(clone)
+    assert done.returncode == 1
+    assert "warnings in log" in done.stdout, done.stdout
