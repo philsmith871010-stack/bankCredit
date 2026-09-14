@@ -210,3 +210,37 @@ def test_installing_pins_the_interpreter_that_has_pandas(repo):
                    cwd=repo, check=True)
     got = git(repo, "config", "merge.counterparty.driver").stdout.strip()
     assert got.startswith(sys.executable + " "), got
+
+
+def stamped(when, *ids, value=1) -> pd.DataFrame:
+    return pd.DataFrame([{"entity_id": i, "reference_date": "2026-06-30", "metric": "cet1",
+                          "basis": "consolidated", "source": "pillar3", "value": value,
+                          "loaded_at": when} for i in ids])
+
+
+def test_the_same_figure_collected_twice_is_not_a_collision(repo):
+    """Two runs re-collecting the same unchanged figure differ only in when they wrote it down.
+    The first real merge called 1,540 of those a collision, which is a number nobody can read and
+    which would hide the one row that mattered."""
+    p = repo / "data" / "facts.parquet"
+    done = two_ways(repo,
+                    lambda r: stamped("2026-09-13T00:00:00", "hsbc-uk").to_parquet(p, index=False),
+                    lambda r: stamped("2026-09-14T12:50:00", "hsbc-uk").to_parquet(p, index=False),
+                    lambda r: stamped("2026-09-14T13:47:00", "hsbc-uk").to_parquet(p, index=False))
+    assert done.returncode == 0, done.stdout + done.stderr
+    assert "both runs" not in done.stdout + done.stderr, "a timestamp is not a disagreement"
+    got = pd.read_parquet(p)
+    assert len(got) == 1
+    assert got.loc[0, "loaded_at"] == "2026-09-14T13:47:00", "the later sighting is the true one"
+
+
+def test_two_runs_that_read_different_figures_still_collide(repo):
+    """The signal the timestamps were drowning: the same figure, read differently."""
+    p = repo / "data" / "facts.parquet"
+    done = two_ways(repo,
+                    lambda r: stamped("2026-09-13T00:00:00", "hsbc-uk", value=1).to_parquet(p, index=False),
+                    lambda r: stamped("2026-09-14T12:50:00", "hsbc-uk", value=2).to_parquet(p, index=False),
+                    lambda r: stamped("2026-09-14T13:47:00", "hsbc-uk", value=3).to_parquet(p, index=False))
+    assert done.returncode == 0, done.stdout + done.stderr
+    assert "1 record(s) written by both runs" in done.stdout + done.stderr, done.stdout + done.stderr
+    assert pd.read_parquet(p).loc[0, "value"] == 2, "this run's reading is the one it keeps"
