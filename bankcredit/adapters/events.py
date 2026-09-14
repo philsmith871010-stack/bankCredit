@@ -299,14 +299,32 @@ def keep_headline(entity: Entity, title: str, source: str) -> bool:
 
 
 VERDICTS = store.DATA / "review" / "news_verdicts.json"
+# One file per sitting, written by a run with no checkout. The scheduled cloud session judges the
+# day's headlines through the GitHub API, and rewriting a shared 100 KB file to add forty entries
+# means reading it, holding it and racing whoever else is writing it. A fragment is write-only.
+VERDICT_PARTS = store.DATA / "review" / "verdicts"
 
 
 def load_verdicts() -> dict:
-    """{event_id: {"keep": bool, "severity": str|None, "why": str}} written by the news-review skill on the Mac."""
+    """{event_id: {"keep": bool, "severity": str|None, "why": str}}, the back book and every sitting
+    since. Later files win, so a judgement can be revisited by writing it again."""
+    out = {}
     try:
-        return json.loads(VERDICTS.read_text()) if VERDICTS.exists() else {}
+        if VERDICTS.exists():
+            out.update(json.loads(VERDICTS.read_text()))
     except Exception:
-        return {}
+        pass
+    if VERDICT_PARTS.exists():
+        for part in sorted(VERDICT_PARTS.glob("*.json")):
+            try:
+                got = json.loads(part.read_text())
+            except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+                # one unreadable sitting must not cost the others
+                log.warning("news: %s is not readable (%s); skipped", part.name, exc)
+                continue
+            if isinstance(got, dict):
+                out.update(got)
+    return out
 
 
 def prune_news() -> int:

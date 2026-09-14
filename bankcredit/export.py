@@ -579,6 +579,32 @@ def peer_quartiles(details: dict) -> dict:
 
 
 
+def news_todo(events: pd.DataFrame, names: dict[str, str], limit: int = 400) -> dict:
+    """The headlines nobody has judged yet, as plain JSON.
+
+    The news review is the one job here that needs a judgement rather than a rule, and the only
+    thing it needs to start is this list. Publishing it means the scheduled run does not have to
+    clone the repository or read a parquet file to find its work - it fetches one file, judges what
+    is in it, and writes the verdicts back. Newest first, because a headline about a bank in
+    trouble is worth judging today and a year-old one is not.
+    """
+    from .adapters.events import load_verdicts
+    if events is None or events.empty:
+        return {"unjudged": 0, "rows": []}
+    news = events[events.type == "news"]
+    if news.empty:
+        return {"unjudged": 0, "rows": []}
+    seen = load_verdicts()
+    todo = news[~news.event_id.isin(seen)].sort_values("date", ascending=False)
+    # The same columns the skill's own working file has. Not the link: these are Google News
+    # redirect URLs, 400 of them is most of the file, and the judgement is made on the headline.
+    rows = [{"event_id": r.event_id, "entity_id": r.entity_id, "short": names.get(r.entity_id, r.entity_id),
+             "date": str(r.date), "severity": _clean(r.severity), "source": _clean(r.source),
+             "title": _clean(r.title)}
+            for r in todo.head(limit).itertuples()]
+    return {"unjudged": int(len(todo)), "judged": len(seen), "rows": rows}
+
+
 def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=None) -> list[dict]:
     """What we hold for each entity: regulatory history (periods, first, last, sources) overall and per
     metric, ratings by agency, prices, CDS, bonds and news, with the score the board gives it."""
@@ -858,6 +884,7 @@ def export_json() -> None:
                              "title": r.title, "url": r.url, "fetched_at": str(r.fetched_at)})
     from . import review
     queue = [{k: i.get(k) for k in ("id", "entity_id", "reference_date", "page", "reason", "url")} for i in review.load()]
+    store.write_json("news_todo", {"generated": generated, **news_todo(events, {e.id: e.short_name for e in entities})})
     store.write_json("status", {"generated": datetime.utcnow().isoformat(timespec="seconds") + "Z", "runs": status,
                                 "documents": doc_rows, "document_counts": counts, "review": queue,
                                 "learning": __import__("bankcredit.learn", fromlist=["summary"]).summary()})

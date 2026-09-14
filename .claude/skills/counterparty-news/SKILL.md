@@ -63,6 +63,13 @@ it if missing), one entry per row:
 
 `why` is a few words. Never invent an event_id; never edit entries already present.
 
+A sitting may instead be written as its own file under `data/review/verdicts/`, named for
+the time it was judged - `2026-09-15T0630Z.json`, same shape. The book and the fragments
+are read as one, later files winning, so a judgement can be revisited by writing it again.
+That is what the scheduled cloud run does: it has no checkout, and rewriting a shared
+100 KB file to add forty entries means holding it and racing whoever else is writing it.
+On a machine with the repository, appending to the book is simpler; either is correct.
+
 ## 4. Apply, check, push
 
 ```bash
