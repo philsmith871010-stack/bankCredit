@@ -1,7 +1,7 @@
 {
  "lloyds-banking-group": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -247,7 +247,7 @@
  },
  "lloyds-bank": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -493,7 +493,7 @@
  },
  "bank-of-scotland": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -785,7 +785,7 @@
  },
  "goldman-sachs-international-bank": {
   "page": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
@@ -831,12 +831,12 @@
  },
  "west-brom-bs": {
   "page": "https://www.westbrom.co.uk/about-us/investor-relations",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "saffron-bs": {
   "page": "https://www.saffronbs.co.uk/about-us/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -854,7 +854,7 @@
  },
  "suffolk-bs": {
   "page": "https://www.suffolkbuildingsociety.co.uk/about/governance/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/Voluntary-modern-slavery-and-human-trafficking-statement.pdf",
@@ -900,7 +900,7 @@
  },
  "progressive-bs": {
   "page": "https://theprogressive.com/about-us/your-society",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
@@ -915,7 +915,7 @@
     "text": ""
    },
    {
-    "url": "https://theprogressive.com/media/wifd1kdz/privacy-policy.pdf",
+    "url": "https://theprogressive.com/media/scygjpc0/privacy-policy_jun26.pdf",
     "text": ""
    },
    {
@@ -926,7 +926,7 @@
  },
  "leek-bs": {
   "page": "https://www.leekbs.co.uk/about-us/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Mortgage%20Fees%20and%20Charges%202026%20-%20MortFeeCharg-REV04-26.pdf",
@@ -952,7 +952,7 @@
  },
  "hinckley-and-rugby-bs": {
   "page": "https://www.hrbs.co.uk/the-society/governance/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2024/11/Whistleblowing-Policy-Public-2024.pdf",
@@ -966,7 +966,7 @@
  },
  "furness-bs": {
   "page": "https://www.furnessbs.co.uk/financial-reports/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.furnessbs.co.uk:443/media/eyfhr5t1/4-4-2022-pillar-3-for-board-pack-07-03-23.pdf",
@@ -1028,7 +1028,7 @@
  },
  "al-rayan-bank": {
   "page": "https://www.alrayanbank.co.uk/about-us/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://apps.apple.com/gb/app/al-rayan-bank-uk/id1061102013",
@@ -1042,7 +1042,7 @@
  },
  "gatehouse-bank": {
   "page": "https://gatehousebank.com/about-us/corporate-governance",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Pillar-III-Disclosure-2024-FINAL.pdf?dm=1754928802",
@@ -1268,12 +1268,12 @@
  },
  "bank-of-china-uk": {
   "page": "https://www.bankofchina.com/uk/en/aboutus/ab1/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "macquarie-bank": {
   "page": "https://www.macquarie.com/au/en/investors/regulatory-disclosures.html",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.macquarie.com/disclosures/document/basel-3-pillar-3-capital",
@@ -1765,7 +1765,7 @@
  },
  "first-abu-dhabi-bank": {
   "page": "https://www.bankfab.com/en-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/final-q1-pillar3-report-q1-2026.pdf?view=1",
@@ -2021,7 +2021,7 @@
  },
  "goldman-sachs": {
   "page": "https://www.goldmansachs.com/investor-relations/financials/other-information",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2026/2Q26-pillar-3.pdf",
@@ -2165,7 +2165,7 @@
  },
  "citigroup": {
   "page": "https://www.citigroup.com/global/investors",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q22026/2026prqtr2rslt.pdf",
@@ -2363,7 +2363,7 @@
  },
  "state-street": {
   "page": "https://investors.statestreet.com/filings-and-reports/supplemental-public-disclosure-of-basel-iii-regulatory-capital/default.aspx",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://investors.statestreet.com/filings-and-reports/supplemental-public-disclosure-of-basel-iii-regulatory-capital/default.aspx",
@@ -2609,7 +2609,7 @@
  },
  "ubs": {
   "page": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html",
@@ -3049,23 +3049,19 @@
  },
  "goldman-sachs-international-bank > reports": {
   "page": "https://www.goldmansachs.com/insights/reports",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": "Regulatory Disclosures"
+   },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
     "text": ""
    },
    {
-    "url": "https://www.goldmansachs.com/disclosures",
-    "text": ""
-   },
-   {
     "url": "https://www.goldmansachs.com/insights/reports",
-    "text": ""
-   },
-   {
-    "url": "javascript:var%20d=document.open();d.domain=",
-    "text": ""
+    "text": "Reports"
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
@@ -3074,12 +3070,16 @@
    {
     "url": "https://www.goldmansachs.com/report",
     "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
+    "text": ""
    }
   ]
  },
  "goldman-sachs-international-bank > investor-relations": {
   "page": "https://www.goldmansachs.com/investor-relations",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
@@ -3237,7 +3237,7 @@
  },
  "goldman-sachs-international-bank > 2026-07-14-q2-results": {
   "page": "https://www.goldmansachs.com/pressroom/press-releases/2026/2026-07-14-q2-results",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
@@ -3275,7 +3275,7 @@
  },
  "goldman-sachs-international-bank > broadcast-second-quarter-2026": {
   "page": "https://www.goldmansachs.com/investor-relations/presentations/2026/broadcast-second-quarter-2026",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
@@ -3310,10 +3310,6 @@
     "text": ""
    },
    {
-    "url": "javascript:var%20d=document.open();d.domain=",
-    "text": ""
-   },
-   {
     "url": "https://www.goldmansachs.com/insights/reports",
     "text": ""
    },
@@ -3325,7 +3321,7 @@
  },
  "goldman-sachs-international-bank > corporate-governance": {
   "page": "https://www.goldmansachs.com/investor-relations/corporate-governance",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.goldmansachs.com/disclosures",
@@ -3367,7 +3363,7 @@
  },
  "goldman-sachs-international-bank > creditor-information": {
   "page": "https://www.goldmansachs.com/investor-relations/creditor-information",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/Fixed-Income-Fact-Sheet.pdf",
@@ -3469,7 +3465,7 @@
  },
  "west-brom-bs > financial-information": {
   "page": "https://www.westbrom.co.uk/about-us/financial-information",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.westbrom.co.uk/about-us/financial-information/financial-reports-and-results",
@@ -3479,7 +3475,7 @@
  },
  "west-brom-bs > corporate-governance": {
   "page": "https://www.westbrom.co.uk/about-us/corporate-governance",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.westbrom.co.uk/-/media/wbbs/images/about-us/rules-and-memorandum-document.jpg?h=193&iar=0&w=298&hash=1AEB436140F3B85D0C9FE29DEC23B148",
@@ -3493,12 +3489,12 @@
  },
  "west-brom-bs > modern-slavery-and-human-trafficking-sta": {
   "page": "https://www.westbrom.co.uk/about-us/corporate-governance/modern-slavery-and-human-trafficking-statement",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "saffron-bs > financial-results": {
   "page": "https://www.saffronbs.co.uk/financial-results",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -3580,7 +3576,7 @@
  },
  "saffron-bs > financial-wellbeing-reviews": {
   "page": "https://www.saffronbs.co.uk/savings/tips-tools-support/financial-wellbeing-reviews",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -3598,7 +3594,7 @@
  },
  "saffron-bs > useful-mortgage-documents": {
   "page": "https://www.saffronbs.co.uk/useful-mortgage-documents",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -3652,7 +3648,7 @@
  },
  "saffron-bs > independent-financial-advice": {
   "page": "https://www.saffronbs.co.uk/its-more-money/services/independent-financial-advice",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -3674,7 +3670,7 @@
  },
  "suffolk-bs > financial-education": {
   "page": "https://www.suffolkbuildingsociety.co.uk/financial-education/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/INVL107-01-26-FSCS-Information-Sheet.pdf",
@@ -3684,7 +3680,7 @@
  },
  "suffolk-bs > annual-general-meeting": {
   "page": "https://www.suffolkbuildingsociety.co.uk/about/governance/annual-general-meeting/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Review-of-the-Year-2025.pdf",
@@ -3710,19 +3706,19 @@
  },
  "suffolk-bs > embed?url=https%3A%2F%2Fwww.suffolkbuild": {
   "page": "https://www.suffolkbuildingsociety.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.suffolkbuildingsociety.co.uk%2Fabout%2Fgovernance%2F&format=xml",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "progressive-bs > search-results": {
   "page": "https://theprogressive.com/search-results",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
     "text": ""
    },
    {
-    "url": "https://theprogressive.com/media/wifd1kdz/privacy-policy.pdf",
+    "url": "https://theprogressive.com/media/scygjpc0/privacy-policy_jun26.pdf",
     "text": ""
    },
    {
@@ -3733,7 +3729,7 @@
  },
  "progressive-bs > document-hub": {
   "page": "https://theprogressive.com/document-hub",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
@@ -3888,15 +3884,15 @@
     "text": ""
    },
    {
-    "url": "https://theprogressive.com/media/wifd1kdz/privacy-policy.pdf",
-    "text": ""
-   },
-   {
     "url": "https://theprogressive.com/media/as5jjtr5/terms-and-conditions-of-use-for-progressive-online.pdf",
     "text": ""
    },
    {
     "url": "https://theprogressive.com/media/z5lotcng/progressive-jargon-buster.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://theprogressive.com/media/scygjpc0/privacy-policy_jun26.pdf",
     "text": ""
    },
    {
@@ -3907,7 +3903,7 @@
  },
  "progressive-bs > governance-and-finance": {
   "page": "https://theprogressive.com/about-us/governance-and-finance",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
@@ -3946,7 +3942,7 @@
     "text": ""
    },
    {
-    "url": "https://theprogressive.com/media/wifd1kdz/privacy-policy.pdf",
+    "url": "https://theprogressive.com/media/scygjpc0/privacy-policy_jun26.pdf",
     "text": ""
    },
    {
@@ -3957,7 +3953,7 @@
  },
  "leek-bs > wren-sterling": {
   "page": "https://www.leekbs.co.uk/financial-planning/wren-sterling/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Mortgage%20Fees%20and%20Charges%202026%20-%20MortFeeCharg-REV04-26.pdf",
@@ -3979,7 +3975,7 @@
  },
  "hinckley-and-rugby-bs > financial-services-compensation-scheme": {
   "page": "https://www.hrbs.co.uk/savings/existing-customers/important-account-information/financial-services-compensation-scheme/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2025/12/fscs_protected-website-leaflet-nov-2025-1.pdf",
@@ -3997,7 +3993,7 @@
  },
  "hinckley-and-rugby-bs > directors-people": {
   "page": "https://www.hrbs.co.uk/the-society/governance/directors-people/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
@@ -4007,7 +4003,7 @@
  },
  "hinckley-and-rugby-bs > committees": {
   "page": "https://www.hrbs.co.uk/the-society/governance/committees/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/08/Audit-and-Compliance-Terms-of-Reference-2026.pdf",
@@ -4033,7 +4029,7 @@
  },
  "hinckley-and-rugby-bs > agm": {
   "page": "https://www.hrbs.co.uk/the-society/governance/agm/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/02/Hinckley_and_Rugby_Building_Society_Chairs_Letter_2026.pdf",
@@ -4183,7 +4179,7 @@
  },
  "al-rayan-bank > results": {
   "page": "https://www.alrayanbank.co.uk/search/results",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://play.google.com/store/apps/details?id=com.alrayanbankuk.mobile",
@@ -4197,7 +4193,7 @@
  },
  "al-rayan-bank > investor-relations": {
   "page": "https://www.alrayanbank.co.uk/investor-relations",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.alrayanbank.co.uk/sites/default/files/media/file-uploads/2026-06/al_rayan_annual_report_accounts_2025.pdf",
@@ -4623,32 +4619,32 @@
  },
  "bank-of-china-uk > investor": {
   "page": "https://www.bankofchina.com/investor/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "bank-of-china-uk > ir1": {
   "page": "https://www.bankofchina.com/investor/ir1/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "bank-of-china-uk > ir2": {
   "page": "https://www.bankofchina.com/investor/ir2/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "bank-of-china-uk > ir5": {
   "page": "https://www.bankofchina.com/investor/ir5/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "bank-of-china-uk > ir3": {
   "page": "https://www.bankofchina.com/investor/ir3/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "bank-of-china-uk > ir9": {
   "page": "https://www.bankofchina.com/investor/ir9/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "first-abu-dhabi-bank > investor-relations": {
@@ -4991,7 +4987,7 @@
  },
  "citigroup > quarterly-earnings": {
   "page": "https://www.citigroup.com/global/investors/quarterly-earnings",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q22026/2026prqtr2rslt.pdf",
@@ -5237,7 +5233,7 @@
  },
  "citigroup > investor-contacts": {
   "page": "https://www.citigroup.com/global/investors/investor-contacts",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.citigroup.com/global/about-us/global-presence/zh-TW/taiwan/regulatory-disclosures",
@@ -5367,7 +5363,7 @@
  },
  "citigroup > investor-day-2026": {
   "page": "https://www.citigroup.com/global/investors/events-and-presentations/investor-day-2026",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/storage/public/investor-day/citi-ID26-ceo-presentation.pdf",
@@ -5581,7 +5577,7 @@
  },
  "citigroup > services-investor-day": {
   "page": "https://www.citigroup.com/global/investors/events-and-presentations/services-investor-day",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/storage/public/services-investor-day-agenda.pdf",
@@ -5803,7 +5799,7 @@
  },
  "citigroup > investor-day-2022": {
   "page": "https://www.citigroup.com/global/investors/events-and-presentations/investor-day-2022",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/akpublic/storage/public/ID22-CEO-Presentation.pdf",
@@ -6005,7 +6001,7 @@
  },
  "citigroup > citi-2026-barclays-global-financial-serv": {
   "page": "https://www.citigroup.com/global/news/press-release/2026/citi-2026-barclays-global-financial-services-conference-gonzalo-luchetti",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/storage/public/global-privacy-policy-institutional-clients.pdf",
@@ -6435,7 +6431,7 @@
  },
  "lloyds-bank-corporate-markets": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -8315,12 +8311,12 @@
  },
  "hinckley-and-rugby-bs > embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2": {
   "page": "https://www.hrbs.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2Fthe-society%2Fgovernance%2F&format=xml",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": []
  },
  "sumitomo-mitsui-trust": {
   "page": "https://www.smtg.jp/english/investors/report/basel",
-  "checked": "2026-09-09",
+  "checked": "2026-09-14",
   "links": [
    {
     "url": "https://www.smtg.jp/english/investors/report/basel",

@@ -770,5 +770,220 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-09-14T11:49:53"
+ },
+ {
+  "id": "65415abc4d5e",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2022/18-november--basel-iii-pillar-3-disclosures--prudential-standard-aps-330--attachment-b--main-features-of-capital-instruments.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/65415abc4d5e4680.pdf",
+  "title": "18-november--basel-iii-pillar-3-disclosures--prudential-standard-aps-330--attachment-b--main-features-of-capital-instrum",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T12:49:08"
+ },
+ {
+  "id": "398bd1bbdd2e",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2018/5-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330---attachment-b---main-features-of-capital-instruments.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/398bd1bbdd2eb5a8.pdf",
+  "title": "5-december---basel-iii-pillar-3-disclosures-prudential-standard-aps-330---attachment-b---main-features-of-capital-instru",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T12:49:08"
+ },
+ {
+  "id": "dcb38025b051",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2015/18-june---basel-iii-pillar-3-disclosures-prudential-standard-aps330---attachment-b---main-features-of-capital-instruments.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/dcb38025b051275e.pdf",
+  "title": "18-june---basel-iii-pillar-3-disclosures-prudential-standard-aps330---attachment-b---main-features-of-capital-instrument",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T12:49:08"
+ },
+ {
+  "id": "9ae1b9ecd005",
+  "entity_id": "bank-of-scotland",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2023/q1/2023-bos-q1-pillar-3.pdf",
+  "local": "cache/pdf/bank-of-scotland/9ae1b9ecd005c216.pdf",
+  "title": "2023-bos-q1-pillar-3.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T12:49:38"
+ },
+ {
+  "id": "ff100ad71e9c",
+  "entity_id": "bank-of-scotland",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2022/q3/2022-bos-q3-pillar-3.pdf",
+  "local": "cache/pdf/bank-of-scotland/ff100ad71e9ca57d.pdf",
+  "title": "2022-bos-q3-pillar-3.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T12:49:39"
+ },
+ {
+  "id": "4c491b4b36d6",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-corporate-markets-plc/2023/q1/2023-lbcm-q1-pillar-3.pdf",
+  "local": "cache/pdf/lloyds-bank-corporate-markets/4c491b4b36d6dd97.pdf",
+  "title": "2023-lbcm-q1-pillar-3.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T12:49:41"
+ },
+ {
+  "id": "5d2765add49d",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-corporate-markets-plc/2022/q3/2022-lbcm-q3-pillar-3.pdf",
+  "local": "cache/pdf/lloyds-bank-corporate-markets/5d2765add49d83dd.pdf",
+  "title": "2022-lbcm-q3-pillar-3.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T12:49:42"
+ },
+ {
+  "id": "0156eab3b981",
+  "entity_id": "state-street",
+  "url": "https://s203.q4cdn.com/888565246/files/doc_downloads/P3-Capital-June-30-2022.pdf",
+  "local": "cache/pdf/state-street/0156eab3b981e151.pdf",
+  "title": "P3-Capital-June-30-2022.pdf",
+  "page": 7,
+  "reference_date": "2022-06-30",
+  "currency": "USD",
+  "values": {
+   "tier1_ratio": 11.5,
+   "leverage_ratio": 6.6,
+   "cet1_capital": 14882.0,
+   "tier1_capital": 16858.0
+  },
+  "checks": [
+   [
+    "error",
+    "no CET1 ratio found"
+   ]
+  ],
+  "reason": "error:no CET1 ratio found",
+  "status": "open",
+  "created": "2026-09-14T12:56:00"
+ },
+ {
+  "id": "948c875a8204",
+  "entity_id": "state-street",
+  "url": "https://s203.q4cdn.com/888565246/files/doc_downloads/Supplement/P3-Capital-March-31-2022.pdf",
+  "local": "cache/pdf/state-street/948c875a8204b4f2.pdf",
+  "title": "P3-Capital-March-31-2022.pdf",
+  "page": 7,
+  "reference_date": "2022-03-31",
+  "currency": "USD",
+  "values": {
+   "tier1_ratio": 11.5,
+   "leverage_ratio": 6.7,
+   "cet1_capital": 15026.0,
+   "tier1_capital": 17002.0
+  },
+  "checks": [
+   [
+    "error",
+    "no CET1 ratio found"
+   ]
+  ],
+  "reason": "error:no CET1 ratio found",
+  "status": "open",
+  "created": "2026-09-14T12:56:01"
+ },
+ {
+  "id": "41336292265e",
+  "entity_id": "state-street",
+  "url": "https://s203.q4cdn.com/888565246/files/doc_downloads/Supplement/P3-Capital-December-31-2021.pdf",
+  "local": "cache/pdf/state-street/41336292265efcec.pdf",
+  "title": "P3-Capital-December-31-2021.pdf",
+  "page": 7,
+  "reference_date": "2021-12-31",
+  "currency": "USD",
+  "values": {
+   "total_capital_ratio": 11.5,
+   "leverage_ratio": 7.4,
+   "cet1_capital": 15947.0,
+   "tier1_capital": 17923.0
+  },
+  "checks": [
+   [
+    "error",
+    "no CET1 ratio found"
+   ]
+  ],
+  "reason": "error:no CET1 ratio found",
+  "status": "open",
+  "created": "2026-09-14T12:56:02"
  }
 ]
