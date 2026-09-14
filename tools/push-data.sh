@@ -31,6 +31,11 @@ git commit -q -m "$MESSAGE"
 # Commit first, then integrate. Pulling with the answers still staged meant that any one of these
 # files the pipeline had also written refused the fast-forward and ended the script, leaving a
 # run's work staged and unpushed with nothing to say so. Committed work survives a failed merge.
+# A day's answers and the pipeline's own collection land in the same tables, so the pull has to
+# union them rather than pick a side. The driver is named in .gitattributes but lives in the
+# clone's config, which nothing ships, so install it here every time: it costs a git config call.
+python3 tools/merge-data.py --install >/dev/null \
+  || echo "!! could not install the data merge driver; a collision will stop the pull" >&2
 git fetch --quiet origin main
 if ! git -c pull.rebase=false pull --no-edit --quiet origin main; then
   echo "!! merged nothing: origin/main conflicts with this run's answers." >&2
