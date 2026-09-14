@@ -51,8 +51,11 @@ def install() -> int:
     every runner has to do this once - the Mac job and the workflow both call it before they pull."""
     subprocess.run(["git", "config", "merge.counterparty.name",
                     "union data records on their natural key"], cwd=HERE, check=True)
+    # sys.executable, not "python3": git resolves the stored command against whatever PATH the
+    # puller happens to have, and the only interpreter certain to have pandas is this one.
     subprocess.run(["git", "config", "merge.counterparty.driver",
-                    f"python3 {HERE / 'tools' / 'merge-data.py'} %O %A %B %P"], cwd=HERE, check=True)
+                    f"{sys.executable} {HERE / 'tools' / 'merge-data.py'} %O %A %B %P"],
+                   cwd=HERE, check=True)
     return 0
 
 
