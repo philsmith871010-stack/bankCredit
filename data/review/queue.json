@@ -610,5 +610,105 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-09-13T10:21:22"
+ },
+ {
+  "id": "e589c633b592",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/fy-2021/9-december--basel-iii-pillar-3-disclosures--prudential-standard-aps-330--attachment-b--main-features-of-capital-instruments.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/e589c633b592f43a.pdf",
+  "title": "9-december--basel-iii-pillar-3-disclosures--prudential-standard-aps-330--attachment-b--main-features-of-capital-instrume",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T10:40:52"
+ },
+ {
+  "id": "1bedd9692447",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/fy-2021/3-december--basel-iii-pillar-3-disclosures-prudential-standard-aps-330--attachment-b--main-features-of-capital-instruments.pdf",
+  "local": "cache/pdf/bendigo-and-adelaide-bank/1bedd9692447f8ec.pdf",
+  "title": "3-december--basel-iii-pillar-3-disclosures-prudential-standard-aps-330--attachment-b--main-features-of-capital-instrumen",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T10:40:52"
+ },
+ {
+  "id": "71f0e79d827d",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/anz-december-2022-pillar-3-chart-pack.pdf",
+  "local": "cache/pdf/anz/71f0e79d827d47ce.pdf",
+  "title": "anz-december-2022-pillar-3-chart-pack.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T10:40:55"
+ },
+ {
+  "id": "b98471412dd3",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/2022-september-pillar-3-disclosure.pdf",
+  "local": "cache/pdf/anz/b98471412dd3b1ef.pdf",
+  "title": "2022-september-pillar-3-disclosure.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T10:40:55"
+ },
+ {
+  "id": "323e2032b6d0",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/G-SIB-Pillar-3-Disclosure-September-2022.pdf",
+  "local": "cache/pdf/anz/323e2032b6d0d15f.pdf",
+  "title": "G-SIB-Pillar-3-Disclosure-September-2022.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-14T10:40:55"
  }
 ]
