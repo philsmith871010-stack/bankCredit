@@ -176,38 +176,58 @@ def test_the_kick_declines_when_the_day_is_already_collected(tmp_path):
 
 
 # ---- whether the day's collection arrived, said on the page ------------------------------------
-def punct(collect_stamp, generated):
-    """Render the Status page's punctuality line against a given collection stamp."""
-    from bankcredit import store
+def punct(started, generated, finished=None, source="esma"):
+    """Render the Status page's punctuality line from a run log, the way the page does.
+
+    Not from data/state/last-collect: the workflow writes that after the site is built, so reading
+    it reported the previous run and contradicted the table underneath."""
     from bankcredit.site import build
-    state = store.DATA / "state"
-    state.mkdir(parents=True, exist_ok=True)
-    if collect_stamp is None:
-        (state / "last-collect").unlink(missing_ok=True)
-    else:
-        (state / "last-collect").write_text(collect_stamp)
-    return build.punctuality(generated)
+    runs = [] if started is None else [
+        {"source": source, "status": "ok", "rows": 1,
+         "started": started, "finished": finished or started, "message": ""}]
+    return build.punctuality({"runs": runs}, generated)
 
 
 def test_a_collection_on_time_reads_as_a_quiet_line():
-    out = punct("2026-09-14T05:40:00Z", "2026-09-14T06:00:00Z")
-    assert "punct good" in out and "05:40 UTC" in out and "40 minutes" in out
+    out = punct("2026-09-14T05:20:00", "2026-09-14T06:00:00", finished="2026-09-14T05:34:00")
+    assert "punct good" in out and "started 05:20" in out and "finished 05:34" in out
+    assert "20 minutes" in out
 
 
 def test_a_collection_hours_late_says_so_and_says_why():
     """Eight mornings running, the kick did not fire and the day waited for GitHub. Nobody saw it,
     because the only place it was said was a routine's chat reply."""
-    out = punct("2026-09-14T10:50:00Z", "2026-09-14T11:30:00Z")
+    out = punct("2026-09-14T10:39:00", "2026-09-14T11:30:00", finished="2026-09-14T10:50:00")
     assert "punct warn" in out
-    assert "5h 50m" in out, out
+    assert "5h 39m" in out, out
     assert "morning kick" in out
 
 
 def test_a_day_with_no_collection_is_not_a_quiet_line():
-    out = punct("2026-09-12T09:34:00Z", "2026-09-14T11:30:00Z")
+    out = punct("2026-09-12T09:34:00", "2026-09-14T11:30:00")
     assert "punct bad" in out and "No collection today" in out and "2 days ago" in out
 
 
-def test_no_stamp_at_all_says_nothing_can_be_assumed_current():
-    out = punct(None, "2026-09-14T11:30:00Z")
+def test_no_collection_in_the_log_says_nothing_can_be_assumed_current():
+    out = punct(None, "2026-09-14T11:30:00")
     assert "punct bad" in out and "No collection recorded" in out
+
+
+def test_the_line_describes_the_run_that_built_the_page(tmp_path):
+    """The bug this replaced: the page was built at 11:59 by a collection that began at 11:46, and
+    the line reported 10:50, because the stamp it read is written after the build."""
+    from bankcredit.site import build
+    runs = [{"source": "esma", "status": "ok", "rows": 1, "message": "",
+             "started": "2026-09-14T10:37:40", "finished": "2026-09-14T10:39:36"},
+            {"source": "esma", "status": "ok", "rows": 1, "message": "",
+             "started": "2026-09-14T11:46:33", "finished": "2026-09-14T11:48:30"}]
+    out = build.punctuality({"runs": runs}, "2026-09-14T11:59:00Z")
+    assert "started 11:46" in out and "finished 11:48" in out, out
+    assert "10:37" not in out and "10:39" not in out
+
+
+def test_a_news_only_run_is_not_mistaken_for_the_day_s_collection():
+    """Only the full collection runs esma. A headline refresh at 14:00 must not read as a
+    collection that was nine hours late."""
+    out = punct("2026-09-14T14:00:00", "2026-09-14T14:10:00", source="events")
+    assert "No collection recorded" in out

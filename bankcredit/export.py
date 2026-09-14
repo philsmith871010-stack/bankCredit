@@ -845,7 +845,7 @@ def export_json() -> None:
     if not runs.empty:
         for src, g in runs.sort_values("finished").groupby("source"):
             last = g.iloc[-1]
-            status.append({"source": src, "status": last.status, "rows": int(last.rows), "finished": str(last.finished), "message": last.message})
+            status.append({"source": src, "status": last.status, "rows": int(last.rows), "started": str(last.started), "finished": str(last.finished), "message": last.message})
     docs = store.read("documents")
     doc_rows, counts = [], {}
     if not docs.empty:

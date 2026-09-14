@@ -674,35 +674,42 @@ def health_card() -> str:
 
 # The day's collection is due from 05:00 UTC. Whether it arrived, and how late, has until now been
 # knowable only from a routine's chat reply that nobody reads - which is how eight consecutive
-# mornings went by with the punctuality layer doing nothing and reporting success. It is on the
-# page now, so a late morning is visible to anyone who looks at the site.
+# mornings went by with the punctuality layer doing nothing and reporting success.
+#
+# Read from the run log rather than from data/state/last-collect. The workflow writes that stamp
+# after the site is built, deliberately, so that a run which fails before publishing leaves the day
+# still owed - which meant this line reported the previous run every time and contradicted the
+# table beneath it. The run log is written by the adapters themselves, before the build, so it
+# describes the run that produced this page.
 DUE_HOUR = 5
 LATE_HOURS = 2
+MARKER = "esma"      # runs only in a full collection, so it marks the day's collection and nothing else
 
 
-def punctuality(generated: str) -> str:
+def punctuality(status, generated: str) -> str:
     """When the day's collection ran, against when it was due."""
-    stamp = (store.DATA / "state" / "last-collect")
-    try:
-        ran = datetime.fromisoformat(stamp.read_text().strip().replace("Z", ""))
-    except Exception:
-        return ('<div class="punct bad"><b>No collection recorded.</b> The pipeline has not written '
-                'a collection stamp, so nothing on this page can be assumed current.</div>')
+    runs = [r for r in (status.get("runs") or []) if r.get("source") == MARKER and r.get("started")]
+    if not runs:
+        return ('<div class="punct bad"><b>No collection recorded.</b> The run log holds no '
+                'collection, so nothing on this page can be assumed current.</div>')
+    last = max(runs, key=lambda r: str(r["finished"]))
+    began = datetime.fromisoformat(str(last["started"])[:19])
+    ended = datetime.fromisoformat(str(last["finished"])[:19])
     now = datetime.fromisoformat(str(generated)[:19].replace("Z", ""))
-    due = ran.replace(hour=DUE_HOUR, minute=0, second=0, microsecond=0)
-    if ran.date() < now.date():
-        days = (now.date() - ran.date()).days
-        return (f'<div class="punct bad"><b>No collection today.</b> The last one finished '
-                f'{ran:%Y-%m-%d %H:%M} UTC, {days} day{"s" if days != 1 else ""} ago. Every figure '
-                f'below is from that run.</div>')
-    late = (ran - due).total_seconds() / 3600
-    when = f'{ran:%H:%M} UTC'
+    if began.date() < now.date():
+        days = (now.date() - began.date()).days
+        return (f'<div class="punct bad"><b>No collection today.</b> The last one ran on '
+                f'{began:%Y-%m-%d} at {began:%H:%M} UTC, {days} day{"s" if days != 1 else ""} ago. '
+                f'Every figure below is from that run.</div>')
+    due = began.replace(hour=DUE_HOUR, minute=0, second=0, microsecond=0)
+    late = (began - due).total_seconds() / 3600
+    ran = f'started {began:%H:%M} and finished {ended:%H:%M} UTC'
     if late <= LATE_HOURS:
-        return (f'<div class="punct good">Today\'s collection finished at <b>{when}</b>, '
+        return (f'<div class="punct good">Today\'s collection {ran}, '
                 f'{_hm(late)} after the 05:00 target.</div>')
-    return (f'<div class="punct warn">Today\'s collection finished at <b>{when}</b>, '
-            f'<b>{_hm(late)}</b> after the 05:00 target. The morning kick is what makes it '
-            f'punctual; when it does not fire, the day waits for GitHub\'s own scheduler.</div>')
+    return (f'<div class="punct warn">Today\'s collection {ran}, <b>{_hm(late)}</b> after the '
+            f'05:00 target. The morning kick is what makes it punctual; when it does not fire, '
+            f'the day waits for GitHub\'s own scheduler.</div>')
 
 
 def _hm(hours: float) -> str:
@@ -718,7 +725,7 @@ def page_status(status, board, generated, inner: bool = False):
     stale = [r for r in rows if r["age_days"] and r["age_days"] > 150]
     lst = lambda xs: ", ".join(f'<a href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a>' for r in xs) or "none"
     content = f'''<div class="page-head"><div><h1>Status</h1><div class="lede">What ran, when, and what needs a look. Auto-publish with spot checks.</div></div></div>
-<div class="card pad"><h3>Pipeline runs</h3>{punctuality(generated)}<div class="table-wrap"><table class="plain"><thead><tr><th>Source</th><th>Status</th><th>Rows</th><th>Finished (UTC)</th><th>Message</th></tr></thead><tbody>{runs}</tbody></table></div></div>
+<div class="card pad"><h3>Pipeline runs</h3>{punctuality(status, generated)}<div class="table-wrap"><table class="plain"><thead><tr><th>Source</th><th>Status</th><th>Rows</th><th>Finished (UTC)</th><th>Message</th></tr></thead><tbody>{runs}</tbody></table></div></div>
 <div class="card pad"><h3>Coverage</h3><p>{len(rows) - len(missing)} of {len(rows)} entities have regulatory figures; {sum(1 for r in rows if r["score"] is not None)} have enough for a score; {sum(1 for r in rows if r["ratings"])} have ratings.</p>
 <p class="small"><span class="b">No regulatory figures yet:</span> {lst(missing)}</p><p class="small"><span class="b">Older than 150 days:</span> {lst(stale)}</p></div>
 {health_card()}
