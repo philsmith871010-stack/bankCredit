@@ -65,91 +65,126 @@ def _quartile(v, pr) -> str | None:
 
 
 # ---- layer one --------------------------------------------------------------------------------
+TYPE_WORD = {"bank": "bank", "building_society": "building society", "holding": "banking group", "subsidiary": "bank"}
+COUNTRY = {"GB": "the UK", "US": "the US", "DE": "Germany", "FR": "France", "NL": "the Netherlands", "ES": "Spain", "IT": "Italy",
+           "SE": "Sweden", "DK": "Denmark", "NO": "Norway", "FI": "Finland", "CH": "Switzerland", "IE": "Ireland", "BE": "Belgium",
+           "AT": "Austria", "CA": "Canada", "AU": "Australia", "SG": "Singapore", "HK": "Hong Kong", "JP": "Japan", "AE": "the UAE",
+           "QA": "Qatar", "SA": "Saudi Arabia", "KW": "Kuwait", "CN": "China", "IN": "India", "KR": "South Korea", "LU": "Luxembourg"}
+
+
+def _join(parts: list[str]) -> str:
+    return parts[0] if len(parts) == 1 else ", ".join(parts[:-1]) + " and " + parts[-1]
+
+
+PLACE = {"top quarter": "in the top quarter", "above median": "above the median", "below median": "below the median",
+         "bottom quarter": "in the bottom quarter"}
+
+
+def _ratio_clause(label, v, unit, dp, q, pr) -> str:
+    return f"{label} of {v:.{dp}f}{unit} is {PLACE[q]} (median {pr['p50']:.{dp}f}{unit})" if q else f"{label} is {v:.{dp}f}{unit}"
+
+
 def brief(d: dict, today: date | None = None) -> dict:
-    """The dated sentences the data supports, one per theme, and the fingerprint they rest on."""
+    """The dated sentences the data supports, in plain English, and the fingerprint they rest on.
+
+    Nothing here quotes the site's own score or band: a reader who has moved the weightings sees
+    a different score, and the paragraph must not contradict the card beside it. It rests on what
+    is published - the agencies' ratings and the banks' own ratios - and on where those sit among
+    peers.
+    """
     today = today or date.today()
     name = d.get("short") or d.get("name") or d.get("id")
     group = PEER_LABEL.get(d.get("peer_group") or "", "its peer group")
-    out = {"standing": "", "peers": "", "ratings": "", "trends": "", "news": "", "asof": d.get("asof")}
+    out = {"standing": "", "capital": "", "liquidity": "", "trends": "", "news": "", "asof": d.get("asof")}
 
-    # standing
-    if d.get("score") is None or d.get("unscored"):
-        why = d.get("unscored") or "not enough current figures"
-        out["standing"] = f"{name} is not scored: {why}."
-    else:
-        s = f"{name} is band {d.get('band') or '?'} with a counterparty score of {d['score']:.0f}"
-        peer = d.get("peer") or {}
-        if d.get("percentile") is not None and peer.get("n"):
-            s += f", {ordinal(int(d['percentile']))} percentile of {peer['n']} {group}"
-        hist = [(x[0], x[1]) for x in ((d.get("history") or {}).get("score") or []) if x[1] is not None]
-        if len(hist) >= 2:
-            delta = hist[-1][1] - hist[-2][1]
-            if abs(delta) >= 0.5:
-                s += f", {'up' if delta > 0 else 'down'} {abs(delta):.1f} since {fdate(hist[-2][0])}"
-            else:
-                s += f", unchanged since {fdate(hist[-2][0])}"
-        out["standing"] = s + "."
-
-    # peers
-    pr_all = d.get("peer_ratios") or {}
-    parts = []
-    for key, pkey, label, unit, dp, _thr in RATIOS:
-        v, pr = d.get(key), pr_all.get(pkey)
-        q = _quartile(v, pr)
-        if q:
-            parts.append(f"{label} {v:.{dp}f}{unit} is {q} of the group (median {pr['p50']:.{dp}f}{unit})")
-        elif v is not None:
-            parts.append(f"{label} {v:.{dp}f}{unit}")
-    if parts:
-        out["peers"] = "; ".join(parts) + (f", figures to {fdate(d['asof'])}." if d.get("asof") else ".")
-
-    # ratings
+    # who, and what the agencies say
+    kind = TYPE_WORD.get(d.get("type") or "", "bank")
+    where = COUNTRY.get(d.get("country") or "")
+    who = f"{name} is a {kind}" + (f" in {where}" if where else "")
     held = {r["agency"]: r for r in (d.get("ratings") or []) if r.get("agency") in AGENCIES}
     if held:
-        rs = []
-        for a in AGENCIES:
-            if a in held:
-                r = held[a]
-                rs.append(f"{AGENCY[a]} {r['value']}" + (f" ({r['outlook']})" if r.get("outlook") else ""))
-        s = f"Composite rating {d.get('rating_composite') or '—'}: " + ", ".join(rs)
+        rs = [f"{held[a]['value']} by {AGENCY[a]}" for a in AGENCIES if a in held]
+        outlooks = {(held[a].get("outlook") or "").lower() for a in AGENCIES if a in held}
+        s = f"{who}, rated {_join(rs)}"
+        if len(outlooks) == 1 and "" not in outlooks:
+            o = outlooks.pop()
+            s += f", {'all' if len(rs) > 2 else 'both'} with a {o} outlook" if len(rs) > 1 else f", with a {o} outlook"
+        elif len(outlooks) > 1:
+            s += " (" + ", ".join(f"{AGENCY[a]} {held[a].get('outlook') or 'no outlook'}" for a in AGENCIES if a in held) + ")"
         moves = [m for m in ((d.get("rating_history") or {}).get("moves") or []) if m.get("agency") in AGENCIES]
         if moves:
             m = moves[0]
-            s += f"; last move {AGENCY[m['agency']]} {m.get('action', 'action')} to {m.get('value')} on {fdate(m.get('date'))}"
-        out["ratings"] = s + "."
-    elif d.get("unrated"):
-        out["ratings"] = "No public rating from Fitch, S&P or Moody's."
+            s += f"; the last move was {AGENCY[m['agency']]}'s {m.get('action', 'action')} to {m.get('value')} on {fdate(m.get('date'))}"
+        out["standing"] = s + "."
+    else:
+        out["standing"] = f"{who} with no public rating from Fitch, S&P or Moody's."
 
-    # trends: over the last four periods, the ratios that moved by more than noise
+    # capital and liquidity, each against the peer group
+    pr_all = d.get("peer_ratios") or {}
+    def block(keys, noun):
+        clauses, qs = [], []
+        for key, pkey, label, unit, dp, _thr in RATIOS:
+            if key not in keys:
+                continue
+            v, pr = d.get(key), pr_all.get(pkey)
+            if v is None:
+                continue
+            q = _quartile(v, pr)
+            qs.append(q)
+            clauses.append(_ratio_clause(label, v, unit, dp, q, pr))
+        if not clauses:
+            return ""
+        known = [q for q in qs if q]
+        if not known:
+            lead = f"{noun}: "
+        elif all(q in ("top quarter", "above median") for q in known):
+            lead = f"{noun} is strong against {group}: "
+        elif all(q in ("bottom quarter", "below median") for q in known):
+            lead = f"{noun} is on the weak side of {group}: "
+        else:
+            lead = f"{noun} is mixed against {group}: "
+        return lead + "; ".join(clauses) + "."
+    out["capital"] = block(("cet1", "leverage"), "Capital")
+    out["liquidity"] = block(("lcr", "nsfr"), "Liquidity")
+
+    # trends over the last four periods, in points
     series = d.get("series") or {}
-    moved, flat = [], []
+    moved, flat, dates = [], [], set()
     for key, pkey, label, unit, dp, thr in RATIOS:
         pts = [p for p in (series.get(pkey) or []) if p.get("v") is not None]
         if len(pts) < 2:
             continue
         back = pts[-5] if len(pts) >= 5 else pts[0]
         delta = pts[-1]["v"] - back["v"]
-        span = f"since {fdate(back['d'])}"
         if abs(delta) >= thr:
-            moved.append(f"{label} {'up' if delta > 0 else 'down'} {abs(delta):.{dp}f} points {span}")
+            moved.append((label, "risen" if delta > 0 else "fallen", f"{abs(delta):.{dp}f}", fdate(back["d"])))
+            dates.add(fdate(back["d"]))
         else:
             flat.append(label)
-    if moved or flat:
-        s = ("Over the last four periods " + ", ".join(moved)) if moved else "Over the last four periods no ratio has moved materially"
-        if moved and flat:
-            s += f"; {', '.join(flat)} broadly unchanged"
-        out["trends"] = s + "."
+    asof = f" (figures to {fdate(d['asof'])})" if d.get("asof") else ""
+    if moved:
+        # one date where every move is measured from the same one; each its own otherwise
+        if len(dates) == 1:
+            lead = f"Since {dates.pop()}, "
+            parts = [f"{l} has {v} {n} points" for l, v, n, _ in moved]
+        else:
+            lead = "Over the past four periods "
+            parts = [f"{l} has {v} {n} points since {dt}" for l, v, n, dt in moved]
+        tail = f", while {_join(flat)} {'has' if len(flat) == 1 else 'have'} been broadly flat" if flat else ""
+        out["trends"] = f"{lead}{_join(parts)}{tail}{asof}."
+    elif flat:
+        out["trends"] = f"None of the ratios has moved materially over the past four periods{asof}."
 
-    # news: the flagged events of the last 90 days
+    # the flagged events of the last 90 days
     cut = (today - timedelta(days=90)).isoformat()
     flagged = sorted((e for e in (d.get("events") or []) if (e.get("severity") or "info") in FLAGGED and str(e.get("date") or "") >= cut),
                      key=lambda e: e["date"], reverse=True)
     if flagged:
         items = "; ".join(f"{fdate(e['date'])}, {e.get('severity')}: {headline(e.get('title'))}" for e in flagged[:3])
-        more = f" and {len(flagged) - 3} more" if len(flagged) > 3 else ""
+        more = f", and {len(flagged) - 3} more" if len(flagged) > 3 else ""
         out["news"] = f"Flagged in the last 90 days: {items}{more}."
     else:
-        out["news"] = "Nothing flagged in the last 90 days."
+        out["news"] = "Nothing has been flagged in the last 90 days."
     out["fingerprint"] = fingerprint(d)
     return out
 
@@ -162,8 +197,11 @@ def headline(title) -> str:
     return s if len(s) <= 90 else s[:87].rstrip() + "\u2026"
 
 
+SENTENCES = ("standing", "capital", "liquidity", "trends", "news")
+
+
 def brief_text(b: dict) -> str:
-    return " ".join(b[k] for k in ("standing", "peers", "ratings", "trends", "news") if b.get(k))
+    return " ".join(b[k] for k in SENTENCES if b.get(k))
 
 
 # ---- the fingerprint: what a written summary rests on ---------------------------------------------
@@ -256,6 +294,10 @@ def check(s: dict, brief_para: str) -> list[str]:
     for w in ("recently", "this year", "last year", "currently", "CEO", "chief executive", "chairman"):
         if w.lower() in text.lower():
             faults.append(f"dated wording: '{w}'")
+    # the site's score and band depend on weightings the reader may have changed; the written
+    # text rests on what is published, never on them
+    if re.search(r"\bscore[sd]?\b|\bband [A-E]\b|\bbands?\b", text, re.I):
+        faults.append("mentions the site's score or band, which depend on the reader's weightings")
     return faults
 
 
