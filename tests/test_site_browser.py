@@ -440,7 +440,8 @@ def test_a_heavy_panel_is_warmed_before_it_is_asked_for(page, server):
 def test_the_policy_page_is_tabs(page, server):
     """The approved names ran the length of the page with the shortlist under them."""
     _seed_many(page, server, 4)
-    tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
+    # the approved-list link shares the strip but is not a tab; it has no panel to switch to
+    tabs = page.eval_on_selector_all(".tabs-card .tab:not(.tab-out)", "e => e.map(x => x.dataset.tab)")
     expected = [t for t in ["policy", "likeforlike", "universe", "ratings", "events", "analysis", "weights"]
                 if t not in HOME_TABS_HIDDEN]
     assert tabs == expected
@@ -829,4 +830,29 @@ def test_the_shortlist_shows_every_name_that_clears_the_bar(page, server):
     counted = page.eval_on_selector(".ll-t.active .cnt", "e => +e.textContent")
     assert drawn == counted, f"the chip counts {counted} and the table draws {drawn}"
     assert page.query_selector(".ll-pane:not([hidden]) .scrollbox"), "and it scrolls in a window"
+    assert not page.errors, page.errors
+
+
+# ---- the approved list ---------------------------------------------------------------------
+def test_the_approved_list_draws_a_column_and_a_card(page, server):
+    """Its own page, its own script: the column comes from one file, the card from another, and
+    both are fetched through the page's data-root rather than a path written into the script."""
+    visit(page, server, "approved/index.html")
+    assert page.eval_on_selector_all(".ap .row[data-id]", "e => e.length") >= 5, "the example list, at least"
+    first = page.inner_text(".ap .acard .hero h2")
+    assert first, "a card is drawn for the selected name"
+    assert page.eval_on_selector_all(".ap .tile", "e => e.length") == 4, "four ratios, each with a verdict"
+    page.eval_on_selector(".ap .row[data-id]:nth-of-type(3)", "e => e.click()")
+    page.wait_for_timeout(700)
+    assert page.inner_text(".ap .acard .hero h2") != first, "clicking a name changes the card"
+    assert not page.errors, page.errors
+    assert not page.bad, page.bad
+
+
+def test_the_home_page_links_to_the_approved_list_without_breaking_its_tabs(page, server):
+    visit(page, server, "index.html")
+    assert page.get_attribute(".tab-out", "href") == "approved/index.html"
+    page.eval_on_selector('.tab[data-tab="universe"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector('.tab[data-tab="universe"]', "e => e.classList.contains('active')")
     assert not page.errors, page.errors

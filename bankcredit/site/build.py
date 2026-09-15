@@ -995,7 +995,9 @@ def page_home(board, status, generated):
                  + ('<button class="tab" data-tab="ratings">Ratings</button>' if "ratings" not in HOME_TABS_HIDDEN else '')
                  + ('<button class="tab" data-tab="events">Events</button>' if "events" not in HOME_TABS_HIDDEN else '')
                  + '<button class="tab" data-tab="analysis">Analysis</button>'
-                 '<button class="tab" data-tab="weights">Weightings</button></div>'
+                 '<button class="tab" data-tab="weights">Weightings</button>'
+                 # the list-and-card view of the same names, while the shape is decided
+                 '<a class="tab tab-out" href="approved/index.html">Approved list<span class="tab-n">preview</span></a></div>'
                  '<section class="panel active" data-panel="policy">'
                  '<div id="policy-body"><div class="sk-cards" aria-hidden="true">'
                  + '<span class="sk"></span>' * 4 + '</div></div>'
@@ -1245,6 +1247,139 @@ def write_detail(limit: int = 40) -> int:
     return n
 
 
+# ---- the approved list -------------------------------------------------------------------------
+# A council's approved names down the left, one card at a time on the right. An alternative to
+# the home page's policy tab while the shape is decided: the same list, read from the same place
+# (counterparty.policy) and stored alongside it, drawn from its own slim files under data/approved.
+APPROVED_MARKUP = """<div class="ap">
+<div class="app" id="app">
+  <aside class="side" aria-label="Approved counterparties">
+    <header class="side-head">
+      <h1>Approved list</h1>
+      <div class="sub" id="count">Loading&hellip;</div>
+    </header>
+    <div class="asearch">
+      <div class="box">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <input id="q" type="search" placeholder="Search, or add a counterparty" autocomplete="off" aria-label="Search your list or add a counterparty">
+      </div>
+    </div>
+    <div class="tools">
+      <label for="sort" class="visually-hidden">Sort</label>
+      <select id="sort">
+        <option value="mine">My order</option>
+        <option value="attention">Attention first</option>
+        <option value="score">Score, high to low</option>
+        <option value="name">Name</option>
+      </select>
+      <label style="display:inline-flex;gap:5px;align-items:center;cursor:pointer"><input type="checkbox" id="group" style="margin:0"> Grouped</label>
+      <span class="spacer"></span>
+      <button id="share" type="button" title="Copy a link that carries this list">Share</button>
+    </div>
+    <nav class="list" id="list" role="listbox" aria-label="Counterparties"></nav>
+    <footer class="side-foot" id="foot"></footer>
+  </aside>
+  <main class="detail" id="detail" tabindex="-1"></main>
+</div>
+</div>"""
+
+APPROVED_KEEP = ("id", "name", "short", "country", "type", "region", "group", "peer_group", "score",
+                 "public_score", "band", "coverage", "unscored", "not_published", "overlay", "percentile",
+                 "peer", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "basis", "asof", "age_days",
+                 "inherited", "ratings", "rating_composite", "rating_grade", "unrated", "market_public",
+                 "price_currency")
+APPROVED_LIST = ("id", "name", "short", "country", "type", "region", "peer_group", "score", "band", "coverage",
+                 "unscored", "rating_composite", "asof", "age_days", "delta", "flags", "unrated")
+APPROVED_TREND = ("cet1_ratio", "leverage_ratio", "lcr", "nsfr")
+
+
+def approved_card(b: dict, today: date) -> dict:
+    """One bank's card: the profile's file cut to what the card draws, plus the three things it
+    works out for itself - the score's move since the start of the month, the four ratios' recent
+    path, and the flags the list column shows (a rating action or a flagged headline this month,
+    a score move of a point or more, figures over six months old)."""
+    g = lambda *ks: _dig(b, *ks)
+    snaps = g("history", "snapshots") or []
+    month_start = today.replace(day=1).isoformat()
+    cut30 = (today - timedelta(days=30)).isoformat()
+    base = None
+    for s in snaps:
+        if s[0] <= month_start:
+            base = s
+    if base is None and snaps:
+        base = snaps[0]
+    delta = round(b["score"] - base[1], 1) if (base and b.get("score") is not None and base[1] is not None) else None
+    moves = (g("rating_history", "moves") or [])[:6]
+    events = sorted((e for e in (b.get("events") or []) if e.get("type") in ("rating", "news")),
+                    key=lambda e: e["date"], reverse=True)[:8]
+    flags = []
+    if any(m["date"] >= cut30 for m in moves):
+        flags.append("rating")
+    if any(e["date"] >= cut30 and e.get("severity") in ("warn", "bad") for e in events):
+        flags.append("news")
+    if delta is not None and abs(delta) >= 1.0:
+        flags.append("score")
+    if (b.get("age_days") or 0) > 180:
+        flags.append("stale")
+    if b.get("unscored"):
+        flags.append("unscored")
+    out = {k: b.get(k) for k in APPROVED_KEEP}
+    sov = b.get("sovereign")
+    out["sovereign"] = {k: sov.get(k) for k in ("country", "name", "composite", "grade")} if sov else None
+    out["pillars"] = g("score_detail", "pillars")
+    out["inputs"] = g("score_detail", "inputs")
+    out["peer_ratios"] = {k: v for k, v in (b.get("peer_ratios") or {}).items() if k in APPROVED_TREND}
+    out["snapshots"] = snaps[-90:]
+    out["quarters"] = (g("history", "score") or [])[-12:]
+    out["moves"] = moves
+    out["events"] = [{k: e.get(k) for k in ("event_id", "date", "type", "title", "source", "url", "severity")} for e in events]
+    out["spark"] = [p["c"] for p in (b.get("prices") or [])[-60:] if p.get("c") is not None]
+    trend = {}
+    for k in APPROVED_TREND:
+        seen = {}
+        for x in (b.get("series") or {}).get(k) or []:
+            if x.get("v") is not None:
+                seen[x["d"]] = x["v"]           # one reading per period, the last one written
+        trend[k] = [[d, seen[d]] for d in sorted(seen)][-12:]
+    out["trend"] = trend
+    out["delta"], out["delta_since"], out["flags"] = delta, (base[0] if base else None), flags
+    return out
+
+
+def _dig(d, *keys):
+    for k in keys:
+        d = d.get(k) if isinstance(d, dict) else None
+    return d
+
+
+def write_approved(generated: str) -> int:
+    src, dst = store.DATA / "json" / "banks", OUT / "data" / "approved"
+    dst.mkdir(parents=True, exist_ok=True)
+    today = date.fromisoformat(generated[:10])
+    rows = []
+    for f in sorted(src.glob("*.json")):
+        try:
+            b = json.loads(f.read_text())
+        except Exception:
+            continue
+        card = approved_card(b, today)
+        (dst / f.name).write_text(json.dumps(card, separators=(",", ":")))
+        rows.append({k: card.get(k) for k in APPROVED_LIST})
+    (dst / "list.json").write_text(json.dumps({"generated": generated, "rows": rows}, separators=(",", ":")))
+    return len(rows)
+
+
+def page_approved(generated: str) -> str:
+    """Its own stylesheet and script, loaded after the site's, and nothing shared but the header."""
+    return (c.shell("Approved list", APPROVED_MARKUP, "approved", "../", generated,
+                    preload=("data/approved/list.json",))
+            .replace("</head>", f'<link rel="stylesheet" href="../assets/approved.css?v={c.stamp(generated)}"></head>')
+            .replace(f'<script src="../assets/app.js?v={c.stamp(generated)}"></script>',
+                     f'<script src="../assets/app.js?v={c.stamp(generated)}"></script>'
+                     f'<script src="../assets/approved.js?v={c.stamp(generated)}"></script>')
+            .replace("<body>", '<body data-root="../">'))
+
+
 def build():
     board = load("board"); status = load("status"); generated = board["generated"]
     if OUT.exists():
@@ -1278,6 +1413,9 @@ def build():
     (OUT / "data").mkdir(exist_ok=True)
     shutil.copy(store.DATA / "json" / "policy.json", OUT / "data" / "policy.json")
     write_detail()
+    (OUT / "approved").mkdir(exist_ok=True)
+    _write(OUT / "approved" / "index.html", page_approved(generated))
+    write_approved(generated)
     (OUT / "brief").mkdir(exist_ok=True)
     _write(OUT / "brief" / "index.html", page_brief_redirect(generated))
     _write(OUT / "status" / "index.html", page_gone("Status", generated, "../admin/index.html#status", "admin"))
