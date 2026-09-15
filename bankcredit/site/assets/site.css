@@ -886,3 +886,10 @@ table.uni .sc-n{font-size:14px}
 .punct.warn{background:var(--orange-soft);border-left-color:var(--orange);color:var(--text)}
 .punct.bad{background:#fbe9e7;border-left-color:var(--red);color:var(--text)}
 .punct b{font-weight:600;color:var(--text)}
+
+/* profile headline tiles: a verdict in words, the headroom over the requirement, the peers it was judged against */
+.tile-vd{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:11.5px;font-weight:600;padding:3px 9px 3px 7px;border-radius:12px;line-height:1.25;max-width:100%}
+.tile-vd i{width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.tile-vd.good{background:#e6f4ea;color:var(--green)}.tile-vd.warn{background:var(--orange-soft);color:#b35900}.tile-vd.bad{background:#fbe9e7;color:var(--red)}.tile-vd.na{background:var(--line-soft);color:var(--muted)}
+.tile-room{font-size:11px;color:var(--muted);margin-top:-4px}.tile-room.bad{color:var(--red);font-weight:600}
+.tile-peers{font-size:11px;color:var(--muted);line-height:1.35;border-top:1px solid var(--line-soft);padding-top:6px}

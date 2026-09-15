@@ -441,7 +441,7 @@ def test_the_policy_page_is_tabs(page, server):
     """The approved names ran the length of the page with the shortlist under them."""
     _seed_many(page, server, 4)
     tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
-    expected = [t for t in ["policy", "approved", "likeforlike", "universe", "ratings", "events", "analysis", "weights"]
+    expected = [t for t in ["policy", "likeforlike", "universe", "ratings", "events", "analysis", "weights"]
                 if t not in HOME_TABS_HIDDEN]
     assert tabs == expected
     assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 4
@@ -830,57 +830,3 @@ def test_the_shortlist_shows_every_name_that_clears_the_bar(page, server):
     assert drawn == counted, f"the chip counts {counted} and the table draws {drawn}"
     assert page.query_selector(".ll-pane:not([hidden]) .scrollbox"), "and it scrolls in a window"
     assert not page.errors, page.errors
-
-
-# ---- the approved list ---------------------------------------------------------------------
-def test_the_approved_list_draws_a_column_and_a_card(page, server):
-    """Its own page, its own script: the column comes from one file, the card from another, and
-    both are fetched through the page's data-root rather than a path written into the script."""
-    visit(page, server, "approved/index.html")
-    assert page.eval_on_selector_all(".ap .row[data-id]", "e => e.length") >= 5, "the example list, at least"
-    first = page.inner_text(".ap .acard .hero h2")
-    assert first, "a card is drawn for the selected name"
-    assert page.eval_on_selector_all(".ap .tile", "e => e.length") == 4, "four ratios, each with a verdict"
-    page.eval_on_selector(".ap .row[data-id]:nth-of-type(3)", "e => e.click()")
-    page.wait_for_timeout(700)
-    assert page.inner_text(".ap .acard .hero h2") != first, "clicking a name changes the card"
-    assert not page.errors, page.errors
-    assert not page.bad, page.bad
-
-
-def test_the_approved_list_is_a_tab_of_the_home_page(page, server):
-    """Its markup and script arrive on first click, like analysis, and the hash names the tab
-    first so a card or a comparison can be linked to without leaving the page."""
-    visit(page, server, "index.html")
-    assert page.eval_on_selector_all('.panel[data-panel="approved"] .row', "e => e.length") == 0, "nothing until asked"
-    page.eval_on_selector('.tab[data-tab="approved"]', "e => e.click()")
-    page.wait_for_timeout(2500)
-    assert page.eval_on_selector_all('.panel[data-panel="approved"] .row[data-id]', "e => e.length") >= 5
-    assert page.inner_text('.panel[data-panel="approved"] .acard .hero h2')
-    assert page.url.split("#")[1].startswith("approved&id="), page.url
-    page.eval_on_selector('.tab[data-tab="universe"]', "e => e.click()")
-    page.wait_for_timeout(300)
-    assert page.eval_on_selector('.tab[data-tab="universe"]', "e => e.classList.contains('active')")
-    assert not page.errors, page.errors
-    assert not page.bad, page.bad
-
-
-def test_ticking_two_names_turns_the_card_into_a_comparison(page, server):
-    """The comparison lives beside the list rather than on a page of its own: tick names and the
-    right side becomes the charts; untick back to one and it is a card again."""
-    visit(page, server, "approved/index.html")
-    page.eval_on_selector("#cmp", "e => e.click()")
-    page.wait_for_timeout(300)
-    assert page.eval_on_selector(".ap .app", "e => e.classList.contains('comparing')")
-    page.eval_on_selector(".ap .row[data-id]:nth-of-type(2)", "e => e.click()")
-    page.eval_on_selector(".ap .row[data-id]:nth-of-type(4)", "e => e.click()")
-    page.wait_for_timeout(900)
-    assert page.eval_on_selector_all(".ap .cmp .chart", "e => e.length") == 5, "the score and the four ratios"
-    assert page.eval_on_selector_all(".ap .ctab tbody tr", "e => e.length") == 3, "the card's name plus the two ticked"
-    assert page.eval_on_selector_all(".ap .row.sel", "e => e.length") == 3
-    assert "#cmp=" in page.url, "a comparison is a link"
-    page.eval_on_selector("#cmp", "e => e.click()")
-    page.wait_for_timeout(700)
-    assert page.inner_text(".ap .acard .hero h2"), "back to a card"
-    assert not page.errors, page.errors
-    assert not page.bad, page.bad
