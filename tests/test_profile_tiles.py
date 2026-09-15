@@ -60,3 +60,11 @@ def test_the_sparkline_draws_the_requirement_only_when_it_is_near():
     far = c.spark([13.9, 14.0, 13.7, 14.1], req=4.5)
     assert "stroke-dasharray" in near, "a requirement one point below the data is worth drawing"
     assert "stroke-dasharray" not in far, "one nine points below flattens the line to say nothing"
+
+
+def test_the_flagged_events_come_first_and_each_group_stays_newest_first():
+    ev = [{"date": "2026-09-01", "severity": "info"}, {"date": "2026-08-01", "severity": "warn"},
+          {"date": "2026-09-10", "severity": "info"}, {"date": "2026-07-01", "severity": "bad"},
+          {"date": "2026-06-01", "severity": None}]
+    got = build.ordered_events(ev)
+    assert [e["date"] for e in got] == ["2026-08-01", "2026-07-01", "2026-09-10", "2026-09-01", "2026-06-01"]

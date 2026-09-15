@@ -898,3 +898,16 @@ table.uni .sc-n{font-size:14px}
 td.asof{white-space:nowrap}td.stale{color:#b35900;font-weight:600}
 .n30{display:inline-block;min-width:18px;padding:0 5px;border-radius:999px;font-size:11px;font-weight:600;text-align:center;font-family:var(--mono,ui-monospace,monospace)}
 .n30.bad{background:#fbe9e7;color:var(--red)}.n30.warn{background:var(--orange-soft);color:#b35900}.n30.good{background:#e6f4ea;color:var(--green)}
+
+/* your counterparties as a table; the flagged events first; plain tables that sort */
+.pol-view{margin-left:auto;display:inline-flex;gap:4px}.pol-summary{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+table.pol-t{font-size:13px}table.pol-t th{cursor:pointer;user-select:none;white-space:nowrap}table.pol-t th:hover{color:var(--orange)}
+table.pol-t th[aria-sort]::after{content:"▾";margin-left:4px;font-size:9px}table.pol-t th[aria-sort=ascending]::after{content:"▴"}
+table.pol-t td{vertical-align:middle;padding-top:8px;padding-bottom:8px}table.pol-t td.num,table.pol-t th.num{text-align:right}
+table.pol-t tbody tr{cursor:pointer}table.pol-t tbody tr:hover{background:var(--bg)}
+table.pol-t tr.pol-tr-flag td:first-child{box-shadow:inset 3px 0 0 var(--orange)}
+table.pol-t .pt-ten .cp-ten span{display:none}table.pol-t .pt-ten select{font:inherit;font-size:12.5px}
+table.pol-t .pol-rm{border:0;background:none;color:var(--muted);font-size:16px;cursor:pointer;padding:2px 6px}table.pol-t .pol-rm:hover{color:var(--red)}
+.ev-divider{margin:10px 0 6px;padding:6px 0;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+table.sortable th[data-sortable]{cursor:pointer;user-select:none;white-space:nowrap}table.sortable th[data-sortable]:hover{color:var(--orange)}
+table.sortable th[aria-sort]::after{content:"▾";margin-left:4px;font-size:9px}table.sortable th[aria-sort=ascending]::after{content:"▴"}

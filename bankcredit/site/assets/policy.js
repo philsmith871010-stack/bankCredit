@@ -28,6 +28,47 @@
   }
 
   function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
+  // Cards or a table: a policy of twenty names is a column of figures to some readers and a set of
+  // cards to others, so the choice is theirs and kept. The table sorts on any of its columns.
+  var VIEW=KEY+'.view', polSort={key:'tenor',dir:-1};
+  function polView(){try{return localStorage.getItem(VIEW)==='table'?'table':'cards'}catch(e){return 'cards'}}
+  function setPolView(v){try{localStorage.setItem(VIEW,v)}catch(e){}}
+  function polVal(it,e,k){
+    if(k==='tenor')return it.tenor; if(k==='short')return (e&&e.short)||it.id;
+    if(k==='news30')return e?news30Rank(e):-1; if(k==='rating_grade')return e&&e.rating_grade!=null?-e.rating_grade:null;
+    return e?e[k]:null;
+  }
+  function polTable(p,flagsOf){
+    var items=p.slice().sort(function(a,b){
+      var k=polSort.key, va=polVal(a,byId[a.id],k), vb=polVal(b,byId[b.id],k);
+      if(va==null&&vb==null)return 0; if(va==null)return 1; if(vb==null)return -1;
+      var d=typeof va==='string'?va.localeCompare(vb):va-vb; return polSort.dir*d||((byId[a.id]||{}).short||'').localeCompare((byId[b.id]||{}).short||'');
+    });
+    var th=function(k,l,cls){return '<th data-k="'+k+'"'+(cls?' class="'+cls+'"':'')+(polSort.key===k?' aria-sort="'+(polSort.dir>0?'ascending':'descending')+'"':'')+'>'+l+'</th>'};
+    var rows=items.map(function(it){
+      var e=byId[it.id];
+      if(!e)return '<tr class="pol-tr"><td colspan="12"><span class="b">'+esc(it.id)+'</span> '+chip('No longer covered','bad')+'</td><td><button class="pol-rm" data-id="'+esc(it.id)+'" title="Remove">×</button></td></tr>';
+      var fl=flagsOf(it,e), worst=fl.filter(function(x){return x[0]!=='muted'})[0], moved=fl.some(function(x){return x[0]!=='muted'&&x[0]!=='good'});
+      return '<tr class="pol-tr'+(moved?' pol-tr-flag':'')+'" data-id="'+esc(e.id)+'" data-tenor="'+it.tenor+'" tabindex="0">'+
+        '<td class="pt-name"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+' · '+sovPill(e)+'</div></td>'+
+        '<td class="num">'+scoreNum(e.score,e.band,'sc-1')+'</td>'+
+        '<td class="mono"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b></td>'+
+        '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1))+'</td>'+
+        '<td class="num mono">'+(e.leverage==null?'—':e.leverage.toFixed(1))+'</td>'+
+        '<td class="num mono">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
+        '<td class="num mono">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
+        asofCell(e)+
+        '<td class="num">'+news30Cell(e)+'</td>'+
+        '<td>'+mkt(e.market,1)+'</td>'+
+        '<td class="pt-ten">'+tenorPick(it)+'</td>'+
+        '<td class="pt-flag">'+(worst?chip(worst[2]||worst[1],worst[0]):'<span class="na">—</span>')+'</td>'+
+        '<td><button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">×</button></td></tr>';
+    }).join('');
+    return '<div class="table-wrap"><table class="plain pol-t" id="pol-table"><thead><tr>'+
+      th('short','Name')+th('score','Score','num')+th('rating_grade','Rating')+th('cet1','CET1','num')+th('leverage','Lev','num')+
+      th('lcr','LCR','num')+th('nsfr','NSFR','num')+th('age_days','Figures')+th('news30','News 30d','num')+'<th>Market</th>'+th('tenor','Tenor')+'<th>Since approval</th><th></th>'+
+      '</tr></thead><tbody>'+rows+'</tbody></table></div>';
+  }
   function save(p){try{localStorage.setItem(KEY,JSON.stringify(p))}catch(e){}}
   // the definition marker, drawn from the glossary every page carries
   function mk(k){return window.tipMark?window.tipMark(k):''}
@@ -719,12 +760,13 @@
           '<span class="ll-ags">'+(e.ratings||[]).map(function(x){return esc(x.letter)}).join('')+'</span></td>'+
         kpi('cet1',e.cet1,1)+kpi('leverage',e.leverage,1)+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
         asofCell(e)+
+        '<td class="num">'+news30Cell(e)+'</td>'+
         '<td class="ll-mkt">'+mp+'</td>'+
         '<td class="ll-addc"><button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></td></tr>';
     }).join('');
     return '<div class="table-wrap scrollbox"><table class="plain ll-t2"><thead><tr>'+
       '<th></th><th>Name</th><th>Score'+mk('score')+'</th><th>Rating</th>'+
-      '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Figures</th><th>Market</th><th></th>'+
+      '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Figures</th><th>News 30d</th><th>Market</th><th></th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   function ratingCell(e){
@@ -839,9 +881,11 @@
         'tenors graded by standing rather than set uniformly. Change a tenor, remove a name or clear the lot: '+
         'it is your list from here, kept in this browser only.'+
         '<button class="filter" id="pol-demo-x">Clear it and start mine</button></div>'+html;
-      html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Flags compare today with the day you approved each name.</span></div>';
+      var view=polView();
+      html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Flags compare today with the day you approved each name.</span>'+
+        '<span class="pol-view" role="group" aria-label="Show as"><button class="filter'+(view==='cards'?' active':'')+'" id="pol-view-cards" type="button">Cards</button><button class="filter'+(view==='table'?' active':'')+'" id="pol-view-table" type="button">Table</button></span></div>';
       html+=overview(p.filter(function(it){return byId[it.id]}));
-      html+='<div class="pol-list">'+rows+'</div>';
+      html+=view==='table'?polTable(p,flags):'<div class="pol-list">'+rows+'</div>';
       // like-for-like: names at least as strong as the weakest you already accept at each tenor
       // One tenor at a time, chosen from a row of chips rather than four lists down a page. Each
       // one now stands alone: it shows every covered name that clears the bar at that tenor, not
@@ -1040,7 +1084,10 @@
         return}
       if(ev.target.id==='md-close'){document.getElementById('pol-modal').close();return}
       // a card opens its detail; a link inside it still navigates
-      var card=ev.target.closest('.pol-card,.ll-r,.uni-row');
+      if(ev.target.id==='pol-view-cards'||ev.target.id==='pol-view-table'){setPolView(ev.target.id==='pol-view-table'?'table':'cards');render();return}
+      var pth=ev.target.closest('#pol-table th[data-k]');
+      if(pth){var k=pth.dataset.k; polSort.dir=polSort.key===k?-polSort.dir:(k==='short'?1:-1); polSort.key=k; render();return}
+      var card=ev.target.closest('.pol-card,.pol-tr,.ll-r,.uni-row');
       if(card&&!ev.target.closest('a,button,select,label')){
         var tn=card.dataset.tenor?+card.dataset.tenor:(card.classList.contains('uni-row')?+document.getElementById('uni-tenor').value:0);
         openModal(card.dataset.id,tn);return}
@@ -1063,7 +1110,7 @@
     });
     document.addEventListener('keydown',function(ev){
       if(ev.key!=='Enter'&&ev.key!==' ')return;
-      var card=ev.target.closest&&ev.target.closest('.ll-r,.pol-card');
+      var card=ev.target.closest&&ev.target.closest('.ll-r,.pol-card,.pol-tr');
       if(card&&!ev.target.closest('a,button')){ev.preventDefault();openModal(card.dataset.id,card.dataset.tenor?+card.dataset.tenor:0)}
     });
     var m=location.hash.match(/#p=([A-Za-z0-9_\-]+)/);if(m){var sh=decode(m[1]);if(sh&&sh.length){if(!load().length){save(sh);history.replaceState(null,'',location.pathname)}else{window.__shared=sh;var box=document.getElementById('pol-shared');box.hidden=false;box.querySelector('span').textContent='This link carries a policy of '+sh.length+' counterparties.'}}}
