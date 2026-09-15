@@ -1,0 +1,13 @@
+{
+ "id": "nottingham-bs",
+ "written": "2026-09-15",
+ "background": "Nottingham Building Society is a regional mutual in the East Midlands, funded by retail savings from its branches and lending on residential mortgages, including to self-employed and less standard borrowers.",
+ "synthesis": "None of the three agencies rates the society. Capital is the weak side against UK building societies: CET1 of 14.3% and leverage of 5.1% are both in the bottom quarter, against medians of 17.8% and 6.1%. Liquidity is mixed, with LCR of 257% in the top quarter and up 88 points since 30 Jun 2024, while NSFR of 142% is in the bottom quarter against 145%. The other ratios have been flat. Nothing has been flagged in the last 90 days. A society that has built a large short-term liquidity cushion while running less capital than most of its peers.",
+ "inputs": {
+  "band": "",
+  "composite": "",
+  "ratings": {},
+  "asof": "2026-06-30",
+  "last_flagged": ""
+ }
+}

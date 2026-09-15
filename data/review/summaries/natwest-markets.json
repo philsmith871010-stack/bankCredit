@@ -1,0 +1,17 @@
+{
+ "id": "natwest-markets",
+ "written": "2026-09-15",
+ "background": "NatWest Markets is the non-ring-fenced bank of NatWest Group, providing rates, currencies and financing to the group's corporate and institutional clients, funded by wholesale markets and the parent.",
+ "synthesis": "Ratings are AA from Fitch after the upgrade on 12 May 2026, A from S&P and A1 from Moody's, all stable, resting on the group. Capital is strong against UK majors: CET1 of 18.3% is in the top quarter against a 13.8% median and leverage of 4.9% is at the median. Liquidity is mixed, with LCR of 204% in the top quarter but NSFR of 122% in the bottom quarter against 132%. Since 30 Jun 2025 CET1 has risen 1.2 points and LCR 11 points while leverage has fallen 0.7 points. Nothing has been flagged in the last 90 days. A markets entity kept well capitalised by its parent.",
+ "inputs": {
+  "band": "B",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "AA stable",
+   "sp": "A stable",
+   "moodys": "A1 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-05-13"
+ }
+}

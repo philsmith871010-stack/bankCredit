@@ -1,0 +1,17 @@
+{
+ "id": "nrw-bank",
+ "written": "2026-09-15",
+ "background": "NRW.BANK is the development bank of North Rhine-Westphalia, wholly owned by the state and carrying its explicit guarantee, which funds itself in the bond markets and lends for housing, infrastructure, small business and municipal purposes across the state.",
+ "synthesis": "Ratings are AAA from Fitch, AA from S&P and Aa1 from Moody's, the S&P and Moody's grades matching the state that guarantees it, with the last move S&P's upgrade to AA on 16 Sep 2019. Capital is far outside the range of ordinary banks, with CET1 of 40.4% and leverage of 10.9% both in the top quarter of EU and Nordic peers. No liquidity ratios are held here, and the figures run only to 30 Jun 2018, so they are very old. Nothing has been flagged in the last 90 days. The state guarantee, not the ratios, is what a depositor is relying on.",
+ "inputs": {
+  "band": "",
+  "composite": "AA+",
+  "ratings": {
+   "fitch": "AAA stable",
+   "sp": "AA stable",
+   "moodys": "Aa1"
+  },
+  "asof": "2018-06-30",
+  "last_flagged": "2026-04-28"
+ }
+}

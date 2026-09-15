@@ -1,0 +1,17 @@
+{
+ "id": "santander-financial-services",
+ "written": "2026-09-15",
+ "background": "Santander Financial Services plc is the Santander group's bank in Jersey and the Isle of Man, offering deposits and lending to Crown Dependency and international clients, funded by those deposits and the group.",
+ "synthesis": "Ratings are AA- from Fitch after the upgrade on 12 May 2026, A- from S&P and A1 from Moody's, all stable, and rest on the Santander group rather than on the entity's own scale. The site holds no capital or liquidity figures for it, so there is no peer comparison to make. Nothing has been flagged in the last 90 days. A small offshore entity whose grades are borrowed from its parent, so the question for a depositor is Santander's support, which the ratings say is strong.",
+ "inputs": {
+  "band": "",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "AA- stable",
+   "sp": "A- stable",
+   "moodys": "A1 stable"
+  },
+  "asof": "",
+  "last_flagged": "2026-05-12"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "id": "mufg",
+ "written": "2026-09-15",
+ "background": "Mitsubishi UFJ Financial Group is Japan's largest bank and one of the largest in the world, the holding company of MUFG Bank and Mitsubishi UFJ Trust, with a large stake in Morgan Stanley and banking subsidiaries in the US and Southeast Asia.",
+ "synthesis": "Ratings are A- from Fitch, A- from S&P and A1 from Moody's, all stable, with the last move Fitch's downgrade to A- on 8 Apr 2020. Capital is on the weak side of Asian peers, with CET1 of 12.9% below the 15.7% median and down 1.0 points since 30 Jun 2025; no leverage or liquidity figures are held here. The flagged news is mostly good, with first-quarter profit up strongly on 3 Aug 2026 and 4 Aug 2026, though the item on 1 Sep 2026 notes the capital buffer thinning, which matches the CET1 trend. A systemically important name whose size, not its ratios, is the comfort.",
+ "inputs": {
+  "band": "B",
+  "composite": "A",
+  "ratings": {
+   "fitch": "A- stable",
+   "sp": "A- stable",
+   "moodys": "A1 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-09-01"
+ }
+}

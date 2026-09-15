@@ -1,0 +1,16 @@
+{
+ "id": "credit-mutuel",
+ "written": "2026-09-15",
+ "background": "Credit Mutuel is a French mutual banking group owned by its members through regional federations, funded by retail deposits and lending to households, farmers and small businesses, with insurance and the CIC network alongside.",
+ "synthesis": "S&P rates the group A+ and Moody's Aa3, both stable. Capital is a clear strength against EU and Nordic peers: CET1 of 20.5% and leverage of 8.0% are both in the top quarter, against medians of 16.4% and 5.5%, and both have risen since 31 Dec 2023, CET1 by 1.3 points and leverage by 0.8 points. Liquidity is mixed, with LCR of 170% above the 151% median but NSFR of 116% in the bottom quarter against 124%. The figures run to 31 Dec 2025. Nothing has been flagged in the last 90 days. One of the better-capitalised names in Europe.",
+ "inputs": {
+  "band": "A",
+  "composite": "A+",
+  "ratings": {
+   "sp": "A+ stable",
+   "moodys": "Aa3 stable"
+  },
+  "asof": "2025-12-31",
+  "last_flagged": ""
+ }
+}

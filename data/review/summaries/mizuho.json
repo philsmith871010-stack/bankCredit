@@ -1,0 +1,16 @@
+{
+ "id": "mizuho",
+ "written": "2026-09-15",
+ "background": "Mizuho Financial Group is one of Japan's three megabanks, the holding company of Mizuho Bank and Mizuho Securities, funded by a very large base of yen deposits and lending to Japanese corporates and households and to large companies worldwide.",
+ "synthesis": "Fitch and S&P both rate the group A-, both stable, with the last move S&P's downgrade to A- on 17 Sep 2015, so the grades have been steady for a decade. The ratios are on the weak side of Asian peers across the board: CET1 of 13.5% is below the 15.7% median, leverage of 4.9% is in the bottom quarter against 5.8%, and LCR of 126% and NSFR of 112% are both in the bottom quarter. None of the ratios has moved materially over the past four periods. The flagged news is good, with first-quarter profit up sharply on 30 Jul 2026 and 31 Jul 2026. A systemically important Japanese name running thinner ratios than most Asian peers.",
+ "inputs": {
+  "band": "B",
+  "composite": "A-",
+  "ratings": {
+   "fitch": "A- stable",
+   "sp": "A- stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-07-31"
+ }
+}

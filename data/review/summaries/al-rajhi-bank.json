@@ -1,0 +1,17 @@
+{
+ "id": "al-rajhi-bank",
+ "written": "2026-09-15",
+ "background": "Al Rajhi Bank is the largest Islamic bank in the world by assets and the largest retail bank in Saudi Arabia, funded by a large base of retail deposits and lending mainly to Saudi households under Sharia-compliant structures.",
+ "synthesis": "Ratings are strong and aligned: A from Fitch and S&P and Aa3 from Moody's, all stable, with Fitch's upgrade to A on 8 Dec 2025 the latest move. No capital or liquidity ratios are held on this site for the bank, so there is no peer comparison to make here. The flagged news is good, with second-quarter profit up 14% reported on 21 Jul 2026. A deposit is a claim on a Saudi bank, so the sovereign is the backdrop.",
+ "inputs": {
+  "band": "",
+  "composite": "A",
+  "ratings": {
+   "fitch": "A stable",
+   "sp": "A stable",
+   "moodys": "Aa3 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-07-21"
+ }
+}

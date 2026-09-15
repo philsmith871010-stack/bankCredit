@@ -1,0 +1,17 @@
+{
+ "id": "cibc",
+ "written": "2026-09-15",
+ "background": "Canadian Imperial Bank of Commerce is one of Canada's big six banks, funded by Canadian deposits and lending mainly on Canadian mortgages and to businesses, with a US commercial and wealth arm and a Caribbean bank.",
+ "synthesis": "Ratings are AA- from Fitch, A+ from S&P and A2 from Moody's, all stable, with the last move Moody's downgrade to A2 on 11 Jul 2024. Against Canadian peers capital is mixed: CET1 of 13.4% is just below the 13.5% median and leverage of 4.3% is in the top quarter, at the median. No liquidity ratios are held here. None of the ratios has moved materially over the past four periods, with figures to 31 Jul 2026. The flagged news is mostly good, with a profit beat on 27 Aug 2026; the item on 10 Sep 2026 concerns a rating watch on a Caribbean counterparty in a deal, not CIBC itself.",
+ "inputs": {
+  "band": "B",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "AA- stable",
+   "sp": "A+ stable",
+   "moodys": "A2 stable"
+  },
+  "asof": "2026-07-31",
+  "last_flagged": "2026-09-10"
+ }
+}

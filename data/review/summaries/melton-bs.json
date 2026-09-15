@@ -1,0 +1,13 @@
+{
+ "id": "melton-bs",
+ "written": "2026-09-15",
+ "background": "Melton Mowbray Building Society is a small mutual in Leicestershire, funded by retail savings from its branches and lending on residential, buy-to-let and self-build mortgages.",
+ "synthesis": "None of the three agencies rates the society. Capital is the weak side against UK building societies: CET1 of 14.2% is in the bottom quarter against a 17.8% median and leverage of 6.0% is a shade under the 6.1% median. Liquidity is very strong, with LCR of 732% and NSFR of 152% both in the top quarter. Since 31 Dec 2022 CET1 has fallen 1.1 points and leverage 0.4 points while LCR has risen 309 points and NSFR 5 points, so the society has built a large liquidity cushion at some cost to capital headroom. The figures run only to 31 Dec 2023, so they are old. Nothing has been flagged in the last 90 days.",
+ "inputs": {
+  "band": "",
+  "composite": "",
+  "ratings": {},
+  "asof": "2023-12-31",
+  "last_flagged": ""
+ }
+}

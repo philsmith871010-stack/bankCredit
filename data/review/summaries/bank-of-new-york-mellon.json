@@ -1,0 +1,17 @@
+{
+ "id": "bank-of-new-york-mellon",
+ "written": "2026-09-15",
+ "background": "The Bank of New York Mellon is the main operating bank of BNY, the world's largest custodian, whose business is safekeeping, settlement and asset servicing for institutions rather than lending to households.",
+ "synthesis": "This is one of the highest-rated banks on the site: AA+ from Fitch after the upgrade on 12 May 2026, AA- from S&P and Aa2 from Moody's, all stable. Capital is strong for a US bank, with CET1 of 14.6% in the top quarter and leverage of 6.2% above the 5.8% median. Liquidity reads weaker on the LCR measure, at 111% against a 117% median, though a custody balance sheet is built differently from a lender's. CET1 has fallen 3.0 points since 30 Jun 2025, a large move that deserves a look at the cause. Nothing flagged in the last 90 days.",
+ "inputs": {
+  "band": "B",
+  "composite": "AA",
+  "ratings": {
+   "fitch": "AA+ stable",
+   "sp": "AA- stable",
+   "moodys": "Aa2 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-05-12"
+ }
+}

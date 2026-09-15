@@ -1,0 +1,15 @@
+{
+ "id": "metro-bank",
+ "written": "2026-09-15",
+ "background": "Metro Bank is a UK high-street challenger bank founded on a branch-led model, funded by retail and business deposits and lending on mortgages, commercial property and to smaller companies, recapitalised and controlled by a Colombian investor after its capital crisis.",
+ "synthesis": "Fitch is the only one of the three agencies rating the bank, at BB with a positive outlook after an upgrade to BB on 12 Aug 2026, so the grade is below investment grade but moving up. Capital is mixed against UK mid-sized banks: CET1 of 12.3% is in the bottom quarter against a 13.9% median while leverage of 7.4% is at the median. Liquidity is strong, with LCR of 288% and NSFR of 159% both in the top quarter. Since 30 Jun 2024 leverage has risen 1.9 points and NSFR 12 points while CET1 has fallen 0.6 points and LCR 31 points. The flagged news is the Fitch upgrade on 12 Aug 2026. A recovery story, not yet an investment-grade one.",
+ "inputs": {
+  "band": "D",
+  "composite": "BB",
+  "ratings": {
+   "fitch": "BB positive"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-08-12"
+ }
+}

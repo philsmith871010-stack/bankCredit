@@ -1,0 +1,17 @@
+{
+ "id": "first-abu-dhabi-bank",
+ "written": "2026-09-15",
+ "background": "First Abu Dhabi Bank is the largest bank in the UAE, formed from the merger of National Bank of Abu Dhabi and First Gulf Bank, with the Abu Dhabi government and ruling family as its largest shareholders, with a large corporate, government and international franchise.",
+ "synthesis": "Ratings are the highest in the Gulf: AA- from Fitch and S&P and Aa3 from Moody's, all stable, resting on Abu Dhabi's ownership and wealth. The site holds no peer group for the bank, so the ratios stand on their own: CET1 is 13.7%, leverage 7.5%, LCR 140% and NSFR 113%. Since 30 Jun 2025 leverage has risen 0.3 points and NSFR 7 points while LCR has fallen 12 points and CET1 has been flat. The one flagged item, on 23 Jul 2026, is higher quarterly profit. For a depositor the sovereign is the backdrop, and it is a strong one.",
+ "inputs": {
+  "band": "B",
+  "composite": "AA-",
+  "ratings": {
+   "fitch": "AA- stable",
+   "sp": "AA- stable",
+   "moodys": "Aa3 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-07-23"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "id": "smbc-bank-international",
+ "written": "2026-09-15",
+ "background": "SMBC Bank International is the London-based bank of Sumitomo Mitsui Banking Corporation, serving the Japanese group's corporate and institutional clients across Europe, the Middle East and Africa, funded by corporate deposits and the parent.",
+ "synthesis": "Ratings are A- from Fitch, A from S&P and A1 from Moody's, all stable, with the last move Fitch's downgrade to A- on 8 Dec 2022, and they rest on the Japanese parent. Capital is strong against UK mid-sized banks, with CET1 of 16.6% above the 13.9% median and leverage of 7.7% above 7.4%. Liquidity is on the weak side, with LCR of 152% in the bottom quarter against 172% and NSFR of 128% below 135%. Since 31 Dec 2024 leverage has fallen 1.5 points, LCR 10 points and NSFR 6 points, and the figures run to 31 Dec 2025. Nothing has been flagged in the last 90 days.",
+ "inputs": {
+  "band": "B",
+  "composite": "A",
+  "ratings": {
+   "fitch": "A- stable",
+   "sp": "A stable",
+   "moodys": "A1 stable"
+  },
+  "asof": "2025-12-31",
+  "last_flagged": ""
+ }
+}

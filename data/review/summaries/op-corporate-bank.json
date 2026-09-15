@@ -1,0 +1,16 @@
+{
+ "id": "op-corporate-bank",
+ "written": "2026-09-15",
+ "background": "OP Corporate Bank is the corporate and central banking entity of OP Financial Group, Finland's largest financial group, handling wholesale funding, corporate lending and markets for the cooperative member banks.",
+ "synthesis": "S&P rates the bank AA- and Moody's Aa3, both stable; Fitch withdrew its rating on 6 Jan 2016. Capital is on the weak side of EU and Nordic peers, with CET1 of 14.2% below the 16.4% median, though as a group entity it is capitalised to serve the whole cooperative rather than on its own. Liquidity is strong, with LCR of 191% in the top quarter and NSFR of 130% above the 124% median. None of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days. The comfort is the mutual group's joint liability, which the ratings reflect.",
+ "inputs": {
+  "band": "A",
+  "composite": "AA-",
+  "ratings": {
+   "sp": "AA- stable",
+   "moodys": "Aa3 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-04-21"
+ }
+}

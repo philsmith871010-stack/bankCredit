@@ -1,0 +1,17 @@
+{
+ "id": "qnb",
+ "written": "2026-09-15",
+ "background": "QNB is the largest bank in the Middle East and Africa by assets, majority-owned by the Qatar Investment Authority, funded by Qatari and Gulf deposits and lending to the Qatari government and its related entities, with subsidiaries in Turkey and Egypt.",
+ "synthesis": "Ratings are A+ from Fitch after its upgrade on 28 Mar 2024, A+ from S&P and Aa3 from Moody's, but Fitch's outlook turned negative on 10 Sep 2026 while the other two remain stable. No capital or liquidity ratios are held here, so there is no peer comparison to make on the figures. The flagged news is that Fitch outlook change on 10 Sep 2026, which is the one thing to watch. Qatari state ownership is the main support, and the negative outlook is a signal about the sovereign's position rather than about the bank's own books.",
+ "inputs": {
+  "band": "",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "A+ negative",
+   "sp": "A+ stable",
+   "moodys": "Aa3 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-09-10"
+ }
+}

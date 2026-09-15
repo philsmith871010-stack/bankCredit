@@ -1,0 +1,16 @@
+{
+ "id": "close-brothers",
+ "written": "2026-09-15",
+ "background": "Close Brothers Group is a UK merchant banking group, funded by retail and corporate deposits and lending on motor finance, asset finance, invoice finance and property development.",
+ "synthesis": "Fitch rates the group BBB and Moody's Baa2, both with a negative outlook, and the last move was Moody's downgrade to Baa2 on 17 Oct 2025, so the direction is down and further cuts are signalled. The motor finance commission issue is the background. On the figures the picture is better: CET1 of 13.8% is just under the 13.9% median for UK mid-sized banks, leverage of 12.9% is in the top quarter, and LCR of 1012% and NSFR of 146% are both in the top quarter. The one flagged item, on 24 Jun 2026, was the group correcting a false report of an administration filing. A name where the ratings, not the ratios, carry the warning.",
+ "inputs": {
+  "band": "C",
+  "composite": "BBB",
+  "ratings": {
+   "fitch": "BBB negative",
+   "moodys": "Baa2 negative"
+  },
+  "asof": "2026-01-31",
+  "last_flagged": "2026-06-24"
+ }
+}

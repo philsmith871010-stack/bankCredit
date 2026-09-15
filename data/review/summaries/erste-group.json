@@ -1,0 +1,17 @@
+{
+ "id": "erste-group",
+ "written": "2026-09-15",
+ "background": "Erste Group is an Austrian bank with the leading retail franchise across Central and Eastern Europe, funded by local deposits in Austria, the Czech Republic, Slovakia, Romania, Hungary and Croatia, and part-owned by its founding savings-bank foundation.",
+ "synthesis": "Ratings are A from Fitch, A+ from S&P and Aa3 from Moody's after the upgrade on 21 Apr 2026, with S&P and Moody's both on a positive outlook. Capital is mixed against EU and Nordic peers: CET1 of 14.4% is below the 16.4% median while leverage of 6.4% is above 5.5%, and both have fallen since 30 Jun 2024, CET1 by 1.1 points and leverage by 0.8 points. Liquidity is also mixed, with LCR of 149% a shade under the 151% median and NSFR of 137% in the top quarter, though NSFR has fallen 7 points since 30 Jun 2025. Nothing has been flagged in the last 90 days.",
+ "inputs": {
+  "band": "B",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "A stable",
+   "sp": "A+ positive",
+   "moodys": "Aa3 positive"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-04-21"
+ }
+}

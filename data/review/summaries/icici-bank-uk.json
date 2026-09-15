@@ -1,0 +1,15 @@
+{
+ "id": "icici-bank-uk",
+ "written": "2026-09-15",
+ "background": "ICICI Bank UK is the UK subsidiary of ICICI Bank, India's largest private-sector bank, funded by UK retail and corporate deposits and lending to Indian corporates' overseas operations, UK businesses and non-resident Indians.",
+ "synthesis": "Only Moody's rates the bank, at Baa1 with a stable outlook, the latest move an upgrade to that level on 24 Jun 2022. Capital is mixed against UK small banks: CET1 of 17.1% is at the median while leverage of 11.5% is in the top quarter against 10.3%. Liquidity is on the weak side of a group that runs very high liquidity, with LCR of 169% and NSFR of 137% both in the bottom quarter. Every ratio has fallen since 31 Mar 2023, CET1 by 4.5 points, leverage by 3.9 points, LCR by 57 points and NSFR by 11 points, which is a steady use of headroom as the book has grown. Nothing has been flagged in the last 90 days.",
+ "inputs": {
+  "band": "B",
+  "composite": "BBB+",
+  "ratings": {
+   "moodys": "Baa1 stable"
+  },
+  "asof": "2026-03-31",
+  "last_flagged": ""
+ }
+}

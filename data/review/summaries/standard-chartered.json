@@ -1,0 +1,16 @@
+{
+ "id": "standard-chartered",
+ "written": "2026-09-15",
+ "background": "Standard Chartered PLC is the London-listed holding company of a bank whose business is almost entirely in Asia, Africa and the Middle East, earning from corporate and institutional banking, trade finance and wealth management.",
+ "synthesis": "As a holding company its ratings sit below the banks': A from Fitch and BBB+ from S&P on a positive outlook, with the last move Fitch's downgrade to A on 20 Sep 2018. Consolidated capital is mixed against UK majors: CET1 of 14.2% is in the top quarter against a 13.8% median, while leverage of 4.7% is below the 4.9% median. Liquidity is strong, with LCR of 158% above the 144% median and NSFR of 137% in the top quarter. None of the ratios has moved materially over the past four periods. The flagged news is good, with a clean beat on 28 Jul 2026 and S&P's positive outlook on 23 Jul 2026.",
+ "inputs": {
+  "band": "B",
+  "composite": "A-",
+  "ratings": {
+   "fitch": "A stable",
+   "sp": "BBB+ positive"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-07-28"
+ }
+}

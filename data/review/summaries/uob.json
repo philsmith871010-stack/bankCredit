@@ -1,0 +1,17 @@
+{
+ "id": "uob",
+ "written": "2026-09-15",
+ "background": "UOB is Singapore's third-largest bank, family-influenced and conservatively run, funded by Singapore dollar deposits and lending across Singapore, Malaysia, Thailand, Indonesia and Vietnam, with a consumer franchise enlarged by the Citigroup businesses it bought in the region.",
+ "synthesis": "Ratings are among the highest in Asia: AA- from Fitch and S&P and Aa1 from Moody's, all stable. Capital is mixed against Asian peers: CET1 of 15.3% is a little under the 15.7% median, while leverage of 7.0% is in the top quarter against 5.8%. Liquidity is strong, with LCR of 144% above the 142% median and NSFR of 115% at the median. None of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days. A steady, well-rated Singapore bank with plenty of plain capital.",
+ "inputs": {
+  "band": "A",
+  "composite": "AA-",
+  "ratings": {
+   "fitch": "AA- stable",
+   "sp": "AA- stable",
+   "moodys": "Aa1 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": ""
+ }
+}

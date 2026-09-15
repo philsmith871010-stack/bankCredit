@@ -1,0 +1,17 @@
+{
+ "id": "dbs",
+ "written": "2026-09-15",
+ "background": "DBS is Singapore's largest bank and the largest in Southeast Asia, with Temasek as its largest shareholder, funded by Singapore dollar deposits and lending across Singapore, Hong Kong, Greater China, India and Indonesia.",
+ "synthesis": "Ratings are among the highest in Asia: AA- from Fitch and S&P and Aa1 from Moody's, all stable. Capital is strong against Asian peers, with CET1 of 16.6% above the 15.7% median and leverage of 5.8% at the median. Liquidity is mixed: LCR of 142% is at the median and NSFR of 113% is a little under 115%. Leverage has fallen 0.7 points since 30 Jun 2025 and the rest has been flat. The flagged news on 10 Sep 2026 is a lawsuit from 1MDB liquidators, which the bank rejects; large in headline terms but a legal claim rather than a balance-sheet event.",
+ "inputs": {
+  "band": "A",
+  "composite": "AA-",
+  "ratings": {
+   "fitch": "AA- stable",
+   "sp": "AA- stable",
+   "moodys": "Aa1 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-09-10"
+ }
+}

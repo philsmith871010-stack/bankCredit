@@ -1,0 +1,17 @@
+{
+ "id": "danske-bank",
+ "written": "2026-09-15",
+ "background": "Danske Bank is Denmark's largest bank, a Nordic universal bank funded by Danish and Nordic deposits and covered bonds, lending to households and companies across Denmark, Sweden, Norway and Finland, with the Estonian money-laundering case behind it.",
+ "synthesis": "Ratings are AA from Fitch after the upgrade on 12 May 2026, A+ from S&P on a positive outlook and A1 from Moody's. Capital is mixed against EU and Nordic peers: CET1 of 17.0% is above the 16.4% median, but leverage of 4.4% is in the bottom quarter against 5.5%. Liquidity is also mixed, with LCR of 162% above the 151% median and NSFR of 122% a little under 124%. The trend is down: since 30 Jun 2025 CET1 has fallen 1.6 points, leverage 0.4 points and LCR 18 points. The flagged news is all good, with rating actions on 26 Aug 2026 and 24 Jun 2026 pointing upward.",
+ "inputs": {
+  "band": "B",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "AA stable",
+   "sp": "A+ positive",
+   "moodys": "A1 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-08-26"
+ }
+}

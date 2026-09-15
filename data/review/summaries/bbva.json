@@ -1,0 +1,17 @@
+{
+ "id": "bbva",
+ "written": "2026-09-15",
+ "background": "BBVA is Spain's second-largest bank, run as a group of self-funded subsidiaries with Mexico the largest earner alongside Spain, Turkey and South America, and a retail and commercial banking focus.",
+ "synthesis": "Ratings are solid at A from Fitch after the upgrade on 12 May 2026, A+ from S&P and A2 from Moody's, all stable. Capital is mixed against EU and Nordic peers: CET1 of 12.8% is in the bottom quarter against a 16.4% median, while leverage of 6.2% is above the 5.5% median. Liquidity is also mixed, with LCR of 142% below the 151% median and NSFR of 125% just above the median. The ratios have been broadly flat, with leverage down 0.3 points since 31 Mar 2024. The flagged news is conduct: a GDPR fine on 9 Sep 2026 and a trial over the spying case on 10 Jul 2026 and 9 Jul 2026, neither of which touches solvency.",
+ "inputs": {
+  "band": "B",
+  "composite": "A",
+  "ratings": {
+   "fitch": "A stable",
+   "sp": "A+ stable",
+   "moodys": "A2 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-09-09"
+ }
+}

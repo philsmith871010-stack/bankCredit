@@ -1,0 +1,16 @@
+{
+ "id": "macquarie-bank",
+ "written": "2026-09-15",
+ "background": "Macquarie Bank is the banking entity of Macquarie Group, Australia's largest investment bank, funded by Australian deposits and wholesale markets and lending on residential mortgages, to businesses and in asset finance, alongside its commodities and markets business.",
+ "synthesis": "Fitch rates the bank A+ after its upgrade on 26 May 2024 and Moody's Aa2, both stable. The site holds no capital or liquidity figures for the bank, so there is no peer comparison to make against the Australian majors. Nothing has been flagged in the last 90 days. A highly rated name whose earnings are more market-driven than those of the big four, which the Fitch grade below the majors' reflects.",
+ "inputs": {
+  "band": "",
+  "composite": "AA-",
+  "ratings": {
+   "fitch": "A+ stable",
+   "moodys": "Aa2 stable"
+  },
+  "asof": "2026-03-31",
+  "last_flagged": ""
+ }
+}

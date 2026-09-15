@@ -1,0 +1,17 @@
+{
+ "id": "banco-santander",
+ "written": "2026-09-15",
+ "background": "Banco Santander is Spain's largest bank and one of the largest in the eurozone, run as a group of self-funded national subsidiaries across Spain, the UK, Brazil, Mexico, the US and elsewhere, with retail and commercial banking at its core.",
+ "synthesis": "Ratings are strong at A+ from Fitch and S&P and A1 from Moody's, all stable, with Fitch's upgrade to A+ on 12 May 2026 the latest move. Capital is the weak point against EU and Nordic peers: CET1 of 14.0% sits in the bottom quarter against a 16.4% median and leverage of 4.8% is under the 5.5% median, though CET1 has risen 1.0 points since 30 Jun 2025. Liquidity is mixed, with LCR of 147% just below the 151% median and NSFR of 124% at the median. The group runs on lower capital than most of its peers but its ratings say the diversification earns that. Nothing flagged in the last 90 days.",
+ "inputs": {
+  "band": "B",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "A+ stable",
+   "sp": "A+ stable",
+   "moodys": "A1 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-05-12"
+ }
+}

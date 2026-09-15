@@ -1,0 +1,17 @@
+{
+ "id": "bpce",
+ "written": "2026-09-15",
+ "background": "Groupe BPCE is France's second-largest banking group, a cooperative owned by the Banque Populaire and Caisse d'Epargne regional banks, with Natixis as its corporate, investment and asset-management arm.",
+ "synthesis": "Ratings are A+ from Fitch after the upgrade on 12 May 2026, A+ from S&P and A1 from Moody's, all stable. Capital is mixed against EU and Nordic peers: CET1 of 16.4% is at the median, while leverage of 5.1% is below the 5.5% median. Liquidity is the weak side, with LCR of 143% below the 151% median and NSFR of 111% in the bottom quarter against 124%. None of the ratios has moved materially over the past four periods, and the figures run to 31 Mar 2026. Nothing has been flagged in the last 90 days.",
+ "inputs": {
+  "band": "B",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "A+ stable",
+   "sp": "A+ stable",
+   "moodys": "A1 stable"
+  },
+  "asof": "2026-03-31",
+  "last_flagged": "2026-05-12"
+ }
+}

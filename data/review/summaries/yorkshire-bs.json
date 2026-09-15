@@ -1,0 +1,16 @@
+{
+ "id": "yorkshire-bs",
+ "written": "2026-09-15",
+ "background": "Yorkshire Building Society is the third-largest UK building society, a mutual funded by retail savings under the Yorkshire, Chelsea and Norwich & Peterborough brands and lending on residential mortgages, with Accord as its intermediary lender.",
+ "synthesis": "Fitch rates the society A after its upgrade on 12 May 2026 and Moody's A2, both stable. The ratios are strong across the board against UK building societies: CET1 of 19.2% is above the 17.8% median, leverage of 7.1% is in the top quarter against 6.1%, LCR of 229% is above the 214% median and NSFR of 158% is in the top quarter. The direction is up as well: since 30 Jun 2025 CET1 has risen 0.7 points, LCR 25 points and NSFR 6 points, with leverage flat. Nothing has been flagged in the last 90 days. One of the strongest of the larger societies on both capital and liquidity.",
+ "inputs": {
+  "band": "A",
+  "composite": "A",
+  "ratings": {
+   "fitch": "A stable",
+   "moodys": "A2 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-05-12"
+ }
+}

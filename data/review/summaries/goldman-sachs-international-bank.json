@@ -1,0 +1,17 @@
+{
+ "id": "goldman-sachs-international-bank",
+ "written": "2026-09-15",
+ "background": "Goldman Sachs International Bank is the London-based bank of The Goldman Sachs Group, taking Marcus retail deposits in the UK and corporate deposits, and lending alongside the group's European investment banking business.",
+ "synthesis": "Ratings are AA- from Fitch after the upgrade on 12 May 2026, with a positive outlook, A+ from S&P and A1 from Moody's, both stable, and rest on the parent. The site holds only its LCR, at 126%, which is in the bottom quarter of UK mid-sized banks against a 172% median, so on the one liquidity measure available it carries less surplus than its peers, though none of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days. A deposit here is a claim on a Goldman entity, and the group's strength and the positive Fitch outlook are the main comfort.",
+ "inputs": {
+  "band": "",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "AA- positive",
+   "sp": "A+ stable",
+   "moodys": "A1 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-05-12"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "id": "hsbc-hong-kong",
+ "written": "2026-09-15",
+ "background": "The Hongkong and Shanghai Banking Corporation is HSBC's founding bank and its largest, the leading bank in Hong Kong and the group's platform across Asia, funded by a very large base of Hong Kong dollar deposits.",
+ "synthesis": "Ratings are AA from Fitch after the upgrade on 12 May 2026, AA- from S&P and Aa3 from Moody's, all stable. Capital is mixed against Asian peers: CET1 of 17.0% is in the top quarter against a 15.7% median, while leverage of 5.4% is below the 5.8% median. Liquidity is also mixed, with LCR of 138% below the 142% median and NSFR of 142% in the top quarter. All four ratios have fallen since 30 Jun 2025, CET1 by 0.9 points, leverage by 0.4 points, LCR by 24 points and NSFR by 10 points, so headroom is being used. The one flagged item, on 4 Aug 2026, is profit up strongly on Asian wealth.",
+ "inputs": {
+  "band": "A",
+  "composite": "AA-",
+  "ratings": {
+   "fitch": "AA stable",
+   "sp": "AA- stable",
+   "moodys": "Aa3 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-08-04"
+ }
+}

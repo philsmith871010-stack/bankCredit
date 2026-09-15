@@ -1,0 +1,16 @@
+{
+ "id": "osb-group",
+ "written": "2026-09-15",
+ "background": "OSB Group is a UK specialist lender formed from OneSavings Bank and Charter Court, funded by retail savings under the Kent Reliance and Charter Savings brands and lending mainly on buy-to-let and professional-landlord mortgages.",
+ "synthesis": "Fitch rates the group BBB after its upgrade on 16 May 2023 and Moody's Baa2, both stable, investment-grade holding-company grades. Capital is mixed against UK mid-sized banks: CET1 of 15.2% is above the 13.9% median, while leverage of 7.1% is a little under the 7.4% median, and both have fallen since 30 Jun 2025, CET1 by 0.5 points and leverage by 0.4 points. Liquidity is strong, with LCR of 172% at the median and NSFR of 140% above 135%. The one flagged item, on 7 Aug 2026, is a guidance cut on higher funding costs, an earnings matter rather than a solvency one.",
+ "inputs": {
+  "band": "B",
+  "composite": "BBB",
+  "ratings": {
+   "fitch": "BBB stable",
+   "moodys": "Baa2 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-08-07"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "id": "jpmorgan-chase-bank",
+ "written": "2026-09-15",
+ "background": "JPMorgan Chase Bank, N.A. is the main operating bank of JPMorgan Chase, the largest bank in the United States, serving consumers, businesses, corporates and institutions across the country and worldwide.",
+ "synthesis": "Ratings are AA from Fitch, AA- from S&P after the upgrade on 15 Nov 2024 and Aa2 from Moody's, all stable, the strongest of any large US operating bank. Capital is strong, with CET1 of 15.0% and leverage of 7.5% both in the top quarter of US banks against medians of 12.1% and 5.8%; CET1 has fallen 0.5 points since 30 Jun 2025. No liquidity ratios are held here for the bank. The flagged news on 10 Sep 2026 and 11 Sep 2026 concerns a lending decision and a lawsuit, neither of which touches the balance sheet. The benchmark US bank on both ratings and capital.",
+ "inputs": {
+  "band": "A",
+  "composite": "AA-",
+  "ratings": {
+   "fitch": "AA stable",
+   "sp": "AA- stable",
+   "moodys": "Aa2 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-09-11"
+ }
+}

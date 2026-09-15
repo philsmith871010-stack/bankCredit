@@ -1,0 +1,17 @@
+{
+ "id": "jpmorgan-chase",
+ "written": "2026-09-15",
+ "background": "JPMorgan Chase & Co. is the holding company of the largest US bank, spanning consumer and community banking, the corporate and investment bank, commercial banking and asset and wealth management.",
+ "synthesis": "As a holding company its ratings sit a notch below the bank's: AA- from Fitch, A from S&P after the upgrade on 15 Nov 2024 and A1 from Moody's, all stable. The site holds consolidated leverage of 7.5%, which is in the top quarter of US banks against a 5.8% median; no CET1 or liquidity figures are held at this level. The flagged news in the last 90 days is a lending decision after losses at a borrower on 11 Sep 2026 and 12 Sep 2026 and a lawsuit on 10 Sep 2026, none of it material to a group of this size. Deposits sit with the operating bank, which carries the higher grades.",
+ "inputs": {
+  "band": "A",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "AA- stable",
+   "sp": "A stable",
+   "moodys": "A1 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-09-12"
+ }
+}

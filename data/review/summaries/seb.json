@@ -1,0 +1,17 @@
+{
+ "id": "seb",
+ "written": "2026-09-15",
+ "background": "SEB is a Swedish universal bank with a corporate and institutional focus, funded by Swedish and Baltic deposits and covered bonds and lending to large Nordic corporates, Swedish households and businesses in the Baltic states.",
+ "synthesis": "Ratings are among the highest in Europe: AA+ from Fitch after the upgrade on 12 May 2026, AA- from S&P and Aa3 from Moody's, all stable. Capital is mixed against EU and Nordic peers: CET1 of 17.2% is above the 16.4% median, while leverage of 5.1% is below 5.5%. Liquidity is the weak side, with LCR of 125% and NSFR of 110% both in the bottom quarter against medians of 151% and 124%. None of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days. Very high ratings and sound capital, with liquidity ratios at the low end for a bank of its grade.",
+ "inputs": {
+  "band": "B",
+  "composite": "AA-",
+  "ratings": {
+   "fitch": "AA+ stable",
+   "sp": "AA- stable",
+   "moodys": "Aa3 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-05-12"
+ }
+}

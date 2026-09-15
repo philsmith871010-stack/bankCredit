@@ -1,0 +1,15 @@
+{
+ "id": "starling",
+ "written": "2026-09-15",
+ "background": "Starling Bank is a UK app-only bank, funded by retail and small-business current-account deposits and lending mainly to small businesses and on residential mortgages, with a banking-software business sold to other institutions.",
+ "synthesis": "Only Moody's rates the bank among the three agencies, at Baa2 with a stable outlook. Capital is mixed against UK small banks: CET1 of 28.6% is in the top quarter against a 17.1% median, while leverage of 8.9% is below the 10.3% median, the shape of a balance sheet heavy in low-risk-weighted assets. Liquidity is very strong, with LCR of 569% and NSFR of 247% both in the top quarter. Since 31 Mar 2022 CET1 has fallen 11.4 points and NSFR 14 points while LCR has risen 54 points and leverage 1.1 points, so the bank has put a large early capital surplus to work. The figures run to 31 Mar 2026. Nothing has been flagged in the last 90 days.",
+ "inputs": {
+  "band": "B",
+  "composite": "BBB",
+  "ratings": {
+   "moodys": "Baa2 stable"
+  },
+  "asof": "2026-03-31",
+  "last_flagged": ""
+ }
+}

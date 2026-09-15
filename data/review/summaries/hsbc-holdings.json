@@ -1,0 +1,16 @@
+{
+ "id": "hsbc-holdings",
+ "written": "2026-09-15",
+ "background": "HSBC Holdings is the listed holding company of HSBC, one of the world's largest banks, with its main earnings in Hong Kong and the UK and a global transaction banking, wealth and trade franchise.",
+ "synthesis": "As a holding company its ratings sit below the banks': A+ from Fitch and A- from S&P on a positive outlook, with the last move S&P's downgrade to A- on 13 May 2020. Consolidated capital is strong against UK majors, with CET1 of 14.1% above the 13.8% median and leverage of 4.9% at the median. Liquidity is mixed: LCR of 134% is in the bottom quarter against 144%, while NSFR of 140% is in the top quarter. Since 30 Jun 2025 CET1 and leverage have each fallen 0.5 points and NSFR 5 points. The flagged news is management change, with the finance director's departure on 10 Sep 2026 and senior job cuts on 20 Aug 2026.",
+ "inputs": {
+  "band": "B",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "A+ stable",
+   "sp": "A- positive"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-09-10"
+ }
+}

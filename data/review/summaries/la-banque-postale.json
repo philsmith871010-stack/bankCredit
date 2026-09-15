@@ -1,0 +1,17 @@
+{
+ "id": "la-banque-postale",
+ "written": "2026-09-15",
+ "background": "La Banque Postale is the banking arm of the French post office, owned by La Poste and ultimately by the French state, funded by a large base of retail deposits collected through post offices and lending on mortgages and to the public sector, with CNP Assurances as its insurer.",
+ "synthesis": "Ratings are A from Fitch after the upgrade on 12 May 2026, A from S&P and A2 from Moody's, all stable. The ratios are strong across the board against EU and Nordic peers: CET1 of 18.5%, leverage of 7.3% and LCR of 183% are all in the top quarter, and NSFR of 124% is at the median. None of the ratios has moved materially over the past four periods, with figures to 31 Mar 2026. Nothing has been flagged in the last 90 days. State ownership and a retail deposit base make this a conservative name; the ratings sit lower than the ratios alone would suggest because of the insurance-heavy, low-margin model.",
+ "inputs": {
+  "band": "B",
+  "composite": "A",
+  "ratings": {
+   "fitch": "A stable",
+   "sp": "A stable",
+   "moodys": "A2 stable"
+  },
+  "asof": "2026-03-31",
+  "last_flagged": "2026-05-12"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "id": "bank-of-america-na",
+ "written": "2026-09-15",
+ "background": "Bank of America, N.A. is the main deposit-taking bank of Bank of America Corporation, the second-largest US bank by assets, serving consumers, small businesses and corporates across the United States.",
+ "synthesis": "The operating bank carries the group's highest ratings: AA from Fitch, A+ from S&P and Aa2 from Moody's, all stable, though Moody's last move was a downgrade to Aa2 on 19 May 2025. Capital is strong for a US bank, with CET1 of 12.1% at the median and leverage of 7.1% in the top quarter against a 5.8% median. Liquidity is the softer side: LCR of 112% is below the 117% median. CET1 has fallen 1.2 points since 30 Jun 2025, which is the one trend to watch. Nothing flagged in the last 90 days.",
+ "inputs": {
+  "band": "B",
+  "composite": "AA-",
+  "ratings": {
+   "fitch": "AA stable",
+   "sp": "A+ stable",
+   "moodys": "Aa2 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": ""
+ }
+}

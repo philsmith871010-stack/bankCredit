@@ -1,0 +1,13 @@
+{
+ "id": "darlington-bs",
+ "written": "2026-09-15",
+ "background": "Darlington Building Society is a small regional mutual in the north-east of England, funded by retail savings from its branches and lending on residential mortgages, including self-build and later-life lending.",
+ "synthesis": "None of the three agencies rates the society. Capital is mixed against UK building societies: CET1 of 15.7% is below the 17.8% median, while leverage of 6.4% is above the 6.1% median, so the society carries less risk-weighted capital but more plain capital than the typical peer. Liquidity is strong, with LCR of 214% at the median and NSFR of 183% in the top quarter. NSFR has risen 7 points since 31 Dec 2022 and the rest has been flat, but the figures run only to 31 Dec 2023, so they are old. Nothing has been flagged in the last 90 days.",
+ "inputs": {
+  "band": "",
+  "composite": "",
+  "ratings": {},
+  "asof": "2023-12-31",
+  "last_flagged": ""
+ }
+}

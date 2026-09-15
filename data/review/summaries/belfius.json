@@ -1,0 +1,17 @@
+{
+ "id": "belfius",
+ "written": "2026-09-15",
+ "background": "Belfius is a Belgian retail, public-sector and insurance group wholly owned by the Belgian state, funded by Belgian retail deposits and lending to households, companies and Belgian local authorities.",
+ "synthesis": "Ratings are A- from Fitch, A from S&P and Aa3 from Moody's, all stable, with Moody's upgrade to Aa3 on 21 Apr 2026 the latest move and the highest of the three. Against EU and Nordic peers capital is mixed: CET1 of 16.2% is a shade below the 16.4% median and leverage of 6.2% is above the 5.5% median. Liquidity is likewise mixed, with LCR of 145% below the 151% median and NSFR of 129% above the 124% median. Leverage has fallen 0.4 points since 30 Jun 2024 and the rest has been flat. Nothing has been flagged in the last 90 days.",
+ "inputs": {
+  "band": "B",
+  "composite": "A",
+  "ratings": {
+   "fitch": "A- stable",
+   "sp": "A stable",
+   "moodys": "Aa3 stable"
+  },
+  "asof": "2026-03-31",
+  "last_flagged": "2026-04-21"
+ }
+}

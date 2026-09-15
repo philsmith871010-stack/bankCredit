@@ -1,0 +1,17 @@
+{
+ "id": "bny",
+ "written": "2026-09-15",
+ "background": "BNY is the holding company of the world's largest custodian bank, earning fees from safekeeping, settlement, asset servicing and investment management for institutions rather than from lending.",
+ "synthesis": "As a holding company its ratings are a notch below the bank's: AA- from Fitch, A from S&P and Aa3 from Moody's, all stable, with Moody's upgrade to Aa3 on 5 Nov 2024 the latest move. Consolidated capital is mixed against US peers: CET1 of 11.9% is just below the 12.1% median, while leverage of 6.7% is in the top quarter. LCR of 111% sits below the 117% median. CET1 has risen 0.7 points since 31 Dec 2021 and the rest has been flat. The flagged news is a strong quarter on 15 Jul 2026 and a legal item on 29 Jun 2026.",
+ "inputs": {
+  "band": "B",
+  "composite": "AA-",
+  "ratings": {
+   "fitch": "AA- stable",
+   "sp": "A stable",
+   "moodys": "Aa3 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-07-15"
+ }
+}

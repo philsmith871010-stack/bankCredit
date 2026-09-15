@@ -84,6 +84,19 @@ def _ratio_clause(label, v, unit, dp, q, pr) -> str:
     return f"{label} of {v:.{dp}f}{unit} is {PLACE[q]} (median {pr['p50']:.{dp}f}{unit})" if q else f"{label} is {v:.{dp}f}{unit}"
 
 
+def _last_move(m: dict) -> str:
+    """'Fitch's upgrade to A on 2 Nov 2025'; a withdrawal or a first rating said as such."""
+    who = AGENCY[m["agency"]]
+    poss = who if who.endswith("s") else who + "'s"
+    act, when = m.get("action") or "action", fdate(m.get("date"))
+    if act == "withdrawal":
+        was = f" of its {m['from']} rating" if m.get("from") else " of its rating"
+        return f"{poss} withdrawal{was} on {when}"
+    if act == "new":
+        return f"{poss} first rating, {m.get('value')}, on {when}"
+    return f"{poss} {act} to {m.get('value')} on {when}"
+
+
 def brief(d: dict, today: date | None = None) -> dict:
     """The dated sentences the data supports, in plain English, and the fingerprint they rest on.
 
@@ -114,7 +127,7 @@ def brief(d: dict, today: date | None = None) -> dict:
         moves = [m for m in ((d.get("rating_history") or {}).get("moves") or []) if m.get("agency") in AGENCIES]
         if moves:
             m = moves[0]
-            s += f"; the last move was {AGENCY[m['agency']]}'s {m.get('action', 'action')} to {m.get('value')} on {fdate(m.get('date'))}"
+            s += f"; the last move was {_last_move(m)}"
         out["standing"] = s + "."
     else:
         out["standing"] = f"{who} with no public rating from Fitch, S&P or Moody's."

@@ -56,6 +56,12 @@ def test_three_agencies_and_mixed_outlooks_read_naturally():
     assert b["standing"] == "TSB is a bank in the UK, rated A+ by Fitch and A by S&P, both with a stable outlook."
 
 
+def test_a_withdrawal_a_first_rating_and_moodys_read_as_english():
+    assert S._last_move({"agency": "moodys", "action": "downgrade", "value": "A2", "date": "2024-05-24"}) == "Moody's downgrade to A2 on 24 May 2024", "never Moody's's"
+    assert S._last_move({"agency": "sp", "action": "withdrawal", "from": "BBB+", "value": "", "date": "2026-03-25"}) == "S&P's withdrawal of its BBB+ rating on 25 Mar 2026"
+    assert S._last_move({"agency": "fitch", "action": "new", "value": "A+", "date": "2026-07-13"}) == "Fitch's first rating, A+, on 13 Jul 2026"
+
+
 def test_an_unscored_unrated_name_still_gets_an_honest_paragraph():
     b = S.brief(bank(score=None, unscored="unrated", ratings=[], rating_composite=None, unrated=True, events=[], type="building_society"), TODAY)
     assert b["standing"] == "TSB is a building society in the UK with no public rating from Fitch, S&P or Moody's."

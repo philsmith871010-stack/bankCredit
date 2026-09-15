@@ -1,0 +1,13 @@
+{
+ "id": "monzo",
+ "written": "2026-09-15",
+ "background": "Monzo is a UK app-only bank, one of the largest digital banks in Britain by customer numbers, funded by retail current-account deposits and lending mainly through overdrafts, personal loans and cards, with much of its balance sheet held in cash and gilts.",
+ "synthesis": "None of the three agencies rates the bank. Capital is mixed against UK small banks: CET1 of 27.3% is in the top quarter against a 17.1% median, while leverage of 8.3% is below the 10.3% median, a pattern that reflects a balance sheet heavy in low-risk-weighted assets. Liquidity is exceptionally strong, with LCR of 1039% and NSFR of 745% both in the top quarter. No trend can be drawn from the periods held. The flagged news is an outage on 19 Aug 2026 and 20 Aug 2026 that left customers unable to pay, an operational rather than a credit event. An unrated name with a very liquid balance sheet.",
+ "inputs": {
+  "band": "",
+  "composite": "",
+  "ratings": {},
+  "asof": "2026-03-31",
+  "last_flagged": "2026-08-20"
+ }
+}

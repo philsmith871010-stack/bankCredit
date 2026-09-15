@@ -1,0 +1,17 @@
+{
+ "id": "bendigo-and-adelaide-bank",
+ "written": "2026-09-15",
+ "background": "Bendigo and Adelaide Bank is Australia's largest regional bank, funded mainly by retail deposits raised through a community-branch model and lending mainly on residential mortgages and to farms and small businesses.",
+ "synthesis": "Ratings are A- from Fitch and S&P and A3 from Moody's, all stable, with Moody's upgrade to A3 on 21 Nov 2025 the latest move. Capital is the weak point against Australian peers: CET1 of 11.3% is in the bottom quarter against a 12.0% median. Liquidity is the strength, with LCR of 140% in the top quarter and NSFR of 115% at the median. None of the ratios has moved materially over the past four periods. The flagged news is mixed: a return to profit on 24 Aug 2026, set against a cash-earnings hit from risk remediation and an anti-money-laundering capital charge reported on 24 Aug 2026 and 25 Aug 2026.",
+ "inputs": {
+  "band": "C",
+  "composite": "A-",
+  "ratings": {
+   "fitch": "A- stable",
+   "sp": "A- stable",
+   "moodys": "A3 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-08-25"
+ }
+}

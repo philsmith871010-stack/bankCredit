@@ -1,0 +1,17 @@
+{
+ "id": "hsbc-uk",
+ "written": "2026-09-15",
+ "background": "HSBC UK Bank plc is the ring-fenced retail and commercial bank of HSBC in Britain, funded by UK personal and business deposits and lending on residential mortgages and to UK companies, including first direct.",
+ "synthesis": "Ratings are AA from Fitch after the upgrade on 12 May 2026, A+ from S&P on a positive outlook and A1 from Moody's. Capital is mixed against UK majors: CET1 of 13.2% is in the bottom quarter against a 13.8% median, while leverage of 5.6% is in the top quarter against 4.9%. Liquidity is strong, with LCR of 160% above the 144% median and NSFR of 143% in the top quarter, though both have come down since 30 Jun 2025, LCR by 26 points and NSFR by 8 points. The one flagged item, on 18 Jun 2026, is a regulatory fine. The strongest liquidity of the HSBC entities held here.",
+ "inputs": {
+  "band": "B",
+  "composite": "A+",
+  "ratings": {
+   "fitch": "AA stable",
+   "sp": "A+ positive",
+   "moodys": "A1 stable"
+  },
+  "asof": "2026-06-30",
+  "last_flagged": "2026-06-18"
+ }
+}

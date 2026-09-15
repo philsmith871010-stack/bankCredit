@@ -1,0 +1,17 @@
+{
+ "id": "rbc",
+ "written": "2026-09-15",
+ "background": "Royal Bank of Canada is Canada's largest bank and one of the largest in North America, funded by Canadian deposits and wholesale markets and lending on Canadian mortgages and to businesses, with large capital markets, wealth management and US operations through City National.",
+ "synthesis": "Ratings are AA- from Fitch, AA- from S&P and A1 from Moody's after its upgrade on 27 Jan 2022, all stable, the strongest of the Canadian banks. Capital is strong against Canadian peers, with CET1 of 13.5% and leverage of 4.3% both in the top quarter, each at the median of a tightly bunched group. No liquidity ratios are held here. None of the ratios has moved materially over the past four periods, with figures to 31 Jul 2026. The flagged news is all good, with results ahead of expectations on 27 Aug 2026. The benchmark Canadian bank.",
+ "inputs": {
+  "band": "B",
+  "composite": "AA-",
+  "ratings": {
+   "fitch": "AA- stable",
+   "sp": "AA- stable",
+   "moodys": "A1 stable"
+  },
+  "asof": "2026-07-31",
+  "last_flagged": "2026-08-27"
+ }
+}

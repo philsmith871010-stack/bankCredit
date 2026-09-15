@@ -1,0 +1,13 @@
+{
+ "id": "furness-bs",
+ "written": "2026-09-15",
+ "background": "Furness Building Society is a small regional mutual based in Barrow-in-Furness, funded by retail savings from its branches in Cumbria and Lancashire and lending on residential mortgages across the north of England.",
+ "synthesis": "None of the three agencies rates the society. Capital is mixed against UK building societies: CET1 of 16.0% is below the 17.8% median while leverage of 6.8% is in the top quarter against 6.1%. Liquidity is on the weak side, with LCR of 193% below the 214% median and NSFR of 137% in the bottom quarter against 145%. The trend is down on both fronts: since 31 Dec 2022 CET1 has fallen 2.9 points and LCR 16 points. The figures run to 31 Dec 2025. Nothing has been flagged in the last 90 days. Sound, but with less headroom than most of its peers and moving the wrong way.",
+ "inputs": {
+  "band": "",
+  "composite": "",
+  "ratings": {},
+  "asof": "2025-12-31",
+  "last_flagged": ""
+ }
+}
