@@ -436,6 +436,9 @@ COMPARE_METRICS = [("score", "Counterparty score", "", 1, True), ("rating_grade"
                    ("efficiency_ratio", "Cost to income", "%", 0, False), ("npl_ratio", "Non-performing loans", "%", 2, False),
                    ("cost_of_risk", "Cost of risk", "%", 2, False), ("total_assets", "Total assets", "m", 0, True)]
 COMPARE_POINTS = 32
+# The columns the universe table can add on request, beyond the four a policy is written around.
+EXTRA_COLUMNS = ("tier1_ratio", "total_capital_ratio", "roe", "roa", "nim", "efficiency_ratio", "npl_ratio", "cost_of_risk",
+                 "total_assets", "deposits")
 
 
 def compare_rows(board: list[dict], series_all: dict, books: dict | None = None) -> list[dict]:
@@ -788,6 +791,9 @@ def export_json() -> None:
                             # the file the page waits for.
                             "pw": [_clean(sc.pillars.get(k, (None,))[0]) for k in PILLAR_ORDER],
                             "overlay": _clean(sc.overlay),
+                            # the latest value of each further ratio the universe table can show on
+                            # request; one object, absent keys for figures never collected
+                            "x": {k: v for k, v in _latest(series).items() if k in EXTRA_COLUMNS},
                             "market_detail": {k: market.get(k) for k in ("vol30", "drawdown52", "bond_change30", "bond_count")}})
         debug = {}
         if DEBUG_DATA:

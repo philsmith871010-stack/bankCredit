@@ -546,13 +546,50 @@
       if(q&&(e.short+' '+e.name+' '+(e.country||'')+' '+(e.lei||'')).toLowerCase().indexOf(q)<0)return false;
       return true;
     }).map(function(e){return {e:e,tenor:have[e.id]}}).sort(function(a,b){
-      var k=uniSort.key, va=k==='news30'?news30Rank(a.e):a.e[k], vb=k==='news30'?news30Rank(b.e):b.e[k];
+      var k=uniSort.key, isx=XCOLS.some(function(c){return c[0]===k});
+      var va=k==='news30'?news30Rank(a.e):(isx?xval(a.e,k):a.e[k]), vb=k==='news30'?news30Rank(b.e):(isx?xval(b.e,k):b.e[k]);
       if(va==null&&vb==null)return 0; if(va==null)return 1; if(vb==null)return -1;
       if(typeof va==='string')return uniSort.dir*va.localeCompare(vb);
       return uniSort.dir*(va-vb);
     });
   }
   var PEEK=8;    // rows a scrolling window shows before there is anything below its fold
+  // Columns the universe table shows on request. The four a policy is written around are always
+  // there; these are the rest of what is held, brought in without widening the default for
+  // everyone, and the choice is kept in this browser.
+  var XCOLS=[['tier1_ratio','Tier 1','%',1],['total_capital_ratio','Total cap.','%',1],['roe','ROE','%',1],['roa','ROA','%',2],
+             ['nim','NIM','%',2],['efficiency_ratio','Cost/income','%',0],['npl_ratio','NPL','%',2],['cost_of_risk','Cost of risk','%',2],
+             ['total_assets','Assets','m',0],['deposits','Deposits','m',0]];
+  var XKEY=KEY.replace('policy','uni.cols');
+  function xcols(){try{var v=JSON.parse(localStorage.getItem(XKEY)||'[]');return Array.isArray(v)?v.filter(function(k){return XCOLS.some(function(c){return c[0]===k})}):[]}catch(e){return[]}}
+  function setXcols(v){try{localStorage.setItem(XKEY,JSON.stringify(v))}catch(e){}}
+  function xval(e,k){return (e.x||{})[k]}
+  function xfmt(v,unit,dp){
+    if(v==null)return '\u2014';
+    if(unit==='m')return v>=1e6?(v/1e6).toFixed(2)+'tn':v>=5000?(v/1000).toFixed(0)+'bn':v.toFixed(0)+'m';
+    return Number(v).toFixed(dp)+(unit==='%'&&dp===0?'%':'');
+  }
+  function renderXhead(){
+    var tr=document.querySelector('#uni-table thead tr'); if(!tr)return;
+    tr.querySelectorAll('th.uni-x').forEach(function(th){th.remove()});
+    var fig=tr.querySelector('th.uni-fig'); if(!fig)return;
+    xcols().forEach(function(k){
+      var c=XCOLS.filter(function(x){return x[0]===k})[0]; if(!c)return;
+      var th=document.createElement('th'); th.className='num uni-x'; th.dataset.sort=k; th.textContent=c[1];
+      if(uniSort.key===k)th.setAttribute('aria-sort',uniSort.dir>0?'ascending':'descending');
+      tr.insertBefore(th,fig);
+    });
+  }
+  function xcells(e){
+    return xcols().map(function(k){var c=XCOLS.filter(function(x){return x[0]===k})[0];return '<td class="num mono uni-x">'+xfmt(xval(e,k),c[2],c[3])+'</td>'}).join('');
+  }
+  function renderColsMenu(){
+    var m=document.getElementById('uni-cols-menu'); if(!m)return;
+    var on=xcols();
+    m.innerHTML='<div class="uni-cols-h">More columns <span class="small muted">latest reported figure</span></div>'+XCOLS.map(function(c){
+      return '<label><input type="checkbox" data-col="'+c[0]+'"'+(on.indexOf(c[0])>-1?' checked':'')+'> '+esc(c[1])+'</label>';
+    }).join('')+'<div class="uni-cols-f"><button class="filter" type="button" id="uni-cols-none">None</button></div>';
+  }
   // A figure's date, and how old that makes it: past six months it is shown as such, because a
   // capital ratio from a year ago is a different fact from one published last quarter.
   function asofCell(e){
@@ -574,6 +611,7 @@
     // Every row is here; the table scrolls inside a window rather than growing the page. Paging a
     // sorted list meant clicking through sixteen pages to read it, and the column headings went
     // off the top of the screen on the way. They stay put now, and the whole list is one scroll.
+    renderXhead();
     var cnt=document.getElementById('uni-count');
     if(cnt)cnt.textContent=rows.length===data.rows.length?data.rows.length+' names'
       :rows.length+' of '+data.rows.length+' names match';
@@ -593,6 +631,7 @@
         '<td class="num mono">'+(e.leverage==null?'—':e.leverage.toFixed(1))+'</td>'+
         '<td class="num mono">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
         '<td class="num mono">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
+        xcells(e)+
         asofCell(e)+
         '<td class="num">'+news30Cell(e)+'</td>'+
         '<td>'+mkt(e.market,1)+'</td>'+
@@ -615,6 +654,15 @@
     Object.keys(regions).sort().forEach(function(r){var o=document.createElement('option');o.value=r;o.textContent=REGION_LABEL[r]||r;reg.appendChild(o)});
     Object.keys(types).sort().forEach(function(x){var o=document.createElement('option');o.value=x;o.textContent=TYPE_LABEL[x]||x;typ.appendChild(o)});
     TENORS.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent='Add at '+x[1];if(x[0]===365)o.selected=true;ten.appendChild(o)});
+    renderColsMenu();
+    var cb=document.getElementById('uni-cols-btn'), cm=document.getElementById('uni-cols-menu');
+    if(cb&&cm){
+      cb.addEventListener('click',function(){var open=cm.hidden;cm.hidden=!open;cb.setAttribute('aria-expanded',String(open));cb.classList.toggle('active',open)});
+      cm.addEventListener('change',function(ev){var i=ev.target.closest('input[data-col]');if(!i)return;var on=xcols().filter(function(k){return k!==i.dataset.col});if(i.checked)on.push(i.dataset.col);
+        setXcols(XCOLS.map(function(c){return c[0]}).filter(function(k){return on.indexOf(k)>-1}));renderUni()});
+      cm.addEventListener('click',function(ev){if(ev.target.id==='uni-cols-none'){setXcols([]);renderColsMenu();renderUni()}});
+      document.addEventListener('click',function(ev){if(!cm.hidden&&!ev.target.closest('.uni-cols')){cm.hidden=true;cb.setAttribute('aria-expanded','false');cb.classList.remove('active')}});
+    }
     ['uni-q','uni-region','uni-type','uni-band','uni-scored','uni-tenor'].forEach(function(id){
       var el=document.getElementById(id); if(el)el.addEventListener('input',renderUni);
     });

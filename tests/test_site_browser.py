@@ -878,3 +878,37 @@ def test_a_profiles_flagged_events_come_first(page, server):
     flagged = [s for s in sev if s in ("bad", "warn", "good")]
     assert sev[:len(flagged)] == flagged, "every flagged event precedes every unflagged one"
     assert page.eval_on_selector_all("#pevents .ev-divider", "e => e.length") == (1 if flagged and len(flagged) < len(sev) else 0)
+
+
+# ---- the universe's column chooser ---------------------------------------------------------
+def test_more_columns_can_be_brought_into_the_universe_table_and_stay(page, server):
+    """The four ratios a policy is written around are always there; the rest of what is held
+    comes in on request, sortable, and the choice is kept."""
+    visit(page, server, "index.html#universe")
+    page.wait_for_timeout(1500)
+    assert page.eval_on_selector_all("#uni-table thead th.uni-x", "e => e.length") == 0
+    page.eval_on_selector("#uni-cols-btn", "e => e.click()")
+    page.wait_for_timeout(200)
+    assert not page.eval_on_selector("#uni-cols-menu", "e => e.hidden")
+    page.eval_on_selector('#uni-cols-menu input[data-col="roe"]', "e => e.click()")
+    page.wait_for_timeout(400)
+    heads = page.eval_on_selector_all("#uni-table thead th", "e => e.map(x => x.textContent.trim())")
+    fig = [i for i, h in enumerate(heads) if h.startswith("Figures")][0]     # the heading carries its info mark
+    assert "ROE" in heads and heads.index("ROE") < fig, heads
+    page.eval_on_selector('#uni-table th[data-sort="roe"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    first = page.eval_on_selector("#uni-body tr:first-child td.uni-x", "e => e.textContent.trim()")
+    assert first not in ("", "—"), "sorted on the new column, the first row has a figure"
+    page.reload(wait_until="networkidle"); page.wait_for_timeout(1500)
+    assert page.eval_on_selector_all("#uni-table thead th.uni-x", "e => e.length") == 1, "the choice is kept"
+    assert not page.errors, page.errors
+    assert not page.bad, page.bad
+
+
+def test_a_long_name_never_widens_the_page_on_a_phone(browser, server):
+    pg = browser.new_page(viewport={"width": 400, "height": 800})
+    try:
+        pg.goto(server + "banks/coventry-bs.html", wait_until="networkidle"); pg.wait_for_timeout(600)
+        assert not pg.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth + 1"), "the page scrolls sideways"
+    finally:
+        pg.close()
