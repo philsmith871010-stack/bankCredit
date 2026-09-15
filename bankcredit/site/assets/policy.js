@@ -49,7 +49,7 @@
       var e=byId[it.id];
       if(!e)return '<tr class="pol-tr"><td colspan="12"><span class="b">'+esc(it.id)+'</span> '+chip('No longer covered','bad')+'</td><td><button class="pol-rm" data-id="'+esc(it.id)+'" title="Remove">×</button></td></tr>';
       var fl=flagsOf(it,e), worst=fl.filter(function(x){return x[0]!=='muted'})[0], moved=fl.some(function(x){return x[0]!=='muted'&&x[0]!=='good'});
-      return '<tr class="pol-tr'+(moved?' pol-tr-flag':'')+'" data-id="'+esc(e.id)+'" data-tenor="'+it.tenor+'" tabindex="0">'+
+      return '<tr class="pol-tr'+(moved?' pol-tr-flag':'')+'" data-id="'+esc(e.id)+'" data-tenor="'+it.tenor+'" tabindex="0"'+(e.blurb?' title="'+esc(e.blurb)+'"':'')+'>'+
         '<td class="pt-name"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+' · '+sovPill(e)+'</div></td>'+
         '<td class="num">'+scoreNum(e.score,e.band,'sc-1')+'</td>'+
         '<td class="mono"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b></td>'+
@@ -618,7 +618,7 @@
     var foot=document.getElementById('uni-count2');
     body.innerHTML=rows.map(function(r){
       var e=r.e;
-      return '<tr class="uni-row" data-id="'+esc(e.id)+'">'+
+      return '<tr class="uni-row" data-id="'+esc(e.id)+'"'+(e.blurb?' title="'+esc(e.blurb)+'"':'')+'>'+
         '<td><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
         '<td class="mono small">'+sovPill(e)+'</td>'+
         '<td class="num">'+(e.score==null?'<span class="na">—</span>':
@@ -907,7 +907,7 @@
         // click away, and a policy of twenty names is a column of numbers rather than a scroll.
         var worst_fl=fl.filter(function(x){return x[0]!=='muted'})[0];
         var kv=function(v,l,cls){return '<div class="ck'+(cls?' '+cls:'')+'"><b>'+v+'</b><span>'+l+'</span></div>'};
-        return '<div class="pol-card'+(moved?' pol-card-flag':'')+'" data-id="'+esc(e.id)+'">'+
+        return '<div class="pol-card'+(moved?' pol-card-flag':'')+'" data-id="'+esc(e.id)+'"'+(e.blurb?' title="'+esc(e.blurb)+'"':'')+'>'+
           '<div class="cp-top">'+
             // The country and its rating are drawn twice and shown once: on the second line with the
             // legal name where there is room for a second line, and up beside the name where there

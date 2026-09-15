@@ -845,9 +845,17 @@ def export_json() -> None:
     # than only against its own past. These are where the peers stand now - the latest value each
     # holds - not a peer history, and every page that draws them says so.
     peer_ratios = peer_quartiles(details)
+    policy_by_id = {r["id"]: r for r in policy_rows}
     for eid, (row, extra) in details.items():
         detail = dict(row); detail.update(extra)
         detail["peer_ratios"] = peer_ratios.get(row.get("peer_group") or "", {})
+        # the written summary's background line where one exists, else the standing sentence the
+        # data gives: the "remind me who this is" a card or a row shows on hover
+        from . import summaries as S
+        _s = S.load(eid)
+        blurb = (_s or {}).get("background") or S.brief(detail, today)["standing"]
+        if eid in policy_by_id:
+            policy_by_id[eid]["blurb"] = blurb
         store.write_json(f"banks/{eid}", detail)
     benchmarks = []
     series = store.read("series")

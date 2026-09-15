@@ -307,6 +307,25 @@ def ordered_events(events: list[dict]) -> list[dict]:
     return flagged + rest
 
 
+def summary_block(b: dict, generated: str) -> str:
+    """Layer one from the data on every build; layer two from the file, with when it was written and
+    what has moved since, so the reader is never told a stale thing as current."""
+    from .. import summaries as S
+    today = date.fromisoformat(generated[:10])
+    br = S.brief(b, today)
+    l1 = "".join(f'<span class="br-{k}">{c.esc(br[k])}</span> ' for k in ("standing", "peers", "ratings", "trends", "news") if br.get(k))
+    s = S.load(b["id"])
+    if not s:
+        l2 = '<div class="brief-meta muted">No written summary yet; the paragraph above is drawn from the data on every build.</div>'
+    else:
+        moved = S.changes_since(s.get("inputs") or {}, br["fingerprint"])
+        meta = f'Written {S.fdate(s["written"])}' + (f' from figures to {S.fdate((s.get("inputs") or {}).get("asof"))}' if (s.get("inputs") or {}).get("asof") else "") + "."
+        stale = f' <span class="brief-stale">Since then: {c.esc("; ".join(moved))}. This summary predates that.</span>' if moved else ""
+        l2 = (f'<p class="brief-bg"><span class="brief-lbl">Background</span> {c.esc(s["background"])}</p>'
+              f'<p class="brief-syn">{c.esc(s["synthesis"])}</p><div class="brief-meta muted">{meta}{stale}</div>')
+    return f'<div class="card brief"><div class="brief-l1">{l1}</div>{l2}</div>'
+
+
 def page_bank(b, generated):
     series = b["series"]
     tiles = "".join(tile(m, l, u, dp, series, b.get("peer_ratios"), b.get("country")) for m, l, u, dp in TILE_METRICS)
@@ -473,7 +492,7 @@ def page_bank(b, generated):
     events_rows += "".join(event_row(e) for e in ordered[n_flagged:]) or '<div class="empty">No events collected yet. Rating actions and disclosures will appear here once the events pipeline runs.</div>'
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
 <div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {sovereign_pill(b)}{c.info("sovereign")}{" · " + c.chip("LEI " + c.esc(b["lei"])) + c.info("lei") if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
-<div class="actions"><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button></div></div>
+<div class="actions"><a class="btn btn-back" href="../index.html">&lsaquo; All names</a><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button></div></div>
 <div class="grid-12"><div class="score-card" data-pw="{c.esc(json.dumps([b["score_detail"]["pillars"].get(k, (None,))[0] for k in c.PILLAR_KEYS]))}" data-overlay="{overlay if overlay is not None else 0}" data-grade="{b.get("rating_grade") if b.get("rating_grade") is not None else ""}" data-coverage="{cov}"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span><span class="score-band">{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</span></div>
 <div class="score-main"><div class="score-fig">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div>
 {c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12, fluid=True)}</div>
@@ -481,6 +500,7 @@ def page_bank(b, generated):
 {f'<div class="np-note"><b>{c.esc(b["not_published"]["reason"][0].upper() + b["not_published"]["reason"][1:])}.</b> {c.esc(b["not_published"].get("standing") or "")}. A score needs current capital ratios for this entity, so none is shown; the rating and the standing above are what to judge this name on. <a href="{c.esc(b["not_published"].get("source") or "")}" target="_blank" rel="noopener">Source</a></div>' if b.get("not_published") else ''}
 <div class="score-note">Rating anchor and public pillars with published weights (w).{c.info("pillar")}{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../admin/index.html#method">Method</a></div></div>
 {ratings_tile(b)}</div>
+{summary_block(b, generated)}
 <div class="tiles">{tiles}</div>
 <div class="card tabs-card"><div class="tabs" role="tablist"><button class="tab active" data-tab="trends">Trends</button><button class="tab" data-tab="ratings">Ratings</button><button class="tab" data-tab="market">Market</button><button class="tab" data-tab="events">Events</button><button class="tab" data-tab="sources">Sources</button>{'<button class="tab" data-tab="data">Data</button>' if b.get("debug") else ''}</div>
 <section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.{" The grey band on a ratio is where this bank" + chr(8217) + "s peer group stands today, quartile to quartile, with the median dashed — not a peer history." if b.get("peer_ratios") else ""}</div>' if n_charts else ''}{f'<div class="sm-flow">{"".join(charts)}</div>' if charts else '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
