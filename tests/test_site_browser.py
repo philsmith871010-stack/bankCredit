@@ -856,3 +856,24 @@ def test_the_home_page_links_to_the_approved_list_without_breaking_its_tabs(page
     page.wait_for_timeout(300)
     assert page.eval_on_selector('.tab[data-tab="universe"]', "e => e.classList.contains('active')")
     assert not page.errors, page.errors
+
+
+def test_ticking_two_names_turns_the_card_into_a_comparison(page, server):
+    """The comparison lives beside the list rather than on a page of its own: tick names and the
+    right side becomes the charts; untick back to one and it is a card again."""
+    visit(page, server, "approved/index.html")
+    page.eval_on_selector("#cmp", "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector(".ap .app", "e => e.classList.contains('comparing')")
+    page.eval_on_selector(".ap .row[data-id]:nth-of-type(2)", "e => e.click()")
+    page.eval_on_selector(".ap .row[data-id]:nth-of-type(4)", "e => e.click()")
+    page.wait_for_timeout(900)
+    assert page.eval_on_selector_all(".ap .cmp .chart", "e => e.length") == 5, "the score and the four ratios"
+    assert page.eval_on_selector_all(".ap .ctab tbody tr", "e => e.length") == 3, "the card's name plus the two ticked"
+    assert page.eval_on_selector_all(".ap .row.sel", "e => e.length") == 3
+    assert "#cmp=" in page.url, "a comparison is a link"
+    page.eval_on_selector("#cmp", "e => e.click()")
+    page.wait_for_timeout(700)
+    assert page.inner_text(".ap .acard .hero h2"), "back to a card"
+    assert not page.errors, page.errors
+    assert not page.bad, page.bad

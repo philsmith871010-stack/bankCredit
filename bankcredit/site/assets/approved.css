@@ -227,3 +227,47 @@
     .ap .ev li .sev{grid-column:2;justify-self:start}
     .ap .mkt{grid-template-columns:1fr}
   }
+
+/* ---------- compare: tick names, the card gives way to the charts ---------- */
+.ap .tools button[aria-pressed="true"]{background:var(--ap-accent);color:var(--ap-on-accent)}
+.ap .row .ck{display:none;width:15px;height:15px;border-radius:4px;border:1.5px solid var(--ap-line-2);background:var(--ap-surface);margin-right:-2px}
+.ap .app.comparing .row .ck{display:block}
+.ap .app.comparing .row{grid-template-columns:15px 10px minmax(0,1fr) 52px 78px}
+.ap .app.comparing .cols{grid-template-columns:15px 10px minmax(0,1fr) 52px 78px}
+.ap .app.comparing .row[aria-selected="true"]{background:transparent;color:var(--ap-ink)}
+.ap .app.comparing .row[aria-selected="true"] .bdot{box-shadow:0 0 0 2px var(--ap-surface)}
+.ap .row.sel .ck{background:var(--ap-sw);border-color:var(--ap-sw)}
+.ap .row.sel{background:var(--ap-sel)}
+.ap .cmp{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.ap .cmp .who{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.ap .cmp .who h2{margin:0 12px 0 0;font-size:22px;font-weight:700;letter-spacing:-.02em}
+.ap .cmp .who .nm{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500}
+.ap .cmp .who .nm i{width:11px;height:11px;border-radius:3px;background:var(--ap-sw)}
+.ap .cmp .who .nm button{border:0;background:transparent;color:var(--ap-ink-3);cursor:pointer;padding:0 2px;font-size:14px;line-height:1}
+.ap .cmp .who .nm button:hover{color:var(--ap-bad)}
+.ap .cmp .hint{color:var(--ap-ink-2);font-size:14px}
+.ap .chart{position:relative}
+.ap .chart svg{width:100%;height:auto;display:block;overflow:visible}
+.ap .chart .ax{font-size:10.5px;fill:var(--ap-ink-3)}
+.ap .chart .gl{stroke:var(--ap-line);stroke-width:1}
+.ap .chart .lbl-end{font-size:11px;font-weight:600;fill:var(--ap-ink-2)}
+.ap .chart .xh{stroke:var(--ap-ink-3);stroke-width:1;stroke-dasharray:2 3;opacity:0;pointer-events:none}
+.ap .chart .tip{position:absolute;top:8px;left:0;transform:translateX(-50%);background:var(--ap-ink);color:var(--ap-ground);border-radius:8px;padding:7px 10px;font-size:12px;line-height:1.45;pointer-events:none;opacity:0;transition:opacity .1s;white-space:nowrap;z-index:2;box-shadow:var(--ap-shadow)}
+.ap .chart .tip b{display:block;font-weight:600;margin-bottom:2px;opacity:.8}
+.ap .chart .tip i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:0}
+.ap .chart.on .xh,.ap .chart.on .tip{opacity:1}
+.ap .smalls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 22px}
+.ap .smalls h4{margin:0 0 4px;font-size:13px;font-weight:600}
+.ap .smalls h4 small{font-weight:400;color:var(--ap-ink-3);margin-left:6px}
+.ap .ctab{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.ap .ctab th{text-align:right;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ap-ink-3);padding:0 10px 8px;border-bottom:1px solid var(--ap-line);white-space:nowrap}
+.ap .ctab th:first-child,.ap .ctab td:first-child{text-align:left;padding-left:0}
+.ap .ctab td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--ap-line);white-space:nowrap}
+.ap .ctab td:first-child{font-weight:500}
+.ap .ctab td .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:-1px}
+.ap .ctab td.good{background:var(--ap-A-soft)} .ap .ctab td.warn{background:var(--ap-C-soft)} .ap .ctab td.bad{background:var(--ap-D-soft)}
+.ap .ctab td .up{color:var(--ap-good);font-size:11.5px;margin-left:4px} .ap .ctab td .dn{color:var(--ap-bad);font-size:11.5px;margin-left:4px}
+.ap .ctab .na{color:var(--ap-ink-3)}
+.ap .ctab-wrap{overflow-x:auto}
+.ap .cmp .note{font-size:12px;color:var(--ap-ink-3);max-width:80ch;line-height:1.5}
+@media (max-width:760px){.ap .smalls{grid-template-columns:1fr}}
