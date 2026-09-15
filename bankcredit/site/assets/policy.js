@@ -666,15 +666,17 @@
     ['uni-q','uni-region','uni-type','uni-band','uni-scored','uni-tenor'].forEach(function(id){
       var el=document.getElementById(id); if(el)el.addEventListener('input',renderUni);
     });
-    document.querySelectorAll('#uni-table th[data-sort]').forEach(function(th){
-      th.addEventListener('click',function(){
+    // One listener on the row, not one per heading: the column chooser adds headings after
+    // this runs, and a heading with no listener sorted nothing.
+    var uhead=document.querySelector('#uni-table thead');
+    if(uhead)uhead.addEventListener('click',function(ev){
+        var th=ev.target.closest('th[data-sort]'); if(!th)return;
         var k=th.dataset.sort;
         uniSort.dir=(uniSort.key===k)?-uniSort.dir:(k==='short'||k==='country'||k==='asof'?1:-1);
         uniSort.key=k;
         document.querySelectorAll('#uni-table th[data-sort]').forEach(function(x){x.removeAttribute('aria-sort')});
         th.setAttribute('aria-sort',uniSort.dir>0?'ascending':'descending');
         renderUni();
-      });
     });
     renderUni();
   }
