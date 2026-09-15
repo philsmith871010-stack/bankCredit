@@ -148,6 +148,29 @@ def main(argv=None):
         for it in items:
             print(f"  {it['id']}  {it['entity_id']:28s} {it.get('reference_date') or '?':10s} p.{it.get('page') or '-':<4} {it['reason'][:90]}")
         return 0
+    if cmd == "summaries":
+        # `due` writes the names whose written summary is owed, with the paragraph and the
+        # fingerprint to write it from, for the skill to read; `check` holds every summary held
+        # against today's paragraph and fails on a figure that did not come from it
+        from datetime import date as _date
+        from . import summaries as S
+        details = S.details_from_json()
+        sub = sys.argv[2] if len(sys.argv) > 2 else "due"
+        if sub == "due":
+            items = S.due(details, _date.today())
+            path = S.write_todo(items)
+            print(f"{len(items)} of {len(details)} summaries owed -> {path}")
+            for it in items[:20]:
+                print(f"  {it['id']}: {it['reason']}")
+            return
+        if sub == "check":
+            faults = S.check_all(details, _date.today())
+            for eid, fs in faults.items():
+                print(f"{eid}: " + "; ".join(fs))
+            n = len(list(S.SUMMARIES.glob("*.json"))) if S.SUMMARIES.exists() else 0
+            print(f"{n} summaries held, {len(faults)} with faults")
+            sys.exit(1 if faults else 0)
+        print("usage: summaries due | check"); sys.exit(2)
     if cmd == "build":
         from .site.build import build
         from .export import export_json

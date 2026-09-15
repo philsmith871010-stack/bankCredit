@@ -919,3 +919,15 @@ table.sortable th[aria-sort]::after{content:"▾";margin-left:4px;font-size:9px}
 .uni-cols-menu .uni-cols-h{font-weight:600;font-size:12.5px;margin-bottom:2px}.uni-cols-menu .uni-cols-h .small{font-weight:400;margin-left:6px}
 .uni-cols-menu label{display:flex;align-items:center;gap:6px;white-space:nowrap;cursor:pointer}
 .uni-cols-menu .uni-cols-f{margin-top:4px;text-align:right}
+
+/* the profile's written summary: the data's own paragraph, then the written one with its date */
+.brief{padding:16px 20px;display:flex;flex-direction:column;gap:10px}
+.brief-l1{font-size:14px;line-height:1.55;color:var(--text)}
+.brief-l1 .br-standing{font-weight:600}
+.brief-l1 .br-news{color:var(--muted)}
+.brief-bg,.brief-syn{margin:0;font-size:14.5px;line-height:1.55}
+.brief-bg{color:var(--muted)}
+.brief-lbl{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin-right:6px}
+.brief-meta{font-size:12px}
+.brief-stale{color:#b35900;font-weight:600}
+.btn-back{text-decoration:none}

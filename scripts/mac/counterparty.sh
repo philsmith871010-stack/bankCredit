@@ -56,6 +56,15 @@ if command -v claude >/dev/null 2>&1; then
   echo "-- judging the headlines"
   claude -p "/counterparty-news" --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --max-turns 40 || echo "claude news step failed"
 fi
+# 2c. the written summary on each profile: only the names whose inputs have moved since it was
+# written, or whose summary is over ninety days old, so most nights this is nothing at all
+if command -v claude >/dev/null 2>&1; then
+  if python -m bankcredit.cli summaries due | head -1 | grep -qv "^0 of"; then
+    echo "-- writing the summaries that are owed"
+    claude -p "/counterparty-summary" --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --max-turns 60 || echo "claude summary step failed"
+    python -m bankcredit.cli summaries check || echo "!! a summary failed its check; see above"
+  fi
+fi
 # 3. load any answers and push the data; the GitHub pipeline rebuilds the site on push
 python -m bankcredit.cli review ingest || true
 python -m bankcredit.cli learn > /dev/null 2>&1 || true
