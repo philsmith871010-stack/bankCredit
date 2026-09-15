@@ -85,18 +85,28 @@ def fmt(v, dp=1, suffix="") -> str:
     return f'<span class="mono">{v:,.{dp}f}{suffix}</span>'
 
 
-def spark(series: list[float], w=92, h=28, color=NAVY) -> str:
+def spark(series: list[float], w=92, h=28, color=NAVY, req: float | None = None) -> str:
+    """A requirement is drawn as a dashed line only when it is near: within the data's own spread
+    below it, or within 45 percent of the level. A UK bank's 12.5% requirement under a 14% CET1
+    ratio is the point; the 4.5% Pillar 1 floor nine points down says nothing but that the line
+    is far above it, and flattens the line saying so."""
     s = [v for v in series if v is not None]
     if len(s) < 2:
         return f'<svg width="{w}" height="{h}" aria-hidden="true"></svg>'
     if len(s) > 48:                                   # a year of prices needs no more points than pixels
         step = len(s) / 48
         s = [s[int(i * step)] for i in range(48)] + [s[-1]]
-    lo, hi = min(s), max(s); rng = (hi - lo) or 1; pad = 3
-    pts = [(pad + i * (w - 2 * pad) / (len(s) - 1), h - pad - (v - lo) / rng * (h - 2 * pad)) for i, v in enumerate(s)]
+    lo, hi = min(s), max(s)
+    near = req is not None and (lo - max((hi - lo) or 1, 0.45 * abs(hi))) <= req <= hi
+    if near:
+        lo = min(lo, req)
+    rng = (hi - lo) or 1; pad = 3
+    y = lambda v: h - pad - (v - lo) / rng * (h - 2 * pad)
+    pts = [(pad + i * (w - 2 * pad) / (len(s) - 1), y(v)) for i, v in enumerate(s)]
     path = "M" + "L".join(f"{x:.0f} {y:.0f}" for x, y in pts)
     ex, ey = pts[-1]
-    return (f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" aria-hidden="true">'
+    line = f'<line x1="0" x2="{w}" y1="{y(req):.0f}" y2="{y(req):.0f}" stroke="{RED}" stroke-width="1" stroke-dasharray="3 3"/>' if near else ""
+    return (f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" aria-hidden="true">{line}'
             f'<path d="{path}" fill="none" stroke="{color}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>'
             f'<circle cx="{ex:.0f}" cy="{ey:.0f}" r="2.6" fill="{ORANGE}"/></svg>')
 

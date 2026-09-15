@@ -89,7 +89,55 @@ def _grade_bucket(r) -> str:
 
 
 
-def tile(metric, label, unit, dp, series, peer_median=None):
+# The regulator's floor for each ratio, where it is the same for everyone. A bank's own capital
+# requirement is in its series and is used ahead of these when it has been collected.
+FLOORS = {"lcr": (100.0, "minimum"), "nsfr": (100.0, "minimum")}
+
+
+def requirement(metric: str, series: dict, country: str | None) -> tuple[float | None, str]:
+    """What the figure is measured against first: the bank's own requirement where it is published,
+    the regulator's floor where it is the same for everyone, nothing for a currency amount."""
+    if metric == "cet1_ratio":
+        # only a CET1 requirement will do: the overall requirement is a total-capital figure, and a
+        # CET1 ratio measured against it reads as a breach on nearly every bank
+        pts = series.get("cet1_requirement")
+        if pts and pts[-1].get("v") is not None:
+            return float(pts[-1]["v"]), "CET1 requirement"
+        return 4.5, "Pillar 1 minimum"
+    if metric == "total_capital_ratio":
+        pts = series.get("overall_capital_requirement")
+        if pts and pts[-1].get("v") is not None:
+            return float(pts[-1]["v"]), "overall requirement"
+        return 8.0, "Pillar 1 minimum"
+    if metric == "leverage_ratio":
+        return (3.25, "UK minimum") if country == "GB" else (3.0, "Basel minimum")
+    if metric in FLOORS:
+        return FLOORS[metric]
+    return None, ""
+
+
+def ratio_verdict(v, pr: dict | None, req: float | None, req_label: str = "requirement") -> tuple[str, str]:
+    """The figure judged in words: against the requirement first, then where it sits among peers.
+    Returns (class, text); the class is good, warn, bad or na and the text always says which."""
+    if v is None:
+        return "na", "Not published"
+    if req is not None and v < req:
+        return "bad", f"Below the {req:g}% {req_label}"
+    if not pr or pr.get("p50") is None:
+        return ("good", f"Above the {req:g}% {req_label}") if req is not None else ("na", "No peer figures")
+    if v >= pr["p75"]:
+        return "good", "Top quarter of peers"
+    if v >= pr["p50"]:
+        return "good", "Above peer median"
+    if v >= pr["p25"]:
+        return "warn", "Below peer median"
+    return "warn", "Bottom quarter of peers"
+
+
+def tile(metric, label, unit, dp, series, peer_ratios=None, country=None):
+    """One headline figure: the value, its move since the last period, a verdict in words against
+    the requirement and then the peer group, the recent path with the requirement drawn on it, and
+    the peer figures it was judged against. A currency amount gets the value and the move only."""
     pts = series.get(metric, [])
     mark = c.info(GLOSS[metric]) if metric in GLOSS else ""
     if not pts:
@@ -109,9 +157,25 @@ def tile(metric, label, unit, dp, series, peer_median=None):
     unverified = (c.chip("unverified", "warn") + c.info("unverified")) if (last.get("conf") or 1) < 0.9 and str(last.get("method", "")).startswith("pdf") else ""
     if last.get("basis") == "group":
         unverified += c.chip("group figure", "navy")
+    move = f'{c.chg(delta, 1, "%" if unit == "m" else "")} vs {c.esc(qlabel(prev["d"]))}' if delta is not None else "<span class=na>first period</span>"
+    verdict = peers = ""
+    req = None
+    if unit == "%":
+        req, req_label = requirement(metric, series, country)
+        pr = (peer_ratios or {}).get(metric)
+        cls, text = ratio_verdict(v, pr, req, req_label)
+        room = ""
+        if req is not None and v is not None:
+            gap = v - req
+            room = (f'<span class="tile-room {"good" if gap >= 0 else "bad"}">{"+" if gap >= 0 else "−"}{abs(gap):.{dpv}f} '
+                    f'{"over" if gap >= 0 else "under"} the {req:g}% {c.esc(req_label)}</span>')
+        verdict = f'<div class="tile-vd {cls}"><i></i>{c.esc(text)}</div>{room}'
+        if pr and pr.get("p50") is not None:
+            peers = (f'<div class="tile-peers">Peers: median {pr["p50"]:.{dpv}f}{u} · middle half {pr["p25"]:.{dpv}f}–{pr["p75"]:.{dpv}f}{u}'
+                     f'{" · " + str(pr["n"]) + " names" if pr.get("n") else ""}</div>')
     return f'''<div class="tile"><div class="tile-head"><span class="tile-label">{label}{mark}</span><span class="tile-flags">{unverified}<span class="src-dot" title="Source: {c.esc(src)}">{c.ico("doc", 13, "#b8c2cc")}</span></span></div>
-<div class="tile-body"><div><span class="mono big">{shown:,.{dpv}f}</span><span class="mono unit">{u}</span></div>{c.spark(vals)}</div>
-<div class="tile-foot"><span>{c.chg(delta, 1, "%" if unit == "m" else "") if delta is not None else "<span class=na>first period</span>"}{" vs prior" if delta is not None else ""}</span><span class="mono">{c.esc(last["d"])}</span></div></div>'''
+<div class="tile-body"><div><span class="mono big">{shown:,.{dpv}f}</span><span class="mono unit">{u}</span></div>{c.spark(vals, req=req)}</div>
+{verdict}<div class="tile-foot"><span>{move}</span><span class="mono">{c.esc(last["d"])}</span></div>{peers}</div>'''
 
 
 def debug_panel(b) -> str:
@@ -232,7 +296,7 @@ def pillar_note(k: str, cell) -> str:
 
 def page_bank(b, generated):
     series = b["series"]
-    tiles = "".join(tile(m, l, u, dp, series) for m, l, u, dp in TILE_METRICS)
+    tiles = "".join(tile(m, l, u, dp, series, b.get("peer_ratios"), b.get("country")) for m, l, u, dp in TILE_METRICS)
     peer = b.get("peer") or {}
     score = b["score"]
     score_html = f'<span class="mono huge">{score:.0f}</span>' if score is not None else '<span class="mono huge muted">—</span>'
@@ -283,11 +347,11 @@ def page_bank(b, generated):
             pts = series.get(metric, [])
             if len(pts) < 2:
                 continue
-            req = None; req_label = "Requirement"
-            if metric == "cet1_ratio":
-                r = series.get("cet1_requirement") or series.get("overall_capital_requirement")
-                if r:
-                    req = r[-1]["v"]; req_label = "CET1 requirement" if series.get("cet1_requirement") else "Overall requirement"
+            # the same floor the headline tile judges against: a bank's own requirement where it is
+            # published, and never the overall requirement against a CET1 ratio
+            req, req_label = (requirement(metric, series, b.get("country")) if metric in ("cet1_ratio", "total_capital_ratio") else (None, "Requirement"))
+            if req_label == "Pillar 1 minimum":
+                req = None                            # nine points below the data, it says nothing on a chart
             shown = pts if len(pts) <= 48 else pts[-48:]                       # up to twelve years of quarters
             u = unit
             if u == "m":
@@ -967,10 +1031,7 @@ def home_panels(board, status, generated) -> dict[str, str]:
     page's 441 KB: every rating of every name, and every event, parsed into the document before
     anything was drawn. They are written here instead and fetched on demand.
     """
-    out = {"analysis": compare_content(),
-           # the list-and-card view of the approved names, an alternative to the policy tab while
-           # the shape is decided; its script comes with it on first click, like analysis
-           "approved": APPROVED_MARKUP}
+    out = {"analysis": compare_content()}
     # a tab that is held back publishes nothing: the fragment is not written either, so the grid
     # and the feed are not sitting at a guessable URL for anyone who looks
     if "ratings" not in HOME_TABS_HIDDEN:
@@ -993,8 +1054,6 @@ def page_home(board, status, generated):
                + '<div class="card tabs-card" style="margin-top:16px" id="browse">'
                  '<div class="tabs" role="tablist">'
                  '<button class="tab active" data-tab="policy">Your counterparties<span class="tab-n" id="tn-policy"></span></button>'
-                 # the same names as a list and a card, offered beside the policy tab as an alternative
-                 '<button class="tab" data-tab="approved">Approved list<span class="tab-n">alternative view</span></button>'
                  '<button class="tab" data-tab="likeforlike">Like-for-like<span class="tab-n" id="tn-ll"></span></button>'
                  '<button class="tab" data-tab="universe">Every covered name</button>'
                  + ('<button class="tab" data-tab="ratings">Ratings</button>' if "ratings" not in HOME_TABS_HIDDEN else '')
@@ -1008,8 +1067,6 @@ def page_home(board, status, generated):
                  '<button class="filter" id="pol-clear">Clear all</button>'
                  # for showing the thing to somebody: puts the example list back as it was
                  '<button class="filter" id="pol-demo">Load the example portfolio</button></div></section>'
-                 f'<section class="panel" data-panel="approved" data-src="data/panels/approved.html?v={c.stamp(generated)}"'
-                 f' data-js="assets/approved.js?v={c.stamp(generated)}"></section>'
                  '<section class="panel" data-panel="likeforlike"><div id="pol-ll"></div></section>'
                  f'<section class="panel" data-panel="universe">{UNIVERSE_PANEL}</section>'
                  + (f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={c.stamp(generated)}"></section>' if "ratings" not in HOME_TABS_HIDDEN else '')
@@ -1252,140 +1309,6 @@ def write_detail(limit: int = 40) -> int:
     return n
 
 
-# ---- the approved list -------------------------------------------------------------------------
-# A council's approved names down the left, one card at a time on the right. An alternative to
-# the home page's policy tab while the shape is decided: the same list, read from the same place
-# (counterparty.policy) and stored alongside it, drawn from its own slim files under data/approved.
-APPROVED_MARKUP = """<div class="ap">
-<div class="app" id="app">
-  <aside class="side" aria-label="Approved counterparties">
-    <header class="side-head">
-      <h1>Approved list</h1>
-      <div class="sub" id="count">Loading&hellip;</div>
-    </header>
-    <div class="asearch">
-      <div class="box">
-        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <input id="q" type="search" placeholder="Search, or add a counterparty" autocomplete="off" aria-label="Search your list or add a counterparty">
-      </div>
-    </div>
-    <div class="tools">
-      <label for="sort" class="visually-hidden">Sort</label>
-      <select id="sort">
-        <option value="mine">My order</option>
-        <option value="attention">Attention first</option>
-        <option value="score">Score, high to low</option>
-        <option value="name">Name</option>
-      </select>
-      <label style="display:inline-flex;gap:5px;align-items:center;cursor:pointer"><input type="checkbox" id="group" style="margin:0"> Grouped</label>
-      <span class="spacer"></span>
-      <button id="cmp" type="button" title="Tick two or more names to see them side by side" aria-pressed="false">Compare</button>
-      <button id="share" type="button" title="Copy a link that carries this list">Share</button>
-    </div>
-    <nav class="list" id="list" role="listbox" aria-label="Counterparties"></nav>
-    <footer class="side-foot" id="foot"></footer>
-  </aside>
-  <main class="detail" id="detail" tabindex="-1"></main>
-</div>
-</div>"""
-
-APPROVED_KEEP = ("id", "name", "short", "country", "type", "region", "group", "peer_group", "score",
-                 "public_score", "band", "coverage", "unscored", "not_published", "overlay", "percentile",
-                 "peer", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "basis", "asof", "age_days",
-                 "inherited", "ratings", "rating_composite", "rating_grade", "unrated", "market_public",
-                 "price_currency")
-APPROVED_LIST = ("id", "name", "short", "country", "type", "region", "peer_group", "score", "band", "coverage",
-                 "unscored", "rating_composite", "asof", "age_days", "delta", "flags", "unrated")
-APPROVED_TREND = ("cet1_ratio", "leverage_ratio", "lcr", "nsfr")
-
-
-def approved_card(b: dict, today: date) -> dict:
-    """One bank's card: the profile's file cut to what the card draws, plus the three things it
-    works out for itself - the score's move since the start of the month, the four ratios' recent
-    path, and the flags the list column shows (a rating action or a flagged headline this month,
-    a score move of a point or more, figures over six months old)."""
-    g = lambda *ks: _dig(b, *ks)
-    snaps = g("history", "snapshots") or []
-    month_start = today.replace(day=1).isoformat()
-    cut30 = (today - timedelta(days=30)).isoformat()
-    base = None
-    for s in snaps:
-        if s[0] <= month_start:
-            base = s
-    if base is None and snaps:
-        base = snaps[0]
-    delta = round(b["score"] - base[1], 1) if (base and b.get("score") is not None and base[1] is not None) else None
-    moves = (g("rating_history", "moves") or [])[:6]
-    events = sorted((e for e in (b.get("events") or []) if e.get("type") in ("rating", "news")),
-                    key=lambda e: e["date"], reverse=True)[:8]
-    flags = []
-    if any(m["date"] >= cut30 for m in moves):
-        flags.append("rating")
-    if any(e["date"] >= cut30 and e.get("severity") in ("warn", "bad") for e in events):
-        flags.append("news")
-    if delta is not None and abs(delta) >= 1.0:
-        flags.append("score")
-    if (b.get("age_days") or 0) > 180:
-        flags.append("stale")
-    if b.get("unscored"):
-        flags.append("unscored")
-    out = {k: b.get(k) for k in APPROVED_KEEP}
-    sov = b.get("sovereign")
-    out["sovereign"] = {k: sov.get(k) for k in ("country", "name", "composite", "grade")} if sov else None
-    out["pillars"] = g("score_detail", "pillars")
-    out["inputs"] = g("score_detail", "inputs")
-    out["peer_ratios"] = {k: v for k, v in (b.get("peer_ratios") or {}).items() if k in APPROVED_TREND}
-    out["snapshots"] = snaps[-90:]
-    out["quarters"] = (g("history", "score") or [])[-12:]
-    out["moves"] = moves
-    out["events"] = [{k: e.get(k) for k in ("event_id", "date", "type", "title", "source", "url", "severity")} for e in events]
-    out["spark"] = [p["c"] for p in (b.get("prices") or [])[-60:] if p.get("c") is not None]
-    trend = {}
-    for k in APPROVED_TREND:
-        seen = {}
-        for x in (b.get("series") or {}).get(k) or []:
-            if x.get("v") is not None:
-                seen[x["d"]] = x["v"]           # one reading per period, the last one written
-        trend[k] = [[d, seen[d]] for d in sorted(seen)][-12:]
-    out["trend"] = trend
-    out["delta"], out["delta_since"], out["flags"] = delta, (base[0] if base else None), flags
-    return out
-
-
-def _dig(d, *keys):
-    for k in keys:
-        d = d.get(k) if isinstance(d, dict) else None
-    return d
-
-
-def write_approved(generated: str) -> int:
-    src, dst = store.DATA / "json" / "banks", OUT / "data" / "approved"
-    dst.mkdir(parents=True, exist_ok=True)
-    today = date.fromisoformat(generated[:10])
-    rows = []
-    for f in sorted(src.glob("*.json")):
-        try:
-            b = json.loads(f.read_text())
-        except Exception:
-            continue
-        card = approved_card(b, today)
-        (dst / f.name).write_text(json.dumps(card, separators=(",", ":")))
-        rows.append({k: card.get(k) for k in APPROVED_LIST})
-    (dst / "list.json").write_text(json.dumps({"generated": generated, "rows": rows}, separators=(",", ":")))
-    return len(rows)
-
-
-def page_approved(generated: str) -> str:
-    """Its own stylesheet and script, loaded after the site's, and nothing shared but the header."""
-    return (c.shell("Approved list", APPROVED_MARKUP, "approved", "../", generated,
-                    preload=("data/approved/list.json",))
-            .replace("</head>", f'<link id="approved-css" rel="stylesheet" href="../assets/approved.css?v={c.stamp(generated)}"></head>')
-            .replace(f'<script src="../assets/app.js?v={c.stamp(generated)}"></script>',
-                     f'<script src="../assets/app.js?v={c.stamp(generated)}"></script>'
-                     f'<script src="../assets/approved.js?v={c.stamp(generated)}"></script>')
-            .replace("<body>", '<body data-root="../">'))
-
-
 def build():
     board = load("board"); status = load("status"); generated = board["generated"]
     if OUT.exists():
@@ -1419,9 +1342,6 @@ def build():
     (OUT / "data").mkdir(exist_ok=True)
     shutil.copy(store.DATA / "json" / "policy.json", OUT / "data" / "policy.json")
     write_detail()
-    (OUT / "approved").mkdir(exist_ok=True)
-    _write(OUT / "approved" / "index.html", page_approved(generated))
-    write_approved(generated)
     (OUT / "brief").mkdir(exist_ok=True)
     _write(OUT / "brief" / "index.html", page_brief_redirect(generated))
     _write(OUT / "status" / "index.html", page_gone("Status", generated, "../admin/index.html#status", "admin"))
