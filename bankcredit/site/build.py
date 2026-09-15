@@ -967,7 +967,10 @@ def home_panels(board, status, generated) -> dict[str, str]:
     page's 441 KB: every rating of every name, and every event, parsed into the document before
     anything was drawn. They are written here instead and fetched on demand.
     """
-    out = {"analysis": compare_content()}
+    out = {"analysis": compare_content(),
+           # the list-and-card view of the approved names, an alternative to the policy tab while
+           # the shape is decided; its script comes with it on first click, like analysis
+           "approved": APPROVED_MARKUP}
     # a tab that is held back publishes nothing: the fragment is not written either, so the grid
     # and the feed are not sitting at a guessable URL for anyone who looks
     if "ratings" not in HOME_TABS_HIDDEN:
@@ -990,14 +993,14 @@ def page_home(board, status, generated):
                + '<div class="card tabs-card" style="margin-top:16px" id="browse">'
                  '<div class="tabs" role="tablist">'
                  '<button class="tab active" data-tab="policy">Your counterparties<span class="tab-n" id="tn-policy"></span></button>'
+                 # the same names as a list and a card, offered beside the policy tab as an alternative
+                 '<button class="tab" data-tab="approved">Approved list<span class="tab-n">alternative view</span></button>'
                  '<button class="tab" data-tab="likeforlike">Like-for-like<span class="tab-n" id="tn-ll"></span></button>'
                  '<button class="tab" data-tab="universe">Every covered name</button>'
                  + ('<button class="tab" data-tab="ratings">Ratings</button>' if "ratings" not in HOME_TABS_HIDDEN else '')
                  + ('<button class="tab" data-tab="events">Events</button>' if "events" not in HOME_TABS_HIDDEN else '')
                  + '<button class="tab" data-tab="analysis">Analysis</button>'
-                 '<button class="tab" data-tab="weights">Weightings</button>'
-                 # the list-and-card view of the same names, while the shape is decided
-                 '<a class="tab tab-out" href="approved/index.html">Approved list<span class="tab-n">preview</span></a></div>'
+                 '<button class="tab" data-tab="weights">Weightings</button></div>'
                  '<section class="panel active" data-panel="policy">'
                  '<div id="policy-body"><div class="sk-cards" aria-hidden="true">'
                  + '<span class="sk"></span>' * 4 + '</div></div>'
@@ -1005,6 +1008,8 @@ def page_home(board, status, generated):
                  '<button class="filter" id="pol-clear">Clear all</button>'
                  # for showing the thing to somebody: puts the example list back as it was
                  '<button class="filter" id="pol-demo">Load the example portfolio</button></div></section>'
+                 f'<section class="panel" data-panel="approved" data-src="data/panels/approved.html?v={c.stamp(generated)}"'
+                 f' data-js="assets/approved.js?v={c.stamp(generated)}"></section>'
                  '<section class="panel" data-panel="likeforlike"><div id="pol-ll"></div></section>'
                  f'<section class="panel" data-panel="universe">{UNIVERSE_PANEL}</section>'
                  + (f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={c.stamp(generated)}"></section>' if "ratings" not in HOME_TABS_HIDDEN else '')
@@ -1374,7 +1379,7 @@ def page_approved(generated: str) -> str:
     """Its own stylesheet and script, loaded after the site's, and nothing shared but the header."""
     return (c.shell("Approved list", APPROVED_MARKUP, "approved", "../", generated,
                     preload=("data/approved/list.json",))
-            .replace("</head>", f'<link rel="stylesheet" href="../assets/approved.css?v={c.stamp(generated)}"></head>')
+            .replace("</head>", f'<link id="approved-css" rel="stylesheet" href="../assets/approved.css?v={c.stamp(generated)}"></head>')
             .replace(f'<script src="../assets/app.js?v={c.stamp(generated)}"></script>',
                      f'<script src="../assets/app.js?v={c.stamp(generated)}"></script>'
                      f'<script src="../assets/approved.js?v={c.stamp(generated)}"></script>')

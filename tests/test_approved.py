@@ -80,7 +80,10 @@ def test_the_page_is_built_with_its_own_assets_and_a_way_in(tmp_path, monkeypatc
         assert anchor in html
     home = build.page_home({"generated": "2026-09-15T05:00:00Z", "rows": [], "benchmarks": []},
                            {"runs": [], "documents": []}, "2026-09-15T05:00:00Z")
-    assert 'href="approved/index.html"' in home and "tab-out" in home, "the link sits in the tab strip"
+    assert 'data-tab="approved"' in home and "alternative view" in home, "a tab, named as the alternative it is"
+    assert 'data-panel="approved"' in home and "assets/approved.js" in home, "its script comes with the panel on first click"
+    panels = build.home_panels({"generated": "2026-09-15T05:00:00Z", "rows": [], "benchmarks": []}, {"runs": [], "documents": []}, "2026-09-15T05:00:00Z")
+    assert 'id="list"' in panels["approved"], "the panel fragment is the view's markup"
 
 
 def test_the_data_files_are_written_for_every_bank(tmp_path, monkeypatch):
