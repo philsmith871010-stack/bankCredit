@@ -31,8 +31,15 @@ rendered as dated sentences, tested like everything else:
 Each summary stores a fingerprint of its inputs: latest ratings and outlooks, band, the figure
 date, the date of the last flagged event. The nightly Mac job (`scripts/mac/counterparty.sh`,
 which already runs Claude Code under the subscription and can push) rewrites a summary only
-when the fingerprint has moved or the text is older than 90 days. On a normal night that is
-zero to three names; the first pass over 152 is an hour or two, once. No API key, no new service.
+when the fingerprint has moved, the text is older than 90 days, or the text quotes a figure
+today's paragraph no longer carries (the check fails). On a normal night that is zero to three
+names; the first pass over 152 is an hour or two, once. No API key, no new service.
+
+The first pass taught one thing: the peer medians move whenever any peer reports, so a synthesis
+that quotes "the 16.4% median" is owed a rewrite the next morning. The skill now says the
+medians in words only, and cites at most the newest headline by date. A summary that fails the
+check is kept off the profile until it is rewritten; the reader sees the dated paragraph and a
+line saying the written summary is being redone.
 
 ## Honesty
 

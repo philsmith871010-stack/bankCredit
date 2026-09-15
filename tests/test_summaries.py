@@ -98,6 +98,9 @@ def test_a_summary_is_owed_when_new_moved_or_old(tmp_path, monkeypatch):
     assert S.why_due(S.load("tsb"), bank(), TODAY) is None, "nothing has moved, it stands"
     assert S.why_due(S.load("tsb"), bank(band="C"), TODAY) == "band moved from B to C"
     assert S.why_due(S.load("tsb"), bank(), date(2027, 1, 1)) == "written 107 days ago"
+    quoted = bank(peer_ratios={"cet1_ratio": {"p25": 13.5, "p50": 13.7, "p75": 14.2, "n": 16}, "lcr": {"p25": 140, "p50": 160, "p75": 180, "n": 16}})
+    assert S.why_due(S.load("tsb"), quoted, TODAY) == "no longer holds: figures not in the paragraph it was written from: 13.8", \
+        "the fingerprint is unchanged, but the median it quotes has moved"
     items = S.due({"tsb": bank(band="C"), "other": bank(id="other")}, TODAY)
     assert [i["id"] for i in items] == ["tsb", "other"]
     assert items[0]["previous"] == "TSB is a UK retail bank owned by Sabadell." and items[0]["brief"].startswith("TSB is a bank in the UK")
@@ -127,3 +130,6 @@ def test_the_profile_shows_both_layers_and_says_what_moved(tmp_path, monkeypatch
     assert "brief-stale" not in html
     html = build.summary_block(bank(band="C"), "2026-09-16T05:00:00Z")
     assert "Since then: band moved from B to C. This summary predates that." in html
+    quoted = bank(peer_ratios={"cet1_ratio": {"p25": 13.5, "p50": 13.7, "p75": 14.2, "n": 16}, "lcr": {"p25": 140, "p50": 160, "p75": 180, "n": 16}})
+    html = build.summary_block(quoted, "2026-09-16T05:00:00Z")
+    assert "owned by Sabadell" not in html and "rests on figures that have since moved" in html, "a stale figure is never shown as current"

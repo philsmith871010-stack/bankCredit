@@ -28,7 +28,7 @@ For each entry, write `data/review/summaries/<id>.json`:
 ```json
 {"id": "coventry-bs", "written": "2026-09-16",
  "background": "Coventry Building Society is a UK mutual funded by retail savings and lending on residential property, the second-largest building society after Nationwide.",
- "synthesis": "The society scores 81, band A, with capital in the top quarter of UK building societies at a 19.6% CET1 ratio. Leverage of 4.7% is the weak spot, in the bottom quarter of the group, and both CET1 and LCR have come down over four periods. Fitch A+ and Moody's A3, both stable, with nothing flagged in the last 90 days.",
+ "synthesis": "Fitch rates the society A+ after its upgrade on 12 May 2026 and Moody's A3, both stable. Capital is strong on the headline measure, with CET1 of 19.6% in the top quarter of UK building societies, but leverage of 4.7% is in the bottom quarter, which is the one figure to keep an eye on. Liquidity is comfortable, with LCR of 233% and NSFR of 147% both above their medians. Since 31 Mar 2025 CET1 has fallen 1.7 points, leverage 0.6 points and LCR 21 points. Nothing has been flagged in the last 90 days.",
  "inputs": { ...copy the entry's inputs exactly... }}
 ```
 
@@ -45,6 +45,15 @@ which way, what the agencies say. Written for a professional; no hedging, no adv
 The one rule that matters: **every figure in the synthesis comes from `brief`**, as it is
 written there, with the same dates. Nothing from memory, nothing from anywhere else. A number
 the check cannot find in the paragraph fails the whole summary and it is not published.
+
+Three things the check allows today but will fail tomorrow, so leave them out:
+
+- **The peer medians.** Say "above the peer median", never "above the 16.4% median": the
+  median moves whenever any peer reports, and a quoted one is owed a rewrite the next morning.
+- **Dates of older headlines.** The paragraph shows only the newest three flagged items, so
+  cite the newest by date at most and the rest in words.
+- **The site's score or band.** They depend on weightings the reader may have changed. The
+  check refuses them outright.
 
 `written` is today's date. `inputs` is the entry's `inputs`, unchanged - it is how the site
 knows, later, what has moved since you wrote this.

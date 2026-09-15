@@ -318,6 +318,10 @@ def summary_block(b: dict, generated: str) -> str:
     s = S.load(b["id"])
     if not s:
         l2 = '<div class="brief-meta muted">No written summary yet; the paragraph above is drawn from the data on every build.</div>'
+    elif S.check(s, S.brief_text(br)):
+        # it quotes a figure the paragraph no longer carries; it is owed a rewrite and is not shown as current
+        l2 = (f'<div class="brief-meta muted">The written summary of {S.fdate(s["written"])} rests on figures that have since moved '
+              'and is being rewritten; the paragraph above is drawn from the data on every build.</div>')
     else:
         moved = S.changes_since(s.get("inputs") or {}, br["fingerprint"])
         meta = f'Written {S.fdate(s["written"])}' + (f' from figures to {S.fdate((s.get("inputs") or {}).get("asof"))}' if (s.get("inputs") or {}).get("asof") else "") + "."

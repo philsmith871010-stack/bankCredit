@@ -268,7 +268,12 @@ def why_due(s: dict | None, d: dict, today: date) -> str | None:
     if age > MAX_AGE_DAYS:
         return f"written {age} days ago"
     moved = changes_since(s.get("inputs") or {}, fingerprint(d))
-    return ("; ".join(moved)) if moved else None
+    if moved:
+        return "; ".join(moved)
+    # a figure it quotes that today's paragraph no longer carries - a peer median that moved, a
+    # headline that dropped out of the window - means it no longer holds, whatever the fingerprint says
+    faults = check(s, brief_text(brief(d, today)))
+    return ("no longer holds: " + "; ".join(faults)) if faults else None
 
 
 def due(details: dict[str, dict], today: date | None = None) -> list[dict]:
