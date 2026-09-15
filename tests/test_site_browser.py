@@ -541,14 +541,13 @@ def test_the_dialog_carries_the_path_the_composite_took(page, server):
     assert not page.errors, page.errors
 
 
-def test_the_profile_links_to_its_own_rating_history(page, server):
-    """"All ratings" pointed at a page that had been retired, so it landed the reader back on the
-    policy page with no rating history anywhere on the site."""
+def test_the_rating_history_lives_on_the_ratings_tab_and_the_tile_stays_clean(page, server):
+    """The ratings tile used to end in a "Rating history" link. The tile is the summary; the
+    history is one tab away and is not advertised on the tile."""
     who = _with_history()
     visit(page, server, f"banks/{who}.html")
-    href = page.eval_on_selector(".tile-ratings .tile-foot a", "e => e.getAttribute('href')")
-    assert href == "#ratings", href
-    page.eval_on_selector(".tile-ratings .tile-foot a", "e => e.click()")
+    assert page.eval_on_selector_all(".tile-ratings a", "e => e.length") == 0, "no link on the tile"
+    page.eval_on_selector('.tab[data-tab="ratings"]', "e => e.click()")
     page.wait_for_timeout(400)
     assert page.eval_on_selector_all(".panel.active", "e => e.map(x => x.dataset.panel)") == ["ratings"]
     assert page.eval_on_selector_all(".ladder", "e => e.length") == 1

@@ -266,7 +266,7 @@ def ratings_tile(b) -> str:
     grade = b.get("rating_grade")
     comp = f'<span class="band mono" style="background:{grade_colour(grade)};color:{c.on_colour(grade_colour(grade))}">{c.esc(b.get("rating_composite") or "NR")}</span>'
     return (f'<div class="tile tile-ratings"><div class="tile-head"><span class="tile-label">Agency ratings{c.info("rating")}</span><span class="tile-flags">composite{c.info("composite")} {comp} {c.market_glyph(b.get("market") or {})} <span class="small muted">{c.esc((b.get("market") or {}).get("label") or "")}</span></span></div>'
-            f'<div class="rcells">{cells}</div><div class="tile-foot"><span>ESMA European Rating Platform, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span><span><a href="#ratings">Rating history</a></span></div></div>')
+            f'<div class="rcells">{cells}</div><div class="tile-foot"><span>ESMA European Rating Platform, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span></div></div>')
 
 
 
