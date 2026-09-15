@@ -36,22 +36,30 @@ def bank(**over):
     return b
 
 
-def test_the_paragraph_says_standing_peers_ratings_trends_and_news_with_dates():
+def test_the_paragraph_reads_as_plain_english_and_never_quotes_the_sites_score():
     b = S.brief(bank(), TODAY)
-    assert b["standing"] == "TSB is band B with a counterparty score of 66, 40th percentile of 16 UK mid-sized banks, up 1.4 since 31 Mar 2026."
-    assert "CET1 14.0% is above median of the group (median 13.8%)" in b["peers"]
-    assert "LCR 150% is below median of the group (median 160%)" in b["peers"] and "figures to 30 Jun 2026" in b["peers"]
-    assert b["ratings"] == "Composite rating A: Fitch A (stable); last move Fitch upgrade to A on 2 Nov 2025.", "DBRS is not one of the three"
-    assert b["trends"] == "Over the last four periods LCR down 20 points since 30 Mar 2025; CET1 broadly unchanged."
+    assert b["standing"] == "TSB is a bank in the UK, rated A by Fitch, with a stable outlook; the last move was Fitch's upgrade to A on 2 Nov 2025.", "DBRS is not one of the three"
+    assert b["capital"] == "Capital is strong against UK mid-sized banks: CET1 of 14.0% is above the median (median 13.8%); leverage is 5.0%.", "no peer figure for leverage, so it is stated but not judged"
+    assert b["liquidity"] == "Liquidity is on the weak side of UK mid-sized banks: LCR of 150% is below the median (median 160%); NSFR is 130%."
+    assert b["trends"] == "Since 30 Mar 2025, LCR has fallen 20 points, while CET1 has been broadly flat (figures to 30 Jun 2026)."
     assert b["news"] == "Flagged in the last 90 days: 10 Aug 2026, warn: TSB fined over outage."
-    assert "noise" not in S.brief_text(b) and "old" not in S.brief_text(b)
+    text = S.brief_text(b)
+    assert "noise" not in text and "old" not in text
+    assert "score" not in text.lower() and "band" not in text.lower(), "the score and band depend on the reader's weightings"
+
+
+def test_three_agencies_and_mixed_outlooks_read_naturally():
+    b = S.brief(bank(ratings=[{"agency": "fitch", "value": "A+", "outlook": "stable"}, {"agency": "sp", "value": "A", "outlook": "negative"},
+                             {"agency": "moodys", "value": "A2", "outlook": "stable"}], rating_history={"moves": []}), TODAY)
+    assert b["standing"] == "TSB is a bank in the UK, rated A+ by Fitch, A by S&P and A2 by Moody's (Fitch stable, S&P negative, Moody's stable)."
+    b = S.brief(bank(ratings=[{"agency": "fitch", "value": "A+", "outlook": "stable"}, {"agency": "sp", "value": "A", "outlook": "stable"}], rating_history={"moves": []}), TODAY)
+    assert b["standing"] == "TSB is a bank in the UK, rated A+ by Fitch and A by S&P, both with a stable outlook."
 
 
 def test_an_unscored_unrated_name_still_gets_an_honest_paragraph():
-    b = S.brief(bank(score=None, unscored="unrated", ratings=[], rating_composite=None, unrated=True, events=[]), TODAY)
-    assert b["standing"] == "TSB is not scored: unrated."
-    assert b["ratings"] == "No public rating from Fitch, S&P or Moody's."
-    assert b["news"] == "Nothing flagged in the last 90 days."
+    b = S.brief(bank(score=None, unscored="unrated", ratings=[], rating_composite=None, unrated=True, events=[], type="building_society"), TODAY)
+    assert b["standing"] == "TSB is a building society in the UK with no public rating from Fitch, S&P or Moody's."
+    assert b["news"] == "Nothing has been flagged in the last 90 days."
 
 
 def test_the_fingerprint_is_what_a_written_summary_rests_on():
@@ -71,7 +79,7 @@ def test_what_moved_since_is_said_in_words():
 
 def summary(**over):
     s = {"id": "tsb", "written": "2026-09-16", "background": "TSB is a UK retail bank owned by Sabadell.",
-         "synthesis": "TSB scores 66 in band B, 40th percentile of its 16 peers. CET1 of 14.0% is above the median of 13.8% while LCR at 150% is below its group's 160% and down 20 points over four periods. Fitch A stable; one adverse headline in the last 90 days.",
+         "synthesis": "Capital is sound, with CET1 of 14.0% a touch above the peer median of 13.8%, and Fitch rates the bank A with a stable outlook. Liquidity is the weak spot: LCR at 150% sits below the group's 160% and has come down 20 points over four periods. One adverse headline, a fine over an outage, in the last 90 days.",
          "inputs": S.fingerprint(bank())}
     s.update(over)
     return s
@@ -86,17 +94,19 @@ def test_a_summary_is_owed_when_new_moved_or_old(tmp_path, monkeypatch):
     assert S.why_due(S.load("tsb"), bank(), date(2027, 1, 1)) == "written 107 days ago"
     items = S.due({"tsb": bank(band="C"), "other": bank(id="other")}, TODAY)
     assert [i["id"] for i in items] == ["tsb", "other"]
-    assert items[0]["previous"] == "TSB is a UK retail bank owned by Sabadell." and items[0]["brief"].startswith("TSB is band")
+    assert items[0]["previous"] == "TSB is a UK retail bank owned by Sabadell." and items[0]["brief"].startswith("TSB is a bank in the UK")
 
 
 def test_a_figure_the_paragraph_did_not_give_fails_the_check():
     para = S.brief_text(S.brief(bank(), TODAY))
     assert S.check(summary(), para) == []
-    bad = summary(synthesis="TSB scores 66 with a CET1 ratio of 14.0% and total assets of 46bn, up from 41bn.")
+    bad = summary(synthesis="TSB has a CET1 ratio of 14.0% and total assets of 46bn, up from 41bn, which is comfortable for a bank of its size and funding model.")
     assert "figures not in the paragraph it was written from: 41, 46" in S.check(bad, para)
     assert S.check(summary(synthesis="Fine."), para) == ["10 words; 40 to 220 is the range"]
     assert "dated wording: 'recently'" in S.check(summary(background="TSB recently changed hands."), para)
     assert S.check({"id": "tsb"}, para) == ["missing written", "missing background", "missing synthesis", "missing inputs"]
+    scored = S.check(summary(synthesis="TSB scores 66 and sits in band B, which is fine for most treasurers at most tenors, and its capital at 14.0% is above the peer median."), para)
+    assert any("score or band" in f for f in scored), scored
 
 
 def test_the_profile_shows_both_layers_and_says_what_moved(tmp_path, monkeypatch):
@@ -104,7 +114,7 @@ def test_the_profile_shows_both_layers_and_says_what_moved(tmp_path, monkeypatch
     monkeypatch.setattr(S, "SUMMARIES", tmp_path)
     b = bank()
     html = build.summary_block(b, "2026-09-16T05:00:00Z")
-    assert "TSB is band B with a counterparty score of 66" in html and "No written summary yet" in html
+    assert "TSB is a bank in the UK, rated A by Fitch" in html and "No written summary yet" in html
     (tmp_path / "tsb.json").write_text(json.dumps(summary()))
     html = build.summary_block(b, "2026-09-16T05:00:00Z")
     assert "owned by Sabadell" in html and "Written 16 Sep 2026 from figures to 30 Jun 2026." in html
