@@ -294,6 +294,19 @@ def pillar_note(k: str, cell) -> str:
             f"reader's: set it on the Weightings tab.")
 
 
+FLAGGED = ("bad", "warn", "good")
+
+
+def ordered_events(events: list[dict]) -> list[dict]:
+    """The flagged events first - the ones with a severity a treasurer acts on - newest first within
+    each group. A profile's event list is otherwise eight years of rating affirmations and
+    documents with the two downgrades somewhere in the middle."""
+    key = lambda e: str(e.get("date") or "")
+    flagged = sorted((e for e in events if (e.get("severity") or "info") in FLAGGED), key=key, reverse=True)
+    rest = sorted((e for e in events if (e.get("severity") or "info") not in FLAGGED), key=key, reverse=True)
+    return flagged + rest
+
+
 def page_bank(b, generated):
     series = b["series"]
     tiles = "".join(tile(m, l, u, dp, series, b.get("peer_ratios"), b.get("country")) for m, l, u, dp in TILE_METRICS)
@@ -450,7 +463,14 @@ def page_bank(b, generated):
                      f'<div class="muted small">{n} document{"s" if n != 1 else ""} · {len(g["metrics"])} metrics · {min(g["dates"])} to {max(g["dates"])}</div></div>'
                      f'<a class="filter" href="{c.esc(latest)}" target="_blank" rel="noopener">Latest source</a></div>')
     metric_rows = "".join(f'<tr><td>{c.esc(METRICS.get(m, m))}</td><td class="mono">{pts[-1]["v"]:,.2f}</td><td class="mono muted">{pts[-1]["d"]}</td><td class="muted">{c.esc(source_name(pts[-1]["src"]))} <span class="small">· {c.esc(METHOD_NAMES.get(pts[-1]["method"], pts[-1]["method"]))}</span></td><td class="mono muted">{pts[-1]["conf"]:.2f}{" " + c.chip("unverified", "warn") if (pts[-1]["conf"] or 1) < 0.9 and str(pts[-1]["method"]).startswith("pdf") else ""}{" " + c.chip("group figure", "navy") if pts[-1].get("basis") == "group" else ""}</td></tr>' for m, pts in series.items() if pts)
-    events_rows = "".join(f'<div class="event"><span class="mono muted">{c.esc(str(e.get("date"))[:10])}</span><div><div class="b">{c.esc(e.get("title"))}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("severity") or "info"))}</div>' for e in b["events"]) or '<div class="empty">No events collected yet. Rating actions and disclosures will appear here once the events pipeline runs.</div>'
+    ordered = ordered_events(b["events"])
+    n_flagged = sum(1 for e in ordered if (e.get("severity") or "info") in FLAGGED)
+    def event_row(e):
+        return f'<div class="event"><span class="mono muted">{c.esc(str(e.get("date"))[:10])}</span><div><div class="b">{c.esc(e.get("title"))}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("severity") or "info"))}</div>'
+    events_rows = "".join(event_row(e) for e in ordered[:n_flagged])
+    if n_flagged and n_flagged < len(ordered):
+        events_rows += f'<div class="ev-divider">{n_flagged} flagged above · {len(ordered) - n_flagged} more, newest first</div>'
+    events_rows += "".join(event_row(e) for e in ordered[n_flagged:]) or '<div class="empty">No events collected yet. Rating actions and disclosures will appear here once the events pipeline runs.</div>'
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
 <div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {sovereign_pill(b)}{c.info("sovereign")}{" · " + c.chip("LEI " + c.esc(b["lei"])) + c.info("lei") if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
 <div class="actions"><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button></div></div>
@@ -466,9 +486,9 @@ def page_bank(b, generated):
 <section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.{" The grey band on a ratio is where this bank" + chr(8217) + "s peer group stands today, quartile to quartile, with the median dashed — not a peer history." if b.get("peer_ratios") else ""}</div>' if n_charts else ''}{f'<div class="sm-flow">{"".join(charts)}</div>' if charts else '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
 <section class="panel" data-panel="ratings">{ratings_html}</section>
 <section class="panel" data-panel="market">{market_html}</section>
-<section class="panel" data-panel="events">{f'<div class="sm-intro small muted">Every event held for this name, newest first: rating actions, Pillar 3 documents and filtered headlines. Severity is rules-based &mdash; read the source.</div>' if b["events"] else ''}<div id="pevents">{events_rows}</div>{'<div class="pager" id="pe-more" data-step="25"></div>' if b["events"] else ''}</section>
+<section class="panel" data-panel="events">{f'<div class="sm-intro small muted">Every event held for this name: the flagged ones first, then the rest, each newest first. Rating actions, Pillar 3 documents and filtered headlines; severity is rules-based &mdash; read the source.</div>' if b["events"] else ''}<div id="pevents">{events_rows}</div>{'<div class="pager" id="pe-more" data-step="25"></div>' if b["events"] else ''}</section>
 {debug_panel(b) if b.get("debug") else ''}
-<section class="panel" data-panel="sources"><h3>Documents and feeds</h3>{src_rows or '<div class="empty">Nothing collected yet.</div>'}<h3>Latest value of every metric held</h3><div class="table-wrap"><table class="plain"><thead><tr><th>Metric</th><th>Value</th><th>Reference date</th><th>Source</th><th>Confidence</th></tr></thead><tbody>{metric_rows}</tbody></table></div></section></div>'''
+<section class="panel" data-panel="sources"><h3>Documents and feeds</h3>{src_rows or '<div class="empty">Nothing collected yet.</div>'}<h3>Latest value of every metric held</h3><div class="table-wrap"><table class="plain sortable"><thead><tr><th data-sortable>Metric</th><th data-sortable class="num">Value</th><th data-sortable>Reference date</th><th data-sortable>Source</th><th data-sortable class="num">Confidence</th></tr></thead><tbody>{metric_rows}</tbody></table></div></section></div>'''
     return c.shell(b["name"], content, "home", "../", generated)
 
 

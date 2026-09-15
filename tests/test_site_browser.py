@@ -830,3 +830,51 @@ def test_the_shortlist_shows_every_name_that_clears_the_bar(page, server):
     assert drawn == counted, f"the chip counts {counted} and the table draws {drawn}"
     assert page.query_selector(".ll-pane:not([hidden]) .scrollbox"), "and it scrolls in a window"
     assert not page.errors, page.errors
+
+
+# ---- the policy as a table, and plain tables that sort ---------------------------------------
+def test_the_policy_can_be_read_as_a_table_and_sorted(page, server):
+    """A policy of twenty names is a column of figures to some readers and a set of cards to
+    others; the choice is theirs, kept, and the table sorts on any column."""
+    _seed_many(page, server, 4)
+    page.eval_on_selector("#pol-view-table", "e => e.click()")
+    page.wait_for_timeout(400)
+    assert page.eval_on_selector_all("#pol-table tbody tr.pol-tr", "e => e.length") == 4
+    assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 0
+    heads = page.eval_on_selector_all("#pol-table thead th", "e => e.map(x => x.textContent.trim())")
+    assert heads[:9] == ["Name", "Score", "Rating", "CET1", "Lev", "LCR", "NSFR", "Figures", "News 30d"], heads
+    page.eval_on_selector('#pol-table th[data-k="score"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    scores = page.eval_on_selector_all("#pol-table tbody tr.pol-tr td:nth-child(2)", "e => e.map(x => parseFloat(x.textContent))")
+    assert scores == sorted(scores, reverse=True), scores
+    page.eval_on_selector('#pol-table th[data-k="score"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    scores = page.eval_on_selector_all("#pol-table tbody tr.pol-tr td:nth-child(2)", "e => e.map(x => parseFloat(x.textContent))")
+    assert scores == sorted(scores), scores
+    page.reload(wait_until="networkidle"); page.wait_for_timeout(900)
+    assert page.eval_on_selector_all("#pol-table tbody tr.pol-tr", "e => e.length") == 4, "the choice is kept"
+    page.eval_on_selector("#pol-view-cards", "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 4
+    assert not page.errors, page.errors
+
+
+def test_a_profiles_metrics_table_sorts_on_its_headings(page, server):
+    visit(page, server, "banks/barclays-bank.html")
+    page.eval_on_selector('.tab[data-tab="sources"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    page.eval_on_selector('table.sortable th[data-sortable]:nth-child(2)', "e => e.click()")
+    page.wait_for_timeout(200)
+    vals = page.eval_on_selector_all("table.sortable tbody tr td:nth-child(2)", "e => e.map(x => parseFloat(x.textContent.replace(/,/g,'')))")
+    assert len(vals) > 5 and vals == sorted(vals), vals
+    assert not page.errors, page.errors
+
+
+def test_a_profiles_flagged_events_come_first(page, server):
+    visit(page, server, "banks/barclays-bank.html")
+    page.eval_on_selector('.tab[data-tab="events"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    sev = page.eval_on_selector_all("#pevents .event .chip", "e => e.map(x => x.textContent.trim())")
+    flagged = [s for s in sev if s in ("bad", "warn", "good")]
+    assert sev[:len(flagged)] == flagged, "every flagged event precedes every unflagged one"
+    assert page.eval_on_selector_all("#pevents .ev-divider", "e => e.length") == (1 if flagged and len(flagged) < len(sev) else 0)

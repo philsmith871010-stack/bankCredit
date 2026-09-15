@@ -433,3 +433,19 @@ addEventListener('hashchange',openNamedTab);
   (window.__panelInit=window.__panelInit||[]).push(all);
   addEventListener('load',all);
 })();
+
+// Any table marked sortable sorts on a click of its headings: by number where the cell holds one,
+// by text otherwise, the same click again reversing it. The board has its own richer sort; this
+// is for the plain tables - a profile's metrics, its ratings - that only need the obvious.
+document.addEventListener('click',function(e){
+  var th=e.target.closest('table.sortable th[data-sortable]'); if(!th)return;
+  var table=th.closest('table'), tb=table.tBodies[0]; if(!tb)return;
+  var ci=th.cellIndex, asc=th.getAttribute('aria-sort')!=='ascending';
+  table.querySelectorAll('th[aria-sort]').forEach(function(x){x.removeAttribute('aria-sort')});
+  th.setAttribute('aria-sort',asc?'ascending':'descending');
+  var num=function(t){var v=parseFloat(String(t).replace(/[^0-9.\-]/g,''));return isNaN(v)?null:v};
+  var rows=[].slice.call(tb.rows);
+  rows.sort(function(a,b){var ta=(a.cells[ci]||{}).textContent||'',tbb=(b.cells[ci]||{}).textContent||'',na=num(ta),nb=num(tbb);
+    var d=(na!=null&&nb!=null)?na-nb:ta.localeCompare(tbb,undefined,{numeric:true}); return asc?d:-d});
+  rows.forEach(function(r){tb.appendChild(r)});
+});
