@@ -1274,6 +1274,7 @@ APPROVED_MARKUP = """<div class="ap">
       </select>
       <label style="display:inline-flex;gap:5px;align-items:center;cursor:pointer"><input type="checkbox" id="group" style="margin:0"> Grouped</label>
       <span class="spacer"></span>
+      <button id="cmp" type="button" title="Tick two or more names to see them side by side" aria-pressed="false">Compare</button>
       <button id="share" type="button" title="Copy a link that carries this list">Share</button>
     </div>
     <nav class="list" id="list" role="listbox" aria-label="Counterparties"></nav>
