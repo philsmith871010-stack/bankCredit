@@ -313,7 +313,8 @@ def summary_block(b: dict, generated: str) -> str:
     from .. import summaries as S
     today = date.fromisoformat(generated[:10])
     br = S.brief(b, today)
-    l1 = "".join(f'<span class="br-{k}">{c.esc(br[k])}</span> ' for k in ("standing", "peers", "ratings", "trends", "news") if br.get(k))
+    # the space goes inside the span: the writer collapses whitespace between tags
+    l1 = "".join(f'<span class="br-{k}">{c.esc(br[k])} </span>' for k in ("standing", "peers", "ratings", "trends", "news") if br.get(k))
     s = S.load(b["id"])
     if not s:
         l2 = '<div class="brief-meta muted">No written summary yet; the paragraph above is drawn from the data on every build.</div>'
