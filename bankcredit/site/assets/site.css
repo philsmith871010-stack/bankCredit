@@ -893,3 +893,8 @@ table.uni .sc-n{font-size:14px}
 .tile-vd.good{background:#e6f4ea;color:var(--green)}.tile-vd.warn{background:var(--orange-soft);color:#b35900}.tile-vd.bad{background:#fbe9e7;color:var(--red)}.tile-vd.na{background:var(--line-soft);color:var(--muted)}
 .tile-room{font-size:11px;color:var(--muted);margin-top:-4px}.tile-room.bad{color:var(--red);font-weight:600}
 .tile-peers{font-size:11px;color:var(--muted);line-height:1.35;border-top:1px solid var(--line-soft);padding-top:6px}
+
+/* the universe and the shortlist: a figure date that says when it is old, the month's news by severity */
+td.asof{white-space:nowrap}td.stale{color:#b35900;font-weight:600}
+.n30{display:inline-block;min-width:18px;padding:0 5px;border-radius:999px;font-size:11px;font-weight:600;text-align:center;font-family:var(--mono,ui-monospace,monospace)}
+.n30.bad{background:#fbe9e7;color:var(--red)}.n30.warn{background:var(--orange-soft);color:#b35900}.n30.good{background:#e6f4ea;color:var(--green)}
