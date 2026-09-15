@@ -2,7 +2,7 @@
  "id": "nordea",
  "written": "2026-09-15",
  "background": "Nordea is the largest bank in the Nordic region, headquartered in Helsinki, funded by deposits and covered bonds across Finland, Sweden, Norway and Denmark and lending to households and companies in all four.",
- "synthesis": "Ratings are among the highest in Europe: AA from Fitch after the upgrade on 12 May 2026, AA- from S&P and Aa1 from Moody's, all stable. The ratios are less striking: CET1 of 15.4% is below the EU and Nordic median of 16.4% and leverage of 4.6% is in the bottom quarter against 5.5%. Liquidity is mixed, with LCR of 156% above the 151% median and NSFR of 121% below 124%. None of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days. The ratings rest on the stability of Nordic banking rather than on ratio headroom.",
+ "synthesis": "Ratings are among the highest in Europe: AA from Fitch after the upgrade on 12 May 2026, AA- from S&P and Aa1 from Moody's, all stable. The ratios are less striking: CET1 of 15.4% is below the peer median and leverage of 4.6% is in the bottom quarter against 5.5%. Liquidity is mixed, with LCR of 156% above the peer median and NSFR of 121% below 124%. None of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days. The ratings rest on the stability of Nordic banking rather than on ratio headroom.",
  "inputs": {
   "band": "B",
   "composite": "AA-",

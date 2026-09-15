@@ -2,7 +2,7 @@
  "id": "standard-chartered-hk",
  "written": "2026-09-15",
  "background": "Standard Chartered Bank (Hong Kong) is one of the three note-issuing banks in Hong Kong and the largest subsidiary of Standard Chartered, funded by Hong Kong deposits and lending to corporates, households and across the group's Asian network.",
- "synthesis": "S&P rates the bank A+ and Moody's A1, both stable, with the last move Moody's downgrade to A1 on 2 May 2017, so the grades have been steady for a long time. The ratios are strong across the board against Asian peers: CET1 of 18.0%, leverage of 6.4% and LCR of 181% are all in the top quarter, against medians of 15.7%, 5.8% and 142%, and NSFR of 128% is above the 115% median. CET1 has fallen 1.0 points and NSFR 7 points since 31 Mar 2025, while leverage has risen 0.5 points since 31 Mar 2022. The figures run to 31 Mar 2026. Nothing has been flagged in the last 90 days.",
+ "synthesis": "S&P rates the bank A+ and Moody's A1, both stable, with the last move Moody's downgrade to A1 on 2 May 2017, so the grades have been steady for a long time. The ratios are strong across the board against Asian peers: CET1 of 18.0%, leverage of 6.4% and LCR of 181% are all in the top quarter, against the peer medians, and NSFR of 128% is above the peer median. CET1 has fallen 1.0 points and NSFR 7 points since 31 Mar 2025, while leverage has risen 0.5 points since 31 Mar 2022. The figures run to 31 Mar 2026. Nothing has been flagged in the last 90 days.",
  "inputs": {
   "band": "A",
   "composite": "A+",

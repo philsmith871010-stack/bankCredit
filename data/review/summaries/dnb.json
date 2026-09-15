@@ -2,7 +2,7 @@
  "id": "dnb",
  "written": "2026-09-15",
  "background": "DNB is Norway's largest bank, part-owned by the Norwegian state, funded by Norwegian deposits and covered bonds and lending to Norwegian households and companies, with a large shipping and energy book.",
- "synthesis": "S&P rates the bank AA- and Moody's Aa1, both stable, with Moody's upgrade to Aa1 on 27 Sep 2023 the latest move. Capital is strong against EU and Nordic peers, with CET1 of 17.4% above the 16.4% median and leverage of 6.3% above 5.5%, though CET1 has fallen 1.6 points since 30 Jun 2024. Liquidity is the weak side: LCR of 136% and NSFR of 116% are both in the bottom quarter, against medians of 151% and 124%. Nothing has been flagged in the last 90 days. A highly rated name whose liquidity ratios sit lower than the ratings might suggest.",
+ "synthesis": "S&P rates the bank AA- and Moody's Aa1, both stable, with Moody's upgrade to Aa1 on 27 Sep 2023 the latest move. Capital is strong against EU and Nordic peers, with CET1 of 17.4% above the peer median and leverage of 6.3% above 5.5%, though CET1 has fallen 1.6 points since 30 Jun 2024. Liquidity is the weak side: LCR of 136% and NSFR of 116% are both in the bottom quarter, against the peer medians. Nothing has been flagged in the last 90 days. A highly rated name whose liquidity ratios sit lower than the ratings might suggest.",
  "inputs": {
   "band": "B",
   "composite": "AA-",

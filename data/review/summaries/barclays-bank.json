@@ -2,7 +2,7 @@
  "id": "barclays-bank",
  "written": "2026-09-15",
  "background": "Barclays Bank PLC is the non-ring-fenced bank of Barclays, housing the corporate and investment bank, the international cards business and the private bank, funded by corporate deposits and wholesale markets.",
- "synthesis": "Ratings match the ring-fenced bank at AA- from Fitch, A+ from S&P and A1 from Moody's, all stable. The ratios are thinner: CET1 of 12.6% is in the bottom quarter of UK majors against a 13.8% median, while leverage of 5.5% is in the top quarter. Liquidity is on the weak side, with LCR of 140% below the 144% median and NSFR of 112% in the bottom quarter against 132%. LCR has fallen 14 points since 30 Jun 2025, the rest has been flat. The flagged news is good, with profit up strongly on 28 Jul 2026 on trading revenue, which is also a reminder that earnings here are market-driven.",
+ "synthesis": "Ratings match the ring-fenced bank at AA- from Fitch, A+ from S&P and A1 from Moody's, all stable. The ratios are thinner: CET1 of 12.6% is in the bottom quarter of UK majors against the peer median, while leverage of 5.5% is in the top quarter. Liquidity is on the weak side, with LCR of 140% below the peer median and NSFR of 112% in the bottom quarter against 132%. LCR has fallen 14 points since 30 Jun 2025, the rest has been flat. The flagged news is good, with profit up strongly on 28 Jul 2026 on trading revenue, which is also a reminder that earnings here are market-driven.",
  "inputs": {
   "band": "B",
   "composite": "A+",

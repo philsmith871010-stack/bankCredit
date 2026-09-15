@@ -2,7 +2,7 @@
  "id": "bank-of-ireland",
  "written": "2026-09-15",
  "background": "Bank of Ireland Group is the holding company of Ireland's other dominant retail and business bank, funded by Irish deposits and lending on Irish and UK mortgages and to Irish companies, with a UK consumer finance arm.",
- "synthesis": "Fitch rates the group A- and Moody's A2, both stable; S&P withdrew its rating on 25 Mar 2026, so two of the three agencies now cover it. Capital is mixed against EU and Nordic peers: CET1 of 14.9% is below the 16.4% median, but leverage of 6.8% is in the top quarter. Liquidity is a clear strength, with LCR of 193% and NSFR of 153% both in the top quarter. Leverage has risen 0.5 points since 30 Jun 2024 and the rest has been flat. Everything flagged in the last 90 days is good news on profit, including the first-half result reported on 31 Jul 2026.",
+ "synthesis": "Fitch rates the group A- and Moody's A2, both stable; S&P withdrew its rating on 25 Mar 2026, so two of the three agencies now cover it. Capital is mixed against EU and Nordic peers: CET1 of 14.9% is below the peer median, but leverage of 6.8% is in the top quarter. Liquidity is a clear strength, with LCR of 193% and NSFR of 153% both in the top quarter. Leverage has risen 0.5 points since 30 Jun 2024 and the rest has been flat. Everything flagged in the last 90 days is good news on profit, including the first-half result reported on 31 Jul 2026.",
  "inputs": {
   "band": "B",
   "composite": "A-",

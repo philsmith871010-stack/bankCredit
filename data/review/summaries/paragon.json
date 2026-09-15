@@ -2,7 +2,7 @@
  "id": "paragon",
  "written": "2026-09-15",
  "background": "Paragon Banking Group is a UK specialist lender, funded by retail savings and lending mainly on buy-to-let mortgages to professional landlords, with development finance, motor finance and SME lending alongside.",
- "synthesis": "Fitch rates the group BBB+ and Moody's Baa2 after its upgrade on 29 Jan 2026, both stable. Capital is the weak side against UK mid-sized banks: CET1 of 13.5% is in the bottom quarter against a 13.9% median and leverage of 7.2% is just under the 7.4% median. Liquidity is mixed, with LCR of 146% in the bottom quarter against 172% and NSFR of 135% at the median. Since 31 Mar 2025 CET1 has fallen 0.7 points, LCR 38 points and NSFR 7 points, so headroom has narrowed on every measure, and the figures run to 31 Mar 2026. Nothing has been flagged in the last 90 days.",
+ "synthesis": "Fitch rates the group BBB+ and Moody's Baa2 after its upgrade on 29 Jan 2026, both stable. Capital is the weak side against UK mid-sized banks: CET1 of 13.5% is in the bottom quarter against the peer median and leverage of 7.2% is just under the peer median. Liquidity is mixed, with LCR of 146% in the bottom quarter against 172% and NSFR of 135% at the median. Since 31 Mar 2025 CET1 has fallen 0.7 points, LCR 38 points and NSFR 7 points, so headroom has narrowed on every measure, and the figures run to 31 Mar 2026. Nothing has been flagged in the last 90 days.",
  "inputs": {
   "band": "C",
   "composite": "BBB",

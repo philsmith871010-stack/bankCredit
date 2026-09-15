@@ -2,7 +2,7 @@
  "id": "northern-trust",
  "written": "2026-09-15",
  "background": "Northern Trust Corporation is the holding company of a Chicago-based custodian and wealth manager, earning fees from asset servicing for institutions and from managing money for wealthy families and foundations.",
- "synthesis": "Ratings are AA- from Fitch, A+ from S&P and A2 from Moody's, all stable, with the S&P grade a notch below the bank's. Consolidated capital is mixed against US peers: CET1 of 12.0% is a shade under the 12.1% median and has fallen 0.9 points since 31 Mar 2025, while leverage of 8.5% is in the top quarter against 5.8%. LCR of 107% is in the bottom quarter against 117%. The flagged news is good, with second-quarter profit up on 22 Jul 2026. A conservative fee-earning group with modest LCR headroom for a US bank.",
+ "synthesis": "Ratings are AA- from Fitch, A+ from S&P and A2 from Moody's, all stable, with the S&P grade a notch below the bank's. Consolidated capital is mixed against US peers: CET1 of 12.0% is a shade under the peer median and has fallen 0.9 points since 31 Mar 2025, while leverage of 8.5% is in the top quarter against 5.8%. LCR of 107% is in the bottom quarter against 117%. The flagged news is good, with second-quarter profit up on 22 Jul 2026. A conservative fee-earning group with modest LCR headroom for a US bank.",
  "inputs": {
   "band": "B",
   "composite": "A+",

@@ -2,7 +2,7 @@
  "id": "vanquis",
  "written": "2026-09-15",
  "background": "Vanquis Banking Group is a UK specialist lender to customers underserved by mainstream banks, funded by retail savings and lending through credit cards, vehicle finance under Moneybarn and personal loans.",
- "synthesis": "Fitch is the only one of the three agencies rating the group, at BB- with a positive outlook, after a downgrade to BB- on 7 Aug 2024, so the grade is well below investment grade but the direction has turned. Capital is mixed against UK small banks: CET1 of 15.6% is below the 17.1% median, while leverage of 10.7% is in the top quarter. Liquidity is on the weak side of a group that runs very high liquidity, with LCR of 280% and NSFR of 143% both below their medians. Since 30 Jun 2024 CET1 has fallen 4.2 points, leverage 4.7 points and LCR 806 points, a sharp use of headroom. The one flagged item, on 30 Jul 2026, is higher interim profit.",
+ "synthesis": "Fitch is the only one of the three agencies rating the group, at BB- with a positive outlook, after a downgrade to BB- on 7 Aug 2024, so the grade is well below investment grade but the direction has turned. Capital is mixed against UK small banks: CET1 of 15.6% is below the peer median, while leverage of 10.7% is in the top quarter. Liquidity is on the weak side of a group that runs very high liquidity, with LCR of 280% and NSFR of 143% both below their medians. Since 30 Jun 2024 CET1 has fallen 4.2 points, leverage 4.7 points and LCR 806 points, a sharp use of headroom. The one flagged item, on 30 Jul 2026, is higher interim profit.",
  "inputs": {
   "band": "D",
   "composite": "BB-",

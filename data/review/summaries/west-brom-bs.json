@@ -2,7 +2,7 @@
  "id": "west-brom-bs",
  "written": "2026-09-15",
  "background": "West Bromwich Building Society is a mutual in the West Midlands, funded by retail savings from its branches and lending on residential mortgages, having wound down the commercial property and buy-to-let books that hurt it after the financial crisis.",
- "synthesis": "None of the three agencies rates the society. Capital is mixed against UK building societies: CET1 of 16.4% is below the 17.8% median, while leverage of 6.5% is above the 6.1% median. Liquidity is on the weak side, with LCR of 167% in the bottom quarter against 214% and NSFR of 143% a little under 145%. Every ratio has fallen: CET1 by 1.6 points, leverage by 1.0 points and LCR by 52 points since 30 Sep 2023, and NSFR by 6 points since 31 Mar 2023. The figures run to 31 Mar 2026. Nothing has been flagged in the last 90 days. Sound, but with headroom narrowing on every measure.",
+ "synthesis": "None of the three agencies rates the society. Capital is mixed against UK building societies: CET1 of 16.4% is below the peer median, while leverage of 6.5% is above the peer median. Liquidity is on the weak side, with LCR of 167% in the bottom quarter against 214% and NSFR of 143% a little under 145%. Every ratio has fallen: CET1 by 1.6 points, leverage by 1.0 points and LCR by 52 points since 30 Sep 2023, and NSFR by 6 points since 31 Mar 2023. The figures run to 31 Mar 2026. Nothing has been flagged in the last 90 days. Sound, but with headroom narrowing on every measure.",
  "inputs": {
   "band": "",
   "composite": "",

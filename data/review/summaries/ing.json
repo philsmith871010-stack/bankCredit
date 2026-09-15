@@ -2,7 +2,7 @@
  "id": "ing",
  "written": "2026-09-15",
  "background": "ING Groep is the holding company of the Netherlands' largest bank, a digital-first retail and wholesale bank funded by deposits across the Netherlands, Belgium, Germany and other European markets, lending on mortgages and to corporates worldwide.",
- "synthesis": "Fitch rates the group A+ and S&P A-, both stable, with the last move Fitch's upgrade to A+ on 14 Apr 2016. Capital is on the weak side of EU and Nordic peers: CET1 of 13.0% and leverage of 4.3% are both in the bottom quarter against medians of 16.4% and 5.5%, and both have fallen since 30 Jun 2024, CET1 by 1.0 points and leverage by 0.3 points. Liquidity is mixed, with LCR of 139% in the bottom quarter and NSFR of 128% above the 124% median. The flagged news is a strong quarter on 30 Jul 2026 and, on 2 Sep 2026, an Australian capital add-on after the local unit overstated its liquidity, a control finding rather than a solvency one.",
+ "synthesis": "Fitch rates the group A+ and S&P A-, both stable, with the last move Fitch's upgrade to A+ on 14 Apr 2016. Capital is on the weak side of EU and Nordic peers: CET1 of 13.0% and leverage of 4.3% are both in the bottom quarter against the peer medians, and both have fallen since 30 Jun 2024, CET1 by 1.0 points and leverage by 0.3 points. Liquidity is mixed, with LCR of 139% in the bottom quarter and NSFR of 128% above the peer median. The flagged news is a strong quarter on 30 Jul 2026 and, on 2 Sep 2026, an Australian capital add-on after the local unit overstated its liquidity, a control finding rather than a solvency one.",
  "inputs": {
   "band": "B",
   "composite": "A+",

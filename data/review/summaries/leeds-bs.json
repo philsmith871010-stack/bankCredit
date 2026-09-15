@@ -2,7 +2,7 @@
  "id": "leeds-bs",
  "written": "2026-09-15",
  "background": "Leeds Building Society is one of the larger UK building societies, a mutual funded by retail savings and lending on residential, shared-ownership and buy-to-let mortgages across the country.",
- "synthesis": "Fitch rates the society A- and Moody's A3, both stable, with the last move Moody's downgrade to A3 on 2 Aug 2017, so the grades have been steady for a long time. Capital is mixed against UK building societies: CET1 of 24.6% is in the top quarter against a 17.8% median, while leverage of 5.7% is below the 6.1% median. Liquidity is also mixed, with LCR of 211% a shade under the 214% median and NSFR of 149% above 145%. Since 30 Jun 2025 CET1 has fallen 1.2 points and LCR has risen 18 points, with the rest flat. Nothing has been flagged in the last 90 days.",
+ "synthesis": "Fitch rates the society A- and Moody's A3, both stable, with the last move Moody's downgrade to A3 on 2 Aug 2017, so the grades have been steady for a long time. Capital is mixed against UK building societies: CET1 of 24.6% is in the top quarter against the peer median, while leverage of 5.7% is below the peer median. Liquidity is also mixed, with LCR of 211% a shade under the peer median and NSFR of 149% above 145%. Since 30 Jun 2025 CET1 has fallen 1.2 points and LCR has risen 18 points, with the rest flat. Nothing has been flagged in the last 90 days.",
  "inputs": {
   "band": "A",
   "composite": "A-",

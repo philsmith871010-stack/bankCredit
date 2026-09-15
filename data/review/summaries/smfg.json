@@ -2,7 +2,7 @@
  "id": "smfg",
  "written": "2026-09-15",
  "background": "Sumitomo Mitsui Financial Group is one of Japan's three megabanks, the holding company of Sumitomo Mitsui Banking Corporation, SMBC Nikko Securities and a consumer finance arm, with growing operations in the United States and Asia.",
- "synthesis": "Ratings are A- from Fitch, A- from S&P and A1 from Moody's, all stable, with the last move Fitch's downgrade to A- on 8 Dec 2022. Capital is on the weak side of Asian peers: CET1 of 12.4% and leverage of 5.0% are both in the bottom quarter, against medians of 15.7% and 5.8%. No liquidity ratios are held here, and no trend can be drawn from the periods held. The one flagged item, on 31 Jul 2026, is first-quarter profit up strongly. A systemically important Japanese group whose size and earnings, rather than its ratios, are the comfort.",
+ "synthesis": "Ratings are A- from Fitch, A- from S&P and A1 from Moody's, all stable, with the last move Fitch's downgrade to A- on 8 Dec 2022. Capital is on the weak side of Asian peers: CET1 of 12.4% and leverage of 5.0% are both in the bottom quarter, against the peer medians. No liquidity ratios are held here, and no trend can be drawn from the periods held. The one flagged item, on 31 Jul 2026, is first-quarter profit up strongly. A systemically important Japanese group whose size and earnings, rather than its ratios, are the comfort.",
  "inputs": {
   "band": "B",
   "composite": "A",

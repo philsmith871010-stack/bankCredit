@@ -2,7 +2,7 @@
  "id": "svenska-handelsbanken",
  "written": "2026-09-15",
  "background": "Svenska Handelsbanken is a Swedish bank run on a decentralised branch model, funded by Swedish deposits and covered bonds and lending mainly on residential mortgages and to businesses in Sweden, Norway, the UK and the Netherlands.",
- "synthesis": "Ratings are among the highest in Europe: AA+ from Fitch after the upgrade on 12 May 2026, AA- from S&P and Aa2 from Moody's, all stable. Capital is mixed against EU and Nordic peers: CET1 of 17.2% is above the 16.4% median but has fallen 1.1 points since 30 Jun 2025, while leverage of 4.2% is in the bottom quarter against 5.5%, as is usual for a mortgage-heavy Nordic bank. Liquidity is also mixed, with LCR of 186% in the top quarter and NSFR of 122% a little under the 124% median. Nothing has been flagged in the last 90 days. A conservative lender with a long record of low credit losses, which the ratings reflect.",
+ "synthesis": "Ratings are among the highest in Europe: AA+ from Fitch after the upgrade on 12 May 2026, AA- from S&P and Aa2 from Moody's, all stable. Capital is mixed against EU and Nordic peers: CET1 of 17.2% is above the peer median but has fallen 1.1 points since 30 Jun 2025, while leverage of 4.2% is in the bottom quarter against 5.5%, as is usual for a mortgage-heavy Nordic bank. Liquidity is also mixed, with LCR of 186% in the top quarter and NSFR of 122% a little under the peer median. Nothing has been flagged in the last 90 days. A conservative lender with a long record of low credit losses, which the ratings reflect.",
  "inputs": {
   "band": "B",
   "composite": "AA-",

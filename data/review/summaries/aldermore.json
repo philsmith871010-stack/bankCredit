@@ -2,7 +2,7 @@
  "id": "aldermore",
  "written": "2026-09-15",
  "background": "Aldermore is a UK specialist lender owned by South Africa's FirstRand, funded by online retail and business savings and lending on buy-to-let and owner-occupied mortgages, asset finance and invoice finance, with MotoNovo in motor finance.",
- "synthesis": "Moody's is the only one of the three agencies rating the bank, at Baa1 with a negative outlook, so the grade is investment-grade but with a warning attached. The ratios are middling for a UK mid-sized bank: CET1 of 13.6% is a touch below the 13.9% median, leverage of 8.3% is above the 7.4% median, and both LCR of 170% and NSFR of 129% sit below their medians. The trend is the concern: since 30 Jun 2023 CET1 has fallen 1.2 points and LCR 41 points. Nothing flagged in the last 90 days.",
+ "synthesis": "Moody's is the only one of the three agencies rating the bank, at Baa1 with a negative outlook, so the grade is investment-grade but with a warning attached. The ratios are middling for a UK mid-sized bank: CET1 of 13.6% is a touch below the peer median, leverage of 8.3% is above the peer median, and both LCR of 170% and NSFR of 129% sit below their medians. The trend is the concern: since 30 Jun 2023 CET1 has fallen 1.2 points and LCR 41 points. Nothing flagged in the last 90 days.",
  "inputs": {
   "band": "C",
   "composite": "BBB+",

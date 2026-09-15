@@ -2,7 +2,7 @@
  "id": "goldman-sachs-bank-usa",
  "written": "2026-09-15",
  "background": "Goldman Sachs Bank USA is the US deposit-taking bank of The Goldman Sachs Group, holding the firm's lending, derivatives and Marcus consumer deposits, funded by deposits and by the parent.",
- "synthesis": "Ratings are AA- from Fitch after the upgrade on 12 May 2026, with a positive outlook, A+ from S&P and A1 from Moody's, both stable. The ratios are strong for a US bank: CET1 of 13.5% is above the 12.1% median, leverage of 7.7% is in the top quarter against 5.8%, and LCR of 126% is in the top quarter against 117%. CET1 has fallen 2.8 points since 30 Jun 2025, a big move that shows the bank is being run with less capital than before. Nothing has been flagged in the last 90 days. A well-capitalised bank inside a markets-driven group.",
+ "synthesis": "Ratings are AA- from Fitch after the upgrade on 12 May 2026, with a positive outlook, A+ from S&P and A1 from Moody's, both stable. The ratios are strong for a US bank: CET1 of 13.5% is above the peer median, leverage of 7.7% is in the top quarter against 5.8%, and LCR of 126% is in the top quarter against 117%. CET1 has fallen 2.8 points since 30 Jun 2025, a big move that shows the bank is being run with less capital than before. Nothing has been flagged in the last 90 days. A well-capitalised bank inside a markets-driven group.",
  "inputs": {
   "band": "B",
   "composite": "A+",

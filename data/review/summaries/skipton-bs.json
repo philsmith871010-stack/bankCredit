@@ -2,7 +2,7 @@
  "id": "skipton-bs",
  "written": "2026-09-15",
  "background": "Skipton Building Society is one of the largest UK building societies, a mutual funded by retail savings and lending on residential mortgages, and the owner of the Connells estate-agency group.",
- "synthesis": "Fitch rates the society A after its upgrade on 12 May 2026 and Moody's A2, both stable. Capital is a clear strength against UK building societies, with CET1 of 27.9% and leverage of 6.7% both in the top quarter against medians of 17.8% and 6.1%. Liquidity is the weaker side, with LCR of 178% below the 214% median and NSFR of 137% in the bottom quarter against 145%. Since 30 Jun 2025 CET1 has fallen 0.9 points and LCR 14 points, with the rest flat. Nothing has been flagged in the last 90 days. Very well capitalised, with liquidity ratios lower than most of its peers.",
+ "synthesis": "Fitch rates the society A after its upgrade on 12 May 2026 and Moody's A2, both stable. Capital is a clear strength against UK building societies, with CET1 of 27.9% and leverage of 6.7% both in the top quarter against the peer medians. Liquidity is the weaker side, with LCR of 178% below the peer median and NSFR of 137% in the bottom quarter against 145%. Since 30 Jun 2025 CET1 has fallen 0.9 points and LCR 14 points, with the rest flat. Nothing has been flagged in the last 90 days. Very well capitalised, with liquidity ratios lower than most of its peers.",
  "inputs": {
   "band": "A",
   "composite": "A",

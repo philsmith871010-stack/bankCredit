@@ -2,7 +2,7 @@
  "id": "raiffeisen-bank-international",
  "written": "2026-09-15",
  "background": "Raiffeisen Bank International is the central institution of the Austrian Raiffeisen cooperative banks and a leading lender across Central and Eastern Europe, with a large and long-running exposure to Russia that it has been unable to fully exit.",
- "synthesis": "S&P rates the bank A- on a positive outlook and Moody's A1, after Moody's upgrade to A1 on 11 Jul 2023. The ratios are strong against EU and Nordic peers: CET1 of 17.3% is above the 16.4% median, leverage of 8.5% is in the top quarter, LCR of 151% is at the median and NSFR of 139% is in the top quarter. LCR has fallen 31 points since 30 Jun 2025 while leverage has risen 0.6 points since 30 Jun 2024. The flagged news is the point: EU discussion of sanctions over its Russian operations on 14 Jul 2026 and 15 Jul 2026, set against S&P's positive outlook on 2 Sep 2026. Strong figures with a political risk the ratios do not capture.",
+ "synthesis": "S&P rates the bank A- on a positive outlook and Moody's A1, after Moody's upgrade to A1 on 11 Jul 2023. The ratios are strong against EU and Nordic peers: CET1 of 17.3% is above the peer median, leverage of 8.5% is in the top quarter, LCR of 151% is at the median and NSFR of 139% is in the top quarter. LCR has fallen 31 points since 30 Jun 2025 while leverage has risen 0.6 points since 30 Jun 2024. The flagged news is the point: EU discussion of sanctions over its Russian operations on 14 Jul 2026 and 15 Jul 2026, set against S&P's positive outlook on 2 Sep 2026. Strong figures with a political risk the ratios do not capture.",
  "inputs": {
   "band": "B",
   "composite": "A",

@@ -2,7 +2,7 @@
  "id": "goldman-sachs",
  "written": "2026-09-15",
  "background": "The Goldman Sachs Group is the holding company of the leading US investment bank, earning from advisory, trading and asset and wealth management, with a smaller lending and deposit franchise than the universal banks.",
- "synthesis": "As a holding company its ratings sit below the bank's: A from Fitch on a positive outlook, BBB+ from S&P and A2 from Moody's, both stable, with Moody's upgrade to A2 on 27 Jan 2021 the latest move. Consolidated capital is mixed against US peers: CET1 of 13.6% is above the 12.1% median, but leverage of 4.3% is in the bottom quarter against 5.8%, and both have come down since 30 Jun 2025, CET1 by 1.7 points and leverage by 1.0 points. LCR of 126% is in the top quarter. The one flagged item, on 14 Jul 2026, is strong second-quarter earnings. Earnings here are market-driven, which is what the holding-company grades reflect.",
+ "synthesis": "As a holding company its ratings sit below the bank's: A from Fitch on a positive outlook, BBB+ from S&P and A2 from Moody's, both stable, with Moody's upgrade to A2 on 27 Jan 2021 the latest move. Consolidated capital is mixed against US peers: CET1 of 13.6% is above the peer median, but leverage of 4.3% is in the bottom quarter against 5.8%, and both have come down since 30 Jun 2025, CET1 by 1.7 points and leverage by 1.0 points. LCR of 126% is in the top quarter. The one flagged item, on 14 Jul 2026, is strong second-quarter earnings. Earnings here are market-driven, which is what the holding-company grades reflect.",
  "inputs": {
   "band": "B",
   "composite": "A",
@@ -12,6 +12,6 @@
    "moodys": "A2 stable"
   },
   "asof": "2026-06-30",
-  "last_flagged": "2026-07-14"
+  "last_flagged": "2026-09-15"
  }
 }

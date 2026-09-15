@@ -2,7 +2,7 @@
  "id": "citigroup",
  "written": "2026-09-15",
  "background": "Citigroup is the holding company of the most international of the large US banks, with services, markets, banking, wealth and US personal banking as its main lines, and a multi-year restructuring behind it.",
- "synthesis": "As the holding company its ratings sit below the bank's: A from Fitch on a positive outlook, BBB+ from S&P and A3 from Moody's, both stable; the last move was S&P's downgrade to BBB+ on 2 Dec 2015. Consolidated capital is on the weak side against US peers: CET1 of 11.8% is below the 12.1% median and leverage of 5.2% is below 5.8%, with leverage down 0.4 points since 30 Sep 2025. LCR of 117% is at the median. The flagged news is conduct: UK sanctions fines on 2 Sep 2026 and 3 Sep 2026 and a privacy lawsuit on 11 Sep 2026, none of it large against the balance sheet.",
+ "synthesis": "As the holding company its ratings sit below the bank's: A from Fitch on a positive outlook, BBB+ from S&P and A3 from Moody's, both stable; the last move was S&P's downgrade to BBB+ on 2 Dec 2015. Consolidated capital is on the weak side against US peers: CET1 of 11.8% is below the peer median and leverage of 5.2% is below 5.8%, with leverage down 0.4 points since 30 Sep 2025. LCR of 117% is at the median. The flagged news is conduct: UK sanctions fines on 2 Sep 2026 and 3 Sep 2026 and a privacy lawsuit on 11 Sep 2026, none of it large against the balance sheet.",
  "inputs": {
   "band": "B",
   "composite": "A-",

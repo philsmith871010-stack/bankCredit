@@ -2,7 +2,7 @@
  "id": "lloyds-banking-group",
  "written": "2026-09-15",
  "background": "Lloyds Banking Group is the holding company of the UK's largest retail and commercial bank, owner of Lloyds Bank, Halifax, Bank of Scotland and Scottish Widows, with almost all of its business in Britain.",
- "synthesis": "As a holding company its ratings sit below the banks': A+ from Fitch and A- from S&P, both stable, with S&P's upgrade to A- on 10 Sep 2025 the latest move. Consolidated capital is mixed against UK majors: CET1 of 13.6% is a little under the 13.8% median, while leverage of 5.1% is in the top quarter. Liquidity is also mixed, with LCR of 144% at the median and NSFR of 123% below the 132% median. Leverage has fallen 0.3 points since 30 Jun 2025 and the rest has been flat. The flagged news is mostly good, with strong first-half results on 30 Jul 2026 and 3 Aug 2026, alongside the Arena fraud trial on 10 Aug 2026.",
+ "synthesis": "As a holding company its ratings sit below the banks': A+ from Fitch and A- from S&P, both stable, with S&P's upgrade to A- on 10 Sep 2025 the latest move. Consolidated capital is mixed against UK majors: CET1 of 13.6% is a little under the peer median, while leverage of 5.1% is in the top quarter. Liquidity is also mixed, with LCR of 144% at the median and NSFR of 123% below the peer median. Leverage has fallen 0.3 points since 30 Jun 2025 and the rest has been flat. The flagged news is mostly good, with strong first-half results on 30 Jul 2026 and 3 Aug 2026, alongside the Arena fraud trial on 10 Aug 2026.",
  "inputs": {
   "band": "B",
   "composite": "A+",

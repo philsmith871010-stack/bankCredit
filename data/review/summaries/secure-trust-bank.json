@@ -2,7 +2,7 @@
  "id": "secure-trust-bank",
  "written": "2026-09-15",
  "background": "Secure Trust Bank is a UK specialist lender listed in London, funded by retail savings and lending on vehicle finance, retail point-of-sale finance, real-estate development and commercial finance.",
- "synthesis": "None of the three agencies rates the bank. Capital is mixed against UK small banks: CET1 of 14.3% is in the bottom quarter against a 17.1% median, while leverage of 10.3% is at the median, and both have risen since 31 Dec 2023, CET1 by 1.6 points and leverage by 0.6 points. Liquidity is on the weak side of a group that runs very high liquidity, with LCR of 209% below the 448% median; no NSFR is held. Nothing has been flagged in the last 90 days. An unrated specialist lender with improving but below-peer capital.",
+ "synthesis": "None of the three agencies rates the bank. Capital is mixed against UK small banks: CET1 of 14.3% is in the bottom quarter against the peer median, while leverage of 10.3% is at the median, and both have risen since 31 Dec 2023, CET1 by 1.6 points and leverage by 0.6 points. Liquidity is on the weak side of a group that runs very high liquidity, with LCR of 209% below the peer median; no NSFR is held. Nothing has been flagged in the last 90 days. An unrated specialist lender with improving but below-peer capital.",
  "inputs": {
   "band": "",
   "composite": "",
