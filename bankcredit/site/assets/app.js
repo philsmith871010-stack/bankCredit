@@ -125,7 +125,7 @@
   document.addEventListener('click',function(e){
     var b=e.target.closest('.watch,.watch-btn');if(b){e.preventDefault();var w=watch(),i=w.indexOf(b.dataset.id);if(i>=0)w.splice(i,1);else w.push(b.dataset.id);setWatch(w);paintWatch();applyFilter();return}
     var f=e.target.closest('.filter');if(f){document.querySelectorAll('.filter').forEach(function(x){x.classList.remove('active')});f.classList.add('active');window.pageReset('cov-more');applyFilter();return}
-    var t=e.target.closest('.tab');var card=t&&t.closest('.tabs-card');if(t&&card&&!t.classList.contains('tab-out')){card.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});card.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.dataset.panel===t.dataset.tab)});t.classList.add('active');if(location.hash.replace('#','').split('&')[0]!==t.dataset.tab)history.replaceState(null,'','#'+t.dataset.tab);loadPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));return}
+    var t=e.target.closest('.tab');var card=t&&t.closest('.tabs-card');if(t&&card){card.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});card.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.dataset.panel===t.dataset.tab)});t.classList.add('active');if(location.hash.replace('#','').split('&')[0]!==t.dataset.tab)history.replaceState(null,'','#'+t.dataset.tab);loadPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));return}
     var th=e.target.closest('th[data-sort]');if(th){sortBy(th.dataset.sort,th.cellIndex);return}
   });
   var q=document.getElementById('q');if(q)q.addEventListener('input',function(){window.pageReset('cov-more');applyFilter()});
@@ -180,7 +180,7 @@ function loadPanel(p){
   });
 }
 document.addEventListener('mouseover',function(e){
-  var t=e.target.closest&&e.target.closest('.tab'); if(!t||t.classList.contains('tab-out'))return;
+  var t=e.target.closest&&e.target.closest('.tab'); if(!t)return;
   var card=t.closest('.tabs-card'); if(!card)return;
   warmPanel(card.querySelector('.panel[data-panel="'+t.dataset.tab+'"]'));
 },{passive:true});

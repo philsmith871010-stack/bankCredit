@@ -6,6 +6,13 @@
   // An empty data-root is the site root, not a missing one: the home page sets it to "".
   var _r=document.body.getAttribute('data-root'), ROOT=(_r==null?'../':_r);
   var POLICY='counterparty.policy';
+  // On the home page the view is a tab and the hash names the tab, so the card and the comparison
+  // ride along after it: #approved&id=barclays-bank, #approved&cmp=a,b. On its own page they stand alone.
+  var IN_TAB=!!document.querySelector('.tabs-card .panel[data-panel="approved"]');
+  function hashFor(kind,val){ return IN_TAB?'#approved&'+kind+'='+val:(kind==='id'?'#'+val:'#cmp='+val); }
+  function hashPart(kind){ var m=new RegExp('[#&]'+kind+'=([^&]+)').exec(location.hash); if(m) return m[1]; if(!IN_TAB&&kind==='id'){ var h=location.hash.slice(1); return /^[a-z0-9-]+$/.test(h)?h:''; } return ''; }
+  if(!document.getElementById('approved-css')){ var lk=document.createElement('link'); lk.id='approved-css'; lk.rel='stylesheet'; lk.href=ROOT+'assets/approved.css'; document.head.appendChild(lk); }
+  function visible(){ var a=document.getElementById('app'); return !!(a&&a.offsetParent); }
   var EXAMPLE=['barclays-bank','lloyds-bank','natwest-bank','hsbc-uk','santander-uk','nationwide','coventry-bs','leeds-bs','yorkshire-bs','skipton-bs','goldman-sachs-international-bank','handelsbanken-plc','close-brothers','standard-chartered','clydesdale-bank'];
   var AG={fitch:'Fitch',sp:'S&P',moodys:"Moody's",dbrs:'DBRS',kbra:'KBRA',scope:'Scope',jcr:'JCR',rni:'R&I'};
   var TYPE={bank:'Bank',holding:'Group holding company',building_society:'Building society',subsidiary:'Subsidiary'};
@@ -214,7 +221,7 @@
     Promise.all(ids.map(fetchBank)).then(function(banks){
       if(!state.compare||ids.join()!==state.sel.join()) return;
       detail.innerHTML=compareHtml(banks); detail.scrollTop=0;
-      history.replaceState(null,'','#cmp='+ids.join(','));
+      history.replaceState(null,'',hashFor('cmp',ids.join(',')));
     }).catch(function(){ detail.innerHTML='<div class="cmp"><div class="hint">Could not load one of the names. Try again.</div></div>'; });
   }
   function setCompare(on){
@@ -340,7 +347,7 @@
       detail.innerHTML='<div class="loading-bar"></div><div class="acard fade">'+card(d)+'</div>';
       detail.scrollTop=0;
       requestAnimationFrame(function(){ var c=detail.querySelector('.acard'); if(c) c.classList.remove('fade'); });
-      if(push!==false&&location.hash!=='#'+id) history.replaceState(null,'','#'+id);
+      if(push!==false&&hashPart('id')!==id) history.replaceState(null,'',hashFor('id',id));
       prefetch();
     }).catch(function(){ clearTimeout(skelTimer); detail.innerHTML='<div class="acard"><p class="none">Could not load '+esc(id)+'. Check the connection and try again.</p></div>'; });
   }
@@ -381,12 +388,13 @@
   $('#group').addEventListener('change',function(){ state.group=this.checked; save(); renderList(); });
   $('#share').addEventListener('click',share);
   document.addEventListener('keydown',function(e){
+    if(!visible()) return;
     var inField=/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName||''));
     if(e.key==='/'&&!inField){ e.preventDefault(); qEl.focus(); qEl.select(); }
     if((e.key==='ArrowDown'||e.key==='ArrowUp')&&!inField&&!state.compare){ e.preventDefault(); move(e.key==='ArrowDown'?1:-1); }
     if(e.key==='Escape'&&!inField&&window.innerWidth<=760){ app.classList.remove('showing'); }
   });
-  window.addEventListener('hashchange',function(){ var id=location.hash.slice(1); if(byId[id]&&id!==current&&!state.compare) show(id,false); });
+  window.addEventListener('hashchange',function(){ var id=hashPart('id'); if(byId[id]&&id!==current&&!state.compare) show(id,false); });
 
   // ---------- boot ----------
   list.innerHTML=skelRows(12); detail.innerHTML=skelCard();
@@ -404,13 +412,15 @@
       else { state.ids=EXAMPLE.filter(function(id){return byId[id]}); state.example=true; }
     }
     $('#sort').value=state.sort; $('#group').checked=state.group;
-    var cm=/^#cmp=([^&]+)/.exec(location.hash);
-    if(cm){ var cids=cm[1].split(',').filter(function(id){return byId[id]}).slice(0,MAXSEL);
+    var cm=hashPart('cmp');
+    if(cm){ var cids=cm.split(',').filter(function(id){return byId[id]}).slice(0,MAXSEL);
       cids.forEach(function(id){ if(state.ids.indexOf(id)<0){ state.ids.push(id); state.example=false; } }); save();
       $('#sort').value=state.sort; $('#group').checked=state.group; current=cids[0]||null; state.sel=cids; setCompare(true); return; }
-    var want=location.hash.slice(1);
+    var want=hashPart('id');
     if(byId[want]&&state.ids.indexOf(want)<0){ state.ids.push(want); state.example=false; save(); }
     var first=rows()[0];
-    if(byId[want]) show(want,false); else if(first){ show(first.id,false); if(window.innerWidth<=760) app.classList.remove('showing'); } else show(null);
+    // On its own page the first card leaves the address alone; as a tab it writes #approved&id=..., so
+    // what is on screen is always what the address says.
+    if(byId[want]) show(want,IN_TAB); else if(first){ show(first.id,IN_TAB); if(window.innerWidth<=760) app.classList.remove('showing'); } else show(null);
   }).catch(function(){ $('#count').textContent='Could not load the data.'; detail.innerHTML='<div class="welcome"><h2>Could not load the data</h2><p>Reload the page to try again.</p></div>'; });
 })();
