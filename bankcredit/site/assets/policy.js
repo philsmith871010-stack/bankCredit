@@ -505,13 +505,28 @@
       if(q&&(e.short+' '+e.name+' '+(e.country||'')+' '+(e.lei||'')).toLowerCase().indexOf(q)<0)return false;
       return true;
     }).map(function(e){return {e:e,tenor:have[e.id]}}).sort(function(a,b){
-      var k=uniSort.key, va=a.e[k], vb=b.e[k];
+      var k=uniSort.key, va=k==='news30'?news30Rank(a.e):a.e[k], vb=k==='news30'?news30Rank(b.e):b.e[k];
       if(va==null&&vb==null)return 0; if(va==null)return 1; if(vb==null)return -1;
       if(typeof va==='string')return uniSort.dir*va.localeCompare(vb);
       return uniSort.dir*(va-vb);
     });
   }
   var PEEK=8;    // rows a scrolling window shows before there is anything below its fold
+  // A figure's date, and how old that makes it: past six months it is shown as such, because a
+  // capital ratio from a year ago is a different fact from one published last quarter.
+  function asofCell(e){
+    var old=(e.age_days||0)>180;
+    return '<td class="mono small asof '+(old?'stale':'muted')+'"'+(old?' title="'+e.age_days+' days old"':'')+'>'+esc(e.asof||'\u2014')+'</td>';
+  }
+  // The month's news by severity - the count a treasurer scans for, not the headlines themselves.
+  function news30Cell(e){
+    var n=e.news30||{}, parts=[];
+    if(n.bad)parts.push('<span class="n30 bad" title="'+n.bad+' serious">'+n.bad+'</span>');
+    if(n.warn)parts.push('<span class="n30 warn" title="'+n.warn+' adverse">'+n.warn+'</span>');
+    if(n.good)parts.push('<span class="n30 good" title="'+n.good+' positive">'+n.good+'</span>');
+    return parts.length?parts.join(' '):'<span class="na">\u2014</span>';
+  }
+  function news30Rank(e){ var n=e.news30||{}; return (n.bad||0)*10+(n.warn||0)*3+(n.good||0); }
   function renderUni(){
     var body=document.getElementById('uni-body'); if(!body||!data)return;
     var rows=uniRows(), t=+document.getElementById('uni-tenor').value;
@@ -534,13 +549,16 @@
           (e.score==null&&e.unscored?'<div class="small muted">'+esc(e.unscored)+'</div>':'')+'</td>'+
         '<td class="mono">'+esc(e.rating_composite||'—')+'</td>'+
         '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1))+'</td>'+
+        '<td class="num mono">'+(e.leverage==null?'—':e.leverage.toFixed(1))+'</td>'+
         '<td class="num mono">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
-        '<td class="mono small muted">'+esc(e.asof||'—')+'</td>'+
+        '<td class="num mono">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
+        asofCell(e)+
+        '<td class="num">'+news30Cell(e)+'</td>'+
         '<td>'+mkt(e.market,1)+'</td>'+
         '<td class="num">'+(r.tenor!=null
             ? '<span class="chip chip-good" title="already in your policy">'+esc(tenorLabel(r.tenor))+'</span>'
             : '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button>')+'</td></tr>';
-    }).join('')||'<tr><td colspan="9" class="empty">No name matches those filters.</td></tr>';
+    }).join('')||'<tr><td colspan="12" class="empty">No name matches those filters.</td></tr>';
     // Measuring the box is no good here: renderUni first runs while this tab is still closed, a
     // hidden box measures nothing, and the answer would stick. The row count asks the same
     // question of the data rather than of the layout, and it cannot go stale.
@@ -700,12 +718,13 @@
         '<td class="ll-cpc"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
           '<span class="ll-ags">'+(e.ratings||[]).map(function(x){return esc(x.letter)}).join('')+'</span></td>'+
         kpi('cet1',e.cet1,1)+kpi('leverage',e.leverage,1)+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
+        asofCell(e)+
         '<td class="ll-mkt">'+mp+'</td>'+
         '<td class="ll-addc"><button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></td></tr>';
     }).join('');
     return '<div class="table-wrap scrollbox"><table class="plain ll-t2"><thead><tr>'+
       '<th></th><th>Name</th><th>Score'+mk('score')+'</th><th>Rating</th>'+
-      '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Market</th><th></th>'+
+      '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Figures</th><th>Market</th><th></th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   function ratingCell(e){
