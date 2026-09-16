@@ -1237,5 +1237,45 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-09-15T06:42:39"
+ },
+ {
+  "id": "11655aa240e5",
+  "entity_id": "credit-agricole-cib",
+  "url": "https://www.ca-cib.com/sites/default/files/2026-09/Pilier_3_CACIB_EN_20260630.pdf",
+  "local": "cache/pdf/credit-agricole-cib/11655aa240e595de.pdf",
+  "title": "Pilier_3_CACIB_EN_20260630.pdf",
+  "page": 3,
+  "reference_date": "2026-06-30",
+  "currency": "EUR",
+  "values": {
+   "cet1_capital": 17650.0,
+   "tier1_capital": 32820.0,
+   "total_capital": 37121.0
+  },
+  "checks": [
+   [
+    "warn",
+    "rows identified by label only (no row numbers in the table)"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-16T06:31:32"
  }
 ]
