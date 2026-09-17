@@ -260,3 +260,21 @@ def test_the_same_document_queued_by_both_runs_is_one_item(repo):
     assert "both runs" not in done.stdout + done.stderr, "the same item twice is not a dispute"
     got = json.loads(p.read_text())
     assert len(got) == 1 and got[0]["created"] == "2026-09-14T12:50:00", got
+
+
+def test_a_stamp_keeps_its_type_through_the_merge(repo):
+    """The first driver compared loaded_at as text and kept the text: after one merge the column
+    was text, the next ingest brought a datetime, and pyarrow refused to write the mix."""
+    p = repo / "data" / "runs.parquet"
+    def stamped(*ids, at):
+        df = runs(*ids)
+        df["loaded_at"] = pd.to_datetime(at)
+        return df
+    done = two_ways(repo,
+                    lambda r: stamped("esma-1", at="2026-09-14T06:00:00").to_parquet(p, index=False),
+                    lambda r: stamped("esma-1", "b", at="2026-09-15T06:00:00").to_parquet(p, index=False),
+                    lambda r: stamped("esma-1", "c", at="2026-09-15T07:00:00").to_parquet(p, index=False))
+    assert done.returncode == 0, done.stdout + done.stderr
+    got = pd.read_parquet(p)
+    assert pd.api.types.is_datetime64_any_dtype(got["loaded_at"]), got.dtypes
+    assert str(got.set_index("run_id").loc["esma-1", "loaded_at"]).startswith("2026-09-15 07:00"), "the later sighting"

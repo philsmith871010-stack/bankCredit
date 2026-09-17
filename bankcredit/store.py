@@ -77,6 +77,17 @@ def _upsert(table: str, rows: list | pd.DataFrame) -> int:
     key = KEYS[table]
     old = read(table)
     if not old.empty:
+        # a timestamp column keeps the form the table already has: text stays text, datetime stays
+        # datetime. Mixing the two made an object column pyarrow refuses to write, and the first
+        # ingest after the merge driver had stamped facts.parquet as text stopped the pipeline
+        for c in new.columns:
+            if c not in old.columns:
+                continue
+            o_dt, n_dt = pd.api.types.is_datetime64_any_dtype(old[c]), pd.api.types.is_datetime64_any_dtype(new[c])
+            if n_dt and not o_dt:
+                new[c] = new[c].apply(lambda v: v.isoformat() if pd.notna(v) else None)
+            elif o_dt and not n_dt:
+                new[c] = pd.to_datetime(new[c], errors="coerce")
         merged = pd.concat([old, new], ignore_index=True)
         merged = merged.drop_duplicates(subset=key, keep="last")
     else:

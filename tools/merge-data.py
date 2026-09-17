@@ -97,7 +97,9 @@ def freshest(keep, other):
     for pick, names in ((max, LAST_SEEN), (min, FIRST_SEEN)):
         for s in names:
             if out.get(s) is not None and other.get(s) is not None:
-                out[s] = pick(str(out[s]), str(other[s]))
+                # compared as text, kept as it was: a stamp that came in as a timestamp goes out
+                # as one, or the column turns to text and the next write refuses to mix the two
+                out[s] = pick((str(out[s]), out[s]), (str(other[s]), other[s]))[1]
     return out
 
 
@@ -149,7 +151,15 @@ def merge_parquet(o: Path, a: Path, b: Path, table: str) -> int:
     merged, fought = three_way(base, ours, theirs)
     rows = list(merged.values())
     cols = list(dict.fromkeys([c for side in (theirs, ours) for rec in side.values() for c in rec]))
-    pd.DataFrame(rows, columns=cols or None).to_parquet(a, index=False)
+    df = pd.DataFrame(rows, columns=cols or None)
+    for src in (frame(a), frame(b)):                 # each column in the type it had, where it can be
+        for c in df.columns:
+            if c in src.columns and str(df[c].dtype) != str(src[c].dtype):
+                try:
+                    df[c] = df[c].astype(src[c].dtype)
+                except (TypeError, ValueError):
+                    pass
+    df.to_parquet(a, index=False)
     say(table, len(base), len(ours), len(theirs), len(rows), fought)
     return 0
 
