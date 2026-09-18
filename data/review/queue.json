@@ -1359,5 +1359,65 @@
   "reason": "error:no CET1 ratio found",
   "status": "open",
   "created": "2026-09-18T06:54:33"
+ },
+ {
+  "id": "2b23a6088ed7",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/ANZ-3Q26-trading-update-and-Pillar-3-discussion-pack.pdf",
+  "local": "cache/pdf/anz/2b23a6088ed7c89f.pdf",
+  "title": "ANZ-3Q26-trading-update-and-Pillar-3-discussion-pack.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-18T07:00:06"
+ },
+ {
+  "id": "f3d753230720",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/Pillar-3-restatement-values.pdf",
+  "local": "cache/pdf/anz/f3d7532307200ef2.pdf",
+  "title": "Pillar-3-restatement-values.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-18T07:00:06"
+ },
+ {
+  "id": "f1c0212ffcf8",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/ANZ-3Q21-June-APS330-Pillar-3-discussion-pack.pdf",
+  "local": "cache/pdf/anz/f1c0212ffcf859ff.pdf",
+  "title": "ANZ-3Q21-June-APS330-Pillar-3-discussion-pack.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-18T07:00:06"
  }
 ]
