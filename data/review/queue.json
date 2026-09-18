@@ -1277,5 +1277,87 @@
   "reason": "warn:rows identified by label only (no row numbers in the table); error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
   "created": "2026-09-16T06:31:32"
+ },
+ {
+  "id": "2d733e9b060f",
+  "entity_id": "lloyds-banking-group",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-banking-group-plc/2022/full-year/2022-lbg-fy-pillar3-capital-instruments.pdf",
+  "local": "cache/pdf/lloyds-banking-group/2d733e9b060f4414.pdf",
+  "title": "2022-lbg-fy-pillar3-capital-instruments.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-18T06:47:59"
+ },
+ {
+  "id": "306e8e44d942",
+  "entity_id": "lloyds-bank",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-plc/2021/half-year/2021-lb-hy-pillar-3.pdf",
+  "local": "cache/pdf/lloyds-bank/306e8e44d94203b2.pdf",
+  "title": "2021-lb-hy-pillar-3.pdf",
+  "page": 5,
+  "reference_date": "2021-06-30",
+  "currency": "GBP",
+  "values": {
+   "cet1_capital": 26960.0,
+   "cet1_headroom": 11.6,
+   "hqla": 111676.0,
+   "net_cash_outflows": 91666.0
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "error",
+    "missing core row cet1_ratio"
+   ],
+   [
+    "info",
+    "no leverage ratio row (not all Basel KM1 filers disclose one)"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ratio row (not all Basel KM1 filers disclose one); info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-09-18T06:48:01"
+ },
+ {
+  "id": "238fe16004f5",
+  "entity_id": "state-street",
+  "url": "https://s203.q4cdn.com/888565246/files/doc_downloads/Supplement/P3-Capital-December-31-2020.pdf",
+  "local": "cache/pdf/state-street/238fe16004f51fd4.pdf",
+  "title": "P3-Capital-December-31-2020.pdf",
+  "page": 7,
+  "reference_date": "2020-12-31",
+  "currency": "USD",
+  "values": {
+   "tier1_ratio": 11.5,
+   "leverage_ratio": 8.1,
+   "cet1_capital": 14377.0,
+   "tier1_capital": 16848.0
+  },
+  "checks": [
+   [
+    "error",
+    "no CET1 ratio found"
+   ]
+  ],
+  "reason": "error:no CET1 ratio found",
+  "status": "open",
+  "created": "2026-09-18T06:54:33"
  }
 ]
