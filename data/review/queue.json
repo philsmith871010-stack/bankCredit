@@ -1419,5 +1419,45 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-09-18T07:00:06"
+ },
+ {
+  "id": "db2cef8753a5",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/anz_1q19_aps330_pillar_3_discussion_pack_final.pdf",
+  "local": "cache/pdf/anz/db2cef8753a54864.pdf",
+  "title": "anz_1q19_aps330_pillar_3_discussion_pack_final.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-19T09:35:00"
+ },
+ {
+  "id": "8cfc8b61bacd",
+  "entity_id": "anz",
+  "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/anz_aps330_comments_on_mortgage_lending_volumes.pdf",
+  "local": "cache/pdf/anz/8cfc8b61bacdd7e7.pdf",
+  "title": "anz_aps330_comments_on_mortgage_lending_volumes.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-09-19T09:35:00"
  }
 ]
