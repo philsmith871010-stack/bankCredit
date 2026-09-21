@@ -329,7 +329,7 @@ def test_a_counterparty_is_one_line(page, server):
     _seed_many(page, server, 4)
     assert page.eval_on_selector_all(".cp-exp, .cp-detail", "e => e.length") == 0
     labels = page.eval_on_selector_all(".pol-card .ck > span", "e => e.map(x => x.textContent.trim())")
-    assert set(labels) == {"score", "rating"}, labels
+    assert set(labels) == {"score", "agency rating"}, labels
     # a row in a column of four, matched to the tallest card beside it; the open card was 400
     assert page.eval_on_selector(".pol-card", "e => e.getBoundingClientRect().height") < 130
     page.eval_on_selector(".pol-card", "e => e.click()")
@@ -441,8 +441,7 @@ def test_the_policy_page_is_tabs(page, server):
     """The approved names ran the length of the page with the shortlist under them."""
     _seed_many(page, server, 4)
     tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
-    expected = [t for t in ["policy", "likeforlike", "universe", "ratings", "events", "analysis", "weights"]
-                if t not in HOME_TABS_HIDDEN]
+    expected = [t for t in ["policy", "likeforlike", "ratings", "events", "analysis"] if t not in HOME_TABS_HIDDEN]
     assert tabs == expected
     assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 4
     assert page.eval_on_selector("#tn-policy", "e => e.textContent") == "4"
@@ -455,7 +454,7 @@ def test_the_policy_page_is_tabs(page, server):
     heads = page.eval_on_selector_all("#pol-ll .ll-t2 thead th", "e => e.map(x => x.textContent.trim())")
     named = [h for h in heads if h]
     assert named[0] == "Name" and named[1].startswith("Score"), heads
-    assert named[2:6] == ["Rating", "CET1", "LEV", "LCR"], heads
+    assert named[2:6] == ["Agency rating", "CET1", "LEV", "LCR"], heads
     # the count on the tab is every distinct name the shortlist turns up, so never fewer than one
     # tenor's worth of cards
     assert int(page.eval_on_selector("#tn-ll", "e => e.textContent")) >= drawn
@@ -572,35 +571,162 @@ def test_the_ratings_grid_plots_the_register_not_our_snapshots(page, server):
 
 
 # ---- a shared link opens on something ---------------------------------------------------------
-def test_a_first_visit_opens_on_an_example_portfolio(page, server):
-    """An empty page is a poor demonstration of a tool for reading a list."""
+def test_a_first_visit_opens_empty_on_the_table_it_chooses_from(page, server):
+    """The page used to open on an example list, a box of the strongest names and a histogram
+    with nothing on it. It opens on an instruction and the whole covered universe, sortable,
+    filterable and addable, and nothing else is pushed at the reader."""
     visit(page, server, "index.html")
     page.wait_for_timeout(1000)
-    cards = page.eval_on_selector_all(".pol-card", "e => e.length")
-    assert cards >= 12, cards
-    assert page.eval_on_selector_all(".pol-demo", "e => e.length") == 1, "it has to say it is an example"
-    tenors = page.eval_on_selector_all(".cp-ten select", "e => [...new Set(e.map(x => x.value))]")
-    assert len(tenors) >= 4, tenors
-    # every tenor offered is one the dropdown itself lists, or the row reads "730 days"
-    offered = page.eval_on_selector_all("#pol-tenor option", "e => e.map(x => x.value)")
-    assert set(tenors) <= set(offered), (tenors, offered)
-    assert not page.errors, page.errors
-
-
-def test_clearing_the_example_clears_it_for_good(page, server):
-    """Seeding on every visit would put back the names a reader had just removed."""
-    visit(page, server, "index.html")
-    page.wait_for_timeout(1000)
+    assert page.eval_on_selector_all(".pol-card", "e => e.length") == 0
+    assert "Your list is empty" in page.inner_text(".pol-empty")
+    assert page.eval_on_selector_all(".pe-top, .pe-fig, .pol-form, #pol-name", "e => e.length") == 0
+    assert not page.eval_on_selector("#uni-panel", "e => e.hidden"), "the table is open on an empty list"
+    assert page.eval_on_selector_all("#uni-body tr.uni-row", "e => e.length") > 100
+    assert page.eval_on_selector("#uni-toggle", "e => e.textContent") == "Hide the table"
+    # nothing was laid in the browser behind the reader's back
+    assert page.evaluate("localStorage.getItem('counterparty.policy')") in (None, "[]")
+    # the example is one link away, and says it is an example
+    page.eval_on_selector("#pol-demo", "e => e.click()")
+    page.wait_for_timeout(600)
+    assert page.eval_on_selector_all(".pol-card", "e => e.length") >= 12
+    assert page.eval_on_selector_all(".pol-demo", "e => e.length") == 1
     page.eval_on_selector("#pol-demo-x", "e => e.click()")
     page.wait_for_timeout(400)
     assert page.eval_on_selector_all(".pol-card", "e => e.length") == 0
     visit(page, server, "index.html")
-    page.wait_for_timeout(1000)
-    assert page.eval_on_selector_all(".pol-card", "e => e.length") == 0, "the seed was laid twice"
-    # and it can be put back, for showing the thing to somebody
-    page.eval_on_selector("#pol-demo", "e => e.click()")
+    page.wait_for_timeout(900)
+    assert page.eval_on_selector_all(".pol-card", "e => e.length") == 0, "cleared stays cleared"
+    assert not page.errors, page.errors
+
+
+def test_the_table_folds_behind_add_names_once_the_list_has_names(page, server):
+    """With names held the page leads with them; the table is one button away and opens in place."""
+    _seed_many(page, server, 3)
+    assert page.eval_on_selector("#uni-panel", "e => e.hidden")
+    assert page.eval_on_selector("#uni-toggle", "e => e.textContent") == "Add names"
+    page.eval_on_selector("#uni-toggle", "e => e.click()")
+    page.wait_for_timeout(300)
+    assert not page.eval_on_selector("#uni-panel", "e => e.hidden")
+    # a name held shows as such in the table, and the chip pulls the held names out on their own
+    assert page.eval_on_selector_all("#uni-body tr.uni-mine", "e => e.length") == 3
+    page.eval_on_selector('#uni-chips [data-uf="mine"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector_all("#uni-body tr.uni-row", "e => e.length") == 3
+    page.eval_on_selector('#uni-chips [data-uf="top"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector_all("#uni-body tr.uni-row", "e => e.length") == 5, "the five strongest standings"
+    # an add from the open table does not fold it: the reader is choosing several
+    page.eval_on_selector('#uni-chips [data-uf="top"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    page.eval_on_selector("#uni-body tr.uni-row:not(.uni-mine) .pol-add-ll", "e => e.click()")
     page.wait_for_timeout(500)
-    assert page.eval_on_selector_all(".pol-card", "e => e.length") >= 12
+    assert page.eval_on_selector_all(".pol-card", "e => e.length") == 4
+    assert not page.eval_on_selector("#uni-panel", "e => e.hidden")
+    assert not page.errors, page.errors
+
+
+def test_the_weightings_come_first_and_change_in_a_dialog(page, server):
+    """The score is the reader's arithmetic, so what it rests on is the first thing on the page."""
+    visit(page, server, "index.html")
+    page.wait_for_timeout(900)
+    top = page.eval_on_selector("#wt-line", "e => e.getBoundingClientRect().top")
+    tabs = page.eval_on_selector(".tabs-card", "e => e.getBoundingClientRect().top")
+    assert top < tabs
+    line = page.inner_text("#wt-vals")
+    assert "agency ratings" in line and "%" in line and "starting point" in line
+    page.eval_on_selector("#wt-change", "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector("#wt-dlg", "e => e.open")
+    page.eval_on_selector("#wt-rating", "e => { e.value = 0; e.dispatchEvent(new Event('input', {bubbles: true})) }")
+    page.wait_for_timeout(400)
+    page.eval_on_selector("#wt-close", "e => e.click()")
+    page.wait_for_timeout(200)
+    assert not page.eval_on_selector("#wt-dlg", "e => e.open")
+    assert "set by you" in page.inner_text("#wt-vals")
+    assert not page.errors, page.errors
+
+
+def test_a_name_is_watched_from_the_table_and_listed_under_the_portfolio(page, server):
+    """Watching lived only on the profile, and Analysis then offered a set nobody knew how to
+    fill. The star is on every row of the table now, and the names followed sit under the list."""
+    _seed_many(page, server, 2)
+    page.eval_on_selector("#uni-toggle", "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector_all("#pol-watch", "e => e.length") == 0
+    who = page.eval_on_selector("#uni-body tr.uni-row:not(.uni-mine)", "e => e.dataset.id")
+    page.eval_on_selector(f'#uni-body tr[data-id="{who}"] .uni-star', "e => e.click()")
+    page.wait_for_timeout(400)
+    assert json.loads(page.evaluate("localStorage.getItem('counterparty.watch')")) == [who]
+    assert page.eval_on_selector_all(f'#pol-watch tr[data-id="{who}"]', "e => e.length") == 1
+    assert page.eval_on_selector(f'#uni-body tr[data-id="{who}"] .uni-star', "e => e.classList.contains('on')")
+    page.eval_on_selector('#uni-chips [data-uf="watch"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector_all("#uni-body tr.uni-row", "e => e.map(x => x.dataset.id)") == [who]
+    # the profile's star reads the same list
+    visit(page, server, f"banks/{who}.html")
+    assert page.eval_on_selector(".watch, .watch-btn", "e => e.classList.contains('on')")
+    # adding a watched name to the list is the stronger form of attention, so it leaves the watch list
+    visit(page, server, "index.html")
+    page.wait_for_timeout(900)
+    page.eval_on_selector(f'#pol-watch tr[data-id="{who}"] .pol-add-ll', "e => e.click()")
+    page.wait_for_timeout(500)
+    assert page.eval_on_selector_all(".pol-card", "e => e.length") == 3
+    assert json.loads(page.evaluate("localStorage.getItem('counterparty.watch')")) == []
+    assert page.eval_on_selector_all("#pol-watch", "e => e.length") == 0
+    assert not page.errors, page.errors
+
+
+def test_names_on_the_same_spot_of_the_tenor_chart_become_one_marker(page, server):
+    """Two dots on top of each other could only speak for the one on top."""
+    _seed_many(page, server, 6)               # six names at 12 months, scores within a few points
+    assert page.eval_on_selector_all(".pv-n", "e => e.length") >= 1
+    assert sum(int(x) for x in page.eval_on_selector_all(".pv-n", "e => e.map(x => x.textContent)")) + \
+        page.eval_on_selector_all("figure:has(.pv-n) circle[r='4.5']", "e => e.length") == 6
+    assert not page.errors, page.errors
+
+
+def test_a_definition_opened_by_hovering_closes_when_the_pointer_leaves(page, server):
+    """It stayed until it was clicked away, and a reader who had only brushed a mark was stuck with it."""
+    visit(page, server, "index.html")
+    page.wait_for_timeout(900)
+    page.hover("#wt-line .i")
+    page.wait_for_timeout(400)
+    assert not page.eval_on_selector(".tip", "e => e.hidden")
+    page.mouse.move(600, 700)
+    page.wait_for_timeout(400)
+    assert page.eval_on_selector(".tip", "e => e.hidden"), "a hover-opened box goes when the pointer does"
+    page.click("#wt-line .i")
+    page.wait_for_timeout(300)
+    page.mouse.move(600, 700)
+    page.wait_for_timeout(400)
+    assert not page.eval_on_selector(".tip", "e => e.hidden"), "a clicked box stays"
+    assert not page.errors, page.errors
+
+
+def test_a_three_letter_composite_fits_its_chip(page, server):
+    """The composite was drawn in a box sized for a two-character grade; AAA and BBB+ were clipped."""
+    for who in ("nwb-bank", "bng-bank", "barclays", "lloyds-banking-group"):
+        visit(page, server, f"banks/{who}.html")
+        w = page.eval_on_selector(".tile-ratings .band", "e => [e.scrollWidth, e.clientWidth, e.textContent]")
+        assert w[0] <= w[1], (who, w)
+    assert not page.errors, page.errors
+
+
+def test_a_name_added_to_the_analysis_set_can_be_removed_again(page, server):
+    """The cross on its chip only unpinned it; the name stayed in every panel in grey."""
+    visit(page, server, "index.html#analysis")
+    page.wait_for_timeout(1800)
+    page.fill("#cp-q", "monzo")
+    page.wait_for_timeout(300)
+    page.eval_on_selector("#cp-sugg button", "e => e.click()")
+    page.wait_for_timeout(600)
+    assert page.eval_on_selector_all('#c-table tr[data-id="monzo"]', "e => e.length") == 1
+    assert page.eval_on_selector_all('.pinchip-x[data-id="monzo"] .cp-rmx', "e => e.length") == 1
+    assert "unpin" in page.inner_text("#cp-pins") and "Added to the set" in page.inner_text("#cp-pins")
+    page.eval_on_selector('.cp-rmx[data-id="monzo"]', "e => e.click()")
+    page.wait_for_timeout(500)
+    assert page.eval_on_selector_all('#c-table tr[data-id="monzo"]', "e => e.length") == 0
+    assert page.eval_on_selector_all('.dash [data-id="monzo"], #c-table [data-id="monzo"], #cp-pins [data-id="monzo"]', "e => e.length") == 0, "gone from every panel"
     assert not page.errors, page.errors
 
 
@@ -630,18 +756,14 @@ def test_the_starting_weights_reproduce_the_published_score(page, server):
 
 def test_a_weight_the_reader_sets_moves_every_score_on_the_site(page, server):
     _seed_many(page, server, 3)
-    page.eval_on_selector('.tab[data-tab="weights"]', "e => e.click()")
+    page.eval_on_selector("#wt-change", "e => e.click()")
     page.wait_for_timeout(400)
     assert page.eval_on_selector_all(".wt-s", "e => e.map(x => x.dataset.k)") == [
         "capital", "liquidity", "asset_quality", "profitability", "stability", "rating"]
-    page.eval_on_selector('.tab[data-tab="policy"]', "e => e.click()")
-    page.wait_for_timeout(300)
     before = page.eval_on_selector_all(".pol-card .ck-score b", "e => e.map(x => x.textContent.trim())")
-    page.eval_on_selector('.tab[data-tab="weights"]', "e => e.click()")
-    page.wait_for_timeout(300)
     page.eval_on_selector("#wt-rating", "e => { e.value = 0; e.dispatchEvent(new Event('input', {bubbles: true})) }")
     page.wait_for_timeout(600)
-    page.eval_on_selector('.tab[data-tab="policy"]', "e => e.click()")
+    page.eval_on_selector("#wt-close", "e => e.click()")
     page.wait_for_timeout(300)
     after = page.eval_on_selector_all(".pol-card .ck-score b", "e => e.map(x => x.textContent.trim())")
     assert after != before, (before, after)
@@ -651,7 +773,7 @@ def test_a_weight_the_reader_sets_moves_every_score_on_the_site(page, server):
 
 def test_the_panel_says_what_this_is_not(page, server):
     visit(page, server, "index.html")
-    page.eval_on_selector('.tab[data-tab="weights"]', "e => e.click()")
+    page.eval_on_selector("#wt-change", "e => e.click()")
     page.wait_for_timeout(400)
     said = page.eval_on_selector(".wt-foot", "e => e.textContent").lower()
     for phrase in ("not a credit rating", "not advice", "the judgement is yours",
@@ -780,7 +902,6 @@ def test_a_long_table_scrolls_in_its_own_window(page, server):
     """Paging a sorted list meant clicking through sixteen pages to read it, and the column
     headings left the screen on the way. Every row is here; the window is what moves."""
     visit(page, server, "index.html")
-    page.eval_on_selector('.tab[data-tab="universe"]', "e => e.click()")
     page.wait_for_timeout(700)
     rows = page.eval_on_selector_all("#uni-body tr", "e => e.length")
     assert rows > 100, "the whole list is in the page, not a page of it"
@@ -798,7 +919,6 @@ def test_a_long_table_scrolls_in_its_own_window(page, server):
 def test_the_column_headings_stay_while_the_rows_move(page, server):
     """A heading that scrolls away takes the meaning of every column with it."""
     visit(page, server, "index.html")
-    page.eval_on_selector('.tab[data-tab="universe"]', "e => e.click()")
     page.wait_for_timeout(700)
     top = page.eval_on_selector("#uni-table thead th", "e => Math.round(e.getBoundingClientRect().top)")
     page.eval_on_selector("#uni-body", "e => { e.closest('.scrollbox').scrollTop = 1400 }")
@@ -841,7 +961,7 @@ def test_the_policy_can_be_read_as_a_table_and_sorted(page, server):
     assert page.eval_on_selector_all("#pol-table tbody tr.pol-tr", "e => e.length") == 4
     assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 0
     heads = page.eval_on_selector_all("#pol-table thead th", "e => e.map(x => x.textContent.trim())")
-    assert heads[:9] == ["Name", "Score", "Rating", "CET1", "Lev", "LCR", "NSFR", "Figures", "News 30d"], heads
+    assert heads[:9] == ["Name", "Score", "Agency rating", "CET1", "Lev", "LCR", "NSFR", "Figures", "News 30d"], heads
     page.eval_on_selector('#pol-table th[data-k="score"]', "e => e.click()")
     page.wait_for_timeout(300)
     scores = page.eval_on_selector_all("#pol-table tbody tr.pol-tr td:nth-child(2)", "e => e.map(x => parseFloat(x.textContent))")

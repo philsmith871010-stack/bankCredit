@@ -316,30 +316,36 @@ initRatingGrid();initRatingActions();
     top=Math.max(12,Math.min(top,vh-h-12));            // never off the screen, however small the screen is
     t.style.left=left+'px';t.style.top=top+'px';
   }
-  function show(btn){
+  // A box the pointer opened closes when the pointer leaves it; one a click opened stays until
+  // the next click. It used to stay either way, and a reader who had only brushed a mark was
+  // left with a box they had to click to be rid of.
+  var byHover=false;
+  function show(btn,hovered){
     var g=gloss()[btn.dataset.t];if(!g)return;
     hide();
     var t=el();
     t.innerHTML='<h4>'+g[0]+'</h4><p class="lead">'+g[1]+'</p><p>'+g[2]+'</p>';
-    open=btn;btn.setAttribute('aria-expanded','true');
+    open=btn;byHover=!!hovered;btn.setAttribute('aria-expanded','true');
     place(btn);
   }
   function hide(){
     if(open)open.setAttribute('aria-expanded','false');
-    open=null;if(tip)tip.hidden=true;
+    open=null;byHover=false;if(tip)tip.hidden=true;
   }
   document.addEventListener('click',function(e){
     var b=e.target.closest('.i');
-    if(b){e.preventDefault();e.stopPropagation();if(open===b)hide();else show(b);return}
+    if(b){e.preventDefault();e.stopPropagation();clearTimeout(hoverT);if(open===b&&!byHover)hide();else show(b,false);return}
     if(!e.target.closest('.tip'))hide();
   },true);
   document.addEventListener('mouseover',function(e){
-    var b=e.target.closest('.i');if(!b||open===b)return;
+    var b=e.target.closest('.i');
     if(!matchMedia('(hover:hover)').matches)return;
-    clearTimeout(hoverT);hoverT=setTimeout(function(){show(b)},160);
+    if(b){if(open===b)return;clearTimeout(hoverT);hoverT=setTimeout(function(){if(open!==b)show(b,true)},160);return}
+    // the pointer is somewhere else: a hover-opened box goes, once it is clear it has left the box too
+    if(open&&byHover&&!e.target.closest('.tip')){clearTimeout(hoverT);hoverT=setTimeout(function(){if(open&&byHover)hide()},120)}
   });
   document.addEventListener('mouseout',function(e){
-    if(e.target.closest&&e.target.closest('.i'))clearTimeout(hoverT);
+    if(e.target.closest&&e.target.closest('.i')&&!(open&&byHover))clearTimeout(hoverT);
   });
   // the same definitions read end to end, built from the payload already on the page
   document.addEventListener('click',function(e){

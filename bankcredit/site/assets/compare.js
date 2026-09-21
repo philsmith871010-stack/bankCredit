@@ -49,6 +49,12 @@
     vals.forEach(function(x){if(pins.length<3&&pins.indexOf(x.r.id)<0)pins.push(x.r.id)});
     state.pins=pins.slice(0,SLOTS.length)}
   function togglePin(id){var i=state.pins.indexOf(id);if(i>=0)state.pins.splice(i,1);else if(state.pins.length<SLOTS.length)state.pins.push(id);else{state.pins.shift();state.pins.push(id)}userPinned=true;render()}
+  // A name brought in through the search box was in the set for good: the cross on its chip only
+  // unpinned it, and it stayed in every panel as a grey line nobody had asked for. Removing takes
+  // it out of the set and off the pins; unpinning is a different act and keeps its own control.
+  function isExtra(id){return state.extra.indexOf(id)>=0}
+  function removeExtra(id){state.extra=state.extra.filter(function(x){return x!==id});var i=state.pins.indexOf(id);if(i>=0)state.pins.splice(i,1);render()}
+  function rmBtn(id){return isExtra(id)?'<button class="cp-rmx" data-id="'+id+'" title="Remove from the set">remove</button>':''}
   function xLabels(bs,X,y,w){var out='',lastX=-99;bs.forEach(function(b,i){var x=X(i);if((i%Math.ceil(bs.length/Math.max(4,Math.floor(w/110)))===0||i===bs.length-1)&&x-lastX>70){lastX=x;out+='<text x="'+x.toFixed(0)+'" y="'+y+'" text-anchor="middle" fill="'+MUTED+'" font-size="11">'+b.slice(0,7)+'</text>'}});return out}
   function tip(){var t=chart.querySelector('.cp-tip');if(!t){t=document.createElement('div');t.className='cp-tip';t.hidden=true;chart.appendChild(t)}return t}
   function placeTip(x,y,html){var t=tip();t.innerHTML=html;t.hidden=false;var r=chart.getBoundingClientRect();var left=x-r.left+14,top=y-r.top+12;if(left+t.offsetWidth>chart.clientWidth-8)left=x-r.left-t.offsetWidth-14;t.style.left=left+'px';t.style.top=top+'px'}
@@ -71,7 +77,7 @@
     }
 
   // ---------- legend / side list ----------
-  function legend(items,m,hint){return '<div class="card pad cp-legend"><h4>Names <span class="muted small">· '+esc(hint)+'</span></h4>'+items.map(function(o){var c=colourOf(o.r.id);return '<div class="lg'+(c?' on':'')+'" data-id="'+o.r.id+'"><button class="pin" data-id="'+o.r.id+'" title="'+(c?'Unpin':'Pin')+'">'+swatch(o.r.id)+'</button><span class="nm">'+link(o.r)+'</span><span class="mono">'+fmt(o.v,m)+'</span><span class="small '+(o.cls||'muted')+'">'+(o.sub||'')+'</span></div>'}).join('')+'</div>'}
+  function legend(items,m,hint){return '<div class="card pad cp-legend"><h4>Names <span class="muted small">· '+esc(hint)+'</span></h4>'+items.map(function(o){var c=colourOf(o.r.id);return '<div class="lg'+(c?' on':'')+'" data-id="'+o.r.id+'"><button class="pin" data-id="'+o.r.id+'" title="'+(c?'Unpin':'Pin')+'">'+swatch(o.r.id)+'</button><span class="nm">'+link(o.r)+(isExtra(o.r.id)?' <em class="cp-added">added</em>':'')+rmBtn(o.r.id)+'</span><span class="mono">'+fmt(o.v,m)+'</span><span class="small '+(o.cls||'muted')+'">'+(o.sub||'')+'</span></div>'}).join('')+'</div>'}
 
   // ---------- trends ----------
   function renderTrend(rows,m){var code=m[0],bs=buckets(rows,code,24);
@@ -135,7 +141,12 @@
     var moves=lines.map(function(l){var f=null,la=null;l.rank.forEach(function(v){if(v!=null){if(f==null)f=v;la=v}});return{r:l.r,v:la,sub:f!=null&&la!=null?('#'+f+' → #'+la+(f-la>0?' · up '+(f-la):f-la<0?' · down '+(la-f):' · level')):'',cls:f!=null&&la!=null?(f-la>0?'good':f-la<0?'bad':'muted'):'muted',ch:(f!=null&&la!=null)?f-la:0}}).sort(function(a,b){return (a.v||99)-(b.v||99)});
     }
 
-  function pinsBarHtml(rows,m){var mk=marked();return '<span class="small muted">Pinned</span>'+state.pins.map(function(id){var r=byId[id];if(!r)return '';var p=latest(r,m[0]);return '<span class="pinchip" data-id="'+id+'" style="--c:'+colourOf(id)+'"><i class="sw" style="background:'+colourOf(id)+'"></i>'+link(r)+'<span class="mono">'+fmt(p&&p.v,m)+'</span>'+(mk[id]?'<span title="watched or in My policy">★</span>':'')+'<button class="pin" data-id="'+id+'" title="Unpin">×</button></span>'}).join('')+(state.pins.length<SLOTS.length?'<span class="small muted">· click any name, bar, line or dot to pin (up to six)</span>':'')}
+  function pinsBarHtml(rows,m){var mk=marked();
+    var pinned=state.pins.map(function(id){var r=byId[id];if(!r)return '';var p=latest(r,m[0]);return '<span class="pinchip" data-id="'+id+'" style="--c:'+colourOf(id)+'"><i class="sw" style="background:'+colourOf(id)+'"></i>'+link(r)+'<span class="mono">'+fmt(p&&p.v,m)+'</span>'+(mk[id]?'<span title="watched or in your list">★</span>':'')+'<button class="pin" data-id="'+id+'" title="Unpin: it stays in the set, drawn in grey" aria-label="Unpin">unpin</button></span>'}).join('');
+    var added=state.extra.map(function(id){var r=byId[id];if(!r)return '';return '<span class="pinchip pinchip-x" data-id="'+id+'">'+link(r)+'<button class="cp-rmx" data-id="'+id+'" title="Remove from the set" aria-label="Remove '+esc(r.short)+' from the set">remove</button></span>'}).join('');
+    return '<span class="small muted">Pinned</span>'+(pinned||'<span class="small muted">none</span>')+
+      (state.pins.length<SLOTS.length?'<span class="small muted">\u00b7 click any name, bar, line or dot to pin (up to six); unpinning keeps a name in the set</span>':'')+
+      (added?'<span class="cp-addedbar"><span class="small muted">Added to the set</span>'+added+'</span>':'')}
   var COLS=[['score','Score',1],['band','Band',0],['rating','Rating',0],['cet1_ratio','CET1',1],['leverage_ratio','Leverage',1],['lcr','LCR',0],['nsfr','NSFR',0],['roe','ROE',1],['efficiency_ratio','Cost/income',0],['npl_ratio','NPL',2],['total_assets','Assets',0]];
   function cell(r,code){if(code==='band')return '<td><span class="band mono band-'+esc(r.band||'x')+'">'+esc(r.band||'?')+'</span></td>';if(code==='rating')return '<td>'+(r.rating?'<b>'+esc(r.rating)+'</b>':'<span class="muted">unrated</span>')+'</td>';var p=latest(r,code),m=metric(code);return '<td class="num mono" data-v="'+(p?p.v:-1e9)+'">'+(p?fmt(p.v,m):'<span class="na">—</span>')+'</td>'}
   function sortVal(r,code){if(code==='name')return r.short.toLowerCase();if(code==='band')return r.band||'Z';if(code==='rating')return r.grade==null?99:r.grade;var p=latest(r,code);return p?p.v:-1e9}
@@ -144,13 +155,13 @@
   // headings stay put while a reader scans down a sort.
   function renderTable(rows){var rs=rows.slice().sort(function(a,b){var x=sortVal(a,state.sort),y=sortVal(b,state.sort);if(typeof x==='string')return state.dir==='asc'?x.localeCompare(y):y.localeCompare(x);return state.dir==='asc'?x-y:y-x});
     var head='<tr><th data-sort="name">Name</th>'+COLS.map(function(c){return '<th class="'+(c[0]==='band'||c[0]==='rating'?'':'num')+(state.sort===c[0]?' sorted':'')+'" data-sort="'+c[0]+'">'+esc(c[1])+(state.sort===c[0]?(state.dir==='asc'?' ▲':' ▼'):'')+'</th>'}).join('')+'</tr>';
-    var body=rs.map(function(r){var c=colourOf(r.id);return '<tr data-id="'+r.id+'"'+(c?' class="on" style="--c:'+c+'"':'')+'><td><button class="pin" data-id="'+r.id+'" title="'+(c?'Unpin':'Pin')+'">'+swatch(r.id)+'</button> '+link(r)+'<span class="small muted"> '+esc(r.country)+'</span></td>'+COLS.map(function(c2){return cell(r,c2[0])}).join('')+'</tr>'}).join('');
+    var body=rs.map(function(r){var c=colourOf(r.id);return '<tr data-id="'+r.id+'"'+(c?' class="on" style="--c:'+c+'"':'')+'><td><button class="pin" data-id="'+r.id+'" title="'+(c?'Unpin':'Pin')+'">'+swatch(r.id)+'</button> '+link(r)+'<span class="small muted"> '+esc(r.country)+'</span>'+(isExtra(r.id)?' <em class="cp-added">added</em>'+rmBtn(r.id):'')+'</td>'+COLS.map(function(c2){return cell(r,c2[0])}).join('')+'</tr>'}).join('');
     tableEl.innerHTML='<table class="plain cp-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table>'}
   function render(){var rows=members(),m=metric(state.metric);
     count.textContent=rows.length+' in the set';
     document.querySelectorAll('.cp-set').forEach(function(b){b.classList.toggle('active',b.dataset.set===state.set)});
     var ids={};rows.forEach(function(r){ids[r.id]=1});state.pins=state.pins.filter(function(id){return ids[id]});
-    if(!rows.length){var msg='<div class="empty">'+(state.set==='watch'?'You are not watching anyone yet. The star on any profile or board row adds a name.':state.set==='policy'?'My policy is empty. Add counterparties there and they appear here.':'Nothing in this set.')+'</div>';Object.keys(PANELS).forEach(function(k){document.getElementById(PANELS[k]).innerHTML=msg});pinsBar.innerHTML='';tableEl.innerHTML='';writeHash();return}
+    if(!rows.length){var msg='<div class="empty">'+(state.set==='watch'?'You are not watching anyone yet. The star on any profile, or on a row of the covered-names table, adds a name.':state.set==='policy'?'Your list is empty. Add counterparties on the first tab and they appear here.':'Nothing in this set.')+'</div>';Object.keys(PANELS).forEach(function(k){document.getElementById(PANELS[k]).innerHTML=msg});pinsBar.innerHTML='';tableEl.innerHTML='';writeHash();return}
     defaultPins(rows,m);
     pinsBar.innerHTML=pinsBarHtml(rows,m[0]==='score'?m:m);
     var draws={rank:function(){renderRank(rows,m)},trend:function(){renderTrend(rows,m)},bump:function(){renderBump(rows,m)}};
@@ -169,7 +180,8 @@
     readHash();sel.value=state.metric;counts();render();
     document.getElementById('cp-sets').addEventListener('click',function(e){var b=e.target.closest('.cp-set');if(!b||b.disabled)return;state.set=b.dataset.set;state.extra=[];state.pins=[];userPinned=false;render()});
     sel.addEventListener('change',function(){state.metric=sel.value;markMeasure(sel.value);if(!userPinned)state.pins=[];render()});
-    document.addEventListener('click',function(e){var b=e.target.closest('.pin');if(b){togglePin(b.dataset.id);return}
+    document.addEventListener('click',function(e){var x0=e.target.closest('.cp-rmx');if(x0){removeExtra(x0.dataset.id);return}
+      var b=e.target.closest('.pin');if(b){togglePin(b.dataset.id);return}
       var x=e.target.closest('.pc-x');if(x){var pnl=document.getElementById('p-'+x.dataset.panel);var was=pnl.classList.contains('wide');document.querySelectorAll('.panel-c.wide').forEach(function(q2){q2.classList.remove('wide')});if(!was)pnl.classList.add('wide');render();return}
       var th=e.target.closest('#c-table th[data-sort]');if(th){var k=th.dataset.sort;if(state.sort===k)state.dir=state.dir==='asc'?'desc':'asc';else{state.sort=k;state.dir=(k==='name'||k==='band'||k==='rating'||k==='efficiency_ratio'||k==='npl_ratio')?'asc':'desc'}renderTable(members());return}
       var p=e.target.closest('.cp-line,.cp-bar,.cp-dot,.cp-lbl');if(p&&p.dataset.id&&!e.target.closest('a[href]')){togglePin(p.dataset.id)}else if(p&&p.dataset.id&&e.target.closest('a[href]')&&e.target.closest('svg')){e.preventDefault();togglePin(p.dataset.id)}});

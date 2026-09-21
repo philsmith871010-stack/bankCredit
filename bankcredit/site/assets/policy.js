@@ -28,6 +28,14 @@
   }
 
   function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
+  // The names a reader follows without holding them. The profile's star writes the same list, so
+  // a star here and a star there are one thing.
+  var WKEY='counterparty.watch';
+  function watchIds(){try{var v=JSON.parse(localStorage.getItem(WKEY)||'[]');return Array.isArray(v)?v:[]}catch(e){return[]}}
+  function saveWatch(w){try{localStorage.setItem(WKEY,JSON.stringify(w))}catch(e){}}
+  function toggleWatch(id){var w=watchIds(),i=w.indexOf(id);if(i>=0)w.splice(i,1);else w.push(id);saveWatch(w)}
+  function starBtn(id,cls){var on=watchIds().indexOf(id)>=0;
+    return '<button type="button" class="uni-star'+(on?' on':'')+(cls?' '+cls:'')+'" data-id="'+esc(id)+'" title="'+(on?'Stop watching':'Watch this name')+'" aria-pressed="'+on+'" aria-label="'+(on?'Stop watching':'Watch')+'">'+(on?'\u2605':'\u2606')+'</button>'}
   // Cards or a table: a policy of twenty names is a column of figures to some readers and a set of
   // cards to others, so the choice is theirs and kept. The table sorts on any of its columns.
   var VIEW=KEY+'.view', polSort={key:'tenor',dir:-1};
@@ -65,7 +73,7 @@
         '<td><button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">×</button></td></tr>';
     }).join('');
     return '<div class="table-wrap"><table class="plain pol-t" id="pol-table"><thead><tr>'+
-      th('short','Name')+th('score','Score','num')+th('rating_grade','Rating')+th('cet1','CET1','num')+th('leverage','Lev','num')+
+      th('short','Name')+th('score','Score','num')+th('rating_grade','Agency rating')+th('cet1','CET1','num')+th('leverage','Lev','num')+
       th('lcr','LCR','num')+th('nsfr','NSFR','num')+th('age_days','Figures')+th('news30','News 30d','num')+'<th>Market</th>'+th('tenor','Tenor')+'<th>Since approval</th><th></th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
@@ -339,17 +347,37 @@
     var inner='<line x1="0" x2="'+w+'" y1="'+Y(50).toFixed(1)+'" y2="'+Y(50).toFixed(1)+'" stroke="#e9ecef" stroke-width="1"/>';
     var weakest=Math.min.apply(null,pts.map(function(p){return p.s}));
     var longest=Math.max.apply(null,pts.map(function(p){return p.t}));
-    pts.forEach(function(p){
-      var e=p.e, atOrAbove=pts.filter(function(o){return o.t>=p.t});
+    // Two names at the same tenor and much the same score drew one dot on top of the other, and
+    // the box could only speak for the one on top. Marks closer than a dot's width now become one
+    // marker with a count, and one box that lists every name in it.
+    var groups=[];
+    pts.slice().sort(function(a,b){return a.t-b.t||b.s-a.s}).forEach(function(p){
+      var g=groups[groups.length-1];
+      if(g&&g.t===p.t&&Math.abs(Y(g.pts[g.pts.length-1].s)-Y(p.s))<9)g.pts.push(p);else groups.push({t:p.t,pts:[p]});
+    });
+    groups.forEach(function(g){
+      var p=g.pts[0], e=p.e, atOrAbove=pts.filter(function(o){return o.t>=g.t});
       var minAt=Math.min.apply(null,atOrAbove.map(function(o){return o.s}));
-      var tip=tipd(tipHead(esc(e.short),e.score.toFixed(1)+' \u00b7 band '+esc(e.band||'?'))+
-        '<i>accepted to <em>'+esc(tenorLabel(p.t))+'</em>'+(p.t===longest?' \u2014 your longest':'')+
-        (p.s===weakest?' \u00b7 your weakest score':'')+'</i>'+
-        '<i>'+(e.rating_composite?'rated '+esc(e.rating_composite)+' \u00b7 ':'')+
-        (e.cet1!=null?'CET1 '+e.cet1.toFixed(1)+'% \u00b7 ':'')+(e.lcr!=null?'LCR '+Math.round(e.lcr)+'%':'')+'</i>'+
-        '<i>weakest you accept at '+esc(tenorLabel(p.t))+' or longer: '+minAt.toFixed(1)+'</i>');
-      inner+='<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.s).toFixed(1)+'" r="4.5" fill="'+(BANDC[e.band]||'#7d93ad')+'" stroke="#fff" stroke-width="1.5"/>'+
-             '<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.s).toFixed(1)+'" r="10" fill="transparent"'+tip+'/>';
+      var cy=g.pts.reduce(function(a,o){return a+Y(o.s)},0)/g.pts.length;
+      var tip;
+      if(g.pts.length===1){
+        tip=tipd(tipHead(esc(e.short),e.score.toFixed(1)+' \u00b7 band '+esc(e.band||'?'))+
+          '<i>accepted to <em>'+esc(tenorLabel(p.t))+'</em>'+(p.t===longest?' \u2014 your longest':'')+
+          (p.s===weakest?' \u00b7 your weakest score':'')+'</i>'+
+          '<i>'+(e.rating_composite?'rated '+esc(e.rating_composite)+' \u00b7 ':'')+
+          (e.cet1!=null?'CET1 '+e.cet1.toFixed(1)+'% \u00b7 ':'')+(e.lcr!=null?'LCR '+Math.round(e.lcr)+'%':'')+'</i>'+
+          '<i>weakest you accept at '+esc(tenorLabel(p.t))+' or longer: '+minAt.toFixed(1)+'</i>');
+        inner+='<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.s).toFixed(1)+'" r="4.5" fill="'+(BANDC[e.band]||'#7d93ad')+'" stroke="#fff" stroke-width="1.5"/>'+
+               '<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.s).toFixed(1)+'" r="10" fill="transparent"'+tip+'/>';
+      }else{
+        tip=tipd(tipHead(g.pts.length+' names at '+esc(tenorLabel(g.t)),(g.t===longest?'your longest tenor':''))+
+          g.pts.map(function(o){return '<i><em>'+esc(o.e.short)+'</em> '+o.s.toFixed(1)+' \u00b7 band '+esc(o.e.band||'?')+
+            (o.e.rating_composite?' \u00b7 '+esc(o.e.rating_composite):'')+(o.s===weakest?' \u00b7 your weakest':'')+'</i>'}).join('')+
+          '<i>weakest you accept at '+esc(tenorLabel(g.t))+' or longer: '+minAt.toFixed(1)+'</i>');
+        inner+='<circle cx="'+X(g.t).toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="7" fill="'+(BANDC[e.band]||'#7d93ad')+'" stroke="#fff" stroke-width="1.5"/>'+
+               '<text x="'+X(g.t).toFixed(1)+'" y="'+(cy+2.6).toFixed(1)+'" text-anchor="middle" class="pv-n">'+g.pts.length+'</text>'+
+               '<circle cx="'+X(g.t).toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="11" fill="transparent"'+tip+'/>';
+      }
     });
     inner+='<text x="0" y="'+h+'" class="pv-ax">short</text><text x="'+w+'" y="'+h+'" text-anchor="end" class="pv-ax">'+tenorLabel(maxT)+'</text>';
     return svg(w,h,inner);
@@ -538,7 +566,12 @@
     var reg=document.getElementById('uni-region').value, typ=document.getElementById('uni-type').value;
     var bnd=document.getElementById('uni-band').value, only=document.getElementById('uni-scored').checked;
     var have={}; load().forEach(function(it){have[it.id]=it.tenor});
+    var wl={}; watchIds().forEach(function(id){wl[id]=1});
+    var top={}; if(uniChip==='top')topStanding().forEach(function(e){top[e.id]=1});
     return data.rows.filter(function(e){
+      if(uniChip==='top'&&!top[e.id])return false;
+      if(uniChip==='mine'&&have[e.id]==null)return false;
+      if(uniChip==='watch'&&!wl[e.id])return false;
       if(reg&&e.region!==reg)return false;
       if(typ&&e.type!==typ)return false;
       if(bnd&&e.band!==bnd)return false;
@@ -554,6 +587,9 @@
     });
   }
   var PEEK=8;    // rows a scrolling window shows before there is anything below its fold
+  // One chip at a time, or none: the five strongest standings, the names held, the names followed.
+  var uniChip='';
+  function topStanding(){return data.rows.filter(function(e){return e.score!=null}).sort(function(a,b){return b.score-a.score}).slice(0,5)}
   // Columns the universe table shows on request. The four a policy is written around are always
   // there; these are the rest of what is held, brought in without widening the default for
   // everyone, and the choice is kept in this browser.
@@ -618,7 +654,8 @@
     var foot=document.getElementById('uni-count2');
     body.innerHTML=rows.map(function(r){
       var e=r.e;
-      return '<tr class="uni-row" data-id="'+esc(e.id)+'"'+(e.blurb?' title="'+esc(e.blurb)+'"':'')+'>'+
+      return '<tr class="uni-row'+(r.tenor!=null?' uni-mine':'')+'" data-id="'+esc(e.id)+'"'+(e.blurb?' title="'+esc(e.blurb)+'"':'')+'>'+
+        '<td class="uni-st">'+(r.tenor!=null?'<span class="uni-own" title="in your list">\u2713</span>':starBtn(e.id))+'</td>'+
         '<td><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
         '<td class="mono small">'+sovPill(e)+'</td>'+
         '<td class="num">'+(e.score==null?'<span class="na">—</span>':
@@ -636,9 +673,9 @@
         '<td class="num">'+news30Cell(e)+'</td>'+
         '<td>'+mkt(e.market,1)+'</td>'+
         '<td class="num">'+(r.tenor!=null
-            ? '<span class="chip chip-good" title="already in your policy">'+esc(tenorLabel(r.tenor))+'</span>'
+            ? '<span class="chip chip-good" title="already in your list">In your list \u00b7 '+esc(tenorLabel(r.tenor))+'</span>'
             : '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button>')+'</td></tr>';
-    }).join('')||'<tr><td colspan="12" class="empty">No name matches those filters.</td></tr>';
+    }).join('')||'<tr><td colspan="13" class="empty">No name matches those filters.</td></tr>';
     // Measuring the box is no good here: renderUni first runs while this tab is still closed, a
     // hidden box measures nothing, and the answer would stick. The row count asks the same
     // question of the data rather than of the layout, and it cannot go stale.
@@ -665,6 +702,13 @@
     }
     ['uni-q','uni-region','uni-type','uni-band','uni-scored','uni-tenor'].forEach(function(id){
       var el=document.getElementById(id); if(el)el.addEventListener('input',renderUni);
+    });
+    var chips=document.getElementById('uni-chips');
+    if(chips)chips.addEventListener('click',function(ev){
+      var b=ev.target.closest('[data-uf]'); if(!b)return;
+      uniChip=uniChip===b.dataset.uf?'':b.dataset.uf;
+      chips.querySelectorAll('[data-uf]').forEach(function(x){x.classList.toggle('active',x.dataset.uf===uniChip)});
+      renderUni();
     });
     // One listener on the row, not one per heading: the column chooser adds headings after
     // this runs, and a heading with no listener sorted nothing.
@@ -815,7 +859,7 @@
         '<td class="ll-addc"><button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></td></tr>';
     }).join('');
     return '<div class="table-wrap scrollbox"><table class="plain ll-t2"><thead><tr>'+
-      '<th></th><th>Name</th><th>Score'+mk('score')+'</th><th>Rating</th>'+
+      '<th></th><th>Name</th><th>Score'+mk('score')+'</th><th>Agency rating</th>'+
       '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Figures</th><th>News 30d</th><th>Market</th><th></th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
@@ -873,6 +917,39 @@
 
   // a tab says how much is behind it, so a reader knows whether it is worth the click
   function tabCount(id,n){var el=document.getElementById(id); if(el)el.textContent=n?String(n):''}
+  // The table is the survey of the market, so it stands open while the list is empty. Once names
+  // are held the page leads with them and the table folds behind "Add names"; opened from there
+  // it stays open through the adds that follow, until it is folded or the page is left.
+  var uniOpen=null;
+  function uniSection(n){
+    var sec=document.getElementById('uni-sec'), btn=document.getElementById('uni-toggle'), ttl=document.getElementById('uni-title'), pnl=document.getElementById('uni-panel');
+    if(!sec||!btn)return;
+    var open=uniOpen==null?!n:uniOpen;
+    pnl.hidden=!open; sec.classList.toggle('uni-closed',!open);
+    btn.textContent=open?'Hide the table':'Add names'; btn.classList.toggle('active',open); btn.setAttribute('aria-expanded',String(open));
+    ttl.textContent=n?'Every covered name':'Choose from every covered name';
+  }
+  // The names followed but not held: a short table under the list, with the same figures and a
+  // way to move one up into the list.
+  function watchSection(p){
+    var have={}; p.forEach(function(it){have[it.id]=1});
+    var ws=watchIds().map(function(id){return byId[id]}).filter(function(e){return e&&!have[e.id]});
+    if(!ws.length)return '';
+    ws.sort(function(a,b){return (b.score||0)-(a.score||0)});
+    var t=+((document.getElementById('uni-tenor')||{}).value||365);
+    var rows=ws.map(function(e){
+      return '<tr class="pw-r" data-id="'+esc(e.id)+'"><td class="uni-st">'+starBtn(e.id)+'</td>'+
+        '<td><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+' \u00b7 '+sovPill(e)+'</div></td>'+
+        '<td class="num">'+scoreNum(e.score,e.band,'sc-1')+'</td>'+
+        '<td class="mono"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'\u2014')+'</b></td>'+
+        '<td class="num mono">'+(e.cet1==null?'\u2014':e.cet1.toFixed(1))+'</td>'+
+        '<td class="num mono">'+(e.lcr==null?'\u2014':Math.round(e.lcr)+'%')+'</td>'+
+        asofCell(e)+'<td class="num">'+news30Cell(e)+'</td><td>'+mkt(e.market,1)+'</td>'+
+        '<td class="num"><button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add at '+esc(tenorLabel(t))+'</button></td></tr>';
+    }).join('');
+    return '<div class="pol-watch" id="pol-watch"><h4>Watching <span class="small muted">\u00b7 '+ws.length+(ws.length===1?' name':' names')+' you follow but do not hold; adding one moves it up</span></h4>'+
+      '<div class="table-wrap"><table class="plain pw-t"><thead><tr><th></th><th>Name</th><th class="num">Score</th><th>Agency rating</th><th class="num">CET1</th><th class="num">LCR</th><th>Figures</th><th class="num">News 30d</th><th>Market</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  }
   function render(){
     var p=load(); var out=document.getElementById('policy-body'); if(!out||!data)return;
     var llBox=document.getElementById('pol-ll'), llHtml='', llN=0;
@@ -882,19 +959,13 @@
     // empty box and a share bar with nothing to share
     var share=document.getElementById('pol-share'); if(share)share.hidden=!p.length;
     if(!p.length){
-      // the space beside the instruction is worth more as real data than as white: the strongest
-      // published standing today, addable in one click, so the page does something on arrival
-      var top=data.rows.filter(function(e){return e.score!=null}).sort(function(a,b){return b.score-a.score}).slice(0,5);
-      html+='<div class="pol-empty"><div><p>Type a name above, or add one from any row of the table below. '+
-        'Every name is re-checked each night against its regulatory filings, its agency ratings and the news.</p>'+
-        '<button class="filter active" id="pol-browse">Browse all '+data.rows.length+' names</button>'+
-        '<figure class="pe-fig"><figcaption>Where the '+data.rows.filter(function(e){return e.score!=null}).length+
-        ' scored names sit'+mk('score')+'</figcaption>'+scoreHist([],data.rows,1)+'</figure></div>'+
-        '<div class="pe-top"><h5>Strongest published standing today</h5>'+top.map(function(e){
-          return '<div class="pe-row" data-id="'+esc(e.id)+'"><span class="pe-nm">'+esc(e.short)+'</span>'+
-                 '<span class="pe-sc">'+scoreNum(e.score,e.band,'sc-1')+'</span>'+
-                 '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="365">Add</button></div>';
-        }).join('')+'</div></div>'}
+      // an instruction and the open table under it: the survey of the market is the empty state
+      html+='<div class="pol-empty"><p><b>Your list is empty.</b> Choose names from the table below: sort on any column, '+
+        'filter by region, type or band, and press Add on a row. Every name you hold is re-checked each night '+
+        'against its regulatory filings, its agency ratings and the news.</p>'+
+        '<p class="small muted">Everything stays in this browser; nothing is sent anywhere. '+
+        'To see the page with names on it, <button class="linky" id="pol-demo" type="button">load an example list</button>.</p></div>'+
+        watchSection(p)}
     else{
       var n_flag=0;
       var rows=p.slice().sort(function(a,b){return b.tenor-a.tenor||(byId[a.id]&&byId[a.id].short||'').localeCompare(byId[b.id]&&byId[b.id].short||'')}).map(function(it){
@@ -918,7 +989,7 @@
               '<div class="cp-sub">'+esc(e.name)+' · '+sovPill(e)+'</div></div>'+
             '<div class="cp-stats">'+
               kv(scoreNum(e.score,e.band),'score','ck-score ck-sep')+
-              kv('<span style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</span>','rating')+
+              kv('<span style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</span>','agency rating')+
             '</div>'+
             tenorPick(it)+
             '<div class="cp-tags">'+(worst_fl?chip(worst_fl[2]||worst_fl[1],worst_fl[0])
@@ -936,6 +1007,7 @@
         '<span class="pol-view" role="group" aria-label="Show as"><button class="filter'+(view==='cards'?' active':'')+'" id="pol-view-cards" type="button">Cards</button><button class="filter'+(view==='table'?' active':'')+'" id="pol-view-table" type="button">Table</button></span></div>';
       html+=overview(p.filter(function(it){return byId[it.id]}));
       html+=view==='table'?polTable(p,flags):'<div class="pol-list">'+rows+'</div>';
+      html+=watchSection(p);
       // like-for-like: names at least as strong as the weakest you already accept at each tenor
       // One tenor at a time, chosen from a row of chips rather than four lists down a page. Each
       // one now stands alone: it shows every covered name that clears the bar at that tenor, not
@@ -980,12 +1052,14 @@
       });
       ll=(tenors.length>1?'<div class="ll-tenors filters">'+chips+'</div>':'')+panes;
       llN=Object.keys(union).length;
-      llHtml='<p class="panel-lede small muted">Covered names at least as strong as the weakest you already accept at each tenor \u2014 same or better band, ratings and score, and no widening market signal.</p>'+ll;
+      llHtml='<h4 class="ll-title">Like-for-like alternatives</h4><p class="panel-lede small muted">Covered names at least as strong as the weakest you already accept at each tenor \u2014 same or better band, ratings and score, and no widening market signal.</p>'+ll;
     }
     out.innerHTML=html;
     if(llBox)llBox.innerHTML=llHtml||'<div class="empty">Approve a name and this fills with the covered names that match the standing you accept.</div>';
     tabCount('tn-policy',p.length); tabCount('tn-ll',llN);
+    uniSection(p.length);
     renderUni();
+    weightLine();
     // the list is on screen: anything speculative may start now
     if(!render.said){render.said=1;dispatchEvent(new Event('cp:ready'))}
   }
@@ -1001,12 +1075,9 @@
       '</select></label>';
   }
   // ---- an example portfolio -------------------------------------------------------------------
-  // A shared link opens on an empty page, and an empty page is a poor demonstration of a tool for
-  // reading a list. So a first visit is seeded with a list shaped like a local authority's: the
-  // clearing banks it settles through, a few building societies, a few overseas names, and tenors
-  // graded by standing rather than uniform. It is an example and the page says so. Clearing it
-  // leaves it cleared - the seed is laid once, not every time the tab is opened.
-  var SEEDED='counterparty.seeded';
+  // A list shaped like a local authority's - the clearing banks it settles through, a few building
+  // societies, a few overseas names, tenors graded by standing - for showing the page with names
+  // on it. It is loaded only by the link in the empty state, and the page says it is an example.
   var DEMO=[
     ['nwb-bank',1825],['bng-bank',1825],['rabobank',730],['handelsbanken-plc',730],
     ['dz-bank',730],['td-bank',730],
@@ -1027,16 +1098,12 @@
     var want={};DEMO.forEach(function(d){want[d[0]]=d[1]});
     return p.every(function(x){return want[x.id]===x.tenor});
   }
-  function seedIfEmpty(){
-    try{if(localStorage.getItem(SEEDED))return}catch(e){return}
-    if(load().length)return;
-    var p=demoPolicy(); if(!p.length)return;
-    save(p);
-    try{localStorage.setItem(SEEDED,'1')}catch(e){}
-    window.__demo=true;
-  }
   function add(id,tenor){var p=load();var e=byId[id];if(!e)return;var ex=p.filter(function(x){return x.id===id})[0];
-    if(ex){ex.tenor=tenor}else{p.push({id:id,tenor:tenor,added:new Date().toISOString().slice(0,10),base:snapshot(e)})}save(p);render()}
+    // a table that was open stays open through an add: the reader is choosing several
+    if(uniOpen==null){var pn=document.getElementById('uni-panel');uniOpen=!!(pn&&!pn.hidden)}
+    if(ex){ex.tenor=tenor}else{p.push({id:id,tenor:tenor,added:new Date().toISOString().slice(0,10),base:snapshot(e)});
+      var w=watchIds(),wi=w.indexOf(id);if(wi>=0){w.splice(wi,1);saveWatch(w)}}
+    save(p);render()}
   // ---- the weighting panel ------------------------------------------------------------------
   function pct(w){var t=0;PILLARS.forEach(function(p){t+=w[p[0]]});return t}
   function weightPanel(){
@@ -1101,8 +1168,22 @@
       '<div class="wt-movers">'+deltas.slice(0,3).map(function(x){return mover(x,'up')}).join('')+
         deltas.slice(-3).reverse().map(function(x){return mover(x,'down')}).join('')+'</div></div>';
   }
+  function weightLine(){
+    var out=document.getElementById('wt-vals'); if(!out)return;
+    var w=weights(), total=pct(w)||1;
+    out.innerHTML=PILLARS.map(function(p){return '<span class="wt-v"><b>'+(w[p[0]]/total*100).toFixed(0)+'%</b>'+esc(p[1].toLowerCase())+'</span>'}).join('')+
+      '<span class="wt-who small muted">'+(w.__custom?'set by you':'the starting point')+'</span>';
+  }
+  function openWeights(){
+    var d=document.getElementById('wt-dlg'); if(!d)return;
+    weightPanel(); if(!d.open)d.showModal();
+  }
   function bindWeights(){
     var box=document.getElementById('pol-weights'); if(!box)return;
+    var chg=document.getElementById('wt-change'); if(chg)chg.addEventListener('click',openWeights);
+    var cls=document.getElementById('wt-close'); if(cls)cls.addEventListener('click',function(){document.getElementById('wt-dlg').close()});
+    var dlg=document.getElementById('wt-dlg');
+    if(dlg)dlg.addEventListener('click',function(ev){if(ev.target===dlg)dlg.close()});
     box.addEventListener('input',function(ev){
       var s=ev.target.closest('.wt-s'); if(!s)return;
       var w=weights(); delete w.__custom; w[s.dataset.k]=+s.value; saveWeights(w);
@@ -1116,14 +1197,11 @@
   }
 
   function init(){
-    var sel=document.getElementById('pol-name');var dl=document.getElementById('pol-names');
-    data.rows.forEach(function(e){byId[e.id]=e;var o=document.createElement('option');o.value=e.short+' — '+e.name;o.dataset.id=e.id;dl.appendChild(o)});
-    seedIfEmpty();
-    var ten=document.getElementById('pol-tenor');TENORS.forEach(function(t){var o=document.createElement('option');o.value=t[0];o.textContent=t[1];if(t[0]===365)o.selected=true;ten.appendChild(o)});
-    document.getElementById('pol-add').addEventListener('click',function(){var v=sel.value;var id=null;for(var i=0;i<dl.options.length;i++)if(dl.options[i].value===v){id=dl.options[i].dataset.id;break}
-      if(!id){var q=v.toLowerCase();data.rows.some(function(e){if(e.short.toLowerCase()===q||e.name.toLowerCase()===q){id=e.id;return true}})}
-      if(!id){sel.classList.add('err');return}sel.classList.remove('err');add(id,+ten.value);sel.value=''});
+    data.rows.forEach(function(e){byId[e.id]=e});
     document.addEventListener('click',function(ev){var b=ev.target.closest('.pol-rm');if(b){var p=load().filter(function(x){return x.id!==b.dataset.id});save(p);render();return}
+      var st=ev.target.closest('.uni-star');if(st){toggleWatch(st.dataset.id);render();return}
+      if(ev.target.closest('#uni-toggle')){uniOpen=document.getElementById('uni-panel').hidden;uniSection(load().length);
+        if(uniOpen){var q0=document.getElementById('uni-q');if(q0)q0.focus({preventScroll:true})}return}
       var a=ev.target.closest('.pol-add-ll');if(a){add(a.dataset.id,+a.dataset.tenor);var d=document.getElementById('pol-modal');if(d&&d.open)d.close();return}
       // one tenor at a time: the chips swap the pane rather than scroll four lists past you
       var tc=ev.target.closest('.ll-t')||ev.target.closest('.ll-jump');
@@ -1152,12 +1230,14 @@
       var sel=ev.target.closest('.cp-ten select'); if(!sel)return;
       add(sel.dataset.id,+sel.value);
     });
-    document.addEventListener('click',function(ev){
-      if(!ev.target.closest('#pol-browse'))return;
-      var t=document.querySelector('.tab[data-tab="universe"]'); if(t&&!t.classList.contains('active'))t.click();
-      var q=document.getElementById('uni-q'); if(q)q.focus({preventScroll:true});
-      var box=document.getElementById('browse'); if(box)box.scrollIntoView({behavior:'smooth',block:'start'});
-    });
+    // the addresses the old tabs answered to still open the right thing
+    function byHash(){
+      var h=location.hash.replace('#','').split('&')[0];
+      if(h==='universe'){var t=document.querySelector('.tab[data-tab="policy"]');if(t&&!t.classList.contains('active'))t.click();uniOpen=true;uniSection(load().length);
+        var sec=document.getElementById('uni-sec');if(sec)sec.scrollIntoView({block:'start'})}
+      if(h==='weights')openWeights();
+    }
+    byHash(); addEventListener('hashchange',byHash);
     document.addEventListener('keydown',function(ev){
       if(ev.key!=='Enter'&&ev.key!==' ')return;
       var card=ev.target.closest&&ev.target.closest('.ll-r,.pol-card,.pol-tr');

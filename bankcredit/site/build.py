@@ -264,7 +264,7 @@ def ratings_tile(b) -> str:
         f'<div class="rst small muted">{("ST " + c.esc(short[r["agency"]])) if r["agency"] in short else ""}{(" · " if r["agency"] in short else "") + c.esc(str(r.get("type") or "").replace("_", " ")) if r.get("type") not in ("idr", "issuer") else ""}</div>'
         f'<div class="rdate mono small muted">{c.esc(r.get("date") or "")}</div></div>' for r in rs)
     grade = b.get("rating_grade")
-    comp = f'<span class="band mono" style="background:{grade_colour(grade)};color:{c.on_colour(grade_colour(grade))}">{c.esc(b.get("rating_composite") or "NR")}</span>'
+    comp = f'<span class="band band-fit mono" style="background:{grade_colour(grade)};color:{c.on_colour(grade_colour(grade))}">{c.esc(b.get("rating_composite") or "NR")}</span>'
     return (f'<div class="tile tile-ratings"><div class="tile-head"><span class="tile-label">Agency ratings{c.info("rating")}</span><span class="tile-flags">composite{c.info("composite")} {comp} {c.market_glyph(b.get("market") or {})} <span class="small muted">{c.esc((b.get("market") or {}).get("label") or "")}</span></span></div>'
             f'<div class="rcells">{cells}</div><div class="tile-foot"><span>ESMA European Rating Platform, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span></div></div>')
 
@@ -1032,17 +1032,16 @@ def page_ratings(generated, inner: bool = False):
     return content if inner else c.shell("Ratings", content, "ratings", "../", generated)
 
 def page_policy_content(board=None) -> str:
-    """The page opens on the work: the field that adds a name, and the tabs under it.
+    """The page opens on what the score rests on, then the tabs.
 
-    It used to open on a masthead - a title, a line of prose and a strip of counts - which said
-    what the header already says and pushed the list down the screen. The counts are on the
-    universe tab, where they are what the reader is looking at.
+    It used to open on a field that added a name, above tabs that included the table the name
+    came from, and a reader who had not yet chosen anyone had nothing to do with either. The
+    weightings come first now - they are the reader's, and every score below follows from them -
+    and adding a name happens where the names are, on the first tab.
     """
     return f'''<div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>
-<section class="pol-wrap"><div class="pol-topbar">
-<div class="pol-form"><label><span>Name{c.info("counterparty")}</span><input id="pol-name" list="pol-names" placeholder="Barclays Bank UK PLC, not Barclays PLC" autocomplete="off"><datalist id="pol-names"></datalist></label>
-<label><span>Longest tenor{c.info('tenor')}</span><select id="pol-tenor"></select></label><button class="filter active" id="pol-add">Add</button>
-<span class="pol-hint small muted">Add a name to your list. Everything stays in this browser; nothing is sent anywhere.</span></div></div>
+<section class="pol-wrap"><div class="wt-line" id="wt-line"><span class="wt-l">Score weightings{c.info("score")}</span><span class="wt-vals" id="wt-vals"><span class="sk"></span></span><button class="filter" id="wt-change" type="button">Change</button></div>
+<dialog id="wt-dlg" class="wt-dlg"><button class="cd-close wt-close" id="wt-close" aria-label="Close">\u00d7</button><div id="pol-weights"></div></dialog>
 <dialog id="pol-modal" class="pol-modal"></dialog></section>'''
 
 
@@ -1052,7 +1051,8 @@ def _panel_content(html: str) -> str:
     return (f'<p class="small muted panel-lede">{m.group(1)}</p>' + html[m.end():]) if m else html
 
 
-UNIVERSE_PANEL = f"""<p class="small muted">Every name, sortable on any column, with the same detail on click. Anything marked <span class="i i-static" aria-hidden="true">i</span> explains itself.</p>
+UNIVERSE_PANEL = f"""<p class="small muted">Every name, sortable on any column, with the same detail on click. Add on any row; the star follows a name without adding it. Anything marked <span class="i i-static" aria-hidden="true">i</span> explains itself.</p>
+<div class="filters uni-chips" id="uni-chips"><button class="filter" data-uf="top" type="button" title="the five strongest published standings today">Top standing today</button><button class="filter" data-uf="mine" type="button">In my list</button><button class="filter" data-uf="watch" type="button">Watching</button></div>
 <div class="uni-bar">
   <input id="uni-q" type="search" placeholder="Search name, country or LEI" autocomplete="off">
   <select id="uni-region"><option value="">Every region</option></select>
@@ -1063,8 +1063,8 @@ UNIVERSE_PANEL = f"""<p class="small muted">Every name, sortable on any column, 
   <span class="uni-count small muted" id="uni-count"></span>
 </div>
 <div class="table-wrap scrollbox"><table class="plain uni" id="uni-table"><thead><tr>
-  <th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score{c.info("score")}</th>
-  <th data-sort="rating_grade">Rating{c.info("composite")}</th><th data-sort="cet1" class="num">CET1{c.info("cet1_ratio")}</th><th data-sort="leverage" class="num">Lev{c.info("leverage_ratio")}</th>
+  <th class="uni-st" title="watching"></th><th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score{c.info("score")}</th>
+  <th data-sort="rating_grade">Agency rating{c.info("composite")}</th><th data-sort="cet1" class="num">CET1{c.info("cet1_ratio")}</th><th data-sort="leverage" class="num">Lev{c.info("leverage_ratio")}</th>
   <th data-sort="lcr" class="num">LCR{c.info("lcr")}</th><th data-sort="nsfr" class="num">NSFR{c.info("nsfr")}</th>
   <th data-sort="asof" class="uni-fig">Figures{c.info("as_at")}</th><th data-sort="news30" class="num" title="headlines and rating actions kept in the last 30 days, by severity">News 30d</th><th>Market{c.info("market_signal")}</th><th></th></tr></thead><tbody id="uni-body"><tr class="sk-tr"><td colspan="12"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr></tbody></table></div><div class="tfoot small muted" id="uni-count2"></div>
 """
@@ -1100,28 +1100,25 @@ def page_home(board, status, generated):
                + '<div class="card tabs-card" style="margin-top:16px" id="browse">'
                  '<div class="tabs" role="tablist">'
                  '<button class="tab active" data-tab="policy">Your counterparties<span class="tab-n" id="tn-policy"></span></button>'
-                 '<button class="tab" data-tab="likeforlike">Like-for-like<span class="tab-n" id="tn-ll"></span></button>'
-                 '<button class="tab" data-tab="universe">Every covered name</button>'
+                 '<button class="tab" data-tab="likeforlike">Alternatives<span class="tab-n" id="tn-ll"></span></button>'
                  + ('<button class="tab" data-tab="ratings">Ratings</button>' if "ratings" not in HOME_TABS_HIDDEN else '')
                  + ('<button class="tab" data-tab="events">Events</button>' if "events" not in HOME_TABS_HIDDEN else '')
-                 + '<button class="tab" data-tab="analysis">Analysis</button>'
-                 '<button class="tab" data-tab="weights">Weightings</button></div>'
+                 + '<button class="tab" data-tab="analysis">Analysis</button></div>'
                  '<section class="panel active" data-panel="policy">'
                  '<div id="policy-body"><div class="sk-cards" aria-hidden="true">'
                  + '<span class="sk"></span>' * 4 + '</div></div>'
                  '<div class="pol-share" id="pol-share" hidden>'
-                 '<button class="filter" id="pol-clear">Clear all</button>'
-                 # for showing the thing to somebody: puts the example list back as it was
-                 '<button class="filter" id="pol-demo">Load the example portfolio</button></div></section>'
+                 '<button class="filter" id="pol-clear">Clear all</button></div>'
+                 # The whole universe lives on this tab: it is the table a name is chosen from, so it
+                 # is open when the list is empty and folds behind one button once it is not.
+                 f'<div class="uni-sec" id="uni-sec"><div class="uni-head"><h4 id="uni-title">Every covered name</h4>'
+                 '<button class="filter active" id="uni-toggle" type="button" aria-expanded="true" aria-controls="uni-panel">Hide the table</button></div>'
+                 f'<div id="uni-panel">{UNIVERSE_PANEL}</div></div></section>'
                  '<section class="panel" data-panel="likeforlike"><div id="pol-ll"></div></section>'
-                 f'<section class="panel" data-panel="universe">{UNIVERSE_PANEL}</section>'
                  + (f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={c.stamp(generated)}"></section>' if "ratings" not in HOME_TABS_HIDDEN else '')
                  + (f'<section class="panel" data-panel="events" data-src="data/panels/events.html?v={c.stamp(generated)}"></section>' if "events" not in HOME_TABS_HIDDEN else '')
                  + f'<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html?v={c.stamp(generated)}"'
                  f' data-js="assets/compare.js?v={c.stamp(generated)}"></section>'
-                 # how much each pillar counts for is the reader's judgement, so it is a tab of its
-                 # own rather than a setting tucked behind a cog, and the disclosure lives with it
-                 '<section class="panel" data-panel="weights"><div id="pol-weights"></div></section>'
                  '</div>')
     # the list is drawn from this file, and asking for it only after two scripts have been
     # fetched and run is a round trip the reader spends looking at an empty box
@@ -1271,7 +1268,7 @@ def _write(path, html: str) -> None:
 def compare_content() -> str:
     sets = [("all", "Everyone"), ("uk_large", "UK majors"), ("uk_mid", "UK mid-sized"), ("uk_small", "UK small banks"), ("uk_bs", "Building societies"),
             ("eu_large", "EU and Nordic"), ("us", "US"), ("ch", "Switzerland"), ("aus", "Australia"), ("can", "Canada"), ("asia", "Asia"), ("gulf", "Gulf"),
-            ("watch", "Watching"), ("policy", "My policy")]
+            ("watch", "Watching"), ("policy", "My list")]
     chips = "".join(f'<button class="filter cp-set" data-set="{k}">{c.esc(l)}<span class="cnt"></span></button>' for k, l in sets)
     def panel(pid, title, sub, wide: bool = False):
         return (f'<section class="panel-c{" wide" if wide else ""}" id="p-{pid}"><div class="pc-head"><h3>{c.esc(title)} <span class="muted small">{c.esc(sub)}</span></h3>'
