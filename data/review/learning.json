@@ -3376,5 +3376,775 @@
   "page_reviewer": 3,
   "date_extractor": null,
   "date_reviewer": "2023-09-30"
+ },
+ {
+  "date": "2026-09-21T06:47:09",
+  "id": "011a4b80b34b",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 17,
+  "date_extractor": null,
+  "date_reviewer": "2024-03-31"
+ },
+ {
+  "date": "2026-09-21T06:47:09",
+  "id": "0156eab3b981",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    14.6
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2022-06-30",
+  "date_reviewer": "2022-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:09",
+  "id": "017e9bed80f7",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2024-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:10",
+  "id": "087e890abfee",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 25,
+  "date_extractor": null,
+  "date_reviewer": "2023-09-30"
+ },
+ {
+  "date": "2026-09-21T06:47:10",
+  "id": "08e66c38bc1d",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2011-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:10",
+  "id": "0f3f907d5ff5",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 17,
+  "date_extractor": null,
+  "date_reviewer": "2022-03-31"
+ },
+ {
+  "date": "2026-09-21T06:47:11",
+  "id": "11655aa240e5",
+  "entity_id": "credit-agricole-cib",
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing ",
+  "skip": false,
+  "compared": 3,
+  "matched": 3,
+  "mismatches": {},
+  "page_extractor": 3,
+  "page_reviewer": 3,
+  "date_extractor": "2026-06-30",
+  "date_reviewer": "2026-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:11",
+  "id": "19ec4e00e9aa",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:11",
+  "id": "1bedd9692447",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:12",
+  "id": "1f3be4acc865",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:12",
+  "id": "2368a2718381",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:12",
+  "id": "238fe16004f5",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    14.4
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2020-12-31",
+  "date_reviewer": "2020-12-31"
+ },
+ {
+  "date": "2026-09-21T06:47:12",
+  "id": "286da97f1367",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2023-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:12",
+  "id": "2b23a6088ed7",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:12",
+  "id": "2c690a403581",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2022-12-31"
+ },
+ {
+  "date": "2026-09-21T06:47:13",
+  "id": "2d733e9b060f",
+  "entity_id": "lloyds-banking-group",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:13",
+  "id": "2f9799d3b8ed",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:13",
+  "id": "306e8e44d942",
+  "entity_id": "lloyds-bank",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2021-06-30",
+  "date_reviewer": "2021-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:13",
+  "id": "323e2032b6d0",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:13",
+  "id": "398bd1bbdd2e",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:13",
+  "id": "3fb74459e688",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:13",
+  "id": "41336292265e",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "total_capital_ratio": [
+    11.5,
+    17.6
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2021-12-31",
+  "date_reviewer": "2021-12-31"
+ },
+ {
+  "date": "2026-09-21T06:47:14",
+  "id": "455958febb4b",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 11,
+  "date_extractor": null,
+  "date_reviewer": "2013-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:14",
+  "id": "4c491b4b36d6",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2023-03-31"
+ },
+ {
+  "date": "2026-09-21T06:47:15",
+  "id": "5469c628852f",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2012-09-30"
+ },
+ {
+  "date": "2026-09-21T06:47:15",
+  "id": "550aa6928c3f",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2012-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:15",
+  "id": "56f5b18e8904",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:15",
+  "id": "5d2765add49d",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 5,
+  "date_extractor": null,
+  "date_reviewer": "2022-09-30"
+ },
+ {
+  "date": "2026-09-21T06:47:15",
+  "id": "62b2b8d2a957",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:16",
+  "id": "65415abc4d5e",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:16",
+  "id": "659eb1e5e295",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 24,
+  "date_extractor": null,
+  "date_reviewer": "2024-09-30"
+ },
+ {
+  "date": "2026-09-21T06:47:16",
+  "id": "71f0e79d827d",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:17",
+  "id": "81ae841a9c33",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:17",
+  "id": "87d87f661ba9",
+  "entity_id": "bank-of-scotland",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2022-03-31"
+ },
+ {
+  "date": "2026-09-21T06:47:17",
+  "id": "89c5329c30d0",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:17",
+  "id": "8cfc8b61bacd",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:18",
+  "id": "948c875a8204",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    13.4
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2022-03-31",
+  "date_reviewer": "2022-03-31"
+ },
+ {
+  "date": "2026-09-21T06:47:18",
+  "id": "95c19e5c40a9",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    12.4
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2021-03-31",
+  "date_reviewer": "2021-03-31"
+ },
+ {
+  "date": "2026-09-21T06:47:18",
+  "id": "9ae1b9ecd005",
+  "entity_id": "bank-of-scotland",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2023-03-31"
+ },
+ {
+  "date": "2026-09-21T06:47:18",
+  "id": "9d6b2ecfd438",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:18",
+  "id": "a3caa709c6df",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:19",
+  "id": "aca53c9a6c13",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:19",
+  "id": "aebc96fed8e4",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 18,
+  "date_extractor": null,
+  "date_reviewer": "2023-03-31"
+ },
+ {
+  "date": "2026-09-21T06:47:19",
+  "id": "af6d329d13c6",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:19",
+  "id": "afcb37d42629",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2013-09-30"
+ },
+ {
+  "date": "2026-09-21T06:47:20",
+  "id": "b2d62f3ae290",
+  "entity_id": "lloyds-bank",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2020-12-31",
+  "date_reviewer": "2020-12-31"
+ },
+ {
+  "date": "2026-09-21T06:47:20",
+  "id": "b6fdacfafa1e",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 2,
+  "date_extractor": null,
+  "date_reviewer": "2011-09-30"
+ },
+ {
+  "date": "2026-09-21T06:47:20",
+  "id": "b98471412dd3",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 26,
+  "date_extractor": null,
+  "date_reviewer": "2022-09-30"
+ },
+ {
+  "date": "2026-09-21T06:47:20",
+  "id": "bd11386be6f9",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 13,
+  "date_extractor": null,
+  "date_reviewer": "2014-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:20",
+  "id": "c0d98cf47724",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2024-12-31"
+ },
+ {
+  "date": "2026-09-21T06:47:21",
+  "id": "c2910fa3e9ab",
+  "entity_id": "lloyds-bank",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2021-12-31",
+  "date_reviewer": "2021-12-31"
+ },
+ {
+  "date": "2026-09-21T06:47:21",
+  "id": "c3b3c59c3cc6",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2022-03-31"
+ },
+ {
+  "date": "2026-09-21T06:47:21",
+  "id": "c90eecafe118",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2022-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:21",
+  "id": "caa5bdc747f1",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:21",
+  "id": "ceab6c066455",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:22",
+  "id": "da637b25eff9",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    12.9
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2021-06-30",
+  "date_reviewer": "2021-06-30"
+ },
+ {
+  "date": "2026-09-21T06:47:22",
+  "id": "dae15630e332",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:22",
+  "id": "db2cef8753a5",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:22",
+  "id": "dcb38025b051",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:22",
+  "id": "dd6aeeed6aab",
+  "entity_id": "state-street",
+  "reason": "error:no CET1 ratio found",
+  "skip": false,
+  "compared": 4,
+  "matched": 3,
+  "mismatches": {
+   "tier1_ratio": [
+    11.5,
+    15.2
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 10,
+  "date_extractor": "2021-09-30",
+  "date_reviewer": "2021-09-30"
+ },
+ {
+  "date": "2026-09-21T06:47:22",
+  "id": "de01d9e36fdc",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:23",
+  "id": "e589c633b592",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:23",
+  "id": "f0e5ef416fc2",
+  "entity_id": "bendigo-and-adelaide-bank",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:23",
+  "id": "f1c0212ffcf8",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:23",
+  "id": "f3d753230720",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:23",
+  "id": "f881611fc8a9",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2023-12-31"
+ },
+ {
+  "date": "2026-09-21T06:47:23",
+  "id": "f96cfea76b37",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:24",
+  "id": "fcb5fddb83f9",
+  "entity_id": "anz",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-21T06:47:24",
+  "id": "ff100ad71e9c",
+  "entity_id": "bank-of-scotland",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 5,
+  "date_extractor": null,
+  "date_reviewer": "2022-09-30"
  }
 ]

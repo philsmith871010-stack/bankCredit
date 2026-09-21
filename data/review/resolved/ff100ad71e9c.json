@@ -1,0 +1,12 @@
+{
+ "id": "ff100ad71e9c",
+ "entity_id": "bank-of-scotland",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2022/q3/2022-bos-q3-pillar-3.pdf",
+ "page": 5,
+ "reference_date": "2022-09-30",
+ "currency": "GBP",
+ "values": {
+  "rwa": 71413.0
+ },
+ "note": "Interim quarterly Pillar 3: no KM1 template by design (the PRA quarterly set is OV1 plus, from 2023, a leverage summary; capital resources are disclosed half-yearly). Total RWA 71,413 from OV1 row 29 (p.5), first column = 30 Sep 2022, GBP millions. The document prints no leverage ratio and no LIQ1 (liquidity is managed at DoLSub level), so only RWA is recorded."
+}

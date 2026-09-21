@@ -1,0 +1,23 @@
+{
+ "id": "11655aa240e5",
+ "entity_id": "credit-agricole-cib",
+ "url": "https://www.ca-cib.com/sites/default/files/2026-09/Pilier_3_CACIB_EN_20260630.pdf",
+ "page": 3,
+ "reference_date": "2026-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 17650.0,
+  "tier1_capital": 32820.0,
+  "total_capital": 37121.0,
+  "rwa": 142824.0,
+  "cet1_ratio": 12.36,
+  "tier1_ratio": 22.98,
+  "total_capital_ratio": 25.99,
+  "overall_capital_requirement": 12.64,
+  "leverage_exposure": 904627.0,
+  "leverage_ratio": 3.63,
+  "lcr": 120.14,
+  "nsfr": 112.33
+ },
+ "note": "Credit Agricole CIB's half-year Pillar 3 'financial review' has no KM1 template. Capital figures come from the simplified regulatory capital table on p.3 (column 30.06.2026, EUR millions): total CET1 17,650, total Tier 1 32,820, total capital 37,121, total RWA 142,824, with ratios of 12.36/22.98/25.99%. The extractor read the three amounts but missed the RWA and ratio rows because they carry no row numbers. The overall capital requirement of 12.64% is from the SREP table on p.4 (Pillar 1 8% + P2R 1.5% + combined buffer 3.14%). The leverage ratio of 3.63% and total exposure measure of 904,627 come from EU LR2 (p.7, rows 24-25, transitional). The LCR of 120.14% is the 12-month average for the quarter ending 30.06.2026, from EU-LIQ1 (p.25). The NSFR of 112.33% is from EU-LIQ2 (p.26, row 34). Check: 17,650/142,824 = 12.36%, 32,820/142,824 = 22.98% and 32,820/904,627 = 3.63%."
+}

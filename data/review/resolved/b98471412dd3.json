@@ -1,0 +1,22 @@
+{
+ "id": "b98471412dd3",
+ "entity_id": "anz",
+ "url": "https://www.anz.com.au/content/dam/anzcom/shareholder/2022-september-pillar-3-disclosure.pdf",
+ "page": 26,
+ "reference_date": "2022-09-30",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 55872.0,
+  "tier1_capital": 63558.0,
+  "total_capital": 82835.0,
+  "rwa": 454718.0,
+  "cet1_ratio": 12.3,
+  "tier1_ratio": 14.0,
+  "total_capital_ratio": 18.2,
+  "leverage_exposure": 1168311.0,
+  "leverage_ratio": 5.4,
+  "lcr": 128.7,
+  "nsfr": 119.07
+ },
+ "note": "ANZ's APS 330 disclosure under APRA's pre-2025 framework, which has no KM1 template (ANZ's KM1 starts with March 2025), hence 'no KM1 template found'. Figures are for ANZ Level 2, the same basis as the stored 2025+ series, in AUD millions, taking the first (current-period) column. Table 3 (p.26) gives the Level 2 CET1, Tier 1 and total capital ratios of 12.3/14.0/18.2% and, in 'Basel III APRA level 2 CET1', CET1 capital of 55,872 and total RWA of 454,718. Table 18 Leverage Ratio (p.87) gives Tier 1 capital of 63,558 (row 20), total exposures of 1,168,311 (row 21) and a leverage ratio of 5.4% (row 22). The LCR of 128.7% is the quarterly average from Table 20. Total capital of 82,835 is common disclosure template row 59, and the NSFR of 119.07% is from Table 21. Check: 55,872/454,718 = 12.29%, 63,558/454,718 = 13.98%, 82,835/454,718 = 18.22% and 63,558/1,168,311 = 5.44%, matching the published ratios."
+}

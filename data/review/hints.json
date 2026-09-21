@@ -135,7 +135,7 @@
   }
  },
  "bendigo-and-adelaide-bank": {
-  "page": 2,
+  "page": 13,
   "currency": "AUD",
   "last_verified": {
    "reference_date": "2026-03-31",
@@ -160,7 +160,22 @@
   },
   "trust_labels": true,
   "skip_patterns": [
-   "\\d+\\-january\\-\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\d+\\-\\-\\-attachment\\-b\\-\\-\\-main\\-features\\-of\\-capital\\-instruments"
+   "\\d+\\-january\\-\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\d+\\-\\-\\-attachment\\-b\\-\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-june\\-\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\-\\d+\\-\\-\\-attachment\\-b\\-\\-\\-main\\-features\\-of\\-capital\\-instruments\\d+",
+   "\\d+\\-december\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\-\\d+\\-\\-attachment\\-b\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-june\\-\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\-\\d+\\-\\-\\-attachment\\-b\\-\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-december\\-\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\d+\\-\\-\\-attachment\\-b\\-\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-march\\-\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\-\\d+\\-\\-\\-attachment\\-b\\-\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-december\\-\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\-\\d+\\-\\-\\-attachment\\-b\\-\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "basel\\-iii\\-pillar\\-\\d+\\-annual\\-remuneration\\-disclosure\\-as\\-at\\-\\d+\\-june\\-\\d+",
+   "\\d+\\-october\\-\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\-\\d+\\-\\-\\-attachment\\-b\\-\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-november\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-\\-prudential\\-standard\\-aps\\-\\d+\\-\\-attachment\\-b\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-november\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\-\\d+\\-\\-attachment\\-b\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-september\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\d+\\-attachment\\-b\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-june\\-\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\d+\\-\\-\\-attachment\\-b\\-\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-november\\-\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-prudential\\-standard\\-aps\\d+\\-\\-\\-attachment\\-b\\-\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-december\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-\\-prudential\\-standard\\-aps\\-\\d+\\-\\-attachment\\-b\\-\\-main\\-features\\-of\\-capital\\-instruments",
+   "\\d+\\-october\\-\\-basel\\-iii\\-pillar\\-\\d+\\-disclosures\\-\\-prudential\\-standard\\-aps\\-\\d+\\-\\-attachment\\-b\\-\\-main\\-features\\-of\\-capital\\-instruments"
   ]
  },
  "shawbrook": {
@@ -575,7 +590,8 @@
   "browser_page_found": "2026-09-08",
   "skip_patterns": [
    "\\d+\\-lbg\\-hy\\-pillar\\-\\d+\\-capital\\-instruments",
-   "\\d+\\-lbg\\-fy\\-pillar\\-\\d+\\-capital\\-instruments"
+   "\\d+\\-lbg\\-fy\\-pillar\\-\\d+\\-capital\\-instruments",
+   "\\d+\\-lbg\\-fy\\-pillar\\d+\\-capital\\-instruments"
   ]
  },
  "lloyds-bank": {
@@ -605,7 +621,9 @@
    "method": "pdf_rules"
   },
   "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "browser_page_found": "2026-09-08"
+  "browser_page_found": "2026-09-08",
+  "page": 5,
+  "currency": "GBP"
  },
  "santander-uk": {
   "page": 2,
@@ -1092,8 +1110,21 @@
   "skip_patterns": [
    "june\\-\\d+\\-pillar\\d+\\-chart\\-pack",
    "anz\\-\\d+\\-first\\-quarter\\-trading\\-update\\-and\\-pillar\\-\\d+\\-discussion\\-pack",
-   "new\\-pillar\\d+\\-disclosure\\-update"
-  ]
+   "new\\-pillar\\d+\\-disclosure\\-update",
+   "anz\\-\\d+q\\d+\\-trading\\-update\\-and\\-pillar\\-\\d+\\-discussion\\-pack",
+   "g\\-sib\\-pillar\\-\\d+\\-disclosure\\-september\\-\\d+",
+   "anz\\-december\\-\\d+\\-pillar\\-\\d+\\-chart\\-pack",
+   "anz_aps\\d+_comments_on_mortgage_lending_volumes",
+   "\\d+\\-june\\-pillar\\d+\\-chart\\-pack",
+   "anz\\-december\\-\\d+\\-pillar\\d+\\-chart\\-pack",
+   "december\\-\\d+\\-pillar\\d+\\-chart\\-pack",
+   "anz\\-june\\-\\d+\\-pillar\\d+\\-chart\\-pack",
+   "anz_\\d+q\\d+_aps\\d+_pillar_\\d+_discussion_pack_final",
+   "anz\\-\\d+q\\d+\\-june\\-aps\\d+\\-pillar\\-\\d+\\-discussion\\-pack",
+   "pillar\\-\\d+\\-restatement\\-values"
+  ],
+  "page": 4,
+  "currency": "AUD"
  },
  "dbs": {
   "last_verified": {
@@ -1154,7 +1185,7 @@
   }
  },
  "state-street": {
-  "page": 9,
+  "page": 10,
   "currency": "USD",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -1569,7 +1600,7 @@
   },
   "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
   "browser_page_found": "2026-09-08",
-  "page": 3,
+  "page": 4,
   "currency": "GBP"
  },
  "furness-bs": {
@@ -1592,16 +1623,27 @@
   ]
  },
  "credit-agricole-cib": {
-  "page": 4,
+  "page": 3,
   "currency": "EUR",
   "last_verified": {
-   "reference_date": "2026-03-31",
+   "reference_date": "2026-06-30",
    "values": {
-    "rwa": 142974.0,
-    "lcr": 120.45
+    "cet1_capital": 17650.0,
+    "tier1_capital": 32820.0,
+    "total_capital": 37121.0,
+    "rwa": 142824.0,
+    "cet1_ratio": 12.36,
+    "tier1_ratio": 22.98,
+    "total_capital_ratio": 25.99,
+    "overall_capital_requirement": 12.64,
+    "leverage_exposure": 904627.0,
+    "leverage_ratio": 3.63,
+    "lcr": 120.14,
+    "nsfr": 112.33
    },
    "method": "pdf_manual"
-  }
+  },
+  "trust_labels": true
  },
  "bank-of-scotland": {
   "last_verified": {
@@ -1615,7 +1657,7 @@
   },
   "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
   "browser_page_found": "2026-09-08",
-  "page": 3,
+  "page": 5,
   "currency": "GBP"
  },
  "standard-chartered-hk": {

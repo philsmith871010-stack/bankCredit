@@ -1,0 +1,18 @@
+{
+ "id": "bd11386be6f9",
+ "entity_id": "bendigo-and-adelaide-bank",
+ "url": "https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/regulatory-disclosures/2014/30-june---basel-iii-pillar-3-disclosures-prudential-standard-aps-330.pdf",
+ "page": 13,
+ "reference_date": "2014-06-30",
+ "currency": "AUD",
+ "values": {
+  "cet1_capital": 2847.8,
+  "tier1_capital": 3260.0,
+  "total_capital": 3996.2,
+  "rwa": 32618.4,
+  "cet1_ratio": 8.73,
+  "tier1_ratio": 9.99,
+  "total_capital_ratio": 12.25
+ },
+ "note": "Bendigo and Adelaide Bank under APRA's APS 330, which has no KM1 template. Neither LCR nor NSFR was reported in Australia at these dates, and APS 330 required no leverage ratio. The half-year report released 3 September 2014. Ratios are from 'Capital Adequacy as at June 30th 2014' (p.13), for the consolidated group. Capital amounts and total RWA come from the common disclosure template (pp.2-4), whose row numbers are printed detached from their labels: row 29 CET1 2,847.8, row 45 Tier 1 3,260.0, row 59 total capital 3,996.2 and row 60 total RWA 32,618.4, with rows 61-63 at 8.73/9.99/12.25%. Check: 2,847.8/32,618.4 = 8.73% and 3,996.2/32,618.4 = 12.25%. A footnote says the Rural Finance acquisition on 1 July 2014 would take the total ratio to 11.39%; that is after the reporting date and is not used."
+}

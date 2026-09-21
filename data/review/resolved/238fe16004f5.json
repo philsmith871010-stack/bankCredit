@@ -1,0 +1,20 @@
+{
+ "id": "238fe16004f5",
+ "entity_id": "state-street",
+ "url": "https://s203.q4cdn.com/888565246/files/doc_downloads/Supplement/P3-Capital-December-31-2020.pdf",
+ "page": 10,
+ "reference_date": "2020-12-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 14377.0,
+  "tier1_capital": 16848.0,
+  "total_capital": 17957.0,
+  "rwa": 117080.0,
+  "cet1_ratio": 12.3,
+  "tier1_ratio": 14.4,
+  "total_capital_ratio": 15.3,
+  "leverage_exposure": 207547.0,
+  "leverage_ratio": 8.1
+ },
+ "note": "State Street reports under the U.S. Basel III framework, which has no KM1 template - hence the extractor's 'no CET1 ratio found'; the queue's p.7 is the regulation narrative. Table 1 'Regulatory capital structure and related regulatory capital ratios' (p.10) has four columns - State Street Advanced, State Street Standardized, State Street Bank Advanced, State Street Bank Standardized - with a Minimum Requirement column printed ahead of the ratios. Recorded the State Street Corporation Standardized column, the same basis as the rest of this bank's stored series. leverage_ratio is the Supplementary Leverage Ratio from Table 2 (p.11) with its total leverage exposure (the custodial-bank central bank deposit deduction applies). Amounts are US dollar millions, header date 2020-12-31. Check: 14,377/117,080 = 12.28%, 16,848/117,080 = 14.39% and 17,957/117,080 = 15.34%, matching the published 12.3/14.4/15.3."
+}

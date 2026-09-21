@@ -1,0 +1,21 @@
+{
+ "id": "306e8e44d942",
+ "entity_id": "lloyds-bank",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-plc/2021/half-year/2021-lb-hy-pillar-3.pdf",
+ "page": 5,
+ "reference_date": "2021-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 26960.0,
+  "tier1_capital": 31909.0,
+  "total_capital": 38362.0,
+  "rwa": 167190.0,
+  "cet1_ratio": 16.1,
+  "tier1_ratio": 19.1,
+  "total_capital_ratio": 22.9,
+  "leverage_exposure": 587248.0,
+  "leverage_ratio": 5.3,
+  "lcr": 122.0
+ },
+ "note": "KM1 on p.5 (Table 1, five quarterly columns, first = '30 Jun 2021'), Lloyds Bank plc consolidated, GBP millions. The extractor read CET1 and the LCR components but not rows 7 and 9: the ratio rows use the transitional/IFRS9-FL paired layout. Recorded the transitional (reported) figures, rows 1, 3, 5, 7, 9, 11 and 13. The leverage ratio is the UK leverage ratio (row 16), which excludes central bank claims, with its exposure measure from row 15. The footnote gives a CRD IV leverage ratio as well, and that is not used. The LCR is the average weighted LCR. There is no NSFR row at this date, since UK NSFR disclosure began in 2022. Check: 26,960/167,190 = 16.13% against the published 16.1%. The Tier 1 and total ratios are above CET1."
+}

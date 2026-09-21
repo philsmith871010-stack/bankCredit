@@ -1,0 +1,13 @@
+{
+ "id": "c3b3c59c3cc6",
+ "entity_id": "lloyds-bank-corporate-markets",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-corporate-markets-plc/2022/q1/2022-lbcm-q1-pillar-3.pdf",
+ "page": 4,
+ "reference_date": "2022-03-31",
+ "currency": "GBP",
+ "values": {
+  "rwa": 20326.0,
+  "lcr": 166.0
+ },
+ "note": "Interim quarterly Pillar 3: no KM1 template by design (the PRA quarterly set is OV1 plus, from 2023, a leverage summary; capital resources are disclosed half-yearly). Total RWA 20,326 from OV1 row 29 (p.4), first column = 31 Mar 2022, GBP millions. The LCR is 166%: LIQB (p.6) states that the 12-month average of month-end observations was 166% as of 31 March 2022. The report has no leverage summary."
+}
