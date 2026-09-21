@@ -917,18 +917,15 @@
 
   // a tab says how much is behind it, so a reader knows whether it is worth the click
   function tabCount(id,n){var el=document.getElementById(id); if(el)el.textContent=n?String(n):''}
-  // The table is the survey of the market, so it stands open while the list is empty. Once names
-  // are held the page leads with them and the table folds behind "Add names"; opened from there
-  // it stays open through the adds that follow, until it is folded or the page is left.
-  var uniOpen=null;
-  function uniSection(n){
-    var sec=document.getElementById('uni-sec'), btn=document.getElementById('uni-toggle'), ttl=document.getElementById('uni-title'), pnl=document.getElementById('uni-panel');
-    if(!sec||!btn)return;
-    var open=uniOpen==null?!n:uniOpen;
-    pnl.hidden=!open; sec.classList.toggle('uni-closed',!open);
-    btn.textContent=open?'Hide the table':'Add names'; btn.classList.toggle('active',open); btn.setAttribute('aria-expanded',String(open));
-    ttl.textContent=n?'Every covered name':'Choose from every covered name';
+  // The table a name is chosen from is a dialog: one button opens it, an add inside it goes
+  // straight onto the list behind, and it stays open until it is closed, so several can be
+  // chosen in one sitting.
+  function openUni(){
+    var d=document.getElementById('uni-dlg'); if(!d)return;
+    if(!d.open)d.showModal();
+    var q=document.getElementById('uni-q'); if(q)q.focus({preventScroll:true});
   }
+  function uniBtn(label){return '<button class="filter filter-blue" id="uni-open" type="button">'+label+'</button>'}
   // The names followed but not held: a short table under the list, with the same figures and a
   // way to move one up into the list.
   function watchSection(p){
@@ -960,11 +957,12 @@
     var share=document.getElementById('pol-share'); if(share)share.hidden=!p.length;
     if(!p.length){
       // an instruction and the open table under it: the survey of the market is the empty state
-      html+='<div class="pol-empty"><p><b>Your list is empty.</b> Choose names from the table below: sort on any column, '+
+      html+='<div class="pol-empty"><p><b>Your list is empty.</b> The button below opens every covered name: sort on any column, '+
         'filter by region, type or band, and press Add on a row. Every name you hold is re-checked each night '+
         'against its regulatory filings, its agency ratings and the news.</p>'+
         '<p class="small muted">Everything stays in this browser; nothing is sent anywhere. '+
-        'To see the page with names on it, <button class="linky" id="pol-demo" type="button">load an example list</button>.</p></div>'+
+        'To see the page with names on it, <button class="linky" id="pol-demo" type="button">load an example list</button>.</p>'+
+        uniBtn('Choose from every covered name')+'</div>'+
         watchSection(p)}
     else{
       var n_flag=0;
@@ -1004,7 +1002,7 @@
         '<button class="filter" id="pol-demo-x">Clear it and start mine</button></div>'+html;
       var view=polView();
       html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Flags compare today with the day you approved each name.</span>'+
-        '<span class="pol-view" role="group" aria-label="Show as"><button class="filter'+(view==='cards'?' active':'')+'" id="pol-view-cards" type="button">Cards</button><button class="filter'+(view==='table'?' active':'')+'" id="pol-view-table" type="button">Table</button></span></div>';
+        '<span class="pol-view" role="group" aria-label="Show as">'+uniBtn('Add names')+'<button class="filter'+(view==='cards'?' active':'')+'" id="pol-view-cards" type="button">Cards</button><button class="filter'+(view==='table'?' active':'')+'" id="pol-view-table" type="button">Table</button></span></div>';
       html+=overview(p.filter(function(it){return byId[it.id]}));
       html+=view==='table'?polTable(p,flags):'<div class="pol-list">'+rows+'</div>';
       html+=watchSection(p);
@@ -1057,7 +1055,6 @@
     out.innerHTML=html;
     if(llBox)llBox.innerHTML=llHtml||'<div class="empty">Approve a name and this fills with the covered names that match the standing you accept.</div>';
     tabCount('tn-policy',p.length); tabCount('tn-ll',llN);
-    uniSection(p.length);
     renderUni();
     weightLine();
     // the list is on screen: anything speculative may start now
@@ -1099,8 +1096,6 @@
     return p.every(function(x){return want[x.id]===x.tenor});
   }
   function add(id,tenor){var p=load();var e=byId[id];if(!e)return;var ex=p.filter(function(x){return x.id===id})[0];
-    // a table that was open stays open through an add: the reader is choosing several
-    if(uniOpen==null){var pn=document.getElementById('uni-panel');uniOpen=!!(pn&&!pn.hidden)}
     if(ex){ex.tenor=tenor}else{p.push({id:id,tenor:tenor,added:new Date().toISOString().slice(0,10),base:snapshot(e)});
       var w=watchIds(),wi=w.indexOf(id);if(wi>=0){w.splice(wi,1);saveWatch(w)}}
     save(p);render()}
@@ -1200,8 +1195,9 @@
     data.rows.forEach(function(e){byId[e.id]=e});
     document.addEventListener('click',function(ev){var b=ev.target.closest('.pol-rm');if(b){var p=load().filter(function(x){return x.id!==b.dataset.id});save(p);render();return}
       var st=ev.target.closest('.uni-star');if(st){toggleWatch(st.dataset.id);render();return}
-      if(ev.target.closest('#uni-toggle')){uniOpen=document.getElementById('uni-panel').hidden;uniSection(load().length);
-        if(uniOpen){var q0=document.getElementById('uni-q');if(q0)q0.focus({preventScroll:true})}return}
+      if(ev.target.closest('#uni-open')){openUni();return}
+      if(ev.target.id==='uni-close'){document.getElementById('uni-dlg').close();return}
+      var ud=document.getElementById('uni-dlg');if(ud&&ud.open&&ev.target===ud){ud.close();return}
       var a=ev.target.closest('.pol-add-ll');if(a){add(a.dataset.id,+a.dataset.tenor);var d=document.getElementById('pol-modal');if(d&&d.open)d.close();return}
       // one tenor at a time: the chips swap the pane rather than scroll four lists past you
       var tc=ev.target.closest('.ll-t')||ev.target.closest('.ll-jump');
@@ -1233,8 +1229,7 @@
     // the addresses the old tabs answered to still open the right thing
     function byHash(){
       var h=location.hash.replace('#','').split('&')[0];
-      if(h==='universe'){var t=document.querySelector('.tab[data-tab="policy"]');if(t&&!t.classList.contains('active'))t.click();uniOpen=true;uniSection(load().length);
-        var sec=document.getElementById('uni-sec');if(sec)sec.scrollIntoView({block:'start'})}
+      if(h==='universe'){var t=document.querySelector('.tab[data-tab="policy"]');if(t&&!t.classList.contains('active'))t.click();openUni()}
       if(h==='weights')openWeights();
     }
     byHash(); addEventListener('hashchange',byHash);

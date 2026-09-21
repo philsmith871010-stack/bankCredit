@@ -367,7 +367,7 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 
 /* ---- the detail dialog ---------------------------------------------------------------- */
 .pol-modal{border:0;border-radius:var(--r-lg);padding:0;width:min(980px,94vw);max-height:88vh;box-shadow:0 20px 60px rgba(10,37,64,.28);color:var(--text)}
-.pol-modal::backdrop{background:rgba(10,37,64,.42)}
+
 /* The head is one line of identity, one stat and the actions, all on the same centre line, and
    the body is the same four panels an open card uses - a ruled heading on a white box, on a
    tinted ground - so a dialog is not a second thing to learn. */
@@ -492,7 +492,7 @@ th .i,.uni th .i{margin-left:4px}
 .glink{background:none;border:0;padding:0;margin-right:8px;font:inherit;color:#0a2540;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .glink:hover{color:#fd7e14}
 .gloss-dlg{border:0;border-radius:16px;padding:0;max-width:720px;width:calc(100% - 32px);max-height:82vh;box-shadow:0 24px 60px rgba(10,37,64,.28)}
-.gloss-dlg::backdrop{background:rgba(10,37,64,.4)}
+
 .gd-head{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:12px;
          padding:16px 20px;background:#fff;border-bottom:1px solid var(--line-soft);z-index:1}
 .gd-head h3{margin:0;font-size:16px}
@@ -941,17 +941,24 @@ table.sortable th[aria-sort]::after{content:"▾";margin-left:4px;font-size:9px}
 .wt-line #wt-change{height:28px;font-size:12.5px}
 .wt-vals .sk{width:220px;height:12px}
 .wt-dlg{width:min(1040px,calc(100vw - 32px));max-width:none;padding:18px 20px 16px;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 60px rgba(10,37,64,.25)}
-.wt-dlg::backdrop{background:rgba(10,37,64,.35)}
+
 .wt-close{position:absolute;top:12px;right:12px}
 @media (max-width:640px){.wt-line{padding:8px 12px}.wt-line .wt-l{flex:1}.wt-vals{flex:1 1 100%;order:3;gap:2px 10px}.wt-who{margin-left:0}.wt-dlg{padding:14px 12px}}
 .wt-dlg .wt-head{padding-right:40px}
 .pw-t td:nth-child(2){min-width:170px}.pw-t .cp-nm{white-space:nowrap}
-/* the table a name is chosen from: open on an empty list, folded behind one button otherwise */
-.uni-sec{margin-top:18px;padding-top:12px;border-top:1px solid var(--line-soft)}
-.uni-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
-.uni-head h4{margin:0;font-size:14px;color:#0a2540}
-.uni-closed{padding-bottom:4px}
+/* the table a name is chosen from, over the page */
+.uni-dlg{width:min(1400px,calc(100vw - 32px));max-width:none;max-height:calc(100vh - 32px);padding:16px 20px 14px;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(10,37,64,.28);overflow:auto}
+.uni-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:2px}
+.uni-head h4{margin:0;font-size:16px;color:#0a2540}
+.uni-dlg .scrollbox{max-height:calc(100vh - 300px)}
+.uni-dlg td:nth-child(2){min-width:260px}
 .uni-chips{margin:4px 0 6px}
+.filter.filter-blue,.filter.filter-blue:hover{background:#2a78d6;border-color:#2a78d6;color:#fff;font-weight:600}
+.pol-empty .filter-blue{margin-top:6px}
+.pol-view #uni-open{margin-right:8px}
+/* every modal: the page behind it goes soft, so the box is the only thing in focus */
+dialog::backdrop{background:rgba(10,37,64,.32);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+@media (max-width:640px){.uni-dlg{padding:12px 10px}.uni-dlg .scrollbox{max-height:calc(100vh - 340px)}}
 th.uni-st,td.uni-st{width:26px;padding-left:4px;padding-right:2px;text-align:center}
 .uni-star{border:0;background:none;padding:0 2px;font:inherit;font-size:16px;line-height:1;color:#b8c2ce;cursor:pointer}
 .uni-star:hover{color:#fd7e14}.uni-star.on{color:#fd7e14}

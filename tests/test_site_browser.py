@@ -580,9 +580,13 @@ def test_a_first_visit_opens_empty_on_the_table_it_chooses_from(page, server):
     assert page.eval_on_selector_all(".pol-card", "e => e.length") == 0
     assert "Your list is empty" in page.inner_text(".pol-empty")
     assert page.eval_on_selector_all(".pe-top, .pe-fig, .pol-form, #pol-name", "e => e.length") == 0
-    assert not page.eval_on_selector("#uni-panel", "e => e.hidden"), "the table is open on an empty list"
+    assert page.eval_on_selector("#uni-open", "e => e.textContent") == "Choose from every covered name"
+    page.eval_on_selector("#uni-open", "e => e.click()")
+    page.wait_for_timeout(300)
+    assert page.eval_on_selector("#uni-dlg", "e => e.open"), "the table opens over the page"
     assert page.eval_on_selector_all("#uni-body tr.uni-row", "e => e.length") > 100
-    assert page.eval_on_selector("#uni-toggle", "e => e.textContent") == "Hide the table"
+    page.eval_on_selector("#uni-close", "e => e.click()")
+    page.wait_for_timeout(200)
     # nothing was laid in the browser behind the reader's back
     assert page.evaluate("localStorage.getItem('counterparty.policy')") in (None, "[]")
     # the example is one link away, and says it is an example
@@ -599,14 +603,17 @@ def test_a_first_visit_opens_empty_on_the_table_it_chooses_from(page, server):
     assert not page.errors, page.errors
 
 
-def test_the_table_folds_behind_add_names_once_the_list_has_names(page, server):
-    """With names held the page leads with them; the table is one button away and opens in place."""
+def test_the_table_opens_over_the_page_from_the_add_names_button(page, server):
+    """With names held the page leads with them; the table is one blue button away, beside the
+    Cards and Table switch, and opens over the page rather than under the list."""
     _seed_many(page, server, 3)
-    assert page.eval_on_selector("#uni-panel", "e => e.hidden")
-    assert page.eval_on_selector("#uni-toggle", "e => e.textContent") == "Add names"
-    page.eval_on_selector("#uni-toggle", "e => e.click()")
+    assert not page.eval_on_selector("#uni-dlg", "e => e.open")
+    assert page.eval_on_selector("#uni-open", "e => e.textContent") == "Add names"
+    assert page.eval_on_selector("#uni-open", "e => e.closest('.pol-summary') !== null"), "up beside the view switch"
+    assert page.eval_on_selector("#uni-open", "e => getComputedStyle(e).backgroundColor") == "rgb(42, 120, 214)"
+    page.eval_on_selector("#uni-open", "e => e.click()")
     page.wait_for_timeout(300)
-    assert not page.eval_on_selector("#uni-panel", "e => e.hidden")
+    assert page.eval_on_selector("#uni-dlg", "e => e.open")
     # a name held shows as such in the table, and the chip pulls the held names out on their own
     assert page.eval_on_selector_all("#uni-body tr.uni-mine", "e => e.length") == 3
     page.eval_on_selector('#uni-chips [data-uf="mine"]', "e => e.click()")
@@ -621,7 +628,10 @@ def test_the_table_folds_behind_add_names_once_the_list_has_names(page, server):
     page.eval_on_selector("#uni-body tr.uni-row:not(.uni-mine) .pol-add-ll", "e => e.click()")
     page.wait_for_timeout(500)
     assert page.eval_on_selector_all(".pol-card", "e => e.length") == 4
-    assert not page.eval_on_selector("#uni-panel", "e => e.hidden")
+    assert page.eval_on_selector("#uni-dlg", "e => e.open"), "an add does not close the table"
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(200)
+    assert not page.eval_on_selector("#uni-dlg", "e => e.open")
     assert not page.errors, page.errors
 
 
@@ -650,7 +660,7 @@ def test_a_name_is_watched_from_the_table_and_listed_under_the_portfolio(page, s
     """Watching lived only on the profile, and Analysis then offered a set nobody knew how to
     fill. The star is on every row of the table now, and the names followed sit under the list."""
     _seed_many(page, server, 2)
-    page.eval_on_selector("#uni-toggle", "e => e.click()")
+    page.eval_on_selector("#uni-open", "e => e.click()")
     page.wait_for_timeout(300)
     assert page.eval_on_selector_all("#pol-watch", "e => e.length") == 0
     who = page.eval_on_selector("#uni-body tr.uni-row:not(.uni-mine)", "e => e.dataset.id")
@@ -901,7 +911,7 @@ def test_the_shortlist_opens_on_a_tenor_that_has_something_to_show(page, server)
 def test_a_long_table_scrolls_in_its_own_window(page, server):
     """Paging a sorted list meant clicking through sixteen pages to read it, and the column
     headings left the screen on the way. Every row is here; the window is what moves."""
-    visit(page, server, "index.html")
+    visit(page, server, "index.html#universe")
     page.wait_for_timeout(700)
     rows = page.eval_on_selector_all("#uni-body tr", "e => e.length")
     assert rows > 100, "the whole list is in the page, not a page of it"
@@ -918,7 +928,7 @@ def test_a_long_table_scrolls_in_its_own_window(page, server):
 
 def test_the_column_headings_stay_while_the_rows_move(page, server):
     """A heading that scrolls away takes the meaning of every column with it."""
-    visit(page, server, "index.html")
+    visit(page, server, "index.html#universe")
     page.wait_for_timeout(700)
     top = page.eval_on_selector("#uni-table thead th", "e => Math.round(e.getBoundingClientRect().top)")
     page.eval_on_selector("#uni-body", "e => { e.closest('.scrollbox').scrollTop = 1400 }")
@@ -1031,3 +1041,15 @@ def test_a_long_name_never_widens_the_page_on_a_phone(browser, server):
         assert not pg.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth + 1"), "the page scrolls sideways"
     finally:
         pg.close()
+
+
+def test_every_modal_softens_the_page_behind_it(page, server):
+    """A box over a page that stays sharp is a box on a busy page."""
+    visit(page, server, "index.html")
+    page.wait_for_timeout(900)
+    blur = page.evaluate("""() => {
+      const s = [...document.styleSheets].flatMap(ss => { try { return [...ss.cssRules] } catch (e) { return [] } });
+      const r = s.find(r => r.selectorText === 'dialog::backdrop');
+      return r ? r.style.backdropFilter || r.style.getPropertyValue('backdrop-filter') : null }""")
+    assert blur and "blur" in blur, blur
+    assert not page.errors, page.errors

@@ -1109,11 +1109,11 @@ def page_home(board, status, generated):
                  + '<span class="sk"></span>' * 4 + '</div></div>'
                  '<div class="pol-share" id="pol-share" hidden>'
                  '<button class="filter" id="pol-clear">Clear all</button></div>'
-                 # The whole universe lives on this tab: it is the table a name is chosen from, so it
-                 # is open when the list is empty and folds behind one button once it is not.
-                 f'<div class="uni-sec" id="uni-sec"><div class="uni-head"><h4 id="uni-title">Every covered name</h4>'
-                 '<button class="filter active" id="uni-toggle" type="button" aria-expanded="true" aria-controls="uni-panel">Hide the table</button></div>'
-                 f'<div id="uni-panel">{UNIVERSE_PANEL}</div></div></section>'
+                 # The table a name is chosen from opens over the page: on the page it ran into the
+                 # list above it, and a survey of 152 names wants the whole window anyway.
+                 f'<dialog id="uni-dlg" class="uni-dlg"><div class="uni-head"><h4>Every covered name</h4>'
+                 '<button class="cd-close" id="uni-close" aria-label="Close">\u00d7</button></div>'
+                 f'{UNIVERSE_PANEL}</dialog></section>'
                  '<section class="panel" data-panel="likeforlike"><div id="pol-ll"></div></section>'
                  + (f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={c.stamp(generated)}"></section>' if "ratings" not in HOME_TABS_HIDDEN else '')
                  + (f'<section class="panel" data-panel="events" data-src="data/panels/events.html?v={c.stamp(generated)}"></section>' if "events" not in HOME_TABS_HIDDEN else '')
