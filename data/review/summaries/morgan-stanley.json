@@ -1,8 +1,8 @@
 {
  "id": "morgan-stanley",
- "written": "2026-09-15",
+ "written": "2026-09-21",
  "background": "Morgan Stanley is the holding company of a leading US investment bank whose earnings have shifted toward wealth and investment management alongside institutional securities, with a deposit franchise built on brokerage sweeps.",
- "synthesis": "As a holding company its ratings sit below the bank's: A+ from Fitch after the upgrade on 4 Nov 2022, A- from S&P and A1 from Moody's, all stable. Consolidated capital is mixed against US peers: CET1 of 14.9% is in the top quarter against the peer median, but leverage of 4.9% is in the bottom quarter against 5.8% and has fallen 0.6 points since 30 Jun 2025. LCR of 129% is in the top quarter. The flagged news in the last 90 days is analyst calls and a court matter over diversity documents on 3 Sep 2026, none of it material to the balance sheet.",
+ "synthesis": "Fitch rates the group A+, S&P A- and Moody's A1, all stable, with the last move Fitch's upgrade to A+ on 4 Nov 2022. Capital is mixed against US banks, with CET1 of 14.9% in the top quarter but leverage of 4.9% in the bottom quarter, and leverage has fallen 0.6 points since 30 Jun 2025. Liquidity is strong, with LCR of 129% in the top quarter. The newest flagged items, on 18 Sep 2026, are a staff move and an analyst note, neither bearing on its credit.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -12,6 +12,6 @@
    "moodys": "A1 stable"
   },
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-09"
+  "last_flagged": "2026-09-18"
  }
 }

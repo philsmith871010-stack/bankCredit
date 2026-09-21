@@ -1,8 +1,8 @@
 {
  "id": "wells-fargo-bank",
- "written": "2026-09-15",
+ "written": "2026-09-21",
  "background": "Wells Fargo Bank, N.A. is the main operating bank of Wells Fargo, one of the four largest US banks, with the largest branch network in the country, serving consumers, small businesses and corporates across the United States.",
- "synthesis": "Ratings are AA- from Fitch, A+ from S&P and Aa2 from Moody's, all stable, with the last move S&P's downgrade to A+ on 7 Feb 2018. Capital is mixed against US peers: CET1 of 12.1% is at the median and has fallen 1.2 points since 30 Jun 2025, while leverage of 8.0% is in the top quarter against 5.8%. Liquidity is strong, with LCR of 119% above the peer median. The flagged news is a strong quarter on 14 Jul 2026 and, on 8 Sep 2026, an anniversary piece on the unauthorised-accounts fine rather than anything new. The bank has emerged from its regulatory asset cap and is rebuilding, with capital being put to work.",
+ "synthesis": "Fitch rates the bank AA-, S&P A+ and Moody's Aa2, all stable, with the last move S&P's downgrade to A+ on 7 Feb 2018. Capital is mixed against US banks: CET1 of 12.1% is just below the peer median and has fallen 1.2 points since 30 Jun 2025, while leverage of 8.0% is in the top quarter. Liquidity is sound, with LCR of 119% above the median. The newest flagged item, on 17 Sep 2026, is continuing layoffs, alongside strong second-quarter profit; neither is a credit concern.",
  "inputs": {
   "band": "B",
   "composite": "AA-",
@@ -12,6 +12,6 @@
    "moodys": "Aa2 stable"
   },
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-08"
+  "last_flagged": "2026-09-17"
  }
 }

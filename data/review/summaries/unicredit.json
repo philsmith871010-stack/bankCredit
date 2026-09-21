@@ -1,8 +1,8 @@
 {
  "id": "unicredit",
- "written": "2026-09-15",
+ "written": "2026-09-21",
  "background": "UniCredit is Italy's second-largest bank and a leading lender in Germany, Austria and Central and Eastern Europe, funded by deposits across those markets, with a large stake in Commerzbank and a Russian subsidiary it has been winding down.",
- "synthesis": "Ratings are A- from Fitch, A- from S&P on a positive outlook and A3 from Moody's after its upgrade on 25 Nov 2025, grades that sit close to the Italian sovereign's. Capital is on the weak side of EU and Nordic peers: CET1 of 14.2% is below the peer median and has fallen 2.1 points since 30 Jun 2024, while leverage of 5.2% is a little under the median. Liquidity is mixed, with LCR of 141% in the bottom quarter and NSFR of 124% at the median. The flagged news is profit ahead of forecasts on 23 Jul 2026, alongside the Commerzbank stake and Iran-related sanctions talk on 11 Sep 2026.",
+ "synthesis": "Fitch rates the bank A- stable, S&P A- positive and Moody's A3 after its upgrade on 25 Nov 2025, stable. Capital is on the weak side of EU and Nordic banks: CET1 of 14.2% is below the peer median and has fallen 2.1 points since 30 Jun 2024, and leverage of 5.2% is below the median too. Liquidity is mixed, with LCR of 141% in the bottom quarter and NSFR of 124% just above the median. The newest flagged item, on 11 Sep 2026, is talk of US sanctions on an unnamed bank over Iran dealings alongside Berlin's conditions on UniCredit, and an earlier one concerns its stalled Russian disposal.",
  "inputs": {
   "band": "B",
   "composite": "A-",

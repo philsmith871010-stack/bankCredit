@@ -1,8 +1,8 @@
 {
  "id": "wells-fargo",
- "written": "2026-09-15",
+ "written": "2026-09-21",
  "background": "Wells Fargo & Company is the holding company of one of the four largest US banks, with consumer banking and lending, commercial banking, corporate and investment banking and wealth management, and a long regulatory remediation behind it.",
- "synthesis": "As a holding company its ratings sit below the bank's: A+ from Fitch, BBB+ from S&P on a positive outlook and A1 from Moody's after its upgrade on 12 Jul 2021. Consolidated capital is mixed against US peers: CET1 of 10.3% is in the bottom quarter and leverage of 5.8% is at the peer median, and both have fallen 0.9 points since 30 Jun 2025 as capital is returned. LCR of 119% is above the median. The flagged news on 10 Sep 2026 is a trading outage tied to a processing vendor, resolved and operational rather than financial. Thin consolidated capital for a bank of this grade.",
+ "synthesis": "Fitch rates the group A+ and Moody's A1, both stable, and S&P BBB+ on positive outlook. Capital is mixed against US banks, with CET1 of 10.3% in the bottom quarter and leverage of 5.8% just above the peer median; both have fallen 0.9 points since 30 Jun 2025. Liquidity is sound, with LCR of 119% above the median. The newest flagged items, on 18 Sep 2026, are its analysts' downgrade of another company's stock and local news, none of which bears on its credit.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -12,6 +12,6 @@
    "moodys": "A1 stable"
   },
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-14"
+  "last_flagged": "2026-09-18"
  }
 }

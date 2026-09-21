@@ -1,17 +1,17 @@
 {
  "id": "hsbc-bank",
- "written": "2026-09-15",
+ "written": "2026-09-21",
  "background": "HSBC Bank plc is the non-ring-fenced UK bank of HSBC, housing the group's European corporate and investment banking, markets and private banking, funded by corporate and institutional deposits and wholesale markets.",
- "synthesis": "Ratings are AA from Fitch after the upgrade on 12 May 2026, A+ from S&P on a positive outlook and A1 from Moody's. Capital is mixed against UK majors: CET1 of 17.1% is in the top quarter against the peer median, but leverage of 4.1% is in the bottom quarter against 4.9%. Liquidity is on the weak side, with LCR of 139% and NSFR of 112% both in the bottom quarter. Every ratio has fallen since 30 Jun 2025, CET1 by 2.3 points, leverage by 1.1 points, LCR by 15 points and NSFR by 5 points, which is the clearest downward trend among the UK majors. The flagged news is senior job cuts on 20 Aug 2026 and conduct matters on 25 Jun 2026 and 18 Jun 2026.",
+ "synthesis": "Fitch rates the bank AA after its upgrade on 12 May 2026, S&P A+ and Moody's A1, with S&P and now Moody's on positive outlook. Capital is mixed against UK majors, with CET1 of 17.1% in the top quarter but leverage of 4.1% in the bottom quarter, and liquidity is on the weak side, with LCR of 139% and NSFR of 112% both in the bottom quarter. Every ratio has fallen since 30 Jun 2025: CET1 by 2.3 points, leverage by 1.1 points, LCR by 15 points and NSFR by 5 points (figures to 30 Jun 2026). The newest flagged items, on 18 Sep 2026, are Moody's positive outlooks on its deposit and issuer ratings, alongside a lost foreclosure claim of no credit significance.",
  "inputs": {
   "band": "B",
   "composite": "A+",
   "ratings": {
    "fitch": "AA stable",
    "sp": "A+ positive",
-   "moodys": "A1 stable"
+   "moodys": "A1 positive"
   },
   "asof": "2026-06-30",
-  "last_flagged": "2026-08-20"
+  "last_flagged": "2026-09-18"
  }
 }

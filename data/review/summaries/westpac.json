@@ -1,8 +1,8 @@
 {
  "id": "westpac",
- "written": "2026-09-15",
+ "written": "2026-09-21",
  "background": "Westpac is Australia's oldest bank and one of the big four, funded by Australian and New Zealand deposits and wholesale markets and lending mainly on residential mortgages and to businesses, with a New Zealand subsidiary.",
- "synthesis": "Ratings are AA- from Fitch after the upgrade on 26 May 2024, AA- from S&P and Aa2 from Moody's, all stable. Capital is strong against Australian peers, with CET1 of 12.1% and leverage of 4.8% both in the top quarter against the peer medians. Liquidity is mixed: LCR of 134% is in the top quarter, at the median, while NSFR of 111% is in the bottom quarter against 115%. None of the ratios has moved materially over the past four periods. The one flagged item, on 19 Jun 2026, is regulatory scrutiny of its small-business lending, a conduct matter rather than a credit one. A typical Australian major with the same high ratings as its peers.",
+ "synthesis": "Fitch rates the bank AA- after its upgrade on 26 May 2024, with S&P at AA- and Moody's at Aa2, all stable. Capital is strong against Australian banks, with CET1 of 12.1% and leverage of 4.8% both in the top quarter. Liquidity is mixed: LCR of 134% is in the top quarter but NSFR of 111% is in the bottom quarter. None of the ratios has moved materially over the past four periods, and nothing has been flagged in the last 90 days.",
  "inputs": {
   "band": "B",
   "composite": "AA-",

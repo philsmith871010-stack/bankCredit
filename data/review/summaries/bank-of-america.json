@@ -1,8 +1,8 @@
 {
  "id": "bank-of-america",
- "written": "2026-09-15",
+ "written": "2026-09-21",
  "background": "Bank of America Corporation is the holding company of the second-largest US bank, spanning consumer banking, wealth management under Merrill and a global corporate and investment bank.",
- "synthesis": "As the holding company its ratings sit below the operating bank's, at AA- from Fitch, A- from S&P and A1 from Moody's, all stable, with the last move Moody's upgrade to A1 on 3 May 2023. Consolidated capital is on the weak side against US peers: CET1 of 11.2% is in the bottom quarter against the peer median and leverage of 5.5% is below the peer median. LCR of 112% also sits below the peer median. None of the ratios has moved materially over the past four periods. The one flagged item, on 9 Sep 2026, is not credit-relevant.",
+ "synthesis": "Fitch rates the group AA-, S&P A- and Moody's A1, all stable, with the last move Moody's upgrade to A1 on 3 May 2023. Capital is on the weak side of US banks, with CET1 of 11.2% in the bottom quarter and leverage of 5.5% below the peer median, and liquidity likewise, with LCR of 112% below the median. None of the ratios has moved materially over the past four periods to 30 Jun 2026. The newest flagged item, on 17 Sep 2026, is the prospect of larger unrealised losses on its bond holdings as yields rise, the main watch point for a bank whose ratios already sit below its peers.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -12,6 +12,6 @@
    "moodys": "A1 stable"
   },
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-09"
+  "last_flagged": "2026-09-17"
  }
 }

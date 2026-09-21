@@ -1,8 +1,8 @@
 {
  "id": "natwest-group",
- "written": "2026-09-15",
+ "written": "2026-09-21",
  "background": "NatWest Group is the holding company of the UK's largest business bank, owner of NatWest, Royal Bank of Scotland, Ulster Bank and Coutts, returned to full private ownership after its financial-crisis rescue.",
- "synthesis": "As a holding company its ratings sit below the banks': A+ from Fitch, A- from S&P after the upgrade on 10 Sep 2025 and A3 from Moody's, all stable. Consolidated capital is on the weak side of UK majors: CET1 of 13.2% is in the bottom quarter against the peer median and leverage of 4.7% is below the peer median. Liquidity is mixed, with LCR of 140% below the peer median and NSFR of 132% at the median; LCR has fallen 10 points since 30 Jun 2025. The one flagged item, on 31 Jul 2026, is a strong half-year profit. Steady, with capital a little below the other UK majors.",
+ "synthesis": "Fitch rates the group A+, S&P A- after its upgrade on 10 Sep 2025 and Moody's A3, all stable, and DBRS has moved to a positive outlook. Capital is on the weak side of UK majors, with CET1 of 13.2% in the bottom quarter and leverage of 4.7% below the peer median. Liquidity is mixed, with LCR of 140% below the median and down 10 points since 30 Jun 2025, and NSFR of 132% just above it. The newest flagged item, on 18 Sep 2026, is half-year results with a higher return on tangible equity and upgraded guidance.",
  "inputs": {
   "band": "B",
   "composite": "A",
@@ -12,6 +12,6 @@
    "moodys": "A3 stable"
   },
   "asof": "2026-06-30",
-  "last_flagged": "2026-07-31"
+  "last_flagged": "2026-09-18"
  }
 }

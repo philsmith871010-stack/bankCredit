@@ -1,16 +1,16 @@
 {
  "id": "co-operative-bank",
- "written": "2026-09-15",
+ "written": "2026-09-21",
  "background": "The Co-operative Bank is a UK retail and small-business bank, funded by retail deposits and lending mainly on residential mortgages, which became a subsidiary of Coventry Building Society after its rescue and years of restructuring.",
- "synthesis": "Fitch assigned its first rating, A+, on 13 Jul 2026 and Moody's rates the bank A3, both stable, a marked improvement on where the bank stood for most of the past decade. Capital is mixed against UK mid-sized banks: CET1 of 18.9% is in the top quarter against the peer median, but leverage of 4.4% is in the bottom quarter against 7.4%. Liquidity is strong, with LCR of 180% and NSFR of 135% at or above their medians. Since 31 Dec 2023 CET1 has fallen 1.2 points and LCR 32 points, and the figures run to 31 Dec 2025. Nothing flagged in the last 90 days. Coventry's ownership is now the main support.",
+ "synthesis": "Fitch downgraded the bank to A on 16 Sep 2026 and Moody's rates it A3, both stable. Capital is strong on the headline measure, with CET1 of 18.9% in the top quarter of UK mid-sized banks, but leverage of 4.4% is in the bottom quarter, well under the peer median. Liquidity is strong, with LCR of 180% and NSFR of 135% both above the median, though since 31 Dec 2023 CET1 has fallen 1.2 points and LCR 32 points while leverage has risen 0.3 points (figures to 31 Dec 2025). The only flagged item is the Fitch downgrade itself on 16 Sep 2026.",
  "inputs": {
   "band": "B",
-  "composite": "A",
+  "composite": "A-",
   "ratings": {
-   "fitch": "A+ stable",
+   "fitch": "A stable",
    "moodys": "A3 stable"
   },
   "asof": "2025-12-31",
-  "last_flagged": ""
+  "last_flagged": "2026-09-16"
  }
 }
