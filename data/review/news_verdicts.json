@@ -8723,5 +8723,360 @@
   "keep": true,
   "severity": "warn",
   "why": "TSB job cuts begin"
+ },
+ "news:f33de2d059c88283": {
+  "keep": true,
+  "severity": "warn",
+  "why": "customer data breach"
+ },
+ "news:ea092eff101cae15": {
+  "keep": true,
+  "severity": null,
+  "why": "CEO on AT1 capital compromise"
+ },
+ "news:dda8545884318440": {
+  "keep": true,
+  "severity": null,
+  "why": "new CFO"
+ },
+ "news:90bd40251e69574a": {
+  "keep": true,
+  "severity": null,
+  "why": "dividend policy change ahead of privatisation"
+ },
+ "news:b687d44aafc1b957": {
+  "keep": true,
+  "severity": "good",
+  "why": "profitability target raised"
+ },
+ "news:464b837401aa1857": {
+  "keep": true,
+  "severity": null,
+  "why": "UniCredit takeover approach continues"
+ },
+ "news:7ddbc0c6ba0bd124": {
+  "keep": true,
+  "severity": null,
+  "why": "Germany seeks guarantees on Commerzbank takeover"
+ },
+ "news:34e4b799d6f149f6": {
+  "keep": true,
+  "severity": "warn",
+  "why": "shares fall 8% on CEO remarks"
+ },
+ "news:e321b4fda1d4830a": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$11m cybertheft settlement"
+ },
+ "news:bb01dcd26f658914": {
+  "keep": true,
+  "severity": "warn",
+  "why": "short-seller Grizzly targets RBI"
+ },
+ "news:d27c2f683306510a": {
+  "keep": true,
+  "severity": null,
+  "why": "trading update, guidance held"
+ },
+ "news:a235be455ec01e37": {
+  "keep": true,
+  "severity": null,
+  "why": "redeeming $1.5bn capital securities"
+ },
+ "news:25bc9017f09c3fd2": {
+  "keep": true,
+  "severity": null,
+  "why": "Q3 results"
+ },
+ "news:62de551cd502b84c": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 profit up to $4.6bn"
+ },
+ "news:92e1e8de535ed4fc": {
+  "keep": true,
+  "severity": null,
+  "why": "H1 profit £7.5bn; bank tax calls"
+ },
+ "news:30d1ad9602b050c0": {
+  "keep": true,
+  "severity": "good",
+  "why": "profit up 10%"
+ },
+ "news:26f243a05829206b": {
+  "keep": true,
+  "severity": null,
+  "why": "profit hit by TSB restructuring"
+ },
+ "news:34f7ccc0c1e6ca77": {
+  "keep": true,
+  "severity": null,
+  "why": "$1.5bn AT1 issue"
+ },
+ "news:4834826bfae00e88": {
+  "keep": true,
+  "severity": null,
+  "why": "job cuts after CS integration"
+ },
+ "news:0b567e570d840041": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:2825d97a6206bd83": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:deed6b2b4b01c34d": {
+  "keep": false,
+  "severity": null,
+  "why": "policy commentary by bank"
+ },
+ "news:6b950f4e1bdac84a": {
+  "keep": false,
+  "severity": null,
+  "why": "routine covered bond issue"
+ },
+ "news:33a3c4016fc2531a": {
+  "keep": false,
+  "severity": null,
+  "why": "law-firm solicitation; breach kept elsewhere"
+ },
+ "news:8af2110a74cd6895": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
+ "news:77075875b658fb06": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:3ee823a8cafc80c0": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate of CFO story"
+ },
+ "news:77c7e172242bcf00": {
+  "keep": false,
+  "severity": null,
+  "why": "routine bond issue"
+ },
+ "news:3bcb4aa21b016a5f": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate dividend story"
+ },
+ "news:a6a9c47f61a7822f": {
+  "keep": false,
+  "severity": null,
+  "why": "market commentary"
+ },
+ "news:b293400b91a120cc": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate of CFO story"
+ },
+ "news:1cba92cf35ddb445": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate of target story"
+ },
+ "news:041d9130013296a9": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee appointed elsewhere"
+ },
+ "news:125f42644df8e9d3": {
+  "keep": false,
+  "severity": null,
+  "why": "junior appointment"
+ },
+ "news:ad0ec0986115f11d": {
+  "keep": false,
+  "severity": null,
+  "why": "bank's own commentary"
+ },
+ "news:4cb5b8b4aa22f4b3": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as dealer"
+ },
+ "news:69171e1cd25bb479": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee appointed elsewhere"
+ },
+ "news:b4b58b8bff143a66": {
+  "keep": false,
+  "severity": null,
+  "why": "client deal, passing mention"
+ },
+ "news:1a1e443c3ebdb3f5": {
+  "keep": false,
+  "severity": null,
+  "why": "consumer CD rates"
+ },
+ "news:6ae411c4384d2418": {
+  "keep": false,
+  "severity": null,
+  "why": "sponsorship"
+ },
+ "news:524a45b449c30e32": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee hired elsewhere"
+ },
+ "news:5081aaf9e4f8a83b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate dividend story"
+ },
+ "news:9c0dba7cbbd0755c": {
+  "keep": false,
+  "severity": null,
+  "why": "stock-tip piece"
+ },
+ "news:5f01239bb7691c1c": {
+  "keep": false,
+  "severity": null,
+  "why": "divisional appointment"
+ },
+ "news:9bdf32c53090ad7e": {
+  "keep": false,
+  "severity": null,
+  "why": "courtesy meeting"
+ },
+ "news:c0cf6f54d3a269b0": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
+ "news:af60223305d672a7": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
+ "news:0c6efe76a1878acc": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:06cb1bf02de5cf25": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee appointed elsewhere"
+ },
+ "news:a73891d84670c53c": {
+  "keep": false,
+  "severity": null,
+  "why": "broker EPS tweak"
+ },
+ "news:f409aa96c5d66488": {
+  "keep": false,
+  "severity": null,
+  "why": "stock-tip piece"
+ },
+ "news:580d313142d1c6e4": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
+ "news:4d983f9139ca6bde": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate of AT1 story"
+ },
+ "news:c96bfa705dcd9537": {
+  "keep": false,
+  "severity": null,
+  "why": "community education"
+ },
+ "news:da85d3b21c87dbc8": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:4fcb7e453c1c0c0c": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:07c24da1db1be8bc": {
+  "keep": false,
+  "severity": null,
+  "why": "strategy fluff"
+ },
+ "news:b5e4553e55e02910": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate of CFO story"
+ },
+ "news:efaf50a8fb4751d6": {
+  "keep": false,
+  "severity": null,
+  "why": "client financing"
+ },
+ "news:8371fef132e00a6c": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO market views"
+ },
+ "news:08c484e80aa9eb20": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO market views"
+ },
+ "news:3e54cdbd8917cf16": {
+  "keep": false,
+  "severity": null,
+  "why": "community initiative"
+ },
+ "news:4cf645f0f35b5d1a": {
+  "keep": false,
+  "severity": null,
+  "why": "directory listing"
+ },
+ "news:663c3dee43c9b4f3": {
+  "keep": false,
+  "severity": null,
+  "why": "tech marketing"
+ },
+ "news:04434d51f32bee7f": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:80a23595c9cd2055": {
+  "keep": false,
+  "severity": null,
+  "why": "daily share move"
+ },
+ "news:082062b220e53450": {
+  "keep": false,
+  "severity": null,
+  "why": "vendor press release"
+ },
+ "news:8f0bde9f539cce9f": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:b59e3107df67ddad": {
+  "keep": false,
+  "severity": null,
+  "why": "bank's investment commentary"
+ },
+ "news:8ecea8937decf476": {
+  "keep": false,
+  "severity": null,
+  "why": "junior appointment"
+ },
+ "news:66e535ea48658c39": {
+  "keep": false,
+  "severity": null,
+  "why": "local branch heads leave"
  }
 }
