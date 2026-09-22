@@ -592,7 +592,9 @@
    "\\d+\\-lbg\\-hy\\-pillar\\-\\d+\\-capital\\-instruments",
    "\\d+\\-lbg\\-fy\\-pillar\\-\\d+\\-capital\\-instruments",
    "\\d+\\-lbg\\-fy\\-pillar\\d+\\-capital\\-instruments"
-  ]
+  ],
+  "page": 5,
+  "currency": "GBP"
  },
  "lloyds-bank": {
   "last_verified": {

@@ -1,0 +1,7 @@
+{"id": "744d97bcbc0e", "entity_id": "lloyds-banking-group",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-banking-group-plc/2021/q4/2021-lbg-fy-pillar3.pdf",
+ "page": 5, "reference_date": "2021-12-31", "currency": "GBP",
+ "values": {"cet1_capital": 33815.0, "tier1_capital": 39145.0, "total_capital": 46334.0, "rwa": 195967.0,
+            "cet1_ratio": 17.3, "tier1_ratio": 20.0, "total_capital_ratio": 23.6,
+            "leverage_exposure": 664362.0, "leverage_ratio": 5.8, "lcr": 135.0},
+ "note": "KM1 on p.5, column 31 Dec 2021 (transitional IFRS 9 figures, rows 1,3,5,7,9,11,13). CET1/RWA = 17.26% vs reported 17.3%. Leverage is the UK leverage ratio (row 16; CRD IV basis 5.2% per footnote 3). LCR is the average LCR row (135%). No NSFR row in this 2021 template; no overall capital requirement row."}

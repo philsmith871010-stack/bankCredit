@@ -4146,5 +4146,19 @@
   "page_reviewer": 5,
   "date_extractor": null,
   "date_reviewer": "2022-09-30"
+ },
+ {
+  "date": "2026-09-22T06:38:40",
+  "id": "744d97bcbc0e",
+  "entity_id": "lloyds-banking-group",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2021-12-31",
+  "date_reviewer": "2021-12-31"
  }
 ]
