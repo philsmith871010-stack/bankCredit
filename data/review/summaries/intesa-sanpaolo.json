@@ -1,8 +1,8 @@
 {
  "id": "intesa-sanpaolo",
- "written": "2026-09-15",
+ "written": "2026-09-22",
  "background": "Intesa Sanpaolo is Italy's largest bank, funded by Italian retail deposits and lending to Italian households and companies, with large wealth management and insurance arms and a smaller international network in Central and Eastern Europe.",
- "synthesis": "Ratings are A- from Fitch, BBB+ from S&P on a positive outlook and A3 from Moody's after its upgrade on 25 Nov 2025, grades that sit close to the Italian sovereign's. Capital is mixed against EU and Nordic peers: CET1 of 13.0% is in the bottom quarter, while leverage of 5.7% is above the peer median. Liquidity is on the weak side, with LCR of 138% in the bottom quarter and NSFR of 120% below the median. None of the ratios has moved materially over the past four periods. The flagged news is all good, with rating upgrades from another agency on 11 Sep 2026.",
+ "synthesis": "Ratings are A- from Fitch, BBB+ from S&P on a positive outlook and A3 from Moody's after its upgrade on 25 Nov 2025. Capital is mixed against EU and Nordic peers: CET1 of 13.0% is in the bottom quarter, while leverage of 5.7% is above the peer median. Liquidity is on the weak side, with LCR of 138% in the bottom quarter and NSFR of 120% below the median, and none of the ratios has moved materially over the past four periods. The flagged news is all good: record earnings reported on 19 Sep 2026 and upgrades from DBRS, which with S&P's positive outlook point the same way.",
  "inputs": {
   "band": "B",
   "composite": "A-",
@@ -12,6 +12,6 @@
    "moodys": "A3 stable"
   },
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-11"
+  "last_flagged": "2026-09-19"
  }
 }

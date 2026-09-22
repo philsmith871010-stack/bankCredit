@@ -1,8 +1,8 @@
 {
  "id": "barclays",
- "written": "2026-09-21",
+ "written": "2026-09-22",
  "background": "Barclays PLC is the listed holding company of the Barclays group, a UK universal bank with a large transatlantic corporate and investment bank alongside UK retail banking and international cards.",
- "synthesis": "Fitch rates the holding company A, S&P BBB+ after its upgrade on 19 May 2023 and Moody's Baa1, all stable. Capital is strong against UK majors, with CET1 of 14.3% in the top quarter and leverage of 4.9% just above the peer median, and liquidity is strong too, with LCR of 158% and NSFR of 136% both above the median. The one move is in LCR, down 20 points since 30 Jun 2025, while the other ratios have been broadly flat to 30 Jun 2026. The newest flagged item, on 17 Sep 2026, is a shareholder-loss lawsuit notice, alongside a fraud impersonation case and FCA attention to a creditors' probe request, none of which bears directly on the group's credit.",
+ "synthesis": "Fitch rates the holding company A, S&P BBB+ after its upgrade on 19 May 2023 and Moody's Baa1, all stable. Capital is strong against UK majors, with CET1 of 14.3% in the top quarter and leverage of 4.9% at the peer median, and liquidity is strong too, with LCR of 158% and NSFR of 136% both above the median. The one move is in LCR, down 20 points since 30 Jun 2025, while the other ratios have been broadly flat to 30 Jun 2026. The newest flagged item, on 10 Sep 2026, is repeated outages on a trading risk platform, and the others concern calls for the FCA to investigate the group's part in a mortgage lender's collapse, conduct questions rather than solvency ones.",
  "inputs": {
   "band": "B",
   "composite": "A-",
@@ -12,6 +12,6 @@
    "moodys": "Baa1 stable"
   },
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-17"
+  "last_flagged": "2026-09-10"
  }
 }

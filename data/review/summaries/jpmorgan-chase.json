@@ -1,8 +1,8 @@
 {
  "id": "jpmorgan-chase",
- "written": "2026-09-21",
+ "written": "2026-09-22",
  "background": "JPMorgan Chase & Co. is the holding company of the largest US bank, spanning consumer and community banking, the corporate and investment bank, commercial banking and asset and wealth management.",
- "synthesis": "Fitch rates the group AA-, S&P A after its upgrade on 15 Nov 2024 and Moody's A1, all stable. Leverage of 7.5% is in the top quarter of US banks, the only ratio held for it. The newest flagged item, on 18 Sep 2026, is an arbitration dispute; others cover curbed lending to an AI-focused hedge fund after losses, a single-client exposure rather than a group-level concern.",
+ "synthesis": "Fitch rates the group AA-, S&P A after its upgrade on 15 Nov 2024 and Moody's A1, all stable. Leverage of 7.5% is in the top quarter of US banks, the only ratio held for it. The newest flagged item, on 21 Aug 2026, is a further round of job cuts; the others cover layoffs at their highest in a decade and a political debanking lawsuit, none of which bears on the group's credit.",
  "inputs": {
   "band": "A",
   "composite": "A+",
@@ -12,6 +12,6 @@
    "moodys": "A1 stable"
   },
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-18"
+  "last_flagged": "2026-08-21"
  }
 }

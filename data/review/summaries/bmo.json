@@ -1,8 +1,8 @@
 {
  "id": "bmo",
- "written": "2026-09-21",
+ "written": "2026-09-22",
  "background": "Bank of Montreal is one of Canada's big six banks and the country's oldest, with a large US Midwest franchise through BMO Harris and the former Bank of the West, funded by Canadian and US deposits.",
- "synthesis": "Fitch rates the bank AA-, S&P A+ and Moody's A2 after its downgrade on 26 Jan 2026, all stable. No capital or liquidity ratios are held for it, so the ratings carry the assessment. The newest flagged item, on 17 Sep 2026, is an equity analyst upgrade and the rest are earnings beats; nothing flagged points to credit strain.",
+ "synthesis": "Fitch rates the bank AA-, S&P A+ and Moody's A2 after its downgrade on 26 Jan 2026, all stable. No capital or liquidity ratios are held for it, so the ratings carry the assessment, and the downgrade still leaves the bank well inside investment grade. The flagged news is good: an earnings beat on 26 Aug 2026 and profit ahead of estimates despite tariff worries. Nothing flagged points to credit strain.",
  "inputs": {
   "band": "",
   "composite": "A+",
@@ -12,6 +12,6 @@
    "moodys": "A2 stable"
   },
   "asof": "2026-07-31",
-  "last_flagged": "2026-09-17"
+  "last_flagged": "2026-08-26"
  }
 }
