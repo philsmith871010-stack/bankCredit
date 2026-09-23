@@ -1,12 +1,14 @@
 {
  "id": "shawbrook",
- "written": "2026-09-22",
+ "written": "2026-09-23",
  "background": "Shawbrook is a UK specialist lender owned by private equity, funded by retail and business savings and lending on buy-to-let and specialist residential mortgages, commercial property, and to smaller companies through asset and structured finance.",
- "synthesis": "None of the three agencies rates the bank. Capital is mixed against UK mid-sized banks: CET1 of 13.0% is in the bottom quarter, while leverage of 8.7% is in the top quarter. Liquidity is on the weak side, with LCR of 157% below the peer median and NSFR of 126% in the bottom quarter. The trend is the point: since 31 Dec 2023 LCR has fallen 154 points and NSFR 20 points, so a large liquidity surplus has been run down, while CET1 has been flat and leverage has risen 0.5 points; the flagged news, on 5 Aug 2026, is a strong rise in first-half profit.",
+ "synthesis": "None of the three main agencies rates the bank. Capital is mixed against UK mid-sized banks: CET1 of 13.0% is in the bottom quarter against the peer median, while leverage of 8.7% is in the top quarter. Liquidity is on the weak side, with LCR of 157% below the peer median and NSFR of 126% in the bottom quarter. The trend is the point: since 31 Dec 2023 LCR has fallen 154 points and NSFR 20 points, so a large liquidity surplus has been used to grow the book, while CET1 has been flat and leverage has risen 0.5 points. The flagged news is good, with first-half profit up 16% reported on 5 Aug 2026.",
  "inputs": {
   "band": "",
   "composite": "",
-  "ratings": {},
+  "worst": "",
+  "outlooks": "",
+  "n": 0,
   "asof": "2026-06-30",
   "last_flagged": "2026-08-05"
  }

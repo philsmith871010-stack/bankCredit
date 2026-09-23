@@ -1,17 +1,15 @@
 {
  "id": "td-bank",
- "written": "2026-09-22",
+ "written": "2026-09-23",
  "background": "The Toronto-Dominion Bank is Canada's second-largest bank, funded by Canadian and US deposits and lending on Canadian mortgages and to businesses, with a large US retail bank along the east coast that has been under a regulatory asset cap after its anti-money-laundering failures.",
- "synthesis": "Ratings are AA- from Fitch, A+ from S&P and A2 from Moody's, all stable, with the last move Moody's downgrade to A2 on 23 Oct 2024. Capital is strong against Canadian peers, with CET1 of 14.3% in the top quarter, though it has fallen 0.6 points since 30 Apr 2025, and no leverage or liquidity figures are held here. The newest flagged items, on 21 Sep 2026, concern a data breach and the lawsuits it has drawn, alongside the departure of the chief operating officer. These are operational and conduct questions, and with the US remediation they are the things to watch.",
+ "synthesis": "The bank is rated A+ on average across all three main agencies, the weakest of them at A, all three on a stable outlook, with the last move a one-notch downgrade by one of the three on 23 Oct 2024, which followed the US enforcement action. Capital is strong against Canadian peers, with CET1 of 14.3% in the top quarter, though it has fallen 0.6 points since 30 Apr 2025, and no leverage or liquidity figures are held here. The newest flagged item, on 7 Sep 2026, is a senior executive's departure after less than a year in the job, while the earlier items are mostly good, with quarterly profit up strongly. Well capitalised, with the US remediation the thing to watch.",
  "inputs": {
   "band": "A",
-  "composite": "AA-",
-  "ratings": {
-   "fitch": "AA- stable",
-   "sp": "A+ stable",
-   "moodys": "A2 stable"
-  },
+  "composite": "A+",
+  "worst": "A",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-07-31",
-  "last_flagged": "2026-09-21"
+  "last_flagged": "2026-09-07"
  }
 }

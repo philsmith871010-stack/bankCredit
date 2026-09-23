@@ -1,15 +1,14 @@
 {
  "id": "state-street",
- "written": "2026-09-22",
+ "written": "2026-09-23",
  "background": "State Street Corporation is the holding company of one of the world's largest custodian banks, earning fees from safekeeping, fund administration and asset management under the State Street Global Advisors brand.",
- "synthesis": "Fitch rates the group AA- and S&P A, both stable, with the last move S&P's downgrade to A on 2 Dec 2015. Capital is mixed against US banks: CET1 of 10.8% is in the bottom quarter but leverage of 6.2% is in the top quarter. None of the ratios has moved materially over the past four periods to 30 Jun 2026, and no liquidity ratio is held here. The flagged news is all good, with strong second-quarter results and a raised outlook, the newest on 11 Sep 2026.",
+ "synthesis": "Two of the three main agencies rate the group, at A+ on average with the weakest of them at A, both on a stable outlook, and the last move a one-notch downgrade by one of the three on 2 Dec 2015. Capital is mixed against US banks: CET1 of 10.8% is in the bottom quarter but leverage of 6.2% is in the top quarter. None of the ratios has moved materially over the past four periods to 30 Jun 2026. The flagged news is all good, the newest item on 11 Sep 2026 a raised full-year outlook after strong second-quarter results, with the earlier items reporting the same quarter.",
  "inputs": {
   "band": "B",
-  "composite": "AA-",
-  "ratings": {
-   "fitch": "AA- stable",
-   "sp": "A stable"
-  },
+  "composite": "A+",
+  "worst": "A",
+  "outlooks": "stable, stable",
+  "n": 2,
   "asof": "2026-06-30",
   "last_flagged": "2026-09-11"
  }

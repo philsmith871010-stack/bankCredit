@@ -1,16 +1,14 @@
 {
  "id": "lloyds-bank",
- "written": "2026-09-22",
+ "written": "2026-09-23",
  "background": "Lloyds Bank plc is the main ring-fenced bank of Lloyds Banking Group, the UK's largest retail bank, funded by UK personal and business deposits and lending mainly on residential mortgages, cards, motor finance and to UK companies.",
- "synthesis": "Ratings are AA from Fitch after the upgrade on 12 May 2026, A+ from S&P and A1 from Moody's, all stable. Capital is mixed against UK majors: CET1 of 13.6% is just under the peer median, while leverage of 5.1% is in the top quarter. Liquidity is the weak side, with LCR of 134% and NSFR of 118% both in the bottom quarter, and leverage has fallen 0.3 points since 30 Jun 2025 while the rest has been flat. The newest flagged item, on 18 Sep 2026, is an online banking outage, and the others centre on the Arena Television fraud claims, a legal exposure rather than a balance-sheet event.",
+ "synthesis": "The bank is rated AA- on average across all three main agencies, the weakest of them at A+, all on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. Capital is mixed against UK majors: CET1 of 13.6% is just under the peer median, while leverage of 5.1% is in the top quarter. Liquidity is the weak side, with LCR of 134% and NSFR of 118% both in the bottom quarter, and leverage has fallen 0.3 points since 30 Jun 2025 while the rest has been flat. The newest flagged item, on 18 Sep 2026, is an online banking outage, and the earlier ones are the Arena TV fraud claims, a legal exposure rather than a balance-sheet event.",
  "inputs": {
   "band": "B",
-  "composite": "A+",
-  "ratings": {
-   "fitch": "AA stable",
-   "sp": "A+ stable",
-   "moodys": "A1 stable"
-  },
+  "composite": "AA-",
+  "worst": "A+",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-09-18"
  }

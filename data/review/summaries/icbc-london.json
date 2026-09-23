@@ -1,12 +1,14 @@
 {
  "id": "icbc-london",
- "written": "2026-09-22",
+ "written": "2026-09-23",
  "background": "ICBC (London) plc is the UK-incorporated subsidiary of Industrial and Commercial Bank of China, the world's largest bank by assets and majority-owned by the Chinese state, serving Chinese corporates and trade and treasury business in London.",
- "synthesis": "None of Fitch, S&P or Moody's publishes a rating on the London subsidiary, and the site holds no capital or liquidity figures for it, so there is no peer comparison to make. The one flagged item, on 14 Sep 2026, is an investigative report into the ICBC group, a reputational warning about the parent rather than a finding on the London entity. Any comfort comes from the state-owned parent, so this is a parental-support name: the question for a depositor is how far ICBC would stand behind its London subsidiary, and nothing shown here answers it.",
+ "synthesis": "None of the three main agencies publishes a rating on the London subsidiary, and the site holds no capital or liquidity figures for it, so there is no peer comparison to make. The one flagged item, on 14 Sep 2026, is an ICIJ investigation into the parent ICBC, which bears on reputation rather than on anything published about the subsidiary itself. Any comfort comes from the state-owned parent, so this is a parental-support name: the question for a depositor is how far ICBC would stand behind its London subsidiary, and nothing shown here answers it.",
  "inputs": {
   "band": "",
   "composite": "",
-  "ratings": {},
+  "worst": "",
+  "outlooks": "",
+  "n": 0,
   "asof": "",
   "last_flagged": "2026-09-14"
  }

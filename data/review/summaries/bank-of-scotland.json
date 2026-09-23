@@ -1,16 +1,14 @@
 {
  "id": "bank-of-scotland",
- "written": "2026-09-22",
+ "written": "2026-09-23",
  "background": "Bank of Scotland plc is one of the ring-fenced banks of Lloyds Banking Group, trading as Bank of Scotland and Halifax, funded by UK retail deposits and lending mainly on residential mortgages.",
- "synthesis": "Ratings are among the strongest of the UK majors: AA from Fitch after the upgrade on 12 May 2026, A+ from S&P and A1 from Moody's, all stable. Capital is mixed, with CET1 of 14.1% above the peer median but leverage of 4.5% in the bottom quarter. Liquidity is also mixed, with LCR of 144% at the median and NSFR of 123% below it; CET1 has risen 0.7 points since 30 Jun 2024 and the rest has been flat. The newest flagged item, on 18 Sep 2026, is an online banking outage across the group's brands, an operational matter rather than a credit one, and the other is the group's strong first-half profit.",
+ "synthesis": "Ratings are among the strongest of the UK majors: AA- on average across all three main agencies, the weakest of them at A+, all three on a stable outlook, with a one-notch upgrade by one of the three on 12 May 2026 the latest move. Capital is mixed: CET1 of 14.1% is above the peer median, but leverage of 4.5% is in the bottom quarter. Liquidity is also mixed, with LCR of 144% at the median and NSFR of 123% below the peer median; CET1 has risen 0.7 points since 30 Jun 2024 and the rest has been flat. The newest flagged item, on 18 Sep 2026, is an online banking outage across the group's brands, set against the group's strong first-half profit reported earlier in the summer.",
  "inputs": {
   "band": "B",
-  "composite": "A+",
-  "ratings": {
-   "fitch": "AA stable",
-   "sp": "A+ stable",
-   "moodys": "A1 stable"
-  },
+  "composite": "AA-",
+  "worst": "A+",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-09-18"
  }
