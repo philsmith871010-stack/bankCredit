@@ -518,7 +518,10 @@ def test_a_profile_draws_the_average_the_weakest_and_the_tones_and_names_no_agen
     titles = page.eval_on_selector_all(".ladder title", "e => e.map(x => x.textContent)")
     assert any(t.startswith("average ") and " from " in t for t in titles), titles
     assert any(t.startswith("rated by ") for t in titles), "the tone lane says how many held each outlook"
-    panel = page.eval_on_selector('.panel[data-panel="ratings"]', "e => e.textContent")
+    # the composite part of the panel: the agencies' own ratings, quoted beside it, are the one
+    # place a name may stand against a rating, and that block has its own test
+    panel = page.eval_on_selector('.panel[data-panel="ratings"]',
+                                  "e => {const c = e.cloneNode(true); c.querySelectorAll('.attr').forEach(x => x.remove()); return c.textContent}")
     for name in ("Fitch", "Moody", "S&P", "DBRS"):
         assert panel.count(name) == (1 if name in ("Fitch", "Moody", "S&P") else 0), \
             f"{name} appears only in the note saying which three agencies are averaged"
@@ -526,6 +529,32 @@ def test_a_profile_draws_the_average_the_weakest_and_the_tones_and_names_no_agen
     assert page.eval_on_selector_all(".rh-list li", "e => e.length") >= 1
     moves = page.eval_on_selector_all(".rh-list li", "e => e.map(x => x.textContent)")
     assert all("one of the three" in m for m in moves), moves
+    assert not page.errors, page.errors
+
+
+def test_the_agencies_own_ratings_are_quoted_from_one_members_file(page, server):
+    """The attributed view: current ratings only, with the agency named, filled in from one file
+    outside the public data so a login can later sit in front of that one path. A build without
+    the file shows the frame and says the view is not available."""
+    members = SITE / "members" / "ratings.json"
+    who = _with_history()
+    visit(page, server, f"banks/{who}.html")
+    page.eval_on_selector('.tab[data-tab="ratings"]', "e => e.click()")
+    page.wait_for_timeout(800)
+    assert page.eval_on_selector_all(".attr[data-attr]", "e => e.length") == 1
+    basis = page.eval_on_selector(".attr-basis p", "e => e.textContent")
+    assert "withdrawn without notice" in basis and "free of charge" in basis
+    if not members.exists():
+        assert "Not available" in page.eval_on_selector(".attr-wait", "e => e.textContent")
+        return
+    rows = json.loads(members.read_text(encoding="utf-8"))["rows"].get(who) or []
+    heads = page.eval_on_selector_all(".attr-t thead th", "e => e.map(x => x.textContent.trim())")
+    assert heads[:5] == ["Agency", "Long-term", "Outlook", "Short-term", "Date"], heads
+    names = page.eval_on_selector_all(".attr-t tbody td:first-child", "e => e.map(x => x.textContent.trim())")
+    assert names == [r["name"] for r in rows], names
+    assert set(names) <= {"Fitch", "S&P", "Moody's"}
+    links = page.eval_on_selector_all(".attr-t a", "e => e.map(x => x.getAttribute('href'))")
+    assert any("esma.europa.eu" in l for l in links), "every row links to the register"
     assert not page.errors, page.errors
 
 

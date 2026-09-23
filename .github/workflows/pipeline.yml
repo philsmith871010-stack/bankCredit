@@ -91,6 +91,7 @@ jobs:
       - name: Export and build site
         env:
           COUNTERPARTY_OVERLAY: ${{ secrets.COUNTERPARTY_OVERLAY }}
+          COUNTERPARTY_ATTRIBUTED: "1"      # the agencies' own ratings on the beta site; docs/attributed-ratings.md
         run: python -m bankcredit.cli build
 
       - name: Commit data

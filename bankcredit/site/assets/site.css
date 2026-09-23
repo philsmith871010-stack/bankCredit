@@ -991,3 +991,12 @@ tr.uni-mine td{background:#f6f9f4}
 .rc-tones{font-size:13px;white-space:nowrap}
 .rl-l i{width:18px;height:3px;border-radius:2px}
 .ll-ags .cr-o{font-size:9px}
+
+/* the agencies' own ratings, for signed-in users */
+.attr{margin-top:18px;padding-top:12px;border-top:1px solid var(--line)}
+.attr h3{margin:0 0 8px}
+.attr-t td,.attr-t th{white-space:nowrap}
+.attr-basis{margin-top:8px}.attr-basis summary{cursor:pointer;color:var(--muted)}
+.attr-basis p{margin:6px 0 0;line-height:1.5}
+.cr-attr{border-top:1px dashed var(--line);margin-top:4px;padding-top:6px}
+.cr-attr-l{font-weight:400;font-size:12px;white-space:normal}

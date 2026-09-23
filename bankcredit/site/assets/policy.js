@@ -884,6 +884,17 @@
       '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Figures</th><th>News 30d</th><th>Market</th><th></th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
+  // The agencies' own ratings: fetched once from the members path, and absent (a build
+  // without it, or a login in front of it later) the dialog simply shows the composite alone.
+  var ATTR=null;
+  fetch(ROOT+'members/ratings.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){ATTR=j}).catch(function(){});
+  function attrLine(e){
+    var rows=ATTR&&ATTR.rows&&ATTR.rows[e.id]; if(!rows||!rows.length)return '';
+    var G={positive:'\u25b2',negative:'\u25bc',stable:'\u25b6','watch negative':'\u25c6','watch positive':'\u25c6'};
+    return '<div class="cr cr-attr" title="the agencies\u2019 own current ratings, quoted from the ESMA register">'+
+      '<span class="cr-a">Agencies</span><span class="cr-g cr-attr-l">'+rows.map(function(r){return '<span><b>'+esc(r.name)+'</b> <span class="mono">'+esc(r.lt)+'</span> <span class="cr-o '+(r.outlook==='positive'?'up':r.outlook==='negative'?'dn':'lv')+'">'+(G[r.outlook]||'')+'</span></span>'}).join(' \u00b7 ')+'</span>'+
+      '<span></span><span class="cr-s small muted">quoted</span></div>';
+  }
   function ratingCell(e){
     var r=e.rating;
     if(!r)return '<div class="cp-rt-none">None of the three main agencies rates this entity.</div>';
@@ -912,7 +923,7 @@
         '<span></span><span class="cr-s mono" title="the most recent action by any of the three">'+esc(r.date||'')+'</span></div>'+
       '<div class="cr" title="'+esc(toneWords(r.tones)||'no outlook published')+'">'+
         '<span class="cr-a">Outlooks</span><span class="cr-g">'+toneGlyphs(r.tones)+'</span>'+
-        '<span></span><span class="cr-s small muted">'+ofThree(r.n)+'</span></div>';
+        '<span></span><span class="cr-s small muted">'+ofThree(r.n)+'</span></div>'+attrLine(e);
     return '<div class="cr-top"><span class="cr-comp" style="color:'+gradeColour(r.letter)+'">'+
       esc(r.letter)+'</span><span class="small muted">average of '+ofThree(r.n)+' main agencies</span></div>'+strip+'<div class="cr-rows">'+rows+'</div>';
   }

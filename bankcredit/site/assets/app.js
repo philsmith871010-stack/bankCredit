@@ -455,3 +455,23 @@ document.addEventListener('click',function(e){
     var d=(na!=null&&nb!=null)?na-nb:ta.localeCompare(tbb,undefined,{numeric:true}); return asc?d:-d});
   rows.forEach(function(r){tb.appendChild(r)});
 });
+
+// The agencies' own ratings: one small file on the members path, so a login can later sit in
+// front of that one path. A build without it gets a 404 and the frame says so; nothing
+// attributed is in the page itself or the public data.
+(function(){
+  var el=document.querySelector('.attr[data-attr]'); if(!el)return;
+  var GLYPH={positive:'\u25b2',negative:'\u25bc',stable:'\u25b6','watch negative':'\u25c6','watch positive':'\u25c6'};
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  var root=document.body.getAttribute('data-root'); root=(root==null?'../':root);
+  fetch(root+'members/ratings.json').then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(j){
+    var rows=(j.rows||{})[el.dataset.attr]||[], body=el.querySelector('.attr-body');
+    if(!rows.length){body.innerHTML='<div class="small muted">None of the three main agencies publishes an issuer-level rating on this name.</div>';return}
+    body.innerHTML='<table class="plain attr-t"><thead><tr><th>Agency</th><th>Long-term</th><th>Outlook</th><th>Short-term</th><th>Date</th><th></th></tr></thead><tbody>'+
+      rows.map(function(r){return '<tr><td class="b">'+esc(r.name)+'</td><td><span class="mono b">'+esc(r.lt)+'</span> <span class="small muted">'+esc(r.type)+'</span></td>'+
+        '<td>'+(r.outlook?'<span title="'+esc(r.outlook)+'">'+(GLYPH[r.outlook]||'')+' '+esc(r.outlook)+'</span>':'<span class="muted">\u2014</span>')+'</td>'+
+        '<td class="mono">'+esc(r.st||'\u2014')+'</td><td class="mono muted">'+esc(r.date)+'</td>'+
+        '<td class="small"><a href="'+esc(r.url)+'" rel="noopener" target="_blank">'+esc(r.name)+'</a> \u00b7 <a href="'+esc(j.source)+'" rel="noopener" target="_blank">ESMA register</a></td></tr>'}).join('')+
+      '</tbody></table><div class="small muted">Quoted from the public record as filed on the ESMA European Rating Platform, as at '+esc(String(j.generated||'').slice(0,10))+'. The agencies\u2019 opinions, not recommendations.</div>';
+  }).catch(function(){var w=el.querySelector('.attr-wait'); if(w)w.innerHTML='Not available in this build.'});
+})();

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 
@@ -10,6 +11,7 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from ..composite import THREE, describe, of_three, tone_words
+from .. import attributed
 from ..models import METRICS
 from ..score import PILLARS, BANDS, OVERLAY_CAP, RATING_WEIGHT, RATING_SCORE, UNRATED_SCORE, UNRATED_CAP, VERSION, score_cap
 from ..composite import SCALE as GRADE_LETTERS
@@ -263,6 +265,14 @@ def ratings_tile(b) -> str:
             f'<div class="rcells">{cells}</div><div class="tile-foot"><span>Long-term ratings of {THREE} on one scale, from the ESMA European Rating Platform, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span></div></div>')
 
 
+def attributed_block(b) -> str:
+    """The agencies' own ratings, filled in by the browser from the members file. The page carries
+    the frame and the basis; the ratings live in one file that a login can later sit in front of."""
+    return (f'<div class="attr" data-attr="{c.esc(b["id"])}"><h3>The agencies\' own ratings</h3>'
+            f'<div class="attr-body"><div class="attr-wait small muted">Loading the current rating and outlook each of the three publishes on this name.</div></div>'
+            f'<details class="attr-basis"><summary class="small">The basis on which they are shown</summary><p class="small muted">{c.esc(attributed.BASIS)}</p></details></div>')
+
+
 def tone_glyphs(tones) -> str:
     """One glyph per agency, worst first, so the tile reads ▼▶▶ for one negative and two stable."""
     out = []
@@ -441,7 +451,7 @@ def page_bank(b, generated):
                   '</tbody></table>'
                   f'<div class="note">Source: ESMA European Rating Platform, checked daily. The three are {three}; which of them said what is not shown, '
                   'and the letters are this site&#39;s notation for a position on the scale, not any agency&#39;s symbol.</div>')
-        ratings_html = (rating_history_block(b) if b.get("rating_history") else "") + stands
+        ratings_html = (rating_history_block(b) if b.get("rating_history") else "") + stands + attributed_block(b)
     else:
         ratings_html = f'<div class="empty">None of {THREE} publishes an issuer-level rating on this entity in the ESMA register.</div>'
     mp = b["market_public"]
@@ -726,6 +736,7 @@ def page_method(generated, inner: bool = False):
 <h3>What changed from version 1</h3><p>Version 1 scored ratios alone against absolute thresholds and kept ratings in the private overlay. That put small, young or narrowly focused banks with very high capital and liquidity ratios at the top of the table, some of them unrated, and large diversified banks with A+ ratings and leaner ratios in band C. Version 2 (7 September 2026) makes the rating the anchor, moves ratings out of the overlay so they are not counted twice, and withholds the score from unrated banks and from banks without current capital ratios. Scoring ratios relative to each peer group rather than to absolute thresholds is the next candidate change.</p>
 <h2>My policy</h2><p>A page for the treasurer's own approved list. You enter the counterparties you accept and the longest tenor for each; the page keeps the list in your browser (and in a link you can share with colleagues) and checks it on every visit against the current score, band, ratings, market signal, news and data age, flagging what has changed since the day each name was approved. Like-for-like shows the other covered names whose public standing is at least as strong as the weakest counterparty you already accept at each tenor. It compares public information; it does not suggest a tenor, a limit or a list, which remain the treasurer's policy and the adviser's advice.</p>
 <h2>Ratings</h2><p>The site shows one rating per entity: the average of the long-term ratings Fitch, S&amp;P and Moody's hold on it (issuer or issuer default rating where it exists, otherwise deposit or counterparty), on one scale, with the weakest of the three beside it and one outlook mark per agency. It does not say which agency holds which rating: a rating shown with its agency's name on it is that agency's product and republishing it needs a licence from the agency, whereas an average and a count worked out from the public register are this site's own. The letters are this site's notation for a position on the scale, never an agency's symbol. Agencies outside the three are not averaged in. Ratings come from the ESMA European Rating Platform, refreshed daily. Each profile also carries the rating history the register publishes under every live rating record, back to the platform's first day on 1 July 2015: the average and the weakest rebuilt from the agencies' own actions on every day either moved, and how many of the three held the name on each outlook. Nothing before July 2015 is on the platform, and a rating record an agency has removed from it takes its actions with it.</p>
+<h3>The agencies' own ratings</h3><p>Each profile also shows the current long-term rating and outlook and the current short-term rating that each of the three main agencies publishes on the name, with the agency named, the date and a link to the source. This view is a quotation, not a feed: current ratings only, no history by agency, no download. The basis on which it is shown is set out beside it and repeated here.</p><p class="note">{c.esc(attributed.BASIS)}</p>
 <h2>Market overlay</h2><p>A layer built from five-year CDS levels and 30-day changes where a CDS market exists (otherwise the 30-day change in the bank's own bond yields against peers), 30-day equity volatility and drawdown from the 52-week high. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points. Provisional weighting (September 2026): the three signals count equally, each worth at most 2.5 points either way. A CDS move is measured within one source (settlement against settlement, or trade medians on days with three or more trades) and split into the part shared with iTraxx Senior Financials and the part that is the bank's own; the label says which. The direction and size of the adjustment are shown; CDS levels themselves are not redistributed.</p>
 <h2>Limitations</h2><ul><li>US banking groups appear twice, as in the UK: the operating bank a depositor faces (Call Report figures from the FDIC, with the US Tier 1 leverage ratio scored on its own scale, and the group's LCR shown as a group figure because banks do not publish their own) and the holding company (binding Basel ratios, the lower of the standardised and advanced approaches, from its Pillar 3 report or XBRL filings, the supplementary leverage ratio, the public LCR disclosure, and asset quality and profitability inherited from its lead bank, labelled).</li><li>UK and other-region figures depend on PDF extraction; failed validations are shown as unverified rather than hidden.</li><li>Peer percentiles are computed only among entities with a score, so they are unstable while coverage is low.</li><li>Asset quality and profitability are held only for US banks so far, so those pillars are re-scaled away for most of the universe; the Coverage page shows this per bank.</li><li>Back-tests against past failures are planned.</li></ul>
 </div>'''
@@ -1362,6 +1373,11 @@ def build():
     (OUT / "data").mkdir(exist_ok=True)
     shutil.copy(store.DATA / "json" / "policy.json", OUT / "data" / "policy.json")
     write_detail()
+    if os.environ.get(attributed.ENV):
+        # the attributed ratings, for the members path only; never in the public data
+        from ..entities import load as load_entities
+        n = attributed.write(OUT / "members" / "ratings.json", [e for e in load_entities() if e.active], store.read("ratings"))
+        print(f"members/ratings.json: the agencies' own ratings on {n} names")
     (OUT / "brief").mkdir(exist_ok=True)
     _write(OUT / "brief" / "index.html", page_brief_redirect(generated))
     _write(OUT / "status" / "index.html", page_gone("Status", generated, "../admin/index.html#status", "admin"))
