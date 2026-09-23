@@ -1,16 +1,14 @@
 {
  "id": "commonwealth-bank",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "Commonwealth Bank of Australia is the largest of Australia's big four banks and the country's largest mortgage lender, funded mainly by Australian retail deposits, with a New Zealand subsidiary in ASB.",
- "synthesis": "Ratings are the highest of the Australian majors: AA from Fitch after the upgrade on 5 Mar 2026, AA- from S&P and Aa2 from Moody's, all stable. Against Australian peers the ratios are middling: CET1 of 12.0% is at the median, leverage of 4.6% is below the peer median, LCR of 132% is below the peer median and NSFR of 115% is in the top quarter, at the median. None of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days. The ratings reflect market position and earnings rather than any ratio lead over peers.",
+ "synthesis": "Ratings are the highest of the Australian majors: AA on average across all three main agencies, the weakest of them at AA-, all three on a stable outlook, with a one-notch upgrade by one of the three on 5 Mar 2026 the latest move. Against Australian peers the ratios are middling: CET1 of 12.0% is at the median, leverage of 4.6% is below the peer median, LCR of 132% is below the peer median and NSFR of 115% is in the top quarter, at the median. None of the ratios has moved materially over the past four periods, and nothing has been flagged in the last 90 days. The ratings reflect market position and earnings rather than any ratio lead over peers.",
  "inputs": {
   "band": "B",
   "composite": "AA",
-  "ratings": {
-   "fitch": "AA stable",
-   "sp": "AA- stable",
-   "moodys": "Aa2 stable"
-  },
+  "worst": "AA-",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-03-05"
  }

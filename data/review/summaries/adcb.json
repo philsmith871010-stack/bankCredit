@@ -1,16 +1,14 @@
 {
  "id": "adcb",
- "written": "2026-09-21",
+ "written": "2026-09-23",
  "background": "Abu Dhabi Commercial Bank is the second-largest bank in Abu Dhabi, majority-owned by the emirate's government through its investment vehicle, with a retail, corporate and Islamic banking franchise concentrated in the UAE.",
- "synthesis": "Fitch and S&P rate the bank A+ and Moody's A1, all stable, with the last move S&P's upgrade to A+ on 14 Mar 2025. No capital or liquidity ratios are held for it, so the ratings carry the assessment. The newest flagged item, on 18 Sep 2026, is higher impairment charges at UAE banks including ADCB, set against strong profit growth reported over the summer.",
+ "synthesis": "The bank is rated A+ on average across all three main agencies, all three on a stable outlook, with the last move a one-notch upgrade by one of the three on 14 Mar 2025. No capital or liquidity ratios are held for it, so the ratings carry the assessment. The newest flagged item, on 18 Sep 2026, is higher impairment charges at UAE banks including ADCB, set against strong profit growth reported over the summer.",
  "inputs": {
   "band": "",
   "composite": "A+",
-  "ratings": {
-   "fitch": "A+ stable",
-   "sp": "A+ stable",
-   "moodys": "A1 stable"
-  },
+  "worst": "A+",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "",
   "last_flagged": "2026-09-18"
  }

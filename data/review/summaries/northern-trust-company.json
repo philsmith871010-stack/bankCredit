@@ -1,16 +1,14 @@
 {
  "id": "northern-trust-company",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "The Northern Trust Company is the operating bank of Northern Trust, a Chicago-based custodian and wealth manager whose business is asset servicing for institutions and banking for wealthy families rather than mass-market lending.",
- "synthesis": "Ratings are AA- from Fitch, AA- from S&P and A2 from Moody's, all stable. Capital is mixed against US peers: CET1 of 11.8% is in the bottom quarter against the peer median, while leverage of 6.8% is in the top quarter against 5.8%. LCR of 107% is in the bottom quarter against 117%, though a custody balance sheet is built differently from a lender's. None of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days. A conservative fee-earning bank with high ratings and modest ratio headroom.",
+ "synthesis": "The bank is rated A+ on average across all three main agencies, the weakest of them at A, all three on a stable outlook. Capital is mixed against US peers: CET1 of 11.8% is in the bottom quarter, while leverage of 6.8% is in the top quarter. LCR of 107% is in the bottom quarter, though a custody balance sheet is built differently from a lender's, and none of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days; a conservative fee-earning bank with high ratings and modest ratio headroom.",
  "inputs": {
   "band": "B",
-  "composite": "AA-",
-  "ratings": {
-   "fitch": "AA- stable",
-   "sp": "AA- stable",
-   "moodys": "A2 stable"
-  },
+  "composite": "A+",
+  "worst": "A",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": ""
  }

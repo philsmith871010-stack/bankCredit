@@ -1,17 +1,15 @@
 {
  "id": "national-bank-of-canada",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "National Bank of Canada is the sixth-largest Canadian bank and the leading bank in Quebec, funded by Canadian deposits and lending to Quebec households and businesses, with Canadian Western Bank added to extend it across the west.",
- "synthesis": "Ratings are A+ from Fitch, A+ from S&P and A2 from Moody's after its upgrade on 16 Dec 2024, all stable, a notch below the largest Canadian banks. Against Canadian peers capital is mixed: CET1 of 13.5% is in the top quarter, at the median, while leverage of 4.2% is in the bottom quarter against 4.3% and has fallen 0.5 points since 31 Jul 2025. No liquidity ratios are held here. The figures run to 31 Jul 2026. Nothing has been flagged in the last 90 days. A sound regional major whose leverage has thinned with the western acquisition.",
+ "synthesis": "Ratings are A+ on average across all three main agencies, the weakest of them at A, all three on a stable outlook, with the last move a one-notch upgrade by one of the three on 16 Dec 2024, a notch below the largest Canadian banks. Against Canadian peers capital is mixed: CET1 of 13.5% is in the top quarter, while leverage of 4.2% is in the bottom quarter and has fallen 0.5 points since 31 Jul 2025. No liquidity ratios are held here, and the figures run to 31 Jul 2026. Nothing has been flagged in the last 90 days, leaving a sound regional major whose leverage has thinned with the western acquisition.",
  "inputs": {
   "band": "B",
   "composite": "A+",
-  "ratings": {
-   "fitch": "A+ stable",
-   "sp": "A+ stable",
-   "moodys": "A2 stable"
-  },
+  "worst": "A",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-07-31",
-  "last_flagged": ""
+  "last_flagged": "2026-05-12"
  }
 }

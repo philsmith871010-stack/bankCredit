@@ -66,13 +66,41 @@ def test_an_agency_that_rates_again_after_withdrawing_starts_a_new_spell():
     assert [x["value"] for x in b.state_at("2024-01-01")] == ["BBB"]
 
 
-def test_the_composite_is_the_median_of_whatever_stood_that_day():
+def test_the_composite_is_the_average_of_the_three_main_agencies_that_stood_that_day():
     b = timeline.Book(acts([("p1", "sp", "2015-07-01", "OR", "A"),          # 6
                             ("p2", "moodys", "2015-07-01", "OR", "A3"),     # 7
+                            ("p4", "dbrs", "2015-07-01", "OR", "AAA"),      # not one of the three
                             ("p3", "fitch", "2018-01-01", "NW", "A+")]))    # 5
-    assert b.composite_at("2016-01-01") == 6.5
-    assert b.composite_at("2019-01-01") == 6.0
-    assert b.composite_at("2014-01-01") is None
+    assert b.composite_at("2016-01-01") == 6.5 and b.worst_at("2016-01-01") == 7
+    assert b.composite_at("2019-01-01") == 6.0 and b.worst_at("2019-01-01") == 7
+    assert b.composite_at("2014-01-01") is None and b.worst_at("2014-01-01") is None
+    assert b.composite_steps() == [["2015-07-01", 6.5], ["2018-01-01", 6.0]]
+    assert b.worst_steps() == [["2015-07-01", 7]]
+
+
+def test_the_tone_lane_counts_agencies_and_names_none():
+    rows = acts([("p1", "sp", "2015-07-01", "OR", "A"),
+                 ("p2", "fitch", "2015-07-01", "OR", "A"),
+                 ("p4", "dbrs", "2015-07-01", "OR", "A"),
+                 ("p1", "sp", "2016-01-01", "OT", ""),
+                 ("p2", "fitch", "2016-03-01", "WR", ""),
+                 ("p2", "fitch", "2016-06-01", "WR", ""),
+                 ("p4", "dbrs", "2016-06-01", "OT", ""),
+                 ("p1", "sp", "2018-01-01", "OT", "")])
+    for i, label in ((3, "Placed under negative outlook"), (4, "Placed under negative watch"),
+                     (5, "Removed under negative watch"), (6, "Placed under negative outlook"),
+                     (7, "Placed under stable outlook")):
+        rows.loc[i, "action"] = label
+    # [date, rated, watch negative, negative, watch positive, positive, stable]
+    assert timeline.Book(rows).tone_steps() == [
+        ["2015-07-01", 2, 0, 0, 0, 0, 0], ["2016-01-01", 2, 0, 1, 0, 0, 0], ["2016-03-01", 2, 1, 1, 0, 0, 0],
+        ["2016-06-01", 2, 0, 1, 0, 0, 0], ["2018-01-01", 2, 0, 0, 0, 0, 1]], "DBRS is not counted"
+
+
+def test_moves_are_the_three_main_agencies_only():
+    b = timeline.Book(acts([("p1", "sp", "2015-07-01", "OR", "A"), ("p4", "dbrs", "2015-07-01", "OR", "A"),
+                            ("p4", "dbrs", "2017-01-01", "DG", "A-"), ("p1", "sp", "2018-01-01", "UP", "A+")]))
+    assert [(m["date"], m["action"]) for m in b.moves()] == [("2018-01-01", "upgrade")]
 
 
 def test_an_agency_speaks_once_however_many_records_it_holds():

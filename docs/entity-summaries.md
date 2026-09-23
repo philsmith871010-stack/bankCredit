@@ -11,7 +11,7 @@ rendered as dated sentences, tested like everything else:
 
 - standing: band, score, rank within the peer group, move since last quarter
 - against peers: each of the four policy ratios placed in its peer quartile, with the median
-- ratings: composite, each of Fitch, S&P and Moody's with outlook, the last move and its date
+- ratings: the average and the weakest of the three main agencies on one scale, how many of the three hold each outlook, the last move and its date; never which agency said what (docs/ratings-composite.md)
 - trends: which held series moved past a threshold over one, four and twelve quarters
 - latest news: flagged headlines and rating actions of the last 90 days, one line each
 

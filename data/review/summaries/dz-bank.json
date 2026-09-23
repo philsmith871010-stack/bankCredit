@@ -1,16 +1,14 @@
 {
  "id": "dz-bank",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "DZ BANK is the central institution of the German cooperative banking sector, owned by the Volksbanken and Raiffeisenbanken, providing them with wholesale, capital markets and treasury services alongside its own corporate lending, and heading a group that includes Union Investment, R+V and Bausparkasse Schwabisch Hall.",
- "synthesis": "Ratings are high at AA from Fitch after the upgrade on 12 May 2026, A+ from S&P and Aa2 from Moody's, all stable, resting on the cooperative sector's protection scheme. Capital is strong against EU and Nordic peers, with CET1 of 17.8% and leverage of 6.8% both in the top quarter, and both up since 30 Jun 2024, CET1 by 2.1 points and leverage by 0.6 points. Liquidity is mixed: LCR of 148% is a shade below the peer median and NSFR of 124% is at the median. The figures run to 31 Mar 2026. Nothing has been flagged in the last 90 days.",
+ "synthesis": "Ratings are high, at AA- on average across all three main agencies and A+ at the weakest, all three on a stable outlook, with the last move a one-notch upgrade by one of the three on 12 May 2026, resting on the cooperative sector's protection scheme. Capital is strong against EU and Nordic peers, with CET1 of 17.8% and leverage of 6.8% both in the top quarter, and both up since 30 Jun 2024, CET1 by 2.1 points and leverage by 0.6 points. Liquidity is mixed: LCR of 148% is a shade below the peer median and NSFR of 124% sits at the median, with the figures running to 31 Mar 2026. Nothing has been flagged in the last 90 days.",
  "inputs": {
   "band": "A",
   "composite": "AA-",
-  "ratings": {
-   "fitch": "AA stable",
-   "sp": "A+ stable",
-   "moodys": "Aa2 stable"
-  },
+  "worst": "A+",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-03-31",
   "last_flagged": "2026-05-12"
  }

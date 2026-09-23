@@ -1,14 +1,14 @@
 {
  "id": "investec",
- "written": "2026-09-21",
+ "written": "2026-09-23",
  "background": "Investec plc is the UK-listed half of the dual-listed Anglo-South African Investec group, a specialist bank and wealth manager funded by UK deposits and lending to mid-sized companies, professionals and high-net-worth clients.",
- "synthesis": "Moody's is the only agency rating the group, at A3 after its upgrade on 14 Apr 2026, with a positive outlook. No capital or liquidity ratios are held for it, so the rating carries the assessment, and it is moving up. The newest flagged item, on 18 Sep 2026, is an Investec analyst call on another company; of the others, the Moody's positive outlook is the one that matters and a board departure is not a credit concern.",
+ "synthesis": "Only one of the three main agencies rates the group, at A- after a one-notch upgrade on 14 Apr 2026, with a positive outlook. No capital or liquidity ratios are held for it, so the rating carries the assessment, and it is moving up. The newest flagged item, on 18 Sep 2026, is a tepid trading update with UK earnings weaker; of the others, the positive outlook from one of the three is the one that matters and a board departure is not a credit concern.",
  "inputs": {
   "band": "",
   "composite": "A-",
-  "ratings": {
-   "moodys": "A3 positive"
-  },
+  "worst": "A-",
+  "outlooks": "positive",
+  "n": 1,
   "asof": "2026-03-31",
   "last_flagged": "2026-09-18"
  }

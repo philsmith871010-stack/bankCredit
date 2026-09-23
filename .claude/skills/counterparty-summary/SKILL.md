@@ -28,7 +28,7 @@ For each entry, write `data/review/summaries/<id>.json`:
 ```json
 {"id": "coventry-bs", "written": "2026-09-16",
  "background": "Coventry Building Society is a UK mutual funded by retail savings and lending on residential property, the second-largest building society after Nationwide.",
- "synthesis": "Fitch rates the society A+ after its upgrade on 12 May 2026 and Moody's A3, both stable. Capital is strong on the headline measure, with CET1 of 19.6% in the top quarter of UK building societies, but leverage of 4.7% is in the bottom quarter, which is the one figure to keep an eye on. Liquidity is comfortable, with LCR of 233% and NSFR of 147% both above their medians. Since 31 Mar 2025 CET1 has fallen 1.7 points, leverage 0.6 points and LCR 21 points. Nothing has been flagged in the last 90 days.",
+ "synthesis": "Two of the three main agencies rate the society, A on average and the weakest of them at A-, both on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. Capital is strong on the headline measure, with CET1 of 19.6% in the top quarter of UK building societies, but leverage of 4.7% is in the bottom quarter, which is the one figure to keep an eye on. Liquidity is comfortable, with LCR of 233% and NSFR of 147% both above their medians. Since 31 Mar 2025 CET1 has fallen 1.7 points, leverage 0.6 points and LCR 21 points. Nothing has been flagged in the last 90 days.",
  "inputs": { ...copy the entry's inputs exactly... }}
 ```
 
@@ -40,7 +40,16 @@ keep it word for word; do not rewrite for the sake of it.
 
 **Synthesis** - three or four sentences on what the figures add up to for a treasurer deciding
 whether to place a deposit: where the strength is, where the weak spot is, what has moved and
-which way, what the agencies say. Written for a professional; no hedging, no advice.
+which way, what the ratings say. Written for a professional; no hedging, no advice.
+
+**Never name a rating agency, and never use an agency's own symbol.** The site shows the
+average and the weakest of the three main agencies' ratings on one scale, and how many of the
+three hold each outlook; it does not say which agency said what, because a rating with an
+agency's name on it is that agency's product and republishing it needs a licence
+(docs/ratings-composite.md). So: "rated A on average across all three, the weakest of them at
+A-, two on a stable outlook and one on negative watch; the last move was a one-notch downgrade
+by one of the three on 3 May 2026". Never "Fitch", "S&P", "Moody's", "DBRS", "KBRA", "Scope",
+"JCR"; never "A2", "Aa3", "Baa1". The check refuses both.
 
 The one rule that matters: **every figure in the synthesis comes from `brief`**, as it is
 written there, with the same dates. Nothing from memory, nothing from anywhere else. A number

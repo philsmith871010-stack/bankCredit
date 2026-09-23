@@ -1,16 +1,14 @@
 {
  "id": "credit-agricole",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "Credit Agricole S.A. is the listed central body of the Credit Agricole group, France's largest banking group by retail deposits, owned by the regional cooperative banks and housing the group's insurance, asset management, consumer finance and corporate and investment banking.",
- "synthesis": "Ratings are AA- from Fitch after the upgrade on 12 May 2026, A+ from S&P and A1 from Moody's, all stable. Capital is strong against EU and Nordic peers, with CET1 of 17.1% above the peer median and leverage of 5.6% just above the peer median. Liquidity is the weaker side: LCR of 136% is in the bottom quarter against the peer median and NSFR of 119% is below the peer median. Nothing has been flagged in the last 90 days. The cooperative group's mutual support scheme is part of what the ratings rest on.",
+ "synthesis": "The bank is rated A+ on average across all three main agencies, all three on a stable outlook, with the last move a one-notch upgrade by one of the three on 12 May 2026. Capital is strong against EU and Nordic peers, with CET1 of 17.1% above the peer median and leverage of 5.6% just above the peer median. Liquidity is the weaker side: LCR of 136% is in the bottom quarter and NSFR of 119% is below the peer median. Nothing has been flagged in the last 90 days, and the cooperative group's mutual support scheme is part of what the ratings rest on.",
  "inputs": {
   "band": "B",
   "composite": "A+",
-  "ratings": {
-   "fitch": "AA- stable",
-   "sp": "A+ stable",
-   "moodys": "A1 stable"
-  },
+  "worst": "A+",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-05-12"
  }

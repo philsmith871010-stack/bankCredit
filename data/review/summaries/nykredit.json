@@ -1,16 +1,14 @@
 {
  "id": "nykredit",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "Nykredit is Denmark's largest mortgage lender, a mutual-owned group that funds Danish residential and commercial mortgages through covered bonds under the Danish balance-principle system, with a commercial and retail bank alongside.",
- "synthesis": "Ratings are AA from Fitch after the upgrade on 12 May 2026, A+ from S&P and A1 from Moody's on a positive outlook. Capital is mixed against EU and Nordic peers: CET1 of 17.0% is above the peer median, while leverage of 4.5% is in the bottom quarter against 5.5%, as is usual for a mortgage bank funded by covered bonds. Liquidity is very strong, with LCR of 501% and NSFR of 143% both in the top quarter, and NSFR up 10 points since 30 Jun 2025. Nothing has been flagged in the last 90 days. A mortgage bank whose model makes its leverage look thin and its liquidity look enormous.",
+ "synthesis": "Ratings are AA- on average across all three main agencies, the weakest of them at A+, one on a positive outlook and two on a stable outlook, after a two-notch upgrade by one of the three on 12 May 2026. Capital is mixed against EU and Nordic peers: CET1 of 17.0% is above the peer median, while leverage of 4.5% is in the bottom quarter, as is usual for a mortgage bank funded by covered bonds. Liquidity is very strong, with LCR of 501% and NSFR of 143% both in the top quarter, and NSFR up 10 points since 30 Jun 2025. Nothing has been flagged in the last 90 days; the mortgage model makes its leverage look thin and its liquidity look enormous.",
  "inputs": {
   "band": "B",
-  "composite": "A+",
-  "ratings": {
-   "fitch": "AA stable",
-   "sp": "A+ stable",
-   "moodys": "A1 positive"
-  },
+  "composite": "AA-",
+  "worst": "A+",
+  "outlooks": "positive, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-05-12"
  }

@@ -1,16 +1,14 @@
 {
  "id": "barclays-bank-uk",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "Barclays Bank UK PLC is the ring-fenced retail bank of Barclays, funded by UK personal and small-business deposits and lending on residential mortgages, cards and to smaller companies.",
- "synthesis": "Ratings are strong at AA- from Fitch after the upgrade on 12 May 2026, A+ from S&P and A1 from Moody's, all stable. The ratios are the best of the Barclays entities: CET1 of 13.8% is at the UK-major median, leverage of 5.0% is just above the peer median, and LCR of 168% and NSFR of 152% are both in the top quarter. The direction is down, though: since 30 Jun 2025 CET1 has fallen 0.7 points, leverage 0.5 points and LCR 33 points, so a large liquidity surplus is being run off. Nothing flagged in the last 90 days.",
+ "synthesis": "Ratings are strong at A+ on average across all three main agencies, all three on a stable outlook, with the last move a one-notch upgrade by one of the three on 12 May 2026. The ratios are the best of the Barclays entities: CET1 of 13.8% is at the UK-major median, leverage of 5.0% is just above the peer median, and LCR of 168% and NSFR of 152% are both in the top quarter. The direction is down, though: since 30 Jun 2025 CET1 has fallen 0.7 points, leverage 0.5 points and LCR 33 points, so a large liquidity surplus is being run off. Nothing flagged in the last 90 days.",
  "inputs": {
   "band": "B",
   "composite": "A+",
-  "ratings": {
-   "fitch": "AA- stable",
-   "sp": "A+ stable",
-   "moodys": "A1 stable"
-  },
+  "worst": "A+",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-05-12"
  }

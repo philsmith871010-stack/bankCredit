@@ -1,14 +1,14 @@
 {
  "id": "tsb",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "TSB Bank is a UK retail and small-business bank, funded by retail deposits and lending mainly on residential mortgages, which passed from Spain's Sabadell to Santander UK.",
- "synthesis": "Only Moody's rates the bank among the three agencies, at A1, after an upgrade to A1 on 14 May 2026. Capital is mixed against UK mid-sized banks: CET1 of 16.7% is in the top quarter against the peer median, while leverage of 5.5% is in the bottom quarter against 7.4%. Liquidity is also mixed, with LCR of 188% in the top quarter against 172% and NSFR of 124% in the bottom quarter against 135%. Leverage has risen 1.3 points since 31 Dec 2022 and the rest has been flat. Nothing has been flagged in the last 90 days. Santander's ownership is now the main support behind the single rating.",
+ "synthesis": "Only one of the three main agencies rates the bank, at A+, after a three-notch upgrade on 14 May 2026. Capital is mixed against UK mid-sized banks: CET1 of 16.7% is in the top quarter, while leverage of 5.5% is in the bottom quarter. Liquidity is also mixed, with LCR of 188% in the top quarter and NSFR of 124% in the bottom quarter, and leverage has risen 1.3 points since 31 Dec 2022 with the rest flat. Nothing has been flagged in the last 90 days, and Santander's ownership is the main support behind the single rating.",
  "inputs": {
   "band": "A",
   "composite": "A+",
-  "ratings": {
-   "moodys": "A1"
-  },
+  "worst": "A+",
+  "outlooks": "",
+  "n": 1,
   "asof": "2026-06-30",
   "last_flagged": "2026-05-14"
  }

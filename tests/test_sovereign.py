@@ -85,13 +85,20 @@ def test_the_reference_file_covers_every_country_the_universe_holds():
 
 
 # ---- the composite shown beside a bank -------------------------------------------------------
-def test_the_composite_is_the_median_of_the_agencies():
-    df = pd.DataFrame([{"entity_id": "GB", "agency": a, "value": v, "outlook": "stable",
-                        "action_date": "2026-08-14"}
-                       for a, v in [("fitch", "AA-"), ("kbra", "AA"), ("scope", "AA")]])
+def test_the_composite_is_the_average_of_the_three_main_agencies_and_names_none():
+    df = pd.DataFrame([{"entity_id": "GB", "agency": a, "value": v, "outlook": o, "action_date": "2026-08-14"}
+                       for a, v, o in [("fitch", "AA-", "stable"), ("sp", "AA", "negative"), ("moodys", "Aa3", "stable"),
+                                       ("kbra", "AAA", "stable"), ("scope", "AAA", "stable")]])
     out = _sovereigns(df)["GB"]
-    assert out["composite"] == "AA" and out["n"] == 3
-    assert [a["agency"] for a in out["agencies"]] == ["fitch", "kbra", "scope"]
+    assert out["composite"] == "AA-" and out["worst"] == "AA-" and out["n"] == 3, "KBRA and Scope are not averaged in"
+    assert out["grade"] == 3.67
+    assert out["tones"] == ["negative", "stable", "stable"]
+    assert "agencies" not in out, "nothing says which agency said what"
+
+
+def test_a_country_rated_only_outside_the_three_has_no_entry():
+    df = pd.DataFrame([{"entity_id": "XX", "agency": "scope", "value": "AA", "outlook": "", "action_date": "2026-08-14"}])
+    assert _sovereigns(df) == {}
 
 
 def test_no_sovereign_data_means_no_claim():

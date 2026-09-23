@@ -1,17 +1,15 @@
 {
  "id": "bbva",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "BBVA is Spain's second-largest bank, run as a group of self-funded subsidiaries with Mexico the largest earner alongside Spain, Turkey and South America, and a retail and commercial banking focus.",
- "synthesis": "Ratings are solid at A from Fitch after the upgrade on 12 May 2026, A+ from S&P and A2 from Moody's, all stable. Capital is mixed against EU and Nordic peers: CET1 of 12.8% is in the bottom quarter against the peer median, while leverage of 6.2% is above the peer median. Liquidity is also mixed, with LCR of 142% below the peer median and NSFR of 125% just above the median. The ratios have been broadly flat, with leverage down 0.3 points since 31 Mar 2024. The flagged news is conduct: a GDPR fine on 9 Sep 2026 and a trial over the spying case on 10 Jul 2026 and 9 Jul 2026, neither of which touches solvency.",
+ "synthesis": "Ratings are solid at A on average across all three main agencies, none of them lower and all three on a stable outlook; the last move was a one-notch upgrade by one of the three on 12 May 2026. Capital is mixed against EU and Nordic peers: CET1 of 12.8% is in the bottom quarter, while leverage of 6.2% is above the peer median. Liquidity is also mixed, with LCR of 142% below the peer median and NSFR of 125% just above it, and the ratios have been broadly flat apart from leverage down 0.3 points since 31 Mar 2024. The newest flagged item, on 18 Sep 2026, is strong results from the Argentine subsidiary; the older items concern the bank and its former leadership standing trial in the spying case, a conduct matter that does not touch solvency.",
  "inputs": {
   "band": "B",
   "composite": "A",
-  "ratings": {
-   "fitch": "A stable",
-   "sp": "A+ stable",
-   "moodys": "A2 stable"
-  },
+  "worst": "A",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-09"
+  "last_flagged": "2026-09-18"
  }
 }

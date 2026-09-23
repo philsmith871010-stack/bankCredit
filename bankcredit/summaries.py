@@ -22,12 +22,14 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from . import store
+from .composite import THREE, describe, of_three
 
 SUMMARIES = store.DATA / "review" / "summaries"
 TODO = store.DATA / "cache" / "summaries_todo.json"
 MAX_AGE_DAYS = 90
-AGENCIES = ("fitch", "sp", "moodys")                     # the three a treasury policy names
-AGENCY = {"fitch": "Fitch", "sp": "S&P", "moodys": "Moody's"}
+# A written summary never names a rating agency: the site shows the average and the weakest of
+# the three main agencies and nothing that says which said what (composite.py).
+AGENCY_NAME = re.compile(r"\b(Fitch|S&P|Standard\s*&\s*Poor|Moody|DBRS|KBRA|Scope Ratings|JCR|Morningstar)\b", re.I)
 PEER_LABEL = {"uk_large": "UK majors", "uk_mid": "UK mid-sized banks", "uk_small": "UK small banks",
               "uk_bs": "UK building societies", "eu_large": "EU and Nordic banks", "us": "US banks",
               "ch": "Swiss banks", "aus": "Australian banks", "can": "Canadian banks", "asia": "Asian banks",
@@ -85,16 +87,16 @@ def _ratio_clause(label, v, unit, dp, q, pr) -> str:
 
 
 def _last_move(m: dict) -> str:
-    """'Fitch's upgrade to A on 2 Nov 2025'; a withdrawal or a first rating said as such."""
-    who = AGENCY[m["agency"]]
-    poss = who if who.endswith("s") else who + "'s"
+    """'a one-notch upgrade by one of the three on 2 Nov 2025'; a withdrawal or a first rating
+    said as such. Which of the three is never said."""
     act, when = m.get("action") or "action", fdate(m.get("date"))
     if act == "withdrawal":
-        was = f" of its {m['from']} rating" if m.get("from") else " of its rating"
-        return f"{poss} withdrawal{was} on {when}"
+        return f"a withdrawal by one of the three on {when}"
     if act == "new":
-        return f"{poss} first rating, {m.get('value')}, on {when}"
-    return f"{poss} {act} to {m.get('value')} on {when}"
+        return f"a new rating from one of the three on {when}"
+    n = m.get("notches")
+    size = {1: "a one-notch", 2: "a two-notch", 3: "a three-notch"}.get(n, "a")
+    return f"{size} {act} by one of the three on {when}"
 
 
 def brief(d: dict, today: date | None = None) -> dict:
@@ -114,23 +116,15 @@ def brief(d: dict, today: date | None = None) -> dict:
     kind = TYPE_WORD.get(d.get("type") or "", "bank")
     where = COUNTRY.get(d.get("country") or "")
     who = f"{name} is a {kind}" + (f" in {where}" if where else "")
-    held = {r["agency"]: r for r in (d.get("ratings") or []) if r.get("agency") in AGENCIES}
-    if held:
-        rs = [f"{held[a]['value']} by {AGENCY[a]}" for a in AGENCIES if a in held]
-        outlooks = {(held[a].get("outlook") or "").lower() for a in AGENCIES if a in held}
-        s = f"{who}, rated {_join(rs)}"
-        if len(outlooks) == 1 and "" not in outlooks:
-            o = outlooks.pop()
-            s += f", {'all' if len(rs) > 2 else 'both'} with a {o} outlook" if len(rs) > 1 else f", with a {o} outlook"
-        elif len(outlooks) > 1:
-            s += " (" + ", ".join(f"{AGENCY[a]} {held[a].get('outlook') or 'no outlook'}" for a in AGENCIES if a in held) + ")"
-        moves = [m for m in ((d.get("rating_history") or {}).get("moves") or []) if m.get("agency") in AGENCIES]
+    comp = d.get("rating")
+    if comp:
+        s = f"{who}, rated {describe(comp)}"
+        moves = (d.get("rating_history") or {}).get("moves") or []
         if moves:
-            m = moves[0]
-            s += f"; the last move was {_last_move(m)}"
+            s += f"; the last move was {_last_move(moves[0])}"
         out["standing"] = s + "."
     else:
-        out["standing"] = f"{who} with no public rating from Fitch, S&P or Moody's."
+        out["standing"] = f"{who} with no public rating from any of {THREE}."
 
     # capital and liquidity, each against the peer group
     pr_all = d.get("peer_ratios") or {}
@@ -219,10 +213,11 @@ def brief_text(b: dict) -> str:
 
 # ---- the fingerprint: what a written summary rests on ---------------------------------------------
 def fingerprint(d: dict) -> dict:
-    held = {r["agency"]: f"{r['value']}{' ' + r['outlook'] if r.get('outlook') else ''}"
-            for r in (d.get("ratings") or []) if r.get("agency") in AGENCIES}
+    comp = d.get("rating") or {}
     flagged = [str(e.get("date"))[:10] for e in (d.get("events") or []) if (e.get("severity") or "info") in FLAGGED]
-    return {"band": d.get("band") or "", "composite": d.get("rating_composite") or "", "ratings": held,
+    return {"band": d.get("band") or "", "composite": d.get("rating_composite") or "",
+            "worst": comp.get("worst_letter") or "", "outlooks": ", ".join(comp.get("tones") or []),
+            "n": comp.get("n") or 0,
             "asof": str(d.get("asof") or ""), "last_flagged": max(flagged) if flagged else ""}
 
 
@@ -233,11 +228,13 @@ def changes_since(then: dict, now: dict) -> list[str]:
     if then.get("band") != now.get("band"):
         out.append(f"band moved from {then.get('band') or '—'} to {now.get('band') or '—'}")
     if then.get("composite") != now.get("composite"):
-        out.append(f"composite rating moved from {then.get('composite') or '—'} to {now.get('composite') or '—'}")
-    for a in AGENCIES:
-        a_then, a_now = (then.get("ratings") or {}).get(a), (now.get("ratings") or {}).get(a)
-        if a_then != a_now:
-            out.append(f"{AGENCY[a]} moved from {a_then or 'no rating'} to {a_now or 'no rating'}")
+        out.append(f"average rating moved from {then.get('composite') or '—'} to {now.get('composite') or '—'}")
+    if (then.get("worst") or "") != (now.get("worst") or ""):
+        out.append(f"weakest rating moved from {then.get('worst') or '—'} to {now.get('worst') or '—'}")
+    if (then.get("outlooks") or "") != (now.get("outlooks") or ""):
+        out.append(f"outlooks moved from {then.get('outlooks') or 'none'} to {now.get('outlooks') or 'none'}")
+    if (then.get("n") or 0) != (now.get("n") or 0):
+        out.append(f"rated by {of_three(now.get('n') or 0)} (was {of_three(then.get('n') or 0)})")
     if then.get("asof") != now.get("asof") and now.get("asof"):
         out.append(f"figures updated to {fdate(now['asof'])}" + (f" (were {fdate(then['asof'])})" if then.get("asof") else ""))
     if (now.get("last_flagged") or "") > (then.get("last_flagged") or ""):
@@ -316,6 +313,11 @@ def check(s: dict, brief_para: str) -> list[str]:
     # text rests on what is published, never on them
     if re.search(r"\bscore[sd]?\b|\bband [A-E]\b|\bbands?\b", text, re.I):
         faults.append("mentions the site's score or band, which depend on the reader's weightings")
+    named = sorted({m.group(1) for m in AGENCY_NAME.finditer(text)})
+    if named:
+        faults.append("names a rating agency (" + ", ".join(named) + "); the site shows the average and the weakest of the three, never which said what")
+    if re.search(r"\b(Aaa|Aa[123]|A[123]|Baa[123]|Ba[123]|B[123]|Caa)\b", s["synthesis"]):
+        faults.append("uses an agency's own rating symbol; the site's letters are AAA, AA+, A- and so on")
     return faults
 
 

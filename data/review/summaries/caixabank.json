@@ -1,16 +1,14 @@
 {
  "id": "caixabank",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "CaixaBank is Spain's largest domestic bank by loans and deposits, formed from the la Caixa savings bank and its takeover of Bankia, with a retail, insurance and asset-management franchise concentrated in Spain and Portugal.",
- "synthesis": "Ratings are A+ from Fitch, A+ from S&P and A2 from Moody's, all stable, with Fitch's upgrade to A+ on 8 Jul 2026 the latest move. Capital is the weak side against EU and Nordic peers: CET1 of 12.3% is in the bottom quarter against the peer median and leverage of 5.5% is at the median. Liquidity is a real strength, with LCR of 193% and NSFR of 143% both in the top quarter, though LCR has fallen 14 points and NSFR 6 points since 30 Jun 2025. The flagged news is good: first-half profit up on 29 Jul 2026 and the Fitch upgrade on 8 Jul 2026.",
+ "synthesis": "The bank is rated A+ on average across all three main agencies, the weakest of them at A, all three on a stable outlook, and the latest move was a one-notch upgrade by one of the three on 8 Jul 2026. Capital is the weak side against EU and Nordic peers: CET1 of 12.3% is in the bottom quarter and leverage of 5.5% sits at the median. Liquidity is a real strength, with LCR of 193% and NSFR of 143% both in the top quarter, though LCR has fallen 14 points and NSFR 6 points since 30 Jun 2025. The flagged news is good: first-half profit up 8.5% on 29 Jul 2026, and the rating upgrade before that.",
  "inputs": {
   "band": "B",
   "composite": "A+",
-  "ratings": {
-   "fitch": "A+ stable",
-   "sp": "A+ stable",
-   "moodys": "A2 stable"
-  },
+  "worst": "A",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-07-29"
  }

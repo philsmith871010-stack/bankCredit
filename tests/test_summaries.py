@@ -20,11 +20,9 @@ def bank(**over):
         "score": 66.4, "band": "B", "percentile": 40, "peer": {"n": 16, "p50": 68.0}, "asof": "2026-06-30",
         "cet1": 14.0, "leverage": 5.0, "lcr": 150.0, "nsfr": 130.0,
         "peer_ratios": {"cet1_ratio": {"p25": 13.5, "p50": 13.8, "p75": 14.2, "n": 16}, "lcr": {"p25": 140, "p50": 160, "p75": 180, "n": 16}},
-        "ratings": [{"agency": "fitch", "value": "A", "outlook": "stable", "date": "2026-05-01"},
-                    {"agency": "dbrs", "value": "A(H)", "outlook": "", "date": "2026-05-01"}],
+        "rating": {"n": 1, "avg": 6.0, "worst": 6, "letter": "A", "worst_letter": "A", "tones": ["stable"], "date": "2026-05-01"},
         "rating_composite": "A",
-        "rating_history": {"moves": [{"date": "2026-05-01", "agency": "dbrs", "action": "upgrade", "value": "A(H)"},
-                                     {"date": "2025-11-02", "agency": "fitch", "action": "upgrade", "value": "A"}]},
+        "rating_history": {"moves": [{"date": "2025-11-02", "action": "upgrade", "notches": 1, "avg": 6.0, "worst": 6}]},
         "history": {"score": [["2026-03-31", 65.0], ["2026-06-30", 66.4]]},
         "series": {"lcr": [{"d": f"2025-{m:02d}-30", "v": v} for m, v in ((3, 170), (6, 165), (9, 160), (12, 155))] + [{"d": "2026-03-30", "v": 150}],
                    "cet1_ratio": [{"d": "2025-03-30", "v": 13.9}, {"d": "2026-03-30", "v": 14.0}]},
@@ -38,7 +36,7 @@ def bank(**over):
 
 def test_the_paragraph_reads_as_plain_english_and_never_quotes_the_sites_score():
     b = S.brief(bank(), TODAY)
-    assert b["standing"] == "TSB is a bank in the UK, rated A by Fitch, with a stable outlook; the last move was Fitch's upgrade to A on 2 Nov 2025.", "DBRS is not one of the three"
+    assert b["standing"] == "TSB is a bank in the UK, rated A on average across one of the three, on a stable outlook; the last move was a one-notch upgrade by one of the three on 2 Nov 2025.", "no agency is named"
     assert b["capital"] == "Capital is strong against UK mid-sized banks: CET1 of 14.0% is above the median (median 13.8%); leverage is 5.0%.", "no peer figure for leverage, so it is stated but not judged"
     assert b["liquidity"] == "Liquidity is on the weak side of UK mid-sized banks: LCR of 150% is below the median (median 160%); NSFR is 130%."
     assert b["trends"] == "Since 30 Mar 2025, LCR has fallen 20 points, while CET1 has been broadly flat (figures to 30 Jun 2026)."
@@ -48,44 +46,51 @@ def test_the_paragraph_reads_as_plain_english_and_never_quotes_the_sites_score()
     assert "score" not in text.lower() and "band" not in text.lower(), "the score and band depend on the reader's weightings"
 
 
-def test_three_agencies_and_mixed_outlooks_read_naturally():
-    b = S.brief(bank(ratings=[{"agency": "fitch", "value": "A+", "outlook": "stable"}, {"agency": "sp", "value": "A", "outlook": "negative"},
-                             {"agency": "moodys", "value": "A2", "outlook": "stable"}], rating_history={"moves": []}), TODAY)
-    assert b["standing"] == "TSB is a bank in the UK, rated A+ by Fitch, A by S&P and A2 by Moody's (Fitch stable, S&P negative, Moody's stable)."
-    b = S.brief(bank(ratings=[{"agency": "fitch", "value": "A+", "outlook": "stable"}, {"agency": "sp", "value": "A", "outlook": "stable"}], rating_history={"moves": []}), TODAY)
-    assert b["standing"] == "TSB is a bank in the UK, rated A+ by Fitch and A by S&P, both with a stable outlook."
+def three(tones=("stable", "negative", "stable"), avg=5.67, worst=6):
+    from bankcredit.composite import grade_letter, sort_tones
+    return {"n": 3, "avg": avg, "worst": worst, "letter": grade_letter(avg), "worst_letter": grade_letter(worst),
+            "tones": sort_tones(tones), "date": "2026-05-01"}
 
 
-def test_a_withdrawal_a_first_rating_and_moodys_read_as_english():
-    assert S._last_move({"agency": "moodys", "action": "downgrade", "value": "A2", "date": "2024-05-24"}) == "Moody's downgrade to A2 on 24 May 2024", "never Moody's's"
-    assert S._last_move({"agency": "sp", "action": "withdrawal", "from": "BBB+", "value": "", "date": "2026-03-25"}) == "S&P's withdrawal of its BBB+ rating on 25 Mar 2026"
-    assert S._last_move({"agency": "fitch", "action": "new", "value": "A+", "date": "2026-07-13"}) == "Fitch's first rating, A+, on 13 Jul 2026"
+def test_three_agencies_and_mixed_outlooks_read_naturally_and_name_nobody():
+    b = S.brief(bank(rating=three(), rating_history={"moves": []}), TODAY)
+    assert b["standing"] == "TSB is a bank in the UK, rated A on average across all three, one on a negative outlook and two on a stable outlook."
+    b = S.brief(bank(rating=dict(three(("stable", "stable"), 5.5, 6), n=2), rating_history={"moves": []}), TODAY)
+    assert b["standing"] == "TSB is a bank in the UK, rated A on average across two of the three, the weakest of them at A, both on a stable outlook.".replace("the weakest of them at A, ", "")
+    assert "Fitch" not in S.brief_text(b) and "Moody" not in S.brief_text(b)
+
+
+def test_a_withdrawal_a_first_rating_and_a_two_notch_move_read_as_english():
+    assert S._last_move({"action": "downgrade", "notches": 2, "date": "2024-05-24"}) == "a two-notch downgrade by one of the three on 24 May 2024"
+    assert S._last_move({"action": "withdrawal", "notches": None, "date": "2026-03-25"}) == "a withdrawal by one of the three on 25 Mar 2026"
+    assert S._last_move({"action": "new", "notches": None, "date": "2026-07-13"}) == "a new rating from one of the three on 13 Jul 2026"
 
 
 def test_an_unscored_unrated_name_still_gets_an_honest_paragraph():
-    b = S.brief(bank(score=None, unscored="unrated", ratings=[], rating_composite=None, unrated=True, events=[], type="building_society"), TODAY)
-    assert b["standing"] == "TSB is a building society in the UK with no public rating from Fitch, S&P or Moody's."
+    b = S.brief(bank(score=None, unscored="unrated", rating=None, rating_composite=None, unrated=True, events=[], type="building_society"), TODAY)
+    assert b["standing"] == "TSB is a building society in the UK with no public rating from any of the three main agencies."
     assert b["news"] == "Nothing has been flagged in the last 90 days."
 
 
 def test_the_fingerprint_is_what_a_written_summary_rests_on():
     fp = S.fingerprint(bank())
-    assert fp == {"band": "B", "composite": "A", "ratings": {"fitch": "A stable"}, "asof": "2026-06-30", "last_flagged": "2026-08-10"}
+    assert fp == {"band": "B", "composite": "A", "worst": "A", "outlooks": "stable", "n": 1, "asof": "2026-06-30", "last_flagged": "2026-08-10"}
 
 
 def test_what_moved_since_is_said_in_words():
     then = S.fingerprint(bank())
-    now = S.fingerprint(bank(band="C", ratings=[{"agency": "fitch", "value": "A-", "outlook": "negative"}], asof="2026-09-30",
+    now = S.fingerprint(bank(band="C", rating=dict(three(("negative", "stable"), 6.5, 7), n=2), rating_composite="A-", asof="2026-09-30",
                              events=[{"date": "2026-09-12", "severity": "bad", "title": "x"}]))
     got = S.changes_since(then, now)
-    assert got == ["band moved from B to C", "Fitch moved from A stable to A- negative",
+    assert got == ["band moved from B to C", "average rating moved from A to A-", "weakest rating moved from A to A-",
+                   "outlooks moved from stable to negative, stable", "rated by two of the three (was one of the three)",
                    "figures updated to 30 Sep 2026 (were 30 Jun 2026)", "a flagged event on 12 Sep 2026 postdates it"]
     assert S.changes_since(then, then) == []
 
 
 def summary(**over):
     s = {"id": "tsb", "written": "2026-09-16", "background": "TSB is a UK retail bank owned by Sabadell.",
-         "synthesis": "Capital is sound, with CET1 of 14.0% a touch above the peer median of 13.8%, and Fitch rates the bank A with a stable outlook. Liquidity is the weak spot: LCR at 150% sits below the group's 160% and has come down 20 points over four periods. One adverse headline, a fine over an outage, in the last 90 days.",
+         "synthesis": "Capital is sound, with CET1 of 14.0% a touch above the peer median of 13.8%, and the one agency that rates the bank has it at A with a stable outlook. Liquidity is the weak spot: LCR at 150% sits below the group's 160% and has come down 20 points over four periods. One adverse headline, a fine over an outage, in the last 90 days.",
          "inputs": S.fingerprint(bank())}
     s.update(over)
     return s
@@ -116,6 +121,9 @@ def test_a_figure_the_paragraph_did_not_give_fails_the_check():
     assert S.check({"id": "tsb"}, para) == ["missing written", "missing background", "missing synthesis", "missing inputs"]
     scored = S.check(summary(synthesis="TSB scores 66 and sits in band B, which is fine for most treasurers at most tenors, and its capital at 14.0% is above the peer median."), para)
     assert any("score or band" in f for f in scored), scored
+    named = S.check(summary(synthesis="Fitch rates the bank A with a stable outlook and Moody's has it at A2, which is comfortable for a bank of its size and funding model, and its capital at 14.0% is above the peer median."), para)
+    assert any("names a rating agency (Fitch, Moody)" in f for f in named), named
+    assert any("own rating symbol" in f for f in named), named
 
 
 def test_the_profile_shows_both_layers_and_says_what_moved(tmp_path, monkeypatch):
@@ -123,7 +131,7 @@ def test_the_profile_shows_both_layers_and_says_what_moved(tmp_path, monkeypatch
     monkeypatch.setattr(S, "SUMMARIES", tmp_path)
     b = bank()
     html = build.summary_block(b, "2026-09-16T05:00:00Z")
-    assert "TSB is a bank in the UK, rated A by Fitch" in html and "No written summary yet" in html
+    assert "TSB is a bank in the UK, rated A on average" in html and "No written summary yet" in html
     (tmp_path / "tsb.json").write_text(json.dumps(summary()))
     html = build.summary_block(b, "2026-09-16T05:00:00Z")
     assert "owned by Sabadell" in html and "Written 16 Sep 2026 from figures to 30 Jun 2026." in html

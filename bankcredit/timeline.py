@@ -25,6 +25,7 @@ from datetime import date
 import pandas as pd
 
 from .adapters.esma import NAME_RANK
+from .composite import AGENCIES, composite, rating_grade, tone
 
 # Actions that set a rating, actions that end one. Everything else - outlook and watch moves - is
 # a change of tone on a rating that stays where it was.
@@ -50,7 +51,8 @@ class Book:
         self.records: list[dict] = []
         self.dates: list[str] = []
         self.states: list[dict] = []           # agency -> {value, type, date}
-        self.composites: list[float | None] = []
+        self.composites: list[float | None] = []      # the average of the three main agencies
+        self.worsts: list[int | None] = []            # and the weakest of them
         self._actions = actions
         self._spells: list[dict] | None = None
         if actions is not None and not actions.empty:
@@ -58,7 +60,6 @@ class Book:
 
     # ---- building ----
     def _build(self, actions: pd.DataFrame) -> None:
-        from .export import rating_grade
         recs: dict[str, dict] = {}
         changes: dict[str, list[tuple[str, str]]] = {}     # date -> [(record id, new value)]
         for r in actions.sort_values(["date", "event_id"]).itertuples():
@@ -93,13 +94,13 @@ class Book:
                     state[rec["agency"]] = (key, {"agency": rec["agency"], "value": value,
                                                   "type": rec["type"], "date": seen})
             state = {a: state[a][1] for a in AGENCY_ORDER if a in state}
-            grades = [g for g in (rating_grade(s["value"]) for s in state.values()) if g is not None]
-            comp = round(float(pd.Series(grades).median()), 1) if grades else None
+            comp = composite([s for a, s in state.items() if a in AGENCIES])
             if self.states and self.states[-1] == state:
                 continue                                   # an affirmation is not a change
             self.dates.append(d)
             self.states.append(state)
-            self.composites.append(comp)
+            self.composites.append(comp["avg"] if comp else None)
+            self.worsts.append(comp["worst"] if comp else None)
 
     # ---- reading ----
     def __bool__(self) -> bool:
@@ -115,15 +116,18 @@ class Book:
         return list(self.states[i].values()) if i >= 0 else []
 
     def composite_at(self, when: str | date) -> float | None:
-        """The median of the agencies' grades on that day: the number the profile shows today,
-        computed on the ratings that stood then."""
+        """The average of the three main agencies' grades on that day: the number the profile
+        shows today, computed on the ratings that stood then."""
         i = self._i(when)
         return self.composites[i] if i >= 0 else None
+
+    def worst_at(self, when: str | date) -> int | None:
+        i = self._i(when)
+        return self.worsts[i] if i >= 0 else None
 
     def agency_steps(self) -> list[dict]:
         """Per agency, the days its headline rating changed and what it changed to. A step, not a
         reading: the line between two changes is flat because the rating was flat."""
-        from .export import rating_grade
         out: dict[str, list] = {}
         last: dict[str, str] = {}
         for d, state in zip(self.dates, self.states):
@@ -139,24 +143,61 @@ class Book:
         return [{"agency": a, "steps": out[a]} for a in AGENCY_ORDER if out.get(a)]
 
     def composite_steps(self) -> list[list]:
-        """The days the composite grade moved, and where to."""
+        """The days the average grade moved, and where to."""
+        return self._steps(self.composites)
+
+    def worst_steps(self) -> list[list]:
+        """The days the weakest of the three main agencies' grades moved, and where to."""
+        return self._steps(self.worsts)
+
+    def _steps(self, values) -> list[list]:
         out, last = [], object()
-        for d, c in zip(self.dates, self.composites):
+        for d, c in zip(self.dates, values):
             if c is None or c == last:
                 continue
             last = c
             out.append([d, c])
         return out
 
+    def tone_steps(self) -> list[list]:
+        """How many of the three main agencies held the name on each tone, on every day that
+        changed: [date, rated, watch negative, negative, watch positive, positive, stable].
+
+        Counts, not names: the chart shows that two of the three went negative in March 2020
+        without saying which two.
+        """
+        spells = [sp for sp in self.spells() if sp["agency"] in AGENCIES]
+        if not spells:
+            return []
+        days = sorted({d for sp in spells for b in sp["blocks"] + sp["marks"] for d in b[:2] if d})
+        out, last = [], None
+        for day in days:
+            n, counts = 0, {"watch negative": 0, "negative": 0, "watch positive": 0, "positive": 0, "stable": 0}
+            for sp in spells:
+                if not any(b[0] <= day and (b[1] is None or day < b[1]) for b in sp["blocks"]):
+                    continue                               # not rated by this agency that day
+                n += 1
+                t = next((tone(m[2]) for m in sp["marks"] if m[0] <= day and (m[1] is None or day < m[1])), "")
+                if t in counts:
+                    counts[t] += 1
+            row = [n] + [counts[k] for k in ("watch negative", "negative", "watch positive", "positive", "stable")]
+            if row == last:
+                continue
+            last = row
+            out.append([day] + row)
+        return out
+
     def moves(self) -> list[dict]:
-        """Every change in an agency's headline rating after the platform's first day, newest first.
+        """Every change in one of the three main agencies' headline rating after the platform's
+        first day, newest first.
 
         The first entry in each agency's series is the book it loaded on day one, not an action it
         took, so it is not a move.
         """
-        from .export import rating_grade
         out = []
         for row in self.agency_steps():
+            if row["agency"] not in AGENCIES:
+                continue
             steps = row["steps"]
             for i in range(1, len(steps)):
                 d, value, grade = steps[i]
@@ -192,7 +233,6 @@ class Book:
         """
         if self._spells is not None:
             return self._spells
-        from .export import rating_grade
         from .adapters.esma import outlook as parse_tone
         acts = self._actions
         self._spells = []
