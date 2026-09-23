@@ -6,10 +6,9 @@
  "inputs": {
   "band": "C",
   "composite": "BBB",
-  "ratings": {
-   "fitch": "BBB negative",
-   "moodys": "Baa2 negative"
-  },
+  "worst": "BBB",
+  "outlooks": "negative, negative",
+  "n": 2,
   "asof": "2026-01-31",
   "last_flagged": "2026-06-24"
  }

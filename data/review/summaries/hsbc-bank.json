@@ -1,16 +1,14 @@
 {
  "id": "hsbc-bank",
- "written": "2026-09-21",
+ "written": "2026-09-23",
  "background": "HSBC Bank plc is the non-ring-fenced UK bank of HSBC, housing the group's European corporate and investment banking, markets and private banking, funded by corporate and institutional deposits and wholesale markets.",
- "synthesis": "Fitch rates the bank AA after its upgrade on 12 May 2026, S&P A+ and Moody's A1, with S&P and now Moody's on positive outlook. Capital is mixed against UK majors, with CET1 of 17.1% in the top quarter but leverage of 4.1% in the bottom quarter, and liquidity is on the weak side, with LCR of 139% and NSFR of 112% both in the bottom quarter. Every ratio has fallen since 30 Jun 2025: CET1 by 2.3 points, leverage by 1.1 points, LCR by 15 points and NSFR by 5 points (figures to 30 Jun 2026). The newest flagged items, on 18 Sep 2026, are Moody's positive outlooks on its deposit and issuer ratings, alongside a lost foreclosure claim of no credit significance.",
+ "synthesis": "Ratings are AA- on average across all three main agencies, the weakest of them at A+, with two of the three on a positive outlook and one on a stable outlook; the last move was a one-notch upgrade by one of the three on 12 May 2026. Capital is mixed against UK majors, with CET1 of 17.1% in the top quarter but leverage of 4.1% in the bottom quarter, and liquidity is on the weak side, with LCR of 139% and NSFR of 112% both in the bottom quarter. Every ratio has fallen since 30 Jun 2025: CET1 by 2.3 points, leverage by 1.1 points, LCR by 15 points and NSFR by 5 points (figures to 30 Jun 2026). The newest flagged item, on 18 Sep 2026, is a second positive outlook from one of the three, alongside older items on the finance chief's planned departure and a large cut in senior bankers.",
  "inputs": {
   "band": "B",
-  "composite": "A+",
-  "ratings": {
-   "fitch": "AA stable",
-   "sp": "A+ positive",
-   "moodys": "A1 positive"
-  },
+  "composite": "AA-",
+  "worst": "A+",
+  "outlooks": "positive, positive, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-09-18"
  }

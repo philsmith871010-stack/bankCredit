@@ -1,16 +1,14 @@
 {
  "id": "state-street-bank",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "State Street Bank and Trust Company is the operating bank of State Street, one of the world's largest custodians, whose business is safekeeping, fund administration and asset servicing for institutions rather than lending to households.",
- "synthesis": "This is one of the highest-rated banks on the site: AA+ from Fitch after the upgrade on 12 May 2026, AA- from S&P and Aa2 from Moody's, all stable. Capital is strong for a US bank, with CET1 of 14.7% in the top quarter against the peer median and leverage of 5.8% at the median. No liquidity ratios are held here for the bank. None of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days. A conservative custody bank with very high ratings and a comfortable capital position.",
+ "synthesis": "This is one of the highest-rated banks on the site: AA on average across all three main agencies, the weakest of them at AA-, all on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. Capital is strong for a US bank, with CET1 of 14.7% in the top quarter and leverage of 5.8% above the peer median, and no liquidity ratios are held here for the bank. None of the ratios has moved materially over the past four periods to 30 Jun 2026. Nothing has been flagged in the last 90 days; a conservative custody bank with very high ratings and a comfortable capital position.",
  "inputs": {
   "band": "A",
   "composite": "AA",
-  "ratings": {
-   "fitch": "AA+ stable",
-   "sp": "AA- stable",
-   "moodys": "Aa2 stable"
-  },
+  "worst": "AA-",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-05-12"
  }

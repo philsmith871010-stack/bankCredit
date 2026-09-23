@@ -983,3 +983,11 @@ tr.uni-mine td{background:#f6f9f4}
 .pinchip .pin{font-size:11px;padding:0 4px;color:var(--muted);text-decoration:underline}
 .pinchip-x{--c:#c3cbd5}
 .cp-addedbar{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:6px;padding-left:10px;border-left:1px solid var(--line-soft)}
+
+/* the rating as a composite: glyph rows, the weakest mark on the scale, the chart legend */
+.tones{display:inline-flex;gap:1px;font-size:11px;line-height:1}
+.cr-o.wn{color:#7a1f28}.cr-o.wp{color:var(--green)}
+.cr-dot.cr-worst{background:var(--white);border:2px solid var(--red);box-sizing:border-box}
+.rc-tones{font-size:13px;white-space:nowrap}
+.rl-l i{width:18px;height:3px;border-radius:2px}
+.ll-ags .cr-o{font-size:9px}

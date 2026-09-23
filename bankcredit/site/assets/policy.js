@@ -147,19 +147,41 @@
            '<i style="width:'+w.toFixed(1)+'%;background:'+(BANDC[band]||'#7d93ad')+'"></i></div>';
   }
   // The country a bank sits in, with the state's own rating beside it - context, never a score input.
-  var AGN_FULL={fitch:'Fitch',sp:'S&P',moodys:"Moody's",dbrs:'DBRS',kbra:'KBRA',scope:'Scope',jcr:'JCR',
-                capital:'Capital Intelligence',creditreform:'Creditreform'};
+  // No agency is named against a rating anywhere: the site shows the average and the weakest
+  // of the three main agencies, and how many of them hold each outlook. See composite.py.
+  var NUMW={0:'none',1:'one',2:'two',3:'three'};
+  function ofThree(n){return n===3?'all three':(NUMW[n]||n)+' of the three'}
+  function toneWords(tones){
+    var c={};(tones||[]).forEach(function(t){c[t||'']=(c[t||'']||0)+1});
+    var parts=[];
+    [['watch negative','on negative watch'],['negative','on a negative outlook'],['watch positive','on positive watch'],
+     ['positive','on a positive outlook'],['stable','on a stable outlook'],['','with no outlook published']].forEach(function(k){
+      if(c[k[0]])parts.push((NUMW[c[k[0]]]||c[k[0]])+' '+k[1])});
+    return parts.length<2?(parts[0]||''):parts.slice(0,-1).join(', ')+' and '+parts[parts.length-1];
+  }
+  var TONE_GLYPH={'watch negative':['\u25c6','wn','negative watch'],'negative':['\u25bc','dn','negative outlook'],
+                  'watch positive':['\u25c6','wp','positive watch'],'positive':['\u25b2','up','positive outlook'],
+                  'stable':['\u25b6','lv','stable outlook'],'':['\u00b7','lv','no outlook published']};
+  function toneGlyphs(tones){
+    return '<span class="tones" title="'+esc(toneWords(tones)||'no outlook published')+'">'+(tones||[]).map(function(t){
+      var g=TONE_GLYPH[t]||TONE_GLYPH[''];return '<span class="cr-o '+g[1]+'">'+g[0]+'</span>'}).join('')+'</span>';
+  }
+  function describeRating(r){
+    if(!r)return 'no public rating from any of the three main agencies';
+    var s=r.letter+' on average across '+ofThree(r.n);
+    if(r.n>1&&r.worst_letter!==r.letter)s+=', the weakest of them at '+r.worst_letter;
+    var tw=toneWords(r.tones);
+    if(tw)s+=', '+(r.n>1?tw:tw.replace('one on','on'));
+    return s;
+  }
   function sovPill(e){
     // one entry a country, held once at the top of the file rather than copied onto every bank
     var sv=e&&((data&&data.sovereigns||{})[e.country]);
     if(!sv||!sv.composite)return esc((e&&e.country)||'');
-    var ags=sv.agencies.map(function(a){return (AGN_FULL[a.agency]||a.agency)+' '+a.value+(a.outlook?' ('+a.outlook+')':'')}).join(' \u00b7 ');
-    return '<span class="sov" title="'+esc(sv.name+' sovereign rating, '+sv.n+(sv.n===1?' agency: ':' agencies: ')+ags+
+    return '<span class="sov" title="'+esc(sv.name+' sovereign rating: '+describeRating({letter:sv.composite,worst_letter:sv.worst||sv.composite,n:sv.n,tones:sv.tones})+
            '. Context, not part of the score.')+'">'+esc(e.country||'')+'<b>'+esc(sv.composite)+'</b></span>';
   }
   function mkt(m,terse){if(!m||m.direction==='none')return terse?'<span class="na">\u2014</span>'  :'<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');return chip(m.label,k,m.label)}
-  function ratings(r){return (r||[]).map(function(x){return '<span class="mono" title="'+esc(x.agency+' '+x.type+(x.outlook?' · '+x.outlook:''))+'">'+esc(x.letter)+' '+esc(x.value)+'</span>'}).join(' <span class="muted">·</span> ')||'<span class="muted">unrated</span>'}
-  function shortR(r){return (r||[]).map(function(x){return '<span class="mono">'+esc(x.letter)+' '+esc(x.value)+'</span>'}).join(' <span class="muted">·</span> ')||'<span class="muted">—</span>'}
   function snapshot(e){return {score:e.score,band:e.band,grade:e.rating_grade,market:e.market&&e.market.direction,asof:e.asof}}
   // nothing makes a share link any more; a link already sent still opens one
   function decode(s){try{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))))}catch(e){return null}}
@@ -464,7 +486,6 @@
                ||(b.series?'<div class="muted small">Only one period held, so there is nothing to plot yet.</div>'
                           :'<div class="md-wait">'+[0,1,2,3,4,5].map(function(){return '<div class="md-sk"></div>'}).join('')+'</div>');
     var n=(TRENDS.map(function(t){return (s[t[0]]||[]).length>1}).filter(Boolean)).length;
-    var extra=(b.ratings_all||[]).length-(((e&&e.ratings)||[]).length);
     // pillars come through as [score, weight]
     var sd=(b.score_detail&&b.score_detail.pillars)||null;
     var pill=sd?Object.keys(sd).map(function(k){var v=sd[k]||[];var pc=v[0],wt=v[1];
@@ -486,7 +507,7 @@
         'md-trend-panel')+
       '<div class="md-col">'+
         sect('Ratings'+mk('rating'),'',ratingCell(e)+ratingPath(b)+
-          (extra>0?'<p class="md-foot">'+extra+' further rating'+(extra>1?'s':'')+' by type on the full profile.</p>':''))+
+          '')+
         sect('Score make-up'+mk('pillar'),(e.score==null?'':'score '+e.score.toFixed(0)),
           (pill?'<div class="md-pills">'+pill+'</div>':'<div class="muted small">No public score for this entity.</div>')+
           (b.percentile!=null?'<p class="md-foot">Stronger than <b>'+Math.round(b.percentile)+'%</b> of its peer group'+
@@ -795,9 +816,9 @@
     if(h.downs)bits.push('<b class="rp-d">'+h.downs+'</b> downgrade'+(h.downs>1?'s':''));
     var last=(h.moves||[])[0];
     return '<div class="rp"'+tipd(tipHead('The path it took',esc(a)+' → '+esc(b))+
-        '<i>the composite rating on every day it changed, from the register’s own action log</i>'+
-        (last?'<i>last move: '+esc(AGN_FULL[last.agency]||last.agency)+' '+
-          esc(last.action)+(last.value?' to '+esc(last.value):'')+' on '+esc(last.date)+'</i>':'')+
+        '<i>the average of the three main agencies on every day it changed, from the register’s own action log</i>'+
+        (last?'<i>last move: '+(last.action==='new'?'a new rating from':last.action==='withdrawal'?'a withdrawal by':'a '+esc(last.action)+(last.notches?' of '+last.notches+' notch'+(last.notches>1?'es':''):'')+' by')+
+          ' one of the three on '+esc(last.date)+'</i>':'')+
         '<i>green marks a step up, red a step down; nothing before July 2015 is on the platform</i>')+'>'+
       '<span class="rp-e" style="color:'+gradeColour(a)+'">'+esc(a)+'</span>'+
       '<svg viewBox="0 0 '+w+' '+ht+'" preserveAspectRatio="none" class="rp-svg" aria-hidden="true">'+
@@ -851,7 +872,7 @@
         '<td class="ll-sc">'+scoreNum(e.score,e.band,'sc-2')+
           '<span class="ll-track">'+bar+'</span></td>'+
         '<td class="ll-cpc"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
-          '<span class="ll-ags">'+(e.ratings||[]).map(function(x){return esc(x.letter)}).join('')+'</span></td>'+
+          '<span class="ll-ags">'+(e.rating?toneGlyphs(e.rating.tones):'')+'</span></td>'+
         kpi('cet1',e.cet1,1)+kpi('leverage',e.leverage,1)+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
         asofCell(e)+
         '<td class="num">'+news30Cell(e)+'</td>'+
@@ -864,54 +885,36 @@
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   function ratingCell(e){
-    var r=(e.ratings||[]);
-    if(!r.length)return '<div class="cp-rt-none">No agency rates this entity.</div>';
-    var sh={};(e.short_ratings||[]).forEach(function(x){sh[x.letter]=x.value});
-    var ix=r.map(function(x){return gradeIndex(x.value)}).filter(function(i){return i>=0}), strip='';
-    if(ix.length){
-      // the axis is the range the covered universe occupies, not AAA to default, so the notches
-      // that separate one bank from another are the ones that get the width
-      var st=uni('rating_grade');
-      var lo=Math.min(st?Math.floor(st.lo)-1:2,Math.min.apply(null,ix)),
-          hi=Math.max(st?Math.ceil(st.hi)-1:12,Math.max.apply(null,ix));
-      if(hi-lo<3)hi=lo+3;
-      var X=function(i){return Math.max(2,Math.min(98,(i-lo)/(hi-lo)*100))};
-      // two agencies at the same grade would be one dot, and the reader would count three where
-      // there are four: they stack upwards from the axis instead, so agreement is visible as height
-      var n={}, stack=1;
-      ix.forEach(function(i){n[i]=(n[i]||0)+1; if(n[i]>stack)stack=n[i]});
-      var base=8*Math.min(stack-1,2), axT=5+base, seen={};
-      var dots=r.map(function(x){
-        var i=gradeIndex(x.value); if(i<0)return '';
-        var k=Math.min((seen[i]=(seen[i]||0)+1)-1,2);
-        return '<span class="cr-dot" style="left:'+X(i).toFixed(1)+'%;top:'+(2+base-8*k)+'px;background:'+gradeColour(x.value)+'"></span>';
-      }).join('');
-      var spread=Math.max.apply(null,ix)-Math.min.apply(null,ix);
-      var tip=tipd(tipHead('On the scale',e.rating_composite?'composite '+esc(e.rating_composite):'')+
-        '<i>'+r.map(function(x){return esc((AGN_FULL[x.agency]||x.agency)+' '+x.value)}).join(' \u00b7 ')+'</i>'+
-        '<i>'+(spread?'the agencies differ by <em>'+spread+' notch'+(spread>1?'es':'')+'</em>':'<em>every agency agrees</em>')+
-        ', and the orange mark is the median they make</i>'+
-        '<i>the axis spans the covered names, '+esc(GRADES[Math.max(0,lo)])+' to '+esc(GRADES[Math.min(16,hi)])+'</i>');
-      strip='<div class="cr-scale" style="height:'+(25+base)+'px"'+tip+'>'+
-        '<span class="cr-ax" style="top:'+axT+'px"></span>'+
-        ((lo<=9&&hi>=10)?'<span class="cr-ig" style="left:'+X(9.5).toFixed(1)+'%;top:'+(axT-4)+'px"></span>':'')+dots+
-        (e.rating_grade!=null?'<span class="cr-c" style="left:'+X(e.rating_grade-1).toFixed(1)+
-          '%;height:'+(axT+9)+'px"></span>':'')+
-        '<span class="cr-e cr-e1">'+esc(GRADES[Math.max(0,lo)])+'</span>'+
-        '<span class="cr-e cr-e2">'+esc(GRADES[Math.min(16,hi)])+'</span></div>';
-    }
-    var rows=r.map(function(x){
-      var o=OUTLOOK[String(x.outlook||'').toLowerCase()]||['','lv','no outlook published'];
-      return '<div class="cr" title="'+esc((AGN_FULL[x.agency]||x.agency)+' '+x.type+' rating'+
-             (x.date?', '+x.date:'')+(x.outlook?' \u00b7 '+x.outlook+' outlook':''))+'">'+
-        '<span class="cr-a">'+esc(AGN_FULL[x.agency]||x.agency)+'</span>'+
-        '<b class="cr-g" style="color:'+gradeColour(x.value)+'">'+esc(x.value)+'</b>'+
-        '<span class="cr-o '+o[1]+'">'+o[0]+'</span>'+
-        '<span class="cr-s mono">'+esc(sh[x.letter]||'')+'</span></div>';
-    }).join('');
-    return '<div class="cr-top"><span class="cr-comp" style="color:'+gradeColour(e.rating_composite)+'">'+
-      esc(e.rating_composite||'\u2014')+'</span><span class="small muted">composite of '+r.length+
-      ' agenc'+(r.length>1?'ies':'y')+'</span></div>'+strip+'<div class="cr-rows">'+rows+'</div>';
+    var r=e.rating;
+    if(!r)return '<div class="cp-rt-none">None of the three main agencies rates this entity.</div>';
+    var strip='';
+    // the axis is the range the covered universe occupies, not AAA to default, so the notches
+    // that separate one bank from another are the ones that get the width
+    var st=uni('rating_grade');
+    var ia=r.avg-1, iw=r.worst-1;
+    var lo=Math.min(st?Math.floor(st.lo)-1:2,Math.floor(ia)), hi=Math.max(st?Math.ceil(st.hi)-1:12,iw);
+    if(hi-lo<3)hi=lo+3;
+    var X=function(i){return Math.max(2,Math.min(98,(i-lo)/(hi-lo)*100))};
+    var spread=r.worst-Math.round(r.avg);
+    var tip=tipd(tipHead('On the scale','average '+esc(r.letter))+
+      '<i>'+esc(describeRating(r))+'</i>'+
+      '<i>the orange mark is the average, the hollow one the weakest'+(r.n>1?(spread>0?': they differ by <em>'+spread+' notch'+(spread>1?'es':'')+'</em>':': <em>the three agree</em>'):'')+'</i>'+
+      '<i>the axis spans the covered names, '+esc(GRADES[Math.max(0,lo)])+' to '+esc(GRADES[Math.min(16,hi)])+'</i>');
+    strip='<div class="cr-scale" style="height:25px"'+tip+'>'+
+      '<span class="cr-ax" style="top:5px"></span>'+
+      ((lo<=9&&hi>=10)?'<span class="cr-ig" style="left:'+X(9.5).toFixed(1)+'%;top:1px"></span>':'')+
+      (r.n>1?'<span class="cr-dot cr-worst" style="left:'+X(iw).toFixed(1)+'%;top:2px;border-color:'+gradeColour(r.worst_letter)+'"></span>':'')+
+      '<span class="cr-c" style="left:'+X(ia).toFixed(1)+'%;height:14px"></span>'+
+      '<span class="cr-e cr-e1">'+esc(GRADES[Math.max(0,lo)])+'</span>'+
+      '<span class="cr-e cr-e2">'+esc(GRADES[Math.min(16,hi)])+'</span></div>';
+    var rows='<div class="cr" title="the lowest of the three main agencies\u2019 ratings">'+
+        '<span class="cr-a">Weakest</span><b class="cr-g" style="color:'+gradeColour(r.worst_letter)+'">'+esc(r.worst_letter)+'</b>'+
+        '<span></span><span class="cr-s mono" title="the most recent action by any of the three">'+esc(r.date||'')+'</span></div>'+
+      '<div class="cr" title="'+esc(toneWords(r.tones)||'no outlook published')+'">'+
+        '<span class="cr-a">Outlooks</span><span class="cr-g">'+toneGlyphs(r.tones)+'</span>'+
+        '<span></span><span class="cr-s small muted">'+ofThree(r.n)+'</span></div>';
+    return '<div class="cr-top"><span class="cr-comp" style="color:'+gradeColour(r.letter)+'">'+
+      esc(r.letter)+'</span><span class="small muted">average of '+ofThree(r.n)+' main agencies</span></div>'+strip+'<div class="cr-rows">'+rows+'</div>';
   }
 
 

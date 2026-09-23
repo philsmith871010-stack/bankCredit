@@ -106,20 +106,26 @@ TERMS: dict[str, tuple[str, str, str]] = {
         "Written as letters: AAA is the strongest, then AA, A, BBB and downwards, with + and - "
         "steps inside each. BBB- and above is called investment grade; below that is sub-investment "
         "grade, and many local authority policies stop there. The ratings here come from the "
-        "European Rating Platform, the public register agencies must file to.",
+        "European Rating Platform, the public register agencies must file to, and are shown as the "
+        "average and the weakest of the three main agencies rather than agency by agency: a rating "
+        "with an agency's name on it is that agency's product, and republishing it needs a licence.",
     ),
     "composite": (
-        "Composite rating",
-        "The site's single letter, taken from all the agencies that rate the bank.",
-        "Where two or three agencies disagree, the composite sits at the middle of their opinions "
-        "rather than the best of them. It is shown with a count of the agencies behind it, so a "
-        "letter backed by one agency is never mistaken for one backed by three.",
+        "Average rating",
+        "The site's single letter: the average of the three main agencies' long-term ratings.",
+        "Fitch, S&P and Moody's, whichever of them rate the bank, each read on one scale and "
+        "averaged, with a half rounded to the weaker notch. The weakest of the three is shown "
+        "beside it, and a count of how many of the three stand behind the letter, so one backed "
+        "by one agency is never mistaken for one backed by three. Which agency holds which "
+        "rating is not shown.",
     ),
     "outlook": (
         "Outlook",
-        "Which way the agency expects the rating to move over the next year or two.",
-        "Positive, stable or negative. It is not a change of rating - it is a signal that one is "
-        "being considered. A negative outlook is a reason to look, not a reason to act.",
+        "Which way an agency expects the rating to move over the next year or two.",
+        "Positive, stable or negative, or a watch when a move is under active review. It is not a "
+        "change of rating - it is a signal that one is being considered. Shown as one mark per "
+        "agency, worst first, without saying which agency holds which. A negative outlook is a "
+        "reason to look, not a reason to act.",
     ),
     "short_term_rating": (
         "Short-term rating",
@@ -132,8 +138,8 @@ TERMS: dict[str, tuple[str, str, str]] = {
         "The credit rating of the country a bank is based in.",
         "A bank is rarely judged stronger than the state behind it: the sovereign sets the terms "
         "its banking system funds itself on, and in a crisis it is the sovereign that would or "
-        "would not stand behind the system. Shown here as the median of the agencies that rate "
-        "the country, from the same public register the bank ratings come from. It is context "
+        "would not stand behind the system. Shown here as the average of the three main agencies' "
+        "ratings on the country, from the same public register the bank ratings come from. It is context "
         "beside a bank, not part of its score.",
     ),
     "idr": (
@@ -144,7 +150,7 @@ TERMS: dict[str, tuple[str, str, str]] = {
     ),
     "unrated": (
         "Unrated",
-        "No agency currently publishes a rating for this entity.",
+        "None of the three main agencies currently publishes a rating for this entity.",
         "Usually a smaller building society or a subsidiary that funds itself through its parent, "
         "so it never needed one. It is not a judgement about the entity - but a name with no rating "
         "cannot be scored on this site, because the rating carries 40% of the score.",

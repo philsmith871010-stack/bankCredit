@@ -44,7 +44,7 @@
                ['asset_quality','Asset quality',5,'non-performing loan ratio'],
                ['profitability','Profitability',5,'return on equity and assets, cost-income'],
                ['stability','Capital headroom',10,'CET1 over the overall requirement'],
-               ['rating','Agency ratings',40,'the median long-term grade of the agencies that rate it']];
+               ['rating','Agency rating',40,'the average of the three main agencies\' long-term ratings on it']];
   var DEFAULTW={};PILLARS.forEach(function(p){DEFAULTW[p[0]]=p[2]});
   // the thresholds and caps the published method uses; the weights are the only part you set
   var SCORE_BANDS=[[80,'A'],[65,'B'],[50,'C'],[35,'D'],[0,'E']];   // not BANDS: this file already had one

@@ -1,7 +1,7 @@
 """Counterparty score, version two. A rating anchor with published ratio pillars; market overlay bounded.
 
-The composite agency rating (median long-term grade across the agencies that rate the bank) is
-40 percent of the public score. The other 60 percent comes from regulatory ratios, each turned
+The composite agency rating (the average long-term grade across the three main agencies, Fitch,
+S&P and Moody's, whichever of them rate the bank) is 40 percent of the public score. The other 60 percent comes from regulatory ratios, each turned
 into a 0..100 sub-score by piecewise-linear interpolation against absolute thresholds (chosen from
 Basel minimums and typical ranges), averaged within pillars and weighted. Missing ratio metrics do
 not score zero: the ratio weight is re-scaled over what is available and the coverage fraction is

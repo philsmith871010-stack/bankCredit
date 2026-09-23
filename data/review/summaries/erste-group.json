@@ -6,12 +6,10 @@
  "inputs": {
   "band": "B",
   "composite": "A+",
-  "ratings": {
-   "fitch": "A stable",
-   "sp": "A+ positive",
-   "moodys": "Aa3 positive"
-  },
+  "worst": "A",
+  "outlooks": "positive, positive, stable",
+  "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-04-21"
+  "last_flagged": "2026-07-09"
  }
 }

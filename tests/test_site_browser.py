@@ -501,25 +501,49 @@ def _with_history():
     pytest.skip("no rating history in this build (python -m bankcredit.cli ratings-history)")
 
 
-def test_a_profile_draws_the_ratings_it_held_and_the_tone_under_them(page, server):
-    """Five step lines on one notch axis was spaghetti: most banks live inside two notches, so the
-    agencies sat on top of each other and the composite disappeared beneath them."""
+def test_a_profile_draws_the_average_the_weakest_and_the_tones_and_names_no_agency(page, server):
+    """The ladder used to carry a band per agency. It now carries the average of the three main
+    agencies as one step line, the weakest of them dashed beneath, and a lane counting how many
+    of the three held each outlook or watch: nothing on it says which agency said what."""
     who = _with_history()
     visit(page, server, f"banks/{who}.html")
     page.eval_on_selector('.tab[data-tab="ratings"]', "e => e.click()")
     page.wait_for_timeout(300)
     assert page.eval_on_selector_all(".ladder", "e => e.length") == 1
-    # one line only, and it is a step rather than a line drawn between two points
-    paths = page.eval_on_selector_all(".ladder path", "e => e.map(x => x.getAttribute('d'))")
-    steps = [d for d in paths if "H" in d]
-    assert len(steps) == 1, paths
-    # a block per rating held, each one carrying the dates it was held between
-    blocks = page.eval_on_selector_all(".ladder g title", "e => e.map(x => x.textContent)")
-    assert sum(1 for t in blocks if " from " in t) >= 2, blocks
-    assert any("outlook from" in t for t in blocks), "the outlook is the point of the second layer"
-    assert page.eval_on_selector_all(".rl-key .rl-k", "e => e.length") >= 5
+    # two step lines: the average, and the weakest
+    assert page.eval_on_selector_all(".ladder path.avg", "e => e.length") == 1
+    assert page.eval_on_selector_all(".ladder path.worst", "e => e.length") <= 1
+    d = page.eval_on_selector(".ladder path.avg", "e => e.getAttribute('d')")
+    assert "H" in d and "V" in d or "H" in d, d
+    titles = page.eval_on_selector_all(".ladder title", "e => e.map(x => x.textContent)")
+    assert any(t.startswith("average ") and " from " in t for t in titles), titles
+    assert any(t.startswith("rated by ") for t in titles), "the tone lane says how many held each outlook"
+    panel = page.eval_on_selector('.panel[data-panel="ratings"]', "e => e.textContent")
+    for name in ("Fitch", "Moody", "S&P", "DBRS"):
+        assert panel.count(name) == (1 if name in ("Fitch", "Moody", "S&P") else 0), \
+            f"{name} appears only in the note saying which three agencies are averaged"
+    assert page.eval_on_selector_all(".rl-key .rl-k", "e => e.length") >= 6
     assert page.eval_on_selector_all(".rh-list li", "e => e.length") >= 1
+    moves = page.eval_on_selector_all(".rh-list li", "e => e.map(x => x.textContent)")
+    assert all("one of the three" in m for m in moves), moves
     assert not page.errors, page.errors
+
+
+def test_nothing_published_names_an_agency_against_a_rating(server):
+    """The JSON the pages read carries the average, the weakest and the tones, and no agency key."""
+    policy = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))
+    for r in policy["rows"]:
+        assert "ratings" not in r and "short_ratings" not in r, r["id"]
+        if r.get("rating"):
+            assert set(r["rating"]) == {"n", "avg", "worst", "letter", "worst_letter", "tones", "date"}, r["rating"]
+    for sv in policy["sovereigns"].values():
+        assert "agencies" not in sv
+    for f in list((SITE / "data" / "detail").glob("*.json"))[:20]:
+        text = f.read_text(encoding="utf-8")
+        assert '"agency"' not in text and "ratings_all" not in text, f.name
+        for e in json.loads(text).get("events") or []:
+            if e.get("type") == "rating":
+                assert e["title"].startswith("One of the three agencies"), e
 
 
 def test_the_dialog_carries_the_path_the_composite_took(page, server):
@@ -643,7 +667,7 @@ def test_the_weightings_come_first_and_change_in_a_dialog(page, server):
     tabs = page.eval_on_selector(".tabs-card", "e => e.getBoundingClientRect().top")
     assert top < tabs
     line = page.inner_text("#wt-vals")
-    assert "agency ratings" in line and "%" in line and "starting point" in line
+    assert "agency rating" in line and "%" in line and "starting point" in line
     page.eval_on_selector("#wt-change", "e => e.click()")
     page.wait_for_timeout(300)
     assert page.eval_on_selector("#wt-dlg", "e => e.open")

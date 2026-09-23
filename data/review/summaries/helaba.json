@@ -1,15 +1,14 @@
 {
  "id": "helaba",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "Helaba is the Landesbank of Hesse and Thuringia, owned by the regional savings banks and the two states, a wholesale and real-estate lender that also acts as the central bank for its savings banks and owns the Frankfurter Sparkasse.",
- "synthesis": "Ratings are AA- from Fitch after the upgrade on 12 May 2026 and Aa2 from Moody's, both stable, resting on the savings-bank sector's protection scheme and state ownership. Capital is on the weak side of EU and Nordic peers, with CET1 of 15.8% and leverage of 5.4% both a little below the peer medians, and CET1 down 0.5 points since 30 Jun 2025. Liquidity is mixed, with LCR of 168% above the median and NSFR of 120% below it. The flagged news is the concern: commercial real-estate losses reported on 31 Aug 2026 and 27 Jul 2026, and a BaFin order on money-laundering controls on 20 Jul 2026.",
+ "synthesis": "Two of the three main agencies rate the bank, at AA- on average and both on a stable outlook, with the last move a one-notch upgrade by one of the three on 12 May 2026, grades resting on the savings-bank sector's protection scheme and state ownership. Capital is on the weak side of EU and Nordic peers, with CET1 of 15.8% and leverage of 5.4% both a little below the peer medians, and CET1 down 0.5 points since 30 Jun 2025. Liquidity is mixed, with LCR of 168% above the median and NSFR of 120% below it. The flagged news is the concern: commercial real-estate losses in the first half reported on 31 Aug 2026, after an earlier write-down on an office sale and a BaFin order to fix money-laundering controls.",
  "inputs": {
   "band": "B",
   "composite": "AA-",
-  "ratings": {
-   "fitch": "AA- stable",
-   "moodys": "Aa2 stable"
-  },
+  "worst": "AA-",
+  "outlooks": "stable, stable",
+  "n": 2,
   "asof": "2026-06-30",
   "last_flagged": "2026-08-31"
  }

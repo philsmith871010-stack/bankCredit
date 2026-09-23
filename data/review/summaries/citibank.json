@@ -1,17 +1,15 @@
 {
  "id": "citibank",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "Citibank, N.A. is the main operating bank of Citigroup, with the broadest international network of any US bank, serving multinationals, institutions and consumers across around a hundred countries.",
- "synthesis": "Ratings are AA- from Fitch after the upgrade on 12 May 2026, with a positive outlook, A+ from S&P and Aa3 from Moody's, both stable. The ratios are strong for a US bank: CET1 of 13.8% is above the peer median, leverage of 7.9% is in the top quarter, and LCR of 117% is at the median. None of the ratios has moved materially over the past four periods. The flagged news is all conduct, centred on the UK sanctions fine reported on 11 Sep 2026, small against the balance sheet but part of a long run of control findings at the group.",
+ "synthesis": "Ratings are AA- on average across all three main agencies, the weakest of them at A+, with one on a positive outlook and two on a stable outlook; the last move was a one-notch upgrade by one of the three on 12 May 2026. The ratios are strong for a US bank: CET1 of 13.8% is above the peer median, leverage of 7.9% is in the top quarter, and LCR of 117% is at the median. None of the ratios has moved materially over the past four periods. The flagged news is all conduct, centred on the UK sanctions fine reported on 11 Sep 2026, small against the balance sheet but part of a long run of control findings at the group.",
  "inputs": {
   "band": "B",
   "composite": "AA-",
-  "ratings": {
-   "fitch": "AA- positive",
-   "sp": "A+ stable",
-   "moodys": "Aa3 stable"
-  },
+  "worst": "A+",
+  "outlooks": "positive, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-15"
+  "last_flagged": "2026-09-11"
  }
 }

@@ -5,11 +5,10 @@
  "synthesis": "Fitch rates the holding company A+, stable, and S&P A- on a positive outlook, with the last move S&P's downgrade to A- on 13 May 2020. Consolidated capital is strong against UK majors, with CET1 of 14.1% above the peer median and leverage of 4.9% at the median. Liquidity is mixed: LCR of 134% is in the bottom quarter, while NSFR of 140% is in the top quarter. Since 30 Jun 2025 CET1 and leverage have each fallen 0.5 points and NSFR 5 points; the flagged news is management change, led by the finance director's planned departure reported on 10 Sep 2026.",
  "inputs": {
   "band": "B",
-  "composite": "A+",
-  "ratings": {
-   "fitch": "A+ stable",
-   "sp": "A- positive"
-  },
+  "composite": "A",
+  "worst": "A-",
+  "outlooks": "positive, stable",
+  "n": 2,
   "asof": "2026-06-30",
   "last_flagged": "2026-09-10"
  }

@@ -1,15 +1,14 @@
 {
  "id": "nwb-bank",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "NWB Bank is the Dutch water boards' bank, owned by the water authorities, the Dutch state and the provinces, which lends to Dutch public-sector bodies, housing associations and healthcare providers and funds itself in the bond markets.",
- "synthesis": "S&P rates the bank AAA and Moody's Aaa, both stable, with the last move S&P's upgrade to AAA on 24 Nov 2015. The ratios are far outside the range of ordinary banks: CET1 of 36.8% and leverage of 39.2% are both in the top quarter of EU and Nordic peers, as are LCR of 243% and NSFR of 148%. Leverage has risen 30.6 points since 30 Jun 2023, a jump that size being more likely a change in how the ratio is calculated than in the bank itself, while CET1 has fallen 1.1 points. The figures run to 31 Dec 2025. Nothing has been flagged in the last 90 days. A public-sector lender with sovereign-level ratings.",
+ "synthesis": "The bank is rated AAA on average across two of the three main agencies, both at the top of the scale on a stable outlook, with the last move a one-notch upgrade by one of the three on 24 Nov 2015. The ratios are far outside the range of ordinary banks: CET1 of 36.8% and leverage of 39.2% are both in the top quarter of EU and Nordic peers, as are LCR of 243% and NSFR of 148%. Leverage has risen 30.6 points since 30 Jun 2023, a jump that size being more likely a change in how the ratio is calculated than in the bank itself, while CET1 has fallen 1.1 points; the figures run to 31 Dec 2025. Nothing has been flagged in the last 90 days: a public-sector lender with sovereign-level ratings.",
  "inputs": {
   "band": "A",
   "composite": "AAA",
-  "ratings": {
-   "sp": "AAA stable",
-   "moodys": "Aaa stable"
-  },
+  "worst": "AAA",
+  "outlooks": "stable, stable",
+  "n": 2,
   "asof": "2025-12-31",
   "last_flagged": ""
  }

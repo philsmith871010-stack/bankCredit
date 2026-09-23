@@ -17,6 +17,7 @@ from datetime import date, datetime, timedelta
 import pandas as pd
 
 from . import store, timeline
+from .composite import AGENCIES, THREE, composite as composite_of, grade_letter, of_three, public_action, rating_grade
 from .entities import load as load_entities
 from .models import METRICS
 from .score import compute
@@ -59,43 +60,45 @@ def _latest(series: dict) -> dict:
     return {m: pts[-1]["v"] for m, pts in series.items() if pts and pts[-1]["v"] is not None}
 
 
-def _ratings_summary(r: pd.DataFrame) -> list[dict]:
-    """One headline long-term rating per agency: prefer idr/issuer, then deposit."""
+def _headline_ratings(r: pd.DataFrame) -> list[dict]:
+    """One headline long-term rating per agency, for the three main agencies: prefer idr/issuer,
+    then deposit. Never published as such; it is what the composite is worked out from."""
     if r.empty:
         return []
     pref = {"idr": 0, "issuer": 1, "deposit": 2, "counterparty": 3, "resolution_counterparty": 4}
     out = []
     long = r[r.horizon == "long"].copy()
     long["pref"] = long.rating_type.map(pref).fillna(9)
-    for ag in AGENCY_ORDER:
+    for ag in AGENCIES:
         g = long[long.agency == ag].sort_values(["pref", "action_date"], ascending=[True, False])
         if not g.empty:
             row = g.iloc[0]
-            out.append({"agency": ag, "letter": AGENCY_LETTER.get(ag, ag[:1].upper()), "value": row.value,
-                        "type": row.rating_type, "outlook": row.outlook or "", "date": str(row.action_date)[:10]})
+            out.append({"agency": ag, "value": row.value, "outlook": row.outlook or "", "date": str(row.action_date)[:10]})
     return out
 
 
+def _composite(r: pd.DataFrame) -> dict | None:
+    """The one rating record a page shows: average, weakest, tones, count. See composite.py."""
+    return composite_of(_headline_ratings(r))
+
+
 def _rating_history(book) -> dict | None:
-    """Eleven years of rating actions, as the profile draws them: a step per agency, the composite
-    under them, and the moves worth naming."""
+    """Eleven years of rating actions, as the profile draws them: the average and the weakest of
+    the three main agencies on every day either moved, how many held each tone, and the moves
+    behind them with no agency named on any of them."""
     if not book:
         return None
-    spells = [{"agency": r["agency"], "letter": AGENCY_LETTER.get(r["agency"], r["agency"][:1].upper()),
-               "blocks": r["blocks"], "marks": r["marks"]} for r in book.spells()]
     comp = book.composite_steps()
-    if not spells or not comp:
+    if not comp:
         return None
-    moves = book.moves()
-    return {"start": timeline.START, "agencies": spells, "composite": comp,
-            "moves": moves[:40], "records": len(book.records),
+    moves = []
+    for m in book.moves():
+        moves.append({"date": m["date"], "action": m["action"], "notches": m["notches"],
+                      "avg": book.composite_at(m["date"]), "worst": book.worst_at(m["date"])})
+    return {"start": timeline.START, "composite": comp, "worst": book.worst_steps(),
+            "tones": book.tone_steps(), "moves": moves[:40],
             "ups": sum(1 for m in moves if m["action"] == "upgrade"),
             "downs": sum(1 for m in moves if m["action"] == "downgrade")}
-
-
-# One numeric scale across agencies (1 = AAA/Aaa ... 10 = BBB-/Baa3 ... 17 = CCC and below), lower is stronger.
-_SP_SCALE = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-", "B+", "B", "B-", "CCC"]
-_MOODYS = ["Aaa", "Aa1", "Aa2", "Aa3", "A1", "A2", "A3", "Baa1", "Baa2", "Baa3", "Ba1", "Ba2", "Ba3", "B1", "B2", "B3", "Caa"]
 
 
 def _sovereigns(df) -> dict[str, dict]:
@@ -114,34 +117,13 @@ def _sovereigns(df) -> dict[str, dict]:
     for cc, g in df.groupby("entity_id"):
         rows = [{"agency": r.agency, "value": r.value, "outlook": r.outlook or "",
                  "date": str(r.action_date)[:10]} for r in g.sort_values("agency").itertuples()]
-        grades = [x for x in (rating_grade(r["value"]) for r in rows) if x is not None]
-        composite = round(float(pd.Series(grades).median()), 1) if grades else None
+        comp = composite_of(rows)
+        if not comp:
+            continue
         out[str(cc)] = {"country": str(cc), "name": (meta.get(str(cc)) or {}).get("short", str(cc)),
-                        "grade": composite, "composite": grade_letter(composite),
-                        "agencies": rows, "n": len(rows)}
+                        "grade": comp["avg"], "composite": comp["letter"], "worst": comp["worst_letter"],
+                        "tones": comp["tones"], "n": comp["n"]}
     return out
-
-
-def rating_grade(value: str | None) -> int | None:
-    """Map any agency's long-term symbol to the common 1..17 scale; None when unrated or withdrawn."""
-    if not value:
-        return None
-    v = str(value).strip().replace(" ", "")
-    v = v.replace("(high)", "+").replace("(H)", "+").replace("(low)", "-").replace("(L)", "-").replace("(hyb)", "")
-    v = v.rstrip("u").split("/")[0]
-    if v in _MOODYS:
-        return _MOODYS.index(v) + 1
-    if v.startswith(("Caa", "Ca", "C")) and v[:1] == "C" and not v.startswith("CCC"):
-        return 17 if v[:2] in ("Ca", "Caa") else None
-    if v.startswith("CCC") or v in ("CC", "C", "D", "RD", "SD"):
-        return 17
-    return _SP_SCALE.index(v) + 1 if v in _SP_SCALE else None
-
-
-def grade_letter(grade: float | None) -> str:
-    if grade is None:
-        return ""
-    return _SP_SCALE[max(0, min(16, int(grade + 0.5) - 1))]
 
 
 import os
@@ -385,6 +367,30 @@ def _overlay(market: dict, ratings: list[dict]) -> float:
 
 PREF_TYPE = {"idr": 0, "issuer": 1, "deposit": 2, "counterparty": 3, "resolution_counterparty": 4}
 
+# The agency's name leads every rating event the adapter writes; only these three reach a page.
+_PUBLIC_AGENCY = {"Fitch": "fitch", "S&P": "sp", "Moody's": "moodys"}
+
+
+def public_events(events: pd.DataFrame) -> pd.DataFrame:
+    """The events table as a page may show it: a rating action loses the agency's name and its
+    symbol, and an action by an agency outside the three main ones is not shown at all. Applied
+    once, where the table is read, so nothing downstream can publish an attributed action."""
+    if events is None or events.empty or "type" not in events:
+        return events
+    is_rating = events.type == "rating"
+    if not is_rating.any():
+        return events
+    ev = events.copy()
+    lead = ev.title.astype(str).str.split(" ", n=1).str[0]
+    keep = ~is_rating | lead.isin(_PUBLIC_AGENCY)
+    ev = ev[keep].copy()
+    r = ev.type == "rating"
+    if r.any():
+        head = ev.loc[r, "title"].astype(str).str.split(":", n=1).str[0].str.split(" ", n=1).str[1].fillna("")
+        horizon = ev.loc[r, "detail"].astype(str) if "detail" in ev else pd.Series("long", index=ev.index[r])
+        ev.loc[r, "title"] = [public_action(a, h) for a, h in zip(head, horizon)]
+    return ev
+
 
 def ratings_summary(active, ratings: pd.DataFrame, events: pd.DataFrame) -> dict:
     """The ratings page: every entity's latest long and short-term rating by agency with outlook and the date of the
@@ -392,31 +398,23 @@ def ratings_summary(active, ratings: pd.DataFrame, events: pd.DataFrame) -> dict
     rows = []
     for e in active:
         r = ratings[ratings.entity_id == e.id] if not ratings.empty else ratings
-        agencies = {}
+        comp = _composite(r)
+        last = None
         if not r.empty:
-            rr = r.assign(_pref=r.rating_type.map(PREF_TYPE).fillna(9)).sort_values(["_pref", "action_date"], ascending=[True, False])
-            for ag in AGENCY_ORDER:
-                g = rr[rr.agency == ag]
-                if g.empty:
-                    continue
-                lt = g[g.horizon == "long"]
-                st = g[g.horizon == "short"]
-                l0 = lt.iloc[0] if not lt.empty else None
-                agencies[ag] = {"lt": l0.value if l0 is not None else None, "lt_type": l0.rating_type if l0 is not None else None,
-                                "outlook": (l0.outlook or "") if l0 is not None else "", "st": st.iloc[0].value if not st.empty else None,
-                                "date": str(g.action_date.max())[:10], "action": (l0.action or "") if l0 is not None else ""}
-        grades = [gr for gr in (rating_grade(a["lt"]) for a in agencies.values()) if gr is not None]
-        grade = round(float(pd.Series(grades).median()), 1) if grades else None
+            mine = r[r.agency.isin(AGENCIES)]
+            last = str(mine.action_date.max())[:10] if not mine.empty else None
         rows.append({"id": e.id, "short": e.short_name, "name": e.name, "country": e.country, "region": e.region, "type": e.type,
-                     "grade": grade, "composite": grade_letter(grade), "agencies": agencies,
-                     "last_action": max((a["date"] for a in agencies.values()), default=None)})
+                     "grade": comp["avg"] if comp else None, "composite": comp["letter"] if comp else "",
+                     "worst": comp["worst_letter"] if comp else "", "worst_grade": comp["worst"] if comp else None,
+                     "n": comp["n"] if comp else 0, "tones": comp["tones"] if comp else [],
+                     "last_action": last})
     actions = []
     if not events.empty:
         cutoff = (date.today() - timedelta(days=90)).isoformat()
         ev = events[(events.type == "rating") & (events.date.astype(str) >= cutoff)]
-        ev = ev[~ev.title.str.contains("affirm|maintained under stable|placed under stable|removed under stable|initial reporting|new:", case=False, na=False)]
+        ev = ev[~ev.title.str.contains("affirmed|under stable|assigned a new", case=False, na=False)]
         short = {e.id: e.short_name for e in active}
-        ev = ev.assign(_k=ev.title.str.split(":").str[0].str.strip())          # "DBRS upgrade" once per bank per day, not per rating type
+        ev = ev.assign(_k=ev.title)          # one action once per bank per day, not per rating type
         for x in ev.sort_values("date", ascending=False).drop_duplicates(["entity_id", "date", "_k"]).head(80).itertuples():
             if x.entity_id in short:
                 actions.append({"date": str(x.date)[:10], "id": x.entity_id, "short": short[x.entity_id], "title": str(x.title)[:160], "severity": x.severity})
@@ -495,13 +493,13 @@ def withdrawn_summary() -> dict:
     if t.empty:
         return {}
     out = {}
-    for entity, rows in t[t.horizon == "long"].groupby("entity_id"):
+    t = t[(t.horizon == "long") & t.agency.isin(AGENCIES)]
+    for entity, rows in t.groupby("entity_id"):
         dates = [str(d)[:10] for d in rows.action_date if d is not None and str(d) != "NaT"]
         when = max(dates, default="")
-        agencies = sorted({AGENCY_NAME.get(a, a) for a in rows.agency})
+        n = len(set(rows.agency))
         out[entity] = {"when": date.fromisoformat(when).strftime("%B %Y") if when else "",
-                       "agencies": ", ".join(agencies),
-                       "ratings": sorted({str(v) for v in rows.value})}
+                       "agencies": f"{of_three(n)}", "n": n}
     return out
 
 
@@ -628,7 +626,7 @@ def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=No
         for m in AUDIT_METRICS:
             md = sorted({str(d)[:10] for d in f[f.metric == m].reference_date}) if not f.empty else []
             metrics[m] = {"n": len(md), "first": md[0] if md else None, "last": md[-1] if md else None}
-        lt = r[r.horizon == "long"] if not r.empty else r           # any long-term rating type: issuer, IDR, deposit, counterparty
+        lt = r[(r.horizon == "long") & r.agency.isin(AGENCIES)] if not r.empty else r     # any long-term rating type: issuer, IDR, deposit, counterparty
         agencies = sorted(set(lt.agency)) if not lt.empty else []
         bd = by_board.get(e.id, {})
         rows.append({"id": e.id, "short": e.short_name, "region": e.region, "type": e.type, "peer_group": e.peer_group,
@@ -636,7 +634,7 @@ def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=No
                      "years": round((date.fromisoformat(dates[-1]) - date.fromisoformat(dates[0])).days / 365.25, 1) if len(dates) > 1 else 0,
                      "sources": sorted(set(f.source)) if not f.empty else [],
                      "metrics": metrics,
-                     "agencies": len(agencies), "agency_list": agencies,
+                     "agencies": len(agencies),
                      "rating": bd.get("rating_composite") or "",
                      "price_days": int(p.date.nunique()) if not p.empty else 0,
                      "price_first": str(p.date.min())[:10] if not p.empty else None,
@@ -653,6 +651,7 @@ def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=No
 def export_json() -> None:
     entities = load_entities()
     facts, ratings, prices, cds, events, runs = (store.read(t) for t in ["facts", "ratings", "prices", "cds", "events", "runs"])
+    events = public_events(events)
     sov = _sovereigns(store.read("sovereign_ratings"))
     bonds_tbl, quotes_tbl = store.read("bonds"), store.read("bond_quotes")
     bond_changes = _bond_changes(bonds_tbl, quotes_tbl)
@@ -710,14 +709,13 @@ def export_json() -> None:
                     series[m] = [dict(pt, basis="group", src=pt["src"] + " (group)") for pt in series_all[e.group][m]]
                     inherited.append(m)
         latest = _latest(series)
-        rsum = _ratings_summary(r)
+        comp = _composite(r)
         market = market_all[e.id]
         if market["direction"] == "none" and e.group in market_all and market_all[e.group]["direction"] != "none":
             market = dict(market_all[e.group], label=market_all[e.group]["label"] + " (group)")
             inherited.append("market")
-        overlay = _overlay(market, rsum)
-        grades = [g for g in (rating_grade(x["value"]) for x in rsum) if g is not None]
-        composite = round(float(pd.Series(grades).median()), 1) if grades else None
+        overlay = _overlay(market, [])
+        composite = comp["avg"] if comp else None
         sc = compute(latest, overlay, composite)
         asof = max((pts[-1]["d"] for pts in series.values() if pts), default=None)
         age = (today - date.fromisoformat(asof)).days if asof else None
@@ -742,7 +740,7 @@ def export_json() -> None:
             "cet1": latest.get("cet1_ratio"), "leverage": latest.get("leverage_ratio", latest.get("tier1_leverage")),
             "leverage_basis": "basel" if "leverage_ratio" in latest else ("us_tier1" if "tier1_leverage" in latest else ""),
             "lcr": latest.get("lcr"),
-            "nsfr": latest.get("nsfr"), "ratings": rsum,
+            "nsfr": latest.get("nsfr"), "rating": comp,
             "market": {k: market[k] for k in ("direction", "label")},
             "events90": int(len(ev)) if not ev.empty else 0, "asof": asof, "age_days": age,
             "basis": (f.sort_values("reference_date").basis.iloc[-1] if not f.empty else ""),
@@ -750,6 +748,7 @@ def export_json() -> None:
         }
         row["rating_grade"] = composite
         row["rating_composite"] = grade_letter(composite)
+        row["rating_worst"] = comp["worst_letter"] if comp else ""
         row["sovereign"] = sov.get(e.country or "")          # context for the country, not a score input
         row["unrated"] = sc.unrated
         book = books.get(e.id)
@@ -761,13 +760,6 @@ def export_json() -> None:
                          "rating_grade": composite, "coverage": sc.coverage})
         board.append(row)
         # the policy page carries everything a treasurer checks on an approved name, in one record
-        short_ratings = []
-        if not r.empty:
-            sh = r[r.horizon == "short"].sort_values("action_date", ascending=False)
-            for ag in AGENCY_ORDER:
-                g = sh[sh.agency == ag]
-                if not g.empty:
-                    short_ratings.append({"letter": AGENCY_LETTER.get(ag, ag[:1].upper()), "value": g.iloc[0].value})
         recent, negative, news30 = [], [], {"bad": 0, "warn": 0, "good": 0}
         if not ev.empty:
             cutoff30 = (today - timedelta(days=30)).isoformat()
@@ -775,16 +767,16 @@ def export_json() -> None:
             for x in e2.itertuples():
                 if x.type == "news" and str(x.date)[:10] >= cutoff30 and x.severity in news30:
                     news30[x.severity] += 1
-                if x.type == "rating" and re.search(r"downgrade|negative|under review for downgrade|withdraw", str(x.title), re.I):
+                if x.type == "rating" and re.search(r"downgrade|negative|withdr", str(x.title), re.I):
                     negative.append({"date": str(x.date)[:10], "title": str(x.title)[:140]})
                 # three is what a card draws, and the dialog has the bank's own file; a fourth
                 # headline is a 178-character news URL nobody follows from here
                 if x.severity != "info" and len(recent) < 3:
                     recent.append({"date": str(x.date)[:10], "type": x.type, "severity": x.severity, "title": str(x.title)[:160], "url": _clean(getattr(x, "url", "")) or ""})
         policy_rows.append({**{k: row[k] for k in ("id", "name", "short", "country", "type", "region", "group", "peer_group", "public_score", "band",
-                                                    "coverage", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "ratings", "market", "asof", "age_days",
-                                                    "rating_grade", "rating_composite", "inherited")},
-                            "score": row["public_score"], "short_ratings": short_ratings, "negative": negative[:3], "news30": news30,
+                                                    "coverage", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "rating", "market", "asof", "age_days",
+                                                    "rating_grade", "rating_composite", "rating_worst", "inherited")},
+                            "score": row["public_score"], "negative": negative[:3], "news30": news30,
                             # The six pillar sub-scores and the market overlay, so the browser can
                             # weigh them the reader's own way rather than ours. An array, in the
                             # order PILLAR_ORDER names, because six keys a row is 18 KB of JSON on
@@ -805,7 +797,7 @@ def export_json() -> None:
                 "bonds": [{"isin": x.isin, "name": x.name, "currency": x.currency, "date": str(x.date)[:10], "price": _clean(float(x.price)), "yield": _clean(float(x["yield"]))}
                           for _, x in bq.iterrows()] if bq is not None else [],
                 "market": {k: _clean(v) for k, v in market.items()},
-                "overlay": [{"part": k, "adj": v} for k, v in overlay_parts(market, rsum)],
+                "overlay": [{"part": k, "adj": v} for k, v in overlay_parts(market, [])],
                 "overlay_total": sc.overlay, "score_public": sc.public_score, "score_final": sc.final_score,
                 "facts": [{"metric": x.metric, "date": str(x.reference_date)[:10], "value": _clean(float(x.value)), "unit": x.unit, "basis": x.basis,
                            "source": x.source, "method": x.method, "confidence": _clean(float(x.confidence)), "document": x.document, "page": _clean(x.page)}
@@ -817,9 +809,6 @@ def export_json() -> None:
             "series": {m: series[m] for m in series if m in SITE_METRICS},
             "metric_labels": {m: METRICS.get(m, m) for m in series},
             "score_detail": {"pillars": sc.pillars, "inputs": sc.inputs},
-            "ratings_all": [{"agency": x.agency, "type": x.rating_type, "horizon": x.horizon, "value": x.value,
-                             "outlook": x.outlook or "", "date": str(x.action_date)[:10], "action": x.action or ""}
-                            for x in r.sort_values(["agency", "horizon", "rating_type"]).itertuples()] if not r.empty else [],
             "prices": [{"d": str(x.date)[:10], "c": float(x.close)} for x in p.sort_values("date").tail(260).itertuples()] if not p.empty else [],
             "price_currency": (p.currency.iloc[-1] if not p.empty else None),
             "price_owner": price_owner,

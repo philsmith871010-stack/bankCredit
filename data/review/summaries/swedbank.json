@@ -1,16 +1,14 @@
 {
  "id": "swedbank",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "Swedbank is Sweden's largest retail bank by customers and a leading bank in Estonia, Latvia and Lithuania, funded by Swedish and Baltic deposits and covered bonds and lending mainly on residential mortgages, with the Baltic money-laundering case behind it.",
- "synthesis": "Ratings are AA+ from Fitch after the upgrade on 12 May 2026, AA- from S&P and Aa2 from Moody's, all stable. Capital is strong against EU and Nordic peers, with CET1 of 17.4% above the peer median and leverage of 6.2% above 5.5%, though both have come down since 30 Jun 2025, CET1 by 2.3 points and leverage by 0.4 points. Liquidity is mixed, with LCR of 162% above the peer median and NSFR of 122% a little under 124% and down 7 points. The flagged news on 17 Jul 2026 and 27 Jul 2026 is a New York settlement over historical anti-money-laundering failures, closing an old matter rather than opening a new one.",
+ "synthesis": "The bank is rated AA on average across all three main agencies, the weakest of them at AA-, all three on a stable outlook, with the last move a two-notch upgrade by one of the three on 12 May 2026. Capital is strong against EU and Nordic peers, with CET1 of 17.4% and leverage of 6.2% both above the peer medians, though both have come down since 30 Jun 2025, CET1 by 2.3 points and leverage by 0.4 points. Liquidity is mixed, with LCR of 162% above the peer median and NSFR of 122% a little under the median and down 7 points. The newest flagged item, on 27 Jul 2026, is a New York settlement over historical anti-money-laundering failures, closing an old matter rather than opening a new one.",
  "inputs": {
   "band": "A",
-  "composite": "AA-",
-  "ratings": {
-   "fitch": "AA+ stable",
-   "sp": "AA- stable",
-   "moodys": "Aa2 stable"
-  },
+  "composite": "AA",
+  "worst": "AA-",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-07-27"
  }

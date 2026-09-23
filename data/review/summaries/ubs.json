@@ -1,15 +1,14 @@
 {
  "id": "ubs",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "UBS Group is Switzerland's only remaining global bank after absorbing Credit Suisse, the world's largest wealth manager, with Swiss retail and corporate banking, asset management and an investment bank, and a balance sheet far larger than the Swiss economy.",
- "synthesis": "Fitch rates the group A+ after its upgrade on 14 Apr 2026 and S&P A-, both stable, holding-company grades that sit below the operating bank's. The site holds no peer group for the group, so the ratios stand on their own: CET1 is 14.4%, leverage 5.8%, LCR 177% and NSFR 115%, and none has moved materially over the past four periods. The flagged news is mixed: a money-laundering fine on 3 Aug 2026, set against a trading-led profit surge on 28 Jul 2026 and 29 Jul 2026. The Credit Suisse integration and the Swiss debate over capital requirements are the things to watch.",
+ "synthesis": "Two of the three main agencies rate the group, at A on average with the weakest of them at A-, both on a stable outlook, and the last move a one-notch upgrade by one of the three on 14 Apr 2026: holding-company grades that sit below the operating bank's. The site holds no peer group for the group, so the ratios stand on their own: CET1 is 14.4%, leverage 5.8%, LCR 177% and NSFR 115%, and none has moved materially over the past four periods. The flagged news is mixed: a money-laundering fine on 3 Aug 2026, set against an earlier trading-led profit surge. The Credit Suisse integration and the Swiss debate over capital requirements are the things to watch.",
  "inputs": {
   "band": "A",
-  "composite": "A+",
-  "ratings": {
-   "fitch": "A+ stable",
-   "sp": "A- stable"
-  },
+  "composite": "A",
+  "worst": "A-",
+  "outlooks": "stable, stable",
+  "n": 2,
   "asof": "2026-06-30",
   "last_flagged": "2026-08-03"
  }

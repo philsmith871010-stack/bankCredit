@@ -5,12 +5,10 @@
  "synthesis": "The agency direction is upward: Fitch upgraded the bank to AA on 12 May 2026, Moody's rates it A1 stable, and S&P at A+ moved to a positive outlook on 26 Aug 2026, the newest flagged item. Capital is mixed against EU and Nordic banks, with CET1 of 17.0% above the median but leverage of 4.4% in the bottom quarter, the usual signature of a large low-risk-weight mortgage book. Liquidity is adequate rather than strong, LCR of 162% above the median set against NSFR of 122% below it. The drift on figures to 30 Jun 2026 is softer across the board, with CET1 down 1.6 points, leverage down 0.4 points and LCR down 18 points since 30 Jun 2025, though from comfortable starting levels.",
  "inputs": {
   "band": "B",
-  "composite": "A+",
-  "ratings": {
-   "fitch": "AA stable",
-   "sp": "A+ positive",
-   "moodys": "A1 stable"
-  },
+  "composite": "AA-",
+  "worst": "A+",
+  "outlooks": "positive, stable, stable",
+  "n": 3,
   "asof": "2026-06-30",
   "last_flagged": "2026-08-26"
  }

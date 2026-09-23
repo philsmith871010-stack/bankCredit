@@ -1,16 +1,14 @@
 {
  "id": "bng-bank",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "BNG Bank is the Dutch public-sector bank, owned by the Dutch state, provinces and municipalities, which lends almost entirely to Dutch local authorities, housing associations and healthcare bodies and funds itself in the bond markets.",
- "synthesis": "This is a triple-A name on every count: AAA from Fitch and S&P and Aaa from Moody's, all stable, with the last move Fitch's upgrade to AAA on 28 Mar 2019. The ratios are far outside the range of ordinary banks, with CET1 of 41.8% and leverage of 14.5% both in the top quarter of EU and Nordic peers, and LCR of 163% and NSFR of 143% above their medians. CET1 has risen 7.1 points and leverage 1.5 points since 31 Dec 2022. The figures run to 31 Dec 2025, so they are older than most on the site. Nothing has been flagged in the last 90 days.",
+ "synthesis": "This is a triple-A name on every count: rated AAA on average across all three main agencies, all three on a stable outlook, with the last move a one-notch upgrade by one of the three on 28 Mar 2019. The ratios are far outside the range of ordinary banks, with CET1 of 41.8% and leverage of 14.5% both in the top quarter of EU and Nordic peers, and LCR of 163% and NSFR of 143% above their medians. CET1 has risen 7.1 points and leverage 1.5 points since 31 Dec 2022, though the figures run to 31 Dec 2025, so they are older than most on the site. Nothing has been flagged in the last 90 days.",
  "inputs": {
   "band": "A",
   "composite": "AAA",
-  "ratings": {
-   "fitch": "AAA stable",
-   "sp": "AAA stable",
-   "moodys": "Aaa stable"
-  },
+  "worst": "AAA",
+  "outlooks": "stable, stable, stable",
+  "n": 3,
   "asof": "2025-12-31",
   "last_flagged": ""
  }
