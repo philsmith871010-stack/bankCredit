@@ -1,8 +1,8 @@
 {
  "id": "scotiabank",
- "written": "2026-09-15",
+ "written": "2026-09-23",
  "background": "The Bank of Nova Scotia is one of Canada's big six banks and the most international of them, funded by Canadian deposits and wholesale markets and lending in Canada, the United States, Mexico, Peru, Chile and the Caribbean.",
- "synthesis": "Ratings are AA- from Fitch, A+ from S&P and A2 from Moody's, all stable, with the last move Moody's downgrade to A2 on 24 Sep 2018. Against Canadian peers capital is mixed: CET1 of 13.1% is in the bottom quarter against the peer median, while leverage of 4.3% is in the top quarter, at the median. No liquidity ratios are held here. None of the ratios has moved materially over the past four periods, with figures to 31 Jul 2026. The flagged news is all good, with results ahead of expectations on 25 Aug 2026 and 1 Sep 2026. The lowest CET1 of the Canadian banks held here, with the international book the main difference from peers.",
+ "synthesis": "Fitch rates the bank AA-, S&P A+ and Moody's A2, all stable, and no agency has moved since Moody's downgrade to A2 on 24 Sep 2018. Capital is middling for a Canadian bank: CET1 of 13.1% is in the bottom quarter of the group while leverage of 4.3% is in the top quarter, and neither has moved materially over the past four periods on figures to 31 Jul 2026. Neither LCR nor NSFR is disclosed, so liquidity cannot be placed against peers on the same basis, which is the gap in the picture rather than a weakness in it. The flagged news is mostly favourable, on earnings beating the bank's own targets; the exception is a settlement in a cybertheft case reported on 21 Sep 2026.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -12,6 +12,6 @@
    "moodys": "A2 stable"
   },
   "asof": "2026-07-31",
-  "last_flagged": "2026-09-04"
+  "last_flagged": "2026-09-21"
  }
 }
