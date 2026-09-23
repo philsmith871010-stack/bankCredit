@@ -4160,5 +4160,47 @@
   "page_reviewer": 5,
   "date_extractor": "2021-12-31",
   "date_reviewer": "2021-12-31"
+ },
+ {
+  "date": "2026-09-23T06:38:59",
+  "id": "191f3e38910c",
+  "entity_id": "lloyds-bank",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 4,
+  "page_reviewer": 4,
+  "date_extractor": "2019-06-30",
+  "date_reviewer": "2019-06-30"
+ },
+ {
+  "date": "2026-09-23T06:39:02",
+  "id": "4f10af0fb1cf",
+  "entity_id": "lloyds-banking-group",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2020-12-31",
+  "date_reviewer": "2020-12-31"
+ },
+ {
+  "date": "2026-09-23T06:39:10",
+  "id": "e879c193095f",
+  "entity_id": "lloyds-banking-group",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2021-06-30",
+  "date_reviewer": "2021-06-30"
  }
 ]

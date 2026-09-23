@@ -1,0 +1,21 @@
+{
+  "id": "191f3e38910c",
+  "entity_id": "lloyds-bank",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-plc/2019/2019-lb-hy-pillar-3.pdf",
+  "page": 4,
+  "reference_date": "2019-06-30",
+  "currency": "GBP",
+  "values": {
+    "cet1_capital": 25082.0,
+    "tier1_capital": 30339.0,
+    "total_capital": 36457.0,
+    "rwa": 173782.0,
+    "cet1_ratio": 14.4,
+    "tier1_ratio": 17.5,
+    "total_capital_ratio": 21.0,
+    "leverage_ratio": 4.8,
+    "leverage_exposure": 590895.0,
+    "lcr": 125.0
+  },
+  "note": "Table 1 KM1 on page 4 of the Lloyds Bank Group (ring-fenced bank) half-year disclosure, column a (T, Q2 2019) = 30 June 2019. Transitional (IFRS 9 applied) rows taken. CET1 25,082/173,782 = 14.43% against the stated 14.4%; Tier 1 17.5% and total capital 21.0% both above CET1. UK leverage ratio 4.8% on a 590,895m exposure measure (footnote 3's CRD IV ratio of 4.5% not used). LCR 125% is the six-month weighted average. No NSFR row and no overall capital requirement row; the CET1 buffer block (3.428%) is a buffer requirement only, so neither is recorded."
+}

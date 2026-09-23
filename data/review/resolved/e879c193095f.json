@@ -1,0 +1,21 @@
+{
+  "id": "e879c193095f",
+  "entity_id": "lloyds-banking-group",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-banking-group-plc/2021/half-year/2021-lbg-hy-pillar-3.pdf",
+  "page": 5,
+  "reference_date": "2021-06-30",
+  "currency": "GBP",
+  "values": {
+    "cet1_capital": 33525.0,
+    "tier1_capital": 38855.0,
+    "total_capital": 46481.0,
+    "rwa": 200858.0,
+    "cet1_ratio": 16.7,
+    "tier1_ratio": 19.3,
+    "total_capital_ratio": 23.1,
+    "leverage_ratio": 5.8,
+    "leverage_exposure": 658689.0,
+    "lcr": 131.0
+  },
+  "note": "Table 1 KM1 on page 5, column headed 30 June 2021 (first of five quarterly columns; the header row carries dates only, no a/b/c letters). Transitional (IFRS 9 applied) figures taken, not the 'as if not applied' rows. CET1 33,525/200,858 = 16.69% against the stated 16.7%; Tier 1 19.3% and total capital 23.1% both above CET1. UK leverage ratio 5.8% on a 658,689m exposure measure (the CRD IV leverage ratio of 5.2% in footnote 3 not used). LCR 131% is the weighted average. No NSFR row in this disclosure, and no overall capital requirement row - only the CET1 buffer requirements block (2.503% total), which is not the same thing, so both are left out."
+}

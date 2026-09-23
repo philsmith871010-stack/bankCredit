@@ -1,0 +1,21 @@
+{
+  "id": "4f10af0fb1cf",
+  "entity_id": "lloyds-banking-group",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-banking-group-plc/2020/full-year/2020-lbg-fy-pillar-3.pdf",
+  "page": 5,
+  "reference_date": "2020-12-31",
+  "currency": "GBP",
+  "values": {
+    "cet1_capital": 32822.0,
+    "tier1_capital": 38666.0,
+    "total_capital": 47168.0,
+    "rwa": 202747.0,
+    "cet1_ratio": 16.2,
+    "tier1_ratio": 19.1,
+    "total_capital_ratio": 23.3,
+    "leverage_ratio": 5.8,
+    "leverage_exposure": 666070.0,
+    "lcr": 136.0
+  },
+  "note": "Table 1 KM1 on page 5, column a (T, Q4 2020) = 31 December 2020. Transitional (IFRS 9 applied) rows taken. CET1 32,822/202,747 = 16.19% against the stated 16.2%; Tier 1 19.1% and total capital 23.3% both above CET1. UK leverage ratio 5.8% on a 666,070m exposure measure (footnote 3's CRD IV ratio of 5.3% not used). LCR 136% is the weighted average. No NSFR row and no overall capital requirement row in this template; the CET1 buffer block (2.502%) is a buffer requirement only, so neither is recorded."
+}
