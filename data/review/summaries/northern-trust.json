@@ -1,8 +1,8 @@
 {
  "id": "northern-trust",
- "written": "2026-09-23",
+ "written": "2026-09-24",
  "background": "Northern Trust Corporation is the holding company of a Chicago-based custodian and wealth manager, earning fees from asset servicing for institutions and from managing money for wealthy families and foundations.",
- "synthesis": "The group is rated A+ on average across all three main agencies, the weakest of them at A, all on a stable outlook. Capital is mixed against US banks, with CET1 of 12.0% just below the peer median but leverage of 8.5% in the top quarter; since 31 Mar 2025 CET1 has fallen 0.9 points and leverage 0.6 points. Liquidity is the weak spot, with LCR of 107% in the bottom quarter. The only flagged items, both on 22 Jul 2026, are strong second-quarter results with earnings ahead of estimates.",
+ "synthesis": "Rated A+ on average across all three, the weakest of them at A, all three on a stable outlook and with no rating move on the record. The shape is a custodian's: leverage of 8.5% is in the top quarter of US banks, CET1 of 12.0% is a touch below the median, and LCR of 107% is in the bottom quarter, which looks thin for a bank whose deposits are largely operational balances from institutional clients. Capital has drifted down, CET1 by 0.9 points and leverage by 0.6 points since 31 Mar 2025, with LCR broadly flat (figures to 30 Jun 2026). Earnings beat expectations in July, and nothing flagged in the last 90 days bears on credit standing.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-07-22"
+  "last_flagged": "2026-09-16"
  }
 }

@@ -1,10 +1,10 @@
 {
  "id": "credit-agricole-cib",
- "written": "2026-09-23",
+ "written": "2026-09-24",
  "background": "Credit Agricole CIB is the corporate and investment bank of the Credit Agricole group, funded in wholesale markets and by corporate deposits, active in structured finance, capital markets and international trade and transaction banking.",
- "synthesis": "Ratings are strong at AA- on average across all three main agencies, the weakest of them at A+, all three on a stable outlook, with the last move a one-notch upgrade by one of the three on 12 May 2026, and rest on the cooperative group behind it. The entity's own ratios are the thinnest of the EU and Nordic peers held here: CET1 of 12.4% and leverage of 3.6% are both in the bottom quarter against the peer medians, and LCR of 120% and NSFR of 112% are likewise in the bottom quarter. None of the ratios has moved materially over the past four periods, with figures to 30 Jun 2026. Nothing flagged in the last 90 days. A deposit here is a bet on group support, which the ratings say is strong.",
+ "synthesis": "Rated AA- on average across all three, the weakest of them at A+ and all three on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026 - a standing that rests on the wider group behind it rather than on the ratios alone. Every measure is in the bottom quarter of EU and Nordic banks: CET1 of 12.4%, leverage of 3.6%, LCR of 120% and NSFR of 112%. That is the shape of a wholesale-funded corporate and investment bank inside a mutual group, but it leaves little headroom, and leverage of 3.6% is thin in absolute terms as well as against peers. None of the ratios has moved materially over the past four periods (figures to 30 Jun 2026), and nothing has been flagged in the last 90 days.",
  "inputs": {
-  "band": "B",
+  "band": "C",
   "composite": "AA-",
   "worst": "A+",
   "outlooks": "stable, stable, stable",

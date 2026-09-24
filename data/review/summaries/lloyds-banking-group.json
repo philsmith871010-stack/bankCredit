@@ -1,8 +1,8 @@
 {
  "id": "lloyds-banking-group",
- "written": "2026-09-23",
+ "written": "2026-09-24",
  "background": "Lloyds Banking Group is the holding company of the UK's largest retail and commercial bank, owner of Lloyds Bank, Halifax, Bank of Scotland and Scottish Widows, with almost all of its business in Britain.",
- "synthesis": "As a holding company its ratings sit below the banks': A on average across two of the three main agencies, the weakest of them at A-, both on a stable outlook, with a one-notch upgrade by one of the three on 10 Sep 2025 the latest move. Consolidated capital is mixed against UK majors: CET1 of 13.6% is a little under the peer median, while leverage of 5.1% is in the top quarter. Liquidity is also mixed, with LCR of 144% level with the median and NSFR of 123% below the peer median; leverage has fallen 0.3 points since 30 Jun 2025 and the rest has been flat. The newest flagged item, on 18 Sep 2026, is an online banking outage, and the older items concern the Arena Television fraud lawsuits, an operational and legal matter rather than a solvency one.",
+ "synthesis": "Rated A on average across two of the three, the weakest of them at A-, both on a stable outlook, after a one-notch upgrade by one of the three on 10 Sep 2025; the holding company is rated below its ring-fenced banks, as structural subordination implies. CET1 of 13.6% is a shade below the median for UK majors while leverage of 5.1% is in the top quarter, and liquidity is unremarkable, with LCR of 144% at the median and NSFR of 123% below it. Leverage has fallen 0.3 points since 30 Jun 2025 and the other ratios are broadly flat (figures to 30 Jun 2026). Half-year profit came in ahead of expectations, and the £1.2bn Arena Television litigation flagged in August is a conduct matter rather than a balance-sheet one.",
  "inputs": {
   "band": "B",
   "composite": "A",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable",
   "n": 2,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-18"
+  "last_flagged": "2026-08-10"
  }
 }

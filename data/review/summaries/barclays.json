@@ -1,8 +1,8 @@
 {
  "id": "barclays",
- "written": "2026-09-23",
+ "written": "2026-09-24",
  "background": "Barclays PLC is the listed holding company of the Barclays group, a UK universal bank with a large transatlantic corporate and investment bank alongside UK retail banking and international cards.",
- "synthesis": "The holding company is rated A- on average across all three main agencies, the weakest of them at BBB+, all three on a stable outlook, and the last move was a one-notch upgrade by one of the three on 19 May 2023. Capital is strong against UK majors, with CET1 of 14.3% in the top quarter and leverage of 4.9% just above the peer median, and liquidity is strong too, with LCR of 158% and NSFR of 136% both above the median. The one move is in LCR, down 20 points since 30 Jun 2025, while the other ratios have been broadly flat to 30 Jun 2026. The newest flagged item, on 10 Sep 2026, is repeated outages on a trading risk platform, alongside FCA attention over a collapsed mortgage lender and a creditors' probe request, none of which bears directly on the group's credit.",
+ "synthesis": "Rated A- on average across all three, the weakest of them at BBB+ and all three on a stable outlook, with no move since a one-notch upgrade by one of the three on 19 May 2023. The ratios sit at the strong end of the UK majors: CET1 of 14.3% is in the top quarter, leverage of 4.9% is above the median, and LCR of 158% and NSFR of 136% are both above theirs. LCR has fallen 20 points since 30 Jun 2025 from a high base and the rest are broadly flat (figures to 30 Jun 2026). The ratings sit lower than the ratios alone would suggest, which is the price of a large investment bank's earnings volatility; what has been flagged in the last 90 days is conduct and operational risk, a regulatory matter and repeated trading-platform outages, rather than anything touching solvency.",
  "inputs": {
   "band": "B",
   "composite": "A-",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-10"
+  "last_flagged": "2026-09-22"
  }
 }

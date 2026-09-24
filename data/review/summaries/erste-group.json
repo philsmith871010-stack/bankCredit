@@ -1,8 +1,8 @@
 {
  "id": "erste-group",
- "written": "2026-09-23",
+ "written": "2026-09-24",
  "background": "Erste Group is an Austrian bank with the leading retail franchise across Central and Eastern Europe, funded by local deposits in Austria, the Czech Republic, Slovakia, Romania, Hungary and Croatia, and part-owned by its founding savings-bank foundation.",
- "synthesis": "Ratings are A+ on average across all three main agencies, the weakest of them at A, with two on a positive outlook and one on a stable outlook after a one-notch upgrade by one of the three on 21 Apr 2026. Capital is mixed against EU and Nordic peers: CET1 of 14.4% is below the peer median while leverage of 6.4% is above it, and both have fallen since 30 Jun 2024, CET1 by 1.1 points and leverage by 0.8 points. Liquidity is also mixed, with LCR of 149% a shade under the peer median and NSFR of 137% in the top quarter, though NSFR has fallen 7 points since 30 Jun 2025. The one flagged item, on 9 Jul 2026, is an equity-research call on another company and does not bear on its credit.",
+ "synthesis": "Rated A+ on average across all three, the weakest of them at A, with two of the three on a positive outlook and one stable, after a one-notch upgrade by one of the three on 21 Apr 2026: the ratings are still being marked up. The ratios are mixed against EU and Nordic banks, with CET1 of 14.4% below the median and LCR of 149% just under it, against leverage of 6.4% above the median and NSFR of 137% in the top quarter. The direction is the qualification: CET1 has fallen 1.1 points and leverage 0.8 points since 30 Jun 2024, and NSFR 7 points since 30 Jun 2025, with LCR broadly flat (figures to 30 Jun 2026). The erosion is gradual and from a comfortable base, and nothing has been flagged in the last 90 days, but it is the one trend to watch across a Central and Eastern European loan book.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "positive, positive, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-07-09"
+  "last_flagged": "2026-04-21"
  }
 }

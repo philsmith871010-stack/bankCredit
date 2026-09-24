@@ -1,8 +1,8 @@
 {
  "id": "raiffeisen-bank-international",
- "written": "2026-09-23",
+ "written": "2026-09-24",
  "background": "Raiffeisen Bank International is the central institution of the Austrian Raiffeisen cooperative banks and a leading lender across Central and Eastern Europe, with a large and long-running exposure to Russia that it has been unable to fully exit.",
- "synthesis": "Two of the three main agencies rate the bank, at A on average with the weakest of them at A-, one on a positive outlook and one on a stable outlook, and the last move a one-notch upgrade by one of the three on 11 Jul 2023. Capital is strong against EU and Nordic banks, with CET1 of 17.3% above the peer median and leverage of 8.5% in the top quarter, and so is liquidity, with LCR of 151% level with the median and NSFR of 139% in the top quarter, though LCR has fallen 31 points since 30 Jun 2025. The weak spot is Russia: the newest flagged items, on 17 Sep 2026, are a short seller's claims that its Russian business remains very active and that linked trade records point to sanctions circumvention, which sent the shares sharply lower. That is a sanctions and reputational risk the ratios do not capture.",
+ "synthesis": "Rated A on average across two of the three, the weakest of them at A-, one on a positive outlook and one stable, after a one-notch upgrade by one of the three on 11 Jul 2023. The ratios are strong for an EU bank: CET1 of 17.3% is above the median, leverage of 8.5% and NSFR of 139% are in the top quarter, and LCR of 151% sits at the median. LCR has fallen 31 points since 30 Jun 2025 while leverage has risen 0.6 points since 30 Jun 2024, with the rest broadly flat (figures to 30 Jun 2026). Those buffers exist because of the Russian exposure rather than in spite of it, and the flow of flagged items is dominated by litigation around it, including a €3.15bn default judgment won on 22 Sep 2026 that still has to be collected.",
  "inputs": {
   "band": "B",
   "composite": "A",
@@ -10,6 +10,6 @@
   "outlooks": "positive, stable",
   "n": 2,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-17"
+  "last_flagged": "2026-09-22"
  }
 }
