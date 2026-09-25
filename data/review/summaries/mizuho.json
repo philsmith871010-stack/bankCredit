@@ -1,8 +1,6 @@
-{
- "id": "mizuho",
- "written": "2026-09-23",
+{"id": "mizuho", "written": "2026-09-25",
  "background": "Mizuho Financial Group is one of Japan's three megabanks, the holding company of Mizuho Bank and Mizuho Securities, funded by a very large base of yen deposits and lending to Japanese corporates and households and to large companies worldwide.",
- "synthesis": "Two of the three main agencies rate the group, at A- on average, both on a stable outlook, with the last move a one-notch downgrade by one of the three on 17 Sep 2015, so the grades have been steady for a decade. The ratios are on the weak side of Asian peers across the board: CET1 of 13.5% is below the peer median, leverage of 4.9% is in the bottom quarter, and LCR of 126% and NSFR of 112% are both in the bottom quarter. None of the ratios has moved materially over the past four periods. The flagged news is good, with first-quarter profit up 45.5% reported on 31 Jul 2026. A systemically important Japanese name running thinner ratios than most Asian peers.",
+ "synthesis": "Two of the three agencies rate the group, A- on both the average and the weakest measure, both on a stable outlook, and neither has moved since a one-notch downgrade by one of the three on 17 Sep 2015. Every ratio sits on the weak side of Asian peers: CET1 of 13.5% is below the median, while leverage of 4.9%, LCR of 126% and NSFR of 112% are all in the bottom quarter. That standing is settled rather than deteriorating, with none of the ratios moving materially over the past four periods, on figures to 30 Jun 2026, and first-quarter profit up sharply on the year. Against that, a fraud claim brought by the group and now in the hands of a court-appointed administrator was flagged on 24 Sep 2026.",
  "inputs": {
   "band": "B",
   "composite": "A-",
@@ -10,6 +8,5 @@
   "outlooks": "stable, stable",
   "n": 2,
   "asof": "2026-06-30",
-  "last_flagged": "2026-07-31"
- }
-}
+  "last_flagged": "2026-09-24"
+ }}

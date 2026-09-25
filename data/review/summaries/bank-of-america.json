@@ -1,8 +1,6 @@
-{
- "id": "bank-of-america",
- "written": "2026-09-24",
+{"id": "bank-of-america", "written": "2026-09-25",
  "background": "Bank of America Corporation is the holding company of the second-largest US bank, spanning consumer banking, wealth management under Merrill and a global corporate and investment bank.",
- "synthesis": "Rated A+ on average across all three, the weakest of them at A-, all three on a stable outlook, with no move since a one-notch upgrade by one of the three on 3 May 2023. Capital is the soft spot: CET1 of 11.2% is in the bottom quarter of US banks and leverage of 5.5% is below the median, and liquidity gives no relief, with LCR of 112% also below it. None of the ratios has moved materially over the past four periods (figures to 30 Jun 2026), so the position is settled rather than deteriorating. What has been flagged in the last 90 days is market and conduct noise, with one exception worth sizing against that thin capital: unrealised losses on the bond book put at over $90bn in an item of 17 Sep 2026.",
+ "synthesis": "All three agencies rate the group, A+ on average and the weakest of them at A-, all three on a stable outlook, with no rating action since a one-notch upgrade by one of the three on 3 May 2023. Capital is the soft spot: CET1 of 11.2% sits in the bottom quarter of US banks and leverage of 5.5% is below the peer median. Liquidity is no better placed, LCR of 112% falling below the median as well, and none of the ratios has moved materially over the past four periods, on figures to 30 Jun 2026. The newsflow is mixed, a broker upgrade on 24 Sep 2026 set against earlier warnings over unrealised losses in the bond book and a sharp fall in the shares.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -10,6 +8,5 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-22"
- }
-}
+  "last_flagged": "2026-09-24"
+ }}

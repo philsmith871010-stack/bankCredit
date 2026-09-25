@@ -1,15 +1,12 @@
-{
- "id": "metro-bank",
- "written": "2026-09-23",
+{"id": "metro-bank", "written": "2026-09-25",
  "background": "Metro Bank is a UK high-street challenger bank founded on a branch-led model, funded by retail and business deposits and lending on mortgages, commercial property and to smaller companies, recapitalised and controlled by a Colombian investor after its capital crisis.",
- "synthesis": "Only one of the three main agencies rates the bank, at BB on a positive outlook after a one-notch upgrade on 12 Aug 2026, below investment grade but moving up. Capital is mixed against UK mid-sized banks: CET1 of 12.3% is in the bottom quarter while leverage of 7.4% is just above the peer median. Liquidity is strong, with LCR of 288% and NSFR of 159% both in the top quarter; since 30 Jun 2024 leverage has risen 1.9 points and NSFR 12 points while CET1 has fallen 0.6 points and LCR 31 points. The only flagged items are that upgrade and the positive outlook that came with it on 12 Aug 2026.",
+ "synthesis": "Only one of the three agencies rates the bank, at BB and on a positive outlook, following its one-notch upgrade on 12 Aug 2026 - thin coverage, and a level well below the UK clearers. Liquidity is the strength, with LCR of 288% and NSFR of 159% both in the top quarter of UK mid-sized banks, and leverage of 7.4% is at the peer median. Risk-weighted capital is the weak spot: CET1 of 12.3% is in the bottom quarter and has slipped 0.6 points since 30 Jun 2024, while over the same span leverage has risen 1.9 points and LCR has given up 31 points, on figures to 30 Jun 2026. The only items flagged in the last 90 days are that rating action itself.",
  "inputs": {
-  "band": "C",
+  "band": "D",
   "composite": "BB",
   "worst": "BB",
   "outlooks": "positive",
   "n": 1,
   "asof": "2026-06-30",
   "last_flagged": "2026-08-12"
- }
-}
+ }}

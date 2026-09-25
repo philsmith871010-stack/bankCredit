@@ -1,15 +1,12 @@
-{
- "id": "wells-fargo",
- "written": "2026-09-24",
+{"id": "wells-fargo", "written": "2026-09-25",
  "background": "Wells Fargo & Company is the holding company of one of the four largest US banks, with consumer banking and lending, commercial banking, corporate and investment banking and wealth management, and a long regulatory remediation behind it.",
- "synthesis": "Rated A on average across all three and the weakest of them at BBB+, with one of the three on a positive outlook and two stable; the last move was a one-notch upgrade by one of the three on 12 Jul 2021. Capital is the weak point: CET1 of 10.3% is in the bottom quarter of US banks and leverage of 5.8% only matches the median, while LCR of 119% is a little above it. Both capital ratios have fallen 0.9 points since 30 Jun 2025 (figures to 30 Jun 2026), and that is the movement to track from here. What has been flagged in the last 90 days is job cuts and general news noise rather than credit events, and the positive outlook held by one of the three points the other way.",
+ "synthesis": "All three agencies rate the group, A on average and the weakest of them at BBB+, two on a stable outlook and one on positive, though the last move was a one-notch upgrade by one of the three as long ago as 12 Jul 2021. Capital is the weak point: CET1 of 10.3% is in the bottom quarter of US banks and has fallen 0.9 points since 30 Jun 2025, with leverage down the same 0.9 points to 5.8%, which still leaves it at the peer median. Liquidity is the better side, LCR of 119% above the median and broadly flat over the same span, on figures to 30 Jun 2026. Both capital measures moving one way over a year is the thing to follow here; nothing bearing on credit stands out in what has been flagged in the last 90 days, the most recent item dated 24 Sep 2026.",
  "inputs": {
-  "band": "B",
+  "band": "C",
   "composite": "A",
   "worst": "BBB+",
   "outlooks": "positive, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-23"
- }
-}
+  "last_flagged": "2026-09-24"
+ }}

@@ -1,8 +1,6 @@
-{
- "id": "ubs",
- "written": "2026-09-23",
+{"id": "ubs", "written": "2026-09-25",
  "background": "UBS Group is Switzerland's only remaining global bank after absorbing Credit Suisse, the world's largest wealth manager, with Swiss retail and corporate banking, asset management and an investment bank, and a balance sheet far larger than the Swiss economy.",
- "synthesis": "Two of the three main agencies rate the group, at A on average with the weakest of them at A-, both on a stable outlook, and the last move a one-notch upgrade by one of the three on 14 Apr 2026: holding-company grades that sit below the operating bank's. The site holds no peer group for the group, so the ratios stand on their own: CET1 is 14.4%, leverage 5.8%, LCR 177% and NSFR 115%, and none has moved materially over the past four periods. The flagged news is mixed: a money-laundering fine on 3 Aug 2026, set against an earlier trading-led profit surge. The Credit Suisse integration and the Swiss debate over capital requirements are the things to watch.",
+ "synthesis": "Two of the three agencies rate the group, A on average and the weakest of them at A-, both on a stable outlook, after a one-notch upgrade by one of the three on 14 Apr 2026. The published ratios leave plenty of headroom - CET1 of 14.4%, leverage of 5.8%, LCR of 177% and NSFR of 115% - and none has moved materially over the past four periods, on figures to 30 Jun 2026. The live question is regulatory rather than reported: the Swiss parliament has backed tougher capital rules aimed squarely at this balance sheet, flagged on 23 Sep 2026, with broker estimates of the extra requirement running into the tens of billions. An anti-money-laundering fine and other conduct items also sit within the last 90 days, so the direction of travel on required capital is the thing to watch here, not the ratios as they stand.",
  "inputs": {
   "band": "A",
   "composite": "A",
@@ -10,6 +8,5 @@
   "outlooks": "stable, stable",
   "n": 2,
   "asof": "2026-06-30",
-  "last_flagged": "2026-08-03"
- }
-}
+  "last_flagged": "2026-09-23"
+ }}
