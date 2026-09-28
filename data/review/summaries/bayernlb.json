@@ -1,15 +1,15 @@
 {
  "id": "bayernlb",
- "written": "2026-09-23",
+ "written": "2026-09-28",
  "background": "BayernLB is the Landesbank of Bavaria, owned by the Free State of Bavaria and the Bavarian savings banks, a wholesale and corporate lender that also owns the online retail bank DKB, funded mainly in wholesale markets and through DKB deposits.",
- "synthesis": "Ratings are high, at AA- on average across two of the three main agencies, both stable, after a one-notch upgrade by one of them on 12 May 2026, resting on state and savings-bank ownership. Capital is mixed against EU and Nordic peers: CET1 of 20.3% is in the top quarter, but leverage of 5.0% is below the peer median. Liquidity is strong, with LCR of 178% in the top quarter and NSFR of 127% above the median, and CET1 has risen 1.8 points and leverage 0.4 points since 30 Jun 2024. Nothing has been flagged in the last 90 days.",
+ "synthesis": "Two of the three main agencies rate the bank, at AA- on average and both on a stable outlook, after a one-notch upgrade by one of them on 12 May 2026. Capital is mixed: CET1 of 19.8% is in the top quarter of peers, but leverage of 4.9% is below the median, the gap that comes with a large low-risk-weight wholesale book. Liquidity is strong, with LCR of 180% in the top quarter and NSFR of 127% above the median. Since 30 Jun 2025 CET1 has fallen 0.7 points while LCR has risen 10 points (figures to 30 Jun 2026), and nothing has been flagged in the last 90 days.",
  "inputs": {
   "band": "A",
   "composite": "AA-",
   "worst": "AA-",
   "outlooks": "stable, stable",
   "n": 2,
-  "asof": "2026-03-31",
+  "asof": "2026-06-30",
   "last_flagged": "2026-05-12"
  }
 }

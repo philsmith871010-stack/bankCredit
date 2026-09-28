@@ -1,6 +1,8 @@
-{"id": "morgan-stanley", "written": "2026-09-25",
+{
+ "id": "morgan-stanley",
+ "written": "2026-09-28",
  "background": "Morgan Stanley is the holding company of a leading US investment bank whose earnings have shifted toward wealth and investment management alongside institutional securities, with a deposit franchise built on brokerage sweeps.",
- "synthesis": "All three agencies rate the group, A on average and the weakest of them at A-, all three on a stable outlook, with no move since a one-notch upgrade by one of the three on 4 Nov 2022. Risk-weighted capital and liquidity are both strong against US banks, CET1 of 14.9% and LCR of 129% each in the top quarter, but leverage of 4.9% is in the bottom quarter - the usual shape for a securities-led balance sheet, and the one figure to keep an eye on. It has fallen 0.6 points since 30 Jun 2025 while CET1 and LCR have been broadly flat over the same span, on figures to 30 Jun 2026. What has been flagged in the last 90 days is conduct and litigation rather than anything bearing on credit, the newest of it dated 23 Sep 2026.",
+ "synthesis": "Ratings are A on average across all three main agencies, the weakest of them at A-, all three on a stable outlook, with the last move a one-notch upgrade by one of them on 4 Nov 2022. Risk-based capital is strong — CET1 of 14.9% is in the top quarter of US banks — but leverage of 4.9% is in the bottom quarter, the usual consequence of a large securities balance sheet. Liquidity is strong, LCR of 129% in the top quarter, and the only real movement is leverage, down 0.6 points since 30 Jun 2025 (figures to 30 Jun 2026). Flagged items are conduct and controls rather than credit: the newest, on 24 Sep 2026, a client email that disclosed a deal pipeline, alongside an earlier litigation matter.",
  "inputs": {
   "band": "B",
   "composite": "A",
@@ -8,5 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-23"
- }}
+  "last_flagged": "2026-09-24"
+ }
+}

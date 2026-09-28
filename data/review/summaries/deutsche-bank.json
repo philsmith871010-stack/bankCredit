@@ -1,8 +1,8 @@
 {
  "id": "deutsche-bank",
- "written": "2026-09-23",
+ "written": "2026-09-28",
  "background": "Deutsche Bank is Germany's largest bank, a universal bank with a large investment bank, a corporate bank, German retail banking under the Deutsche and Postbank brands, and the DWS asset manager.",
- "synthesis": "Ratings are A+ on average across all three main agencies, the weakest of them at A, two on a positive outlook and one on a stable outlook, with the last move a two-notch upgrade by one of the three on 12 May 2026. The ratios are on the weak side of EU and Nordic banks: CET1 of 13.9%, leverage of 4.5% and LCR of 140% are all in the bottom quarter, and NSFR of 118% is below the peer median. None of the ratios has moved materially over the past four periods to 30 Jun 2026. The newest flagged item, on 8 Sep 2026, bundles industry lobbying with a legal settlement, and the others are settlements with former staff, none of them a credit event.",
+ "synthesis": "Ratings are A+ on average across all three main agencies, the weakest of them at A, with two of the three on a positive outlook and one on a stable outlook after a two-notch upgrade by one of them on 12 May 2026 — the ratings are the strongest part of the picture. The ratios are not: CET1 of 13.9%, leverage of 4.5% and LCR of 140% are all in the bottom quarter of peers and NSFR of 118% is below the median. None has moved materially over the past four periods (figures to 30 Jun 2026). Flagged items run to litigation and settlements rather than anything systemic, the newest, on 22 Sep 2026, being a research note on an unrelated company.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "positive, positive, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-08"
+  "last_flagged": "2026-09-22"
  }
 }

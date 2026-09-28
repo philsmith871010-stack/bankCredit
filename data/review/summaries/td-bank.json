@@ -1,8 +1,8 @@
 {
  "id": "td-bank",
- "written": "2026-09-24",
+ "written": "2026-09-28",
  "background": "The Toronto-Dominion Bank is Canada's second-largest bank, funded by Canadian and US deposits and lending on Canadian mortgages and to businesses, with a large US retail bank along the east coast that has been under a regulatory asset cap after its anti-money-laundering failures.",
- "synthesis": "Rated A+ on average across all three, the weakest of them at A and all three on a stable outlook; the last move was a one-notch downgrade by one of the three on 23 Oct 2024. Capital is the strength: CET1 of 14.3% is in the top quarter of Canadian banks, though it has fallen 0.6 points since 30 Apr 2025 (figures to 31 Jul 2026). No leverage or liquidity ratios are held, so the reading rests on capital beside the ratings. Earnings are running well on capital-markets activity, but the flagged items keep coming from one direction - a data breach reported on 21 Sep 2026 and continued turnover in senior management - and operational and regulatory execution, not the balance sheet, is where the risk sits.",
+ "synthesis": "Ratings are A+ on average across all three main agencies, the weakest of them at A, all three on a stable outlook, but the last move was a one-notch downgrade by one of them on 23 Oct 2024. Capital is strong: CET1 of 14.3% is in the top quarter of Canadian banks, though it has fallen 0.6 points since 30 Apr 2025 (figures to 31 Jul 2026). The profile carries no leverage or liquidity ratios, so capital is the only ratio to go on. Flagged items are operational and conduct matters — the newest, on 25 Sep 2026, a further disclosed customer data breach, alongside senior management turnover — the pattern a treasurer would expect while remediation continues.",
  "inputs": {
   "band": "A",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-07-31",
-  "last_flagged": "2026-09-21"
+  "last_flagged": "2026-09-25"
  }
 }
