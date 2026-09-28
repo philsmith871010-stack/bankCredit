@@ -4216,5 +4216,26 @@
   "page_reviewer": 5,
   "date_extractor": "2020-06-30",
   "date_reviewer": "2020-06-30"
+ },
+ {
+  "date": "2026-09-28T06:40:10",
+  "id": "07ff035e9f59",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-28T06:40:13",
+  "id": "34547b094a61",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-28T06:40:19",
+  "id": "a344e1aabff8",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
  }
 ]

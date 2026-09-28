@@ -1,0 +1,7 @@
+{
+  "id": "34547b094a61",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Canada/basel-III/citibank-canada-basel-iii-pillar-3-osfi-q2-2026-en.pdf",
+  "skip": true,
+  "note": "Not Citigroup Inc. This is Citibank Canada's OSFI SMSB Pillar 3 disclosure, in thousands CAD. It has a genuine KM1 on p.4-5 (CET1/T1 788,950k, total capital 803,963k, RWA 2,916,362k, CET1 and T1 ratio 27.05%, total capital ratio 27.57%, leverage exposure 9,449,605k, leverage ratio 8.35%, Q2 2026 = 2026-06-30; no LCR or NSFR, SMSBs are not required to disclose them), but it is a subsidiary and would collide with Citigroup Inc.'s already-loaded 2026-06-30 USD group figures. The queue's reference_date 2025-02-28 was also wrong, read off 'February 2025' in the intro prose rather than the column header. Skipped so the quarterly file is not queued again; the locator pattern is the real fix."
+}

@@ -1,0 +1,7 @@
+{
+  "id": "07ff035e9f59",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Canada/basel-III/citibank-canada-basel-iii-pillar-3-osfi-q2-2026-fr.pdf",
+  "skip": true,
+  "note": "Not Citigroup Inc., and a duplicate: the French translation of the Citibank Canada OSFI Pillar 3 disclosure already skipped as 34547b094a61, same figures in thousands CAD. The queue's reference_date 2013-01-31 came from the '1er janvier 2013' framework date in the intro prose, not the column header (T2 2026). Skipped so the quarterly French file is not queued again."
+}

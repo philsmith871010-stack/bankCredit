@@ -1,0 +1,7 @@
+{
+  "id": "a344e1aabff8",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/cgme-pillar-3-disclosure-q2-2026.pdf",
+  "skip": true,
+  "note": "Not Citigroup Inc. This is the German Pillar 3 Offenlegungsbericht of Citigroup Global Markets Europe AG (CGME), a subsidiary, in EUR millions. It does carry a real EU KM1 on p.5-6 (CET1/T1/total capital 4,692; RWA 17,657; all three ratios 26.57%; overall capital requirement 14.45%; leverage exposure 65,467, leverage ratio 7.17%; LCR 473.27%; NSFR 118.91%; as at 30.06.2026), but those are the subsidiary's figures, not the group's, and Citigroup Inc.'s own 2026-06-30 disclosure (c-baseI-iii-adv-approach-06-30-2026.pdf, USD) is already loaded at the same reference date, so loading these would overwrite the group facts. Skipped so the quarterly CGME file is not queued again. Real fix is in code: the citigroup browser locator's match pattern rcs/citigpa/storage/public/.*(basel|pillar).*\\.pdf is too broad and sweeps in subsidiary disclosures."
+}

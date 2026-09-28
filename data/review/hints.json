@@ -267,7 +267,14 @@
     "rwa": 1329505.0
    },
    "method": "pdf_rules"
-  }
+  },
+  "browser_page": "https://www.citigroup.com/global/investors/other-regulatory-filings",
+  "browser_page_found": "2026-09-28",
+  "skip_patterns": [
+   "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-osfi\\-q\\d+\\-\\d+\\-fr",
+   "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-osfi\\-q\\d+\\-\\d+\\-en",
+   "cgme\\-pillar\\-\\d+\\-disclosure\\-q\\d+\\-\\d+"
+  ]
  },
  "nab": {
   "page": 5,
