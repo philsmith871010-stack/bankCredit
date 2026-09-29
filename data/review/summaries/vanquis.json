@@ -1,8 +1,8 @@
 {
  "id": "vanquis",
- "written": "2026-09-23",
+ "written": "2026-09-29",
  "background": "Vanquis Banking Group is a UK specialist lender to customers underserved by mainstream banks, funded by retail savings and lending through credit cards, vehicle finance under Moneybarn and personal loans.",
- "synthesis": "Only one of the three main agencies rates the group, at BB- with a positive outlook, after a one-notch downgrade on 7 Aug 2024, so the grade is well below investment grade but the direction has turned. Capital is mixed against UK small banks: CET1 of 15.6% is below the peer median, while leverage of 10.7% is in the top quarter. Liquidity is on the weak side of a group that runs very high liquidity, with LCR of 280% and NSFR of 143% both below their medians. Since 30 Jun 2024 CET1 has fallen 4.2 points, leverage 4.7 points and LCR 806 points, a sharp use of headroom. The newest flagged item, on 11 Sep 2026, is the head of the group stepping down by the end of the year, a management change rather than a credit event.",
+ "synthesis": "Only one of the three main agencies rates the group, at BB- and below investment grade, on a positive outlook, the last move a one-notch downgrade on 7 Aug 2024. The headline capital ratios still look adequate against UK small banks, CET1 of 15.6% below the peer median and leverage of 10.7% in the top quarter, but the run of them is the point: since 30 Jun 2024 CET1 has fallen 4.2 points and leverage 4.7 points. Liquidity has been drawn down on the same scale, LCR of 280% below the peer median after a fall of 806 points and NSFR of 143% also below it though broadly flat (figures to 30 Jun 2026) — a balance sheet that has spent a very large surplus in two years. Turnover at the top of the firm, flagged on 12 Sep 2026, leaves the turnaround without its author; this is the weakest credit in the UK set and deposits here warrant a limit sized accordingly.",
  "inputs": {
   "band": "D",
   "composite": "BB-",
@@ -10,6 +10,6 @@
   "outlooks": "positive",
   "n": 1,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-11"
+  "last_flagged": "2026-09-12"
  }
 }

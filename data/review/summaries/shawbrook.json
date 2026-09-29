@@ -1,8 +1,8 @@
 {
  "id": "shawbrook",
- "written": "2026-09-23",
- "background": "Shawbrook is a UK specialist lender owned by private equity, funded by retail and business savings and lending on buy-to-let and specialist residential mortgages, commercial property, and to smaller companies through asset and structured finance.",
- "synthesis": "None of the three main agencies rates the bank. Capital is mixed against UK mid-sized banks: CET1 of 13.0% is in the bottom quarter against the peer median, while leverage of 8.7% is in the top quarter. Liquidity is on the weak side, with LCR of 157% below the peer median and NSFR of 126% in the bottom quarter. The trend is the point: since 31 Dec 2023 LCR has fallen 154 points and NSFR 20 points, so a large liquidity surplus has been used to grow the book, while CET1 has been flat and leverage has risen 0.5 points. The flagged news is good, with first-half profit up 16% reported on 5 Aug 2026.",
+ "written": "2026-09-29",
+ "background": "Shawbrook is a UK specialist lender funded by retail and business savings, lending on buy-to-let and specialist residential mortgages, commercial property, and to smaller companies through asset and structured finance.",
+ "synthesis": "No agency rates the bank publicly, so the figures have to carry the whole judgement. Capital reads two ways against UK mid-sized banks: CET1 of 13.0% is in the bottom quarter, reflecting the risk weights on specialist property lending, while leverage of 8.7% is in the top quarter and has risen 0.5 points since 31 Dec 2023. The drift in funding is the thing to watch, LCR of 157% below the peer median after a fall of 154 points over that span and NSFR of 126% in the bottom quarter after a fall of 20 points, with CET1 broadly flat (figures to 30 Jun 2026) — a balance sheet being run with less surplus liquidity as lending grows. Everything flagged in the last 90 days is favourable, a first half with profit up reported on 25 Sep 2026 and in August.",
  "inputs": {
   "band": "",
   "composite": "",
@@ -10,6 +10,6 @@
   "outlooks": "",
   "n": 0,
   "asof": "2026-06-30",
-  "last_flagged": "2026-08-05"
+  "last_flagged": "2026-09-25"
  }
 }

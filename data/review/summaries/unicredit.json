@@ -1,8 +1,8 @@
 {
  "id": "unicredit",
- "written": "2026-09-28",
+ "written": "2026-09-29",
  "background": "UniCredit is Italy's second-largest bank and a leading lender in Germany, Austria and Central and Eastern Europe, funded by deposits across those markets, with a large stake in Commerzbank and a Russian subsidiary it has been winding down.",
- "synthesis": "Ratings are A- on average across all three main agencies and none is lower, with one of the three on a positive outlook and two on a stable outlook after a one-notch upgrade by one of them on 25 Nov 2025. Capital is below peers and falling: CET1 of 14.3% and leverage of 5.1% are both under their medians, and since 30 Jun 2025 CET1 has dropped 1.8 points with leverage down 0.6 points, the clearest negative trend in the figures. Liquidity is mixed, LCR of 140% in the bottom quarter against NSFR of 124% above the median, both broadly flat (figures to 30 Jun 2026). The one flagged item, on 27 Jul 2026, concerns the sanctions treatment of a stalled transaction.",
+ "synthesis": "All three of the main agencies rate the bank, A- on average and A- at the weakest of them, one on a positive outlook and two on stable, after a one-notch upgrade by one of the three on 25 Nov 2025. Capital is on the weak side of EU and Nordic banks, CET1 of 14.3% and leverage of 5.1% both below the peer median, and both have given ground since 30 Jun 2025, CET1 by 1.8 points and leverage by 0.6 points — the most pointed trend in the file, and the price of heavy distributions and the build-up of the Commerzbank stake. Liquidity is mixed, LCR of 140% in the bottom quarter against NSFR of 124% above the peer median, both broadly flat (figures to 30 Jun 2026). Nothing adverse has been flagged in the last 90 days beyond the slow progress of the Commerzbank and Russian-exit files, the newest item on 6 Aug 2026.",
  "inputs": {
   "band": "B",
   "composite": "A-",
@@ -10,6 +10,6 @@
   "outlooks": "positive, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-07-27"
+  "last_flagged": "2026-08-06"
  }
 }
