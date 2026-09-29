@@ -846,13 +846,18 @@ def _hm(hours: float) -> str:
 
 
 def page_status(status, board, generated, inner: bool = False):
-    runs = "".join(f'<tr><td class="b">{c.esc(r["source"])}</td><td>{c.chip(c.esc(r["status"]), {"ok": "good", "partial": "warn", "failed": "bad", "skipped": "muted"}.get(r["status"], "muted"))}</td><td class="mono">{r["rows"]}</td><td class="mono muted">{c.esc(r["finished"][:16].replace("T", " "))}</td><td class="muted small">{c.esc(r["message"])}</td></tr>' for r in status["runs"]) or '<tr><td colspan="5" class="empty">No runs recorded yet.</td></tr>'
+    # the regulatory sources run on the 1st, 15th and 25th (pipeline.yml): a date ten days old
+    # on one of those rows is the cadence, not a failure, and the table says so
+    THRICE = {"fdic", "eba", "edgar", "te", "esef", "fundamentals", "nsm_release"}
+    def cadence(src):
+        return "1st, 15th and 25th" if src in THRICE else ("when a key is set" if src == "fred" else "daily")
+    runs = "".join(f'<tr><td class="b">{c.esc(r["source"])}</td><td>{c.chip(c.esc(r["status"]), {"ok": "good", "partial": "warn", "failed": "bad", "skipped": "muted"}.get(r["status"], "muted"))}</td><td class="mono">{r["rows"]}</td><td class="mono muted">{c.esc(r["finished"][:16].replace("T", " "))}</td><td class="small muted">{cadence(r["source"])}</td><td class="muted small">{c.esc(r["message"])}</td></tr>' for r in status["runs"]) or '<tr><td colspan="6" class="empty">No runs recorded yet.</td></tr>'
     rows = board["rows"]
     missing = [r for r in rows if not r["asof"]]
     stale = [r for r in rows if r["age_days"] and r["age_days"] > 150]
     lst = lambda xs: ", ".join(f'<a href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a>' for r in xs) or "none"
     content = f'''<div class="page-head"><div><h1>Status</h1><div class="lede">What ran, when, and what needs a look. Auto-publish with spot checks.</div></div></div>
-<div class="card pad"><h3>Pipeline runs</h3>{punctuality(status, generated)}<div class="table-wrap"><table class="plain"><thead><tr><th>Source</th><th>Status</th><th>Rows</th><th>Finished (UTC)</th><th>Message</th></tr></thead><tbody>{runs}</tbody></table></div></div>
+<div class="card pad"><h3>Pipeline runs</h3>{punctuality(status, generated)}<div class="table-wrap"><table class="plain"><thead><tr><th>Source</th><th>Status</th><th>Rows</th><th>Finished (UTC)</th><th>Runs</th><th>Message</th></tr></thead><tbody>{runs}</tbody></table></div></div>
 <div class="card pad"><h3>Coverage</h3><p>{len(rows) - len(missing)} of {len(rows)} entities have regulatory figures; {sum(1 for r in rows if r["score"] is not None)} have enough for a score; {sum(1 for r in rows if r.get("rating"))} have ratings.</p>
 <p class="small"><span class="b">No regulatory figures yet:</span> {lst(missing)}</p><p class="small"><span class="b">Older than 150 days:</span> {lst(stale)}</p></div>
 {health_card()}
@@ -1240,7 +1245,7 @@ def page_coverage(generated, inner: bool = False):
         '<th class="num" data-sort="col" title="headlines kept in the last 90 days">News 90d</th>'
         f'<th class="num" data-sort="col" title="span of the CET1 history in years">Years</th><th>Sources</th>{heads}</tr></thead><tbody>{body}</tbody></table></div><div class="pager" id="cov-more" data-step="40"></div>'
         '<div class="table-foot"><span>Ratio cells: periods held, then the first and last year. Shading: light under 4 periods, mid under 12, dark 12 and over. '
-        "Rating letters are the agencies holding a long-term issuer rating (F Fitch, S S&amp;P, M Moody's, D DBRS, K KBRA, Sc Scope, J JCR). Click a column heading to sort.</span></div></div>")
+        "The rating column is the average across the three main agencies, and how many of the three rate the name. Click a column heading to sort.</span></div></div>")
     return content if inner else c.shell("Coverage", content, "coverage", "../", generated)
 
 
