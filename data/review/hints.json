@@ -66,12 +66,16 @@
   "last_verified": {
    "reference_date": "2026-06-30",
    "values": {
-    "lcr": 112.0,
-    "hqla": 683634.0,
-    "net_cash_outflows": 600009.0
+    "cet1_ratio": 11.2,
+    "tier1_ratio": 12.6,
+    "total_capital_ratio": 14.7,
+    "tier1_leverage": 6.6,
+    "leverage_ratio": 5.5
    },
    "method": "pdf_rules"
-  }
+  },
+  "page": 4,
+  "currency": "USD"
  },
  "morgan-stanley": {
   "last_verified": {

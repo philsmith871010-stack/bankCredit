@@ -1,0 +1,12 @@
+{
+  "id": "5b20183e1f0d",
+  "entity_id": "bank-of-america",
+  "url": "https://d1io3yog0oux5.cloudfront.net/_2cceed924bb30ecfff99d97807e2ad6e/bankofamerica/db/944/9900/pdf/2Q22%2BPillar%2B3%2BU.S.%2BLiquidity%2BCoverage%2BRatio%2BDisclosure_FINAL_ADA.PDF",
+  "page": 4,
+  "reference_date": "2022-06-30",
+  "currency": "USD",
+  "values": {
+    "lcr": 118.2
+  },
+  "note": "US LCR-only public disclosure (5 pages), not a KM1 template: no CET1/Tier 1/total capital, no RWA, no leverage ratio or NSFR anywhere in the document, so only the LCR is recorded. LCR2 table on p.4, quarterly period 4/1/2022 to 6/30/2022, row 35 'LIQUIDITY COVERAGE RATIO (%)' = 118.2%; cross-checked against HQLA 613,539 / total adjusted net cash outflow 518,961 = 118.2%, and against the narrative on the same page ('average daily U.S. LCR was 118.2 percent'). Header period matches the queued reference date 2022-06-30. Root cause of the queue entry: the collected URL is percent-encoded ('%2B' for '+'), so Pillar3Adapter._locator_for (bankcredit/adapters/pillar3.py:552) tested the raw URL against the us_lcr match pattern 'liquidity.?coverage.?ratio', missed, and fell back to the entity's first locator (us_capital) - which then reported 'no CET1 ratio found' on an LCR document. The pattern matches once the URL is unquoted; the sibling method at pillar3.py:508 already unquotes. Same bank's 1Q26/2Q26 LCR PDFs route correctly only because their URLs carry literal '+'."
+}
