@@ -1,10 +1,10 @@
 {
  "id": "ubs",
- "written": "2026-09-29",
+ "written": "2026-09-30",
  "background": "UBS Group is Switzerland's only remaining global bank after absorbing Credit Suisse, the world's largest wealth manager, with Swiss retail and corporate banking, asset management and an investment bank, and a balance sheet far larger than the Swiss economy.",
- "synthesis": "Two of the three main agencies rate the group, A on average and A- at the weaker of them, both on a stable outlook, after a one-notch upgrade by one of the three on 14 Apr 2026. The ratios are solid in isolation, CET1 of 14.4% and leverage of 5.8% on the capital side, LCR of 177% and NSFR of 115% on liquidity, and none has moved materially over the past four periods (figures to 30 Jun 2026). The live question is not the current position but the Swiss capital regime: parliament voted in September 2026 for tougher rules aimed squarely at this bank, with estimates of the additional requirement running into the tens of billions of dollars. A US penalty flagged on 28 Sep 2026 is immaterial by comparison; the capital debate is what a depositor should follow, and it points toward a stronger balance sheet at the cost of years of retained earnings.",
+ "synthesis": "Two of the three main agencies rate the group, A on average and A- at the weaker of them, both on a stable outlook, after a one-notch upgrade by one of the three on 14 Apr 2026. The ratios are solid in isolation, CET1 of 14.4% and leverage of 5.8% on the capital side, LCR of 177% and NSFR of 115% on liquidity, and none has moved materially over the past four periods (figures to 30 Jun 2026). The flagged news is heavy and points one way: the newest items, on 28 Sep 2026, are an analyst estimate of the profit cost of the latest Swiss capital plan and a US fine. The fine is a conduct cost; the capital plan is what a depositor should follow, since it means a stronger balance sheet bought with years of retained earnings.",
  "inputs": {
-  "band": "A",
+  "band": "B",
   "composite": "A",
   "worst": "A-",
   "outlooks": "stable, stable",

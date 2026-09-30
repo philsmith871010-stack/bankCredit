@@ -1,8 +1,8 @@
 {
  "id": "wells-fargo",
- "written": "2026-09-28",
+ "written": "2026-09-30",
  "background": "Wells Fargo & Company is the holding company of one of the four largest US banks, with consumer banking and lending, commercial banking, corporate and investment banking and wealth management, and a long regulatory remediation behind it.",
- "synthesis": "Ratings are A on average across all three main agencies, the weakest of them at BBB+, with one of the three on a positive outlook and two on a stable outlook; the last move was a one-notch upgrade by one of them on 12 Jul 2021. Capital is the weak point: CET1 of 10.3% is in the bottom quarter of US banks and has fallen 0.9 points since 30 Jun 2025, with leverage also down 0.9 points to 5.8%, which still leaves it above the peer median. Liquidity is adequate, LCR of 119% above the median and broadly flat (figures to 30 Jun 2026). Flagged items are operational, a trading outage in early September and continuing job cuts; the newest, on 18 Sep 2026, is a local news item of no credit relevance.",
+ "synthesis": "Ratings are A on average across all three main agencies, the weakest of them at BBB+, with one of the three on a positive outlook and two on a stable outlook; the last move was a one-notch upgrade by one of them on 12 Jul 2021. Capital is the weak point: CET1 of 10.3% is in the bottom quarter of US banks and has fallen 0.9 points since 30 Jun 2025, with leverage also down 0.9 points to 5.8%, which still leaves it above the peer median. Liquidity is adequate, LCR of 119% above the median and broadly flat (figures to 30 Jun 2026). The flagged items are staff and local news, the newest on 29 Sep 2026 the reported dismissal of an individual employee, and none bears on the balance sheet.",
  "inputs": {
   "band": "B",
   "composite": "A",
@@ -10,6 +10,6 @@
   "outlooks": "positive, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-18"
+  "last_flagged": "2026-09-29"
  }
 }
