@@ -66,11 +66,9 @@
   "last_verified": {
    "reference_date": "2026-06-30",
    "values": {
-    "cet1_ratio": 11.2,
-    "tier1_ratio": 12.6,
-    "total_capital_ratio": 14.7,
-    "tier1_leverage": 6.6,
-    "leverage_ratio": 5.5
+    "lcr": 112.0,
+    "hqla": 683634.0,
+    "net_cash_outflows": 600009.0
    },
    "method": "pdf_rules"
   },
@@ -277,7 +275,9 @@
   "skip_patterns": [
    "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-osfi\\-q\\d+\\-\\d+\\-fr",
    "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-osfi\\-q\\d+\\-\\d+\\-en",
-   "cgme\\-pillar\\-\\d+\\-disclosure\\-q\\d+\\-\\d+"
+   "cgme\\-pillar\\-\\d+\\-disclosure\\-q\\d+\\-\\d+",
+   "cgme\\-pillar\\-\\d+\\-disclosures\\-q\\d+\\-\\d+",
+   "cukl\\-pillar\\-\\d+\\-disclosures\\-\\d+"
   ]
  },
  "nab": {

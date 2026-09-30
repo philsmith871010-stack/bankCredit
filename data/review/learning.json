@@ -4251,5 +4251,19 @@
   "page_reviewer": 4,
   "date_extractor": "2022-06-30",
   "date_reviewer": "2022-06-30"
+ },
+ {
+  "date": "2026-09-30T06:40:04",
+  "id": "0d138ec9bdbd",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-09-30T06:40:07",
+  "id": "3c1fb7738364",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
  }
 ]

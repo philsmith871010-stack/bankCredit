@@ -1,0 +1,7 @@
+{
+  "id": "0d138ec9bdbd",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/cgme-pillar-3-disclosures-q4-2025.pdf",
+  "skip": true,
+  "note": "Not Citigroup Inc. This is the German year-end Pillar 3 Offenlegungsbericht of Citigroup Global Markets Europe AG (CGME), a subsidiary, in EUR millions. It does carry a real EU KM1 (Tabelle 2, Schlüsselparameter) on p.6-7, which the extractor missed because the row labels are German: CET1/T1/total capital 4,698; RWA 14,848; all three ratios 31.64% (4,698/14,848 checks); overall capital requirement 14.64%; leverage exposure 59,104, leverage ratio 7.95%; LCR 651.74%; NSFR 123.98%; as at 31.12.2025. Those are the subsidiary's figures, not the group's, CGME is not an entity in this dataset, and Citigroup Inc.'s own 2025-12-31 disclosure (c-baseI-iii-adv-approach-12-31-2025.pdf, USD) is already loaded at the same reference date, so loading these would overwrite the group facts. Same decision as a344e1aabff8 (the Q2 2026 CGME report); that skip pattern did not catch this file because the name says 'disclosures' with an s. Skipped so this filename shape is not queued again. Real fix is in code: the citigroup browser locator's match pattern rcs/citigpa/storage/public/.*(basel|pillar).*\\.pdf is too broad and sweeps in subsidiary disclosures."
+}

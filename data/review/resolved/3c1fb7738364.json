@@ -1,0 +1,7 @@
+{
+  "id": "3c1fb7738364",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/cukl-pillar-3-disclosures-2025.pdf",
+  "skip": true,
+  "note": "Not Citigroup Inc. This is the annual Pillar 3 disclosure of Citibank UK Limited (CUKL), a small UK subsidiary that is winding down its consumer and wealth business and is now mainly a trustee and depositary, in GBP millions. It has a genuine UK KM1 on p.5 (the column header dates sit at the foot of the table, which is probably why the extractor found no template): CET1/T1/total capital 268.6; RWA 327.7; all three ratios 82.0% (268.6/327.7 checks); overall capital requirement 15.4%; leverage exposure excluding central bank claims 343.4, leverage ratio 78.2%; LCR 3089.9%; NSFR 306.3%; as at 31 December 2025. Those are the subsidiary's figures, not the group's, CUKL is not an entity in this dataset (only Citigroup Inc. and Citibank, N.A. are), and Citigroup Inc.'s own 2025-12-31 USD disclosure is already loaded at the same reference date, so loading these would overwrite the group facts with GBP figures for a different company. Skipped so the annual CUKL file is not queued again. Real fix is in code: the citigroup browser locator's match pattern rcs/citigpa/storage/public/.*(basel|pillar).*\\.pdf is too broad and sweeps in subsidiary disclosures."
+}
