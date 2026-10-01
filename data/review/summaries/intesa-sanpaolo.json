@@ -1,8 +1,8 @@
 {
  "id": "intesa-sanpaolo",
- "written": "2026-09-23",
+ "written": "2026-10-01",
  "background": "Intesa Sanpaolo is Italy's largest bank, funded by Italian retail deposits and lending to Italian households and companies, with large wealth management and insurance arms and a smaller international network in Central and Eastern Europe.",
- "synthesis": "Ratings are A- on average across all three main agencies, the weakest of them at BBB+, one on a positive outlook and two on a stable outlook, after a one-notch upgrade by one of the three on 25 Nov 2025, grades that sit close to the Italian sovereign's. Capital is mixed against EU and Nordic peers: CET1 of 13.0% is in the bottom quarter, while leverage of 5.7% is above the peer median; liquidity is on the weak side, with LCR of 138% in the bottom quarter and NSFR of 120% below the median. None of the ratios has moved materially over the past four periods to 30 Jun 2026. The flagged news is all good: record quarterly earnings on 19 Sep 2026, and earlier a record first half with raised guidance and an upgrade from an agency outside the three.",
+ "synthesis": "Intesa Sanpaolo is rated A- on average across all three main agencies, the weakest of them at BBB+, one on a positive outlook and two on a stable outlook, after a one-notch upgrade by one of the three on 25 Nov 2025. The weak spot is CET1 of 13.0%, in the bottom quarter of EU and Nordic banks, and liquidity is thin by the same measure, with LCR of 138% in the bottom quarter and NSFR of 120% below the peer median; leverage of 5.7% is above the median. None of the ratios has moved materially over the past four periods (figures to 30 Jun 2026). The newest flagged item, on 25 Sep 2026, is a reported €95 million fraud on a bank chair in Italy using AI-faked calls, set against record quarterly earnings and a rating upgrade in the weeks before.",
  "inputs": {
   "band": "B",
   "composite": "A-",
@@ -10,6 +10,6 @@
   "outlooks": "positive, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-19"
+  "last_flagged": "2026-09-25"
  }
 }

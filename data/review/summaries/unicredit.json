@@ -1,8 +1,8 @@
 {
  "id": "unicredit",
- "written": "2026-09-30",
+ "written": "2026-10-01",
  "background": "UniCredit is Italy's second-largest bank and a leading lender in Germany, Austria and Central and Eastern Europe, funded by deposits across those markets, with a large stake in Commerzbank and a Russian subsidiary it has been winding down.",
- "synthesis": "All three of the main agencies rate the bank, A- on average, one on a positive outlook and two on stable, after a one-notch upgrade by one of the three on 25 Nov 2025. Capital is on the weak side of EU and Nordic banks, CET1 of 14.3% and leverage of 5.1% both below the peer median, and both have given ground since 30 Jun 2025, CET1 by 1.8 points and leverage by 0.6 points, the most pointed trend in the file. Liquidity is mixed, LCR of 140% in the bottom quarter against NSFR of 124% above the peer median, both broadly flat (figures to 30 Jun 2026). The newest flagged item, on 29 Sep 2026, is the bank setting a timetable for a full takeover of Commerzbank, a deal that would put further demand on capital already thin against peers.",
+ "synthesis": "UniCredit is rated A- on average across all three main agencies, one on a positive outlook and two on a stable outlook, after a one-notch upgrade by one of the three on 25 Nov 2025. Capital is on the weak side of EU and Nordic banks and moving the wrong way: CET1 of 14.3% and leverage of 5.1% are both below the peer median, having fallen 1.8 points and 0.6 points since 30 Jun 2025. Liquidity is mixed, with NSFR of 124% above the peer median but LCR of 140% in the bottom quarter (figures to 30 Jun 2026). The only item flagged in the last 90 days, on 6 Aug 2026, concerns its tightening grip on Commerzbank, whose quarterly profit almost doubled.",
  "inputs": {
   "band": "B",
   "composite": "A-",
@@ -10,6 +10,6 @@
   "outlooks": "positive, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-29"
+  "last_flagged": "2026-08-06"
  }
 }
