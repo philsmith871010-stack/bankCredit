@@ -84,6 +84,11 @@
   "severity": "warn",
   "why": "new data breach disclosed"
  },
+ "news:025a3ed66ec0afc0": {
+  "keep": true,
+  "severity": "info",
+  "why": "Intesa offer for MPS"
+ },
  "news:02977a8518241340": {
   "keep": true,
   "severity": "info",
@@ -569,6 +574,11 @@
   "severity": null,
   "why": "third party faked bank's bonds"
  },
+ "news:0ae6a553cd6b1ee3": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate CEO succession coverage"
+ },
  "news:0ae7aa50fcc8bfa0": {
   "keep": false,
   "severity": null,
@@ -683,6 +693,11 @@
   "keep": false,
   "severity": null,
   "why": "routine statistical filing"
+ },
+ "news:0c35a1f4eb604a1d": {
+  "keep": false,
+  "severity": null,
+  "why": "product launch"
  },
  "news:0c477c546df27a77": {
   "keep": false,
@@ -1128,6 +1143,11 @@
   "keep": true,
   "severity": "info",
   "why": "NVCC sub debt issue"
+ },
+ "news:168539e556a05bfc": {
+  "keep": false,
+  "severity": null,
+  "why": "marketing"
  },
  "news:16de4b0da69c1463": {
   "keep": false,
@@ -1599,6 +1619,11 @@
   "severity": null,
   "why": "share capital and voting rights notice"
  },
+ "news:2035b11e132aa2eb": {
+  "keep": false,
+  "severity": null,
+  "why": "individual employment lawsuit"
+ },
  "news:20425b439031bc5c": {
   "keep": true,
   "severity": "info",
@@ -1658,6 +1683,11 @@
   "keep": true,
   "severity": "info",
   "why": "slim order book on covered bond"
+ },
+ "news:211491372bc2ec89": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary results"
  },
  "news:2163e02ad7a6b7ac": {
   "keep": false,
@@ -1868,6 +1898,11 @@
   "keep": false,
   "severity": null,
   "why": "bank as equity analyst"
+ },
+ "news:254a7140099f6b02": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender"
  },
  "news:254fb97cd4b903fc": {
   "keep": false,
@@ -2234,6 +2269,11 @@
   "severity": null,
   "why": "CEO interview"
  },
+ "news:2cb48db267c94980": {
+  "keep": true,
+  "severity": "info",
+  "why": "UniCredit plans Commerzbank board ouster"
+ },
  "news:2cb6b9e44dafc650": {
   "keep": false,
   "severity": null,
@@ -2559,6 +2599,11 @@
   "severity": null,
   "why": "banker gossip"
  },
+ "news:333e5cf890e13e99": {
+  "keep": false,
+  "severity": null,
+  "why": "marketing feature"
+ },
  "news:3346107537853ff1": {
   "keep": true,
   "severity": "info",
@@ -2764,6 +2809,11 @@
   "severity": "info",
   "why": "450 job cuts and outsourcing"
  },
+ "news:38c60d35c970df8c": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
  "news:38d5de507cb2e3cf": {
   "keep": false,
   "severity": null,
@@ -2829,6 +2879,11 @@
   "severity": "info",
   "why": "CFO succession"
  },
+ "news:3a69326685650998": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
  "news:3a6c66298223a5a2": {
   "keep": true,
   "severity": "info",
@@ -2853,6 +2908,11 @@
   "keep": false,
   "severity": null,
   "why": "political colour piece"
+ },
+ "news:3b5c71986c7ebd0e": {
+  "keep": true,
+  "severity": "info",
+  "why": "Nu takeover of Monzo in doubt"
  },
  "news:3b6f5aa4a5d4eac7": {
   "keep": false,
@@ -2993,6 +3053,11 @@
   "keep": false,
   "severity": null,
   "why": "campaign group on arranger role"
+ },
+ "news:3f6774f3bc14ab72": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary routine issuance"
  },
  "news:3f7891d4eb819c4c": {
   "keep": false,
@@ -3174,6 +3239,11 @@
   "severity": "info",
   "why": "takeover rules review call"
  },
+ "news:437bb279a4518f02": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
  "news:4390e945e95e26fd": {
   "keep": false,
   "severity": null,
@@ -3213,6 +3283,11 @@
   "keep": true,
   "severity": "info",
   "why": "CFO guides RoE above 11%"
+ },
+ "news:442dcd0f6207a857": {
+  "keep": false,
+  "severity": null,
+  "why": "Indian subsidiary results"
  },
  "news:4447ffb4bb3570c4": {
   "keep": false,
@@ -3303,6 +3378,11 @@
   "keep": false,
   "severity": null,
   "why": "macro commentary by the bank"
+ },
+ "news:45f20d4eada8d374": {
+  "keep": false,
+  "severity": null,
+  "why": "routine green bond pricing"
  },
  "news:45f2b3e88cdb2def": {
   "keep": true,
@@ -3413,6 +3493,11 @@
   "keep": false,
   "severity": null,
   "why": "bank as project lender"
+ },
+ "news:48bba62672bba35b": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
  },
  "news:4905dd17b3aeff00": {
   "keep": false,
@@ -3589,6 +3674,11 @@
   "severity": null,
   "why": "dividend reinvestment notice"
  },
+ "news:4cd29b7373de9825": {
+  "keep": false,
+  "severity": null,
+  "why": "minor associate earnings contribution"
+ },
  "news:4ce6aa0765b4e4d4": {
   "keep": false,
   "severity": null,
@@ -3658,6 +3748,11 @@
   "keep": false,
   "severity": null,
   "why": "equity broker downgrade"
+ },
+ "news:4f232b207c5eedf0": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by CEO"
  },
  "news:4f2a46f700c0b1f0": {
   "keep": false,
@@ -3854,6 +3949,11 @@
   "severity": "info",
   "why": "takeover nearing completion"
  },
+ "news:549b88598c822824": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as acquisition lender"
+ },
  "news:54d646c02e634936": {
   "keep": true,
   "severity": "warn",
@@ -4004,6 +4104,11 @@
   "severity": null,
   "why": "desk-level hires"
  },
+ "news:57f2a1a9c71a9e6f": {
+  "keep": false,
+  "severity": null,
+  "why": "business unit appointment"
+ },
  "news:580d313142d1c6e4": {
   "keep": false,
   "severity": null,
@@ -4094,6 +4199,11 @@
   "severity": null,
   "why": "start-up programme marketing"
  },
+ "news:5a2e0c7fe859edb7": {
+  "keep": false,
+  "severity": null,
+  "why": "sponsorship"
+ },
  "news:5a2e1371e9507937": {
   "keep": false,
   "severity": null,
@@ -4123,6 +4233,11 @@
   "keep": false,
   "severity": null,
   "why": "FX commentary by bank"
+ },
+ "news:5acf617097a37d1a": {
+  "keep": true,
+  "severity": "info",
+  "why": "board discusses Waldron as CEO"
  },
  "news:5ad515e048ed1338": {
   "keep": true,
@@ -4819,6 +4934,11 @@
   "severity": null,
   "why": "vendor software announcement, not an AML finding"
  },
+ "news:67f5ccf69b0cb834": {
+  "keep": false,
+  "severity": null,
+  "why": "industry MOC, passing mention"
+ },
  "news:68111777b42a0113": {
   "keep": false,
   "severity": null,
@@ -5144,6 +5264,11 @@
   "severity": "info",
   "why": "Q2 results"
  },
+ "news:6eb864def58955ce": {
+  "keep": false,
+  "severity": null,
+  "why": "Nu stock forecast"
+ },
  "news:6ef19c25bc5a249d": {
   "keep": false,
   "severity": null,
@@ -5243,6 +5368,11 @@
   "keep": true,
   "severity": "good",
   "why": "wins default judgment against Rasperia"
+ },
+ "news:706f30ae4aa00684": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
  },
  "news:70cd956038e7b3ba": {
   "keep": true,
@@ -5428,6 +5558,11 @@
   "keep": true,
   "severity": "info",
   "why": "capital increase for MPS bid approved"
+ },
+ "news:73e0c08274e3bf75": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers results"
  },
  "news:73f4f5fc0bda5ce6": {
   "keep": true,
@@ -5994,6 +6129,11 @@
   "severity": "info",
   "why": "GBP2.7bn Evelyn acquisition"
  },
+ "news:8133919cb53d665e": {
+  "keep": true,
+  "severity": "warn",
+  "why": "another loss, deeper cost cuts"
+ },
  "news:814380a8c2614d70": {
   "keep": false,
   "severity": null,
@@ -6053,6 +6193,11 @@
   "keep": false,
   "severity": null,
   "why": "research outlook"
+ },
+ "news:829d12c169301e22": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Belfius sale coverage"
  },
  "news:82b948417aca04c1": {
   "keep": false,
@@ -6139,6 +6284,11 @@
   "severity": "warn",
   "why": "MFS collapse claims against Barclays"
  },
+ "news:84e459f0b0772606": {
+  "keep": false,
+  "severity": null,
+  "why": "product permission, not credit"
+ },
  "news:852dccf432155dd1": {
   "keep": false,
   "severity": null,
@@ -6168,6 +6318,11 @@
   "keep": false,
   "severity": null,
   "why": "market issuance story"
+ },
+ "news:85ebfa3af45ee94c": {
+  "keep": true,
+  "severity": "info",
+  "why": "buyers circle Aldermore"
  },
  "news:85efc2206349c33b": {
   "keep": true,
@@ -6399,6 +6554,11 @@
   "severity": null,
   "why": "CEO at state dinner"
  },
+ "news:8ba3341821161df6": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
  "news:8bdd5ecb582cf304": {
   "keep": false,
   "severity": null,
@@ -6418,6 +6578,11 @@
   "keep": false,
   "severity": null,
   "why": "audit tender process detail"
+ },
+ "news:8c5164657f756d87": {
+  "keep": true,
+  "severity": "good",
+  "why": "cash earnings beat estimates"
  },
  "news:8c76140a2ca6d9bd": {
   "keep": false,
@@ -6468,6 +6633,11 @@
   "keep": false,
   "severity": null,
   "why": "equity broker rating"
+ },
+ "news:8dce8333865b57fc": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary appointment"
  },
  "news:8dd73edfef1c7bc3": {
   "keep": true,
@@ -6533,6 +6703,11 @@
   "keep": false,
   "severity": null,
   "why": "bank as analyst"
+ },
+ "news:8f10da3c5987df3a": {
+  "keep": false,
+  "severity": null,
+  "why": "individual employment lawsuit"
  },
  "news:8f4f8312e1afde73": {
   "keep": false,
@@ -6709,6 +6884,11 @@
   "severity": "info",
   "why": "UniCredit seeks Commerzbank board exit"
  },
+ "news:921f2d21fde4dcca": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
  "news:9246465974a17d8f": {
   "keep": false,
   "severity": null,
@@ -6753,6 +6933,11 @@
   "keep": true,
   "severity": "info",
   "why": "takeover analysis"
+ },
+ "news:93459a4c49a48fb4": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
  },
  "news:9358e6def301ce1a": {
   "keep": true,
@@ -6964,6 +7149,11 @@
   "severity": "info",
   "why": "CEO on takeover value"
  },
+ "news:976565a6b548524d": {
+  "keep": false,
+  "severity": null,
+  "why": "ETF product"
+ },
  "news:977164a8e843df90": {
   "keep": true,
   "severity": "warn",
@@ -6993,6 +7183,11 @@
   "keep": true,
   "severity": "info",
   "why": "Q2 sector results"
+ },
+ "news:97f7aacbeeae759e": {
+  "keep": true,
+  "severity": "info",
+  "why": "no definitive timeline for CEO exit"
  },
  "news:9893e37eb2a445b9": {
   "keep": false,
@@ -7054,6 +7249,11 @@
   "severity": null,
   "why": "sector commentary by bank"
  },
+ "news:99db9bd3aca12b83": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate CEO succession coverage"
+ },
  "news:99f77d6f6364b9b1": {
   "keep": true,
   "severity": "warn",
@@ -7063,6 +7263,11 @@
   "keep": true,
   "severity": "info",
   "why": "nears Denizbank acquisition"
+ },
+ "news:9a1f58bf0c8bdfae": {
+  "keep": false,
+  "severity": null,
+  "why": "sponsored trade commentary"
  },
  "news:9a624f5b887facf6": {
   "keep": true,
@@ -7088,6 +7293,11 @@
   "keep": true,
   "severity": "good",
   "why": "record H1 pre-tax profit"
+ },
+ "news:9b06df211bd0d218": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
  },
  "news:9b12a04d41944573": {
   "keep": false,
@@ -7329,6 +7539,11 @@
   "severity": "info",
   "why": "acquires LCN Capital"
  },
+ "news:9fa2c45018990882": {
+  "keep": false,
+  "severity": null,
+  "why": "fund distributions"
+ },
  "news:9fb328de8fb182c2": {
   "keep": true,
   "severity": "warn",
@@ -7478,6 +7693,11 @@
   "keep": true,
   "severity": "info",
   "why": "CFO guides interest income higher"
+ },
+ "news:a2d5fd6e6c8c3aa2": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
  },
  "news:a2de4b7f12f9c1b4": {
   "keep": false,
@@ -7879,6 +8099,11 @@
   "severity": "info",
   "why": "shares fall on JGB yields"
  },
+ "news:a99802828a10f2b7": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
  "news:a9db3d68588190d6": {
   "keep": true,
   "severity": "info",
@@ -8049,6 +8274,11 @@
   "severity": null,
   "why": "stock forecast filler"
  },
+ "news:aef8b95d82ef96d1": {
+  "keep": false,
+  "severity": null,
+  "why": "conference marketing"
+ },
  "news:af12764d54612e22": {
   "keep": false,
   "severity": null,
@@ -8128,6 +8358,11 @@
   "keep": false,
   "severity": null,
   "why": "unsourced M&A speculation"
+ },
+ "news:b0a9e04ebbaa63cb": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by CEO"
  },
  "news:b0f2759cf5f9ec37": {
   "keep": false,
@@ -8225,6 +8460,11 @@
   "why": "warnings ignored in $330m embezzlement"
  },
  "news:b2ca3649f643f3c9": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:b2d91c8e6a43e1e3": {
   "keep": false,
   "severity": null,
   "why": "earnings preview"
@@ -8344,6 +8584,11 @@
   "severity": "info",
   "why": "Commerzbank takeover conditions"
  },
+ "news:b53e9ca302766916": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
  "news:b548bba9f3dad715": {
   "keep": true,
   "severity": "info",
@@ -8383,6 +8628,11 @@
   "keep": false,
   "severity": null,
   "why": "duplicate of CFO story"
+ },
+ "news:b60eaf2f2e15d202": {
+  "keep": false,
+  "severity": null,
+  "why": "routine bond issuance"
  },
  "news:b612b9004c96b130": {
   "keep": false,
@@ -8629,6 +8879,11 @@
   "severity": "info",
   "why": "H1 results after disposal"
  },
+ "news:bb7578970afb266c": {
+  "keep": true,
+  "severity": "info",
+  "why": "Lloyds weighs Aldermore takeover"
+ },
  "news:bb9afc2504c4db6e": {
   "keep": false,
   "severity": null,
@@ -8639,10 +8894,20 @@
   "severity": "good",
   "why": "H1 profit up 36%"
  },
+ "news:bc1e1d295c687795": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate CEO succession coverage"
+ },
  "news:bc2aa7f6f5e577b5": {
   "keep": true,
   "severity": "info",
   "why": "divisional H1 results"
+ },
+ "news:bc4f037a1dfd278a": {
+  "keep": false,
+  "severity": null,
+  "why": "macro interview with CEO"
  },
  "news:bc85f44574be66e3": {
   "keep": false,
@@ -8703,6 +8968,11 @@
   "keep": false,
   "severity": null,
   "why": "dividend commentary"
+ },
+ "news:bdb45cad35506d72": {
+  "keep": true,
+  "severity": "warn",
+  "why": "FY loss, GBP165m motor finance hit"
  },
  "news:bdb477d154bb8f1f": {
   "keep": false,
@@ -8889,6 +9159,11 @@
   "severity": "good",
   "why": "Q1 net profit up"
  },
+ "news:c190cf42730ad382": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
  "news:c19a9411b9962d47": {
   "keep": true,
   "severity": "info",
@@ -8903,6 +9178,11 @@
   "keep": false,
   "severity": null,
   "why": "bank as lender on a deal"
+ },
+ "news:c253b849e99ed9a1": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee, passing mention"
  },
  "news:c2594188739b6d10": {
   "keep": true,
@@ -9039,6 +9319,11 @@
   "severity": "info",
   "why": "capital calculation change"
  },
+ "news:c670694c88333908": {
+  "keep": true,
+  "severity": "info",
+  "why": "IndiaFirst Life acquisition cleared"
+ },
  "news:c690ab00dd978db7": {
   "keep": false,
   "severity": null,
@@ -9108,6 +9393,11 @@
   "keep": true,
   "severity": "info",
   "why": "MPS bid analysis"
+ },
+ "news:c940aaac893f1752": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
  },
  "news:c9670f4f2482830d": {
   "keep": false,
@@ -9214,10 +9504,25 @@
   "severity": "good",
   "why": "Q1 profit beat"
  },
+ "news:ccba65eb7ac85996": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by CEO"
+ },
+ "news:cd21da2502c32039": {
+  "keep": false,
+  "severity": null,
+  "why": "technology appointment"
+ },
  "news:cd33b6e0acbf1264": {
   "keep": true,
   "severity": "info",
   "why": "AT1 issue announced"
+ },
+ "news:cd481e097d69fa97": {
+  "keep": true,
+  "severity": "info",
+  "why": "Berlin seeks UniCredit commitments"
  },
  "news:cd4e7cda8e87399f": {
   "keep": true,
@@ -9349,6 +9654,11 @@
   "severity": null,
   "why": "bank as forecaster on AI/S&P"
  },
+ "news:d04d0632f3482787": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
  "news:d07557fcefd96190": {
   "keep": false,
   "severity": null,
@@ -9373,6 +9683,11 @@
   "keep": true,
   "severity": "warn",
   "why": "fined over scam failures"
+ },
+ "news:d0b0bbeab0642cde": {
+  "keep": true,
+  "severity": "info",
+  "why": "planned private sale of Belfius"
  },
  "news:d0c686c11232a32c": {
   "keep": true,
@@ -9404,6 +9719,11 @@
   "severity": null,
   "why": "earnings preview"
  },
+ "news:d1af4bcfd3007bbd": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
  "news:d1b6fc754a8e486a": {
   "keep": true,
   "severity": "info",
@@ -9433,6 +9753,11 @@
   "keep": false,
   "severity": null,
   "why": "investment product partnership"
+ },
+ "news:d21ca54d5f25fe60": {
+  "keep": false,
+  "severity": null,
+  "why": "deposit rate roundup"
  },
  "news:d252d841a207a4b6": {
   "keep": true,
@@ -9493,6 +9818,11 @@
   "keep": false,
   "severity": null,
   "why": "routine covered bond issuance"
+ },
+ "news:d37ed523a028c45f": {
+  "keep": true,
+  "severity": "info",
+  "why": "UniCredit eyes Commerzbank control"
  },
  "news:d3912a2e02c5d1fa": {
   "keep": false,
@@ -9583,6 +9913,11 @@
   "keep": true,
   "severity": "warn",
   "why": "OFSI sanctions fine"
+ },
+ "news:d5c6bce2df0682c1": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers results"
  },
  "news:d5c797ebc8908cef": {
   "keep": true,
@@ -9739,6 +10074,11 @@
   "severity": "info",
   "why": "Tier 2 issued"
  },
+ "news:d7c8441a827fbdba": {
+  "keep": false,
+  "severity": null,
+  "why": "conference marketing"
+ },
  "news:d7db657e0b1157e0": {
   "keep": false,
   "severity": null,
@@ -9773,6 +10113,11 @@
   "keep": false,
   "severity": null,
   "why": "desk-level hires"
+ },
+ "news:d87bb0c131842adc": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend stock analysis"
  },
  "news:d87c023f25dd11b6": {
   "keep": false,
@@ -9894,6 +10239,11 @@
   "severity": null,
   "why": "bank as analyst"
  },
+ "news:dad026c21c494fb7": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
  "news:dae62a9f3dbbabe3": {
   "keep": true,
   "severity": "info",
@@ -9903,6 +10253,11 @@
   "keep": false,
   "severity": null,
   "why": "research outlook"
+ },
+ "news:db0f7edda5f4b0fd": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender"
  },
  "news:db161a188d17f394": {
   "keep": false,
@@ -10049,6 +10404,11 @@
   "severity": "good",
   "why": "Fitch lifts subsidiaries to AA"
  },
+ "news:de034e1633ee4455": {
+  "keep": false,
+  "severity": null,
+  "why": "coal financing league table"
+ },
  "news:de1784a29bdccd29": {
   "keep": true,
   "severity": "info",
@@ -10103,6 +10463,11 @@
   "keep": false,
   "severity": null,
   "why": "cricket sponsorship"
+ },
+ "news:dee56fa340bdf661": {
+  "keep": true,
+  "severity": "good",
+  "why": "record Q2 profit"
  },
  "news:deed6b2b4b01c34d": {
   "keep": false,
@@ -10369,6 +10734,11 @@
   "severity": "info",
   "why": "Addiko backs Raiffeisen bid"
  },
+ "news:e33c4019356578be": {
+  "keep": false,
+  "severity": null,
+  "why": "ABS ratings, not the bank"
+ },
  "news:e35e6dfa626e806b": {
   "keep": false,
   "severity": null,
@@ -10413,6 +10783,11 @@
   "keep": false,
   "severity": null,
   "why": "AI product launch"
+ },
+ "news:e4fa6ebaa5d0c5ae": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate CEO succession coverage"
  },
  "news:e5196c270f3a25bf": {
   "keep": false,
@@ -10724,6 +11099,11 @@
   "severity": null,
   "why": "stock quote page"
  },
+ "news:ec0dcfeba0328e3e": {
+  "keep": true,
+  "severity": "good",
+  "why": "record Q2 revenue"
+ },
  "news:ec48c9f56ad821da": {
   "keep": false,
   "severity": null,
@@ -10993,6 +11373,11 @@
   "keep": true,
   "severity": "warn",
   "why": "exposure to MFS-linked insolvencies"
+ },
+ "news:f253b4bee368e7f1": {
+  "keep": true,
+  "severity": "info",
+  "why": "Nu in talks to acquire Monzo"
  },
  "news:f25e813bc3dedefa": {
   "keep": true,
@@ -11424,6 +11809,11 @@
   "severity": null,
   "why": "bank as lender on a deal"
  },
+ "news:fabd33e6b3fdd2f9": {
+  "keep": true,
+  "severity": "info",
+  "why": "2Q net income S$1.48bn in line"
+ },
  "news:facbaba71086c0b6": {
   "keep": true,
   "severity": "info",
@@ -11588,6 +11978,11 @@
   "keep": true,
   "severity": "good",
   "why": "quarterly profit up 56%"
+ },
+ "news:ffa7816938d505ff": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate CEO succession coverage"
  },
  "news:ffc92ab68fcf72ed": {
   "keep": true,
