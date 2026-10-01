@@ -1,0 +1,7 @@
+{
+  "id": "9dfe3b8a295c",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/cgml-pillar-3-disclosures-q4-2025.pdf",
+  "skip": true,
+  "note": "Not Citigroup Inc. This is the year-end Pillar 3 disclosure of Citigroup Global Markets Limited (CGML), the UK broker-dealer subsidiary, in USD millions. It has a genuine UK KM1 (Table 1) on p.6, which the extractor missed (it found only net cash outflows 20,302 and no LCR): CET1 22,911; Tier 1 27,211; total capital 29,811; RWA 154,978; CET1 14.8% (22,911/154,978 = 14.78% checks), T1 17.6%, total capital 19.2%; overall capital requirement 13.5%; leverage exposure excl. central bank claims 444,717, leverage ratio 6.1%; LCR 251.0% (12-month average); NSFR 112.7%; as at 31 December 2025. Those are the subsidiary's figures, not the group's. CGML is not an entity in this dataset, and Citigroup Inc.'s own 2025-12-31 USD disclosure is already loaded at the same reference date, so loading these would overwrite the group facts. Same decision as the CGME (0d138ec9bdbd, a344e1aabff8) and CUKL (3c1fb7738364) files. Skipped so the CGML filename shape is not queued again. The real fix is in code: the citigroup browser locator's match pattern rcs/citigpa/storage/public/.*(basel|pillar).*\\.pdf is too broad and sweeps in subsidiary disclosures."
+}

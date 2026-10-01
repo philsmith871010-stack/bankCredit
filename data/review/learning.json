@@ -4265,5 +4265,19 @@
   "entity_id": "citigroup",
   "reason": "no KM1 template found",
   "skip": true
+ },
+ {
+  "date": "2026-10-01T06:38:38",
+  "id": "9dfe3b8a295c",
+  "entity_id": "citigroup",
+  "reason": "error:no LCR found",
+  "skip": true
+ },
+ {
+  "date": "2026-10-01T06:38:42",
+  "id": "e03e5053525a",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
  }
 ]

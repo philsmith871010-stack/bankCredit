@@ -1,0 +1,7 @@
+{
+  "id": "e03e5053525a",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Canada/basel-III/citibank-canada-basel-iii-pillar-3-q4-2025-en.pdf",
+  "skip": true,
+  "note": "Not Citigroup Inc. This is Citibank Canada's OSFI SMSB Basel III Pillar 3 disclosure for Q4 2025, in thousands CAD (not USD as queued). It has a genuine KM1 on p.4: CET1/T1 754,338k; total capital 775,763k; RWA 2,723,706k; CET1 and T1 ratio 27.70% (754,338/2,723,706 checks); total capital ratio 28.48%; no LCR or NSFR, since SMSBs are not required to disclose them. The queue's reference_date 2025-02-28 is wrong: it was read off 'February 2025' in the intro prose, not the Q4 2025 column header. It is a subsidiary and would collide with Citigroup Inc.'s USD group figures. Same decision as 34547b094a61 (EN Q2 2026) and 07ff035e9f59 (FR Q2 2026). That skip did not catch this file because this filename has no '-osfi-' segment. Skipped so this filename shape is not queued again. The locator pattern is the real fix."
+}
