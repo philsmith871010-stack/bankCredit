@@ -1,8 +1,8 @@
 {
  "id": "nordea",
- "written": "2026-09-23",
+ "written": "2026-10-02",
  "background": "Nordea is the largest bank in the Nordic region, headquartered in Helsinki, funded by deposits and covered bonds across Finland, Sweden, Norway and Denmark and lending to households and companies in all four.",
- "synthesis": "Ratings are among the highest in Europe: AA on average across all three main agencies, the weakest of them at AA-, all three on a stable outlook, with the last move a one-notch upgrade by one of the three on 12 May 2026. The ratios are less striking: CET1 of 15.4% is below the peer median and leverage of 4.6% is in the bottom quarter. Liquidity is mixed, with LCR of 156% above the peer median and NSFR of 121% below it. None of the ratios has moved materially over the past four periods. Nothing has been flagged in the last 90 days. The ratings rest on the stability of Nordic banking rather than on ratio headroom.",
+ "synthesis": "Nordea is rated AA on average across all three main agencies, the weakest of them at AA-, all three on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. Capital is the weak spot on the figures, with CET1 of 15.4% below the median for EU and Nordic banks and leverage of 4.6% in the bottom quarter. Liquidity is mixed, LCR of 156% above the median and NSFR of 121% just below it, and none of the ratios has moved materially over the past four periods (figures to 30 Jun 2026). The only flagged item, on 30 Sep 2026, is an equity analyst upgrade, which says nothing about credit.",
  "inputs": {
   "band": "B",
   "composite": "AA",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-06-04"
+  "last_flagged": "2026-09-30"
  }
 }

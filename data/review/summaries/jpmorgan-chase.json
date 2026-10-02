@@ -1,8 +1,8 @@
 {
  "id": "jpmorgan-chase",
- "written": "2026-10-01",
+ "written": "2026-10-02",
  "background": "JPMorgan Chase & Co. is the holding company of the largest US bank, spanning consumer and community banking, the corporate and investment bank, commercial banking and asset and wealth management.",
- "synthesis": "JPMorgan Chase is rated A+ on average across all three main agencies, the weakest of them at A, all three on a stable outlook, after a one-notch upgrade by one of the three on 15 Nov 2024; the holding company sits below the operating bank, as structural subordination implies. Leverage of 7.5% is in the top quarter of US banks, the one capital figure shown for the group. The items flagged, the newest on 30 Sep 2026, are an employee harassment lawsuit and rounds of layoffs, matters of conduct and cost rather than credit.",
+ "synthesis": "JPMorgan Chase is rated A+ on average across all three main agencies, the weakest of them at A, all three on a stable outlook; the last move was a one-notch upgrade by one of the three on 15 Nov 2024. The only ratio shown is leverage, at 7.5% in the top quarter of US banks, so capital looks strong on that measure while risk-weighted capital and liquidity are not covered here. The flagged news concerns job cuts and a debanking lawsuit rather than the balance sheet, the newest on 21 Aug 2026.",
  "inputs": {
   "band": "A",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-30"
+  "last_flagged": "2026-08-21"
  }
 }

@@ -1,15 +1,15 @@
 {
  "id": "belfius",
- "written": "2026-09-29",
+ "written": "2026-10-02",
  "background": "Belfius is a Belgian retail, public-sector and insurance group wholly owned by the Belgian state, funded by Belgian retail deposits and lending to households, companies and Belgian local authorities.",
- "synthesis": "All three of the main agencies rate the bank, A on average and A- at the weakest of them, all three on a stable outlook, after a one-notch upgrade by one of the three on 21 Apr 2026. Capital is strong against EU and Nordic banks on both measures, CET1 of 16.2% and leverage of 6.2% each above the peer median, and the leverage ratio in particular leaves a wide margin. Liquidity is mixed but unremarkable, LCR of 145% a little below the peer median and NSFR of 129% above it. Since 30 Jun 2024 only leverage has moved, down 0.4 points, with the other three ratios broadly flat (figures to 31 Mar 2026), and nothing has been flagged in the last 90 days.",
+ "synthesis": "Belfius is rated A on average across all three main agencies, the weakest of them at A-, all three on a stable outlook, following a one-notch upgrade by one of the three on 21 Apr 2026. Capital is sound rather than strong, CET1 of 15.5% just below the median for EU and Nordic banks while leverage of 6.1% is above it. Liquidity is similarly balanced, with LCR of 148% below the median and NSFR of 127% above it. CET1 has slipped 0.6 points since 30 Jun 2025 with the other ratios broadly flat (figures to 30 Jun 2026), and nothing has been flagged in the last 90 days.",
  "inputs": {
   "band": "B",
   "composite": "A",
   "worst": "A-",
   "outlooks": "stable, stable, stable",
   "n": 3,
-  "asof": "2026-03-31",
+  "asof": "2026-06-30",
   "last_flagged": "2026-04-21"
  }
 }

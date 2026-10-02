@@ -1,8 +1,8 @@
 {
  "id": "barclays",
- "written": "2026-10-01",
+ "written": "2026-10-02",
  "background": "Barclays PLC is the listed holding company of the Barclays group, a UK universal bank with a large transatlantic corporate and investment bank alongside UK retail banking and international cards.",
- "synthesis": "All three of the main agencies rate the group, A- on average and BBB+ at the weakest of them, all three on a stable outlook, with no rating action since a one-notch upgrade by one of the three on 19 May 2023; the holding company is notched below the operating bank, as structural subordination implies. Capital is strong against the UK majors, CET1 of 14.3% in the top quarter and leverage of 4.9% above the peer median. Liquidity is comfortable, with LCR of 158% and NSFR of 136% both above the peer median, though LCR has fallen 20 points since 30 Jun 2025 while the other three ratios have been broadly flat (figures to 30 Jun 2026). The adverse items flagged, the newest on 29 Sep 2026, concern a bridging lender's collapse amid fraud allegations and the claims its owner has made against the bank, rather than the group's own position.",
+ "synthesis": "Barclays is rated A- on average across all three main agencies, the weakest of them at BBB+, all three on a stable outlook; the last move was a one-notch upgrade by one of the three on 19 May 2023. Capital is sound against UK majors, with CET1 of 14.3% in the top quarter and leverage of 4.9% above the median, and liquidity is comfortable, LCR of 158% and NSFR of 136% both above their medians. The one move of note is LCR, down 20 points since 30 Jun 2025, while CET1, leverage and NSFR have held broadly flat (figures to 30 Jun 2026). Recent news is mostly neutral to good, though an item on 1 Oct 2026 flagged cyber-risk warnings over its widening use of AI.",
  "inputs": {
   "band": "B",
   "composite": "A-",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-29"
+  "last_flagged": "2026-10-01"
  }
 }

@@ -1,15 +1,15 @@
 {
  "id": "aib",
- "written": "2026-09-28",
+ "written": "2026-10-02",
  "background": "AIB Group is the holding company of Allied Irish Banks, one of Ireland's two dominant retail and business banks, funded by Irish deposits and lending mainly on Irish mortgages and to Irish companies.",
- "synthesis": "Only one of the three main agencies rates the group, at BBB+ on a stable outlook, after a one-notch upgrade on 6 Nov 2025. Capital and liquidity are both strong: CET1 of 16.4% and leverage of 6.7% are above their peer medians, and LCR of 204% and NSFR of 158% are both in the top quarter. Since 30 Jun 2024 CET1 has risen 0.9 points and leverage has fallen 0.8 points, with NSFR down 7 points since 30 Jun 2025 and LCR broadly flat (figures to 31 Mar 2026). The only item flagged in the last 90 days, on 31 Jul 2026, is a record first-half profit.",
+ "synthesis": "AIB is rated by only one of the three main agencies, at BBB+ on a stable outlook after a one-notch upgrade on 6 Nov 2025, which leaves less to go on than for most names. Capital is solid, with CET1 of 16.4% and leverage of 6.7% both above the median for EU and Nordic banks, and liquidity is a clear strength, LCR of 198% and NSFR of 158% both in the top quarter. Since 30 Jun 2025 leverage has eased 0.4 points and NSFR 7 points, with CET1 and LCR broadly flat, so the cushions are thinning only slightly from a high level (figures to 30 Jun 2026). The only flagged item in the last 90 days is good, a record half-year profit reported on 31 Jul 2026.",
  "inputs": {
   "band": "B",
   "composite": "BBB+",
   "worst": "BBB+",
   "outlooks": "stable",
   "n": 1,
-  "asof": "2026-03-31",
+  "asof": "2026-06-30",
   "last_flagged": "2026-07-31"
  }
 }

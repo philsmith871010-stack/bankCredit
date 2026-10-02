@@ -1,8 +1,8 @@
 {
  "id": "abn-amro",
- "written": "2026-09-28",
+ "written": "2026-10-02",
  "background": "ABN AMRO is a Dutch retail, private and commercial bank, part-owned by the Dutch state since its rescue, funded largely by domestic deposits and lending mainly on Dutch residential mortgages and to Northwest European businesses.",
- "synthesis": "Ratings are A+ on average across all three main agencies, the weakest of them at A, with one of the three on a positive outlook and two on a stable outlook after a two-notch upgrade by one of them on 12 May 2026. Capital is the weaker side of the profile, CET1 of 15.3% and leverage of 4.9% both below their peer medians, while liquidity is strong, with LCR of 159% above the median and NSFR of 138% in the top quarter. Since 30 Jun 2025 CET1 has risen 0.8 points and LCR 14 points, but leverage has fallen 0.6 points and NSFR is broadly flat (figures to 30 Jun 2026). The newest flagged items, both on 12 Aug 2026, are a profit beat and raised guidance, set against an older item on anti-money-laundering shortcomings.",
+ "synthesis": "ABN AMRO is rated A+ on average across all three main agencies, the weakest of them at A, with one on a positive outlook and two on a stable outlook after a two-notch upgrade by one of the three on 12 May 2026. Liquidity is the strength, with LCR of 159% above the peer median and NSFR of 138% in the top quarter of EU and Nordic banks, while capital is the weaker side, CET1 of 15.3% and leverage of 4.9% both below their medians. Since 30 Jun 2025 CET1 has risen 0.8 points and LCR 14 points, but leverage has fallen 0.6 points and NSFR is broadly flat (figures to 30 Jun 2026). The news flow is benign, the newest item on 1 Oct 2026 an extended IT partnership, with a profit beat and raised revenue guidance before it.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "positive, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-08-12"
+  "last_flagged": "2026-10-01"
  }
 }

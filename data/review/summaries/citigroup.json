@@ -1,8 +1,8 @@
 {
  "id": "citigroup",
- "written": "2026-09-30",
+ "written": "2026-10-02",
  "background": "Citigroup is the holding company of the most international of the large US banks, with services, markets, banking, wealth and US personal banking as its main lines, and a multi-year restructuring behind it.",
- "synthesis": "All three of the main agencies rate the group, A- on average and BBB+ at the weakest of them, one on a positive outlook and two on stable, with no rating action since a one-notch downgrade by one of the three on 2 Dec 2015. Capital is on the weak side of US banks, CET1 of 11.8% and leverage of 5.2% both below the peer median, with leverage down 0.4 points since 30 Sep 2025 and CET1 broadly flat. Liquidity is the stronger leg, LCR of 128% in the top quarter and up 11 points since 31 Mar 2024 (figures to 30 Jun 2026). Flagged items in the last 90 days run both ways: an improved outlook reported on 27 Sep 2026 against a UK penalty for sanctions-control failures at a group unit earlier in the month, a conduct cost and not a threat to the balance sheet.",
+ "synthesis": "Citigroup is rated A- on average across all three main agencies, the weakest of them at BBB+, one on a positive outlook and two on a stable outlook; the last move was a one-notch downgrade by one of the three on 2 Dec 2015. Capital is the weaker side against US banks, CET1 of 11.8% and leverage of 5.2% both below the median, whereas liquidity is a strength, with LCR of 128% in the top quarter. Leverage has fallen 0.4 points since 30 Sep 2025 and LCR has risen 11 points since 31 Mar 2024, with CET1 broadly flat (figures to 30 Jun 2026). Recent news is mixed, with a UK fine on one unit for Russia sanctions breaches the main negative.",
  "inputs": {
   "band": "B",
   "composite": "A-",
@@ -10,6 +10,6 @@
   "outlooks": "positive, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-27"
+  "last_flagged": "2026-10-01"
  }
 }

@@ -1,8 +1,8 @@
 {
  "id": "bbva",
- "written": "2026-09-23",
+ "written": "2026-10-02",
  "background": "BBVA is Spain's second-largest bank, run as a group of self-funded subsidiaries with Mexico the largest earner alongside Spain, Turkey and South America, and a retail and commercial banking focus.",
- "synthesis": "Ratings are solid at A on average across all three main agencies, none of them lower and all three on a stable outlook; the last move was a one-notch upgrade by one of the three on 12 May 2026. Capital is mixed against EU and Nordic peers: CET1 of 12.8% is in the bottom quarter, while leverage of 6.2% is above the peer median. Liquidity is also mixed, with LCR of 142% below the peer median and NSFR of 125% just above it, and the ratios have been broadly flat apart from leverage down 0.3 points since 31 Mar 2024. The newest flagged item, on 18 Sep 2026, is strong results from the Argentine subsidiary; the older items concern the bank and its former leadership standing trial in the spying case, a conduct matter that does not touch solvency.",
+ "synthesis": "BBVA is rated A on average across all three main agencies, all three on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. Capital is the weak spot on the risk-weighted measure, with CET1 of 13.0% in the bottom quarter of EU and Nordic banks, though leverage of 6.0% is above the median. Liquidity is adequate rather than ample, LCR of 142% below the median and NSFR of 125% just above it, and since 30 Jun 2024 leverage has fallen 0.8 points with the other ratios broadly flat (figures to 30 Jun 2026). The newest flagged item, on 18 Sep 2026, is a strong quarter at its Argentine unit; the one negative is a criminal trial of the bank over alleged spying.",
  "inputs": {
   "band": "B",
   "composite": "A",
