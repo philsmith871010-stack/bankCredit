@@ -11988,5 +11988,500 @@
   "keep": true,
   "severity": "warn",
   "why": "TSB job cuts begin"
+ },
+ "news:2ad5c63079817e0a": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend stock analysis"
+ },
+ "news:83f49f1ba636a385": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee hired elsewhere"
+ },
+ "news:901f5c0eee2bef54": {
+  "keep": false,
+  "severity": null,
+  "why": "VC fund unit activity"
+ },
+ "news:137e59945090daca": {
+  "keep": false,
+  "severity": null,
+  "why": "IT vendor partnership"
+ },
+ "news:e51a58f5f23da94b": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as sector forecaster"
+ },
+ "news:4299f060ad070103": {
+  "keep": false,
+  "severity": null,
+  "why": "advisor recruiting"
+ },
+ "news:b759df5f7a8b1986": {
+  "keep": false,
+  "severity": null,
+  "why": "policy commentary by bank"
+ },
+ "news:d97184ace31bc4a6": {
+  "keep": false,
+  "severity": null,
+  "why": "small fintech acquisition"
+ },
+ "news:8e183f68d0e6d0fc": {
+  "keep": false,
+  "severity": null,
+  "why": "AI adoption story"
+ },
+ "news:dc4e432372554076": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:8300497a1abe8a38": {
+  "keep": false,
+  "severity": null,
+  "why": "policy commentary by bank"
+ },
+ "news:dc43f8369c4b20c7": {
+  "keep": false,
+  "severity": null,
+  "why": "passing mention in round-up"
+ },
+ "news:7523979a1969019d": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo bid coverage"
+ },
+ "news:f5b429d545011967": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:44cac4f3c6dfb393": {
+  "keep": false,
+  "severity": null,
+  "why": "industry awards list"
+ },
+ "news:c966f5f8884e3fda": {
+  "keep": false,
+  "severity": null,
+  "why": "industry awards list"
+ },
+ "news:1e084b6b36e7e657": {
+  "keep": false,
+  "severity": null,
+  "why": "client loan deal"
+ },
+ "news:dfedba229532cb4f": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo bid coverage"
+ },
+ "news:5a95d637215f1197": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo bid coverage"
+ },
+ "news:bc48bdc1b3276b44": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo bid coverage"
+ },
+ "news:ba90920a69175148": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo bid coverage"
+ },
+ "news:caab8b67e60171c1": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo bid coverage"
+ },
+ "news:be365f7cc47b322b": {
+  "keep": true,
+  "severity": "info",
+  "why": "Nubank drops \u00a310bn Monzo bid"
+ },
+ "news:4859f81687169c98": {
+  "keep": false,
+  "severity": null,
+  "why": "industry awards list"
+ },
+ "news:8883615483f3b4ef": {
+  "keep": false,
+  "severity": null,
+  "why": "industry awards list"
+ },
+ "news:8c60fba8af924012": {
+  "keep": false,
+  "severity": null,
+  "why": "junior appointment, other bank"
+ },
+ "news:8b5198f2376899b5": {
+  "keep": false,
+  "severity": null,
+  "why": "junior appointment, other bank"
+ },
+ "news:5a1152564c481720": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:bd43e832658a567b": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee hired elsewhere"
+ },
+ "news:5d948f6caafafdd6": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate CEO succession coverage"
+ },
+ "news:93eeeb7c501dad84": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:d6baf2941520247c": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend narrative filler"
+ },
+ "news:78c758c379b750af": {
+  "keep": false,
+  "severity": null,
+  "why": "routine dividend declaration"
+ },
+ "news:cbb5e1c4ae0f85d5": {
+  "keep": false,
+  "severity": null,
+  "why": "retail CD rate table"
+ },
+ "news:702230171cf086bf": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:eb68ed330cb3c5a9": {
+  "keep": true,
+  "severity": "info",
+  "why": "sells SG Ghana majority stake"
+ },
+ "news:e2920f296bf5adf2": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend narrative filler"
+ },
+ "news:6b6df1833c1a1cfb": {
+  "keep": true,
+  "severity": "info",
+  "why": "investor pressure over capital rules"
+ },
+ "news:5d31ea502586134e": {
+  "keep": false,
+  "severity": null,
+  "why": "routine dividend declaration"
+ },
+ "news:52ba673f10603bd6": {
+  "keep": false,
+  "severity": null,
+  "why": "routine dividend declaration"
+ },
+ "news:1a5f4f318be66fe2": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo bid coverage"
+ },
+ "news:c808fe6eabf39e67": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
+ "news:11f4e7fc0201e17f": {
+  "keep": true,
+  "severity": "info",
+  "why": "weighs bid for Cetelem Iberia"
+ },
+ "news:e9b23db09428038a": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Cetelem story"
+ },
+ "news:48f3cb690de09883": {
+  "keep": false,
+  "severity": null,
+  "why": "exploratory expansion talk"
+ },
+ "news:c44717b14cf114c2": {
+  "keep": true,
+  "severity": "info",
+  "why": "earnings and capital review"
+ },
+ "news:76a6bbf0c3e0735d": {
+  "keep": false,
+  "severity": null,
+  "why": "registrar unit mention"
+ },
+ "news:ea28cf27ceb010dc": {
+  "keep": false,
+  "severity": null,
+  "why": "registrar unit mention"
+ },
+ "news:369a57c17f8fbf16": {
+  "keep": false,
+  "severity": null,
+  "why": "registrar unit mention"
+ },
+ "news:98bf8835f42f80c2": {
+  "keep": false,
+  "severity": null,
+  "why": "HR head appointment"
+ },
+ "news:dcf8b82777ee4b73": {
+  "keep": false,
+  "severity": null,
+  "why": "conference commentary"
+ },
+ "news:6c18cffa80a67bcf": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Cetelem story"
+ },
+ "news:03d693154cdda146": {
+  "keep": false,
+  "severity": null,
+  "why": "payments innovation commentary"
+ },
+ "news:96e5573829706845": {
+  "keep": false,
+  "severity": null,
+  "why": "single customer complaint"
+ },
+ "news:1cf4be2c0a223b65": {
+  "keep": false,
+  "severity": null,
+  "why": "product launch"
+ },
+ "news:a8d9cd5f9d59b0a2": {
+  "keep": false,
+  "severity": null,
+  "why": "employee share plan notice"
+ },
+ "news:50abc238e88bad93": {
+  "keep": false,
+  "severity": null,
+  "why": "retail CD rate table"
+ },
+ "news:8ae232b2202c45fc": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO industry commentary"
+ },
+ "news:3e3f1ba12f01b3b6": {
+  "keep": false,
+  "severity": null,
+  "why": "policy commentary by bank"
+ },
+ "news:1e4a0a12e3557c0c": {
+  "keep": false,
+  "severity": null,
+  "why": "policy commentary by bank"
+ },
+ "news:e15c9805958f7915": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend stock piece"
+ },
+ "news:29406d6ca58905c6": {
+  "keep": false,
+  "severity": null,
+  "why": "results date notice"
+ },
+ "news:9839a2fce091c7c7": {
+  "keep": false,
+  "severity": null,
+  "why": "event marketing"
+ },
+ "news:ce7f15fde2a5fd80": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate CEO succession coverage"
+ },
+ "news:d0011a6f740cc4ee": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO succession"
+ },
+ "news:1998f5cf3e19a834": {
+  "keep": false,
+  "severity": null,
+  "why": "advisor recruiting"
+ },
+ "news:ca4052211c095d64": {
+  "keep": false,
+  "severity": null,
+  "why": "payments pilot"
+ },
+ "news:315c804725dde9bd": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee hired elsewhere"
+ },
+ "news:a006d821abe5ed96": {
+  "keep": false,
+  "severity": null,
+  "why": "venture unit deal"
+ },
+ "news:1cc72a9b9ffe70af": {
+  "keep": false,
+  "severity": null,
+  "why": "equity stock rating"
+ },
+ "news:ae43f45bc8353b95": {
+  "keep": false,
+  "severity": null,
+  "why": "sponsorship"
+ },
+ "news:b9678bb7d90efbe5": {
+  "keep": false,
+  "severity": null,
+  "why": "daily share price move"
+ },
+ "news:80f833346288bc95": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
+ "news:ccc5967e9d71b85a": {
+  "keep": true,
+  "severity": "info",
+  "why": "UniCredit to take over Commerzbank"
+ },
+ "news:502eb1fa6fa198f9": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:53ee7ee8b7c369db": {
+  "keep": false,
+  "severity": null,
+  "why": "routine dividend declaration"
+ },
+ "news:fbea46a544aed4f7": {
+  "keep": false,
+  "severity": null,
+  "why": "sponsorship"
+ },
+ "news:3d48f8fb12910aba": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend stock analysis"
+ },
+ "news:4b2098e7f0327d79": {
+  "keep": false,
+  "severity": null,
+  "why": "board committee change"
+ },
+ "news:51885a58be21545f": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend reinvestment notice"
+ },
+ "news:8d0420595cb83cb4": {
+  "keep": false,
+  "severity": null,
+  "why": "tech strategy marketing"
+ },
+ "news:11323b9d2c682a66": {
+  "keep": true,
+  "severity": "info",
+  "why": "wins judgment in Rasperia case"
+ },
+ "news:22d65d53a5fb1a50": {
+  "keep": true,
+  "severity": "info",
+  "why": "S&P affirms covered bond rating"
+ },
+ "news:dfbf7fb8f03b7ac0": {
+  "keep": false,
+  "severity": null,
+  "why": "scheduled note redemption notice"
+ },
+ "news:8824ba1b2209fbf4": {
+  "keep": true,
+  "severity": "info",
+  "why": "AML remediation continues"
+ },
+ "news:a5ed393772510145": {
+  "keep": true,
+  "severity": "info",
+  "why": "H1 2026 results"
+ },
+ "news:6ae23f4261dc5d54": {
+  "keep": true,
+  "severity": "warn",
+  "why": "FSA criticises unit documentation"
+ },
+ "news:e32eb9ef75fda53b": {
+  "keep": false,
+  "severity": null,
+  "why": "routine tender offer results"
+ },
+ "news:6fd4a91e827241a3": {
+  "keep": false,
+  "severity": null,
+  "why": "client loan deal"
+ },
+ "news:6edeffc95c0906e0": {
+  "keep": true,
+  "severity": "info",
+  "why": "NPL portfolio sales"
+ },
+ "news:94be03fd3c3ebecf": {
+  "keep": false,
+  "severity": null,
+  "why": "scheduled note redemption notice"
+ },
+ "news:eb181bc478232a9c": {
+  "keep": false,
+  "severity": null,
+  "why": "client loan deal"
+ },
+ "news:1d077ec12afe8006": {
+  "keep": false,
+  "severity": null,
+  "why": "client loan deal"
+ },
+ "news:b4f0e3badf71ad4e": {
+  "keep": true,
+  "severity": "info",
+  "why": "bid for MPS"
+ },
+ "news:54b1bb8dc2800659": {
+  "keep": false,
+  "severity": null,
+  "why": "sponsorship"
+ },
+ "news:3f20f308a498d86f": {
+  "keep": false,
+  "severity": null,
+  "why": "junior appointments"
+ },
+ "news:1ada7f94df20f9d7": {
+  "keep": false,
+  "severity": null,
+  "why": "equity valuation piece"
+ },
+ "news:aa7a82ce0c7dee29": {
+  "keep": true,
+  "severity": "warn",
+  "why": "NYDFS fine"
+ },
+ "news:eb13d1548bc9f3ed": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
  }
 }
