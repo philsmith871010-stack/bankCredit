@@ -1,0 +1,7 @@
+{
+  "id": "8057d2857a8a",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Canada/basel-III/citibank-canada-basel-iii-pillar-3-q4-2025-fr.pdf",
+  "skip": true,
+  "note": "Not Citigroup Inc., and a duplicate: the French translation of Citibank Canada's Q4 2025 OSFI Pillar 3 disclosure (T1 754 338 k$ CAD, same as the English file skipped as e03e5053525a). The queue's reference_date 2013-01-31 came from '1er janvier 2013' in the intro prose, not the column header. Skipped so the French Q4 filename shape (no '-osfi-' segment, unlike 07ff035e9f59) is not queued again."
+}

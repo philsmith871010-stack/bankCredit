@@ -257,7 +257,7 @@
   }
  },
  "citigroup": {
-  "page": 4,
+  "page": 8,
   "currency": "USD",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -281,7 +281,9 @@
    "cgme\\-pillar\\-\\d+\\-disclosures\\-q\\d+\\-\\d+",
    "cukl\\-pillar\\-\\d+\\-disclosures\\-\\d+",
    "cgml\\-pillar\\-\\d+\\-disclosures\\-q\\d+\\-\\d+",
-   "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-q\\d+\\-\\d+\\-en"
+   "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-q\\d+\\-\\d+\\-en",
+   "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-q\\d+\\-\\d+\\-fr",
+   "citibank\\-canada\\-pillar\\-\\d+\\-disclosure\\-ye\\-\\d+\\-en"
   ]
  },
  "nab": {

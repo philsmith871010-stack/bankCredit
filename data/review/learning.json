@@ -4279,5 +4279,33 @@
   "entity_id": "citigroup",
   "reason": "no KM1 template found",
   "skip": true
+ },
+ {
+  "date": "2026-10-02T06:38:26",
+  "id": "8057d2857a8a",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-10-02T06:38:26",
+  "id": "887b5823c996",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 8,
+  "date_extractor": "2025-03-31",
+  "date_reviewer": "2025-03-31"
+ },
+ {
+  "date": "2026-10-02T06:38:33",
+  "id": "f93aec72e7f1",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
  }
 ]

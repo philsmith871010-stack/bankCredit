@@ -1,0 +1,20 @@
+{
+  "id": "887b5823c996",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/c-basel-III-adv-approach-03-31-2025-forum.pdf",
+  "page": 8,
+  "reference_date": "2025-03-31",
+  "currency": "USD",
+  "values": {
+    "cet1_capital": 155839.0,
+    "tier1_capital": 175514.0,
+    "total_capital": 201355.0,
+    "rwa": 1306822.0,
+    "cet1_ratio": 11.93,
+    "tier1_ratio": 13.43,
+    "total_capital_ratio": 15.41,
+    "leverage_ratio": 5.79,
+    "leverage_exposure": 3033450.0
+  },
+  "note": "Citigroup Inc. Basel III Advanced Approaches Disclosures, Q1 2025. A US disclosure, so there is no KM1: the figures come from Table 2 'Risk-Based Capital Ratios' on p.8 (printed page 7), as of March 31, 2025, USD millions. Advanced Approaches column used, the same column as the loaded 2025-09-30 and 2025-12-31 facts from the same series: CET1 155,839, Tier 1 175,514, total capital 201,355, RWA 1,306,822; CET1 11.93% (155,839/1,306,822 = 11.925 checks), T1 13.43%, total capital 15.41% (201,355/1,306,822 = 15.41 checks). The Standardized Approach (binding for CET1 and T1) shows RWA 1,162,306, CET1 13.41%, T1 15.10%, total capital 18.06% (total capital 209,930). leverage_ratio is the Supplementary Leverage Ratio 5.79% on total leverage exposure 3,033,450, as the pipeline records it for other quarters; the Tier 1 leverage ratio is 7.08% on adjusted average assets 2,478,351. The document has no LCR, NSFR or OCR; the SLR section points to the 10-Q. The extractor's 'no LCR found' is expected for this document type."
+}

@@ -1,0 +1,7 @@
+{
+  "id": "f93aec72e7f1",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Canada/basel-III/citibank-canada-pillar-3-disclosure-ye-2025-en.pdf",
+  "skip": true,
+  "note": "Not Citigroup Inc. This is Citibank Canada's annual (year-end 2025) Basel III Pillar 3 report, 42 pages of narrative and tables in thousands CAD, including remuneration; Citibank Canada is a wholly owned indirect subsidiary of Citibank, N.A. and not an entity in this dataset. Its quarterly OSFI figures for the same date were already reviewed and skipped as e03e5053525a, and loading them would collide with Citigroup Inc.'s USD group facts at 2025-12-31. Skipped so this 'pillar-3-disclosure-ye' filename shape is not queued again. The locator pattern rcs/citigpa/storage/public/.*(basel|pillar).*\\.pdf is still the real fix."
+}
