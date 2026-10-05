@@ -1,8 +1,8 @@
 {
  "id": "goldman-sachs",
- "written": "2026-09-28",
+ "written": "2026-10-05",
  "background": "The Goldman Sachs Group is the holding company of the leading US investment bank, earning from advisory, trading and asset and wealth management, with a smaller lending and deposit franchise than the universal banks.",
- "synthesis": "Ratings are A- on average across all three main agencies, the weakest of them at BBB+, with one of the three on a positive outlook and two on a stable outlook; the last move was a one-notch upgrade by one of them on 27 Jan 2021. Capital is mixed: CET1 of 13.6% is above the peer median but leverage of 4.3% is in the bottom quarter of US banks, the shape of a balance sheet weighted to trading assets, while LCR of 126% is in the top quarter. The movement is the point to note: since 30 Jun 2025 CET1 has fallen 1.7 points and leverage 1.0 points, with LCR broadly flat (figures to 30 Jun 2026). The one flagged item, on 14 Jul 2026, is a strong second-quarter result.",
+ "synthesis": "Goldman Sachs is rated A- on average across all three main agencies, the weakest of them at BBB+, one on a positive outlook and two on a stable outlook; the last move was a one-notch upgrade by one of the three on 27 Jan 2021. Capital is mixed against US banks: CET1 of 13.6% is above the peer median but leverage of 4.3% is in the bottom quarter, the weak spot, while LCR of 126% is above the median. Both capital measures have moved down since 30 Jun 2025, CET1 by 1.7 points and leverage by 1.0 points, with LCR broadly flat (figures to 30 Jun 2026). The newest flagged item, on 2 Oct 2026, is the sentencing of a former employee in a loan fraud scheme, which says nothing about the firm's credit, with strong second-quarter earnings before it.",
  "inputs": {
   "band": "B",
   "composite": "A-",
@@ -10,6 +10,6 @@
   "outlooks": "positive, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-07-14"
+  "last_flagged": "2026-10-02"
  }
 }

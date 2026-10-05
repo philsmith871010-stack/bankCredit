@@ -1,8 +1,8 @@
 {
  "id": "jpmorgan-chase-bank",
- "written": "2026-10-01",
+ "written": "2026-10-05",
  "background": "JPMorgan Chase Bank, N.A. is the main operating bank of JPMorgan Chase, the largest bank in the United States, serving consumers, businesses, corporates and institutions across the country and worldwide.",
- "synthesis": "JPMorgan Chase Bank is rated AA on average across all three main agencies, the weakest of them at AA-, all three on a stable outlook, after a one-notch upgrade by one of the three on 15 Nov 2024. Capital is strong against US banks, with CET1 of 15.0% and leverage of 7.5% both in the top quarter. CET1 has eased 0.5 points since 30 Jun 2025, the only movement of note (figures to 30 Jun 2026). Nothing has been flagged in the last 90 days.",
+ "synthesis": "JPMorgan Chase Bank is rated AA on average across all three main agencies, the weakest of them at AA-, all three on a stable outlook, after a one-notch upgrade by one of the three on 15 Nov 2024. Capital is strong against US banks, CET1 of 15.0% and leverage of 7.5% both in the top quarter, though CET1 has fallen 0.5 points since 30 Jun 2025 (figures to 30 Jun 2026). The only flagged item, on 2 Oct 2026, is an SEC censure without a fine for a supervision lapse, a conduct matter of no weight for credit.",
  "inputs": {
   "band": "A",
   "composite": "AA",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2025-11-04"
+  "last_flagged": "2026-10-02"
  }
 }

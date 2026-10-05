@@ -1,10 +1,10 @@
 {
  "id": "commerzbank",
- "written": "2026-10-01",
+ "written": "2026-10-05",
  "background": "Commerzbank is Germany's second-largest listed bank, funded by German retail and corporate deposits and lending to the Mittelstand and to households, with the Polish mBank as its largest subsidiary and the German state as a shareholder.",
- "synthesis": "Two of the three main agencies rate the bank, A on average, both on a stable outlook, after a one-notch downgrade by one of the three on 21 Apr 2026. Every ratio sits below the peer median of EU and Nordic banks, with CET1 of 14.4%, LCR of 141% and NSFR of 119%, and leverage of 4.3% in the bottom quarter is the weakest point. None of the ratios has moved materially over the past four periods (figures to 30 Jun 2026). The items flagged on 20 Aug 2026 are charges against former staff in a dividend tax fraud case, a legacy conduct matter rather than a sign of present strain.",
+ "synthesis": "Two of the three main agencies rate the bank, A on average, both on a stable outlook, after a one-notch downgrade by one of the three on 21 Apr 2026. Capital is on the weak side of EU and Nordic banks, CET1 of 14.4% below the peer median and leverage of 4.3% in the bottom quarter, the weakest figure here; liquidity is also below the median, with LCR of 141% and NSFR of 119%. None of the ratios has moved materially over the past four periods (figures to 30 Jun 2026). The flagged news, on 20 Aug 2026, is charges against former staff in the dividend tax case, legacy conduct rather than a current credit concern.",
  "inputs": {
-  "band": "B",
+  "band": "C",
   "composite": "A",
   "worst": "A",
   "outlooks": "stable, stable",

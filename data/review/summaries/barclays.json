@@ -1,15 +1,15 @@
 {
  "id": "barclays",
- "written": "2026-10-02",
+ "written": "2026-10-05",
  "background": "Barclays PLC is the listed holding company of the Barclays group, a UK universal bank with a large transatlantic corporate and investment bank alongside UK retail banking and international cards.",
- "synthesis": "Barclays is rated A- on average across all three main agencies, the weakest of them at BBB+, all three on a stable outlook; the last move was a one-notch upgrade by one of the three on 19 May 2023. Capital is sound against UK majors, with CET1 of 14.3% in the top quarter and leverage of 4.9% above the median, and liquidity is comfortable, LCR of 158% and NSFR of 136% both above their medians. The one move of note is LCR, down 20 points since 30 Jun 2025, while CET1, leverage and NSFR have held broadly flat (figures to 30 Jun 2026). Recent news is mostly neutral to good, though an item on 1 Oct 2026 flagged cyber-risk warnings over its widening use of AI.",
+ "synthesis": "Barclays is rated A- on average across all three main agencies, the weakest of them at BBB+, all three on a stable outlook, the last move a one-notch upgrade by one of the three on 19 May 2023. Capital and liquidity are both strong against UK majors: CET1 of 14.3% is in the top quarter, leverage of 4.9% above the peer median, and LCR of 158% and NSFR of 136% both above their medians. The one move of note is LCR, down 20 points since 30 Jun 2025, with CET1, leverage and NSFR broadly flat (figures to 30 Jun 2026). The news flow is busy and negative in tone, the newest item on 4 Oct 2026 a solicitation of investor-loss claims, with a senior departure at the investment bank and a technical outage before it.",
  "inputs": {
-  "band": "B",
+  "band": "C",
   "composite": "A-",
   "worst": "BBB+",
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-10-01"
+  "last_flagged": "2026-10-04"
  }
 }
