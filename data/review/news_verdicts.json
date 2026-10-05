@@ -12483,5 +12483,505 @@
   "keep": false,
   "severity": null,
   "why": "bank as analyst"
+ },
+ "news:f212274558d771d3": {
+  "keep": false,
+  "severity": null,
+  "why": "law-firm class action solicitation"
+ },
+ "news:6c5500d0b03c1fc2": {
+  "keep": false,
+  "severity": null,
+  "why": "bank's property fund product"
+ },
+ "news:267c95193315a7f4": {
+  "keep": true,
+  "severity": "info",
+  "why": "raises MPS takeover offer"
+ },
+ "news:127ca4aa83b6896f": {
+  "keep": false,
+  "severity": null,
+  "why": "passing mention"
+ },
+ "news:3fac24196ffdbc3b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate of Reuters story"
+ },
+ "news:b6bdbcaa831273c4": {
+  "keep": true,
+  "severity": "good",
+  "why": "H1 profit up 9.4%"
+ },
+ "news:4689a60008451ba9": {
+  "keep": false,
+  "severity": null,
+  "why": "minor disposal"
+ },
+ "news:28e59fcf3fe16cae": {
+  "keep": true,
+  "severity": "info",
+  "why": "Nubank ends Monzo takeover talks"
+ },
+ "news:959db6d60df64c2f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "Swiss capital rules defeat"
+ },
+ "news:e6b63b37864d955c": {
+  "keep": true,
+  "severity": "info",
+  "why": "Monzo turns to PE after Nubank exit"
+ },
+ "news:d2bf605d586c509c": {
+  "keep": false,
+  "severity": null,
+  "why": "bank survey/marketing"
+ },
+ "news:a9873d5722014391": {
+  "keep": true,
+  "severity": "info",
+  "why": "CFO succession search"
+ },
+ "news:372929ccd066e9e9": {
+  "keep": false,
+  "severity": null,
+  "why": "technology adoption story"
+ },
+ "news:659ac66abee029a6": {
+  "keep": true,
+  "severity": "warn",
+  "why": "mobile banking outage"
+ },
+ "news:2f794381d9cf27b7": {
+  "keep": false,
+  "severity": null,
+  "why": "lending deal, not about bank"
+ },
+ "news:9ecaf23718a22716": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate roundup"
+ },
+ "news:59d8ab9d7ed6b86f": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo/Nubank story"
+ },
+ "news:1af8a68bd17212cd": {
+  "keep": false,
+  "severity": null,
+  "why": "fund distribution notice"
+ },
+ "news:6a25a17846fe532d": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:f5b1e9c9385d30ff": {
+  "keep": true,
+  "severity": "info",
+  "why": "Germany policy on UniCredit-style takeovers"
+ },
+ "news:a63d86db5ba87e96": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO to leave at end of term 2027"
+ },
+ "news:24427dccd234e89e": {
+  "keep": false,
+  "severity": null,
+  "why": "technology adoption story"
+ },
+ "news:407ff56db09505e2": {
+  "keep": true,
+  "severity": "warn",
+  "why": "SEC censure, supervision lapse"
+ },
+ "news:61748d21107894ff": {
+  "keep": false,
+  "severity": null,
+  "why": "former employee's personal fraud case"
+ },
+ "news:f140f6fcadd2db8a": {
+  "keep": false,
+  "severity": null,
+  "why": "succession commentary"
+ },
+ "news:b3f039ad1854d557": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as market commentator"
+ },
+ "news:55416e55abbf647b": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:56cd9148f383a796": {
+  "keep": false,
+  "severity": null,
+  "why": "market-cap ranking"
+ },
+ "news:f040e15320062dc3": {
+  "keep": false,
+  "severity": null,
+  "why": "former execs join other firm"
+ },
+ "news:86e40f62085410cf": {
+  "keep": false,
+  "severity": null,
+  "why": "client event"
+ },
+ "news:247ce3d3a74567a5": {
+  "keep": false,
+  "severity": null,
+  "why": "venture-arm role change"
+ },
+ "news:b0def147df72829c": {
+  "keep": true,
+  "severity": "warn",
+  "why": "mortgage technical outage"
+ },
+ "news:8c08a1e532165cb4": {
+  "keep": false,
+  "severity": null,
+  "why": "lending deal, not about bank"
+ },
+ "news:fd148d151a6c114f": {
+  "keep": false,
+  "severity": null,
+  "why": "lending deal, not about bank"
+ },
+ "news:1da1fd7e4b294d47": {
+  "keep": false,
+  "severity": null,
+  "why": "AI marketing piece"
+ },
+ "news:c3ad5cee236b245e": {
+  "keep": true,
+  "severity": "info",
+  "why": "possible merger with HVB"
+ },
+ "news:1a83c0c005cd1789": {
+  "keep": true,
+  "severity": "info",
+  "why": "Tier 2 issuance"
+ },
+ "news:639519f72dc094f3": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as commodities analyst"
+ },
+ "news:38124398209ac5f9": {
+  "keep": false,
+  "severity": null,
+  "why": "brokerage marketing"
+ },
+ "news:b0ce5906b8fe2a82": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo/Nubank story"
+ },
+ "news:46849904273248bb": {
+  "keep": false,
+  "severity": null,
+  "why": "former advisers, passing mention"
+ },
+ "news:0853b034f3a4c22b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo/Nubank story"
+ },
+ "news:78a94bfdeb1ea48b": {
+  "keep": false,
+  "severity": null,
+  "why": "small asset-management disposal"
+ },
+ "news:de783ae45202632b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Monzo/Nubank story"
+ },
+ "news:7244f58dc2c9d423": {
+  "keep": false,
+  "severity": null,
+  "why": "bank's fund product"
+ },
+ "news:c4dd6a381df521fe": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as economist"
+ },
+ "news:0ad0ae782c4ff49d": {
+  "keep": false,
+  "severity": null,
+  "why": "junior appointment, wrong entity"
+ },
+ "news:ba740c851c10410c": {
+  "keep": false,
+  "severity": null,
+  "why": "sponsorship (football league)"
+ },
+ "news:c96111ea7756e15c": {
+  "keep": true,
+  "severity": "info",
+  "why": "\u20ac750m AT1 issuance"
+ },
+ "news:0e4c746b7b7afec9": {
+  "keep": false,
+  "severity": null,
+  "why": "junior appointment, wrong entity"
+ },
+ "news:c2ff98e177764cea": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as crypto analyst"
+ },
+ "news:283595a2018e2a29": {
+  "keep": false,
+  "severity": null,
+  "why": "equity analyst stock rating"
+ },
+ "news:f4a45901349ef6a8": {
+  "keep": false,
+  "severity": null,
+  "why": "small bolt-on acquisition"
+ },
+ "news:6cb4011f846d07ec": {
+  "keep": false,
+  "severity": null,
+  "why": "third-party bond upgrade"
+ },
+ "news:14e6b38b9b7bc06c": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$39m class action settlement"
+ },
+ "news:275298e7061b9991": {
+  "keep": true,
+  "severity": "info",
+  "why": "weighs bid for BNP's Cetelem Iberia"
+ },
+ "news:ff497fd26b986d6d": {
+  "keep": false,
+  "severity": null,
+  "why": "results date notice"
+ },
+ "news:774f0b75483995ad": {
+  "keep": false,
+  "severity": null,
+  "why": "industry award"
+ },
+ "news:8f20bd3b606dad70": {
+  "keep": false,
+  "severity": null,
+  "why": "investor dividend commentary"
+ },
+ "news:9bfac1c3443eeee3": {
+  "keep": false,
+  "severity": null,
+  "why": "investor dividend commentary"
+ },
+ "news:0b05560fe119c103": {
+  "keep": false,
+  "severity": null,
+  "why": "succession gossip"
+ },
+ "news:5ad9b23562268224": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:d096651daada101e": {
+  "keep": false,
+  "severity": null,
+  "why": "investor dividend commentary"
+ },
+ "news:ff214bd99e08e9d0": {
+  "keep": false,
+  "severity": null,
+  "why": "former banker joins rival"
+ },
+ "news:3c50b44644885386": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior notes issuance"
+ },
+ "news:cfb95435d1c90f9c": {
+  "keep": false,
+  "severity": null,
+  "why": "adviser recruiting"
+ },
+ "news:8e05b818c3a98290": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO handover planned for 2028"
+ },
+ "news:6399897e0f1c656c": {
+  "keep": true,
+  "severity": "info",
+  "why": "reported merger talks"
+ },
+ "news:e6c98a6e2c5b4cb5": {
+  "keep": false,
+  "severity": null,
+  "why": "succession commentary"
+ },
+ "news:8440b4f3a08315ca": {
+  "keep": false,
+  "severity": null,
+  "why": "bank's ETF product"
+ },
+ "news:d793be79b733683e": {
+  "keep": false,
+  "severity": null,
+  "why": "opinion piece"
+ },
+ "news:2bd5a87b3c3cb477": {
+  "keep": false,
+  "severity": null,
+  "why": "succession commentary"
+ },
+ "news:7e2f46faf17e4db7": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate CFO story"
+ },
+ "news:55b2e216ca3719c8": {
+  "keep": true,
+  "severity": "info",
+  "why": "Nubank takeover talks"
+ },
+ "news:062e5bfb36ae151d": {
+  "keep": true,
+  "severity": "warn",
+  "why": "online banking outage"
+ },
+ "news:76d7b79c1b843669": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate outage story"
+ },
+ "news:7c8bb5e64678639a": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate outage story"
+ },
+ "news:a30e9628112f6df9": {
+  "keep": false,
+  "severity": null,
+  "why": "routine covered-bond data"
+ },
+ "news:078a39c366e33112": {
+  "keep": false,
+  "severity": null,
+  "why": "routine covered-bond data"
+ },
+ "news:957a9e912ed0a6e7": {
+  "keep": false,
+  "severity": null,
+  "why": "former CEO interview"
+ },
+ "news:7c3b82a4459850aa": {
+  "keep": false,
+  "severity": null,
+  "why": "issuance framework marketing"
+ },
+ "news:54f8a7d6b4fa5ed1": {
+  "keep": false,
+  "severity": null,
+  "why": "marketing"
+ },
+ "news:7397ee4253fb1484": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 2026 results"
+ },
+ "news:c7f0511a05d3fd9c": {
+  "keep": false,
+  "severity": null,
+  "why": "routine covered bond issuance"
+ },
+ "news:2f3883cbfbc12e4d": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 2026 results"
+ },
+ "news:d7228ed060f9aefc": {
+  "keep": false,
+  "severity": null,
+  "why": "product launch"
+ },
+ "news:592297aca6a70ed7": {
+  "keep": true,
+  "severity": "good",
+  "why": "earnings rise, margins up"
+ },
+ "news:454e5a9389e1cf81": {
+  "keep": true,
+  "severity": "warn",
+  "why": "risk management overhaul lagging"
+ },
+ "news:ef72bca33c1fbc9c": {
+  "keep": false,
+  "severity": null,
+  "why": "board appointment"
+ },
+ "news:8816ec0bd6280258": {
+  "keep": false,
+  "severity": null,
+  "why": "board appointment"
+ },
+ "news:91ba8f27765537cf": {
+  "keep": false,
+  "severity": null,
+  "why": "business-line reorganisation"
+ },
+ "news:4ea4038ae43b01c5": {
+  "keep": true,
+  "severity": "warn",
+  "why": "account access outage"
+ },
+ "news:a1a47865a4bd87bc": {
+  "keep": false,
+  "severity": null,
+  "why": "structured product distribution"
+ },
+ "news:ba72cf3c558b3920": {
+  "keep": true,
+  "severity": "warn",
+  "why": "regulator rebuke on risk failures"
+ },
+ "news:f68f9a390e10debb": {
+  "keep": false,
+  "severity": null,
+  "why": "loyalty programme"
+ },
+ "news:6e64ffb6be06bd41": {
+  "keep": false,
+  "severity": null,
+  "why": "preferred dividend notice"
+ },
+ "news:b23e65b1070051b7": {
+  "keep": false,
+  "severity": null,
+  "why": "minority investor in deal"
+ },
+ "news:c5201a3aedf879ff": {
+  "keep": true,
+  "severity": "info",
+  "why": "earnings steady, outlook tweaked"
+ },
+ "news:b64c4aa6af16d271": {
+  "keep": true,
+  "severity": "good",
+  "why": "H1 profit up 44%"
+ },
+ "news:3d256d7fb703809f": {
+  "keep": false,
+  "severity": null,
+  "why": "industry fraud-prevention initiative"
  }
 }
