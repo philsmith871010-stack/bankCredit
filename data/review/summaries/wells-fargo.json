@@ -1,8 +1,8 @@
 {
  "id": "wells-fargo",
- "written": "2026-10-05",
+ "written": "2026-10-06",
  "background": "Wells Fargo & Company is the holding company of one of the four largest US banks, with consumer banking and lending, commercial banking, corporate and investment banking and wealth management, and a long regulatory remediation behind it.",
- "synthesis": "Wells Fargo is rated A on average across all three main agencies, the weakest of them at A-, all three on a stable outlook, after a one-notch upgrade by one of the three on 29 Sep 2026 that also resolved a positive outlook. Capital is the weak spot against US banks, CET1 of 10.3% in the bottom quarter, with leverage of 5.8% and LCR of 119% above the peer median. Since 30 Jun 2025 CET1 and leverage have each fallen 0.9 points while LCR has been broadly flat (figures to 30 Jun 2026). The rating action of 29 Sep 2026 is the news that matters; the rest of the flagged items say little about credit.",
+ "synthesis": "Rated A on average across all three, the weakest of them at A-, all three on a stable outlook, the group was upgraded by one notch by one of the three on 29 Sep 2026. Capital is the weak spot: CET1 of 10.3% is in the bottom quarter of US banks, and both CET1 and leverage have fallen 0.9 points since 30 Jun 2025, though leverage of 5.8% still sits at the peer median. Liquidity is adequate, with LCR of 119% at the median and broadly flat. The recent news is the upgrade itself; the latest flagged headline, on 1 Oct 2026, concerns its analysts' views on oil stocks and says nothing about its own credit.",
  "inputs": {
   "band": "B",
   "composite": "A",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-29"
+  "last_flagged": "2026-10-01"
  }
 }

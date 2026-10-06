@@ -1,13 +1,15 @@
 {
  "id": "monmouthshire-bs",
- "written": "2026-09-15",
+ "written": "2026-10-06",
  "background": "Monmouthshire Building Society is a small mutual based in Newport, funded by retail savings from its branches in south-east Wales and the border counties and lending on residential mortgages.",
- "synthesis": "None of the three agencies rates the society. Capital is the weak side against UK building societies: CET1 of 14.3% is in the bottom quarter against the peer median and leverage of 5.6% is below the peer median. Liquidity is mixed, with LCR of 170% in the bottom quarter against 214% but NSFR of 145% at the median. No trend can be drawn from the periods held. Nothing has been flagged in the last 90 days. Sound on the absolute numbers but with less headroom than most of its peers on both capital and liquidity.",
+ "synthesis": "The society holds no public rating from any of the three main agencies, so a depositor has only the reported figures to go on. Capital is thin by building-society standards, with CET1 of 14.3% in the bottom quarter and leverage of 5.6% below the median. Liquidity is adequate rather than generous: LCR of 170% is in the bottom quarter while NSFR of 145% sits at the median. The one flagged item, on 19 Aug 2026, is a fall in lending while its mortgage platform was upgraded, which slows growth but does not touch its capital.",
  "inputs": {
   "band": "",
   "composite": "",
-  "ratings": {},
+  "worst": "",
+  "outlooks": "",
+  "n": 0,
   "asof": "2023-04-30",
-  "last_flagged": ""
+  "last_flagged": "2026-08-19"
  }
 }
