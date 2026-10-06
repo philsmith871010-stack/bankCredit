@@ -1,0 +1,392 @@
+{
+ "news:3498d8d62768d2c6": {
+  "keep": false,
+  "severity": null,
+  "why": "customer marketing stat"
+ },
+ "news:573b14b2efcd6ad8": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO community visit"
+ },
+ "news:b7aea50f5d8b7e66": {
+  "keep": true,
+  "severity": null,
+  "why": "MPS bid backed by top investor"
+ },
+ "news:a4be8549d486cd96": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings date notice"
+ },
+ "news:9dfc2b9d990b050e": {
+  "keep": false,
+  "severity": null,
+  "why": "internal reorganisation, AI unit"
+ },
+ "news:591725dcd5bf174d": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:65da2b29d1dee68b": {
+  "keep": false,
+  "severity": null,
+  "why": "strategist commentary"
+ },
+ "news:209c1ccdca77244a": {
+  "keep": false,
+  "severity": null,
+  "why": "strategist commentary"
+ },
+ "news:d021b7fc5e09b8a5": {
+  "keep": false,
+  "severity": null,
+  "why": "strategist commentary"
+ },
+ "news:121e1210d2385832": {
+  "keep": false,
+  "severity": null,
+  "why": "central bank speech at bank event"
+ },
+ "news:a3e7969af4645b38": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:4d23413d5d39b645": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate MPS bid coverage"
+ },
+ "news:4f2c5c670e79961f": {
+  "keep": false,
+  "severity": null,
+  "why": "FX call by bank"
+ },
+ "news:4371dc5902bbd3ae": {
+  "keep": false,
+  "severity": null,
+  "why": "customer marketing stat"
+ },
+ "news:38fd290cd95d5d2e": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate MPS bid coverage"
+ },
+ "news:b53d2794b6efb593": {
+  "keep": true,
+  "severity": null,
+  "why": "Ghana unit sale approved"
+ },
+ "news:aea57bffa5bf4e23": {
+  "keep": true,
+  "severity": "good",
+  "why": "record profit"
+ },
+ "news:4403f74737934e69": {
+  "keep": false,
+  "severity": null,
+  "why": "market-maker notice"
+ },
+ "news:20ac721225a8818b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate of raised MPS offer"
+ },
+ "news:911f572e3efed8da": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:f27e93e10dbe1488": {
+  "keep": false,
+  "severity": null,
+  "why": "stock analyst roundup"
+ },
+ "news:a75d0fc48727cd94": {
+  "keep": false,
+  "severity": null,
+  "why": "stock analyst roundup"
+ },
+ "news:338cf0ae3aaac0c1": {
+  "keep": false,
+  "severity": null,
+  "why": "routine client lending"
+ },
+ "news:487046233043540b": {
+  "keep": false,
+  "severity": null,
+  "why": "fund product page"
+ },
+ "news:f95fd4890f1e1a76": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate of UBS exit story"
+ },
+ "news:fe301d1fb461495e": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:f868928e52e9fefc": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:dda89cb59e817b43": {
+  "keep": false,
+  "severity": null,
+  "why": "analyst comment, succession dup"
+ },
+ "news:88fa3a34b1193924": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate CEO succession coverage"
+ },
+ "news:b0b81e8326552f9e": {
+  "keep": true,
+  "severity": null,
+  "why": "results, motor finance provision up"
+ },
+ "news:281c1b618ca8bd9c": {
+  "keep": false,
+  "severity": null,
+  "why": "fund product page"
+ },
+ "news:13168b5dffc4783a": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate outage syndication"
+ },
+ "news:0ac734754498b930": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate outage syndication"
+ },
+ "news:2610e89e93c97ee7": {
+  "keep": false,
+  "severity": null,
+  "why": "routine bond notice"
+ },
+ "news:2d336adf4d82d7ad": {
+  "keep": false,
+  "severity": null,
+  "why": "trading-signal content"
+ },
+ "news:cb4568ac872ff478": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:fb25f6563b9e906e": {
+  "keep": true,
+  "severity": null,
+  "why": "covered-bond rating affirmed"
+ },
+ "news:fe6bd21611764d9d": {
+  "keep": true,
+  "severity": null,
+  "why": "shares fall on CEO outlook"
+ },
+ "news:cfa09ca3c6be72b7": {
+  "keep": false,
+  "severity": null,
+  "why": "share-price speculation"
+ },
+ "news:8a204dcdd1037d64": {
+  "keep": true,
+  "severity": null,
+  "why": "Q3 results"
+ },
+ "news:6310a41bccf40e27": {
+  "keep": true,
+  "severity": null,
+  "why": "Q3 results"
+ },
+ "news:d2ff67330fa1b82b": {
+  "keep": false,
+  "severity": null,
+  "why": "routine dividend declaration"
+ },
+ "news:718e882421bfe053": {
+  "keep": false,
+  "severity": null,
+  "why": "routine client lending"
+ },
+ "news:37dd6fc514eadac8": {
+  "keep": true,
+  "severity": null,
+  "why": "Q3 results"
+ },
+ "news:2afe875472d69985": {
+  "keep": true,
+  "severity": null,
+  "why": "Q3 results"
+ },
+ "news:7d5045f5fb57318c": {
+  "keep": true,
+  "severity": "info",
+  "why": "lending falls; not positive"
+ },
+ "news:0c9984f5863fa11e": {
+  "keep": true,
+  "severity": "warn",
+  "why": "chair stepping down"
+ },
+ "news:717901f7cd07e6be": {
+  "keep": false,
+  "severity": null,
+  "why": "minor subsidiary result"
+ },
+ "news:4ddd86b81cfc8f71": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO policy commentary"
+ },
+ "news:add0270c7eedf9e4": {
+  "keep": true,
+  "severity": null,
+  "why": "cyber-failure fine"
+ },
+ "news:0b36f8ed42b52a28": {
+  "keep": false,
+  "severity": null,
+  "why": "market forecast by bank"
+ },
+ "news:e2c83a746786d4d0": {
+  "keep": false,
+  "severity": null,
+  "why": "employee share plan"
+ },
+ "news:1f4173fdfa86936f": {
+  "keep": true,
+  "severity": "good",
+  "why": "higher H1 profit"
+ },
+ "news:89b4e2020b82da31": {
+  "keep": true,
+  "severity": null,
+  "why": "subsidiary interim results"
+ },
+ "news:44f01d6777421b68": {
+  "keep": true,
+  "severity": null,
+  "why": "record H1, guidance up"
+ },
+ "news:54d889ad3a1d0ee2": {
+  "keep": true,
+  "severity": "good",
+  "why": "record H1 profit"
+ },
+ "news:b871a4b032748f06": {
+  "keep": false,
+  "severity": null,
+  "why": "routine client lending"
+ },
+ "news:f48628d18e6f03c6": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:3c93197800f1d853": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:4f1fcc3bf1855aee": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:1fbbdf74bb62f3c9": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:afa77e5541bce976": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:abda67e87aea5ce0": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:42243634f050c2ce": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:796d935e0e4e114b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:0086df983b0ecf5c": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:06c79509e5bc8b3a": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:7ff710991d5a3ace": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:d8fb82bfa19d764e": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:f70548006d6c4c89": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:d8c04676fd5bbb85": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:5f201c5178b2cd80": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:a97eefd9d22ac607": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:94f43689768ba63b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:0ed791c2fd6e507f": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:566f7c5fded8eea4": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:ae7039d620923fc2": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ },
+ "news:3ebe7c47a7ee7051": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers syndication"
+ }
+}
