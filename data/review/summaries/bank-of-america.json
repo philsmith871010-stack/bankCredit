@@ -1,8 +1,8 @@
 {
  "id": "bank-of-america",
- "written": "2026-10-05",
+ "written": "2026-10-07",
  "background": "Bank of America Corporation is the holding company of the second-largest US bank, spanning consumer banking, wealth management under Merrill and a global corporate and investment bank.",
- "synthesis": "Bank of America is rated A+ on average across all three main agencies, the weakest of them at A-, all three on a stable outlook, the last move a one-notch upgrade by one of the three on 3 May 2023. The rating is the strength; the balance sheet sits on the weak side of US banks, with CET1 of 11.2% in the bottom quarter and leverage of 5.5% and LCR of 112% both below the peer median. None of the ratios has moved materially over the past four periods (figures to 30 Jun 2026). The newest flagged item, on 1 Oct 2026, is a $39 million class action settlement, small for a group of this size, with an 8% fall in the shares in a week before it.",
+ "synthesis": "All three main agencies rate the group, A+ on average and the weakest of them at A-, all on a stable outlook, with the last move a one-notch upgrade by one of the three on 3 May 2023. The weak spot is the balance sheet against US peers: CET1 of 11.2% is in the bottom quarter, leverage of 5.5% is below the median and LCR of 112% is below the median too. None of the ratios has moved materially over the past four periods, so the position is stable rather than deteriorating. The newest flagged items, on 6 Oct 2026, concern fraud and cybercrime losses across the US market rather than the bank's own credit.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-10-01"
+  "last_flagged": "2026-10-06"
  }
 }
