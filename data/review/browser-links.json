@@ -1,7 +1,7 @@
 {
  "lloyds-banking-group": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -247,7 +247,7 @@
  },
  "lloyds-bank": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -493,7 +493,7 @@
  },
  "bank-of-scotland": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -789,39 +789,83 @@
  },
  "goldman-sachs-international-bank": {
   "page": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
-    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
-    "text": ""
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/2025/gsib-2025-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
    },
    {
-    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
-    "text": ""
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/2024/gsib-2024-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
    },
    {
-    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
-    "text": ""
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/2023/gsib-2023-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
    },
    {
-    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
-    "text": ""
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/2022/gsib-2022-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/2021/gsib-12-31-2021-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/docs/gsib-12-31-2020-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/docs/gsib-11-30-2019-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/docs/gsib-05-31-2019-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/docs/gsib-11-30-2018-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/docs/gsib-06-30-2018-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/docs/gsib-12-31-2017-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/docs/gsib-06-30-2017-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/docs/gsib-12-31-2016-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/docs/gsib-06-30-16-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/docs/gsib-12-31-15-financial-statements.pdf",
+    "text": "Goldman Sachs International Bank - Financial Statements"
+   },
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": "Regulatory Disclosures"
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
     "text": ""
    },
    {
-    "url": "https://www.goldmansachs.com/disclosures",
-    "text": ""
-   },
-   {
     "url": "https://www.goldmansachs.com/insights/reports",
-    "text": ""
+    "text": "Reports"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/financials/annual-reports",
-    "text": ""
+    "text": "Annual Report"
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
@@ -830,17 +874,21 @@
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/investor-relations/financials/annual-reports",
     "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
+    "text": ""
    }
   ]
  },
  "west-brom-bs": {
   "page": "https://www.westbrom.co.uk/about-us/investor-relations",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "saffron-bs": {
   "page": "https://www.saffronbs.co.uk/about-us/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -858,7 +906,7 @@
  },
  "suffolk-bs": {
   "page": "https://www.suffolkbuildingsociety.co.uk/about/governance/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/Voluntary-modern-slavery-and-human-trafficking-statement.pdf",
@@ -904,7 +952,7 @@
  },
  "progressive-bs": {
   "page": "https://theprogressive.com/about-us/your-society",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
@@ -930,7 +978,7 @@
  },
  "leek-bs": {
   "page": "https://www.leekbs.co.uk/about-us/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Mortgage%20Fees%20and%20Charges%202026%20-%20MortFeeCharg-REV04-26.pdf",
@@ -956,7 +1004,7 @@
  },
  "hinckley-and-rugby-bs": {
   "page": "https://www.hrbs.co.uk/the-society/governance/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2024/11/Whistleblowing-Policy-Public-2024.pdf",
@@ -970,7 +1018,7 @@
  },
  "furness-bs": {
   "page": "https://www.furnessbs.co.uk/financial-reports/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.furnessbs.co.uk:443/media/eyfhr5t1/4-4-2022-pillar-3-for-board-pack-07-03-23.pdf",
@@ -1064,7 +1112,7 @@
  },
  "al-rayan-bank": {
   "page": "https://www.alrayanbank.co.uk/about-us/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://apps.apple.com/gb/app/al-rayan-bank-uk/id1061102013",
@@ -1078,7 +1126,7 @@
  },
  "gatehouse-bank": {
   "page": "https://gatehousebank.com/about-us/corporate-governance",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://assets.gatehousebank.com/production/downloads/Gatehouse-Bank-Pillar-III-Disclosure-2024-FINAL.pdf?dm=1754928802",
@@ -1304,12 +1352,12 @@
  },
  "bank-of-china-uk": {
   "page": "https://www.bankofchina.com/uk/en/aboutus/ab1/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "macquarie-bank": {
   "page": "https://www.macquarie.com/au/en/investors/regulatory-disclosures.html",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.macquarie.com/disclosures/document/basel-3-pillar-3-capital",
@@ -1801,7 +1849,7 @@
  },
  "first-abu-dhabi-bank": {
   "page": "https://www.bankfab.com/en-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/final-q1-pillar3-report-q1-2026.pdf?view=1",
@@ -2057,7 +2105,7 @@
  },
  "goldman-sachs": {
   "page": "https://www.goldmansachs.com/investor-relations/financials/other-information",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2026/2Q26-pillar-3.pdf",
@@ -2201,7 +2249,7 @@
  },
  "citigroup": {
   "page": "https://www.citigroup.com/global/investors/other-regulatory-filings",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.citigroup.com/rcs/citigpa/storage/public/cgme-pillar-3-disclosure-q1-2026.pdf",
@@ -2447,7 +2495,7 @@
  },
  "state-street": {
   "page": "https://investors.statestreet.com/filings-and-reports/supplemental-public-disclosure-of-basel-iii-regulatory-capital/default.aspx",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://investors.statestreet.com/filings-and-reports/supplemental-public-disclosure-of-basel-iii-regulatory-capital/default.aspx",
@@ -2693,7 +2741,7 @@
  },
  "ubs": {
   "page": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html",
@@ -3141,7 +3189,7 @@
  },
  "goldman-sachs-international-bank > reports": {
   "page": "https://www.goldmansachs.com/insights/reports",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.goldmansachs.com/disclosures",
@@ -3171,55 +3219,39 @@
  },
  "goldman-sachs-international-bank > investor-relations": {
   "page": "https://www.goldmansachs.com/investor-relations",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
-    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
-    "text": ""
-   },
-   {
-    "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
-    "text": ""
-   },
-   {
     "url": "https://www.goldmansachs.com/investor-relations/financials/proxy-statements/2026/proxy-statement.pdf",
-    "text": ""
+    "text": "2026 Proxy Statement for our Annual Meeting of Shareholders"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/financials/10k/2025/2025-10-k.pdf",
-    "text": ""
+    "text": "2025 Form 10-K"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/Fixed-Income-Fact-Sheet.pdf",
-    "text": ""
+    "text": "The Goldman Sachs Group Fixed Income Fact Sheet"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/goldman-sachs-bank-usa-fixed-income-factsheet.pdf",
-    "text": ""
+    "text": "Goldman Sachs Bank USA Fixed Income  Fact Sheet"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/credit-ratings.pdf",
-    "text": ""
+    "text": "Credit Ratings"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/LIBOR-transition.pdf",
-    "text": ""
+    "text": "LIBOR Transition 2023"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/docs/FultonCountyEmployeesRetirementSystem-StipulationandAgreement.pdf",
-    "text": ""
+    "text": "Fulton County Employees’ Retirement System - Stipulation and Agreement of Settlement"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/docs/FultonCountyEmployeesRetirementSystem-NoticeofSettlement.pdf",
-    "text": ""
-   },
-   {
-    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pressroom/press-releases/current/pdfs/2026-q2-results.pdf",
-    "text": ""
-   },
-   {
-    "url": "https://www.goldmansachs.com/content/dam/gs/gscom/pressroom/press-releases/current/pdfs/2026-q2-earnings-results-presentation.pdf",
-    "text": ""
+    "text": "Fulton County Employees’ Retirement System - Notice of Settlement of Shareholder Derivative Litigation and Hearing"
    },
    {
     "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/financials/proxy-statements/2026/proxy-statement.pdf",
@@ -3254,32 +3286,56 @@
     "text": ""
    },
    {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": "Regulatory Disclosures"
+   },
+   {
     "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
     "text": ""
    },
    {
-    "url": "https://www.goldmansachs.com/disclosures",
-    "text": ""
+    "url": "https://www.goldmansachs.com/insights/reports",
+    "text": "Reports"
    },
    {
-    "url": "https://www.goldmansachs.com/insights/reports",
-    "text": ""
+    "url": "https://www.goldmansachs.com/investor-relations/financials",
+    "text": "Financial Documents"
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/2026/2026-07-14-q2-results",
+    "text": "Goldman Sachs Reports 2026 Second Quarter Earnings Per Common Share of $20.98 and Annualized Return on Common Equity of "
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/2026/2026-04-13-q1-results",
+    "text": "Goldman Sachs Reports 2026 First Quarter Earnings Per Common Share of $17.55 and Annualized Return on Common Equity of 1"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2025-annual-report",
-    "text": ""
+    "text": "2025 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/2026/2026-01-15-q4-results",
+    "text": "Goldman Sachs Reports 2025 Full Year and Fourth Quarter Earnings Results"
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/2025/2025-10-14-q3-results",
+    "text": "Goldman Sachs Reports 2025 Third Quarter Earnings Per Common Share of $12.25 and Annualized Return on Common Equity of 1"
+   },
+   {
+    "url": "https://www.goldmansachs.com/pressroom/press-releases/2025/2025-07-16-q2-results",
+    "text": "Goldman Sachs Reports 2025 Second Quarter Earnings Per Common Share of $10.91 and Annualized Return on Common Equity of "
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2024-annual-report",
-    "text": ""
+    "text": "Read the Letter"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/corporate-governance/sustainability-reporting",
-    "text": ""
+    "text": "Sustainability and Other Reporting"
    },
    {
     "url": "https://goldmansachs-my.sharepoint.com/personal/higgsh_firmwide_corp_gs_com/Documents/FulfillmentNY/JC@gs.com",
-    "text": ""
+    "text": "FulfillmentNY/JC@gs.com"
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
@@ -3323,6 +3379,10 @@
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/investor-relations/corporate-governance/sustainability-reporting",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
     "text": ""
    }
   ]
@@ -3413,7 +3473,7 @@
  },
  "goldman-sachs-international-bank > corporate-governance": {
   "page": "https://www.goldmansachs.com/investor-relations/corporate-governance",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.goldmansachs.com/disclosures",
@@ -3455,47 +3515,47 @@
  },
  "goldman-sachs-international-bank > creditor-information": {
   "page": "https://www.goldmansachs.com/investor-relations/creditor-information",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/Fixed-Income-Fact-Sheet.pdf",
-    "text": ""
+    "text": "The Goldman Sachs Group, Inc. Fixed Income Fact Sheet"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/goldman-sachs-bank-usa-fixed-income-factsheet.pdf",
-    "text": ""
+    "text": "Goldman Sachs Bank USA Fixed Income Fact Sheet"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/credit-ratings.pdf",
-    "text": ""
+    "text": "Credit Ratings"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/LIBOR-transition.pdf",
-    "text": ""
+    "text": "LIBOR Transition 2023"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/2025-global-resolution-plan.pdf",
-    "text": ""
+    "text": "Global Resolution Plan"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/sustainability-issuance-report-2023.pdf",
-    "text": ""
+    "text": "Sustainability Issuance Report 2023"
    },
    {
     "url": "https://www.goldmansachs.com/pdfs/migrated/our-commitments/sustainability/2022-sustainability-report/multimedia/report.pdf",
-    "text": ""
+    "text": "Sustainability Issuance Report 2022"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/sustainability-issuance-report-2021.pdf",
-    "text": ""
+    "text": "Sustainability Issuance Report 2021"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/gs-sustainability-issuance-framework.pdf",
-    "text": ""
+    "text": "GS Sustainability Issuance Framework"
    },
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/GS-Sustainability-Issuance-Framework-Presentation.pdf",
-    "text": ""
+    "text": "Sustainability: Our Issuance Framework"
    },
    {
     "url": "https://www.goldmansachs.com/content/dam/gs/gscom/investor-relations/creditor-information/Fixed-Income-Fact-Sheet.pdf",
@@ -3538,26 +3598,30 @@
     "text": ""
    },
    {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": "Regulatory Disclosures"
+   },
+   {
     "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
     "text": ""
    },
    {
-    "url": "https://www.goldmansachs.com/disclosures",
-    "text": ""
-   },
-   {
     "url": "https://www.goldmansachs.com/insights/reports",
-    "text": ""
+    "text": "Reports"
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
     "text": ""
    }
   ]
  },
  "west-brom-bs > financial-information": {
   "page": "https://www.westbrom.co.uk/about-us/financial-information",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.westbrom.co.uk/about-us/financial-information/financial-reports-and-results",
@@ -3567,7 +3631,7 @@
  },
  "west-brom-bs > corporate-governance": {
   "page": "https://www.westbrom.co.uk/about-us/corporate-governance",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.westbrom.co.uk/-/media/wbbs/images/about-us/rules-and-memorandum-document.jpg?h=193&iar=0&w=298&hash=1AEB436140F3B85D0C9FE29DEC23B148",
@@ -3581,12 +3645,12 @@
  },
  "west-brom-bs > modern-slavery-and-human-trafficking-sta": {
   "page": "https://www.westbrom.co.uk/about-us/corporate-governance/modern-slavery-and-human-trafficking-statement",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "saffron-bs > financial-results": {
   "page": "https://www.saffronbs.co.uk/financial-results",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -3668,7 +3732,7 @@
  },
  "saffron-bs > financial-wellbeing-reviews": {
   "page": "https://www.saffronbs.co.uk/savings/tips-tools-support/financial-wellbeing-reviews",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -3686,7 +3750,7 @@
  },
  "saffron-bs > useful-mortgage-documents": {
   "page": "https://www.saffronbs.co.uk/useful-mortgage-documents",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -3740,7 +3804,7 @@
  },
  "saffron-bs > independent-financial-advice": {
   "page": "https://www.saffronbs.co.uk/its-more-money/services/independent-financial-advice",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
@@ -3762,7 +3826,7 @@
  },
  "suffolk-bs > financial-education": {
   "page": "https://www.suffolkbuildingsociety.co.uk/financial-education/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/01/INVL107-01-26-FSCS-Information-Sheet.pdf",
@@ -3772,7 +3836,7 @@
  },
  "suffolk-bs > annual-general-meeting": {
   "page": "https://www.suffolkbuildingsociety.co.uk/about/governance/annual-general-meeting/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.suffolkbuildingsociety.co.uk/wp-content/uploads/2026/02/Review-of-the-Year-2025.pdf",
@@ -3798,12 +3862,12 @@
  },
  "suffolk-bs > embed?url=https%3A%2F%2Fwww.suffolkbuild": {
   "page": "https://www.suffolkbuildingsociety.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.suffolkbuildingsociety.co.uk%2Fabout%2Fgovernance%2F&format=xml",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "progressive-bs > search-results": {
   "page": "https://theprogressive.com/search-results",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
@@ -3821,7 +3885,7 @@
  },
  "progressive-bs > document-hub": {
   "page": "https://theprogressive.com/document-hub",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
@@ -3995,7 +4059,7 @@
  },
  "progressive-bs > governance-and-finance": {
   "page": "https://theprogressive.com/about-us/governance-and-finance",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://theprogressive.com/media/r3oimdvb/withdrawn-accounts-1-august-2026.pdf",
@@ -4045,7 +4109,7 @@
  },
  "leek-bs > wren-sterling": {
   "page": "https://www.leekbs.co.uk/financial-planning/wren-sterling/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.leekbs.co.uk/content/images/page/files/Mortgage%20Fees%20and%20Charges%202026%20-%20MortFeeCharg-REV04-26.pdf",
@@ -4067,7 +4131,7 @@
  },
  "hinckley-and-rugby-bs > financial-services-compensation-scheme": {
   "page": "https://www.hrbs.co.uk/savings/existing-customers/important-account-information/financial-services-compensation-scheme/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2025/12/fscs_protected-website-leaflet-nov-2025-1.pdf",
@@ -4085,7 +4149,7 @@
  },
  "hinckley-and-rugby-bs > directors-people": {
   "page": "https://www.hrbs.co.uk/the-society/governance/directors-people/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
@@ -4095,7 +4159,7 @@
  },
  "hinckley-and-rugby-bs > committees": {
   "page": "https://www.hrbs.co.uk/the-society/governance/committees/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/08/Audit-and-Compliance-Terms-of-Reference-2026.pdf",
@@ -4121,7 +4185,7 @@
  },
  "hinckley-and-rugby-bs > agm": {
   "page": "https://www.hrbs.co.uk/the-society/governance/agm/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/02/Hinckley_and_Rugby_Building_Society_Chairs_Letter_2026.pdf",
@@ -4271,7 +4335,7 @@
  },
  "al-rayan-bank > results": {
   "page": "https://www.alrayanbank.co.uk/search/results",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://play.google.com/store/apps/details?id=com.alrayanbankuk.mobile",
@@ -4285,7 +4349,7 @@
  },
  "al-rayan-bank > investor-relations": {
   "page": "https://www.alrayanbank.co.uk/investor-relations",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.alrayanbank.co.uk/sites/default/files/media/file-uploads/2026-06/al_rayan_annual_report_accounts_2025.pdf",
@@ -4711,32 +4775,32 @@
  },
  "bank-of-china-uk > investor": {
   "page": "https://www.bankofchina.com/investor/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "bank-of-china-uk > ir1": {
   "page": "https://www.bankofchina.com/investor/ir1/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "bank-of-china-uk > ir2": {
   "page": "https://www.bankofchina.com/investor/ir2/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "bank-of-china-uk > ir5": {
   "page": "https://www.bankofchina.com/investor/ir5/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "bank-of-china-uk > ir3": {
   "page": "https://www.bankofchina.com/investor/ir3/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "bank-of-china-uk > ir9": {
   "page": "https://www.bankofchina.com/investor/ir9/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "first-abu-dhabi-bank > investor-relations": {
@@ -6523,7 +6587,7 @@
  },
  "lloyds-bank-corporate-markets": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -8403,12 +8467,12 @@
  },
  "hinckley-and-rugby-bs > embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2": {
   "page": "https://www.hrbs.co.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.hrbs.co.uk%2Fthe-society%2Fgovernance%2F&format=xml",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": []
  },
  "sumitomo-mitsui-trust": {
   "page": "https://www.smtg.jp/english/investors/report/basel",
-  "checked": "2026-10-06",
+  "checked": "2026-10-07",
   "links": [
    {
     "url": "https://www.smtg.jp/english/investors/report/basel",
@@ -10208,6 +10272,150 @@
    },
    {
     "url": "https://5398600.fls.doubleclick.net/activityi;src=5398600;type=arsgw0;cat=testl0;rcb=15;ord=9987070643685;npa=0;auiddc=433081075.1788774792;u1=https%3A%2F%2Fwww.adcb.com%2Fen%2Fways-to-bank%2Fkyc-documents-update%2F;uaa=x86;uab=64;uafvl=Chromium%3B148.0.7778.96%7CHeadlessChrome%3B148.0.7778.96%7CNot%252FA",
+    "text": ""
+   }
+  ]
+ },
+ "goldman-sachs-international-bank > updated-conference-call-number-for-4q25-": {
+  "page": "https://www.goldmansachs.com/pressroom/press-releases/2025/updated-conference-call-number-for-4q25-and-2026-earnings-results",
+  "checked": "2026-10-07",
+  "links": [
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": "Regulatory Disclosures"
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/insights/reports",
+    "text": "Reports"
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
+    "text": ""
+   }
+  ]
+ },
+ "goldman-sachs-international-bank > annual-reports": {
+  "page": "https://www.goldmansachs.com/investor-relations/financials/annual-reports",
+  "checked": "2026-10-07",
+  "links": [
+   {
+    "url": "https://www.goldmansachs.com/disclosures",
+    "text": "Regulatory Disclosures"
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/disclosures",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/insights/reports",
+    "text": "Reports"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/annual-reports",
+    "text": "What We Do"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2025-annual-report",
+    "text": "2025 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2024-annual-report",
+    "text": "2024 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2023-annual-report",
+    "text": "2023 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2022-annual-report",
+    "text": "2022 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2021-annual-report",
+    "text": "2021 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2020-annual-report",
+    "text": "2020 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2019-annual-report",
+    "text": "2019 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2018-annual-report",
+    "text": "2018 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2017-annual-report",
+    "text": "2017 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/current/annual-reports/2016-annual-report",
+    "text": "2016 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/archived/annual-reports/2015-annual-report",
+    "text": "2015 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/archived/annual-reports/2014-annual-report",
+    "text": "2014 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/archived/annual-reports/2013-annual-report",
+    "text": "2013 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/archived/annual-reports/2012-annual-report",
+    "text": "2012 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/archived/annual-reports/2011-annual-report",
+    "text": "2011 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/archived/annual-reports/2009-annual-report",
+    "text": "2009 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/archived/annual-reports/2010-annual-report",
+    "text": "2010 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/archived/annual-reports/2008-annual-report",
+    "text": "2008 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/archived/annual-reports/2007-annual-report",
+    "text": "2007 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/investor-relations/financials/archived/annual-reports/2006-annual-report",
+    "text": "2006 Annual Report"
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/content/gs/gscom/investor-relations/financials/annual-reports",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/annual-report",
+    "text": ""
+   },
+   {
+    "url": "https://www.goldmansachs.com/,E=e.document,A=/^(?:",
     "text": ""
    }
   ]
