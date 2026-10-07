@@ -12983,5 +12983,525 @@
   "keep": false,
   "severity": null,
   "why": "industry fraud-prevention initiative"
+ },
+ "news:0423afbc3181144a": {
+  "keep": false,
+  "severity": null,
+  "why": "results date advisory"
+ },
+ "news:06628e039c319e85": {
+  "keep": true,
+  "severity": "info",
+  "why": "CFO planned retirement"
+ },
+ "news:08b0890c3f73062f": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate results syndication"
+ },
+ "news:09b981db7350cbd4": {
+  "keep": false,
+  "severity": null,
+  "why": "routine noteholder notice"
+ },
+ "news:09c525959612b07d": {
+  "keep": false,
+  "severity": null,
+  "why": "routine dividend declaration"
+ },
+ "news:0cff4d94418eccfd": {
+  "keep": false,
+  "severity": null,
+  "why": "desk-level hires"
+ },
+ "news:0d6f39c087ef0b09": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:0f2e7c2253c24648": {
+  "keep": false,
+  "severity": null,
+  "why": "BDC fund product"
+ },
+ "news:0fb34e8e7fcb9aac": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Sabadell stake coverage"
+ },
+ "news:132a2d8a082d2a3e": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:140594bf8b6397db": {
+  "keep": false,
+  "severity": null,
+  "why": "research outlook"
+ },
+ "news:16d934182e6a91e1": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO industry commentary"
+ },
+ "news:17135b6c8a915083": {
+  "keep": true,
+  "severity": "info",
+  "why": "Sabadell stake acquisition"
+ },
+ "news:192de0db9c7c9b9c": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:1b120bc5f6e8ebe7": {
+  "keep": false,
+  "severity": null,
+  "why": "minor strategic investment"
+ },
+ "news:1c9f77ecc2ad226d": {
+  "keep": true,
+  "severity": "warn",
+  "why": "chairman to step down"
+ },
+ "news:1d3d5da85103a242": {
+  "keep": true,
+  "severity": "warn",
+  "why": "another loss, cost cuts"
+ },
+ "news:1d485c64e2d65629": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:226efb86108be8ae": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate UBS fund admin coverage"
+ },
+ "news:247f50cfe22ccc28": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend stock comparison"
+ },
+ "news:250b667407515e57": {
+  "keep": false,
+  "severity": null,
+  "why": "stock narrative filler"
+ },
+ "news:253116214573cbd9": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary appointments"
+ },
+ "news:28316fcd5fcdfb49": {
+  "keep": true,
+  "severity": "info",
+  "why": "Fitch AA- affirmed, stable"
+ },
+ "news:286d179730b033da": {
+  "keep": false,
+  "severity": null,
+  "why": "mortgage servicer rating, not credit"
+ },
+ "news:30304b6af3606192": {
+  "keep": true,
+  "severity": "good",
+  "why": "strong Q2 results"
+ },
+ "news:30366da5ee40563a": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as project lender"
+ },
+ "news:33f27806fc0de4f6": {
+  "keep": false,
+  "severity": null,
+  "why": "stale stock forecast page"
+ },
+ "news:36c79246d45d968e": {
+  "keep": false,
+  "severity": null,
+  "why": "results date advisory"
+ },
+ "news:3ae791af0780e75c": {
+  "keep": false,
+  "severity": null,
+  "why": "mortgage servicer rating, not credit"
+ },
+ "news:3dda89ce4b11d27a": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:4175fde07cbcb805": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:440521c9bc49913b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate UBS fund admin coverage"
+ },
+ "news:4624f641f82f2628": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate MPS bid coverage"
+ },
+ "news:47a5864b531c757d": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 preview: credit losses in focus"
+ },
+ "news:48eed2ac2136cea0": {
+  "keep": true,
+  "severity": "info",
+  "why": "shares fell 8% on CEO remarks"
+ },
+ "news:498062d6c1e8632f": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Sabadell stake coverage"
+ },
+ "news:49ba86de584512f0": {
+  "keep": false,
+  "severity": null,
+  "why": "customer scam story"
+ },
+ "news:4eb0946a39d409de": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as project lender"
+ },
+ "news:524fef2b60779cff": {
+  "keep": false,
+  "severity": null,
+  "why": "marketing"
+ },
+ "news:57f6c6a563f713d5": {
+  "keep": true,
+  "severity": "info",
+  "why": "Russia unit sale cleared"
+ },
+ "news:621f5fc5ba7ded86": {
+  "keep": false,
+  "severity": null,
+  "why": "minor strategic investment"
+ },
+ "news:63351a52fbe74f95": {
+  "keep": true,
+  "severity": "warn",
+  "why": "\u20ac500k data protection fine"
+ },
+ "news:63551b978acf8f7f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "APRA seeks $8m cyber penalty"
+ },
+ "news:6c90dbac279bf240": {
+  "keep": true,
+  "severity": "info",
+  "why": "Santander Brasil buy-in offer"
+ },
+ "news:6ca7306ed2cb24ec": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:6cc21c3dee7c4c12": {
+  "keep": false,
+  "severity": null,
+  "why": "equity broker rating"
+ },
+ "news:7353da4c347f3781": {
+  "keep": false,
+  "severity": null,
+  "why": "research outlook"
+ },
+ "news:765797d50fa5927b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Russia sale coverage"
+ },
+ "news:76d4b6ac31393004": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:770d3a71db588639": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Russia sale coverage"
+ },
+ "news:7c7b1057d6f730d5": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as gilt lead manager"
+ },
+ "news:7fb34e9130c66727": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Sabadell stake coverage"
+ },
+ "news:82cb25aa63ad3681": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:838880e28daade01": {
+  "keep": true,
+  "severity": "info",
+  "why": "takes on UBS fund admin"
+ },
+ "news:84be2d4ace986424": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:861a889b6da38b1b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate results syndication"
+ },
+ "news:8776e772f11b5eab": {
+  "keep": false,
+  "severity": null,
+  "why": "former campus property"
+ },
+ "news:8b245077178085c1": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:8c460c19c1d456d3": {
+  "keep": false,
+  "severity": null,
+  "why": "fraud-education marketing"
+ },
+ "news:9434ab05d2cc7428": {
+  "keep": true,
+  "severity": "info",
+  "why": "interim dividend up 16%"
+ },
+ "news:978d1d0737b1135d": {
+  "keep": false,
+  "severity": null,
+  "why": "adviser team departs"
+ },
+ "news:987cf5a72f5b2be2": {
+  "keep": true,
+  "severity": "info",
+  "why": "debut bond, record pricing"
+ },
+ "news:98daf5608e0ef8f9": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend stock comparison"
+ },
+ "news:9a0f7d86ca66a9fa": {
+  "keep": true,
+  "severity": "info",
+  "why": "Webster acquisition completed"
+ },
+ "news:9f04c8b9d0b0d8b0": {
+  "keep": false,
+  "severity": null,
+  "why": "research outlook"
+ },
+ "news:a0dbb83d8bca520d": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate MPS bid coverage"
+ },
+ "news:a3da05e3cfb00354": {
+  "keep": true,
+  "severity": "good",
+  "why": "H1 underlying profit +15%"
+ },
+ "news:b1414f9e1a10bd30": {
+  "keep": false,
+  "severity": null,
+  "why": "regional appointment"
+ },
+ "news:b1c01c61f910a904": {
+  "keep": false,
+  "severity": null,
+  "why": "tech adoption story"
+ },
+ "news:b23d2bc226e0f9b9": {
+  "keep": false,
+  "severity": null,
+  "why": "market maker notice"
+ },
+ "news:b3f56e878eab224b": {
+  "keep": false,
+  "severity": null,
+  "why": "real estate agency business"
+ },
+ "news:b4f9a1c7927d736a": {
+  "keep": true,
+  "severity": "info",
+  "why": "C$2bn Moneris sale"
+ },
+ "news:baf7ddac8b62f5fc": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate results syndication"
+ },
+ "news:bc5f8e144be9e5e4": {
+  "keep": false,
+  "severity": null,
+  "why": "research outlook"
+ },
+ "news:c0c795f2799bc921": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:c0df2d3eda9573f2": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 beat estimates"
+ },
+ "news:c2667584523fea16": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender on a deal"
+ },
+ "news:c4c994f762c26c4e": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:c4ec9bceabf015cc": {
+  "keep": false,
+  "severity": null,
+  "why": "history retrospective"
+ },
+ "news:c6230ea69528da2f": {
+  "keep": false,
+  "severity": null,
+  "why": "results date advisory"
+ },
+ "news:ce4c9ad69a60036e": {
+  "keep": true,
+  "severity": "good",
+  "why": "Fitch VR upgrade"
+ },
+ "news:ce94c8c14c3a7236": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Russia sale coverage"
+ },
+ "news:cee60d25381ccbfb": {
+  "keep": false,
+  "severity": null,
+  "why": "fund unit distribution"
+ },
+ "news:cfec827b04fcfaff": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:d01e040e16eb1766": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:d42ba274b5e2f265": {
+  "keep": true,
+  "severity": "info",
+  "why": "rating affirmed, stable"
+ },
+ "news:da04b973e8e18806": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:dac565e81f9dd0a5": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:e0a7919d1ebfee7d": {
+  "keep": true,
+  "severity": "info",
+  "why": "exits fund admin unit"
+ },
+ "news:e2d1977661bc7cda": {
+  "keep": false,
+  "severity": null,
+  "why": "wealth desk hires"
+ },
+ "news:e3ceb2dcb0d5f370": {
+  "keep": false,
+  "severity": null,
+  "why": "fraud-education marketing"
+ },
+ "news:e5ecc105ac2d4b4c": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:ea7f1c1940cb916e": {
+  "keep": true,
+  "severity": "info",
+  "why": "MPS takeover bid backed"
+ },
+ "news:eb4d882544d92c48": {
+  "keep": false,
+  "severity": null,
+  "why": "routine senior issuance"
+ },
+ "news:ed6748ba76f15c24": {
+  "keep": false,
+  "severity": null,
+  "why": "routine bond terms"
+ },
+ "news:f0134e7b77e65a0c": {
+  "keep": false,
+  "severity": null,
+  "why": "routine dividend declaration"
+ },
+ "news:f07389526fa1d88b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Sabadell stake coverage"
+ },
+ "news:f1a9b7ba913b601c": {
+  "keep": false,
+  "severity": null,
+  "why": "staff interview"
+ },
+ "news:f38a8880c9b845d1": {
+  "keep": true,
+  "severity": "info",
+  "why": "$2.25bn NEOS acquisition"
+ },
+ "news:f38f943ea20cbab6": {
+  "keep": false,
+  "severity": null,
+  "why": "registrar appointment"
+ },
+ "news:f6d52d2b6b725bc6": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:fd80202cf70e9319": {
+  "keep": true,
+  "severity": "warn",
+  "why": "SEC censure"
+ },
+ "news:fde298edfe554887": {
+  "keep": false,
+  "severity": null,
+  "why": "marketing hires"
+ },
+ "news:ff509b7013a929fa": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Russia sale coverage"
  }
 }
