@@ -13503,5 +13503,515 @@
   "keep": false,
   "severity": null,
   "why": "duplicate Russia sale coverage"
+ },
+ "news:6088e236b5a7cabe": {
+  "keep": true,
+  "severity": "info",
+  "why": "Intesa bid for MPS, shareholders back"
+ },
+ "news:d2b9e284b4fb8de9": {
+  "keep": true,
+  "severity": "warn",
+  "why": "ex-employee money-laundering plea"
+ },
+ "news:0596954d5ffe25fe": {
+  "keep": true,
+  "severity": "warn",
+  "why": "large UK wealth job cuts"
+ },
+ "news:5c4bb8d00402ef6f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "large UK wealth job cuts"
+ },
+ "news:141c79669d94b95d": {
+  "keep": true,
+  "severity": "warn",
+  "why": "large UK wealth job cuts"
+ },
+ "news:060a3c3db4fa41e4": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:f310384649e702f5": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:770cf0f1f5adf6a8": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:d5411bf78ff87573": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:7263dab4084c7910": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:7ab85fa333b2932c": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:f5173963d4f4bb9b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:62fa4927ca40373d": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:473338abfa13bf5b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:e49931abad802de7": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:25ca1e9c7a1e193b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:b47e992b521103ae": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:8cb3837edffbcbc5": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:ff3cb8de6d19d0c6": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:2d73e738407b13cd": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:9b9cc8017842b9dd": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:9055dcf4805ca8cb": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:f19e8e28c7b7f6a3": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate job-cut syndication"
+ },
+ "news:758be72816cb3307": {
+  "keep": false,
+  "severity": null,
+  "why": "asset-management product"
+ },
+ "news:829b53b79edfe9c0": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as dealer in gilt pilot"
+ },
+ "news:911ae4456982c5a3": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as dealer in gilt pilot"
+ },
+ "news:74a59a8f42da3056": {
+  "keep": true,
+  "severity": "info",
+  "why": "equity downgrade of the bank"
+ },
+ "news:1cc339181c6bc0ae": {
+  "keep": false,
+  "severity": null,
+  "why": "product launch"
+ },
+ "news:44dd74e0289d0ec6": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend listicle"
+ },
+ "news:bceddefe9dffa8b8": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend listicle"
+ },
+ "news:2b2c7d883dbb647d": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend listicle"
+ },
+ "news:27cadd417b2b5895": {
+  "keep": false,
+  "severity": null,
+  "why": "dividend listicle"
+ },
+ "news:210837b3ac8e4e1a": {
+  "keep": false,
+  "severity": null,
+  "why": "AI ranking marketing"
+ },
+ "news:55ba6fdba6269709": {
+  "keep": false,
+  "severity": null,
+  "why": "token price page"
+ },
+ "news:7a59de4a9cbc66d2": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:50a328aed5a015c7": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender on a deal"
+ },
+ "news:f400bca13f3949bf": {
+  "keep": true,
+  "severity": "info",
+  "why": "\u20ac5bn AT1 capital issuance"
+ },
+ "news:2f7b6561d71ecf8b": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:4cb1e322eba4428e": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:916be3e4e0a3b795": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate EY breach syndication"
+ },
+ "news:58de75bf3738de74": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate EY breach syndication"
+ },
+ "news:42fd6831e24750e1": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate EY breach syndication"
+ },
+ "news:de17c7795a12f231": {
+  "keep": true,
+  "severity": "warn",
+  "why": "client data exposed in EY breach"
+ },
+ "news:36f6055844f3c3f8": {
+  "keep": true,
+  "severity": "warn",
+  "why": "client data exposed in EY breach"
+ },
+ "news:a2975f6cce5975b2": {
+  "keep": true,
+  "severity": "info",
+  "why": "Dutch state to cut stake"
+ },
+ "news:b2bbeb128e3c4842": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate video of stake story"
+ },
+ "news:2115735cd3f13fa5": {
+  "keep": false,
+  "severity": null,
+  "why": "about acquirer of small unit"
+ },
+ "news:dc78d5a3bb8b0991": {
+  "keep": false,
+  "severity": null,
+  "why": "former staff convictions, legacy"
+ },
+ "news:33375c583c7d98bc": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:7f75e7ae7f7e2ec0": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:7bdabf4aeeac73e8": {
+  "keep": false,
+  "severity": null,
+  "why": "sustainability PR"
+ },
+ "news:86839fe34cfc0ced": {
+  "keep": false,
+  "severity": null,
+  "why": "former exec joins another firm"
+ },
+ "news:552c55a30317d81f": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as adviser on client deal"
+ },
+ "news:22a6cdd1bbcf7a47": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:728a4597e080827d": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rate listicle"
+ },
+ "news:833034247919a68a": {
+  "keep": false,
+  "severity": null,
+  "why": "office hub local story"
+ },
+ "news:07294ef26a12e798": {
+  "keep": false,
+  "severity": null,
+  "why": "local leadership profile"
+ },
+ "news:bc14146103a96915": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:1d8f5b84ee3adbac": {
+  "keep": true,
+  "severity": "info",
+  "why": "wins UBS fund-admin business"
+ },
+ "news:3757af071bc1ec02": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate UBS fund-admin deal"
+ },
+ "news:398103e9fa00b551": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate UBS fund-admin deal"
+ },
+ "news:0feb6c7283c04a63": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:bcf8857b993626b6": {
+  "keep": false,
+  "severity": null,
+  "why": "stock narrative filler"
+ },
+ "news:5c8ec1c9ec9469bb": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:2c033b2167c9e494": {
+  "keep": true,
+  "severity": "warn",
+  "why": "HUD regulator probe"
+ },
+ "news:9df02f09a6e7f4c1": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate HUD probe coverage"
+ },
+ "news:eb5235b7c3eb0f17": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate HUD probe coverage"
+ },
+ "news:a73b9ef6b2fffabc": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate HUD probe coverage"
+ },
+ "news:59946d42c33321d9": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate HUD probe coverage"
+ },
+ "news:ca6fa90ae0e3ec9e": {
+  "keep": false,
+  "severity": null,
+  "why": "strategist interview"
+ },
+ "news:3efe2a00e7e37fd8": {
+  "keep": false,
+  "severity": null,
+  "why": "law-firm solicitation ad"
+ },
+ "news:843588db2b241af1": {
+  "keep": false,
+  "severity": null,
+  "why": "law-firm solicitation ad"
+ },
+ "news:c9f8b5f93b7c92df": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as equity analyst"
+ },
+ "news:119fa53b7eebb5fd": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO general commentary"
+ },
+ "news:c65e0e4da1d5ab7a": {
+  "keep": false,
+  "severity": null,
+  "why": "bank's own content"
+ },
+ "news:be4227119c561228": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:d9cb5426517d446e": {
+  "keep": true,
+  "severity": "info",
+  "why": "Delfin backs MPS takeover"
+ },
+ "news:f08ea96f5d357c9f": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate MPS bid coverage"
+ },
+ "news:9b0e71d23c832b34": {
+  "keep": false,
+  "severity": null,
+  "why": "regional appointment"
+ },
+ "news:a7230c64a21e5560": {
+  "keep": false,
+  "severity": null,
+  "why": "macro commentary by bank"
+ },
+ "news:8be5aee782abd328": {
+  "keep": false,
+  "severity": null,
+  "why": "stock forecast page"
+ },
+ "news:d43da82b7c6fe12c": {
+  "keep": false,
+  "severity": null,
+  "why": "product launch"
+ },
+ "news:8cd02c993cef7a2a": {
+  "keep": true,
+  "severity": "info",
+  "why": "rating affirmed"
+ },
+ "news:19d975937657ef3e": {
+  "keep": false,
+  "severity": null,
+  "why": "functional appointment"
+ },
+ "news:26e14e2223046a80": {
+  "keep": true,
+  "severity": "warn",
+  "why": "another loss, cost cuts"
+ },
+ "news:46415872ed2e507c": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate syndication"
+ },
+ "news:c104af63166325d4": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate syndication"
+ },
+ "news:cf18c0e48a8183cc": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate syndication"
+ },
+ "news:25f7c66f17196318": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate syndication"
+ },
+ "news:9cba35b1aeaba468": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate syndication"
+ },
+ "news:08e6e44db395cc94": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate syndication"
+ },
+ "news:b29886f509a26cba": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate syndication"
+ },
+ "news:6167b481c808a642": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate syndication"
+ },
+ "news:a556c4a5af0183cf": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate syndication"
+ },
+ "news:428d3643663ea81d": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate syndication"
+ },
+ "news:45023c8e62a8cb36": {
+  "keep": false,
+  "severity": null,
+  "why": "'today in history' filler"
+ },
+ "news:a1db9255634e1fb1": {
+  "keep": true,
+  "severity": "info",
+  "why": "UniCredit takeover, chair on rules"
+ },
+ "news:dd51324b5066fed9": {
+  "keep": false,
+  "severity": null,
+  "why": "minor book disposal"
+ },
+ "news:3b1372e0dc8b1756": {
+  "keep": true,
+  "severity": "info",
+  "why": "NVCC subordinated capital issuance"
+ },
+ "news:626f5d303700683d": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender on a deal"
+ },
+ "news:8c4c1f4122b01b6e": {
+  "keep": false,
+  "severity": null,
+  "why": "product partnership"
+ },
+ "news:fb356f9330c07221": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$35m penalty over scam failures"
  }
 }
