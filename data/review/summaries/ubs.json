@@ -1,8 +1,8 @@
 {
  "id": "ubs",
- "written": "2026-10-07",
+ "written": "2026-10-08",
  "background": "UBS Group is Switzerland's only remaining global bank after absorbing Credit Suisse, the world's largest wealth manager, with Swiss retail and corporate banking, asset management and an investment bank, and a balance sheet far larger than the Swiss economy.",
- "synthesis": "Two of the three main agencies rate the group, A on average and the weakest of them at A-, both on a stable outlook, after a one-notch upgrade by one of the three on 14 Apr 2026. Capital is solid on its own figures, with CET1 of 14.4% and leverage of 5.8%, and liquidity is ample, with LCR of 177% and NSFR of 115%; none of the ratios has moved materially over the past four periods. The pressure is regulatory rather than in the numbers: the newest flagged item, on 6 Oct 2026, is its exit from the fund-administration business inherited from Credit Suisse, and the rest centre on a Swiss capital plan that would force it to hold more capital or move abroad.",
+ "synthesis": "Rated A on average across two of the three, the weakest of them at A-, both on a stable outlook, after a one-notch upgrade by one of the three on 14 Apr 2026, UBS holds a solid single-A standing. CET1 is 14.4% and leverage 5.8%, with LCR of 177% and NSFR of 115%, and none of the ratios has moved materially over the past four periods to 30 Jun 2026. The issue to watch is regulatory: the flagged news, the newest on 2 Oct 2026, centres on Swiss proposals for higher capital requirements and their cost to the group.",
  "inputs": {
   "band": "B",
   "composite": "A",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable",
   "n": 2,
   "asof": "2026-06-30",
-  "last_flagged": "2026-10-06"
+  "last_flagged": "2026-10-02"
  }
 }

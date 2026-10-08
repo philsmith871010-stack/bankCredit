@@ -1,8 +1,8 @@
 {
  "id": "barclays-bank",
- "written": "2026-10-07",
+ "written": "2026-10-08",
  "background": "Barclays Bank PLC is the non-ring-fenced bank of Barclays, housing the corporate and investment bank, the international cards business and the private bank, funded by corporate deposits and wholesale markets.",
- "synthesis": "All three main agencies rate the bank at A+ on average, all on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. Capital is mixed: leverage of 5.5% is in the top quarter of UK majors, but CET1 of 12.6% is in the bottom quarter. Liquidity is the softer side, with LCR of 140% below the median and NSFR of 112% in the bottom quarter, and LCR has fallen 14 points since 30 Jun 2025 while the other ratios have been broadly flat. The flagged news, the newest on 28 Sep 2026, centres on the collapse of a shadow-bank client and fraud allegations around it, alongside outages on its traders' risk platform.",
+ "synthesis": "Rated A+ on average across all three, all three on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026, the bank carries a stronger rating than its parent. Capital is mixed: leverage of 5.5% is in the top quarter of UK majors, but CET1 of 12.6% is in the bottom quarter. Liquidity is the softer side, with LCR of 140% below the peer median and NSFR of 112% in the bottom quarter, and LCR has fallen 14 points since 30 Jun 2025 while the other ratios have been broadly flat. The flagged news is mostly legacy conduct and litigation, the newest on 7 Oct 2026 concerning former bankers' convictions, plus allegations over its role in a collapsed lender.",
  "inputs": {
   "band": "C",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-28"
+  "last_flagged": "2026-10-07"
  }
 }
