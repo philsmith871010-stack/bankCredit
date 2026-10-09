@@ -1,8 +1,8 @@
 {
  "id": "morgan-stanley",
- "written": "2026-10-08",
+ "written": "2026-10-09",
  "background": "Morgan Stanley is the holding company of a leading US investment bank whose earnings have shifted toward wealth and investment management alongside institutional securities, with a deposit franchise built on brokerage sweeps.",
- "synthesis": "Rated A on average across all three, the weakest of them at A-, all three on a stable outlook, the group holds a steady single-A standing. CET1 of 14.9% and LCR of 129% are both in the top quarter of US banks, but leverage of 4.9% is in the bottom quarter, typical of a securities-heavy balance sheet and the one figure to watch. Leverage has fallen 0.6 points since 30 Jun 2025, while CET1 and LCR have been broadly flat. The flagged news is operational, the most notable a deal pipeline accidentally shared with clients, and the newest, on 7 Oct 2026, is not about credit.",
+ "synthesis": "Rated A on average across all three, the weakest of them at A-, all three on a stable outlook, with no move since a one-notch upgrade by one of the three on 4 Nov 2022. CET1 of 14.9% and LCR of 129% are both in the top quarter of US banks, but leverage of 4.9% is in the bottom quarter and is the figure to watch. Leverage has fallen 0.6 points since 30 Jun 2025, while CET1 and LCR have been broadly flat. Flagged news in the last 90 days is about a misdirected client email exposing its Asia deal pipeline, the newest on 25 Sep 2026, an operational rather than a credit matter.",
  "inputs": {
   "band": "B",
   "composite": "A",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-10-07"
+  "last_flagged": "2026-09-25"
  }
 }

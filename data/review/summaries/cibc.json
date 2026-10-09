@@ -1,8 +1,8 @@
 {
  "id": "cibc",
- "written": "2026-09-23",
+ "written": "2026-10-09",
  "background": "Canadian Imperial Bank of Commerce is one of Canada's big six banks, funded by Canadian deposits and lending mainly on Canadian mortgages and to businesses, with a US commercial and wealth arm and a Caribbean bank.",
- "synthesis": "The bank is rated A+ on average across all three main agencies, the weakest of them at A, all on a stable outlook; the last move was a three-notch downgrade by one of the three on 11 Jul 2024. Capital is mixed against Canadian banks: CET1 of 13.4% is just below the peer median while leverage of 4.3% is in the top quarter. None of the ratios has moved materially over the past four periods to 31 Jul 2026. The newest flagged item, on 17 Sep 2026, is an investor's fraud claim against CIBC World Markets allowed to proceed, alongside layoff reports; litigation and cost-cutting rather than credit concerns.",
+ "synthesis": "Rated A+ on average across all three, the weakest of them at A, all three on a stable outlook, with no move since a three-notch downgrade by one of the three on 11 Jul 2024. Leverage of 4.3% is in the top quarter of Canadian banks, while CET1 of 13.4% is just below the peer median. None of the ratios has moved materially over the past four periods, on figures to 31 Jul 2026. Flagged news in the last 90 days is litigation and layoffs rather than credit events, the newest on 9 Oct 2026 a settlement of a mutual fund commission lawsuit.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-07-31",
-  "last_flagged": "2026-09-17"
+  "last_flagged": "2026-10-09"
  }
 }

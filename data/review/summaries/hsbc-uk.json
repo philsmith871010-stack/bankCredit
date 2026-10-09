@@ -1,8 +1,8 @@
 {
  "id": "hsbc-uk",
- "written": "2026-10-08",
+ "written": "2026-10-09",
  "background": "HSBC UK Bank plc is the ring-fenced retail and commercial bank of HSBC in Britain, funded by UK personal and business deposits and lending on residential mortgages and to UK companies, including first direct.",
- "synthesis": "Rated AA- on average across all three, the weakest of them at A+, two on a positive outlook and one on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026, the ring-fenced bank is among the best-rated UK lenders. Liquidity is the strength, with LCR of 160% above the UK majors' median and NSFR of 143% in the top quarter, and leverage of 5.6% is also in the top quarter, though CET1 of 13.2% is in the bottom quarter. Liquidity has come down from a high level, with LCR down 26 points and NSFR down 8 points since 30 Jun 2025, while CET1 and leverage have been broadly flat. The flagged news, the newest on 7 Oct 2026, is about job cuts in the UK wealth business.",
+ "synthesis": "Rated AA- on average across all three, the weakest of them at A+, two on a positive outlook and one on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026, the ring-fenced bank is rated high with momentum upward. Liquidity and leverage are the strength, with LCR of 160% above the UK majors median and NSFR of 143% and leverage of 5.6% in the top quarter, while CET1 of 13.2% in the bottom quarter is the softer figure. Since 30 Jun 2025 LCR has fallen 26 points and NSFR 8 points, while CET1 and leverage have been broadly flat. Flagged news in the last 90 days is about job cuts in the UK wealth business, the newest on 8 Oct 2026, not credit.",
  "inputs": {
   "band": "B",
   "composite": "AA-",
@@ -10,6 +10,6 @@
   "outlooks": "positive, positive, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-10-07"
+  "last_flagged": "2026-10-08"
  }
 }

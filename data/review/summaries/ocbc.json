@@ -1,8 +1,8 @@
 {
  "id": "ocbc",
- "written": "2026-10-08",
+ "written": "2026-10-09",
  "background": "OCBC is Singapore's second-largest bank, funded by Singapore dollar deposits and lending across Singapore, Malaysia, Indonesia and Greater China, with Great Eastern as its insurance arm and Bank of Singapore in private banking.",
- "synthesis": "Rated AA on average across all three, the weakest of them at AA-, all three on a stable outlook, OCBC is among the highest-rated banks in the comparison. Capital is strong against Asian banks, with CET1 of 15.7% above the median and leverage of 6.5% in the top quarter. Liquidity is the weaker side, with LCR of 131% and NSFR of 109% both in the bottom quarter. Since 30 Jun 2025 CET1 has fallen 1.3 points and leverage 0.8 points, while LCR and NSFR have been broadly flat; the newest flagged item, on 7 Oct 2026, is a broker's sell call on the shares, while earlier items report strong profits.",
+ "synthesis": "Rated AA on average across all three, the weakest of them at AA-, all three on a stable outlook. Capital is strong against Asian banks, with CET1 of 15.7% above the peer median and leverage of 6.5% in the top quarter, but LCR of 131% and NSFR of 109% are both in the bottom quarter, which is the weak spot. Since 30 Jun 2025 CET1 has fallen 1.3 points and leverage 0.8 points, while LCR and NSFR have been broadly flat. Recent news is good on earnings, and the newest flag, on 8 Oct 2026, is a fall in Singapore bank shares.",
  "inputs": {
   "band": "B",
   "composite": "AA",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-10-07"
+  "last_flagged": "2026-10-08"
  }
 }

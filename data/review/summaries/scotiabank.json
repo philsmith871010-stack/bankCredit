@@ -1,8 +1,8 @@
 {
  "id": "scotiabank",
- "written": "2026-09-24",
+ "written": "2026-10-09",
  "background": "The Bank of Nova Scotia is one of Canada's big six banks and the most international of them, funded by Canadian deposits and wholesale markets and lending in Canada, the United States, Mexico, Peru, Chile and the Caribbean.",
- "synthesis": "Rated A+ on average across all three, the weakest of them at A and all three on a stable outlook; the last move was a three-notch downgrade by one of the three on 24 Sep 2018, long enough ago that the standing has settled. Capital is mixed against Canadian peers, with CET1 of 13.1% in the bottom quarter against leverage of 4.3% in the top quarter, and no liquidity ratios are held. None of the ratios has moved materially over the past four periods (figures to 31 Jul 2026). Third-quarter earnings beat the bank's own target, and the one adverse item in the last 90 days, an $11m cybertheft settlement flagged on 21 Sep 2026, is immaterial at this size.",
+ "synthesis": "Rated A+ on average across all three, the weakest of them at A, all three on a stable outlook, with no move since a three-notch downgrade by one of the three on 24 Sep 2018. Leverage of 4.3% is in the top quarter of Canadian banks, but CET1 of 13.1% is in the bottom quarter. None of the ratios has moved materially over the past four periods, on figures to 31 Jul 2026. The newest flag, on 2 Oct 2026, is the bank addressing US anti-money laundering compliance deficiencies, the one recent item with a regulatory edge.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-07-31",
-  "last_flagged": "2026-09-21"
+  "last_flagged": "2026-10-02"
  }
 }
