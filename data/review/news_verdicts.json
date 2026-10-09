@@ -14013,5 +14013,635 @@
   "keep": true,
   "severity": "warn",
   "why": "$35m penalty over scam failures"
+ },
+ "news:ab6f5e94366c733b": {
+  "keep": true,
+  "severity": "warn",
+  "why": "BaFin AML remediation deadlines"
+ },
+ "news:16d8e5df3a63efa7": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO succession reported"
+ },
+ "news:9ca9d1246c0c6d6c": {
+  "keep": false,
+  "severity": null,
+  "why": "hire below senior level"
+ },
+ "news:3bfdb5a85f24bdcf": {
+  "keep": true,
+  "severity": "warn",
+  "why": "$26M lawsuit settlement"
+ },
+ "news:993b480058c49421": {
+  "keep": false,
+  "severity": null,
+  "why": "competitor commentary"
+ },
+ "news:387a8dfc7e524a20": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rates listing"
+ },
+ "news:1ce3d130a69b76d6": {
+  "keep": false,
+  "severity": null,
+  "why": "share-price commentary"
+ },
+ "news:b2ad3d6eeb8e2a5f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "BaFin AML remediation deadlines"
+ },
+ "news:291b4d24d905a5a4": {
+  "keep": false,
+  "severity": null,
+  "why": "options/earnings preview"
+ },
+ "news:ebc4078de2763a3d": {
+  "keep": true,
+  "severity": "info",
+  "why": "ownership: PE stake sale"
+ },
+ "news:59bf2471bb42179b": {
+  "keep": false,
+  "severity": null,
+  "why": "options/earnings preview"
+ },
+ "news:9e3580dbae89902d": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:8c3292be24955cb8": {
+  "keep": false,
+  "severity": null,
+  "why": "business win"
+ },
+ "news:3540b21644e6c524": {
+  "keep": false,
+  "severity": null,
+  "why": "internal appointment"
+ },
+ "news:2412552a0c5d1290": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:a8380aa5139f2a65": {
+  "keep": true,
+  "severity": "info",
+  "why": "merger amid credit crunch"
+ },
+ "news:f54af3132986a495": {
+  "keep": true,
+  "severity": "warn",
+  "why": "BaFin extends AML remediation deadline"
+ },
+ "news:fa29e614a8d5f61c": {
+  "keep": false,
+  "severity": null,
+  "why": "product launch"
+ },
+ "news:8dc934cd283aca24": {
+  "keep": true,
+  "severity": "warn",
+  "why": "BaFin AML remediation deadlines"
+ },
+ "news:c4359c1de57e1d56": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:8e917f6041b0cdec": {
+  "keep": true,
+  "severity": "warn",
+  "why": "client data exposed in EY breach"
+ },
+ "news:56a97e4ce2a3f992": {
+  "keep": true,
+  "severity": "warn",
+  "why": "federal probe"
+ },
+ "news:7c7bdd61742f9ce3": {
+  "keep": false,
+  "severity": null,
+  "why": "share-price commentary"
+ },
+ "news:8067981053ee9535": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:ec9cef4eb313baa4": {
+  "keep": false,
+  "severity": null,
+  "why": "share buy-back"
+ },
+ "news:4a2e4fcd5107658e": {
+  "keep": false,
+  "severity": null,
+  "why": "crypto partnership talks"
+ },
+ "news:a2ae3ced757b5545": {
+  "keep": false,
+  "severity": null,
+  "why": "share buy-back"
+ },
+ "news:05acdf3802eeb4d0": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:f134b6fa2acd13bc": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:e66433e0bd3637a8": {
+  "keep": false,
+  "severity": null,
+  "why": "obituary"
+ },
+ "news:857a4bd07e56f7ae": {
+  "keep": true,
+  "severity": "info",
+  "why": "acquittal upheld, Korea short-selling"
+ },
+ "news:9a88b0845bafd062": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:7a9fda1f4ba6d402": {
+  "keep": false,
+  "severity": null,
+  "why": "community commentary"
+ },
+ "news:e3078ad9ca0c6415": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:aedaf30242d73d59": {
+  "keep": true,
+  "severity": "warn",
+  "why": "US leveraged loan losses"
+ },
+ "news:5f4976110d8dfd36": {
+  "keep": false,
+  "severity": null,
+  "why": "share-price commentary"
+ },
+ "news:b499aed1d0a3607b": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:7b47a965c67201ee": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:321f2afe7166e67c": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:454a2cb87e2a8086": {
+  "keep": true,
+  "severity": "warn",
+  "why": "large UK job cuts"
+ },
+ "news:9991d94fb4ecef26": {
+  "keep": true,
+  "severity": "info",
+  "why": "acquittal upheld, Korea short-selling"
+ },
+ "news:6d276d020903860c": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:a2d69373a154506f": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:e05244147412170f": {
+  "keep": false,
+  "severity": null,
+  "why": "share-price commentary"
+ },
+ "news:2d3e1953af85932e": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:a0b3fd625f4ea58f": {
+  "keep": true,
+  "severity": "info",
+  "why": "M&A contest for BPM"
+ },
+ "news:b55341692178214d": {
+  "keep": false,
+  "severity": null,
+  "why": "marketing"
+ },
+ "news:ce0a9f990993a9eb": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:a0b74f663557ccbd": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:5b1cf20546d509b4": {
+  "keep": false,
+  "severity": null,
+  "why": "share-price commentary"
+ },
+ "news:46552fb277bd9ba6": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:719f165bcce4307b": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:76eadbf16ef665d9": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:c763df2ce43ebb66": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:dcbf301eb0209cc1": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:74bec131c8bf1021": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:0d45a37b4890a7c5": {
+  "keep": true,
+  "severity": "info",
+  "why": "exits US/EU govt bond dealing"
+ },
+ "news:074badb7825990e6": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:0e71f8058465385d": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:43e1e6f3d129710a": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:d0b52482aef2102c": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee hire elsewhere"
+ },
+ "news:8d2211e4991debd9": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:882a8416ee080ba0": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:2b52f164df489ec0": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:dd32c29fc5f50bbb": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:61f81e6e0a452f0a": {
+  "keep": false,
+  "severity": null,
+  "why": "commentary on job cuts"
+ },
+ "news:72e842f8a35098e6": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:e0d620769b6c7195": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:bfd8dd8d5df8e903": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:21b90f4cedba1acf": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:88403d9918bc7960": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:2d285f8edbb10eb1": {
+  "keep": false,
+  "severity": null,
+  "why": "unrelated (street address)"
+ },
+ "news:ff8f489b51a8a89e": {
+  "keep": false,
+  "severity": null,
+  "why": "unrelated (street address)"
+ },
+ "news:f39f4228911449b5": {
+  "keep": false,
+  "severity": null,
+  "why": "securities services mandate"
+ },
+ "news:d2b6a47c3412b7da": {
+  "keep": true,
+  "severity": "warn",
+  "why": "federal probe"
+ },
+ "news:fb64a30a6a5bbf4d": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:f7c2a8a2c763097a": {
+  "keep": true,
+  "severity": "info",
+  "why": "exits US/EU govt bond dealing"
+ },
+ "news:03ea2e0763bec512": {
+  "keep": false,
+  "severity": null,
+  "why": "product launch"
+ },
+ "news:3e658ad3c8835d1c": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:2d3cbee082f10b26": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:097dc52915ca4231": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:fc31bb9e33f06e4b": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary appointments"
+ },
+ "news:c59dbfffad21adb2": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:1cfbe53db4fb03a2": {
+  "keep": true,
+  "severity": "info",
+  "why": "Fitch A- affirmed"
+ },
+ "news:588dd556eb3214fc": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:e3338361695dcdf5": {
+  "keep": false,
+  "severity": null,
+  "why": "internal appointment"
+ },
+ "news:e1f8d139058fe60b": {
+  "keep": false,
+  "severity": null,
+  "why": "CD rates listing"
+ },
+ "news:b01ccffc8a170068": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:68931630f9d3502e": {
+  "keep": false,
+  "severity": null,
+  "why": "crypto partnership talks"
+ },
+ "news:dacf5690a5188e47": {
+  "keep": false,
+  "severity": null,
+  "why": "immaterial acquisition"
+ },
+ "news:6e6056cf1e593be2": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:a1ae070ec1574317": {
+  "keep": true,
+  "severity": "info",
+  "why": "explores Bangladesh retail sale"
+ },
+ "news:6bcf8ba68a84d829": {
+  "keep": false,
+  "severity": null,
+  "why": "adviser team hire"
+ },
+ "news:abb1904b3b482e9d": {
+  "keep": false,
+  "severity": null,
+  "why": "adviser team hire"
+ },
+ "news:5c60b310b84cbf1b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:7e1af5db42f8b704": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:c1361f4ea009ce58": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:13840dafb28cce36": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:a937aea14be8bc2d": {
+  "keep": false,
+  "severity": null,
+  "why": "crypto partnership talks"
+ },
+ "news:4510ea5156ebb7dc": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:1f99efd92da792ea": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:2a4bd7b84aba5adb": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary bond issue"
+ },
+ "news:d6dacbce77446182": {
+  "keep": true,
+  "severity": "warn",
+  "why": "large UK job cuts"
+ },
+ "news:798fec0b0cc01b8e": {
+  "keep": true,
+  "severity": "warn",
+  "why": "large UK job cuts"
+ },
+ "news:6003d5322d06d0f9": {
+  "keep": false,
+  "severity": null,
+  "why": "crypto partnership talks"
+ },
+ "news:3640106ac5c9e1a9": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:9ee8fc9155c5e6a2": {
+  "keep": false,
+  "severity": null,
+  "why": "commentary on job cuts"
+ },
+ "news:dc0d48931ddbdfe2": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:00a0bd99e1388424": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-traders' convictions, not the bank"
+ },
+ "news:00074cdd25be0d91": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:d2b8044a7bf9ed70": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:14db3e168d4f8dd8": {
+  "keep": true,
+  "severity": "info",
+  "why": "M&A approval"
+ },
+ "news:b68687118a6f5a27": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst/forecaster or passing mention"
+ },
+ "news:e0ed4829e6630b54": {
+  "keep": true,
+  "severity": "info",
+  "why": "takes 7% Sabadell stake"
+ },
+ "news:b28abe67ed3eb36b": {
+  "keep": false,
+  "severity": null,
+  "why": "fund-research watchlist"
+ },
+ "news:df39e0d5317c2103": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings date notice"
+ },
+ "news:d1ea0793d651003a": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO conference remarks"
+ },
+ "news:741ad18f27b052dc": {
+  "keep": true,
+  "severity": "warn",
+  "why": "US AML compliance deficiencies"
+ },
+ "news:bfb8ed53bec28b7d": {
+  "keep": false,
+  "severity": null,
+  "why": "ex-employee hire elsewhere"
+ },
+ "news:fa8fcbc2c067d562": {
+  "keep": true,
+  "severity": "warn",
+  "why": "another loss, cost cuts"
+ },
+ "news:2fe06d7167fda847": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:b4741dc161f92aca": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:cebdc947e737ed2b": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate story"
+ },
+ "news:8291ee99cb598672": {
+  "keep": true,
+  "severity": "warn",
+  "why": "online banking outage"
+ },
+ "news:8b9ad65fab25c532": {
+  "keep": true,
+  "severity": "info",
+  "why": "2029 strategic targets"
+ },
+ "news:8c4f1f12246f96da": {
+  "keep": true,
+  "severity": "info",
+  "why": "ECB leaning to approve Commerzbank bid"
  }
 }
