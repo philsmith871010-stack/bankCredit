@@ -290,7 +290,8 @@
    "cgml\\-pillar\\-\\d+\\-disclosures\\-q\\d+\\-\\d+",
    "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-q\\d+\\-\\d+\\-en",
    "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-q\\d+\\-\\d+\\-fr",
-   "citibank\\-canada\\-pillar\\-\\d+\\-disclosure\\-ye\\-\\d+\\-en"
+   "citibank\\-canada\\-pillar\\-\\d+\\-disclosure\\-ye\\-\\d+\\-en",
+   "cgme\\-pillar\\-\\d+\\-disclosures_q\\d+\\-\\d+"
   ]
  },
  "nab": {

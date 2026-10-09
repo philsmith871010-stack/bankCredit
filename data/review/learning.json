@@ -4314,5 +4314,12 @@
   "entity_id": "citigroup",
   "reason": "error:no LCR found",
   "skip": true
+ },
+ {
+  "date": "2026-10-09T16:43:08",
+  "id": "2ebaf7661009",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
  }
 ]
