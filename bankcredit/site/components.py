@@ -261,14 +261,63 @@ def stamp(generated: str) -> str:
     return "".join(ch for ch in generated[:16] if ch.isdigit())
 
 
+# The product, in the platform's own style: PWLB and one accent word, the way PWLBpredict,
+# PWLBbenchmark and PWLBbrief are written. One constant to change if the word changes.
+PRODUCT = ("PWLB", "counterparty")
+STRAP = "Bank credit for treasury desks: who you can deal with, and for how long"
+TOOL = "tool/index.html"
+
+# The sidebar is the pathways. A reader arrives with one of three jobs - build a counterparty
+# policy, keep an eye on the names already on it, or find the next one - and each group is one
+# of those jobs, top to bottom in the order the jobs come. Reference sits last because it is
+# read second. Keys match the panel each item opens, so the tool can mark the item for the panel
+# under the reader's eye.
+NAV = [
+    ("Build your strategy", [
+        ("strategy", "Start here", TOOL + "#strategy", "list"),
+        ("weights", "Weightings", TOOL + "#weights", "grid"),
+        ("universe", "Choose names", TOOL + "#universe", "search"),
+    ]),
+    ("Monitor", [
+        ("policy", "Your counterparties", TOOL + "#policy", "bank"),
+        ("events", "Events", TOOL + "#events", "bell"),
+    ]),
+    ("Compare", [
+        ("likeforlike", "Alternatives", TOOL + "#likeforlike", "compare"),
+        ("analysis", "Analysis", TOOL + "#analysis", "activity"),
+        ("ratings", "Ratings", TOOL + "#ratings", "star"),
+    ]),
+    ("Reference", [
+        ("overview", "Overview", "index.html", "book"),
+        ("method", "Method", "admin/index.html#method", "doc"),
+        ("status", "Data status", "admin/index.html#status", "status"),
+    ]),
+]
+# Pages that used to name their place by an older key.
+_ACTIVE_ALIAS = {"home": "policy", "admin": "method", "coverage": "status"}
+
+
+def sidebar(root: str, active: str) -> str:
+    active = _ACTIVE_ALIAS.get(active, active)
+    out = ""
+    for group, items in NAV:
+        out += f'<div class="side-g">{esc(group)}</div>'
+        for key, label, href, icon in items:
+            cls = "side-a active" if key == active else "side-a"
+            out += (f'<a class="{cls}" href="{root}{href}" data-nav="{key}">{ico(icon, 15)}'
+                    f'<span>{esc(label)}</span></a>')
+    return f'<aside class="side" id="side" aria-label="Pathways">{out}</aside>'
+
+
 def shell(title: str, content: str, active: str, root: str = "", generated: str = "", subtitle: str = "",
-          preload: tuple[str, ...] = ()) -> str:
-    """One page, no rail. The site is one page and three tabs of it; a navigation column of three
-    links, one of them always the page you are on, spent 220px saying so. The build stamp it used to
-    carry sits in the header, where it is still the first thing a reader checks."""
+          preload: tuple[str, ...] = (), body_class: str = "") -> str:
+    """The platform's shell: the wordmark and a title bar across the top, the pathways down the
+    side, the page in the rest. The same frame PWLBtoday puts round every tool, so this reads as
+    one of them rather than a site of its own."""
+    strap = subtitle or STRAP
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)} · Counterparty · PWLBtoday</title>
+<title>{esc(title)} · {PRODUCT[0]}{PRODUCT[1]} · PWLBtoday</title>
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='9' fill='%23fd7e14'/%3E%3C/svg%3E">
 {"".join(f'<link rel="preload" href="{root}{p}" as="fetch" crossorigin>' for p in preload)}
@@ -278,13 +327,14 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
      fallback from the first paint and changes typeface when the font lands. -->
 <link rel="stylesheet" href="{root}assets/site.css?v={stamp(generated)}">
 <script type="speculationrules">{SPECULATION}</script>
-</head><body>{symbols()}
-<header class="top"><a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>
-<div class="crumb"><span class="crumb-app">Counterparty</span>{'' if title == "Counterparty" else f'<span class="crumb-sep">/</span><span class="crumb-page">{esc(title)}</span>'}</div>
+</head><body{f' class="{body_class}"' if body_class else ''}>{symbols()}
+<header class="top"><button type="button" class="side-toggle" id="side-toggle" aria-label="Open the pathways" aria-controls="side" aria-expanded="false">{ico("menu", 18)}</button>
+<a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>
+<div class="ptitle"><span class="ptitle-name">{PRODUCT[0]}<span class="brand-accent">{PRODUCT[1]}</span></span><span class="ptitle-sep"></span><span class="ptitle-strap">{esc(strap)}</span></div>
 <div class="top-right"><span class="built">{ico("clock", 13, MUTED)} Built {esc(generated[:16].replace("T", " "))} UTC</span><span class="beta">Beta</span></div></header>
-<div class="frame"><main class="main">{content}</main></div>
+<div class="frame">{sidebar(root, active)}<div class="side-back" id="side-back" hidden></div><main class="main">{content}</main></div>
 <dialog id="gloss-dlg" class="gloss-dlg"></dialog>
-<footer class="foot"><button type="button" class="glink" id="glink">What do these numbers mean?</button> Counterparty is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}admin/index.html#method">Method</a> · <a href="{root}admin/index.html#status">Data status</a></footer>
+<footer class="foot"><button type="button" class="glink" id="glink">What do these numbers mean?</button> {PRODUCT[0]}{PRODUCT[1]} is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}admin/index.html#method">Method</a> · <a href="{root}admin/index.html#status">Data status</a></footer>
 <script id="gloss" type="application/json">{glossary.payload()}</script>
 <script src="{root}assets/app.js?v={stamp(generated)}"></script></body></html>"""
 

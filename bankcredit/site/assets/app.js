@@ -475,3 +475,29 @@ document.addEventListener('click',function(e){
       '</tbody></table><div class="small muted">Quoted from the public record as filed on the ESMA European Rating Platform, as at '+esc(String(j.generated||'').slice(0,10))+'. The agencies\u2019 opinions, not recommendations.</div>';
   }).catch(function(){var w=el.querySelector('.attr-wait'); if(w)w.innerHTML='Not available in this build.'});
 })();
+
+// The sidebar is the pathways. On the tool it also says which panel is open: a tab change marks
+// the item that opens that panel. The two items that open a dialog rather than a panel
+// (weightings, choose names) are never marked, because the panel under them has not changed.
+(function(){
+  var side=document.getElementById('side'); if(!side)return;
+  function mark(name){
+    if(!name)return;
+    var items=side.querySelectorAll('.side-a[data-nav]'); if(!items.length)return;
+    var hit=side.querySelector('.side-a[data-nav="'+name+'"]'); if(!hit)return;
+    items.forEach(function(a){a.classList.toggle('active',a===hit)});
+  }
+  if(document.body.classList.contains('tool')){
+    function sync(){var t=document.querySelector('.tabs-card .tab.active'); if(t)mark(t.dataset.tab)}
+    document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.tabs-card .tab'))setTimeout(sync,0)});
+    addEventListener('hashchange',function(){setTimeout(sync,0)});
+    sync();
+  }
+  // on a phone the pathways slide in from the left and a tap outside puts them away
+  var btn=document.getElementById('side-toggle'), back=document.getElementById('side-back');
+  function set(open){side.classList.toggle('open',open); if(back)back.hidden=!open; if(btn)btn.setAttribute('aria-expanded',open?'true':'false')}
+  if(btn)btn.addEventListener('click',function(){set(!side.classList.contains('open'))});
+  if(back)back.addEventListener('click',function(){set(false)});
+  side.addEventListener('click',function(e){if(e.target.closest('a')&&innerWidth<=900)set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&side.classList.contains('open'))set(false)});
+})();

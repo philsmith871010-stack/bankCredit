@@ -1000,3 +1000,58 @@ tr.uni-mine td{background:#f6f9f4}
 .attr-basis p{margin:6px 0 0;line-height:1.5}
 .cr-attr{border-top:1px dashed var(--line);margin-top:4px;padding-top:6px}
 .cr-attr-l{font-weight:400;font-size:12px;white-space:normal}
+
+/* ---- the platform shell: title bar across the top, the pathways down the side ---------------
+   The same frame PWLBtoday puts round PWLBbenchmark and PWLBbrief. The sidebar is the pathways
+   rather than a list of pages: build a policy, watch it, find the next name, then the reference. */
+:root{--side:220px}
+.top{gap:14px}
+.brand{width:auto;flex:0 0 auto;padding-right:14px;border-right:1px solid var(--line);height:34px}
+.ptitle{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.ptitle-name{font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--navy);white-space:nowrap}
+.ptitle-sep{width:1px;height:22px;background:var(--line)}
+.ptitle-strap{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side-toggle{display:none;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--line);border-radius:8px;background:var(--white);color:var(--navy);cursor:pointer;padding:0}
+.frame{display:flex;align-items:stretch}
+.side{flex:0 0 var(--side);width:var(--side);background:var(--grad);color:#fff;padding:8px 10px 22px;position:sticky;top:var(--header);height:calc(100vh - var(--header));overflow-y:auto;overflow-x:hidden}
+.side-g{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.52);margin:16px 10px 5px}
+.side-g:first-child{margin-top:10px}
+.side-a{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;color:rgba(255,255,255,.86);font-size:13.5px;font-weight:500;text-decoration:none;white-space:nowrap}
+.side-a svg{flex:0 0 auto;opacity:.75}
+.side-a:hover{background:rgba(255,255,255,.08);color:#fff}
+.side-a.active{background:rgba(255,255,255,.14);color:#fff;font-weight:600;box-shadow:inset 3px 0 0 var(--orange)}
+.side-a.active svg{opacity:1;color:var(--orange)}
+.side-back{position:fixed;inset:var(--header) 0 0 0;background:rgba(10,37,64,.45);z-index:25}
+.side-back[hidden]{display:none}
+.main{flex:1;min-width:0}
+@media (max-width:1100px){.ptitle-strap{display:none}.ptitle-sep{display:none}}
+@media (max-width:900px){
+  .side-toggle{display:inline-flex}
+  .brand{border-right:0;padding-right:0}
+  .side{position:fixed;left:0;top:var(--header);bottom:0;height:auto;z-index:30;transform:translateX(-100%);transition:transform .2s ease;box-shadow:0 10px 28px rgba(10,37,64,.3)}
+  .side.open{transform:none}
+  .main{padding:14px 14px 32px}
+}
+@media (max-width:600px){.built{display:none}.ptitle-name{font-size:17px}}
+
+/* ---- the tool: the sidebar is the navigation, so the tab strip steps aside -------------------- */
+body.tool .tabs-card>.tabs{display:none}
+body.tool .tabs-card{margin-top:0}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0 0 14px}
+.ph h2{margin:0 0 3px;font-size:19px;font-weight:700;letter-spacing:-.01em}
+.ph .lede{font-size:13.5px;color:var(--muted);max-width:72ch;display:block}
+.ph-k{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+/* the three steps of a strategy, numbered the way PWLBreports numbers its passes */
+.steps{border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:18px;padding:22px 0;border-bottom:1px solid var(--line);align-items:start}
+.step .k{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;color:var(--orange);letter-spacing:.08em;padding-top:4px;font-weight:600}
+.step h3{margin:0 0 6px;font-size:15.5px;font-weight:700}
+.step p{margin:0 0 10px;font-size:13.5px;color:var(--muted);max-width:66ch;line-height:1.5}
+.step-act{display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:200px}
+.step-now{font-size:12.5px;color:var(--muted);text-align:right;max-width:240px}
+.step-now b{color:var(--text)}
+.step .wt-line{margin:4px 0 0;border:0;padding:0;background:none;box-shadow:none;flex-wrap:wrap}
+.step-done .k{color:var(--green)}
+@media (max-width:760px){.step{grid-template-columns:48px minmax(0,1fr)}.step-act{grid-column:2;align-items:flex-start}.step-now{text-align:left}}
+/* on a phone the header keeps the product and the way in; the platform wordmark folds to its mark */
+@media (max-width:600px){.brand{font-size:0;gap:0;padding-right:0;border-right:0;width:auto}.brand .dot{width:12px;height:12px}.ptitle{gap:8px}.ptitle-name{overflow:hidden;text-overflow:ellipsis}.top{gap:10px;padding:0 12px}}

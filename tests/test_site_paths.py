@@ -30,6 +30,8 @@ def test_every_fetch_starts_from_the_resolved_root():
             assert not call.startswith(("'../", '"../', "'/", '"/')), f"{js.name}: fetch({call}...) is not root-relative"
 
 
-def test_the_home_page_declares_the_site_root():
+def test_the_tool_declares_the_site_root():
+    """The tool sits one level down, so its root is ../; the scripts read it as a string, never
+    through a falsy test, which is what the two tests above guard."""
     build = (Path(__file__).resolve().parent.parent / "bankcredit" / "site" / "build.py").read_text(encoding="utf-8")
-    assert 'data-root=""' in build
+    assert 'data-root="../"' in build

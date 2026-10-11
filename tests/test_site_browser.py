@@ -32,6 +32,7 @@ held = lambda tab: pytest.mark.skipif(tab in HOME_TABS_HIDDEN,
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
+TOOL = "tool/index.html"        # the tool; the root index.html is the landing page
 ASSETS = ROOT / "bankcredit" / "site" / "assets"
 BASE = "/bankCredit/"                                   # the project subdirectory Pages publishes under
 
@@ -112,7 +113,7 @@ def visit(pg, server, path):
 # ---- the data arrives at all ---------------------------------------------------------------
 def test_home_loads_its_data_under_a_subdirectory(page, server):
     """The fault that emptied the live site: data-root="" is the root, not a missing root."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     assert page.eval_on_selector_all("#uni-body tr", "e => e.length") > 50
     assert "names" in page.inner_text("#uni-count2")
     assert "Loading" not in page.inner_text("#policy-body")
@@ -122,7 +123,7 @@ def test_home_loads_its_data_under_a_subdirectory(page, server):
 
 def test_the_analysis_tab_loads_its_own_data(page, server):
     """Analysis is a tab now: its markup, its script and its 444 KB of data all wait for the click."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     assert page.eval_on_selector_all("#cp-metric option", "e => e.length") == 0
     page.eval_on_selector('.tab[data-tab="analysis"]', "e => e.click()")
     page.wait_for_timeout(2500)
@@ -157,7 +158,7 @@ def _open_first_bank(pg):
 def test_a_closed_dialog_leaves_nothing_behind(page, server):
     """A dialog is display:none unless [open]; setting display on the element overrode that and
     left a dead copy of the last bank sitting in the page."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     _open_first_bank(page)
     assert page.eval_on_selector("#pol-modal", "e => e.open")
     page.eval_on_selector("#md-close", "e => e.click()")
@@ -167,7 +168,7 @@ def test_a_closed_dialog_leaves_nothing_behind(page, server):
 
 
 def test_clicking_outside_a_dialog_closes_it(page, server):
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     _open_first_bank(page)
     page.mouse.click(20, 20)
     page.wait_for_timeout(300)
@@ -176,7 +177,7 @@ def test_clicking_outside_a_dialog_closes_it(page, server):
 
 def test_the_dialog_head_sits_on_one_centre_line(page, server):
     """A pill with a height needs a box that centres its text; an anchor was not one."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     _open_first_bank(page)
     mids = page.evaluate("""() => ['#md-close', '.md-head a.filter', '.md-sc'].map(s => {
       const r = document.querySelector(s).getBoundingClientRect();
@@ -186,7 +187,7 @@ def test_the_dialog_head_sits_on_one_centre_line(page, server):
 
 
 def test_the_dialog_is_built_from_panels(page, server):
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     _open_first_bank(page)
     heads = page.eval_on_selector_all("#md-body .cp-cell > h5 > span:first-child",
                                       "e => e.map(x => x.textContent.trim())")
@@ -197,7 +198,7 @@ def test_the_dialog_is_built_from_panels(page, server):
 
 def test_an_event_in_the_dialog_shows_its_whole_headline(page, server):
     """A dialog paints in the top layer, so a tooltip left on the body sits behind it."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     _open_first_bank(page)
     row = page.query_selector("#md-body .md-news > div[data-tip]")
     if row is None:
@@ -214,7 +215,7 @@ def test_an_event_in_the_dialog_shows_its_whole_headline(page, server):
 
 
 def test_the_dialog_fills_from_the_detail_file(page, server):
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     _open_first_bank(page)
     body = page.inner_text("#md-body")
     assert "Loading" not in body and len(body) > 200
@@ -223,7 +224,7 @@ def test_the_dialog_fills_from_the_detail_file(page, server):
 
 # ---- the marks explain themselves ------------------------------------------------------------
 def test_a_chart_mark_carries_a_tooltip(page, server):
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     mark = page.query_selector(".pv-charts [data-tip]")
     if mark is None:
         pytest.skip("no policy stored in this browser, so the overview charts are not drawn")
@@ -233,7 +234,7 @@ def test_a_chart_mark_carries_a_tooltip(page, server):
 
 
 def test_a_definition_marker_opens_a_definition(page, server):
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.eval_on_selector(".uni th .i", "e => e.click()")
     page.wait_for_timeout(300)
     assert len(page.inner_text(".tip")) > 40
@@ -252,9 +253,9 @@ def _seed(pg, server):
         pytest.skip("no covered name carries a score, two ratings and a bond signal")
     policy = [{"id": pick["id"], "tenor": 365, "added": "2026-01-01",
                "base": {"score": pick["score"], "band": pick["band"], "grade": pick["rating_grade"]}}]
-    pg.goto(server + "index.html", wait_until="domcontentloaded")
+    pg.goto(server + TOOL, wait_until="domcontentloaded")
     pg.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
-    visit(pg, server, "index.html")
+    visit(pg, server, TOOL)
     return pick
 
 
@@ -272,16 +273,17 @@ def _seed_many(pg, server, n=6):
     pick = [r for r in rows if r.get("score") is not None][:n]
     policy = [{"id": r["id"], "tenor": 365, "added": "2026-01-01",
                "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}} for r in pick]
-    pg.goto(server + "index.html", wait_until="domcontentloaded")
+    pg.goto(server + TOOL, wait_until="domcontentloaded")
     pg.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
-    visit(pg, server, "index.html")
+    visit(pg, server, TOOL)
     return policy
 
 
-@pytest.mark.parametrize(("width", "columns"), [(1600, 4), (1100, 3), (760, 2), (420, 1)])
+@pytest.mark.parametrize(("width", "columns"), [(1600, 4), (1280, 3), (760, 2), (420, 1)])
 def test_the_list_runs_in_as_many_columns_as_fit(browser, server, width, columns):
     """A council holds plenty of names and a row is now only a name, a score, a rating and a
-    tenor, so it takes about 300px: four abreast on a desk, one on a phone."""
+    tenor, so it takes about 300px: four abreast on a desk beside the pathways, one on a phone,
+    where the pathways are off screen until asked for."""
     pg = browser.new_page(viewport={"width": width, "height": 900})
     try:
         _seed_many(pg, server, 8)
@@ -387,7 +389,7 @@ def test_no_page_scrolls_sideways(browser, server, path, width):
 
 def test_every_asset_the_page_names_carries_the_build():
     """New HTML with yesterday's script is how a tab arrived with nothing behind it."""
-    html = (SITE / "index.html").read_text(encoding="utf-8")
+    html = (SITE / TOOL).read_text(encoding="utf-8")
     for ref in ("assets/site.css", "assets/app.js", "assets/policy.js",
                 "data/panels/analysis.html", "assets/compare.js"):
         assert f'{ref}?v=' in html, f"{ref} is named without the build it belongs to"
@@ -396,10 +398,10 @@ def test_every_asset_the_page_names_carries_the_build():
 # ---- something is always on screen while something is on its way ------------------------------
 def test_the_page_opens_on_a_skeleton_not_a_word(page, server):
     """A slow connection used to get the word "Loading" in grey; it gets the shape now."""
-    html = (SITE / "index.html").read_text(encoding="utf-8")
+    html = (SITE / TOOL).read_text(encoding="utf-8")
     assert 'class="sk-cards"' in html and "sk-tr" in html
     assert "Loading" not in html
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     assert page.eval_on_selector_all(".sk", "e => e.length") == 0, "the skeleton outstayed the data"
 
 
@@ -409,7 +411,7 @@ def test_nothing_speculative_starts_before_the_list_is_drawn(page, server):
     _seed_many(page, server, 4)
     # measured in the page, at the instant the first card lands: asking from here would be a
     # round trip later, by which time the warming has run whatever the order was
-    page.goto(server + "index.html", wait_until="commit")
+    page.goto(server + TOOL, wait_until="commit")
     early = page.evaluate("""async () => {
       let w = 0;
       while (!document.querySelector('.pol-card') && w < 20000) { await new Promise(r => setTimeout(r, 8)); w += 8; }
@@ -427,7 +429,7 @@ def test_a_heavy_panel_is_warmed_before_it_is_asked_for(page, server):
     """The bytes arrive on an idle browser; only the building waits for the click."""
     seen = []
     page.on("response", lambda r: seen.append(r.url.rsplit("/", 1)[-1].split("?")[0]))
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.wait_for_timeout(2500)
     assert "analysis.html" in seen
     assert page.eval_on_selector_all("#cp-metric option", "e => e.length") == 0, "warming should not build"
@@ -441,7 +443,7 @@ def test_the_policy_page_is_tabs(page, server):
     """The approved names ran the length of the page with the shortlist under them."""
     _seed_many(page, server, 4)
     tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
-    expected = [t for t in ["policy", "likeforlike", "ratings", "events", "analysis"] if t not in HOME_TABS_HIDDEN]
+    expected = [t for t in ["strategy", "policy", "events", "likeforlike", "analysis", "ratings"] if t not in HOME_TABS_HIDDEN]
     assert tabs == expected
     assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 4
     assert page.eval_on_selector("#tn-policy", "e => e.textContent") == "4"
@@ -470,9 +472,9 @@ def test_the_shortlist_shows_one_tenor_at_a_time(page, server):
     policy = [{"id": r["id"], "tenor": t, "added": "2026-01-01",
                "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}
               for r, t in zip(pick, (90, 365, 730))]
-    page.goto(server + "index.html", wait_until="domcontentloaded")
+    page.goto(server + TOOL, wait_until="domcontentloaded")
     page.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
     page.wait_for_timeout(400)
     chips = page.eval_on_selector_all("#pol-ll .ll-t", "e => e.map(x => x.dataset.t)")
@@ -583,9 +585,9 @@ def test_the_dialog_carries_the_path_the_composite_took(page, server):
         pytest.skip("that name is not on the policy list")
     policy = [{"id": who, "tenor": 365, "added": "2026-01-01",
                "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}]
-    page.goto(server + "index.html", wait_until="domcontentloaded")
+    page.goto(server + TOOL, wait_until="domcontentloaded")
     page.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.eval_on_selector(".pol-card", "e => e.click()")
     page.wait_for_timeout(700)
     assert page.eval_on_selector_all("dialog .rp", "e => e.length") == 1
@@ -610,7 +612,7 @@ def test_the_rating_history_lives_on_the_ratings_tab_and_the_tile_stays_clean(pa
 def test_the_ratings_grid_plots_the_register_not_our_snapshots(page, server):
     """The last column plotted the composite on each daily build. Snapshots began four days
     earlier, so all 152 rows carried the same flat line and the same "4d"."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.eval_on_selector('.tab[data-tab="ratings"]', "e => e.click()")
     page.wait_for_timeout(900)
     heads = page.eval_on_selector_all("#board thead th", "e => e.map(x => x.textContent.trim())")
@@ -628,7 +630,7 @@ def test_a_first_visit_opens_empty_on_the_table_it_chooses_from(page, server):
     """The page used to open on an example list, a box of the strongest names and a histogram
     with nothing on it. It opens on an instruction and the whole covered universe, sortable,
     filterable and addable, and nothing else is pushed at the reader."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.wait_for_timeout(1000)
     assert page.eval_on_selector_all(".pol-card", "e => e.length") == 0
     assert "Your list is empty" in page.inner_text(".pol-empty")
@@ -650,7 +652,7 @@ def test_a_first_visit_opens_empty_on_the_table_it_chooses_from(page, server):
     page.eval_on_selector("#pol-demo-x", "e => e.click()")
     page.wait_for_timeout(400)
     assert page.eval_on_selector_all(".pol-card", "e => e.length") == 0
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.wait_for_timeout(900)
     assert page.eval_on_selector_all(".pol-card", "e => e.length") == 0, "cleared stays cleared"
     assert not page.errors, page.errors
@@ -689,12 +691,13 @@ def test_the_table_opens_over_the_page_from_the_add_names_button(page, server):
 
 
 def test_the_weightings_come_first_and_change_in_a_dialog(page, server):
-    """The score is the reader's arithmetic, so what it rests on is the first thing on the page."""
-    visit(page, server, "index.html")
+    """The score is the reader's arithmetic, so what it rests on is the first step of the strategy."""
+    visit(page, server, TOOL)
     page.wait_for_timeout(900)
-    top = page.eval_on_selector("#wt-line", "e => e.getBoundingClientRect().top")
-    tabs = page.eval_on_selector(".tabs-card", "e => e.getBoundingClientRect().top")
-    assert top < tabs
+    # the weightings are step one of Build your strategy, the panel a first visit opens on
+    assert page.eval_on_selector("#wt-line", "e => e.closest('[data-panel=\"strategy\"]') !== null")
+    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "strategy"
+    assert page.eval_on_selector("#wt-line", "e => e.getBoundingClientRect().height") > 0, "the line is drawn"
     line = page.inner_text("#wt-vals")
     assert "agency rating" in line and "%" in line and "starting point" in line
     page.eval_on_selector("#wt-change", "e => e.click()")
@@ -729,7 +732,7 @@ def test_a_name_is_watched_from_the_table_and_listed_under_the_portfolio(page, s
     visit(page, server, f"banks/{who}.html")
     assert page.eval_on_selector(".watch, .watch-btn", "e => e.classList.contains('on')")
     # adding a watched name to the list is the stronger form of attention, so it leaves the watch list
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.wait_for_timeout(900)
     page.eval_on_selector(f'#pol-watch tr[data-id="{who}"] .pol-add-ll', "e => e.click()")
     page.wait_for_timeout(500)
@@ -750,7 +753,7 @@ def test_names_on_the_same_spot_of_the_tenor_chart_become_one_marker(page, serve
 
 def test_a_definition_opened_by_hovering_closes_when_the_pointer_leaves(page, server):
     """It stayed until it was clicked away, and a reader who had only brushed a mark was stuck with it."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.wait_for_timeout(900)
     page.hover("#wt-line .i")
     page.wait_for_timeout(400)
@@ -777,7 +780,7 @@ def test_a_three_letter_composite_fits_its_chip(page, server):
 
 def test_a_name_added_to_the_analysis_set_can_be_removed_again(page, server):
     """The cross on its chip only unpinned it; the name stayed in every panel in grey."""
-    visit(page, server, "index.html#analysis")
+    visit(page, server, TOOL + "#analysis")
     page.wait_for_timeout(1800)
     page.fill("#cp-q", "monzo")
     page.wait_for_timeout(300)
@@ -796,7 +799,7 @@ def test_a_name_added_to_the_analysis_set_can_be_removed_again(page, server):
 def test_no_typeface_is_preloaded_ahead_of_the_data(page, server):
     """50 KB of Inter in the same queue as the 18 KB the list is drawn from cost a second on a
     slow line, and every face carries font-display:swap, so nothing waits to be readable."""
-    html = (SITE / "index.html").read_text(encoding="utf-8")
+    html = (SITE / TOOL).read_text(encoding="utf-8")
     assert 'as="font"' not in html, "a typeface is preloaded ahead of the data again"
     assert "font-display:swap" in (SITE / "assets" / "site.css").read_text(encoding="utf-8")
 
@@ -806,9 +809,9 @@ def test_the_starting_weights_reproduce_the_published_score(page, server):
     """The browser recomputes every score from the pillar sub-scores. Left alone it must agree with
     what the pipeline published, to the decimal, or the weighting panel is quietly rewriting the
     site rather than handing it over."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.wait_for_timeout(900)
-    off = page.evaluate("""() => fetch('data/policy.json').then(r => r.json()).then(j => {
+    off = page.evaluate("""() => fetch('../data/policy.json').then(r => r.json()).then(j => {
       const w = window.CPW.weights();
       return j.rows.filter(e => e.score != null)
         .map(e => [e.id, e.score, window.CPW.rescore(e, w).score])
@@ -835,7 +838,7 @@ def test_a_weight_the_reader_sets_moves_every_score_on_the_site(page, server):
 
 
 def test_the_panel_says_what_this_is_not(page, server):
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.eval_on_selector("#wt-change", "e => e.click()")
     page.wait_for_timeout(400)
     said = page.eval_on_selector(".wt-foot", "e => e.textContent").lower()
@@ -862,8 +865,8 @@ def test_a_profile_shows_the_readers_weights_not_ours(page, server):
 # ---- the home page is not the whole universe three times over --------------------------------
 def test_the_home_page_stays_small():
     """Two tabs nobody had clicked were 426 KB of the home page's 441 KB."""
-    kb = (SITE / "index.html").stat().st_size / 1024
-    assert kb < 60, f"index.html is {kb:.0f} KB; the heavy panels belong in data/panels"
+    kb = (SITE / TOOL).stat().st_size / 1024
+    assert kb < 60, f"the tool page is {kb:.0f} KB; the heavy panels belong in data/panels"
     for name in ("ratings", "events"):
         fragment = SITE / "data" / "panels" / f"{name}.html"
         if name in HOME_TABS_HIDDEN:
@@ -876,7 +879,7 @@ def test_the_home_page_stays_small():
     pytest.param("ratings", "#board tbody tr", marks=held("ratings")),
     pytest.param("events", "#events .event", marks=held("events"))])
 def test_a_deferred_panel_fills_and_still_filters(page, server, tab, rows):
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     assert page.eval_on_selector_all(rows, "e => e.length") == 0
     page.eval_on_selector(f'.tab[data-tab="{tab}"]', "e => e.click()")
     page.wait_for_timeout(900)
@@ -906,7 +909,7 @@ def test_no_page_ships_an_unrendered_placeholder(name):
 def test_a_long_feed_stands_a_page_at_a_time(page, server):
     """Three hundred events rendered at once was thirty thousand pixels, and the oldest was
     unreachable. The rows are all in the page; only a page of them stands on it."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.eval_on_selector('.tab[data-tab="events"]', "e => e.click()")
     page.wait_for_timeout(900)
     held = page.eval_on_selector_all("#events .event", "e => e.length")
@@ -924,7 +927,7 @@ def test_a_long_feed_stands_a_page_at_a_time(page, server):
 @held("events")
 def test_a_change_of_filter_starts_the_list_at_the_top_again(page, server):
     """Otherwise a reader who has paged deep into 'All' meets a filtered list already exhausted."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.eval_on_selector('.tab[data-tab="events"]', "e => e.click()")
     page.wait_for_timeout(900)
     step = page.eval_on_selector("#ev-more", "e => +e.dataset.step")
@@ -948,9 +951,9 @@ def test_the_shortlist_opens_on_a_tenor_that_has_something_to_show(page, server)
     policy = [{"id": r["id"], "tenor": t, "added": "2026-01-01",
                "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}
               for r, t in ((best, 1825), (mid, 365))]
-    page.goto(server + "index.html", wait_until="domcontentloaded")
+    page.goto(server + TOOL, wait_until="domcontentloaded")
     page.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
     page.wait_for_timeout(500)
     counts = page.eval_on_selector_all("#pol-ll .ll-t", "e => e.map(x => +x.querySelector('.cnt').textContent)")
@@ -964,7 +967,7 @@ def test_the_shortlist_opens_on_a_tenor_that_has_something_to_show(page, server)
 def test_a_long_table_scrolls_in_its_own_window(page, server):
     """Paging a sorted list meant clicking through sixteen pages to read it, and the column
     headings left the screen on the way. Every row is here; the window is what moves."""
-    visit(page, server, "index.html#universe")
+    visit(page, server, TOOL + "#universe")
     page.wait_for_timeout(700)
     rows = page.eval_on_selector_all("#uni-body tr", "e => e.length")
     assert rows > 100, "the whole list is in the page, not a page of it"
@@ -981,7 +984,7 @@ def test_a_long_table_scrolls_in_its_own_window(page, server):
 
 def test_the_column_headings_stay_while_the_rows_move(page, server):
     """A heading that scrolls away takes the meaning of every column with it."""
-    visit(page, server, "index.html#universe")
+    visit(page, server, TOOL + "#universe")
     page.wait_for_timeout(700)
     top = page.eval_on_selector("#uni-table thead th", "e => Math.round(e.getBoundingClientRect().top)")
     page.eval_on_selector("#uni-body", "e => { e.closest('.scrollbox').scrollTop = 1400 }")
@@ -1002,9 +1005,9 @@ def test_the_shortlist_shows_every_name_that_clears_the_bar(page, server):
     policy = [{"id": r["id"], "tenor": t, "added": "2026-01-01",
                "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}
               for r, t in zip(weak[:2], (365, 90))]      # two tenors, so the chips carry counts
-    page.goto(server + "index.html", wait_until="domcontentloaded")
+    page.goto(server + TOOL, wait_until="domcontentloaded")
     page.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.eval_on_selector('.tab[data-tab="likeforlike"]', "e => e.click()")
     page.wait_for_timeout(600)
     drawn = page.eval_on_selector_all(".ll-pane:not([hidden]) .ll-r", "e => e.length")
@@ -1066,7 +1069,7 @@ def test_a_profiles_flagged_events_come_first(page, server):
 def test_more_columns_can_be_brought_into_the_universe_table_and_stay(page, server):
     """The four ratios a policy is written around are always there; the rest of what is held
     comes in on request, sortable, and the choice is kept."""
-    visit(page, server, "index.html#universe")
+    visit(page, server, TOOL + "#universe")
     page.wait_for_timeout(1500)
     assert page.eval_on_selector_all("#uni-table thead th.uni-x", "e => e.length") == 0
     page.eval_on_selector("#uni-cols-btn", "e => e.click()")
@@ -1098,7 +1101,7 @@ def test_a_long_name_never_widens_the_page_on_a_phone(browser, server):
 
 def test_every_modal_softens_the_page_behind_it(page, server):
     """A box over a page that stays sharp is a box on a busy page."""
-    visit(page, server, "index.html")
+    visit(page, server, TOOL)
     page.wait_for_timeout(900)
     blur = page.evaluate("""() => {
       const s = [...document.styleSheets].flatMap(ss => { try { return [...ss.cssRules] } catch (e) { return [] } });
@@ -1106,3 +1109,90 @@ def test_every_modal_softens_the_page_behind_it(page, server):
       return r ? r.style.backdropFilter || r.style.getPropertyValue('backdrop-filter') : null }""")
     assert blur and "blur" in blur, blur
     assert not page.errors, page.errors
+
+
+# ---- the pathways: a landing page, a sidebar, and a strategy with three steps ------------------
+def test_the_root_is_a_landing_page_that_opens_into_the_tool(page, server):
+    """The root used to be the tool. It is the page that explains the tool now, in the frame
+    PWLBreports uses for the same job: one question, the three pathways, the way in."""
+    html = (SITE / "index.html").read_text(encoding="utf-8")
+    assert "assets/landing.css" in html and "app.js" not in html, "the landing page carries no application script"
+    assert 'as="font"' not in html and "fonts.css" not in html, "no webfont: the page makes no request but its own stylesheet"
+    visit(page, server, "index.html")
+    cards = page.eval_on_selector_all("#paths a.card", "e => e.map(x => x.getAttribute('href'))")
+    assert cards == [TOOL + "#strategy", TOOL + "#policy", TOOL + "#likeforlike"], cards
+    assert page.eval_on_selector_all(f'a.btn[href="{TOOL}"]', "e => e.length") >= 2, "the way in, at the top and the close"
+    assert page.eval_on_selector("#returning", "e => e.hidden"), "no list, no welcome back"
+    stats = page.eval_on_selector_all(".hc-stat b", "e => e.map(x => +x.textContent)")
+    assert len(stats) == 4 and stats[0] >= stats[1] >= stats[2] > 0, stats
+    assert not page.errors, page.errors
+
+
+def test_a_returning_reader_is_offered_the_way_straight_to_the_list(page, server):
+    _seed_many(page, server, 3)
+    visit(page, server, "index.html")
+    assert not page.eval_on_selector("#returning", "e => e.hidden")
+    assert "3 names" in page.eval_on_selector("#returning-n", "e => e.textContent")
+    assert page.eval_on_selector("#returning a", "e => e.getAttribute('href')") == TOOL + "#policy"
+
+
+def test_the_sidebar_is_the_pathways_and_follows_the_open_panel(page, server):
+    """Four groups, in the order the jobs come, on every page; on the tool the item for the open
+    panel is marked, and the two that open a dialog never are."""
+    visit(page, server, TOOL)
+    groups = page.eval_on_selector_all("#side .side-g", "e => e.map(x => x.textContent)")
+    assert groups == ["Build your strategy", "Monitor", "Compare", "Reference"], groups
+    hrefs = page.eval_on_selector_all("#side .side-a", "e => e.map(x => x.getAttribute('href'))")
+    assert hrefs[:3] == ["../" + TOOL + "#strategy", "../" + TOOL + "#weights", "../" + TOOL + "#universe"], hrefs
+    assert any(h.endswith("admin/index.html#method") for h in hrefs) and any(h.endswith("index.html") for h in hrefs)
+    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "strategy"
+    assert page.eval_on_selector_all(".tabs-card .tabs", "e => e.map(x => getComputedStyle(x).display)") == ["none"], "the tab strip steps aside for the sidebar"
+    page.eval_on_selector('#side .side-a[data-nav="events"]', "e => e.click()")
+    page.wait_for_timeout(700)
+    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "events"
+    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "events"
+    assert page.eval_on_selector('[data-panel="events"] .ph h2', "e => e.textContent") == "Events"
+    page.eval_on_selector('#side .side-a[data-nav="weights"]', "e => e.click()")
+    page.wait_for_timeout(500)
+    assert page.eval_on_selector("#wt-dlg", "e => e.open"), "the weightings item opens the dialog"
+    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "events", "a dialog does not move the mark"
+    # the same frame round a bank page
+    visit(page, server, "banks/barclays-bank.html")
+    assert page.eval_on_selector_all("#side .side-g", "e => e.length") == 4
+    assert page.eval_on_selector(".ptitle-name", "e => e.textContent") == "PWLBcounterparty"
+    assert not page.errors, page.errors
+
+
+def test_the_strategy_is_three_steps_that_say_where_the_reader_is(page, server):
+    visit(page, server, TOOL)
+    ks = page.eval_on_selector_all('[data-panel="strategy"] .step .k', "e => e.map(x => x.textContent)")
+    assert ks == ["01", "02", "03"]
+    assert "No names yet" in page.eval_on_selector("#st-names", "e => e.textContent")
+    assert "published weightings" in page.eval_on_selector("#st-weights", "e => e.textContent")
+    assert page.eval_on_selector_all('[data-panel="strategy"] .step-done', "e => e.length") == 0
+    page.eval_on_selector('[data-panel="strategy"] .uni-open', "e => e.click()")
+    page.wait_for_timeout(400)
+    assert page.eval_on_selector("#uni-dlg", "e => e.open"), "step two opens the table every name is on"
+    page.eval_on_selector("#uni-close", "e => e.click()")
+    _seed_many(page, server, 2)
+    visit(page, server, TOOL)
+    assert "2 names" in page.eval_on_selector("#st-names", "e => e.textContent")
+    assert page.eval_on_selector_all('[data-panel="strategy"] .step-done', "e => e.length") == 2, "names chosen, tenors set"
+    assert "1 year" in page.eval_on_selector("#st-tenors", "e => e.textContent")
+    assert not page.errors, page.errors
+
+
+def test_on_a_phone_the_pathways_slide_in_from_a_button(page, server):
+    page.set_viewport_size({"width": 390, "height": 844})
+    try:
+        visit(page, server, TOOL)
+        assert page.eval_on_selector("#side", "e => e.getBoundingClientRect().right") <= 0, "off screen until asked for"
+        page.eval_on_selector("#side-toggle", "e => e.click()")
+        page.wait_for_timeout(400)
+        assert page.eval_on_selector("#side", "e => e.classList.contains('open') && e.getBoundingClientRect().left === 0")
+        page.eval_on_selector("#side-back", "e => e.click()")
+        page.wait_for_timeout(400)
+        assert not page.eval_on_selector("#side", "e => e.classList.contains('open')")
+        assert not page.errors, page.errors
+    finally:
+        page.set_viewport_size({"width": 1280, "height": 900})

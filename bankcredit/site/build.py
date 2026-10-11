@@ -514,7 +514,7 @@ def page_bank(b, generated):
     events_rows += "".join(event_row(e) for e in ordered[n_flagged:]) or '<div class="empty">No events collected yet. Rating actions and disclosures will appear here once the events pipeline runs.</div>'
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
 <div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {sovereign_pill(b)}{c.info("sovereign")}{" · " + c.chip("LEI " + c.esc(b["lei"])) + c.info("lei") if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
-<div class="actions"><a class="btn btn-back" href="../index.html">&lsaquo; All names</a><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button></div></div>
+<div class="actions"><a class="btn btn-back" href="../tool/index.html#universe">&lsaquo; All names</a><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button></div></div>
 <div class="grid-12"><div class="score-card" data-pw="{c.esc(json.dumps([b["score_detail"]["pillars"].get(k, (None,))[0] for k in c.PILLAR_KEYS]))}" data-overlay="{overlay if overlay is not None else 0}" data-grade="{b.get("rating_grade") if b.get("rating_grade") is not None else ""}" data-coverage="{cov}"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span><span class="score-band">{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</span></div>
 <div class="score-main"><div class="score-fig">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div>
 {c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12, fluid=True)}</div>
@@ -531,7 +531,7 @@ def page_bank(b, generated):
 <section class="panel" data-panel="events">{f'<div class="sm-intro small muted">Every event held for this name: the flagged ones first, then the rest, each newest first. Rating actions, Pillar 3 documents and filtered headlines; severity is rules-based &mdash; read the source.</div>' if b["events"] else ''}<div id="pevents">{events_rows}</div>{'<div class="pager" id="pe-more" data-step="25"></div>' if b["events"] else ''}</section>
 {debug_panel(b) if b.get("debug") else ''}
 <section class="panel" data-panel="sources"><h3>Documents and feeds</h3>{src_rows or '<div class="empty">Nothing collected yet.</div>'}<h3>Latest value of every metric held</h3><div class="table-wrap"><table class="plain sortable"><thead><tr><th data-sortable>Metric</th><th data-sortable class="num">Value</th><th data-sortable>Reference date</th><th data-sortable>Source</th><th data-sortable class="num">Confidence</th></tr></thead><tbody>{metric_rows}</tbody></table></div></section></div>'''
-    return c.shell(b["name"], content, "home", "../", generated)
+    return c.shell(b["name"], content, "", "../", generated)
 
 
 def page_brief_redirect(generated):
@@ -543,7 +543,7 @@ def page_brief_redirect(generated):
 # press have said, and neither answers a question the covered-name table and a bank's own page do
 # not answer better. Nothing behind them is torn out - the profile pages, the RSS feed and the
 # flags on a reader's own list all still build - so bringing them back is this line.
-HOME_TABS_HIDDEN = ("ratings", "events")
+HOME_TABS_HIDDEN = ()
 
 
 def event_items(board):
@@ -1024,24 +1024,47 @@ def page_ratings(generated, inner: bool = False):
 <p class="note">Long-term issuer ratings only. The gap between the two bars is how far the three main agencies disagree about the same banks.</p></div></div>'''
     return content if inner else c.shell("Ratings", content, "ratings", "../", generated)
 
-def page_policy_content(board=None) -> str:
-    """The page opens on what the score rests on, then the tabs.
+WT_LINE = (f'<div class="wt-line" id="wt-line"><span class="wt-l">Score weightings{c.info("score")}</span>'
+           '<span class="wt-vals" id="wt-vals"><span class="sk"></span></span>'
+           '<button class="filter" id="wt-change" type="button">Change</button></div>')
 
-    It used to open on a field that added a name, above tabs that included the table the name
-    came from, and a reader who had not yet chosen anyone had nothing to do with either. The
-    weightings come first now - they are the reader's, and every score below follows from them -
-    and adding a name happens where the names are, on the first tab.
-    """
-    return f'''<div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>
-<section class="pol-wrap"><div class="wt-line" id="wt-line"><span class="wt-l">Score weightings{c.info("score")}</span><span class="wt-vals" id="wt-vals"><span class="sk"></span></span><button class="filter" id="wt-change" type="button">Change</button></div>
-<dialog id="wt-dlg" class="wt-dlg"><button class="cd-close wt-close" id="wt-close" aria-label="Close">\u00d7</button><div id="pol-weights"></div></dialog>
-<dialog id="pol-modal" class="pol-modal"></dialog></section>'''
+TOOL_DIALOGS = ('<dialog id="wt-dlg" class="wt-dlg"><button class="cd-close wt-close" id="wt-close" aria-label="Close">×</button><div id="pol-weights"></div></dialog>'
+                '<dialog id="pol-modal" class="pol-modal"></dialog>')
 
 
-def _panel_content(html: str) -> str:
-    """A page's own content, with its page-head reduced to the lede so it reads as a panel."""
+def strategy_panel() -> str:
+    """Build your strategy: the three steps, numbered the way PWLBreports numbers its passes, each
+    saying where the reader has got to. Step one carries the weightings line; the other two open
+    the table and the list. The counts are painted by the list's own script."""
+    return ('<section class="panel active" data-panel="strategy">'
+            '<div class="ph"><div><span class="ph-k">Build your strategy</span><h2>Three steps to a counterparty policy</h2>'
+            '<span class="lede">Set how the score is made, choose the names you accept, and say how long you would lend to each. The list stays in your browser; a link carries it to a colleague.</span></div></div>'
+            '<div class="steps">'
+            '<div class="step" id="st-1"><span class="k">01</span><div><h3>Set your weightings</h3>'
+            "<p>The score is the agency rating and the bank's own regulatory ratios, weighed by the published method. Change the weights and every score on the site follows, for you alone.</p>"
+            + WT_LINE + '</div><div class="step-act"><span class="step-now" id="st-weights"></span></div></div>'
+            '<div class="step" id="st-2"><span class="k">02</span><div><h3>Choose your names</h3>'
+            '<p>Every covered bank and building society on one table: sort on any column, filter by region, type or band, and add the ones you accept. The star follows a name without adding it.</p></div>'
+            '<div class="step-act"><button class="filter filter-blue uni-open" type="button">Choose from every covered name</button><span class="step-now" id="st-names"></span></div></div>'
+            '<div class="step" id="st-3"><span class="k">03</span><div><h3>Set tenors, then watch</h3>'
+            '<p>Say how long you would lend to each name. From then on the list is re-checked every night and anything that has moved since you approved it is flagged, and Alternatives shows the names at least as strong as your weakest at each tenor.</p></div>'
+            '<div class="step-act"><a class="filter" href="#policy">Go to your counterparties &rarr;</a><span class="step-now" id="st-tenors"></span></div></div>'
+            '</div></section>')
+
+
+def panel_head(kicker: str, title: str, lede: str) -> str:
+    return (f'<div class="ph"><div><span class="ph-k">{c.esc(kicker)}</span><h2>{c.esc(title)}</h2>'
+            f'<span class="lede">{lede}</span></div></div>')
+
+
+def _panel_content(html: str, kicker: str = "", title: str = "") -> str:
+    """A page's own content, with its page-head turned into a panel head: the pathway it sits on,
+    the name the sidebar gives it, and the page's own lede beneath."""
     m = re.search(r'<div class="page-head">.*?<div class="lede">(.*?)</div>.*?</div></div>', html, re.S)
-    return (f'<p class="small muted panel-lede">{m.group(1)}</p>' + html[m.end():]) if m else html
+    if not m:
+        return html
+    head = panel_head(kicker, title, m.group(1)) if title else f'<p class="small muted panel-lede">{m.group(1)}</p>'
+    return head + html[m.end():]
 
 
 UNIVERSE_PANEL = f"""<p class="small muted">Every name, sortable on any column, with the same detail on click. Add on any row; the star follows a name without adding it. Anything marked <span class="i i-static" aria-hidden="true">i</span> explains itself.</p>
@@ -1070,57 +1093,154 @@ def home_panels(board, status, generated) -> dict[str, str]:
     page's 441 KB: every rating of every name, and every event, parsed into the document before
     anything was drawn. They are written here instead and fetched on demand.
     """
-    out = {"analysis": compare_content()}
+    out = {"analysis": _panel_content(compare_content(), "Compare", "Analysis")}
     # a tab that is held back publishes nothing: the fragment is not written either, so the grid
     # and the feed are not sitting at a guessable URL for anyone who looks
     if "ratings" not in HOME_TABS_HIDDEN:
-        out["ratings"] = _panel_content(page_ratings(generated, inner=True))
+        out["ratings"] = _panel_content(page_ratings(generated, inner=True), "Compare", "Ratings")
     if "events" not in HOME_TABS_HIDDEN:
-        out["events"] = _panel_content(page_events(board, status, generated, inner=True))
+        out["events"] = _panel_content(page_events(board, status, generated, inner=True), "Monitor", "Events")
     return out
 
 
-def page_home(board, status, generated):
-    """One page for the whole job: build a policy, watch it, and find the next name.
+def page_tool(board, status, generated):
+    """The tool, one page: every pathway is a panel, and the sidebar is the way between them.
 
     The board, the bank navigator, the ratings grid and the events feed were four pages showing
     slices of one universe. They are panels here, so nothing is lost and nothing is a journey.
+    The tab strip that used to switch them is still in the document, because the panel loader
+    and every link into the page speak to it, but it is not drawn: the pathways down the side
+    say the same thing in the platform's own words.
     """
-    # Five tabs rather than one page: the approved names, the shortlist that follows from them,
-    # and the three views of the universe behind both. The list used to run the length of the page
-    # with the shortlist under it, so reaching the universe was a scroll past everything.
-    content = (page_policy_content(board)
-               + '<div class="card tabs-card" style="margin-top:16px" id="browse">'
-                 '<div class="tabs" role="tablist">'
-                 '<button class="tab active" data-tab="policy">Your counterparties<span class="tab-n" id="tn-policy"></span></button>'
-                 '<button class="tab" data-tab="likeforlike">Alternatives<span class="tab-n" id="tn-ll"></span></button>'
-                 + ('<button class="tab" data-tab="ratings">Ratings</button>' if "ratings" not in HOME_TABS_HIDDEN else '')
-                 + ('<button class="tab" data-tab="events">Events</button>' if "events" not in HOME_TABS_HIDDEN else '')
-                 + '<button class="tab" data-tab="analysis">Analysis</button></div>'
-                 '<section class="panel active" data-panel="policy">'
-                 '<div id="policy-body"><div class="sk-cards" aria-hidden="true">'
-                 + '<span class="sk"></span>' * 4 + '</div></div>'
-                 '<div class="pol-share" id="pol-share" hidden>'
-                 '<button class="filter" id="pol-clear">Clear all</button></div>'
-                 # The table a name is chosen from opens over the page: on the page it ran into the
-                 # list above it, and a survey of 152 names wants the whole window anyway.
-                 f'<dialog id="uni-dlg" class="uni-dlg"><div class="uni-head"><h4>Every covered name</h4>'
-                 '<button class="cd-close" id="uni-close" aria-label="Close">\u00d7</button></div>'
-                 f'{UNIVERSE_PANEL}</dialog></section>'
-                 '<section class="panel" data-panel="likeforlike"><div id="pol-ll"></div></section>'
-                 + (f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={c.stamp(generated)}"></section>' if "ratings" not in HOME_TABS_HIDDEN else '')
-                 + (f'<section class="panel" data-panel="events" data-src="data/panels/events.html?v={c.stamp(generated)}"></section>' if "events" not in HOME_TABS_HIDDEN else '')
-                 + f'<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html?v={c.stamp(generated)}"'
-                 f' data-js="assets/compare.js?v={c.stamp(generated)}"></section>'
-                 '</div>')
+    v = c.stamp(generated)
+    content = (
+        '<div class="pol-shared" id="pol-shared" hidden><span></span><button class="filter" id="pol-use-shared">Use it</button><button class="filter" id="pol-keep-mine">Keep mine</button></div>'
+        '<div class="card tabs-card" id="browse">'
+        '<div class="tabs" role="tablist">'
+        '<button class="tab active" data-tab="strategy">Build your strategy</button>'
+        '<button class="tab" data-tab="policy">Your counterparties<span class="tab-n" id="tn-policy"></span></button>'
+        '<button class="tab" data-tab="events">Events</button>'
+        '<button class="tab" data-tab="likeforlike">Alternatives<span class="tab-n" id="tn-ll"></span></button>'
+        '<button class="tab" data-tab="analysis">Analysis</button>'
+        '<button class="tab" data-tab="ratings">Ratings</button></div>'
+        + strategy_panel()
+        + '<section class="panel" data-panel="policy">'
+        + panel_head("Monitor", "Your counterparties",
+                     "Every name on your list, re-checked each night against its filings, its ratings and the news, with what has moved since you approved it. Names you are only watching sit beneath.")
+        + '<div id="policy-body"><div class="sk-cards" aria-hidden="true">' + '<span class="sk"></span>' * 4 + '</div></div>'
+        '<div class="pol-share" id="pol-share" hidden><button class="filter" id="pol-clear">Clear all</button></div></section>'
+        f'<section class="panel" data-panel="events" data-src="data/panels/events.html?v={v}"></section>'
+        '<section class="panel" data-panel="likeforlike">'
+        + panel_head("Compare", "Alternatives",
+                     "At each tenor, the covered names at least as strong as the weakest you already accept: same or better band, ratings and score, and no widening market signal.")
+        + '<div id="pol-ll"></div></section>'
+        f'<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html?v={v}" data-js="assets/compare.js?v={v}"></section>'
+        f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={v}"></section>'
+        '</div>'
+        # The table a name is chosen from opens over the page: on the page it ran into the list
+        # above it, and a survey of 152 names wants the whole window anyway.
+        '<dialog id="uni-dlg" class="uni-dlg"><div class="uni-head"><h4>Every covered name</h4>'
+        '<button class="cd-close" id="uni-close" aria-label="Close">×</button></div>'
+        + UNIVERSE_PANEL + '</dialog>' + TOOL_DIALOGS)
     # the list is drawn from this file, and asking for it only after two scripts have been
     # fetched and run is a round trip the reader spends looking at an empty box
-    return (c.shell("Policy", content, "home", "", generated, preload=("data/policy.json",))
-            .replace(f'<script src="assets/app.js?v={c.stamp(generated)}"></script>',
-                     f'<script src="assets/app.js?v={c.stamp(generated)}"></script>'
-                     f'<script src="assets/policy.js?v={c.stamp(generated)}"></script>')
-            .replace("<body>", '<body data-root="">'))
+    return (c.shell("Your counterparties", content, "strategy", "../", generated,
+                    preload=("data/policy.json",), body_class="tool")
+            .replace(f'<script src="../assets/app.js?v={v}"></script>',
+                     f'<script src="../assets/app.js?v={v}"></script>'
+                     f'<script src="../assets/policy.js?v={v}"></script>')
+            .replace('<body class="tool">', '<body class="tool" data-root="../">'))
 
+
+page_home = page_tool
+
+
+BAND_COLOUR = {"A": "#4cb583", "B": "#5695d1", "C": "#e8c547", "D": "#e8974a", "E": "#e0776a"}
+
+LANDING_SCRIPT = """
+(function(){
+  try{var p=JSON.parse(localStorage.getItem('counterparty.policy')||'[]');
+    if(p&&p.length){var r=document.getElementById('returning');document.getElementById('returning-n').textContent='Your list holds '+p.length+' name'+(p.length===1?'':'s')+'.';r.hidden=false}}catch(e){}
+  var rv=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){rv.forEach(function(el){el.classList.add('in')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  rv.forEach(function(el){io.observe(el)});
+})();
+"""
+
+
+def page_landing(board, status, generated):
+    """The page that explains the tool, in the frame PWLBreports uses for the same job: one
+    question, the three pathways, how it works, what it rests on, and the way in. Static, dark,
+    no webfont, no script but a reveal and a line for the reader who has been here before."""
+    rows = board["rows"]
+    n = len(rows)
+    rated = sum(1 for r in rows if r.get("rating"))
+    scored = sum(1 for r in rows if r.get("score") is not None)
+    bands = {k: sum(1 for r in rows if r.get("band") == k) for k in "ABCDE"}
+    total = sum(bands.values()) or 1
+    bar = "".join(f'<i style="width:{bands[k] / total * 100:.1f}%;background:{BAND_COLOUR[k]}" title="Band {k}: {bands[k]}"></i>' for k in "ABCDE" if bands[k])
+    leg = "".join(f'<span><i style="background:{BAND_COLOUR[k]}"></i>{k} &middot; {bands[k]}</span>' for k in "ABCDE")
+    built = generated[:10]
+    P = c.PRODUCT[0] + c.PRODUCT[1]
+    T = c.TOOL
+    arrow = '<span class="arw">&rarr;</span>'
+    lock = ('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+            '<rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>')
+    return (f'<!doctype html>\n<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\n'
+            f'<title>{P} · PWLBtoday</title>\n'
+            '<meta name="description" content="Who can you deal with, and for how long? Every covered bank and building society scored from its regulatory filings, its agency ratings and the news, against the weightings you choose. Build a counterparty policy, watch every name on it, and find the next one. From PWLBtoday.">\n'
+            '<meta name="color-scheme" content="dark">\n'
+            '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Ccircle cx=\'16\' cy=\'16\' r=\'9\' fill=\'%23fd7e14\'/%3E%3C/svg%3E">\n'
+            f'<link rel="stylesheet" href="assets/landing.css?v={c.stamp(generated)}">\n</head><body>\n'
+            f'<div class="masthead"><div class="wrap"><a class="brand" href="index.html"><b>{c.PRODUCT[0]}</b>{c.PRODUCT[1]}</a><span class="sp"></span>'
+            f'<a class="mini" href="#paths">Three pathways</a><a class="mini" href="#how">How it works</a><a class="mini" href="#rests">What it rests on</a><a class="mini" href="{T}">Open the tool &rarr;</a></div></div>\n'
+            '<header class="hero"><div class="wrap"><div class="herogrid"><div>\n'
+            '<h1 class="rv">Who can you deal with,<br><span class="em">and for how long</span>?</h1>\n'
+            '<p class="sub rv">Every covered bank and building society, scored from its regulatory filings, its agency ratings and the news, against the weightings you choose. Build a counterparty policy, watch every name on it, and find the next one.</p>\n'
+            f'<div class="cta rv"><a class="btn" href="{T}">Open {P} {arrow}</a><a class="btn ghost" href="#paths">See the three pathways</a></div>\n'
+            f'<p class="freeline rv">{lock}Your list stays in your browser. Nothing is sent anywhere.</p>\n'
+            f'<div class="returning" id="returning" hidden><span>Welcome back. <b id="returning-n"></b></span><a href="{T}#policy">Go straight to your counterparties &rarr;</a></div>\n'
+            '</div>\n'
+            f'<div class="herocard rv"><div class="hc-k"><span class="live"></span>What it holds today &middot; built {c.esc(built)}</div>\n'
+            '<p class="hc-t">Every name a UK treasury desk would deal with, read from the public record every morning.</p>\n'
+            f'<div class="hc-stats"><div class="hc-stat"><b>{n}</b><span>names covered</span></div><div class="hc-stat"><b>{rated}</b><span>rated by the three main agencies</span></div>'
+            f'<div class="hc-stat"><b>{scored}</b><span>with enough published to score</span></div><div class="hc-stat"><b>{bands["A"]}</b><span>in band A on the published weights</span></div></div>\n'
+            f'<div class="hc-bands"><div class="bar">{bar}</div><div class="hc-leg">{leg}</div></div></div>\n'
+            '</div></div></header>\n\n'
+            '<section id="paths" class="path"><div class="wrap">\n<p class="eyebrow rv">Three pathways</p>\n'
+            '<h2 class="rv">Build it. <span class="em">Watch it.</span> Find the next name.</h2>\n'
+            '<p class="lede rv">A counterparty list is built once, checked every day and extended now and then. The tool is laid out in that order, and the pathways down its side take you to each.</p>\n'
+            '<div class="cards">\n'
+            f'<a class="card rv" href="{T}#strategy"><span class="n">01 &middot; Build your strategy</span><h3>Three steps to a policy</h3><p>Set how the score is made, choose the names you accept, and say how long you would lend to each.</p>'
+            '<ul><li>Weightings you can change, for you alone</li><li>Every covered name on one table</li><li>A tenor on every name, and a link that carries the list</li></ul><span class="go">Start here &rarr;</span></a>\n'
+            f'<a class="card rv" href="{T}#policy"><span class="n">02 &middot; Monitor your counterparties</span><h3>Re-checked every night</h3><p>Every name on your list, against its filings, its ratings and the news, with what has moved since you approved it.</p>'
+            '<ul><li>What changed, flagged on the card</li><li>Names you are only watching, beneath</li><li>Rating actions and headlines, judged daily</li></ul><span class="go">Open your counterparties &rarr;</span></a>\n'
+            f'<a class="card rv" href="{T}#likeforlike"><span class="n">03 &middot; Compare</span><h3>The next name, and the whole universe</h3><p>Alternatives at least as strong as your weakest at each tenor, any names side by side, and the universe by rating.</p>'
+            '<ul><li>Alternatives, tenor by tenor</li><li>Analysis: any names, any ratio, over time</li><li>Ratings: the average and the weakest of the three</li></ul><span class="go">Compare &rarr;</span></a>\n'
+            '</div></div></section>\n\n<div class="wrap"><div class="rule"></div></div>\n\n'
+            '<section id="how" class="honest"><div class="wrap">\n<p class="eyebrow rv">How it works</p>\n'
+            '<h2 class="rv">Four passes a day, and nothing typed by hand.</h2>\n'
+            '<p class="lede rv">Every figure on a profile carries its source, its method and its date. The score is one published method applied the same way to every name.</p>\n'
+            '<div class="steps">\n'
+            "<div class=\"step rv\"><span class=\"k\">01</span><div><h3>The public record is read</h3></div><p>Pillar 3 reports and regulatory returns for the capital and liquidity ratios; the ESMA register for the agencies' ratings; traded prices for the market signal; the day's headlines, judged for what they say about credit.</p></div>\n"
+            "<div class=\"step rv\"><span class=\"k\">02</span><div><h3>Every name is scored</h3></div><p>The agency rating is the anchor and the bank's own ratios the pillars, weighed by the published method, or by your weightings when you have set them. A name without a rating or without current capital figures is not scored, and says so.</p></div>\n"
+            '<div class="step rv"><span class="k">03</span><div><h3>Your list is checked against it</h3></div><p>Each night every name you hold is read again. A rating that moved, a ratio that fell, a headline that was flagged: each is marked on the card beside the date you approved the name.</p></div>\n'
+            '<div class="step rv"><span class="k">04</span><div><h3>The next name is found</h3></div><p>Alternatives shows the names at least as strong as your weakest at each tenor; Analysis puts any names side by side; the Ratings view lays out the whole universe by the average and the weakest of the three.</p></div>\n'
+            '</div></div></section>\n\n'
+            '<section id="rests"><div class="wrap">\n<p class="eyebrow rv">What it rests on</p>\n'
+            '<h2 class="rv">Public data, one method, every date on the page.</h2>\n<div class="cards">\n'
+            "<div class=\"card rv\"><span class=\"n\">Regulatory filings</span><h3>The banks' own figures</h3><p>CET1, leverage, liquidity and funding ratios from Pillar 3 reports, the EBA and the FDIC, read by a rules-based extractor with every figure checked against the ones around it.</p></div>\n"
+            "<div class=\"card rv\"><span class=\"n\">Agency ratings</span><h3>The average and the weakest of three</h3><p>The long-term ratings of Fitch, S&amp;P and Moody's on one scale, as the average and the weakest, with one outlook mark per agency, from the ESMA European Rating Platform every day.</p></div>\n"
+            '<div class="card rv"><span class="n">Market and news</span><h3>What the market and the press say</h3><p>CDS, bond yields and the share price as a bounded signal, never more than a few points either way; headlines judged daily for what they tell a treasurer.</p></div>\n'
+            "<div class=\"card rv\"><span class=\"n\">Not advice</span><h3>Information, and a published method</h3><p>Scores use the published method and can be wrong. Nothing here is a recommendation, and nothing stands in for your own policy or your adviser's advice.</p></div>\n"
+            '</div></div></section>\n\n'
+            '<section class="close"><div class="wrap">\n<h2 class="rv">Open the tool and build your list.</h2>\n'
+            f'<div class="cta rv"><a class="btn" href="{T}">Open {P} {arrow}</a></div>\n'
+            '<p class="claims rv"><b>Kept in your browser.</b> Your list and your weightings are stored in this browser and nowhere else; a share link carries the list to a colleague. <b>What it does not claim.</b> It is information, not advice. Check every figure against its source before it reaches a committee.</p>\n'
+            '</div></section>\n\n'
+            f'<footer><div class="wrap"><span><b>{c.PRODUCT[0]}</b>{c.PRODUCT[1]} &middot; from PWLBtoday</span><span class="sp"></span><a href="admin/index.html#method">Method</a><a href="admin/index.html#status">Data status</a><a href="{T}">Open the tool</a></div></footer>\n'
+            f'<script>{LANDING_SCRIPT}</script>\n</body></html>')
 
 
 def page_admin(status, board, generated):
@@ -1354,27 +1474,29 @@ def build():
     faces = (ASSETS / "fonts.css").read_text()
     css = OUT / "assets" / "site.css"
     css.write_text(faces + css.read_text())        # one stylesheet: the faces first, then everything that uses them
-    _write(OUT / "index.html", page_home(board, status, generated))
+    _write(OUT / "index.html", page_landing(board, status, generated))
+    (OUT / "tool").mkdir(exist_ok=True)
+    _write(OUT / "tool" / "index.html", page_tool(board, status, generated))
     (OUT / "data" / "panels").mkdir(parents=True, exist_ok=True)
     for name, html in home_panels(board, status, generated).items():
         _write(OUT / "data" / "panels" / f"{name}.html", html)
     write_events_feed(board, generated)
-    _write(OUT / "banks" / "index.html", page_gone("Banks", generated))
+    _write(OUT / "banks" / "index.html", page_gone("Banks", generated, "../tool/index.html#universe", "universe"))
     for r in board["rows"]:
         _write(OUT / "banks" / f"{r['id']}.html", page_bank(load(f"banks/{r['id']}"), generated))
-    _write(OUT / "events" / "index.html", page_gone("Events", generated))
+    _write(OUT / "events" / "index.html", page_gone("Events", generated, "../tool/index.html#events", "events"))
     (OUT / "admin").mkdir(exist_ok=True)
     _write(OUT / "admin" / "index.html", page_admin(status, board, generated))
     _write(OUT / "method" / "index.html", page_gone("Method", generated, "../admin/index.html#method", "admin"))
     (OUT / "ratings").mkdir(exist_ok=True)
-    _write(OUT / "ratings" / "index.html", page_gone("Ratings", generated))
+    _write(OUT / "ratings" / "index.html", page_gone("Ratings", generated, "../tool/index.html#ratings", "ratings"))
     (OUT / "compare").mkdir(exist_ok=True); (OUT / "data").mkdir(exist_ok=True)
-    _write(OUT / "compare" / "index.html", page_gone("Analysis", generated, "../index.html#analysis", "home"))
+    _write(OUT / "compare" / "index.html", page_gone("Analysis", generated, "../tool/index.html#analysis", "analysis"))
     shutil.copy(store.DATA / "json" / "compare.json", OUT / "data" / "compare.json")
     (OUT / "coverage").mkdir(exist_ok=True)
     _write(OUT / "coverage" / "index.html", page_gone("Coverage", generated, "../admin/index.html#coverage", "admin"))
     (OUT / "policy").mkdir(exist_ok=True)
-    _write(OUT / "policy" / "index.html", page_gone("My policy", generated))
+    _write(OUT / "policy" / "index.html", page_gone("My policy", generated, "../tool/index.html#policy", "policy"))
     (OUT / "data").mkdir(exist_ok=True)
     shutil.copy(store.DATA / "json" / "policy.json", OUT / "data" / "policy.json")
     write_detail()

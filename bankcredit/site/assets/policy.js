@@ -961,7 +961,22 @@
     return '<div class="pol-watch" id="pol-watch"><h4>Watching <span class="small muted">\u00b7 '+ws.length+(ws.length===1?' name':' names')+' you follow but do not hold; adding one moves it up</span></h4>'+
       '<div class="table-wrap"><table class="plain pw-t"><thead><tr><th></th><th>Name</th><th class="num">Score</th><th>Agency rating</th><th class="num">CET1</th><th class="num">LCR</th><th>Figures</th><th class="num">News 30d</th><th>Market</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
   }
+  // The Build-your-strategy panel: three steps, each saying where the reader has got to. Painted
+  // with the list, so adding a name on the universe table moves step two the moment it happens.
+  function paintStrategy(){
+    var p=load(), w=weights();
+    var el=function(id){return document.getElementById(id)};
+    var n=p.length, names=el('st-names'), ten=el('st-tenors'), wt=el('st-weights');
+    if(names)names.innerHTML=n?'<b>'+n+'</b> name'+(n===1?'':'s')+' on your list':'<b>No names yet.</b> Every name you add is re-checked each night.';
+    if(ten){var ts=p.map(function(x){return +x.tenor||0}).filter(Boolean);
+      ten.innerHTML=!n?'Set when you add a name; change it on the card.':(!ts.length?'No tenor set yet':Math.min.apply(null,ts)===Math.max.apply(null,ts)?'Every name at <b>'+tenorWord(ts[0])+'</b>':'Tenors from <b>'+tenorWord(Math.min.apply(null,ts))+'</b> to <b>'+tenorWord(Math.max.apply(null,ts))+'</b>')}
+    if(wt)wt.innerHTML=w.__custom?'<b>Your own weightings</b> are in force':'<b>The published weightings</b> are in force';
+    ['st-1','st-2','st-3'].forEach(function(id,i){var st=el(id); if(!st)return;
+      st.classList.toggle('step-done',[!!w.__custom,n>0,n>0&&p.every(function(x){return +x.tenor>0})][i])});
+  }
+  function tenorWord(d){return d>=365?(d/365===1?'1 year':(Math.round(d/365*10)/10)+' years'):d>=28?Math.round(d/30.4)+' months':d+' days'}
   function render(){
+    paintStrategy();
     var p=load(); var out=document.getElementById('policy-body'); if(!out||!data)return;
     var llBox=document.getElementById('pol-ll'), llHtml='', llN=0;
     TIPS={}; hideTip();                       // the marks are about to be rebuilt
@@ -1064,7 +1079,7 @@
       });
       ll=(tenors.length>1?'<div class="ll-tenors filters">'+chips+'</div>':'')+panes;
       llN=Object.keys(union).length;
-      llHtml='<h4 class="ll-title">Like-for-like alternatives</h4><p class="panel-lede small muted">Covered names at least as strong as the weakest you already accept at each tenor \u2014 same or better band, ratings and score, and no widening market signal.</p>'+ll;
+      llHtml=ll;   // the panel head above says what this is
     }
     out.innerHTML=html;
     if(llBox)llBox.innerHTML=llHtml||'<div class="empty">Approve a name and this fills with the covered names that match the standing you accept.</div>';
@@ -1209,7 +1224,7 @@
     data.rows.forEach(function(e){byId[e.id]=e});
     document.addEventListener('click',function(ev){var b=ev.target.closest('.pol-rm');if(b){var p=load().filter(function(x){return x.id!==b.dataset.id});save(p);render();return}
       var st=ev.target.closest('.uni-star');if(st){toggleWatch(st.dataset.id);render();return}
-      if(ev.target.closest('#uni-open')){openUni();return}
+      if(ev.target.closest('#uni-open,.uni-open')){openUni();return}
       if(ev.target.id==='uni-close'){document.getElementById('uni-dlg').close();return}
       var ud=document.getElementById('uni-dlg');if(ud&&ud.open&&ev.target===ud){ud.close();return}
       var a=ev.target.closest('.pol-add-ll');if(a){add(a.dataset.id,+a.dataset.tenor);var d=document.getElementById('pol-modal');if(d&&d.open)d.close();return}
@@ -1247,6 +1262,8 @@
       if(h==='weights')openWeights();
     }
     byHash(); addEventListener('hashchange',byHash);
+    // a reader with a list opens on the list; a reader without one opens on how to build it
+    if(!location.hash&&load().length){var pt=document.querySelector('.tab[data-tab="policy"]'); if(pt&&!pt.classList.contains('active'))pt.click()}
     document.addEventListener('keydown',function(ev){
       if(ev.key!=='Enter'&&ev.key!==' ')return;
       var card=ev.target.closest&&ev.target.closest('.ll-r,.pol-card,.pol-tr');
