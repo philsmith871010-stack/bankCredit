@@ -1,15 +1,15 @@
 {
  "id": "wells-fargo",
- "written": "2026-10-09",
+ "written": "2026-10-12",
  "background": "Wells Fargo & Company is the holding company of one of the four largest US banks, with consumer banking and lending, commercial banking, corporate and investment banking and wealth management, and a long regulatory remediation behind it.",
- "synthesis": "Rated A on average across all three, the weakest of them at A-, all three on a stable outlook, after a one-notch upgrade by one of the three on 29 Sep 2026. CET1 of 10.3% is in the bottom quarter of US banks and is the weak spot, while leverage of 5.8% and LCR of 119% are above the peer median. Since 30 Jun 2025 CET1 and leverage have each fallen 0.9 points, while LCR has been broadly flat. Flagged news in the last 90 days is heavy, led by a federal probe into its homeownership programmes, the newest on 8 Oct 2026.",
+ "synthesis": "Rated A on average across all three, the weakest of them at A-, all three on a stable outlook, after a one-notch upgrade by one of the three on 29 Sep 2026. CET1 of 10.3% is in the bottom quarter of US banks and is the weak spot, while leverage of 5.8% and LCR of 119% are above the peer median. Since 30 Jun 2025 CET1 and leverage have each fallen 0.9 points, while LCR has been broadly flat. Flagged news in the last 90 days is heavy, led by a federal probe into its homeownership pledge, the newest on 9 Oct 2026 and graded bad.",
  "inputs": {
-  "band": "B",
+  "band": "C",
   "composite": "A",
   "worst": "A-",
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-10-08"
+  "last_flagged": "2026-10-09"
  }
 }
