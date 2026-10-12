@@ -14643,5 +14643,330 @@
   "keep": true,
   "severity": "info",
   "why": "ECB leaning to approve Commerzbank bid"
+ },
+ "news:5d856dce1e1ffdce": {
+  "keep": false,
+  "severity": null,
+  "why": "former CEO profile"
+ },
+ "news:448fade31b177454": {
+  "keep": false,
+  "severity": null,
+  "why": "former CEO profile"
+ },
+ "news:62c6e6597fbe96cb": {
+  "keep": false,
+  "severity": null,
+  "why": "former CEO property sale"
+ },
+ "news:3212d069c197f00f": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:a4e0c30c7c37df19": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:84e518886e672cee": {
+  "keep": false,
+  "severity": null,
+  "why": "junior staff appointment"
+ },
+ "news:4e7467d4b68a2332": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as investor, passing mention"
+ },
+ "news:c3e1f79d09bae0b9": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as investor, passing mention"
+ },
+ "news:5ce87d478e81d769": {
+  "keep": false,
+  "severity": null,
+  "why": "league table, marketing"
+ },
+ "news:82472b48c144b417": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview / stock commentary"
+ },
+ "news:8207eee986cc4dbe": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview / stock commentary"
+ },
+ "news:fcccecc43a75fbc1": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview / stock commentary"
+ },
+ "news:6316d2fbc61c86f7": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview / stock commentary"
+ },
+ "news:6d4903adda765663": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender, client deal"
+ },
+ "news:789c66f73258c609": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as lender, client deal"
+ },
+ "news:05854bf68af075ed": {
+  "keep": true,
+  "severity": "info",
+  "why": "exits US/EU bond dealing"
+ },
+ "news:a941f2d0a9f414df": {
+  "keep": true,
+  "severity": "info",
+  "why": "exits US/EU bond dealing"
+ },
+ "news:86036038a28e01c7": {
+  "keep": true,
+  "severity": "info",
+  "why": "exits US/EU bond dealing"
+ },
+ "news:dea2977da6cd62fd": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:4d2dec7675232f91": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:ff64407c7076b476": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:eec460938c752f92": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:946c3e44a34b47f5": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:fff23b4d110a7835": {
+  "keep": true,
+  "severity": "info",
+  "why": "EU antitrust deadline on Commerzbank bid"
+ },
+ "news:bd5fec1707964ca8": {
+  "keep": true,
+  "severity": "info",
+  "why": "EU antitrust deadline on Commerzbank bid"
+ },
+ "news:5130e476dae5c531": {
+  "keep": true,
+  "severity": "info",
+  "why": "EU antitrust deadline on Commerzbank bid"
+ },
+ "news:16304d79d6d8c1fa": {
+  "keep": true,
+  "severity": "info",
+  "why": "EU antitrust deadline on Commerzbank bid"
+ },
+ "news:eb709aafe7ccaa18": {
+  "keep": true,
+  "severity": "info",
+  "why": "EU antitrust deadline on Commerzbank bid"
+ },
+ "news:960fa08b2c8dfb6a": {
+  "keep": false,
+  "severity": null,
+  "why": "sponsorship / arena"
+ },
+ "news:d868d5a229f33940": {
+  "keep": true,
+  "severity": "info",
+  "why": "new CTO appointed"
+ },
+ "news:50e23da670db7bfe": {
+  "keep": true,
+  "severity": "warn",
+  "why": "BaFin extends AML remediation deadline"
+ },
+ "news:e46833fa73c0951c": {
+  "keep": true,
+  "severity": "warn",
+  "why": "BaFin extends AML remediation deadline"
+ },
+ "news:9529f72c86779f9a": {
+  "keep": true,
+  "severity": "warn",
+  "why": "federal probe of lending programme"
+ },
+ "news:196ad8294dc24f8f": {
+  "keep": true,
+  "severity": "warn",
+  "why": "federal probe of lending programme"
+ },
+ "news:dd68f5745adc90c9": {
+  "keep": true,
+  "severity": "warn",
+  "why": "federal probe of lending programme"
+ },
+ "news:3f5978f004ea1b04": {
+  "keep": true,
+  "severity": "warn",
+  "why": "federal probe of lending programme"
+ },
+ "news:e35c2a602a085796": {
+  "keep": true,
+  "severity": "info",
+  "why": "Singapore bank shares falling"
+ },
+ "news:81e8447387d2c224": {
+  "keep": false,
+  "severity": null,
+  "why": "investor stock commentary"
+ },
+ "news:afe31eecf0f30b5b": {
+  "keep": false,
+  "severity": null,
+  "why": "investor stock commentary"
+ },
+ "news:6bb1bf3f5a716843": {
+  "keep": false,
+  "severity": null,
+  "why": "investor stock commentary"
+ },
+ "news:d42530d6af533e8b": {
+  "keep": false,
+  "severity": null,
+  "why": "investor stock commentary"
+ },
+ "news:8e973e7496d7fb74": {
+  "keep": false,
+  "severity": null,
+  "why": "investor stock commentary"
+ },
+ "news:f0bec6091d0a14b9": {
+  "keep": false,
+  "severity": null,
+  "why": "regulator consultation, not about bank"
+ },
+ "news:2a272b85bb9ad0d2": {
+  "keep": true,
+  "severity": "warn",
+  "why": "trader job cuts"
+ },
+ "news:2dacda73c233e2a9": {
+  "keep": true,
+  "severity": "warn",
+  "why": "trader job cuts"
+ },
+ "news:76431d31f514fa4d": {
+  "keep": false,
+  "severity": null,
+  "why": "share buy-back approval"
+ },
+ "news:f58ef54891312c5f": {
+  "keep": false,
+  "severity": null,
+  "why": "share buy-back approval"
+ },
+ "news:6835bc32d26a352a": {
+  "keep": true,
+  "severity": "info",
+  "why": "acquittal in short-selling case upheld"
+ },
+ "news:6a45fd629b83e683": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO commentary"
+ },
+ "news:c54abca11a6b4a77": {
+  "keep": false,
+  "severity": null,
+  "why": "passing mention"
+ },
+ "news:a7a78db4fc7f07e8": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary appointments"
+ },
+ "news:e6c0b9ccc7e44b2f": {
+  "keep": true,
+  "severity": "good",
+  "why": "Q3 EPS beat"
+ },
+ "news:1d02526c08977b11": {
+  "keep": true,
+  "severity": "info",
+  "why": "shares fall in bond selloff"
+ },
+ "news:4b50416206f28575": {
+  "keep": true,
+  "severity": "warn",
+  "why": "another loss, cost cuts"
+ },
+ "news:234d83143533ff11": {
+  "keep": true,
+  "severity": "warn",
+  "why": "another loss, cost cuts"
+ },
+ "news:26e27513a8a35002": {
+  "keep": true,
+  "severity": "warn",
+  "why": "another loss, cost cuts"
+ },
+ "news:8e238d5e9b91a2c7": {
+  "keep": true,
+  "severity": "warn",
+  "why": "another loss, cost cuts"
+ },
+ "news:c30014c395e5869c": {
+  "keep": true,
+  "severity": "warn",
+  "why": "online banking outage"
+ },
+ "news:9e66b1b7f934fe75": {
+  "keep": true,
+  "severity": "warn",
+  "why": "online banking outage"
+ },
+ "news:4672aeeaedaebb60": {
+  "keep": true,
+  "severity": "good",
+  "why": "interim profit rises"
+ },
+ "news:493220eff3618de9": {
+  "keep": true,
+  "severity": "good",
+  "why": "record results"
+ },
+ "news:217bd2d272bf9f9f": {
+  "keep": true,
+  "severity": "info",
+  "why": "acquires HSBC Egypt retail"
+ },
+ "news:f1862a6f54454b53": {
+  "keep": false,
+  "severity": null,
+  "why": "subsidiary product rates"
+ },
+ "news:bfa107abc21a925e": {
+  "keep": false,
+  "severity": null,
+  "why": "industry award"
+ },
+ "news:bc47fc147c5d48ed": {
+  "keep": true,
+  "severity": "info",
+  "why": "Rathbones merger regulatory delay"
  }
 }
