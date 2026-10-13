@@ -14968,5 +14968,230 @@
   "keep": true,
   "severity": "info",
   "why": "Rathbones merger regulatory delay"
+ },
+ "news:bcb76e231e824dba": {
+  "keep": false,
+  "severity": null,
+  "why": "share-price commentary"
+ },
+ "news:54674833faa23737": {
+  "keep": false,
+  "severity": null,
+  "why": "NASCAR sponsorship"
+ },
+ "news:5eda921aced7d6cf": {
+  "keep": false,
+  "severity": null,
+  "why": "NASCAR sponsorship"
+ },
+ "news:c95bc292cf14c4f8": {
+  "keep": true,
+  "severity": "info",
+  "why": "effort to resolve regulatory consent orders"
+ },
+ "news:7df20f61399395ed": {
+  "keep": false,
+  "severity": null,
+  "why": "minor crypto venture stake"
+ },
+ "news:da0c8adcde4ee8fa": {
+  "keep": true,
+  "severity": "info",
+  "why": "ACCC clears GROW acquisition"
+ },
+ "news:90624a4cb6b2bddb": {
+  "keep": false,
+  "severity": null,
+  "why": "AI policy meeting"
+ },
+ "news:fe5847994180879d": {
+  "keep": false,
+  "severity": null,
+  "why": "junior HR appointment"
+ },
+ "news:bfc9a7eca1f8af0d": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
+ "news:f9d276b5d939267a": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
+ "news:4f66a8821ec60a98": {
+  "keep": true,
+  "severity": "warn",
+  "why": "settles US$1.1bn 1MDB lawsuit"
+ },
+ "news:d5f8ad1607c7ddf6": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate 1MDB settlement coverage"
+ },
+ "news:c4728091787be1da": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:7a91bf2508b1edfc": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:d2d328e7d0eade5b": {
+  "keep": true,
+  "severity": "info",
+  "why": "hedging risky car-dealer exposure via SRT"
+ },
+ "news:9d365e5cd3f653be": {
+  "keep": false,
+  "severity": null,
+  "why": "crypto product partnership"
+ },
+ "news:ff524fbcf3ea6d56": {
+  "keep": false,
+  "severity": null,
+  "why": "routine bond issue"
+ },
+ "news:1dd86b2251ba57d6": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:670c61a55d92b637": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:97f4d21813b8192e": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:cb92e8f43ae58688": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:741dc84f7ce4ac35": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:aafdcd5e7d5ae0a9": {
+  "keep": false,
+  "severity": null,
+  "why": "NASCAR sponsorship"
+ },
+ "news:a4492a20e6762bec": {
+  "keep": false,
+  "severity": null,
+  "why": "CEO macro commentary"
+ },
+ "news:5e65f5655e300f5c": {
+  "keep": false,
+  "severity": null,
+  "why": "NASCAR sponsorship"
+ },
+ "news:90ddd91314f421f5": {
+  "keep": false,
+  "severity": null,
+  "why": "NASCAR sponsorship"
+ },
+ "news:c920f6a25176bad2": {
+  "keep": false,
+  "severity": null,
+  "why": "NASCAR sponsorship"
+ },
+ "news:8652da4f1b070db1": {
+  "keep": false,
+  "severity": null,
+  "why": "earnings preview"
+ },
+ "news:d9e9666bf5eaa0bf": {
+  "keep": false,
+  "severity": null,
+  "why": "NASCAR sponsorship"
+ },
+ "news:138b5f6029eaf24c": {
+  "keep": false,
+  "severity": null,
+  "why": "NASCAR sponsorship"
+ },
+ "news:7f7c5c7ba6b54a19": {
+  "keep": false,
+  "severity": null,
+  "why": "NASCAR sponsorship"
+ },
+ "news:60864ec7741ef2fe": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as analyst"
+ },
+ "news:f3aaa9f5ac3d1e53": {
+  "keep": false,
+  "severity": null,
+  "why": "bank market commentary"
+ },
+ "news:c1638c372fe5d774": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as FX forecaster"
+ },
+ "news:5511e07630a2b2a6": {
+  "keep": false,
+  "severity": null,
+  "why": "routine bond call"
+ },
+ "news:058fe8f87739dfbc": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as FX forecaster"
+ },
+ "news:506d14d75b8a00be": {
+  "keep": false,
+  "severity": null,
+  "why": "crypto product partnership"
+ },
+ "news:322f214338a44a04": {
+  "keep": true,
+  "severity": "info",
+  "why": "CEO on Russian unit expropriation risk"
+ },
+ "news:980d6991160118b3": {
+  "keep": true,
+  "severity": "warn",
+  "why": "another loss, cost cuts"
+ },
+ "news:c95ba0d3203e94d6": {
+  "keep": false,
+  "severity": null,
+  "why": "duplicate Close Brothers loss coverage"
+ },
+ "news:1bdcde01dbc3b269": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q3 results"
+ },
+ "news:05ca76fbe29717f9": {
+  "keep": false,
+  "severity": null,
+  "why": "routine dividend declaration"
+ },
+ "news:e3fcf1ce074a5dd0": {
+  "keep": false,
+  "severity": null,
+  "why": "bank as forecaster"
+ },
+ "news:3d49d36ebc8c048a": {
+  "keep": false,
+  "severity": null,
+  "why": "executive relocation"
+ },
+ "news:31a17cff1680340a": {
+  "keep": true,
+  "severity": "info",
+  "why": "Q2 results"
  }
 }
