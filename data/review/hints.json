@@ -289,7 +289,9 @@
    "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-q\\d+\\-\\d+\\-en",
    "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-q\\d+\\-\\d+\\-fr",
    "citibank\\-canada\\-pillar\\-\\d+\\-disclosure\\-ye\\-\\d+\\-en",
-   "cgme\\-pillar\\-\\d+\\-disclosures_q\\d+\\-\\d+"
+   "cgme\\-pillar\\-\\d+\\-disclosures_q\\d+\\-\\d+",
+   "citibank\\-canada\\-pillar\\-\\d+\\-disclosure_ye\\-\\d+\\-en",
+   "citibank\\-canada\\-basel\\-iii\\-pillar\\d+\\-osfi\\-q\\d+\\-\\d+\\-fr"
   ]
  },
  "nab": {

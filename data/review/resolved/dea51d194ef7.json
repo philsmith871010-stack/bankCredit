@@ -1,0 +1,5 @@
+{
+ "id": "dea51d194ef7",
+ "skip": true,
+ "note": "Citibank Canada French-language OSFI Pillar 3 capital disclosure (Q4 2024; extractor misread the reference date as 2013-01-31 from 'a compter du 1er janvier 2013'). Canadian subsidiary in CAD, not the Citigroup Inc. group, so nothing loaded under citigroup. Skipping this filename shape."
+}

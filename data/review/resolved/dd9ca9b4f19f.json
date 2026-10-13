@@ -1,0 +1,5 @@
+{
+ "id": "dd9ca9b4f19f",
+ "skip": true,
+ "note": "Citibank Canada (Canadian subsidiary, OSFI SMSB Pillar 3, CAD) - not the Citigroup Inc. consolidated group. Its figures must not be loaded as Citigroup's; the document is also the year-end 2024 SMSB disclosure with no LCR. Skipping so this filename shape is not queued for citigroup again."
+}
