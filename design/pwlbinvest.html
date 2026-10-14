@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PWLBinvest · coming soon</title>
+<meta name="description" content="Who your council can place money with, and for how long, straight from the public record. Every bank and building society scored from its regulatory filings, its agency ratings and the news, your list re-checked every night, and the next name found. Coming soon to PWLBtoday: sign up to hear first.">
+<!-- A TEASER, NOT A DOOR. This page goes up before the tool does, so it has no
+     way in: where PWLBreports says "Open the tool", this asks people to sign up
+     (PWLBtoday's sign-up page) so they hear first.
+     Everything else is PWLBforecast's page, deliberately: the same ground, type,
+     cards and motion, so the family reads as one. Like that page, it makes no
+     requests at all, not even for a font. -->
+<style>
+/* ===========================================================================
+ * PWLBinvest — the page that announces it.
+ *
+ * Palette, rhythm and components are PWLBreports' and PWLBforecast's own. The
+ * colours that are this tool's are the five bands a score falls into, green
+ * through red, and the orange the platform keeps for the thing that matters:
+ * here, the reader's own list and the names at least as strong as its weakest.
+ *
+ * Animation is Web Animations and IntersectionObserver, no library, all of it
+ * skipped under prefers-reduced-motion. Nothing is required to read the page.
+ * ======================================================================== */
+:root{
+  --ground:#061a2e; --ground2:#0a2540; --panel:#0e2f52; --panel2:#143b66;
+  --ink:#eaf1f8; --ink2:#b6c1d0; --muted:#7d95ad; --faint:#8199b0;
+  --line:#1b3a5c; --line2:#27507c;
+  --orange:#f0954a;
+  /* the tool's own colours: the five bands, and the weakest line */
+  --a:#4cb583; --b:#5695d1; --c:#e8c547; --d:#e8974a; --e:#e0776a; --min:#e0776a;
+  --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --wrap:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:17px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.wrap{max-width:var(--wrap); margin:0 auto; padding:0 28px}
+a{color:inherit}
+h1,h2,h3{text-wrap:balance; margin:0}
+
+/* ---- shared rhythm ------------------------------------------------------- */
+section{padding:104px 0; position:relative}
+.eyebrow{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 20px;
+  display:flex; align-items:center; gap:12px;
+}
+.eyebrow::before{content:""; width:26px; height:1px; background:var(--line2)}
+h2{font-size:clamp(28px,3.6vw,42px); line-height:1.14; letter-spacing:-.022em; font-weight:600}
+.lede{
+  font-family:var(--serif); font-size:clamp(18px,2vw,21px); line-height:1.62;
+  color:var(--ink2); max-width:62ch; margin:22px 0 0;
+}
+.rule{height:1px; background:linear-gradient(90deg,var(--line2),transparent)}
+
+/* ---- hero ---------------------------------------------------------------- */
+.hero{padding:0; min-height:100svh; display:flex; flex-direction:column; justify-content:center;
+  position:relative; overflow:hidden}
+/* A faint grid, like the background of every chart in the tool. */
+.hero::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 90% 70% at 60% 45%,#000 20%,transparent 78%);
+  opacity:.5;
+}
+.masthead{
+  position:fixed; top:0; left:0; right:0; padding:22px 0; z-index:3;
+  border-bottom:1px solid transparent; transition:background .25s ease, border-color .25s ease;
+}
+.masthead .wrap{display:flex; align-items:center; gap:18px}
+@media (max-width:600px){
+  .masthead a.mini{display:none}
+  .masthead .wrap{gap:12px}
+}
+.brand{font-family:var(--mono); font-size:13px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--ink2); font-weight:500}
+.brand b{color:var(--ink); font-weight:600}
+.masthead .sp{flex:1}
+.masthead a.mini{font-family:var(--sans); font-size:13.5px; color:var(--ink2);
+  text-decoration:none; font-weight:500}
+.masthead a.mini:hover{color:var(--ink)}
+/* where PWLBreports has its way in: sign up, to hear first */
+.soon{text-decoration:none; font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--orange); border:1px solid rgba(240,149,74,.45); border-radius:999px; padding:5px 11px;
+  white-space:nowrap}
+
+.herogrid{
+  display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);
+  gap:56px; align-items:center; position:relative; z-index:2; padding:110px 0 60px;
+}
+h1{
+  font-size:clamp(38px,5.6vw,66px); line-height:1.04; letter-spacing:-.035em;
+  font-weight:600;
+}
+h1 .em{
+  font-family:var(--serif); font-style:italic; font-weight:400;
+  color:var(--orange);
+}
+.sub{
+  font-family:var(--serif); font-size:clamp(17px,1.7vw,20px); line-height:1.6;
+  color:var(--ink2); margin:26px 0 0; max-width:52ch;
+}
+.cta{display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin:38px 0 0}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--sans); font-size:15px; font-weight:600;
+  padding:14px 24px; border-radius:6px; text-decoration:none;
+  border:1px solid var(--orange); background:var(--orange); color:#12243a;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line2)}
+a.btn:hover{transform:translateY(-1px); box-shadow:0 8px 24px rgba(0,0,0,.4)}
+a.btn.ghost:hover{border-color:var(--ink2)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(240,149,74,.55)}70%{box-shadow:0 0 0 9px rgba(240,149,74,0)}100%{box-shadow:0 0 0 0 rgba(240,149,74,0)}}
+.freeline{display:inline-flex; align-items:center; gap:10px; margin:26px 0 0;
+  font-family:var(--sans); font-size:15px; font-weight:600; color:var(--ink);
+  padding:10px 17px 10px 14px; border-radius:999px;
+  border:1px solid rgba(240,149,74,.34); background:rgba(240,149,74,.08)}
+.freeline .dot{width:8px; height:8px; border-radius:50%; background:var(--orange); flex:none}
+html.anim .freeline .dot{animation:pulse 2.4s ease-out infinite}
+a.soon:hover{background:rgba(240,149,74,.12)}
+
+/* the hero chart */
+.chartcard{
+  background:linear-gradient(180deg,var(--panel),var(--ground2));
+  border:1px solid var(--line2); border-radius:12px; padding:22px 22px 16px;
+  box-shadow:0 24px 70px rgba(0,0,0,.5);
+}
+.chartcard h4{
+  margin:0 0 2px; font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); font-weight:600;
+}
+.chartcard .cap{font-size:13px; color:var(--ink2); margin:0 0 14px}
+.chartcard svg{display:block; width:100%; height:auto}
+/* the two figures the tool exists to give */
+.kpis{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 0 14px}
+.kpi{border:1px solid var(--line2); border-radius:8px; padding:10px 12px; background:rgba(6,26,46,.45)}
+.kpi.hl{border-color:rgba(240,149,74,.5); background:rgba(240,149,74,.10)}
+.kpi span{display:block; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted)}
+.kpi b{display:block; font-family:var(--mono); font-size:clamp(20px,2.3vw,26px); font-weight:600;
+  letter-spacing:-.02em; font-variant-numeric:tabular-nums; color:var(--ink); line-height:1.25}
+.kpi.hl b{color:var(--orange)}
+.kpi em{display:block; font-style:normal; font-size:12px; line-height:1.4; color:var(--ink2); margin-top:2px}
+.legend{display:flex; flex-wrap:wrap; gap:6px 18px; margin:12px 2px 0}
+.legend span{display:inline-flex; align-items:center; gap:7px;
+  font-family:var(--sans); font-size:12px; color:var(--ink2)}
+.legend i{width:14px; height:2.5px; border-radius:2px; display:block}
+.legend i.sw{width:10px; height:10px; border-radius:50%}
+.legend i.ring{width:10px; height:10px; border-radius:50%; background:none; border:2px solid var(--orange)}
+.legend svg.lsw{flex:none; width:20px; height:6px; display:block}
+#hchart .ax{font-family:IBM Plex Mono, monospace; font-size:10px; fill:#8199b0}
+#hchart .lab{font-family:IBM Plex Mono, monospace; font-size:10.5px; fill:#e0776a}
+#hchart .nm{font-family:IBM Plex Mono, monospace; font-size:9.5px; fill:#eaf1f8}
+
+/* ---- the night sweep ----------------------------------------------------- */
+.scatterwrap{position:relative; margin:44px 0 0;
+  background:var(--ground2); border:1px solid var(--line); border-radius:10px;
+  padding:26px; overflow:hidden}
+@media (max-width:600px){.scatterwrap{padding:16px}}
+#night{display:block; width:100%; height:auto}
+#night .sh{font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; fill:var(--muted)}
+#night .nm{font-family:var(--sans); font-size:14px; font-weight:600; fill:var(--ink)}
+#night .sc{font-family:var(--mono); font-size:12px; fill:var(--ink2)}
+#night .st{font-family:var(--mono); font-size:10px; fill:var(--muted); transition:fill .4s ease}
+#night .st.ok{fill:var(--a)} #night .st.flag{fill:var(--orange)}
+#night .clock{font-family:var(--mono); font-size:13px; letter-spacing:.08em; fill:var(--orange); font-variant-numeric:tabular-nums}
+#night .ax{font-family:var(--mono); font-size:10px; letter-spacing:.12em; fill:var(--faint)}
+#night .pill{font-family:var(--mono); font-size:9.5px; font-weight:600; fill:#061a2e}
+#night.nar .sh{font-size:12px} #night.nar .nm{font-size:16px} #night.nar .sc{font-size:13.5px}
+#night.nar .st{font-size:11.5px} #night.nar .ax{font-size:11.5px} #night.nar .clock{font-size:15px}
+#night .tile{transform-box:fill-box; transform-origin:50% 50%}
+#night .conn{stroke-opacity:.7}
+.scatterlab{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin:20px 2px 0}
+.scount{font-family:var(--mono); font-weight:600; font-variant-numeric:tabular-nums;
+  font-size:clamp(30px,4.4vw,46px); line-height:1; letter-spacing:-.02em;
+  color:var(--ink2); transition:color .6s ease}
+.scatterlab.done .scount{color:var(--orange)}
+.scatterlab .sstate{font-family:var(--mono); font-size:11.5px;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--muted); max-width:62ch; flex:1}
+.scatterlab .legend{margin:0}
+@media (max-width:600px){.scatterlab .legend{flex-basis:100%}}
+
+/* ---- cards --------------------------------------------------------------- */
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(272px,1fr)); gap:20px; margin:44px 0 0}
+.card{
+  background:var(--ground2); border:1px solid var(--line); border-radius:10px;
+  padding:28px 26px; position:relative;
+}
+.card .n{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; color:var(--muted);
+  display:block; margin-bottom:14px;
+}
+.card h3{font-size:19px; font-weight:600; letter-spacing:-.012em; margin:0 0 10px}
+.card p{margin:0; font-size:15px; color:var(--ink2); line-height:1.6}
+
+/* ---- the steps ----------------------------------------------------------- */
+.steps{margin:48px 0 0; border-top:1px solid var(--line)}
+.step{
+  display:grid; grid-template-columns:76px minmax(0,1fr) minmax(0,1.15fr); gap:30px;
+  padding:32px 0; border-bottom:1px solid var(--line); align-items:start;
+}
+.step .k{font-family:var(--mono); font-size:13px; color:var(--orange); letter-spacing:.08em; padding-top:3px}
+.step h3{font-size:20px; font-weight:600; letter-spacing:-.014em}
+.step h3 small{display:block; font-family:var(--mono); font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); font-weight:500; margin-top:6px}
+.step p{margin:0; color:var(--ink2); font-size:15.5px}
+
+.honest{background:var(--ground2); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+
+/* ---- close --------------------------------------------------------------- */
+.close{text-align:center; padding:120px 0}
+.close h2{max-width:20ch; margin:0 auto}
+.close .lede{margin:22px auto 0; text-align:center}
+.close .cta{justify-content:center}
+.claims{max-width:62ch; margin:34px auto 0; font-size:13.5px; line-height:1.65;
+  color:var(--muted); border-top:1px solid var(--line); padding-top:22px}
+.claims b{color:var(--ink2); font-weight:600}
+footer{border-top:1px solid var(--line); padding:38px 0 56px; color:var(--muted); font-size:13.5px}
+footer .wrap{display:flex; gap:24px; flex-wrap:wrap; align-items:baseline}
+footer .sp{flex:1}
+
+/* ---- reveal ---------------------------------------------------------------
+ * Visible by DEFAULT; the script hides things only once it is running, and
+ * forces everything visible after a few seconds whatever happens (a background
+ * tab gets no animation frames). PWLBreports learned this the hard way. */
+html.anim .rv{opacity:0; transform:translateY(18px)}
+html.anim .rv.in{opacity:1; transform:none;
+  transition:opacity .7s cubic-bezier(.22,.61,.36,1),
+             transform .7s cubic-bezier(.22,.61,.36,1)}
+
+#worth .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:1000px){#worth .cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){#worth .cards{grid-template-columns:1fr}}
+
+@media (max-width:900px){
+  .herogrid{grid-template-columns:1fr; gap:40px; padding:120px 0 70px}
+  .step{grid-template-columns:1fr; gap:10px}
+  .step .k{padding-top:0}
+  section{padding:78px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1; transform:none; transition:none}
+  .btn{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap">
+    <span class="brand"><b>PWLB</b>invest</span>
+    <span class="sp"></span>
+    <a class="mini" href="#why">Why</a>
+    <a class="mini" href="#how">How it works</a>
+    <a class="mini" href="#worth">What it is worth</a>
+    <a class="soon" href="https://eh0riw.logto.app/register?app_id=m52m4xlvozkv20vnkixtc">Sign up</a>
+  </div>
+</div>
+
+<!-- ======================= HERO ======================= -->
+<header class="hero">
+  <div class="wrap">
+    <div class="herogrid">
+      <div>
+        <h1 class="rv">Who you can place money with, and for how long, <span class="em">straight from the public&nbsp;record</span>.</h1>
+        <p class="sub rv">Every bank and building society a treasury desk deals with, scored from
+          its regulatory filings, its agency ratings and the news, against the weightings you
+          choose. Build your counterparty list, have every name on it re-checked each night, and
+          find the next one.</p>
+        <div class="cta rv">
+          <a class="btn" href="https://eh0riw.logto.app/register?app_id=m52m4xlvozkv20vnkixtc">Sign up to hear first</a>
+          <a class="btn ghost" href="#how">How it works</a>
+        </div>
+        <p class="freeline rv"><span class="dot"></span>Coming soon to PWLBtoday</p>
+      </div>
+
+      <div class="chartcard rv">
+        <h4>Counterparty scores &middot; Illustrative universe</h4>
+        <p class="cap">Every covered name on one scale, your own list marked, and the names at
+          least as strong as your weakest. Shapes are illustrative; the tool draws this from the
+          public record each morning.</p>
+        <div class="kpis">
+          <div class="kpi hl"><span>At least as strong as your weakest</span><b id="kAlt">50 names</b><em>not yet on your list, at 12 months</em></div>
+          <div class="kpi"><span>Weakest on your list</span><b id="kLow">78 &middot; B</b><em>of 8 names approved</em></div>
+        </div>
+        <svg id="hchart" viewBox="0 0 560 260" role="img"
+             aria-label="An illustrative score scale from 40 to 100. Every covered name sits on it
+             as a dot coloured by its band, most between 60 and 90. Eight names on the reader's own
+             list are ringed in orange. A dashed line marks the weakest of them at 78, and the
+             scale to its right, where names at least as strong sit, is shaded.">
+          <g id="hgrid" stroke="#1b3a5c" stroke-width="1"></g>
+          <rect id="shade" fill="rgba(240,149,74,.14)" opacity="0"></rect>
+          <g id="hax"></g>
+          <g id="dots"></g>
+          <line id="lnMin" stroke="#e0776a" stroke-width="1.4" stroke-dasharray="6 4" opacity="0"></line>
+          <g id="mine"></g>
+          <g id="minLabel" opacity="0"><text id="minText" class="lab">your weakest &middot; 78</text></g>
+          <g id="altLabel" opacity="0"><text id="altText" class="lab" fill="#f0954a">at least as strong &rarr;</text></g>
+        </svg>
+        <div class="legend">
+          <span><i class="sw" style="background:#4cb583"></i>Band A</span>
+          <span><i class="sw" style="background:#5695d1"></i>B</span>
+          <span><i class="sw" style="background:#e8c547"></i>C</span>
+          <span><i class="sw" style="background:#e8974a"></i>D</span>
+          <span><i class="ring"></i>Your list</span>
+          <span><svg class="lsw" width="20" height="6" aria-hidden="true"><line x1="0" y1="3" x2="20" y2="3"
+            stroke="#e0776a" stroke-width="1.6" stroke-dasharray="6 4"/></svg>Your weakest</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ======================= WHY ======================= -->
+<section id="why">
+  <div class="wrap">
+    <p class="eyebrow rv">Why it exists</p>
+    <h2 class="rv">A counterparty list is approved once, and checked when someone remembers.</h2>
+    <p class="lede rv">The ratings move, the filings land, the headlines come, and the list on the
+      policy sits where it was signed. The public record already says which names have got weaker.
+      Nobody has the week it takes to read it.</p>
+
+    <div class="scatterwrap rv">
+      <!-- The method in one picture, and this page's own: not a statement being
+           sorted but a night passing over the whole universe. Your list sits on
+           the left; every covered name is a tile on the right; the sweep is the
+           nightly check, and by six in the morning each of your names has a
+           tick or a flag. Names and events are illustrative. -->
+      <svg id="night" viewBox="0 0 1000 380" role="img"
+           aria-label="A council's list of six names on the left. On the right, every covered
+           name as a tile, one hundred and fifty-two of them. A sweep of light passes over the
+           tiles through the night, brightening each as it is checked. Three of the council's
+           names are flagged in orange as the sweep reaches them: a liquidity ratio that fell,
+           an outlook turned negative, a downgrade. By six in the morning every name has a tick
+           or a flag."></svg>
+      <div class="scatterlab" id="nightLab">
+        <span class="scount" id="nightCount">0</span>
+        <span class="sstate" id="nightState">names checked tonight</span>
+        <span class="legend">
+          <span><i style="background:#4cb583"></i>Checked</span>
+          <span><i style="background:#f0954a"></i>Flag raised</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card rv">
+        <span class="n">01</span>
+        <h3>From the record, not the rumour</h3>
+        <p>Every score is built from what the bank filed, what the agencies published and what the
+          market and the press said, each figure with its source and its date.</p>
+      </div>
+      <div class="card rv">
+        <span class="n">02</span>
+        <h3>Checked every night</h3>
+        <p>Each name on your list is read again each night. A rating that moved, a ratio that fell,
+          a headline that was flagged: marked on the card, beside the day you approved it.</p>
+      </div>
+      <div class="card rv">
+        <span class="n">03</span>
+        <h3>Weighed your way</h3>
+        <p>The published method is the starting point. Change the weightings and every score on the
+          site follows, for you alone; the figures beneath never move.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<!-- ======================= HOW ======================= -->
+<section id="how" class="honest">
+  <div class="wrap">
+    <p class="eyebrow rv">How it works</p>
+    <h2 class="rv">Four passes, and a list that looks after itself.</h2>
+    <p class="lede rv">Every figure comes from the public record or from something you chose. The
+      method is published and applied the same way to every name: no AI, nothing a treasurer cannot
+      follow.</p>
+
+    <div class="steps">
+      <div class="step rv"><span class="k">01</span>
+        <div><h3>The record is read<small>Every morning</small></h3></div>
+        <p>Pillar 3 reports and regulatory returns for the capital and liquidity ratios; the ESMA
+          register for the agencies' ratings; traded prices for the market signal; the day's
+          headlines, judged for what they say about credit.</p></div>
+      <div class="step rv"><span class="k">02</span>
+        <div><h3>Every name is scored<small>The same way, every name</small></h3></div>
+        <p>The agency rating is the anchor and the bank's own ratios the pillars, weighed by the
+          published method or by your weightings. A name without a rating or without current
+          capital figures is not scored, and says so.</p></div>
+      <div class="step rv"><span class="k">03</span>
+        <div><h3>Your list is checked<small>Each night</small></h3></div>
+        <p>Choose the names you accept and say how long you would lend to each. From then on,
+          anything that has moved since you approved a name is flagged on its card.</p></div>
+      <div class="step rv"><span class="k">04</span>
+        <div><h3>The next name is found<small>Whenever you like</small></h3></div>
+        <p>At each tenor, the names at least as strong as your weakest; any names side by side on
+          any ratio; the whole universe by the average and the weakest of the three main
+          agencies.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= WHAT IT IS WORTH ======================= -->
+<section id="worth">
+  <div class="wrap">
+    <p class="eyebrow rv">What it is worth to an authority</p>
+    <h2 class="rv">The counterparty review you would do, if you had the week.</h2>
+    <p class="lede rv">Almost none of the work is the judgement. It is finding the filing, reading
+      the ratios out of it, checking the register, and doing it again next quarter for every name.
+      That part is done for you.</p>
+
+    <div class="cards">
+      <div class="card rv"><span class="n">01</span><h3>Every figure sourced and dated</h3>
+        <p>CET1, leverage, liquidity and funding, each with the document, the page, the method and
+          the date it was read from. Nothing is a black box.</p></div>
+      <div class="card rv"><span class="n">02</span><h3>What changed, on the card</h3>
+        <p>The day you approved each name is the baseline. A downgrade, a ratio that fell, a
+          flagged headline: shown against it, not buried in a feed.</p></div>
+      <div class="card rv"><span class="n">03</span><h3>The next name, at each tenor</h3>
+        <p>Alternatives at least as strong as your weakest at three months, six, a year: same or
+          better band, ratings and score, and no widening market signal.</p></div>
+      <div class="card rv"><span class="n">04</span><h3>The three main agencies, on one scale</h3>
+        <p>The average and the weakest of Fitch, S&amp;P and Moody's, with one outlook mark per
+          agency, and eleven years of how they moved.</p></div>
+      <div class="card rv"><span class="n">05</span><h3>Weightings that are yours</h3>
+        <p>Set how much the rating, the capital, the liquidity and the rest count for, and read
+          every score your way. The published method is always one click back.</p></div>
+      <div class="card rv"><span class="n">06</span><h3>A list that travels</h3>
+        <p>Your list stays in your browser; a link carries it to a colleague, the committee or your
+          adviser, names and tenors intact.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CLOSE ======================= -->
+<section class="close">
+  <div class="wrap">
+    <h2 class="rv">Coming soon to PWLBtoday.</h2>
+    <p class="lede rv">Sign up and you'll be the first to hear when it opens, with an example list to
+      try it on: every pathway, exactly as with your own names.</p>
+    <div class="cta rv">
+      <a class="btn" href="https://eh0riw.logto.app/register?app_id=m52m4xlvozkv20vnkixtc">Sign up to hear first</a>
+    </div>
+    <p class="claims rv"><b>What it does not claim.</b>
+      It is information, not advice. Scores use a published method and can be wrong; nothing here is a
+      recommendation, and nothing stands in for your counterparty policy, your section 151 officer or
+      your adviser.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span><b>PWLB</b>invest &middot; from PWLBtoday</span>
+    <span class="sp"></span>
+    <span>Coming soon</span>
+  </div>
+</footer>
+
+<script>
+"use strict";
+/* ---------------------------------------------------------------------------
+ * Motion, written natively as on PWLBreports: decoration only, skipped under
+ * reduced motion, and the page reads completely without it.
+ * ------------------------------------------------------------------------ */
+const STILL = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+if(!STILL) document.documentElement.classList.add("anim");
+
+/* ---- the hero chart -------------------------------------------------------
+ * A plausible universe, not real names' scores: around 150 covered names on
+ * the 0-100 scale, most in the sixties to eighties, coloured by the band each
+ * score falls in. Eight of them are the reader's list, ringed in orange; the
+ * weakest of those draws the line, and the names to the right of it are the
+ * ones the tool would offer as alternatives. The two tiles are read off the
+ * same points, so the card cannot contradict itself.
+ */
+const BAND = s => s >= 80 ? "#4cb583" : s >= 65 ? "#5695d1" : s >= 50 ? "#e8c547" : s >= 35 ? "#e8974a" : "#e0776a";
+const LETTER = s => s >= 80 ? "A" : s >= 65 ? "B" : s >= 50 ? "C" : s >= 35 ? "D" : "E";
+const rnd = (() => { let t = 7; return () => { t = (t * 16807) % 2147483647; return (t - 1) / 2147483646; }; })();
+const N = 150;
+const scores = Array.from({length:N}, () => {
+  const u = rnd() + rnd() + rnd();                       // bell-shaped around the middle
+  return Math.max(41, Math.min(99, Math.round(52 + u * 14.5 + (rnd() < .08 ? -14 : 0) + (rnd() < .1 ? 6 : 0))));
+}).sort((a,b) => a - b);
+const MINE = [92, 90, 88, 86, 84, 82, 80, 78];           // the reader's list, weakest last
+const WEAKEST = Math.min(...MINE);
+
+const P = {t:16, r:14, b:30, l:14}, W = 560, H = 260;
+const iw = W - P.l - P.r, ih = H - P.t - P.b;
+const LO = 40, HI = 100;
+const X = s => P.l + ((s - LO) / (HI - LO)) * iw;
+const BASE = P.t + ih - 4;                               // the dots stack up from here
+const R = 4.2, ROW = 9.2;
+
+(function frame(){
+  const g = $("#hgrid"), ax = $("#hax");
+  for(let v = LO; v <= HI; v += 10){
+    const x = X(v).toFixed(1);
+    g.insertAdjacentHTML("beforeend", `<line x1="${x}" y1="${P.t}" x2="${x}" y2="${BASE + 6}" opacity="${v % 20 ? .35 : .7}"/>`);
+    ax.insertAdjacentHTML("beforeend", `<text class="ax" x="${x}" y="${H - P.b + 18}" text-anchor="middle">${v}</text>`);
+  }
+  ax.insertAdjacentHTML("beforeend", `<text class="ax" x="${X(LO).toFixed(1)}" y="${P.t + 2}" text-anchor="start" opacity=".8">weaker</text>`);
+  ax.insertAdjacentHTML("beforeend", `<text class="ax" x="${X(HI).toFixed(1)}" y="${P.t + 2}" text-anchor="end" opacity=".8">stronger</text>`);
+})();
+
+// the beeswarm: every dot at its score, stacked up a column so none sit on another
+const cols = {};
+const pts = scores.map((s, i) => {
+  const k = Math.round(s); const n = (cols[k] = (cols[k] || 0) + 1);
+  return {s, i, x: X(s) + (k % 2 ? 1.6 : -1.6), y: BASE - (n - 1) * ROW - R};
+});
+$("#dots").innerHTML = pts.map(p => `<circle class="pt" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${R}" fill="${BAND(p.s)}" opacity="0"/>`).join("");
+// the reader's list: one ring each on a dot of that score, lifted so it reads over the swarm
+const mine = MINE.map((s, j) => {
+  const k = Math.round(s), n = cols[k] || 1;
+  return {s, x: X(s), y: BASE - n * ROW - R - 6, j};
+});
+$("#mine").innerHTML = mine.map(m => `<g class="mn" opacity="0"><circle cx="${m.x.toFixed(1)}" cy="${m.y.toFixed(1)}" r="6.2" fill="#0e2f52" stroke="#f0954a" stroke-width="2.2"/><circle cx="${m.x.toFixed(1)}" cy="${m.y.toFixed(1)}" r="2.4" fill="${BAND(m.s)}"/></g>`).join("");
+const xm = X(WEAKEST);
+$("#lnMin").setAttribute("x1", xm.toFixed(1)); $("#lnMin").setAttribute("x2", xm.toFixed(1));
+$("#lnMin").setAttribute("y1", P.t + 8); $("#lnMin").setAttribute("y2", BASE + 6);
+$("#shade").setAttribute("x", xm.toFixed(1)); $("#shade").setAttribute("y", P.t + 8);
+$("#shade").setAttribute("width", (X(HI) - xm).toFixed(1)); $("#shade").setAttribute("height", (BASE + 6 - P.t - 8).toFixed(1));
+$("#minText").setAttribute("x", (xm - 6).toFixed(1)); $("#minText").setAttribute("y", P.t + 20); $("#minText").setAttribute("text-anchor", "end");
+$("#altText").setAttribute("x", (xm + 8).toFixed(1)); $("#altText").setAttribute("y", P.t + 20);
+// the tiles, from the same points
+const alt = scores.filter(s => s >= WEAKEST).length - MINE.length;
+$("#kAlt").textContent = alt + " names";
+$("#kLow").innerHTML = WEAKEST + " &middot; " + LETTER(WEAKEST);
+$("#kLow").nextElementSibling.textContent = "of " + MINE.length + " names approved";
+$("#minText").textContent = "your weakest · " + WEAKEST;
+
+function fade(sel, delay, dur){
+  const el = $(sel); if(!el) return;
+  if(STILL){ el.style.opacity = 1; return; }
+  el.animate([{opacity:0},{opacity:1}], {duration:dur || 600, delay:delay, easing:"ease-out", fill:"forwards"});
+}
+function drawHero(){
+  // the universe arrives from the left, weakest first, as the record is read
+  $$("#dots .pt").forEach((c, i) => {
+    if(STILL){ c.style.opacity = .92; return; }
+    c.animate([{opacity:0, transform:"translateY(10px)"},{opacity:.92, transform:"none"}],
+      {duration:420, delay:200 + i * 9, easing:"cubic-bezier(.3,.7,.3,1)", fill:"forwards"});
+  });
+  $$("#mine .mn").forEach((g, j) => {
+    if(STILL){ g.style.opacity = 1; return; }
+    g.animate([{opacity:0, transform:"translateY(-14px)"},{opacity:1, transform:"none"}],
+      {duration:520, delay:1800 + j * 110, easing:"cubic-bezier(.3,.7,.3,1)", fill:"forwards"});
+  });
+  fade("#lnMin", 2900);
+  fade("#minLabel", 3050);
+  fade("#shade", 3300, 800);
+  fade("#altLabel", 3500);
+}
+let drawn = false;
+const once = () => { if(drawn) return; drawn = true; drawHero(); };
+if(document.readyState === "complete") once(); else window.addEventListener("load", once);
+setTimeout(once, 2500);
+// a floor under the chart: whatever happened to the animation, it ends drawn
+setTimeout(() => {
+  $$("#dots .pt").forEach(c => { c.style.opacity = .92; });
+  $$("#mine .mn").forEach(g => { g.style.opacity = 1; });
+  ["#lnMin","#minLabel","#shade","#altLabel"].forEach(k => { $(k).style.opacity = 1; });
+}, 5500);
+
+/* ---- reveal on scroll ---------------------------------------------------- */
+(function reveal(){
+  const items = $$(".rv");
+  if(STILL || !("IntersectionObserver" in window)){ items.forEach(el => el.classList.add("in")); return; }
+  const hero = $$(".hero .rv");
+  hero.forEach((el,i) => { el.style.transitionDelay = (i*90)+"ms"; });
+  setTimeout(() => hero.forEach(el => el.classList.add("in")), 40);
+  setTimeout(() => {
+    document.documentElement.classList.remove("anim");
+    items.forEach(el => { el.classList.add("in"); if(el.getAnimations) el.getAnimations().forEach(a => { try{ a.cancel(); }catch(e){} }); });
+  }, 4000);
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if(!e.isIntersecting) return;
+      const sibs = Array.from(e.target.parentElement.children).filter(c => c.classList.contains("rv"));
+      e.target.style.transitionDelay = (Math.max(0, sibs.indexOf(e.target)) * 70) + "ms";
+      e.target.classList.add("in");
+      io.unobserve(e.target);
+    });
+  }, {rootMargin:"0px 0px -12% 0px", threshold:.12});
+  items.filter(el => !hero.includes(el)).forEach(el => io.observe(el));
+})();
+
+/* ---- the night sweep ------------------------------------------------------
+ * The method in one picture, and this page's own. A council's list of six
+ * names on one side; every covered name as a tile on the other, coloured by
+ * its band. Then a night passes: a sweep of light crosses the field and every
+ * tile brightens as it is re-read, the clock runs from midnight to six, and
+ * each of the six names gets a tick as the sweep reaches it, or a flag, in the
+ * platform's orange, with what moved. The names and the events are
+ * illustrative; the arithmetic of the sweep is not drawn by hand.
+ */
+(function night(){
+  const svg = $("#night"), lab = $("#nightLab"), count = $("#nightCount"), state = $("#nightState");
+  const BANDC = {A:"#4cb583", B:"#5695d1", C:"#e8c547", D:"#e8974a"};
+  const LIST = [
+    {name:"Lloyds Bank",       score:81, band:"A", flag:null},
+    {name:"Nationwide BS",     score:84, band:"A", flag:null},
+    {name:"Santander UK",      score:76, band:"B", flag:"LCR fell 23 points"},
+    {name:"Toronto-Dominion",  score:79, band:"B", flag:null},
+    {name:"Handelsbanken plc", score:86, band:"A", flag:"outlook to negative"},
+    {name:"Close Brothers",    score:61, band:"C", flag:"downgraded a notch"},
+  ];
+  const N = 152, DUR = 5200;
+  // the universe's bands, in roughly the proportion the real one has
+  const r2 = (() => { let t = 29; return () => { t = (t * 48271) % 2147483647; return (t - 1) / 2147483646; }; })();
+  const UNI = Array.from({length:N}, () => { const u = r2(); return u < .26 ? "A" : u < .8 ? "B" : u < .95 ? "C" : "D"; });
+  const hhmm = p => { const m = Math.round(p * 360); return String(Math.floor(m / 60)).padStart(2,"0") + ":" + String(m % 60).padStart(2,"0"); };
+
+  let G, tiles, cols, marks, conns, sweep, clock, fin = false, timers = [];
+  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  function build(){
+    const nar = svg.clientWidth < 600;
+    G = nar
+      ? {W:440, H:722, lx:0, lw:440, ly:62, rh:30, fx:32, fy:276, cols:12, tile:24, gap:8, pos:[[1,2],[4,4],[7,6],[9,8],[2,10],[11,11]], head:30, fhead:262}
+      : {W:1000, H:380, lx:0, lw:290, ly:70, rh:48, fx:340, fy:70, cols:19, tile:26, gap:8, pos:[[1,3],[5,6],[2,9],[6,12],[3,15],[0,17]], head:30, fhead:30};
+    svg.classList.toggle("nar", nar);
+    svg.setAttribute("viewBox", `0 0 ${G.W} ${G.H}`);
+    const step = G.tile + G.gap, rows = Math.ceil(N / G.cols);
+    const fw = G.cols * step - G.gap, fh = rows * step - G.gap;
+    const tx = c => G.fx + c * step, ty = r => G.fy + r * step;
+    const mine = new Map(G.pos.map(([r,c], i) => [r * G.cols + c, i]));
+    let h = `<defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" stop-color="#f0954a" stop-opacity="0"/><stop offset=".55" stop-color="#f0954a" stop-opacity=".28"/><stop offset="1" stop-color="#f0954a" stop-opacity="0"/></linearGradient>
+      <clipPath id="fc"><rect x="${G.fx - 4}" y="${G.fy - 4}" width="${fw + 8}" height="${fh + 8}" rx="6"/></clipPath></defs>`;
+    // the list
+    h += `<text class="sh" x="${G.lx}" y="${G.head}">YOUR LIST · ${LIST.length} NAMES · APPROVED 12 MAR</text>`;
+    LIST.forEach((L, i) => {
+      const y = G.ly + i * G.rh;
+      h += `<text class="nm" x="${G.lx}" y="${y + 14}">${L.name}</text>
+        <text class="st" id="st${i}" x="${nar ? G.lw - 70 : G.lx}" y="${y + (nar ? 14 : 30)}"${nar ? ' text-anchor="end"' : ""}>approved 12 Mar</text>
+        <text class="sc" x="${G.lx + G.lw - 36}" y="${y + 14}" text-anchor="end">${L.score}</text>
+        <rect x="${G.lx + G.lw - 28}" y="${y + 1}" width="22" height="17" rx="4" fill="${BANDC[L.band]}"/>
+        <text class="pill" x="${G.lx + G.lw - 17}" y="${y + 13}" text-anchor="middle">${L.band}</text>`;
+    });
+    // the field
+    h += `<text class="sh" x="${G.fx}" y="${G.fhead}">THE UNIVERSE · ${N} NAMES · TONIGHT</text>
+      <text class="clock" id="nclock" x="${G.fx + fw}" y="${G.fhead}" text-anchor="end">00:00</text>`;
+    h += UNI.map((b, k) => {
+      const r = Math.floor(k / G.cols), c = k % G.cols, m = mine.get(k);
+      const fill = m == null ? BANDC[b] : BANDC[LIST[m].band];
+      return `<rect class="tile" data-c="${c}" ${m != null ? `data-m="${m}"` : ""} x="${tx(c)}" y="${ty(r)}" width="${G.tile}" height="${G.tile}" rx="5" fill="${fill}" opacity=".35"/>`;
+    }).join("");
+    // the reader's own names, ringed, so they can be found before the night starts
+    h += G.pos.map(([r,c]) => `<rect x="${tx(c) - 3}" y="${ty(r) - 3}" width="${G.tile + 6}" height="${G.tile + 6}" rx="7" fill="none" stroke="#f0954a" stroke-width="1.6" opacity=".9"/>`).join("");
+    // what moved: a line from the name to its tile, drawn when the sweep gets there
+    // (on a phone the list sits above the field, and the orange tile and the row's own text say enough)
+    h += LIST.map((L, i) => { if(!L.flag || nar) return "";
+      const [r,c] = G.pos[i]; const y1 = G.ly + i * G.rh + 9;
+      const x1 = G.lx + G.lw + 6, xm = (x1 + G.fx) / 2, gy = ty(r) - G.gap / 2, x2 = tx(c) + G.tile / 2, y2 = ty(r) - 3;
+      const d = `M${x1} ${y1} L${xm} ${y1} L${xm} ${gy} L${x2} ${gy} L${x2} ${y2}`;
+      return `<path class="conn" data-i="${i}" d="${d}" fill="none" stroke="#f0954a" stroke-width="1.2" stroke-dasharray="3 3" opacity="0"/>`; }).join("");
+    // the sweep
+    h += `<g clip-path="url(#fc)"><rect id="nsweep" x="${G.fx - 90}" y="${G.fy - 4}" width="90" height="${fh + 8}" fill="url(#sg)" opacity="0"/></g>`;
+    h += `<text class="ax" x="${G.fx}" y="${G.fy + fh + 22}">${nar ? "EVERY NAME RE-READ OVERNIGHT · BY 06:00" : "EVERY NAME RE-READ OVERNIGHT · BY 06:00 THE LIST SAYS WHAT MOVED"}</text>`;
+    svg.innerHTML = h;
+    tiles = Array.from(svg.querySelectorAll(".tile"));
+    cols = Array.from({length:G.cols}, (_, c) => tiles.filter(t => +t.dataset.c === c));
+    marks = LIST.map((_, i) => svg.querySelector(`#st${i}`));
+    conns = Array.from(svg.querySelectorAll(".conn"));
+    sweep = svg.querySelector("#nsweep"); clock = svg.querySelector("#nclock");
+    G.fw = fw; G.step = step;
+  }
+  function hide(){
+    tiles.forEach(t => { t.style.opacity = .35; t.style.fill = ""; });
+    marks.forEach(m => { m.textContent = "approved 12 Mar"; m.classList.remove("ok","flag"); });
+    conns.forEach(c => { c.style.opacity = 0; });
+    sweep.style.opacity = 0; clock.textContent = "00:00"; count.textContent = "0"; state.textContent = "names checked tonight";
+  }
+  function finish(){
+    fin = true; timers.forEach(clearTimeout); timers = [];
+    svg.querySelectorAll("*").forEach(el => { if(el.getAnimations) el.getAnimations().forEach(a => a.cancel()); });
+    tiles.forEach(t => { const m = t.dataset.m; t.style.opacity = m != null ? 1 : .55; t.style.fill = (m != null && LIST[m].flag) ? "#f0954a" : ""; });
+    LIST.forEach((L, i) => { const m = marks[i]; m.textContent = L.flag || "checked, nothing moved"; m.classList.add(L.flag ? "flag" : "ok"); });
+    conns.forEach(c => { c.style.opacity = 1; c.style.strokeDasharray = "3 3"; c.style.strokeDashoffset = 0; });
+    sweep.style.opacity = 0; clock.textContent = "06:00";
+    const flags = LIST.filter(L => L.flag).length;
+    count.textContent = String(flags);
+    state.textContent = `flags raised on your ${LIST.length} names · ${N} checked by 06:00`;
+    lab.classList.add("done");
+  }
+  function play(){
+    if(STILL || document.hidden) return finish();
+    sweep.style.opacity = 1;
+    sweep.animate([{transform:"translateX(0)"},{transform:`translateX(${G.fw + 100}px)`}], {duration:DUR, easing:"linear", fill:"forwards"});
+    const tAt = c => DUR * (c * G.step + G.tile / 2 + 40.5) / (G.fw + 100); // when the sweep's peak crosses the column
+    let seen = 0;
+    cols.forEach((col, c) => later(() => {
+      col.forEach(t => {
+        const m = t.dataset.m, flag = m != null && LIST[m].flag;
+        t.animate([{opacity:.35, transform:"scale(1)"},{opacity:1, transform:"scale(1.18)", offset:.3},{opacity:m != null ? 1 : .55, transform:"scale(1)"}],
+          {duration:900, easing:"cubic-bezier(.3,.7,.3,1)", fill:"forwards"});
+        if(flag) t.animate([{fill:BANDC[LIST[m].band]},{fill:"#f0954a"}], {duration:700, delay:250, easing:"ease-out", fill:"forwards"});
+      });
+      seen += col.length; count.textContent = String(seen); clock.textContent = hhmm(tAt(c) / DUR);
+    }, tAt(c)));
+    LIST.forEach((L, i) => later(() => {
+      const m = marks[i];
+      m.textContent = L.flag || ("checked · " + hhmm(tAt(G.pos[i][1]) / DUR)); m.classList.add(L.flag ? "flag" : "ok");
+      if(L.flag){ const p = conns.find(x => +x.dataset.i === i); if(p){ const len = p.getTotalLength(); p.style.opacity = 1; p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
+        p.animate([{strokeDashoffset:len},{strokeDashoffset:0}], {duration:600, easing:"ease-out", fill:"forwards"}).finished.then(() => { p.style.strokeDasharray = "3 3"; p.style.strokeDashoffset = 0; }).catch(() => {}); } }
+    }, tAt(G.pos[i][1]) + 300));
+    later(finish, DUR + 900);
+  }
+  build();
+  if(STILL || !("IntersectionObserver" in window)){ finish(); return; }
+  hide();
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if(e.isIntersecting){ io.disconnect(); later(play, 300); }
+  }), {threshold:.35});
+  io.observe(svg);
+  // a background tab gets few timers: show the end rather than a half-told story
+  document.addEventListener("visibilitychange", () => { if(document.hidden && !fin && timers.length) finish(); });
+  // a phone turned sideways: redraw at the new shape, finished
+  let wasNar = svg.classList.contains("nar");
+  window.addEventListener("resize", () => {
+    const nar = svg.clientWidth < 600;
+    if(nar === wasNar) return; wasNar = nar;
+    const done = fin; build(); if(done || timers.length) finish(); else hide();
+  });
+})();
+
+/* ---- masthead hairline once the hero is behind you ----------------------- */
+(function mast(){
+  const mh = $(".masthead");
+  const on = () => {
+    const past = window.scrollY > 60;
+    mh.style.background = past ? "rgba(6,26,46,.88)" : "transparent";
+    mh.style.backdropFilter = past ? "blur(10px)" : "";
+    mh.style.borderBottomColor = past ? "var(--line)" : "transparent";
+  };
+  on(); window.addEventListener("scroll", on, {passive:true});
+})();
+</script>
+</body>
+</html>
