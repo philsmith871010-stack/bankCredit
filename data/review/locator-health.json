@@ -1,8 +1,8 @@
 {
- "generated": "2026-10-27",
+ "generated": "2026-10-28",
  "counts": {
-  "ok": 121,
-  "overdue": 9,
+  "ok": 109,
+  "overdue": 21,
   "never": 16,
   "no source": 2,
   "by design": 4
@@ -235,6 +235,68 @@
    "state": "never"
   },
   {
+   "entity": "bng-bank",
+   "short": "BNG Bank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "bny",
+   "short": "BNY",
+   "region": "us_ch",
+   "locators": 1,
+   "kinds": [
+    "pattern"
+   ],
+   "documents": 6,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
+   "capital_sources": [
+    "edgar"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "clydesdale-bank",
+   "short": "Clydesdale Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 1,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "credit-mutuel",
+   "short": "Credit Mutuel",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
+   "capital_sources": [
+    "eba",
+    "eba_te"
+   ],
+   "state": "overdue"
+  },
+  {
    "entity": "cumberland-bs",
    "short": "Cumberland BS",
    "region": "uk",
@@ -244,7 +306,7 @@
    ],
    "documents": 15,
    "capital_as_of": "2023-03-31",
-   "age_days": 1306,
+   "age_days": 1307,
    "capital_sources": [
     "pillar3"
    ],
@@ -260,7 +322,40 @@
    ],
    "documents": 6,
    "capital_as_of": "2023-12-31",
-   "age_days": 1031,
+   "age_days": 1032,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "family-bs",
+   "short": "Family BS",
+   "region": "uk",
+   "locators": 2,
+   "kinds": [
+    "html"
+   ],
+   "documents": 4,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "furness-bs",
+   "short": "Furness BS",
+   "region": "uk",
+   "locators": 3,
+   "kinds": [
+    "browser",
+    "html"
+   ],
+   "documents": 8,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
    "capital_sources": [
     "pillar3"
    ],
@@ -276,7 +371,23 @@
    ],
    "documents": 3,
    "capital_as_of": "2024-12-31",
-   "age_days": 665,
+   "age_days": 666,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "handelsbanken-plc",
+   "short": "Handelsbanken plc",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 4,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
    "capital_sources": [
     "pillar3"
    ],
@@ -292,7 +403,7 @@
    ],
    "documents": 7,
    "capital_as_of": "2023-12-31",
-   "age_days": 1031,
+   "age_days": 1032,
    "capital_sources": [
     "pillar3"
    ],
@@ -308,9 +419,40 @@
    ],
    "documents": 3,
    "capital_as_of": "2023-04-30",
-   "age_days": 1276,
+   "age_days": 1277,
    "capital_sources": [
     "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "nbk-international",
+   "short": "NBK International",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 1,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "nwb-bank",
+   "short": "NWB Bank",
+   "region": "eu",
+   "locators": 0,
+   "kinds": [],
+   "documents": 0,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
+   "capital_sources": [
+    "eba",
+    "eba_te"
    ],
    "state": "overdue"
   },
@@ -322,9 +464,41 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2025-09-30",
-   "age_days": 392,
+   "age_days": 393,
    "capital_sources": [
     "nsm_release"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "principality-bs",
+   "short": "Principality BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 8,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "secure-trust-bank",
+   "short": "Secure Trust Bank",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 4,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
+   "capital_sources": [
+    "pillar3"
    ],
    "state": "overdue"
   },
@@ -339,7 +513,23 @@
    ],
    "documents": 1,
    "capital_as_of": "2025-11-30",
-   "age_days": 331,
+   "age_days": 332,
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "overdue"
+  },
+  {
+   "entity": "tsb",
+   "short": "TSB",
+   "region": "uk",
+   "locators": 2,
+   "kinds": [
+    "html"
+   ],
+   "documents": 14,
+   "capital_as_of": "2025-12-31",
+   "age_days": 301,
    "capital_sources": [
     "pillar3"
    ],
@@ -355,7 +545,7 @@
    ],
    "documents": 19,
    "capital_as_of": "2025-09-30",
-   "age_days": 392,
+   "age_days": 393,
    "capital_sources": [
     "pillar3"
    ],
@@ -372,7 +562,7 @@
    ],
    "documents": 6,
    "capital_as_of": "2025-09-30",
-   "age_days": 392,
+   "age_days": 393,
    "capital_sources": [
     "pillar3"
    ],
@@ -424,7 +614,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2018-06-30",
-   "age_days": 3041,
+   "age_days": 3042,
    "capital_sources": [
     "eba_te"
    ],
@@ -440,7 +630,7 @@
    ],
    "documents": 17,
    "capital_as_of": "2018-06-30",
-   "age_days": 3041,
+   "age_days": 3042,
    "capital_sources": [
     "eba_te",
     "pillar3"
@@ -467,7 +657,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -482,7 +672,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -499,7 +689,7 @@
    ],
    "documents": 18,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -515,7 +705,7 @@
    ],
    "documents": 61,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -529,7 +719,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -544,9 +734,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 431,
+   "documents": 437,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -560,7 +750,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "fdic"
    ],
@@ -574,7 +764,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -589,7 +779,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "fdic"
    ],
@@ -605,7 +795,7 @@
    ],
    "documents": 22,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -621,7 +811,7 @@
    ],
    "documents": 11,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -637,7 +827,7 @@
    ],
    "documents": 5,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba_te",
     "pillar3"
@@ -654,7 +844,7 @@
    ],
    "documents": 8,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -668,7 +858,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -683,7 +873,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -698,7 +888,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -715,24 +905,9 @@
    ],
    "documents": 84,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "bng-bank",
-   "short": "BNG Bank",
-   "region": "eu",
-   "locators": 0,
-   "kinds": [],
-   "documents": 0,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
-   "capital_sources": [
-    "eba",
-    "eba_te"
    ],
    "state": "ok"
   },
@@ -744,7 +919,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -759,25 +934,9 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
+   "age_days": 211,
    "capital_sources": [
     "eba"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "bny",
-   "short": "BNY",
-   "region": "us_ch",
-   "locators": 1,
-   "kinds": [
-    "pattern"
-   ],
-   "documents": 6,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
-   "capital_sources": [
-    "edgar"
    ],
    "state": "ok"
   },
@@ -791,7 +950,7 @@
    ],
    "documents": 10,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
+   "age_days": 211,
    "capital_sources": [
     "pillar3"
    ],
@@ -805,7 +964,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba"
    ],
@@ -819,7 +978,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -836,7 +995,7 @@
    ],
    "documents": 11,
    "capital_as_of": "2026-07-31",
-   "age_days": 88,
+   "age_days": 89,
    "capital_sources": [
     "pillar3"
    ],
@@ -850,7 +1009,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
+   "age_days": 211,
    "capital_sources": [
     "eba"
    ],
@@ -864,7 +1023,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "fdic"
    ],
@@ -881,7 +1040,7 @@
    ],
    "documents": 38,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -897,23 +1056,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-07-31",
-   "age_days": 88,
-   "capital_sources": [
-    "pillar3"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "clydesdale-bank",
-   "short": "Clydesdale Bank",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "html"
-   ],
-   "documents": 1,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
+   "age_days": 89,
    "capital_sources": [
     "pillar3"
    ],
@@ -929,7 +1072,7 @@
    ],
    "documents": 23,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -943,7 +1086,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -960,7 +1103,7 @@
    ],
    "documents": 4,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -976,7 +1119,7 @@
    ],
    "documents": 29,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -990,7 +1133,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba"
    ],
@@ -1006,25 +1149,10 @@
    ],
    "documents": 4,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "pillar3"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "credit-mutuel",
-   "short": "Credit Mutuel",
-   "region": "eu",
-   "locators": 0,
-   "kinds": [],
-   "documents": 0,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
-   "capital_sources": [
-    "eba",
-    "eba_te"
    ],
    "state": "ok"
   },
@@ -1036,7 +1164,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1053,7 +1181,7 @@
    ],
    "documents": 1,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1067,7 +1195,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1082,7 +1210,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1097,7 +1225,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1114,7 +1242,7 @@
    ],
    "documents": 19,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1128,26 +1256,10 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "family-bs",
-   "short": "Family BS",
-   "region": "uk",
-   "locators": 2,
-   "kinds": [
-    "html"
-   ],
-   "documents": 4,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
-   "capital_sources": [
-    "pillar3"
    ],
    "state": "ok"
   },
@@ -1161,24 +1273,7 @@
    ],
    "documents": 19,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
-   "capital_sources": [
-    "pillar3"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "furness-bs",
-   "short": "Furness BS",
-   "region": "uk",
-   "locators": 3,
-   "kinds": [
-    "browser",
-    "html"
-   ],
-   "documents": 8,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1194,7 +1289,7 @@
    ],
    "documents": 12,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "edgar",
     "pillar3"
@@ -1209,25 +1304,9 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "fdic"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "handelsbanken-plc",
-   "short": "Handelsbanken plc",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "html"
-   ],
-   "documents": 4,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
-   "capital_sources": [
-    "pillar3"
    ],
    "state": "ok"
   },
@@ -1239,7 +1318,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1256,7 +1335,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1272,7 +1351,7 @@
    ],
    "documents": 10,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba_te",
     "pillar3"
@@ -1289,7 +1368,7 @@
    ],
    "documents": 21,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1305,7 +1384,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1321,7 +1400,7 @@
    ],
    "documents": 3,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
+   "age_days": 211,
    "capital_sources": [
     "pillar3"
    ],
@@ -1335,7 +1414,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1350,7 +1429,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1365,7 +1444,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "fdic"
    ],
@@ -1379,7 +1458,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1394,7 +1473,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1409,7 +1488,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1426,7 +1505,7 @@
    ],
    "documents": 21,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1442,7 +1521,7 @@
    ],
    "documents": 30,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1458,7 +1537,7 @@
    ],
    "documents": 22,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1474,7 +1553,7 @@
    ],
    "documents": 55,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba_te",
     "pillar3"
@@ -1491,7 +1570,7 @@
    ],
    "documents": 15,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1507,7 +1586,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1523,7 +1602,7 @@
    ],
    "documents": 1,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
+   "age_days": 211,
    "capital_sources": [
     "pillar3"
    ],
@@ -1539,7 +1618,7 @@
    ],
    "documents": 9,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "edgar",
     "pillar3"
@@ -1554,7 +1633,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "fdic"
    ],
@@ -1570,7 +1649,7 @@
    ],
    "documents": 6,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1586,7 +1665,7 @@
    ],
    "documents": 52,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1602,7 +1681,7 @@
    ],
    "documents": 44,
    "capital_as_of": "2026-07-31",
-   "age_days": 88,
+   "age_days": 89,
    "capital_sources": [
     "pillar3"
    ],
@@ -1618,7 +1697,7 @@
    ],
    "documents": 13,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba_te",
     "pillar3"
@@ -1635,7 +1714,7 @@
    ],
    "documents": 10,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1651,7 +1730,7 @@
    ],
    "documents": 15,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba_te",
     "pillar3"
@@ -1668,23 +1747,7 @@
    ],
    "documents": 16,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
-   "capital_sources": [
-    "pillar3"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "nbk-international",
-   "short": "NBK International",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "html"
-   ],
-   "documents": 1,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1698,7 +1761,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1713,7 +1776,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1730,7 +1793,7 @@
    ],
    "documents": 15,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
+   "age_days": 211,
    "capital_sources": [
     "pillar3"
    ],
@@ -1744,7 +1807,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "fdic"
    ],
@@ -1760,24 +1823,9 @@
    ],
    "documents": 16,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "nwb-bank",
-   "short": "NWB Bank",
-   "region": "eu",
-   "locators": 0,
-   "kinds": [],
-   "documents": 0,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
-   "capital_sources": [
-    "eba",
-    "eba_te"
    ],
    "state": "ok"
   },
@@ -1789,7 +1837,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1806,7 +1854,7 @@
    ],
    "documents": 29,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1820,7 +1868,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1837,7 +1885,7 @@
    ],
    "documents": 34,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -1853,23 +1901,7 @@
    ],
    "documents": 1,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
-   "capital_sources": [
-    "pillar3"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "principality-bs",
-   "short": "Principality BS",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "html"
-   ],
-   "documents": 8,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
+   "age_days": 211,
    "capital_sources": [
     "pillar3"
    ],
@@ -1883,7 +1915,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1898,7 +1930,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -1915,7 +1947,7 @@
    ],
    "documents": 11,
    "capital_as_of": "2026-07-31",
-   "age_days": 88,
+   "age_days": 89,
    "capital_sources": [
     "pillar3"
    ],
@@ -1929,9 +1961,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 43,
-   "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "documents": 44,
+   "capital_as_of": "2026-09-30",
+   "age_days": 28,
    "capital_sources": [
     "pillar3"
    ],
@@ -1947,7 +1979,7 @@
    ],
    "documents": 12,
    "capital_as_of": "2026-07-31",
-   "age_days": 88,
+   "age_days": 89,
    "capital_sources": [
     "pillar3"
    ],
@@ -1961,26 +1993,10 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "secure-trust-bank",
-   "short": "Secure Trust Bank",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "html"
-   ],
-   "documents": 4,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
-   "capital_sources": [
-    "pillar3"
    ],
    "state": "ok"
   },
@@ -1994,7 +2010,7 @@
    ],
    "documents": 15,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -2010,7 +2026,7 @@
    ],
    "documents": 23,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -2026,7 +2042,7 @@
    ],
    "documents": 18,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -2042,7 +2058,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
+   "age_days": 211,
    "capital_sources": [
     "pillar3"
    ],
@@ -2056,7 +2072,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -2071,9 +2087,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 52,
-   "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "documents": 54,
+   "capital_as_of": "2026-09-30",
+   "age_days": 28,
    "capital_sources": [
     "eba_te",
     "pillar3"
@@ -2090,7 +2106,7 @@
    ],
    "documents": 10,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
+   "age_days": 211,
    "capital_sources": [
     "pillar3"
    ],
@@ -2106,7 +2122,7 @@
    ],
    "documents": 9,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
+   "age_days": 211,
    "capital_sources": [
     "pillar3"
    ],
@@ -2122,7 +2138,7 @@
    ],
    "documents": 22,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -2136,7 +2152,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "fdic"
    ],
@@ -2152,7 +2168,7 @@
    ],
    "documents": 8,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -2166,7 +2182,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-09-30",
-   "age_days": 27,
+   "age_days": 28,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -2181,7 +2197,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -2198,23 +2214,7 @@
    ],
    "documents": 5,
    "capital_as_of": "2026-07-31",
-   "age_days": 88,
-   "capital_sources": [
-    "pillar3"
-   ],
-   "state": "ok"
-  },
-  {
-   "entity": "tsb",
-   "short": "TSB",
-   "region": "uk",
-   "locators": 2,
-   "kinds": [
-    "html"
-   ],
-   "documents": 14,
-   "capital_as_of": "2025-12-31",
-   "age_days": 300,
+   "age_days": 89,
    "capital_sources": [
     "pillar3"
    ],
@@ -2230,7 +2230,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -2244,7 +2244,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "eba",
     "eba_te"
@@ -2261,7 +2261,7 @@
    ],
    "documents": 7,
    "capital_as_of": "2026-03-31",
-   "age_days": 210,
+   "age_days": 211,
    "capital_sources": [
     "pillar3"
    ],
@@ -2277,7 +2277,7 @@
    ],
    "documents": 10,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -2293,7 +2293,7 @@
    ],
    "documents": 20,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -2307,7 +2307,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "fdic"
    ],
@@ -2323,7 +2323,7 @@
    ],
    "documents": 8,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
@@ -2339,7 +2339,7 @@
    ],
    "documents": 7,
    "capital_as_of": "2026-06-30",
-   "age_days": 119,
+   "age_days": 120,
    "capital_sources": [
     "pillar3"
    ],
