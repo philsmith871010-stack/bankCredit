@@ -86,7 +86,7 @@ table.ratings td{font-size:13px;vertical-align:top}table.ratings .band{display:i
 @media (max-width:900px){.rgrid{grid-template-columns:1fr}}
 .tile-ratings{justify-content:space-between}
 .tile-ratings .tile-foot{flex-wrap:wrap}
-.tile-ratings .rcells{flex:1 1 auto;align-content:center}
+.tile-ratings .rcells{flex:1 1 auto;align-content:start;margin-top:12px}
 .rcells{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}.rcell{border-left:3px solid var(--line);padding-left:10px}.ragency{font-size:11.5px;font-weight:600;color:var(--muted);letter-spacing:.04em}.rlt .big{font-size:24px}.tile-ratings .band{display:inline-flex;height:auto;min-width:0;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;line-height:1.3}
 table.coverage td.cov{text-align:center;white-space:nowrap;padding:6px 6px}table.coverage td.cov b{display:block;font-family:var(--mono,ui-monospace,monospace);font-size:12px}table.coverage td.cov span{font-size:11px;color:var(--muted)}
 table.coverage td.cov0{color:#c4ccd6}table.coverage td.cov1{background:#f3f6fa}table.coverage td.cov2{background:#dfe7f1}table.coverage td.cov3{background:#c3d2e4}
@@ -185,7 +185,7 @@ table.board thead th,table.coverage thead th,table.ratings thead th{position:sti
 .rgrid-card{padding:14px 16px;margin-top:2px}.rg-tools{margin-bottom:8px}.rg-tools .search{width:220px;margin-left:auto}
 .rg-hist{display:flex;align-items:flex-end;gap:6px;padding:8px 0 12px;border-bottom:1px solid var(--line);margin-bottom:6px;flex-wrap:wrap}.rg-hist>.small{align-self:center;margin-right:6px}
 .gbar{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:0;padding:2px 3px;cursor:pointer;font:inherit;border-radius:6px;min-width:34px}.gbar i{display:block;width:26px;border-radius:3px 3px 0 0}.gbar .glabel{font-size:10.5px;color:var(--muted)}.gbar .gcount{font-size:11px;color:var(--text)}.gbar:hover,.gbar.active{background:var(--bg)}.gbar.active .glabel{color:var(--text);font-weight:700}.gbar:disabled{opacity:.35;cursor:default}
-table.rgrid td,table.rgrid th{padding:7px 8px}table.rgrid td.rc{background:color-mix(in srgb,var(--g) 17%,#fff);border-left:3px solid var(--g);min-width:88px}table.rgrid td.rc-na{color:#c4ccd6;background:none;border-left:3px solid transparent;text-align:center}
+table.rgrid td,table.rgrid th{padding:7px 8px}table.rgrid td.rc{min-width:88px}table.rgrid td.rc-na{color:#c4ccd6;text-align:left}
 .rc-lt{font-weight:700;font-size:14px}.rc-sub{display:block;font-size:11px;line-height:1.3;margin-top:1px}.rc-typ{font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 3px;margin-left:3px;vertical-align:middle}.rc-comp .band{font-size:12px}
 .chip-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--orange);vertical-align:middle;margin-right:4px}
 .rgrid2{margin-top:16px}.rgrid2 .card h3{margin-top:0}
@@ -347,12 +347,13 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 
 /* ---- policy overview: dense small multiples, one question each ----------------------- */
 .pv{border:1px solid var(--line);border-radius:var(--r-md);background:var(--white);padding:12px 14px;margin-bottom:12px}
-.pv-tiles{display:flex;flex-wrap:wrap;gap:10px 26px;padding-bottom:11px;border-bottom:1px solid var(--line-soft)}
+.pv-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:12px 20px;padding-bottom:11px;border-bottom:1px solid var(--line-soft)}
 .pv-tile{display:flex;flex-direction:column;gap:1px}
 .pv-tile b{font-size:22px;font-weight:600;line-height:1.05;letter-spacing:-.02em}
 .pv-tile span{font-size:10.5px;color:var(--muted);letter-spacing:.03em;text-transform:uppercase}
 .pv-tile.pv-warn b{color:var(--orange)}
-.pv-charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px 0;padding-top:11px}
+.pv-charts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 0;padding-top:11px}
+@media (max-width:760px){.pv-charts{grid-template-columns:1fr}}
 .pv-charts figure{margin:0;min-width:0;padding:0 18px;border-left:1px solid var(--line-soft)}
 .pv-charts figure:first-child{padding-left:0;border-left:0}
 .pv-charts figure:last-child{padding-right:0}
@@ -1066,10 +1067,17 @@ body.tool .tabs-card{margin-top:0}
 .step h3{margin:0 0 6px;font-size:15.5px;font-weight:700}
 .step p{margin:0 0 10px;font-size:13.5px;color:var(--muted);max-width:66ch;line-height:1.5}
 .step-act{display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:200px}
-.step-now{font-size:12.5px;color:var(--muted);text-align:right;max-width:240px}
+.step-now{font-size:12.5px;color:var(--muted);text-align:right;max-width:240px;min-height:1.5em}
+.step-act .filter{white-space:nowrap}
 .step-now b{color:var(--text)}
 .step .wt-line{margin:4px 0 0;border:0;padding:0;background:none;box-shadow:none;flex-wrap:wrap}
+.step .wt-line .wt-who{margin-left:0}
 .step-done .k{color:var(--green)}
 @media (max-width:760px){.step{grid-template-columns:48px minmax(0,1fr)}.step-act{grid-column:2;align-items:flex-start}.step-now{text-align:left}}
 /* on a phone the header keeps the product and the way in; the platform wordmark folds to its mark */
 @media (max-width:600px){.brand{font-size:0;gap:0;padding-right:0;border-right:0;width:auto}.brand .dot{width:12px;height:12px}.ptitle{gap:8px}.ptitle-name{overflow:hidden;text-overflow:ellipsis}.top{gap:10px;padding:0 12px}}
+/* Coverage: nine counts on one row where the width allows, never one left alone on a row */
+.rtiles-cov{grid-template-columns:repeat(auto-fit,minmax(118px,1fr))}.rtiles-cov .rtile{padding:11px 13px}
+.nowrap{white-space:nowrap}
+/* a panel head takes the width it is given, so its lede wraps at its own measure, not early */
+.ph>div{flex:1 1 auto;min-width:0}

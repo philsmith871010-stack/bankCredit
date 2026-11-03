@@ -251,8 +251,6 @@ def ratings_tile(b) -> str:
     if not rs:
         return (f'<div class="tile tile-ratings tile-empty"><span class="tile-label">Agency rating{c.info("rating")}</span>'
                 f'<span class="na big">NR</span><span class="tile-foot">none of {THREE} publishes an issuer rating on the ESMA register</span></div>')
-    grade = b.get("rating_grade")
-    comp = f'<span class="band band-fit mono" style="background:{grade_colour(grade)};color:{c.on_colour(grade_colour(grade))}">{c.esc(rs["letter"])}</span>'
     wg = rs.get("worst")
     cells = (f'<div class="rcell"><div class="ragency">Average</div><div class="rlt"><span class="mono big">{c.esc(rs["letter"])}</span></div>'
              f'<div class="rst small muted">of {c.esc(of_three(rs["n"]))}</div></div>'
@@ -262,8 +260,10 @@ def ratings_tile(b) -> str:
              f'<div class="rst small muted">{c.esc(tone_words(rs.get("tones") or []) or "none published")}</div></div>'
              f'<div class="rcell"><div class="ragency">Last action</div><div class="rlt"><span class="mono" style="font-size:16px">{c.esc(rs.get("date") or "—")}</span></div>'
              f'<div class="rst small muted">by any of the three</div></div>')
-    return (f'<div class="tile tile-ratings"><div class="tile-head"><span class="tile-label">Agency rating{c.info("rating")}</span><span class="tile-flags">average{c.info("composite")} {comp} {c.market_glyph(b.get("market") or {})} <span class="small muted">{c.esc((b.get("market") or {}).get("label") or "")}</span></span></div>'
-            f'<div class="rcells">{cells}</div><div class="tile-foot"><span>Long-term ratings of {THREE} on one scale, from the ESMA European Rating Platform, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span></div></div>')
+    # The average sits large in the first cell, so the heading does not repeat it; the market signal
+    # has its own tab and its own line on the score card.
+    return (f'<div class="tile tile-ratings"><div class="tile-head"><span class="tile-label">Agency rating{c.info("rating")}</span></div>'
+            f'<div class="rcells">{cells}</div><div class="tile-foot"><span>Long-term ratings of {THREE} on one scale, from the ESMA register, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span></div></div>')
 
 
 def attributed_block(b) -> str:
@@ -309,28 +309,28 @@ def pillar_note(k: str, cell) -> str:
 
 
 def summary_block(b: dict, generated: str) -> str:
-    """Layer one from the data on every build; layer two from the file, with when it was written and
-    what has moved since, so the reader is never told a stale thing as current."""
+    """One summary on the profile. The written one (a background sentence and a short synthesis)
+    when it still holds, with when it was written and what has moved since; otherwise the paragraph
+    the data gives on every build, so the reader is never told a stale thing as current. Both used
+    to stand one above the other, saying the same ratios twice."""
     from .. import summaries as S
     today = date.fromisoformat(generated[:10])
     br = S.brief(b, today)
     # the space goes inside the span: the writer collapses whitespace between tags
-    l1 = "".join(f'<span class="br-{k}">{c.esc(br[k])} </span>' for k in S.SENTENCES if br.get(k))
+    l1 = '<div class="brief-l1">' + "".join(f'<span class="br-{k}">{c.esc(br[k])} </span>' for k in S.SENTENCES if br.get(k)) + '</div>'
     s = S.load(b["id"])
     if not s:
-        l2 = '<div class="brief-meta muted">No written summary yet; the paragraph above is drawn from the data on every build.</div>'
-    elif S.check(s, S.brief_text(br)):
+        return f'<div class="card brief">{l1}</div>'
+    if S.check(s, S.brief_text(br)):
         # it quotes a figure the paragraph no longer carries, or headlines the site no longer shows;
         # it is owed a rewrite and is not shown as current
-        l2 = (f'<div class="brief-meta muted">The written summary of {S.fdate(s["written"])} no longer matches the data '
-              'and is being rewritten; the paragraph above is drawn from the data on every build.</div>')
-    else:
-        moved = S.changes_since(s.get("inputs") or {}, br["fingerprint"])
-        meta = f'Written {S.fdate(s["written"])}' + (f' from figures to {S.fdate((s.get("inputs") or {}).get("asof"))}' if (s.get("inputs") or {}).get("asof") else "") + "."
-        stale = f' <span class="brief-stale">Since then: {c.esc("; ".join(moved))}. This summary predates that.</span>' if moved else ""
-        l2 = (f'<p class="brief-bg"><span class="brief-lbl">Background</span> {c.esc(s["background"])}</p>'
-              f'<p class="brief-syn">{c.esc(s["synthesis"])}</p><div class="brief-meta muted">{meta}{stale}</div>')
-    return f'<div class="card brief"><div class="brief-l1">{l1}</div>{l2}</div>'
+        return (f'<div class="card brief">{l1}<div class="brief-meta muted">The written summary of {S.fdate(s["written"])} '
+                'is being rewritten; this paragraph is drawn from the data on every build.</div></div>')
+    moved = S.changes_since(s.get("inputs") or {}, br["fingerprint"])
+    meta = f'Written {S.fdate(s["written"])}' + (f' from figures to {S.fdate((s.get("inputs") or {}).get("asof"))}' if (s.get("inputs") or {}).get("asof") else "") + "."
+    stale = f' <span class="brief-stale">Since then: {c.esc("; ".join(moved))}.</span>' if moved else ""
+    return (f'<div class="card brief"><p class="brief-bg">{c.esc(s["background"])}</p>'
+            f'<p class="brief-syn">{c.esc(s["synthesis"])}</p><div class="brief-meta muted">{meta}{stale}</div></div>')
 
 
 def page_bank(b, generated):
@@ -374,12 +374,9 @@ def page_bank(b, generated):
                         f'<div class="sm-sub">{dchip}<span class="muted">vs {c.esc(sc_pts[-2][0])}</span></div>'
                         f'{c.chart(sc_pts, unit="", dp=1, w=300, h=96, compact=True)}'
                         f'<template>{c.chart(sc_pts, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)}</template></button>')
-    snaps = [(d[5:], v) for d, v, _g in (hist.get("snapshots") or []) if v is not None]
-    if len(snaps) >= 2:
-        big = c.chart(snaps, unit="", dp=1, w=720, h=300, ymin=0, ymax=100, step=20)
-        small = c.chart(snaps, unit="", dp=1, w=300, h=96, compact=True)
-        standing.append(f'<button class="sm" type="button" data-title="Published score, daily" data-def="score" data-sub="The score as published on each build since snapshots began · {len(snaps)} days" aria-label="Expand published score">'
-                        f'<div class="sm-head"><span class="sm-label">Published score</span><span class="sm-val mono">{snaps[-1][1]:.0f}</span></div><div class="sm-sub"><span class="muted">since {c.esc(hist["snapshots"][0][0])}</span></div>{small}<template>{big}</template></button>')
+    # The published score, day by day, used to sit beside this. Each day's figure carries that day's
+    # method and data fixes, so it stepped about in ways that say nothing about the bank; the
+    # recomputed line above is the like-for-like path, and the one worth reading.
     if standing:
         charts.append(f'<div class="sm-block" style="--n:{len(standing)}"><div class="sm-sec">Standing</div>'
                       f'<div class="sm-cards">{"".join(standing)}</div></div>')
@@ -507,7 +504,7 @@ def page_bank(b, generated):
 {c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12, fluid=True)}</div>
 <div class="pillars">{prow}</div></div>
 {f'<div class="np-note"><b>{c.esc(b["not_published"]["reason"][0].upper() + b["not_published"]["reason"][1:])}.</b> {c.esc(b["not_published"].get("standing") or "")}. A score needs current capital ratios for this entity, so none is shown; the rating and the standing above are what to judge this name on. <a href="{c.esc(b["not_published"].get("source") or "")}" target="_blank" rel="noopener">Source</a></div>' if b.get("not_published") else ''}
-<div class="score-note">Rating anchor and public pillars with published weights (w).{c.info("pillar")}{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market overlay <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>, bounded at ±{OVERLAY_CAP:.0f}. <a href="../admin/index.html#method">Method</a></div></div>
+<div class="score-note">The agency rating and the bank's own ratios, each weighted (w).{c.info("pillar")}{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} Market signal <span class="mono" style="color:#fff;font-weight:600">{("+" if overlay > 0 else "") + f"{overlay:.1f}" if overlay is not None else "—"}</span>. <a href="../admin/index.html#method">Method</a></div></div>
 {ratings_tile(b)}</div>
 {summary_block(b, generated)}
 <div class="tiles">{tiles}</div>
@@ -649,8 +646,7 @@ def punctuality(status, generated: str) -> str:
         return (f'<div class="punct good">Today\'s collection {ran}, '
                 f'{_hm(late)} after the 05:00 target.</div>')
     return (f'<div class="punct warn">Today\'s collection {ran}, <b>{_hm(late)}</b> after the '
-            f'05:00 target. The morning kick is what makes it punctual; when it does not fire, '
-            f'the day waits for GitHub\'s own scheduler.</div>')
+            f'05:00 target: the morning kick did not start it.</div>')
 
 
 def _hm(hours: float) -> str:
@@ -659,18 +655,41 @@ def _hm(hours: float) -> str:
     return f"{h}h {m:02d}m" if h else f"{m} minutes"
 
 
+# What each source is, in the reader's words rather than the adapter's name.
+SOURCE_LABEL = {"bonds": "Bond quotes", "dtcc": "CDS trades (DTCC)", "eba": "EBA Pillar 3 hub", "edgar": "SEC filings",
+                "esef": "Annual accounts (ESEF)", "esma": "Agency ratings (ESMA)", "events": "Rating actions",
+                "fdic": "FDIC returns", "fundamentals": "Accounts (Yahoo)", "ice": "CDS prices (ICE)",
+                "nsm_release": "Results (FCA NSM)", "pillar3": "Pillar 3 reports", "sovereign": "Sovereign ratings",
+                "te": "EBA Transparency Exercise", "yahoo": "Share prices"}
+
+
+def run_note(msg) -> str:
+    """A run's message as a line a reader can take in: how many names failed and which, rather than
+    the Python exception, which stays in the cell's title for whoever needs it."""
+    msg = "" if msg is None or str(msg) == "nan" else str(msg)
+    if not msg:
+        return ""
+    names = re.findall(r"(?:^|; )([a-z0-9][a-z0-9-]+): ", msg)
+    if names:
+        shown = ", ".join(names[:3]) + (f" and {len(names) - 3} more" if len(names) > 3 else "")
+        text = f'{len(names)} could not be read: {shown}'
+    else:
+        text = msg if len(msg) <= 110 else msg[:107].rstrip() + "…"
+    return f'<span title="{c.esc(msg)}">{c.esc(text)}</span>'
+
+
 def page_status(status, board, generated, inner: bool = False):
     # the regulatory sources run on the 1st, 15th and 25th (pipeline.yml): a date ten days old
     # on one of those rows is the cadence, not a failure, and the table says so
     THRICE = {"fdic", "eba", "edgar", "te", "esef", "fundamentals", "nsm_release"}
     def cadence(src):
-        return "1st, 15th and 25th" if src in THRICE else "daily"
-    runs = "".join(f'<tr><td class="b">{c.esc(r["source"])}</td><td>{c.chip(c.esc(r["status"]), {"ok": "good", "partial": "warn", "failed": "bad", "skipped": "muted"}.get(r["status"], "muted"))}</td><td class="mono">{r["rows"]}</td><td class="mono muted">{c.esc(r["finished"][:16].replace("T", " "))}</td><td class="small muted">{cadence(r["source"])}</td><td class="muted small">{c.esc(r["message"])}</td></tr>' for r in status["runs"]) or '<tr><td colspan="6" class="empty">No runs recorded yet.</td></tr>'
+        return "1st, 15th, 25th" if src in THRICE else "daily"
+    runs = "".join(f'<tr><td class="b" title="{c.esc(r["source"])}">{c.esc(SOURCE_LABEL.get(r["source"], r["source"]))}</td><td>{c.chip(c.esc(r["status"]), {"ok": "good", "partial": "warn", "failed": "bad", "skipped": "muted"}.get(r["status"], "muted"))}</td><td class="mono">{r["rows"]}</td><td class="mono muted">{c.esc(r["finished"][:16].replace("T", " "))}</td><td class="small muted nowrap">{cadence(r["source"])}</td><td class="muted small">{run_note(r["message"])}</td></tr>' for r in status["runs"]) or '<tr><td colspan="6" class="empty">No runs recorded yet.</td></tr>'
     rows = board["rows"]
     missing = [r for r in rows if not r["asof"]]
     stale = [r for r in rows if r["age_days"] and r["age_days"] > 150]
     lst = lambda xs: ", ".join(f'<a href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a>' for r in xs) or "none"
-    content = f'''<div class="page-head"><div><h1>Status</h1><div class="lede">What ran, when, and what needs a look. Auto-publish with spot checks.</div></div></div>
+    content = f'''<div class="page-head"><div><h1>Status</h1><div class="lede">What ran, when, and what needs a look.</div></div></div>
 <div class="card pad"><h3>Pipeline runs</h3>{punctuality(status, generated)}<div class="table-wrap"><table class="plain"><thead><tr><th>Source</th><th>Status</th><th>Rows</th><th>Finished (UTC)</th><th>Runs</th><th>Message</th></tr></thead><tbody>{runs}</tbody></table></div></div>
 <div class="card pad"><h3>Coverage</h3><p>{len(rows) - len(missing)} of {len(rows)} entities have regulatory figures; {sum(1 for r in rows if r["score"] is not None)} have enough for a score; {sum(1 for r in rows if r.get("rating"))} have ratings.</p>
 <p class="small"><span class="b">No regulatory figures yet:</span> {lst(missing)}</p><p class="small"><span class="b">Older than 150 days:</span> {lst(stale)}</p></div>
@@ -761,8 +780,8 @@ def grade_trend(r) -> str:
             return (f'<span class="gpath" title="the composite grade at each year end from '
                     f'{c.esc(steps[0][0][:4])} to today">' + c.spark([-g for g in pts], w=72, h=20)
                     + f'<span class="small" style="color:{col}">{c.esc(lab)}</span></span>')
-    since = r.get("last_action")
-    return f'<span class="small muted">last action {c.esc(since)}</span>' if since else '<span class="muted">—</span>'
+    # no path to draw: the Last action column already carries the date, so this one stays quiet
+    return '<span class="muted">—</span>'
 
 
 def page_ratings(generated, inner: bool = False):
@@ -845,9 +864,8 @@ def page_ratings(generated, inner: bool = False):
 <p class="note">Long-term issuer ratings only. The gap between the two bars is how far the three main agencies disagree about the same banks.</p></div></div>'''
     return content if inner else c.shell("Ratings", content, "ratings", "../", generated)
 
-WT_LINE = (f'<div class="wt-line" id="wt-line"><span class="wt-l">Score weightings{c.info("score")}</span>'
-           '<span class="wt-vals" id="wt-vals"><span class="sk"></span></span>'
-           '<button class="filter" id="wt-change" type="button">Change</button></div>')
+WT_LINE = (f'<div class="wt-line" id="wt-line"><span class="wt-l">Weightings{c.info("score")}</span>'
+           '<span class="wt-vals" id="wt-vals"><span class="sk"></span></span></div>')
 
 # A name's detail still opens over the page: it is a glance at one name from wherever it is listed.
 # Weightings and Choose names were dialogs too; they are pages of their own now (strategy pages below).
@@ -870,23 +888,23 @@ def strategy_pages() -> str:
 
 def strategy_panel() -> str:
     """Build your strategy: the three steps, numbered the way PWLBreports numbers its passes, each
-    saying where the reader has got to. Step one carries the weightings line and leads to the
-    Weightings page; step two leads to Choose names, step three to the list. The counts are painted
-    by the list's own script."""
+    with its one action on the right and a line saying where the reader has got to. Step one leads
+    to the Weightings page, step two to Choose names, step three to the list. The status lines are
+    painted by the list's own script."""
+    def step(n, title, text, body, act):
+        return (f'<div class="step" id="st-{n}"><span class="k">0{n}</span><div><h3>{title}</h3><p>{text}</p>{body}</div>'
+                f'<div class="step-act">{act}</div></div>')
     return ('<section class="panel active" data-panel="strategy">'
-            '<div class="ph"><div><span class="ph-k">Build your strategy</span><h2>Three steps to a counterparty policy</h2>'
-            '<span class="lede">Set how the score is made, choose the names you accept, and say how long you would lend to each. The list stays in your browser; a link carries it to a colleague.</span></div></div>'
-            '<div class="steps">'
-            '<div class="step" id="st-1"><span class="k">01</span><div><h3>Set your weightings</h3>'
-            "<p>The score is the agency rating and the bank's own regulatory ratios, weighed by the published method. Change the weights and every score on the site follows, for you alone.</p>"
-            + WT_LINE + '</div><div class="step-act"><span class="step-now" id="st-weights"></span></div></div>'
-            '<div class="step" id="st-2"><span class="k">02</span><div><h3>Choose your names</h3>'
-            '<p>Every covered bank and building society on one table: sort on any column, filter by region, type or band, and add the ones you accept. The star follows a name without adding it.</p></div>'
-            '<div class="step-act"><button class="filter filter-blue uni-open" type="button">Choose from every covered name</button><span class="step-now" id="st-names"></span></div></div>'
-            '<div class="step" id="st-3"><span class="k">03</span><div><h3>Set tenors, then watch</h3>'
-            '<p>Say how long you would lend to each name. From then on the list is re-checked every night and anything that has moved since you approved it is flagged, and Alternatives shows the names at least as strong as your weakest at each tenor.</p></div>'
-            '<div class="step-act"><a class="filter" href="#policy">Go to your counterparties &rarr;</a><span class="step-now" id="st-tenors"></span></div></div>'
-            '</div></section>')
+            + panel_head("Build your strategy", "Three steps to a counterparty policy",
+                         "Set how the score is made, choose the names you accept, and say how long you would lend to each.")
+            + '<div class="steps">'
+            + step(1, "Set your weightings", "Decide how much each part of the score counts. The published weights apply until you change them.",
+                   WT_LINE, '<button class="filter" id="wt-change" type="button">Change weightings</button><span class="step-now" id="st-weights"></span>')
+            + step(2, "Choose your names", "Every covered bank and building society on one table. Add the ones you accept.",
+                   "", '<button class="filter filter-blue uni-open" type="button">Choose from every covered name</button><span class="step-now" id="st-names"></span>')
+            + step(3, "Set tenors, then watch", "Give each name a tenor. The list is re-checked every night, and Alternatives finds names as strong as your weakest.",
+                   "", '<a class="filter" href="#policy">Go to your counterparties &rarr;</a><span class="step-now" id="st-tenors"></span>')
+            + '</div></section>')
 
 
 def panel_head(kicker: str, title: str, lede: str) -> str:
@@ -969,7 +987,7 @@ def page_tool(board, status, generated):
         + strategy_pages()
         + '<section class="panel" data-panel="policy">'
         + panel_head("Monitor", "Your counterparties",
-                     "Every name on your list, re-checked each night against its filings, its ratings and the market, with what has moved since you approved it. Names you are only watching sit beneath.")
+                     "Every name on your list, re-checked each night, with what has moved since you approved it.")
         + '<div id="policy-body"><div class="sk-cards" aria-hidden="true">' + '<span class="sk"></span>' * 4 + '</div></div>'
         '<div class="pol-share" id="pol-share" hidden><button class="filter" id="pol-clear">Clear all</button></div></section>'
         '<section class="panel" data-panel="likeforlike">'
@@ -978,7 +996,16 @@ def page_tool(board, status, generated):
         + '<div id="pol-ll"></div></section>'
         f'<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html?v={v}" data-js="assets/compare.js?v={v}"></section>'
         f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={v}"></section>'
-        '</div>' + TOOL_DIALOGS)
+        '</div>'
+        # The panel to open on is decided here, before the first paint, rather than after the scripts
+        # have loaded: the address's own panel, or the list for a reader who holds one. Done later, the
+        # page painted Start here and then jumped to the list.
+        '<script>(function(){try{var h=location.hash.slice(1).split("&")[0],c=document.getElementById("browse");'
+        'if(!h){var p=JSON.parse(localStorage.getItem("counterparty.policy")||"[]");if(p&&p.length)h="policy"}'
+        'var q0=h&&c.querySelector(\'.panel[data-panel="\'+h+\'"]\');if(!q0||q0.dataset.src)return;'
+        'c.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("active",t.dataset.tab===h)});'
+        'c.querySelectorAll(".panel").forEach(function(q){q.classList.toggle("active",q.dataset.panel===h)})}catch(e){}})()</script>'
+        + TOOL_DIALOGS)
     # the list is drawn from this file, and asking for it only after two scripts have been
     # fetched and run is a round trip the reader spends looking at an empty box
     return (c.shell("Your counterparties", content, "strategy", "../", generated,
@@ -1034,47 +1061,47 @@ def page_landing(board, status, generated):
             f'<a class="mini" href="#paths">Three pathways</a><a class="mini" href="#how">How it works</a><a class="mini" href="#rests">What it rests on</a><a class="mini" href="{T}">Open the tool &rarr;</a></div></div>\n'
             '<header class="hero"><div class="wrap"><div class="herogrid"><div>\n'
             '<h1 class="rv">Who can you deal with,<br><span class="em">and for how long</span>?</h1>\n'
-            '<p class="sub rv">Every covered bank and building society, scored from its regulatory filings and its agency ratings, with the market&rsquo;s own signal, against the weightings you choose. Build a counterparty policy, watch every name on it, and find the next one.</p>\n'
+            '<p class="sub rv">Every covered bank and building society, scored from its regulatory filings and agency ratings. Build a counterparty policy, watch every name on it, and find the next one.</p>\n'
             f'<div class="cta rv"><a class="btn" href="{T}">Open {P} {arrow}</a><a class="btn ghost" href="#paths">See the three pathways</a></div>\n'
             f'<p class="freeline rv">{lock}Your list stays in your browser. Nothing is sent anywhere.</p>\n'
             f'<div class="returning" id="returning" hidden><span>Welcome back. <b id="returning-n"></b></span><a href="{T}#policy">Go straight to your counterparties &rarr;</a></div>\n'
             '</div>\n'
             f'<div class="herocard rv"><div class="hc-k"><span class="live"></span>What it holds today &middot; built {c.esc(built)}</div>\n'
             '<p class="hc-t">Every name a UK treasury desk would deal with, read from the public record every morning.</p>\n'
-            f'<div class="hc-stats"><div class="hc-stat"><b>{n}</b><span>names covered</span></div><div class="hc-stat"><b>{rated}</b><span>rated by the three main agencies</span></div>'
-            f'<div class="hc-stat"><b>{scored}</b><span>with enough published to score</span></div><div class="hc-stat"><b>{bands["A"]}</b><span>in band A on the published weights</span></div></div>\n'
+            f'<div class="hc-stats"><div class="hc-stat"><b>{n}</b><span>names covered</span></div><div class="hc-stat"><b>{rated}</b><span>with an agency rating</span></div>'
+            f'<div class="hc-stat"><b>{scored}</b><span>scored</span></div><div class="hc-stat"><b>{bands["A"]}</b><span>in band A</span></div></div>\n'
             f'<div class="hc-bands"><div class="bar">{bar}</div><div class="hc-leg">{leg}</div></div></div>\n'
             '</div></div></header>\n\n'
             '<section id="paths" class="path"><div class="wrap">\n<p class="eyebrow rv">Three pathways</p>\n'
             '<h2 class="rv">Build it. <span class="em">Watch it.</span> Find the next name.</h2>\n'
-            '<p class="lede rv">A counterparty list is built once, checked every day and extended now and then. The tool is laid out in that order, and the pathways down its side take you to each.</p>\n'
+            '<p class="lede rv">A counterparty list is built once, checked every day and extended now and then. The tool follows that order.</p>\n'
             '<div class="cards">\n'
             f'<a class="card rv" href="{T}#strategy"><span class="n">01 &middot; Build your strategy</span><h3>Three steps to a policy</h3><p>Set how the score is made, choose the names you accept, and say how long you would lend to each.</p>'
-            '<ul><li>Weightings you can change, for you alone</li><li>Every covered name on one table</li><li>A tenor on every name, and a link that carries the list</li></ul><span class="go">Start here &rarr;</span></a>\n'
+            '<ul><li>Weightings you can change, for you alone</li><li>Every covered name on one table</li><li>Any tenor, from a day to ten years</li></ul><span class="go">Start here &rarr;</span></a>\n'
             f'<a class="card rv" href="{T}#policy"><span class="n">02 &middot; Monitor your counterparties</span><h3>Re-checked every night</h3><p>Every name on your list, against its filings, its ratings and the market, with what has moved since you approved it.</p>'
             '<ul><li>What changed, flagged on the card</li><li>Names you are only watching, beneath</li><li>Rating actions and new filings, on each name</li></ul><span class="go">Open your counterparties &rarr;</span></a>\n'
             f'<a class="card rv" href="{T}#likeforlike"><span class="n">03 &middot; Compare</span><h3>The next name, and the whole universe</h3><p>Alternatives at least as strong as your weakest at each tenor, any names side by side, and the universe by rating.</p>'
             '<ul><li>Alternatives, tenor by tenor</li><li>Analysis: any names, any ratio, over time</li><li>Ratings: the average and the weakest of the three</li></ul><span class="go">Compare &rarr;</span></a>\n'
             '</div></div></section>\n\n<div class="wrap"><div class="rule"></div></div>\n\n'
             '<section id="how" class="honest"><div class="wrap">\n<p class="eyebrow rv">How it works</p>\n'
-            '<h2 class="rv">Four passes a day, and nothing typed by hand.</h2>\n'
-            '<p class="lede rv">Every figure on a profile carries its source, its method and its date. The score is one published method applied the same way to every name.</p>\n'
+            '<h2 class="rv">Read every morning, and nothing typed by hand.</h2>\n'
+            '<p class="lede rv">One published method, applied the same way to every name. Every figure carries its source and its date.</p>\n'
             '<div class="steps">\n'
-            "<div class=\"step rv\"><span class=\"k\">01</span><div><h3>The public record is read</h3></div><p>Pillar 3 reports and regulatory returns for the capital and liquidity ratios; the ESMA register for the agencies' ratings; and traded prices for the market signal. Nothing is typed by hand and nothing is taken from the press.</p></div>\n"
-            "<div class=\"step rv\"><span class=\"k\">02</span><div><h3>Every name is scored</h3></div><p>The agency rating is the anchor and the bank's own ratios the pillars, weighed by the published method, or by your weightings when you have set them. A name without a rating or without current capital figures is not scored, and says so.</p></div>\n"
-            '<div class="step rv"><span class="k">03</span><div><h3>Your list is checked against it</h3></div><p>Each night every name you hold is read again. A rating that moved, a ratio that fell, a market signal that turned: each is marked on the card beside the date you approved the name.</p></div>\n'
-            '<div class="step rv"><span class="k">04</span><div><h3>The next name is found</h3></div><p>Alternatives shows the names at least as strong as your weakest at each tenor; Analysis puts any names side by side; the Ratings view lays out the whole universe by the average and the weakest of the three.</p></div>\n'
+            "<div class=\"step rv\"><span class=\"k\">01</span><div><h3>The public record is read</h3></div><p>Pillar 3 reports and regulatory returns for capital and liquidity, the ESMA register for the agencies' ratings, and traded prices for the market signal.</p></div>\n"
+            "<div class=\"step rv\"><span class=\"k\">02</span><div><h3>Every name is scored</h3></div><p>The agency rating anchors the score and the bank's own ratios make up the rest, weighed by the published method or by your own weightings. A name without a rating or current figures is not scored, and says so.</p></div>\n"
+            '<div class="step rv"><span class="k">03</span><div><h3>Your list is checked against it</h3></div><p>Each night every name you hold is read again. A rating that moved, a ratio that fell or a market signal that turned is marked on its card.</p></div>\n'
+            '<div class="step rv"><span class="k">04</span><div><h3>The next name is found</h3></div><p>Alternatives finds names at least as strong as your weakest at each tenor. Analysis puts any names side by side, and Ratings lays out the whole universe.</p></div>\n'
             '</div></div></section>\n\n'
             '<section id="rests"><div class="wrap">\n<p class="eyebrow rv">What it rests on</p>\n'
-            '<h2 class="rv">Public data, one method, every date on the page.</h2>\n<div class="cards">\n'
-            "<div class=\"card rv\"><span class=\"n\">Regulatory filings</span><h3>The banks' own figures</h3><p>CET1, leverage, liquidity and funding ratios from Pillar 3 reports, the EBA and the FDIC, read by a rules-based extractor with every figure checked against the ones around it.</p></div>\n"
-            "<div class=\"card rv\"><span class=\"n\">Agency ratings</span><h3>The average and the weakest of three</h3><p>The long-term ratings of Fitch, S&amp;P and Moody's on one scale, as the average and the weakest, with one outlook mark per agency, from the ESMA European Rating Platform every day.</p></div>\n"
-            '<div class="card rv"><span class="n">Market</span><h3>What the market says</h3><p>CDS, bond yields and the share price as a bounded signal, never more than a few points either way. The market prices the news faster than any reading of it can.</p></div>\n'
-            "<div class=\"card rv\"><span class=\"n\">Not advice</span><h3>Information, and a published method</h3><p>Scores use the published method and can be wrong. Nothing here is a recommendation, and nothing stands in for your own policy or your adviser's advice.</p></div>\n"
+            '<h2 class="rv">Public data, one method, every date on the page.</h2>\n<div class="cards cards-4">\n'
+            "<div class=\"card rv\"><span class=\"n\">Regulatory filings</span><h3>The banks' own figures</h3><p>CET1, leverage, liquidity and funding ratios from Pillar 3 reports, the EBA and the FDIC, each checked against the figures around it.</p></div>\n"
+            "<div class=\"card rv\"><span class=\"n\">Agency ratings</span><h3>The average and the weakest of three</h3><p>The long-term ratings of Fitch, S&amp;P and Moody's on one scale, from the ESMA register every day.</p></div>\n"
+            '<div class="card rv"><span class="n">Market</span><h3>What the market says</h3><p>CDS, bond yields and the share price, as a signal worth a few points either way at most.</p></div>\n'
+            "<div class=\"card rv\"><span class=\"n\">Not advice</span><h3>Information, and a published method</h3><p>Scores follow the published method and can be wrong. Nothing here is a recommendation or stands in for your own policy.</p></div>\n"
             '</div></div></section>\n\n'
             '<section class="close"><div class="wrap">\n<h2 class="rv">Open the tool and build your list.</h2>\n'
             f'<div class="cta rv"><a class="btn" href="{T}">Open {P} {arrow}</a></div>\n'
-            '<p class="claims rv"><b>Kept in your browser.</b> Your list and your weightings are stored in this browser and nowhere else; a share link carries the list to a colleague. <b>What it does not claim.</b> It is information, not advice. Check every figure against its source before it reaches a committee.</p>\n'
+            '<p class="claims rv">Your list and your weightings stay in this browser and nowhere else. Information, not advice: check every figure against its source before it reaches a committee.</p>\n'
             '</div></section>\n\n'
             f'<footer><div class="wrap"><span><b>{c.PRODUCT[0]}</b>{c.PRODUCT[1]} &middot; from PWLBtoday</span><span class="sp"></span><a href="admin/index.html#method">Method</a><a href="admin/index.html#status">Data status</a><a href="{T}">Open the tool</a></div></footer>\n'
             f'<script>{LANDING_SCRIPT}</script>\n</body></html>')
@@ -1087,17 +1114,17 @@ def page_admin(status, board, generated):
     what ran last night. Kept together so it can be shown to someone deciding whether to trust
     the thing, and taken away without disturbing the pages that do the work.
     """
-    content = ('<div class="page-head"><div><h1>Method and data</h1><div class="lede">How the score is '
-               'built, what is held for every name, and what ran last night.</div></div></div>'
-               '<div class="card tabs-card"><div class="tabs" role="tablist">'
+    # The navigation names the three pages, so the tab strip steps aside here as it does on the
+    # tool, and each page carries its own heading.
+    content = ('<div class="card tabs-card"><div class="tabs" role="tablist">'
                '<button class="tab active" data-tab="method">Method</button>'
                '<button class="tab" data-tab="coverage">Coverage</button>'
-               '<button class="tab" data-tab="status">Status</button></div>'
-               f'<section class="panel active" data-panel="method">{_panel_content(page_method(generated, inner=True))}</section>'
-               f'<section class="panel" data-panel="coverage">{_panel_content(page_coverage(generated, inner=True))}</section>'
-               f'<section class="panel" data-panel="status">{_panel_content(page_status(status, board, generated, inner=True))}</section>'
+               '<button class="tab" data-tab="status">Data status</button></div>'
+               f'<section class="panel active" data-panel="method">{_panel_content(page_method(generated, inner=True), "Reference", "Method")}</section>'
+               f'<section class="panel" data-panel="coverage">{_panel_content(page_coverage(generated, inner=True), "Reference", "Coverage")}</section>'
+               f'<section class="panel" data-panel="status">{_panel_content(page_status(status, board, generated, inner=True), "Reference", "Data status")}</section>'
                '</div>')
-    return c.shell("Method and data", content, "admin", "../", generated)
+    return c.shell("Method", content, "admin", "../", generated, body_class="tool")
 
 
 def page_gone(title: str, generated: str, target: str = "../index.html", nav: str = "home") -> str:
@@ -1177,7 +1204,7 @@ def page_coverage(generated, inner: bool = False):
         score = a["score"] if a["score"] is not None else -1
         sources = ", ".join(x.replace("eba_te", "EBA TE") for x in a["sources"])
         trs.append(f'<tr data-id="{c.esc(a["id"])}" data-name="{c.esc(a["short"].lower())}" data-region="{c.esc(a["region"])}" data-score="{score}">'
-                   f'<td class="b"><a href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><div class="muted small">{c.esc(a["peer_group"])}</div></td>'
+                   f'<td class="b"><a href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><div class="muted small">{c.esc(REGION_LABEL.get(a["region"], a["region"]))} · {c.esc(TYPE_LABEL.get(a["type"], a["type"]))}</div></td>'
                    f'<td class="mono" data-v="{score}">{a["score"] if a["score"] is not None else "—"} {band}</td>'
                    f'<td data-v="{a["agencies"]}">{rating}</td>'
                    f'<td class="mono" data-v="{a["price_days"]}">{price}</td>'
@@ -1190,10 +1217,9 @@ def page_coverage(generated, inner: bool = False):
     heads = "".join(f'<th class="num" data-sort="col" title="periods held and the years they span">{c.esc(l)}</th>' for _, l in AUDIT_COLS)
     body = "".join(trs)
     content = (
-        '<div class="page-head"><div><h1>Coverage</h1><div class="lede">What is held for every entity: the score it earns, ratings by agency, '
-        'share price, CDS and bond data, and for each ratio the number of reporting periods and the years they span. '
-        'A build-time view, so gaps are visible before they are trusted.</div></div></div>'
-        f'<div class="rtiles">{tiles}</div>'
+        '<div class="page-head"><div><h1>Coverage</h1><div class="lede">What is held for every name. In each ratio column, '
+        'the number is how many reporting dates are held, and beneath it the first and last year.</div></div></div>'
+        f'<div class="rtiles rtiles-cov">{tiles}</div>'
         f'<div class="card" style="margin-top:16px"><div class="toolbar"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>'
         '<div class="table-wrap"><table id="board" class="plain coverage"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Score</th>'
         '<th data-sort="col">Rating</th><th class="num" data-sort="col" title="trading days of closing prices held">Price days</th>'
@@ -1215,15 +1241,15 @@ def _write(path, html: str) -> None:
 def compare_content() -> str:
     sets = [("all", "Everyone"), ("uk_large", "UK majors"), ("uk_mid", "UK mid-sized"), ("uk_small", "UK small banks"), ("uk_bs", "Building societies"),
             ("eu_large", "EU and Nordic"), ("us", "US"), ("ch", "Switzerland"), ("aus", "Australia"), ("can", "Canada"), ("asia", "Asia"), ("gulf", "Gulf"),
-            ("watch", "Watching"), ("policy", "My list")]
+            ("watch", "Watching"), ("policy", "My counterparties")]
     chips = "".join(f'<button class="filter cp-set" data-set="{k}">{c.esc(l)}<span class="cnt"></span></button>' for k, l in sets)
     def panel(pid, title, sub, wide: bool = False):
         return (f'<section class="panel-c{" wide" if wide else ""}" id="p-{pid}"><div class="pc-head"><h3>{c.esc(title)} <span class="muted small">{c.esc(sub)}</span></h3>'
                 f'<button class="pc-x" data-panel="{pid}" title="Expand or restore" aria-label="Expand {c.esc(title)}">⤢</button></div>'
                 f'<div class="pc-body cp-chart" id="c-{pid}"><div class="sk-rows" aria-hidden="true">'
                 + '<span class="sk"></span>' * 5 + '</div></div></section>')
-    return f'''<p class="small muted panel-lede">One peer set, one measure, three views: where the names stand today, where the measure has been, and how the order between them has changed. Pin up to six names \u2014 they keep their colour in every panel and in the table.</p>
-<div class="card cp-card"><div class="cp-tools">
+    head = panel_head("Compare", "Analysis", "Pick a peer set and a measure: where the names stand today, where the measure has been, and how their order has changed. Pin up to six names to follow them through every view.")
+    return head + f'''<div class="card cp-card"><div class="cp-tools">
 <div class="filters" id="cp-sets">{chips}</div>
 <div class="cp-row"><label class="small muted">Measure <select id="cp-metric"></select></label><button type="button" class="i" id="cp-def" data-t="score" aria-expanded="false" aria-label="What is this measure?">i</button>
 <div class="search cp-add">{c.ico("search", 16, c.MUTED)}<input id="cp-q" placeholder="Add a name to the set" autocomplete="off"><div class="cp-sugg" id="cp-sugg" hidden></div></div>

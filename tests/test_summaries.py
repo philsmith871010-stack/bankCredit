@@ -130,18 +130,22 @@ def test_a_figure_the_paragraph_did_not_give_fails_the_check():
     assert any("news or headlines" in f for f in press), press
 
 
-def test_the_profile_shows_both_layers_and_says_what_moved(tmp_path, monkeypatch):
+def test_the_profile_shows_one_summary_and_says_what_moved(tmp_path, monkeypatch):
+    """The written summary when it holds, the data paragraph when there is none or it no longer
+    holds; never both, which said the same ratios twice."""
     from bankcredit.site import build
     monkeypatch.setattr(S, "SUMMARIES", tmp_path)
     b = bank()
     html = build.summary_block(b, "2026-09-16T05:00:00Z")
-    assert "TSB is a bank in the UK, rated A on average" in html and "No written summary yet" in html
+    assert "TSB is a bank in the UK, rated A on average" in html, "no written summary: the data paragraph"
     (tmp_path / "tsb.json").write_text(json.dumps(summary()))
     html = build.summary_block(b, "2026-09-16T05:00:00Z")
     assert "owned by Sabadell" in html and "Written 16 Sep 2026 from figures to 30 Jun 2026." in html
+    assert "TSB is a bank in the UK, rated A on average" not in html, "one summary, not both"
     assert "brief-stale" not in html
     html = build.summary_block(bank(band="C"), "2026-09-16T05:00:00Z")
-    assert "Since then: band moved from B to C. This summary predates that." in html
+    assert "Since then: band moved from B to C." in html
     quoted = bank(peer_ratios={"cet1_ratio": {"p25": 13.5, "p50": 13.7, "p75": 14.2, "n": 16}, "lcr": {"p25": 140, "p50": 160, "p75": 180, "n": 16}})
     html = build.summary_block(quoted, "2026-09-16T05:00:00Z")
-    assert "owned by Sabadell" not in html and "no longer matches the data" in html, "a stale figure is never shown as current"
+    assert "owned by Sabadell" not in html and "being rewritten" in html, "a stale figure is never shown as current"
+    assert "TSB is a bank in the UK, rated A on average" in html, "the data paragraph stands in for it"

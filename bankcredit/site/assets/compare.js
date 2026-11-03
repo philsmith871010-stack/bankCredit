@@ -39,6 +39,9 @@
   function atBucket(r,code,b){var s=r.series[code]||[],best=null;for(var i=0;i<s.length;i++){if(s[i][0]<=b&&daysBetween(s[i][0],b)<=400)best=s[i][1]}return best}
   function buckets(rows,code,n){var set={};rows.forEach(function(r){(r.series[code]||[]).forEach(function(p){set[qEnd(p[0])]=1})});return Object.keys(set).sort().slice(-n)}
   function link(r){return '<a href="../banks/'+r.id+'.html">'+esc(r.short)+'</a>'}
+  // A name cut to the room a chart gives it, with an ellipsis rather than a clipped edge; the full
+  // name is in the label's own title. About 6.6px a character at the label size.
+  function fit(t,px){var n=Math.max(4,Math.floor(px/6.6));return t.length>n?t.slice(0,n-1)+'\u2026':t}
   function W(){return Math.max(300,chart.clientWidth-2)}
   function svgOpen(w,h){return '<svg viewBox="0 0 '+w+' '+h+'" width="'+w+'" height="'+h+'" style="display:block;max-width:100%" font-family="inherit" font-size="12">'}
   function colourOf(id){var i=state.pins.indexOf(id);return i>=0&&i<SLOTS.length?SLOTS[i]:null}
@@ -70,7 +73,7 @@
     var out=svgOpen(w,H);
     out+='<line x1="'+sc(med).toFixed(0)+'" x2="'+sc(med).toFixed(0)+'" y1="20" y2="'+(H-8)+'" stroke="'+INK+'" stroke-dasharray="3 3" opacity=".5"/><text x="'+sc(med).toFixed(0)+'" y="13" text-anchor="middle" fill="'+INK+'" font-size="11">median '+fmt(med,m)+'</text>';
     vals.forEach(function(x,i){var y=26+i*rowH,c=colourOf(x.r.id);
-      out+='<a href="../banks/'+x.r.id+'.html"><text data-id="'+x.r.id+'" class="cp-lbl" x="'+(left-10)+'" y="'+(y+14)+'" text-anchor="end" fill="'+(c||INK)+'" font-weight="'+(c?'700':'500')+'">'+esc(x.r.short.slice(0,28))+'</text></a>';
+      out+='<a href="../banks/'+x.r.id+'.html"><text data-id="'+x.r.id+'" class="cp-lbl" x="'+(left-10)+'" y="'+(y+14)+'" text-anchor="end" fill="'+(c||INK)+'" font-weight="'+(c?'700':'500')+'"><title>'+esc(x.r.name)+'</title>'+esc(fit(x.r.short,left-16))+'</text></a>';
       out+='<rect class="cp-bar" data-id="'+x.r.id+'" x="'+sc(Math.max(lo,Math.min(0,x.p.v))).toFixed(0)+'" y="'+(y+4)+'" width="'+Math.max(1,Math.abs(sc(x.p.v)-sc(Math.max(lo,0)))).toFixed(0)+'" height="'+(rowH-9)+'" rx="4" fill="'+(c||MID)+'" fill-opacity="'+(c?1:0.55)+'"><title>'+esc(x.r.name)+': '+fmt(x.p.v,m)+' at '+x.p.d+'</title></rect>';
       out+='<text x="'+(sc(Math.max(x.p.v,0))+8).toFixed(0)+'" y="'+(y+14)+'" fill="'+INK+'" font-family="ui-monospace,monospace" font-size="12">'+fmt(x.p.v,m)+'</text>'});
     chart.innerHTML=out+'</svg>';
@@ -134,7 +137,7 @@
         var ly=Y(lr)+4;
         if(!c){for(var k=0;k<placed.length;k++)if(Math.abs(placed[k]-ly)<13){ly=null;break}}
         if(ly!=null){placed.push(ly);
-          out+='<text x="'+(w-R+8)+'" y="'+ly.toFixed(0)+'" fill="'+(c||MUTED)+'" font-weight="'+(c?'600':'400')+'" font-size="11.5">#'+lr+' '+esc(l.r.short.slice(0,16))+'</text>'}}});
+          out+='<text x="'+(w-R+8)+'" y="'+ly.toFixed(0)+'" fill="'+(c||MUTED)+'" font-weight="'+(c?'600':'400')+'" font-size="11.5"><title>'+esc(l.r.name)+'</title>#'+lr+' '+esc(fit(l.r.short,R-34))+'</text>'}}});
     chart.innerHTML=out+'</svg>'+(dense?'<div class="pc-note small muted">'+n+
       ' names: the pinned ones are drawn in full and the rest as the band they move within. '+
       'Pick a smaller set to follow individual lines.</div>':'');

@@ -294,46 +294,6 @@
     return svg(w,h,parts)+'<div class="pv-keys">'+key+'</div>';
   }
 
-  function scoreHist(mine,all,solo){
-    // The universe is the context and your names are the point, so this is emphasis: the
-    // distribution in grey behind, each of your names marked on it. Two bar series scaled to
-    // their own maxima would put one name at the same height as forty.
-    var bins=20,w=260,h=52,base=h-14,ax=[];
-    for(var i=0;i<bins;i++)ax.push(0);
-    all.forEach(function(e){if(e.score!=null)ax[Math.min(bins-1,Math.floor(e.score/100*bins))]++});
-    var amax=Math.max.apply(null,ax)||1, bw=w/bins, inner='', hits='';
-    var scored=all.filter(function(e){return e.score!=null});
-    for(var j=0;j<bins;j++){
-      var ah=ax[j]/amax*(base-4);
-      if(ah>0)inner+='<rect x="'+(j*bw+.6).toFixed(1)+'" y="'+(base-ah).toFixed(1)+'" width="'+(bw-1.2).toFixed(1)+'" height="'+ah.toFixed(1)+'" rx="1.5" fill="'+(solo?'#c3ced9':'#e9ecef')+'"/>';
-      // the bar is a few pixels wide, so the thing you can point at is the whole column
-      var lo=j*100/bins, hi=(j+1)*100/bins;
-      var inBin=scored.filter(function(e){return e.score>=lo&&(e.score<hi||(j===bins-1&&e.score<=100))});
-      var yours=(mine||[]).filter(function(e){return e.score!=null&&e.score>=lo&&e.score<hi});
-      if(inBin.length)hits+='<rect x="'+(j*bw).toFixed(1)+'" y="0" width="'+bw.toFixed(1)+'" height="'+base+'" fill="transparent"'+
-        tipd(tipHead('Scores '+lo+' to '+hi,inBin.length+(inBin.length===1?' name':' names'))+
-          '<i>'+Math.round(inBin.length/scored.length*100)+'% of the '+scored.length+' scored names sit in this range</i>'+
-          '<i>'+names(inBin.sort(function(a,b){return b.score-a.score}),5)+'</i>'+
-          (yours.length?'<i>yours here: <em>'+names(yours,4)+'</em></i>':''))+'/>';
-    }
-    inner+='<line x1="0" x2="'+w+'" y1="'+base+'" y2="'+base+'" stroke="#dee2e6" stroke-width="1"/>'+hits;
-    mine.forEach(function(e){
-      if(e.score==null)return;
-      var x=e.score/100*w;
-      var below=scored.filter(function(o){return o.score<e.score}).length;
-      var tip=tipd(tipHead(esc(e.short),e.score.toFixed(1)+' \u00b7 band '+esc(e.band||'?'))+
-        '<i>stronger than <em>'+Math.round(below/Math.max(1,scored.length)*100)+'%</em> of the '+scored.length+' scored names</i>'+
-        '<i>'+(e.rating_composite?'rated '+esc(e.rating_composite)+' \u00b7 ':'')+
-        (e.cet1!=null?'CET1 '+e.cet1.toFixed(1)+'% \u00b7 ':'')+(e.lcr!=null?'LCR '+Math.round(e.lcr)+'%':'')+'</i>'+
-        (e.asof?'<i>figures as at '+esc(e.asof)+'</i>':''));
-      inner+='<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+(base-13)+'" y2="'+(base+4)+'" stroke="#fff" stroke-width="3.4"/>'+
-             '<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+(base-13)+'" y2="'+(base+4)+'" stroke="#fd7e14" stroke-width="2"/>'+
-             '<rect x="'+(x-5).toFixed(1)+'" y="'+(base-15)+'" width="10" height="21" fill="transparent"'+tip+'/>';
-    });
-    inner+='<text x="1" y="'+h+'" class="pv-ax">0</text><text x="'+(w/2)+'" y="'+h+'" text-anchor="middle" class="pv-ax">50</text><text x="'+w+'" y="'+h+'" text-anchor="end" class="pv-ax">100</text>';
-    return svg(w,h,inner);
-  }
-
   function ratingHist(es){
     // the composite rating is an ordered scale, so the bars stay in grade order
     var n={},who={},tot=0;
@@ -427,7 +387,6 @@
       '</div>'+
       '<div class="pv-charts">'+
         '<figure><figcaption>Band mix'+mk('band')+'</figcaption>'+bandMix(es)+'</figure>'+
-        '<figure><figcaption>Against every name'+mk('score')+'</figcaption>'+scoreHist(es,data.rows)+'</figure>'+
         '<figure><figcaption>Composite rating'+mk('composite')+'</figcaption>'+ratingHist(es)+'</figure>'+
         '<figure><figcaption>Score by tenor accepted'+mk('tenor')+'</figcaption>'+tenorScore(items)+'</figure>'+
       '</div></div>';
@@ -958,14 +917,13 @@
     var p=load(), w=weights();
     var el=function(id){return document.getElementById(id)};
     var n=p.length, names=el('st-names'), ten=el('st-tenors'), wt=el('st-weights');
-    if(names)names.innerHTML=n?'<b>'+n+'</b> name'+(n===1?'':'s')+' on your list':'<b>No names yet.</b> Every name you add is re-checked each night.';
+    if(names)names.innerHTML=n?'<b>'+n+'</b> name'+(n===1?'':'s')+' on your list':'No names yet';
     if(ten){var ts=p.map(function(x){return +x.tenor||0}).filter(Boolean);
-      ten.innerHTML=!n?'Set when you add a name; change it on the card.':(!ts.length?'No tenor set yet':Math.min.apply(null,ts)===Math.max.apply(null,ts)?'Every name at <b>'+tenorWord(ts[0])+'</b>':'Tenors from <b>'+tenorWord(Math.min.apply(null,ts))+'</b> to <b>'+tenorWord(Math.max.apply(null,ts))+'</b>')}
-    if(wt)wt.innerHTML=w.__custom?'<b>Your own weightings</b> are in force':'<b>The published weightings</b> are in force';
+      ten.innerHTML=!n?'Set as you add each name':(!ts.length?'No tenor set yet':Math.min.apply(null,ts)===Math.max.apply(null,ts)?'Every name at <b>'+tenorLabel(ts[0])+'</b>':'Tenors from <b>'+tenorLabel(Math.min.apply(null,ts))+'</b> to <b>'+tenorLabel(Math.max.apply(null,ts))+'</b>')}
+    if(wt)wt.innerHTML=w.__custom?'<b>Your own</b> weightings':'<b>Published</b> weightings';
     ['st-1','st-2','st-3'].forEach(function(id,i){var st=el(id); if(!st)return;
       st.classList.toggle('step-done',[!!w.__custom,n>0,n>0&&p.every(function(x){return +x.tenor>0})][i])});
   }
-  function tenorWord(d){return d>=365?(d/365===1?'1 year':(Math.round(d/365*10)/10)+' years'):d>=28?Math.round(d/30.4)+' months':d+' days'}
   function render(){
     paintStrategy();
     var p=load(); var out=document.getElementById('policy-body'); if(!out||!data)return;
@@ -1016,9 +974,7 @@
           '</div></div>';
       }).join('');
       if(isDemo(p))html='<div class="pol-demo">'+
-        '<b>This is an example portfolio.</b> Eighteen names shaped like a local authority\u2019s list, with '+
-        'tenors graded by standing rather than set uniformly. Change a tenor, remove a name or clear the lot: '+
-        'it is your list from here, kept in this browser only.'+
+        '<b>An example list.</b> Eighteen names shaped like a local authority\u2019s. Change it freely, or clear it and start your own.'+
         '<button class="filter" id="pol-demo-x">Clear it and start mine</button></div>'+html;
       var view=polView();
       html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Flags compare today with the day you approved each name.</span>'+
@@ -1132,27 +1088,15 @@
         '<output class="wt-o" for="wt-'+k+'">'+(v/total*100).toFixed(0)+'%</output></div>';
     }).join('');
     box.innerHTML=
-      '<div class="wt-head"><div>'+
-        '<p class="small muted">These are yours, not ours. Move a slider and every score on this site is '+
-        'recomputed from the figures using your weights, on this device, at once. Nothing is sent anywhere. '+
-        'The six are scaled to 100 percent between them, so what matters is their size against each other.</p></div>'+
+      '<div class="wt-head"><p class="small muted">Move a slider and every score on the site is recomputed with your weights, '+
+        'on this device only. The six are scaled to add up to 100%.</p>'+
         '<button class="filter" id="wt-reset"'+(w.__custom?'':' disabled')+'>Back to the starting point</button></div>'+
       '<div class="wt-body"><div><div class="wt-grid">'+rows+'</div>'+weightEffect()+'</div>'+
       '<aside class="wt-foot">'+
-        '<p><b>This is not a credit rating.</b> It is arithmetic on figures the banks publish themselves and on '+
-        'the ratings their agencies publish, combined the way you have chosen to combine them. It is not issued '+
-        'by a registered credit rating agency and it is not a credit rating within the meaning of the UK or EU '+
-        'Credit Rating Agency Regulations.</p>'+
-        '<p><b>This is not advice.</b> Nothing here is investment advice, a recommendation, or a suggestion that '+
-        'you should or should not deal with any counterparty, at any tenor, for any amount. Your counterparty '+
-        'policy, your limits and your tenors remain yours, and your adviser’s.</p>'+
-        '<p><b>The judgement is yours.</b> How much capital counts for against liquidity, or ratios against the '+
-        'agencies, is a policy question with no correct answer. The starting point is one reasonable set of '+
-        'weights and is deliberately not called a house view, a model or a recommendation. It carries no more '+
-        'authority than any other set, including yours.</p>'+
-        '<p class="muted">Figures come from each bank’s own regulatory disclosures and from the ESMA European '+
-        'Rating Platform, with their dates shown. They can be wrong, late or missing, and a score computed from '+
-        'them can be too. Check anything you rely on against the source, which every figure on this site names.</p>'+
+        '<p><b>Not a credit rating.</b> Arithmetic on the figures banks publish and the ratings their agencies '+
+        'publish, combined your way. It is not a credit rating under the UK or EU Credit Rating Agency Regulations.</p>'+
+        '<p><b>Not advice.</b> Your counterparty policy, limits and tenors remain yours. The starting weights are '+
+        'one reasonable set, not a recommendation.</p>'+
       '</aside></div>';
   }
 

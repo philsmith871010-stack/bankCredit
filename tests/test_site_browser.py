@@ -767,11 +767,13 @@ def test_a_definition_opened_by_hovering_closes_when_the_pointer_leaves(page, se
 
 
 def test_a_three_letter_composite_fits_its_chip(page, server):
-    """The composite was drawn in a box sized for a two-character grade; AAA and BBB+ were clipped."""
-    for who in ("nwb-bank", "bng-bank", "barclays", "lloyds-banking-group"):
-        visit(page, server, f"banks/{who}.html")
-        w = page.eval_on_selector(".tile-ratings .band", "e => [e.scrollWidth, e.clientWidth, e.textContent]")
-        assert w[0] <= w[1], (who, w)
+    """The composite was drawn in a box sized for a two-character grade; AAA and BBB+ were clipped.
+    The chips live on the Ratings grid now; the profile's rating card shows the letters large."""
+    visit(page, server, TOOL + "#ratings")
+    page.wait_for_timeout(600)
+    clipped = page.eval_on_selector_all("table.rgrid .band", "e => e.filter(x => x.scrollWidth > x.clientWidth).map(x => x.textContent)")
+    assert clipped == [], clipped
+    assert page.eval_on_selector_all("table.rgrid .band", "e => e.map(x => x.textContent)").count("AAA") >= 1
     assert not page.errors, page.errors
 
 
@@ -839,8 +841,7 @@ def test_the_panel_says_what_this_is_not(page, server):
     page.eval_on_selector("#wt-change", "e => e.click()")
     page.wait_for_timeout(400)
     said = page.eval_on_selector(".wt-foot", "e => e.textContent").lower()
-    for phrase in ("not a credit rating", "not advice", "the judgement is yours",
-                   "credit rating agency regulations"):
+    for phrase in ("not a credit rating", "not advice", "credit rating agency regulations"):
         assert phrase in said, phrase
 
 
@@ -1142,7 +1143,7 @@ def test_the_strategy_is_three_steps_that_say_where_the_reader_is(page, server):
     ks = page.eval_on_selector_all('[data-panel="strategy"] .step .k', "e => e.map(x => x.textContent)")
     assert ks == ["01", "02", "03"]
     assert "No names yet" in page.eval_on_selector("#st-names", "e => e.textContent")
-    assert "published weightings" in page.eval_on_selector("#st-weights", "e => e.textContent")
+    assert "published weightings" in page.eval_on_selector("#st-weights", "e => e.textContent").lower()
     assert page.eval_on_selector_all('[data-panel="strategy"] .step-done', "e => e.length") == 0
     page.eval_on_selector('[data-panel="strategy"] .uni-open', "e => e.click()")
     page.wait_for_timeout(400)
@@ -1151,7 +1152,7 @@ def test_the_strategy_is_three_steps_that_say_where_the_reader_is(page, server):
     visit(page, server, TOOL)
     assert "2 names" in page.eval_on_selector("#st-names", "e => e.textContent")
     assert page.eval_on_selector_all('[data-panel="strategy"] .step-done', "e => e.length") == 2, "names chosen, tenors set"
-    assert "1 year" in page.eval_on_selector("#st-tenors", "e => e.textContent")
+    assert "12 months" in page.eval_on_selector("#st-tenors", "e => e.textContent")
     assert not page.errors, page.errors
 
 

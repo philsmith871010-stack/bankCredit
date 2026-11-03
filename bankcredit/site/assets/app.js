@@ -472,8 +472,7 @@ document.addEventListener('click',function(e){
     nav.querySelectorAll('.tn-pages').forEach(function(r){r.hidden=r.dataset.group!==g});
     if(window.scrollMarks)window.scrollMarks();
   }
-  // Coverage has no item of its own: it is read as part of the data's status.
-  var NAV_FOR={coverage:'status'};
+  var NAV_FOR={};
   var tool=document.body.classList.contains('tool');
   var rest=document.title.split(' \u00b7 ').slice(1).join(' \u00b7 ');
   function sync(){

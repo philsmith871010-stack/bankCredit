@@ -287,11 +287,12 @@ NAV = [
     ]),
     ("Reference", [
         ("method", "Method", "admin/index.html#method", "doc"),
+        ("coverage", "Coverage", "admin/index.html#coverage", "grid"),
         ("status", "Data status", "admin/index.html#status", "status"),
     ]),
 ]
 # Pages that used to name their place by an older key.
-_ACTIVE_ALIAS = {"home": "policy", "admin": "method", "coverage": "status"}
+_ACTIVE_ALIAS = {"home": "policy", "admin": "method"}
 
 
 def _slug(group: str) -> str:
@@ -440,13 +441,6 @@ TONE_COLOUR = {"positive": GREEN, "negative": RED, "stable": "#9aa7b4",
                "watch positive": GREEN, "watch negative": RED, "watch": MUTED}
 
 
-def GRADE_BAND(g):
-    if g is None:
-        return "#dfe5eb"
-    for upper, col in GRADE_BANDS:
-        if g <= upper:
-            return col
-    return RED
 
 
 def _letter(g):
