@@ -185,7 +185,7 @@
   }
   var TONE_GLYPH={'watch negative':['\u25c6','wn','negative watch'],'negative':['\u25bc','dn','negative outlook'],
                   'watch positive':['\u25c6','wp','positive watch'],'positive':['\u25b2','up','positive outlook'],
-                  'stable':['\u25b6','lv','stable outlook'],'':['\u00b7','lv','no outlook published']};
+                  'stable':['\u25b6','lv','stable outlook'],'':['\u2013','lv','no outlook published']};
   function toneGlyphs(tones){
     return '<span class="tones" title="'+esc(toneWords(tones)||'no outlook published')+'">'+(tones||[]).map(function(t){
       var g=TONE_GLYPH[t]||TONE_GLYPH[''];return '<span class="cr-o '+g[1]+'">'+g[0]+'</span>'}).join('')+'</span>';
@@ -857,7 +857,8 @@
         '<span class="cr-a">Weakest</span><b class="cr-g" style="color:'+gradeColour(r.worst_letter)+'">'+esc(r.worst_letter)+'</b>'+
         '<span></span><span class="cr-s small muted">'+(r.n>1&&r.worst_letter===r.letter?'the same':'')+'</span></div>'+
       '<div class="cr">'+
-        '<span class="cr-a">Outlooks</span><span class="cr-g">'+toneGlyphs(r.tones)+'</span>'+
+        // three stable outlooks are said in words alone; marks appear when one of them is not stable
+        '<span class="cr-a">Outlooks</span><span class="cr-g">'+((r.tones||[]).every(function(t){return t==='stable'})?'':toneGlyphs(r.tones))+'</span>'+
         '<span></span><span class="cr-s small muted">'+esc(toneWords(r.tones)||'none published')+'</span></div>'+
       (r.date?'<div class="cr"><span class="cr-a">Last action</span><span class="cr-g tnum">'+esc(r.date)+'</span><span></span><span class="cr-s small muted">by any of the three</span></div>':'')+
       attrLine(e);

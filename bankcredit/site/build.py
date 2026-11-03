@@ -290,7 +290,7 @@ def tone_glyphs(tones) -> str:
     """One glyph per agency, worst first, so the tile reads ▼▶▶ for one negative and two stable."""
     out = []
     for t in tones:
-        out.append(outlook_glyph(t) or '<span title="no outlook published" class="muted">·</span>')
+        out.append(outlook_glyph(t) or '<span title="no outlook published" class="muted">–</span>')
     return f'<span title="{c.esc(tone_words(tones) or "no outlook published")}">{"".join(out)}</span>'
 
 
@@ -558,7 +558,6 @@ def page_method(generated, inner: bool = False):
     mname = lambda m: METRICS.get(m) or {"cet1_headroom": "CET1 above the bank's own requirement (points)"}.get(m, m.replace("_", " "))
     pillar_rows = "".join(f'<tr><td class="b">{c.PILLAR_LABEL.get(k, k)}</td><td class="tnum">{w}</td><td>{", ".join(mname(m) for m in ms)}</td></tr>' for k, (w, ms) in PILLARS.items())
     thr = "".join(f'<tr><td>{mname(m)}</td><td class="tnum small">{" · ".join(f"{v}→{s}" for v, s in pts)}</td></tr>' for _, (w, ms) in PILLARS.items() for m, pts in ms.items())
-    bands = " · ".join(f'<span class="b">{b}</span> {f} and above' for f, b in BANDS)
     grade_cells = "".join(f'<td class="tnum small">{c.esc(l)}<br>{RATING_SCORE[i + 1]}</td>' for i, l in enumerate(GRADE_LETTERS))
     ratio_weight = sum(w for w, _ in PILLARS.values())
     body = f'''<div class="card pad prose" id="method-prose">
@@ -570,7 +569,7 @@ def page_method(generated, inner: bool = False):
 <table class="plain"><thead><tr><th>Component</th><th>Weight</th><th>Inputs</th></tr></thead><tbody><tr><td class="b">{c.PILLAR_LABEL["rating"]}</td><td class="mono">{RATING_WEIGHT}</td><td>Composite long-term agency rating; required for a score; caps of 74.9 for the BBB range and 64.9 below investment grade</td></tr>{pillar_rows}</tbody></table>
 <h3>Rating sub-scores</h3><div class="table-wrap"><table class="plain subscores"><tbody><tr>{grade_cells}</tr></tbody></table></div>
 <h3>Thresholds (value → sub-score)</h3><table class="plain"><tbody>{thr}</tbody></table>
-<h3>Bands</h3><p>{bands}.</p>
+
 <h2>Ratings</h2><p>The site shows one rating per name: the average of the long-term ratings Fitch, S&amp;P and Moody's hold on it, on one scale, with the weakest of the three beside it and one outlook mark per agency. Ratings come from the ESMA European Rating Platform, refreshed daily, and each profile carries the history the register publishes back to July 2015. Agencies outside the three are not averaged in.</p>
 <details class="method-more"><summary>The agencies' own ratings, and the basis for quoting them</summary><p>Each profile also shows the current long-term rating and outlook and the current short-term rating that each of the three main agencies publishes on the name, with the agency named, the date and a link to the source. This view is a quotation, not a feed: current ratings only, no history by agency, no download. The basis on which it is shown is set out beside it and repeated here.</p><p class="note">{c.esc(attributed.BASIS)}</p></details>
 <h2>Market signal</h2><p>A layer built from five-year CDS levels and 30-day changes where a CDS market exists (otherwise the 30-day change in the bank's own bond yields against peers), 30-day equity volatility and drawdown from the 52-week high. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points.</p><details class="method-more"><summary>How the signal is weighted and measured</summary><p>Provisional weighting (September 2026): the three signals count equally, each worth at most 2.5 points either way. A CDS move is measured within one source (settlement against settlement, or trade medians on days with three or more trades) and split into the part shared with iTraxx Senior Financials and the part that is the bank's own; the label says which. The direction and size of the adjustment are shown; CDS levels themselves are not redistributed.</p></details>
@@ -1301,7 +1300,7 @@ def page_coverage(generated, inner: bool = False):
         '<div class="page-head"><div><h1>Coverage</h1><div class="lede">What is held for every name. In each ratio column, '
         'the number is how many reporting dates are held, and beneath it the first and last year.</div></div></div>'
         f'<div class="rtiles rtiles-cov">{tiles}</div>'
-        f'<div class="card" style="margin-top:16px;padding:14px 16px"><div class="toolbar rg-tools"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>'
+        f'<div class="card cov-card" style="margin-top:16px;padding:14px 16px"><div class="toolbar rg-tools"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>'
         '<div class="table-wrap"><table id="board" class="plain coverage"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Score</th>'
         '<th data-sort="col">Rating</th>'
         f'<th class="num" data-sort="col" title="span of the CET1 history in years; hover a cell for its sources">Years</th>{heads}</tr></thead><tbody>{body}</tbody></table></div><div class="pager" id="cov-more" data-step="40"></div>'

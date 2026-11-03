@@ -105,7 +105,7 @@
     // touch, the whole stack then centred on where the lines really end, and a short leader joins
     // any label that had to move to its dot.
     labels.sort(function(a,b){return a.y0-b.y0});
-    var GAP=15,i;labels.forEach(function(lb){lb.y=lb.y0});
+    var GAP=16,i;labels.forEach(function(lb){lb.y=lb.y0});
     for(i=1;i<labels.length;i++)labels[i].y=Math.max(labels[i].y,labels[i-1].y+GAP);
     if(labels.length){var drift=0;labels.forEach(function(lb){drift+=lb.y-lb.y0});drift/=labels.length;
       labels.forEach(function(lb){lb.y-=drift});
