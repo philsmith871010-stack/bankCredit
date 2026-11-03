@@ -203,7 +203,7 @@
     var sv=e&&((data&&data.sovereigns||{})[e.country]);
     if(!sv||!sv.composite)return esc((e&&e.country)||'');
     return '<span class="sov" title="'+esc(sv.name+' sovereign rating: '+describeRating({letter:sv.composite,worst_letter:sv.worst||sv.composite,n:sv.n,tones:sv.tones})+
-           '. Context, not part of the score.')+'">'+esc(e.country||'')+'<b>'+esc(sv.composite)+'</b></span>';
+           '. Context, not part of the score.')+'">'+esc(e.country||'')+'</span>';   // the state's rating is context: on hover, not beside every bank's own
   }
   // One rule everywhere: a market chip appears only when the market has moved; a quiet market,
   // or none, leaves the cell empty rather than saying "Stable" on half the rows
@@ -618,7 +618,7 @@
         '<td class="uni-add">'+(r.tenor!=null
             ? '<span class="chip chip-good" title="already in your list at this tenor"><span class="tl-l">'+esc(tenorLabel(r.tenor))+'</span><span class="tl-s">'+esc(tenorShort(r.tenor))+'</span></span>'
             : '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" title="Add at '+esc(tenorLabel(t))+'">Add</button>')+'</td>'+
-        '<td class="uni-nm"><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
+        '<td class="uni-nm"><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+(mkt(e.market,1)?' '+mkt(e.market,1):'')+'<div class="small muted">'+esc(e.name)+'</div></td>'+
         '<td class="mono small">'+sovPill(e)+'</td>'+
         '<td class="num uni-sc">'+(e.score==null?'<span class="na">—</span>':
             // the number and its band already say where the name stands, and the table sorts on it;
@@ -633,8 +633,7 @@
         '<td class="num">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
         '<td class="num">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
         xcells(e)+
-        asofCell(e)+
-        '<td>'+mkt(e.market,1)+'</td></tr>';
+        asofCell(e)+'</tr>';
     }).join('')||'<tr><td colspan="13" class="empty">No name matches those filters.</td></tr>';
     // Measuring the box is no good here: renderUni first runs while this tab is still closed, a
     // hidden box measures nothing, and the answer would stick. The row count asks the same
@@ -805,7 +804,7 @@
       return '<tr class="ll-r" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+
           esc(e.short)+', open detail" style="--band:'+(BANDC[e.band]||'#c9d3de')+'">'+
         '<td class="ll-rank mono">'+(off+i+1)+'</td>'+
-        '<td class="ll-name"><span class="ll-nm">'+esc(e.short)+typeTag(e)+'</span>'+
+        '<td class="ll-name"><span class="ll-nm">'+esc(e.short)+typeTag(e)+(mp?' '+mp:'')+'</span>'+
           '<span class="ll-co">'+esc(e.name)+' · '+sovPill(e)+'</span></td>'+
         '<td class="ll-sc">'+scoreNum(e.score,e.band,'sc-2')+
           '<span class="ll-track">'+bar+'</span></td>'+
@@ -813,12 +812,11 @@
           '<span class="ll-ags">'+(e.rating?toneGlyphs(e.rating.tones):'')+'</span></td>'+
         kpi('cet1',e.cet1,1,'%')+kpi('leverage',e.leverage,1,'%')+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
         asofCell(e)+
-        '<td class="ll-mkt">'+mp+'</td>'+
         '<td class="ll-addc"><button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></td></tr>';
     }).join('');
     return '<div class="table-wrap scrollbox"><table class="plain ll-t2"><thead><tr>'+
       '<th></th><th>Name</th><th>Score'+mk('score')+'</th><th>Agency rating</th>'+
-      '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Figures</th><th>Market</th><th></th>'+
+      '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Figures</th><th></th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   // The agencies' own ratings: fetched once from the members path, and absent (a build
@@ -829,7 +827,7 @@
     var rows=ATTR&&ATTR.rows&&ATTR.rows[e.id]; if(!rows||!rows.length)return '';
     var G={positive:'\u25b2',negative:'\u25bc',stable:'\u25b6','watch negative':'\u25c6','watch positive':'\u25c6'};
     return '<div class="cr cr-attr" title="the agencies\u2019 own current ratings, quoted from the ESMA register">'+
-      '<span class="cr-a">Agencies (quoted)</span><span class="cr-g cr-attr-l">'+rows.map(function(r){return '<span><b>'+esc(r.name)+'</b> <span class="mono">'+esc(r.lt)+'</span> <span class="cr-o '+(r.outlook==='positive'?'up':r.outlook==='negative'?'dn':'lv')+'">'+(G[r.outlook]||'')+'</span></span>'}).join(' \u00b7 ')+'</span>'+
+      '<span class="cr-a">Agencies (quoted)</span><span class="cr-g cr-attr-l">'+rows.map(function(r){var o=r.outlook&&r.outlook!=='stable'?' <span class="cr-o '+(r.outlook==='positive'?'up':r.outlook==='negative'?'dn':'lv')+'">'+(G[r.outlook]||'')+'</span>':'';return '<span><b>'+esc(r.name)+'</b> <span class="tnum">'+esc(r.lt)+'</span>'+o+'</span>'}).join('')+'</span>'+
       '</div>';
   }
   function ratingCell(e){

@@ -76,7 +76,7 @@
     vals.forEach(function(x,i){var y=26+i*rowH,c=colourOf(x.r.id);
       out+='<a href="../banks/'+x.r.id+'.html"><text data-id="'+x.r.id+'" class="cp-lbl" x="'+(left-10)+'" y="'+(y+14)+'" text-anchor="end" fill="'+(c||INK)+'" font-weight="'+(c?'700':'500')+'"><title>'+esc(x.r.name)+'</title>'+esc(fit(x.r.short,left-16))+'</text></a>';
       out+='<rect class="cp-bar" data-id="'+x.r.id+'" x="'+sc(Math.max(lo,Math.min(0,x.p.v))).toFixed(0)+'" y="'+(y+4)+'" width="'+Math.max(1,Math.abs(sc(x.p.v)-sc(Math.max(lo,0)))).toFixed(0)+'" height="'+(rowH-9)+'" rx="4" fill="'+(c||MID)+'" fill-opacity="'+(c?1:0.55)+'"><title>'+esc(x.r.name)+': '+fmt(x.p.v,m)+' at '+x.p.d+'</title></rect>';
-      out+='<text x="'+(sc(Math.max(x.p.v,0))+8).toFixed(0)+'" y="'+(y+14)+'" fill="'+INK+'" font-family="inherit" style="font-variant-numeric:tabular-nums" font-size="12">'+fmt(x.p.v,m)+'</text>'});
+      out+='<text x="'+(sc(Math.max(x.p.v,0))+8).toFixed(0)+'" y="'+(y+14)+'" fill="'+INK+'" font-family="inherit" style="font-variant-numeric:tabular-nums;paint-order:stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round" font-size="12">'+fmt(x.p.v,m)+'</text>'});
     chart.innerHTML=out+'</svg>';
     }
 

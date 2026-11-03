@@ -55,7 +55,7 @@ def sovereign_pill(b, cls: str = "") -> str:
         return f'<span class="sov{" " + cls if cls else ""}">{c.esc(country)}</span>'
     title = f'{sv["name"]} sovereign rating: {describe(dict(sv, letter=sv["composite"], worst_letter=sv.get("worst") or sv["composite"]))}. Context, not part of the score.'
     return (f'<span class="sov{" " + cls if cls else ""}" title="{c.esc(title)}">{c.esc(country)}'
-            f'<b>{c.esc(sv["composite"])}</b></span>')
+            f'<b>sovereign {c.esc(sv["composite"])}</b></span>')
 
 
 def sc(r):
@@ -449,6 +449,11 @@ def page_bank(b, generated):
             # the block asks for room for its own charts, so a section of one can share a row
             charts.append(f'<div class="sm-block" style="--n:{len(cards)}"><div class="sm-sec">{group}</div>'
                           f'<div class="sm-cards">{"".join(cards)}</div></div>')
+            # the score's own history opens the row after the first group, so a short row starts on
+            # the headline series and simply ends early
+            if standing_block and len(charts) == 1:
+                charts.append(standing_block)
+                standing_block = ""
     # the score's own history closes the trends, where it shares a row with the other short section
     if standing_block:
         charts.append(standing_block)
@@ -561,7 +566,7 @@ def page_method(generated, inner: bool = False):
 <p class="small muted wlegend">{" · ".join([c.PILLAR_LABEL["rating"] + " " + str(RATING_WEIGHT)] + [c.PILLAR_LABEL[k] + " " + str(w) for k, (w, _) in PILLARS.items()])}</p>
 <p>The score runs from 0 to 100. The agency rating counts for {RATING_WEIGHT}%: the average of the three main agencies' long-term ratings, converted by the table below. The bank's own ratios count for the other {ratio_weight}%: each is scored from 0 to 100 against the thresholds below and averaged within its part. A ratio the bank does not publish is left out and the rest re-weighted, and the coverage figure says how much of the method a score rests on.</p>
 <p>A score is withheld, with the reason, when a bank has no agency rating, no capital ratio, or capital figures older than eighteen months. A rating in the BBB range caps the score at 74.9 (band B), and one below investment grade at 64.9 (band C).</p>
-<div class="bandscale" aria-hidden="true">{"".join(f'<span class="band-{b}" style="flex:{(100 if b == "A" else 80 if b == "B" else 65 if b == "C" else 50 if b == "D" else 35) - f}">{b} · {f}+</span>' for f, b in BANDS)}</div>
+<div class="bandscale" aria-hidden="true">{"".join(f'<span class="band-{b}" style="flex:{(100 if b == "A" else 80 if b == "B" else 65 if b == "C" else 50 if b == "D" else 35) - f}"></span>' for f, b in BANDS)}</div><p class="small muted wlegend">{" · ".join(f"Band {b} {f}+" if f else f"Band {b} below 35" for f, b in BANDS)}</p>
 <table class="plain"><thead><tr><th>Component</th><th>Weight</th><th>Inputs</th></tr></thead><tbody><tr><td class="b">{c.PILLAR_LABEL["rating"]}</td><td class="mono">{RATING_WEIGHT}</td><td>Composite long-term agency rating; required for a score; caps of 74.9 for the BBB range and 64.9 below investment grade</td></tr>{pillar_rows}</tbody></table>
 <h3>Rating sub-scores</h3><div class="table-wrap"><table class="plain subscores"><tbody><tr>{grade_cells}</tr></tbody></table></div>
 <h3>Thresholds (value → sub-score)</h3><table class="plain"><tbody>{thr}</tbody></table>
@@ -1017,7 +1022,7 @@ UNIVERSE_PANEL = f"""<div class="uni-tools">
   <th class="uni-st" title="watching"></th><th class="uni-add"><span class="sr-only">Add</span></th><th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score{c.info("score")}</th>
   <th data-sort="rating_grade">Agency rating{c.info("composite")}</th><th data-sort="cet1" class="num">CET1{c.info("cet1_ratio")}</th><th data-sort="leverage" class="num">Lev{c.info("leverage_ratio")}</th>
   <th data-sort="lcr" class="num">LCR{c.info("lcr")}</th><th data-sort="nsfr" class="num">NSFR{c.info("nsfr")}</th>
-  <th data-sort="asof" class="uni-fig">Figures{c.info("as_at")}</th><th>Market{c.info("market_signal")}</th></tr></thead><tbody id="uni-body"><tr class="sk-tr"><td colspan="12"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr></tbody></table></div><div class="tfoot small muted" id="uni-count2"></div>
+  <th data-sort="asof" class="uni-fig">Figures{c.info("as_at")}</th></tr></thead><tbody id="uni-body"><tr class="sk-tr"><td colspan="11"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr></tbody></table></div><div class="tfoot small muted" id="uni-count2"></div>
 """
 
 

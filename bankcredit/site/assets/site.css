@@ -1289,3 +1289,18 @@ table.subscores{table-layout:fixed;width:100%}table.subscores td{text-align:cent
 /* Choose names on a phone: a long name takes a second line rather than an ellipsis */
 @media (max-width:640px){#uni-table td.uni-nm .b{white-space:normal;text-overflow:clip;line-height:1.25}}
 @media (max-width:640px){table.rgrid td:first-child a,table.coverage td:first-child a{white-space:normal;text-overflow:clip;line-height:1.25}}
+.csm-ax{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
+.chart-dark + .csm-ax,.score-card .csm-ax{color:rgba(255,255,255,.55)}
+.chart-sm{height:70px}
+.bandscale{height:14px;margin-bottom:6px}.bandscale span{font-size:0!important}
+.rn-more summary{color:var(--navy);text-decoration:underline;text-decoration-color:var(--orange);text-underline-offset:2px;font-weight:500}
+.cr-attr-l{display:flex;flex-wrap:wrap;gap:4px 16px}
+/* Ratings on a phone: a one-line header names the three columns */
+@media (max-width:640px){
+  table.rgrid thead{display:block}
+  table.rgrid thead tr{display:grid;grid-template-columns:minmax(0,1fr) 52px 48px 48px;gap:0 8px;padding:0 2px 4px;border-bottom:1px solid var(--line)}
+  table.rgrid thead th{padding:0;border:0;font-size:10.5px;text-transform:none;letter-spacing:0;white-space:nowrap}
+  table.rgrid thead th:nth-child(n+5),table.rgrid thead th .i{display:none}
+  table.rgrid tr{grid-template-columns:minmax(0,1fr) 52px 48px 48px}
+}
+@media (max-width:640px){.rtiles-cov{grid-template-columns:repeat(2,minmax(0,1fr))}.rtiles-cov .rtile:nth-child(n+5){display:none}}

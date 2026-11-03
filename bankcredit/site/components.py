@@ -117,7 +117,9 @@ def _chart_compact(pts_in, w, h, unit, req, dp, band=None, median=None, on_dark=
     lo, hi = min(vals + ref), max(vals + ref)
     span = (hi - lo) or 1
     ymin, ymax = lo - span * 0.18, hi + span * 0.22
-    padl, padr, padt, padb = 6, 6, 6, 16
+    # the dates sit under the chart in HTML: inside an SVG stretched to its card they were squashed
+    # to 7px, and the min and max marks with them
+    padl, padr, padt, padb = 6, 6, 6, 4
     n = len(pts_in)
     X = lambda i: padl + i * (w - padl - padr) / (n - 1)
     Y = lambda v: padt + (ymax - v) / (ymax - ymin) * (h - padt - padb)
@@ -130,14 +132,11 @@ def _chart_compact(pts_in, w, h, unit, req, dp, band=None, median=None, on_dark=
     if median is not None:
         peer += f'<line x1="{padl}" x2="{w-padr}" y1="{Y(median):.0f}" y2="{Y(median):.0f}" stroke="{MUTED}" stroke-width="1" stroke-dasharray="3 2" stroke-opacity="0.75"/>' 
     last = pts_in[-1][1]
-    imin, imax = vals.index(min(vals)), vals.index(max(vals))
-    marks = "".join(f'<text x="{min(max(X(i), 18), w - 18):.0f}" y="{(Y(v) - 5) if k == "max" else (Y(v) + 11):.0f}" text-anchor="middle" class="axis">{v:.{dp}f}{unit}</text>'
-                    for k, i, v in (("max", imax, vals[imax]), ("min", imin, vals[imin])) if i not in (0, n - 1))
     return (f'<svg viewBox="0 0 {w} {h}" width="100%" class="chart chart-sm" preserveAspectRatio="none" aria-hidden="true">'
             f'{peer}{reqline}'
             f'<path d="{path}" fill="none" stroke="{NAVY}" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'
-            f'<circle cx="{X(n-1):.0f}" cy="{Y(last):.0f}" r="3.2" fill="{ORANGE}"/>{marks}'
-            f'<text x="{padl}" y="{h-4}" class="axis">{esc(pts_in[0][0])}</text><text x="{w-padr}" y="{h-4}" text-anchor="end" class="axis">{esc(pts_in[-1][0])}</text></svg>')
+            f'<circle cx="{X(n-1):.0f}" cy="{Y(last):.0f}" r="3.2" fill="{ORANGE}" vector-effect="non-scaling-stroke"/></svg>'
+            f'<div class="csm-ax"><span>{esc(pts_in[0][0])}</span><span>{esc(pts_in[-1][0])}</span></div>')
 
 
 def ribbon(score, p25=None, p50=None, p75=None, w=96, h=10, fluid: bool = False) -> str:
