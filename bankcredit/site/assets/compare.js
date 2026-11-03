@@ -90,7 +90,7 @@
     var med=bs.map(function(b,i){return median(lines.map(function(l){return l.pts[i]}).filter(function(v){return v!=null}))});
     var all=[];lines.forEach(function(l){l.pts.forEach(function(v){if(v!=null)all.push(v)})});
     var ticks=niceTicks(Math.min.apply(null,all),Math.max.apply(null,all),6),lo=ticks[0],hi=ticks[ticks.length-1];
-    var w=W(),H=Math.max(340,Math.min(480,Math.round(w*0.36))),L=54,R=Math.min(170,Math.max(120,w*0.16)),T=16,B=32;
+    var w=W(),H=Math.max(340,Math.min(480,Math.round(w*0.36))),L=54,R=Math.min(180,Math.max(136,w*0.2)),T=16,B=32;
     var X=function(i){return L+i*(w-L-R)/Math.max(1,bs.length-1)},Y=function(v){return T+(hi-v)/(hi-lo)*(H-T-B)};
     var out=svgOpen(w,H);
     ticks.forEach(function(v){out+='<line x1="'+L+'" x2="'+(w-R)+'" y1="'+Y(v).toFixed(0)+'" y2="'+Y(v).toFixed(0)+'" stroke="#eef1f4"/><text x="'+(L-8)+'" y="'+(Y(v)+4).toFixed(0)+'" text-anchor="end" fill="'+MUTED+'" font-size="11">'+fmt(v,m)+'</text>'});
@@ -100,7 +100,7 @@
     out+='<path d="'+path(med)+'" fill="none" stroke="'+INK+'" stroke-width="2" stroke-dasharray="5 4" opacity=".75"/>';
     var labels=[];   // the median is the dashed line, named in the panel's heading; its own end label only crowded the names
     lines.filter(function(l){return colourOf(l.r.id)}).forEach(function(l){var c=colourOf(l.r.id);out+='<path class="cp-line on" data-id="'+l.r.id+'" d="'+path(l.pts)+'" fill="none" stroke="'+c+'" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>';
-      var li=l.pts.length-1;while(li>=0&&l.pts[li]==null)li--;if(li>=0){out+='<circle cx="'+X(li).toFixed(1)+'" cy="'+Y(l.pts[li]).toFixed(1)+'" r="4" fill="'+c+'" stroke="#fff" stroke-width="2"/>';labels.push({x0:X(li),y0:Y(l.pts[li]),t:fit(l.r.short,R-18),c:c,w:'600'})}});
+      var li=l.pts.length-1;while(li>=0&&l.pts[li]==null)li--;if(li>=0){out+='<circle cx="'+X(li).toFixed(1)+'" cy="'+Y(l.pts[li]).toFixed(1)+'" r="4" fill="'+c+'" stroke="#fff" stroke-width="2"/>';labels.push({x0:X(li),y0:Y(l.pts[li]),t:fit(l.r.short,R-14),c:c,w:'600'})}});
     // Each name sits as near its own line end as the others allow: pushed apart just enough not to
     // touch, the whole stack then centred on where the lines really end, and a short leader joins
     // any label that had to move to its dot.

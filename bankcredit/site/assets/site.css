@@ -1267,3 +1267,8 @@ table.coverage td:first-child{min-width:190px}
 @media (max-width:640px){table.rgrid td:first-child .small,table.coverage td:first-child .small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
 .cr-rows .cr-g.tnum{font-weight:500;font-size:13px}
 .cr-rows .tones .cr-o{font-size:13px}
+/* Data status: its two sections sit on the page card, as on every other page */
+.panel .status-card{border:0;box-shadow:none;background:none;padding:4px 0 18px}
+/* phone rows: the region alone under a name; the type is in the table's own filters */
+@media (max-width:640px){table.rgrid td:first-child .small .ty,table.coverage td:first-child .small .ty{display:none}}
+.src-t td{font-variant-numeric:tabular-nums}.src-t td.mono,.src-t td .mono{font-family:inherit}

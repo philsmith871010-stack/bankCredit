@@ -205,7 +205,10 @@
     return '<span class="sov" title="'+esc(sv.name+' sovereign rating: '+describeRating({letter:sv.composite,worst_letter:sv.worst||sv.composite,n:sv.n,tones:sv.tones})+
            '. Context, not part of the score.')+'">'+esc(e.country||'')+'<b>'+esc(sv.composite)+'</b></span>';
   }
-  function mkt(m,terse){if(!m||m.direction==='none')return terse?'<span class="na">\u2014</span>'  :'<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');return chip(m.label,k,m.label)}
+  function mkt(m,terse){if(!m||m.direction==='none')return terse?'<span class="na">\u2014</span>'  :'<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');
+    // one word on the chip; whether the signal is the group's own, and against what, is in its title
+    var grp=/ \(group\)$/.test(m.label||''), shown=(m.label||'').replace(/ \(group\)$/,'').replace(/ \((with the market|bank-specific)\)$/,'');
+    return chip(shown,k,m.label+(grp?': the signal is the group\u2019s, which carries the market prices':''))}
   function snapshot(e){return {score:e.score,band:e.band,grade:e.rating_grade,market:e.market&&e.market.direction,asof:e.asof}}
   // nothing makes a share link any more; a link already sent still opens one
   function decode(s){try{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))))}catch(e){return null}}
@@ -959,7 +962,8 @@
             tenorPick(it)+
             // a holding company says so beside the flag, where it does not take the name's room
             '<div class="cp-tags">'+typeTag(e)+(worst_fl?chip(worst_fl[2]||worst_fl[1],worst_fl[0],worst_fl[1])
-              :((e.market&&e.market.direction!=='none')?mkt(e.market):''))+'</div>'+
+              // a card speaks when the market moves; "Stable" on twelve cards of eighteen was noise
+              :((e.market&&e.market.direction!=='none'&&e.market.direction!=='flat')?mkt(e.market):''))+'</div>'+
             '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">×</button>'+
           '</div></div>';
       }).join('');

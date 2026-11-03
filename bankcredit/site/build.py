@@ -551,10 +551,10 @@ HOME_TABS_HIDDEN = ()
 
 def page_method(generated, inner: bool = False):
     mname = lambda m: METRICS.get(m) or {"cet1_headroom": "CET1 above the bank's own requirement (points)"}.get(m, m.replace("_", " "))
-    pillar_rows = "".join(f'<tr><td class="b">{c.PILLAR_LABEL.get(k, k)}</td><td class="mono">{w}</td><td>{", ".join(mname(m) for m in ms)}</td></tr>' for k, (w, ms) in PILLARS.items())
-    thr = "".join(f'<tr><td>{mname(m)}</td><td class="mono small">{" · ".join(f"{v}→{s}" for v, s in pts)}</td></tr>' for _, (w, ms) in PILLARS.items() for m, pts in ms.items())
+    pillar_rows = "".join(f'<tr><td class="b">{c.PILLAR_LABEL.get(k, k)}</td><td class="tnum">{w}</td><td>{", ".join(mname(m) for m in ms)}</td></tr>' for k, (w, ms) in PILLARS.items())
+    thr = "".join(f'<tr><td>{mname(m)}</td><td class="tnum small">{" · ".join(f"{v}→{s}" for v, s in pts)}</td></tr>' for _, (w, ms) in PILLARS.items() for m, pts in ms.items())
     bands = " · ".join(f'<span class="b">{b}</span> {f} and above' for f, b in BANDS)
-    grade_cells = "".join(f'<td class="mono small">{c.esc(l)}<br>{RATING_SCORE[i + 1]}</td>' for i, l in enumerate(GRADE_LETTERS))
+    grade_cells = "".join(f'<td class="tnum small">{c.esc(l)}<br>{RATING_SCORE[i + 1]}</td>' for i, l in enumerate(GRADE_LETTERS))
     ratio_weight = sum(w for w, _ in PILLARS.values())
     body = f'''<div class="card pad prose" id="method-prose">
 <h2>Score</h2><div class="wbar" aria-hidden="true"><span style="flex:{RATING_WEIGHT}" class="w-rating">{c.PILLAR_LABEL["rating"]} {RATING_WEIGHT}</span>{"".join(f'<span style="flex:{w}" class="w-{k}{" w-narrow" if w < 10 else ""}" title="{c.PILLAR_LABEL[k]} {w}">{(c.PILLAR_LABEL[k] + " ") if w >= 10 else ""}{w}</span>' for k, (w, _) in PILLARS.items())}</div>
@@ -726,8 +726,8 @@ def page_status(status, board, generated, inner: bool = False):
     # and which names' figures are old or missing. The pipeline's own diagnostics (source health,
     # the review queue, how the rules did, the data audit) are on the maintainer's page.
     content = f'''<div class="page-head"><div><h1>Data status</h1><div class="lede">How fresh the data is, source by source and name by name.</div></div></div>
-<div class="card pad"><h3>Sources</h3>{punctuality(status, generated)}<div class="table-wrap"><table class="plain src-t"><thead><tr><th>Source</th><th>State</th><th>Last run</th><th>Runs</th></tr></thead><tbody>{runs}</tbody></table></div></div>
-<div class="card pad"><h3>Names</h3><p class="small">{len(rows) - len(missing)} of {len(rows)} have regulatory figures, {sum(1 for r in rows if r["score"] is not None)} are scored and {sum(1 for r in rows if r.get("rating"))} carry an agency rating.</p>
+<div class="card pad status-card"><h3>Sources</h3>{punctuality(status, generated)}<div class="table-wrap"><table class="plain src-t"><thead><tr><th>Source</th><th>State</th><th>Last run</th><th>Runs</th></tr></thead><tbody>{runs}</tbody></table></div></div>
+<div class="card pad status-card"><h3>Names</h3><p class="small">{len(rows) - len(missing)} of {len(rows)} have regulatory figures, {sum(1 for r in rows if r["score"] is not None)} are scored and {sum(1 for r in rows if r.get("rating"))} carry an agency rating.</p>
 <p class="small"><span class="b">Figures older than 150 days, oldest first: </span>{lst(stale)}</p><p class="small"><span class="b">No regulatory figures yet: </span>{lst(missing)}</p></div>'''
     return content if inner else c.shell("Status", content, "status", "../", generated)
 
@@ -903,7 +903,7 @@ def page_ratings(generated, inner: bool = False):
     trs = "".join(
         f'<tr data-id="{c.esc(r["id"])}" data-region="{c.esc(r["region"])}" data-name="{c.esc(r["short"].lower())} {c.esc(r["name"].lower())}" data-score="{100 - (r["grade"] or 99)}" '
         f'data-grade="{max(1, min(17, int(r["grade"] + 0.5))) if r["grade"] is not None else "nr"}" data-band="{band_key(r["grade"])}" data-moved="{1 if r["id"] in moved else 0}">'
-        f'<td><a class="b" href="../banks/{c.esc(r["id"])}.html">{c.esc(r["short"])}</a><div class="small muted">{c.esc(COUNTRY.get(r["country"], r["country"]))} · {c.esc(TYPE_LABEL.get(r["type"], r["type"]))}</div></td>'
+        f'<td><a class="b" href="../banks/{c.esc(r["id"])}.html">{c.esc(r["short"])}</a><div class="small muted">{c.esc(COUNTRY.get(r["country"], r["country"]))}<span class="ty"> · {c.esc(TYPE_LABEL.get(r["type"], r["type"]))}</span></div></td>'
         + letter_cell(r["composite"] or ("NR" if r["grade"] is None else ""), r["grade"], f'{c.esc(of_three(r["n"]))}' if r["n"] else "")
         + letter_cell(r["worst"], r.get("worst_grade"))
         + f'<td class="rc-tones">{tone_glyphs(r.get("tones") or []) if r["n"] else "—"}</td>'
@@ -1277,7 +1277,7 @@ def page_coverage(generated, inner: bool = False):
                                            "pillar3": "Pillar 3", "fdic": "FDIC", "edgar": "SEC", "fundamentals": "accounts",
                                            "te": "EBA"}.get(x, x) for x in a["sources"]))
         trs.append(f'<tr data-id="{c.esc(a["id"])}" data-name="{c.esc(a["short"].lower())}" data-region="{c.esc(a["region"])}" data-score="{score}">'
-                   f'<td class="b"><a href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><div class="muted small nowrap">{c.esc(REGION_LABEL.get(a["region"], a["region"]))} · {c.esc(TYPE_LABEL.get(a["type"], a["type"]))}</div></td>'
+                   f'<td class="b"><a href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><div class="muted small nowrap">{c.esc(REGION_LABEL.get(a["region"], a["region"]))}<span class="ty"> · {c.esc(TYPE_LABEL.get(a["type"], a["type"]))}</span></div></td>'
                    f'<td class="nowrap cov-sc" data-v="{score}">{shown_score} {band}</td>'
                    f'<td data-v="{a["agencies"]}">{rating}</td>'
                    f'<td class="cov-yr" data-v="{a["years"]}" title="{c.esc(sources)}">{a["years"] or "—"}</td>{cells}</tr>')
