@@ -842,7 +842,12 @@ def export_json() -> None:
     store.write_json("ratings", {"generated": generated, **ratings_summary(active, ratings, events)})
     status = []
     if not runs.empty:
+        # only the sources the pipeline still has: a retired one's last run would sit on the
+        # Status page for good, reporting on something nobody collects
+        from .cli import ADAPTER_MODULES
         for src, g in runs.sort_values("finished").groupby("source"):
+            if src not in ADAPTER_MODULES:
+                continue
             last = g.iloc[-1]
             status.append({"source": src, "status": last.status, "rows": int(last.rows), "started": str(last.started), "finished": str(last.finished), "message": last.message})
     docs = store.read("documents")
