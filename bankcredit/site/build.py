@@ -936,7 +936,7 @@ def page_ratings(generated, inner: bool = False):
         return (f'<div class="ract"><span class="mono muted">{a["date"]}</span><a class="b" href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a>'
                 f'<span title="{c.esc(a["title"])}">{c.esc(words)}</span>{c.chip(label, tone.get(tone_, "muted"))}</div>')
     acts = "".join(ract(a) for a in acts_all[:30]) or '<div class="empty">No rating actions other than affirmations in the last 90 days.</div>'
-    content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">The three main agencies' long-term ratings for every name, on one scale, from the ESMA register. Click a tile, bar or region to filter.</div></div></div>
+    content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">The three main agencies' long-term ratings for every name, on one scale, from the ESMA register. Filter with a tile or a region.</div></div></div>
 <div class="rtiles rtiles-f">{tiles}</div>
 <div class="card rgrid-card"><div class="toolbar rg-tools"><div class="filters">{filters}<button class="filter" data-region="moved">Moved in 90 days</button></div><input id="q" class="search" placeholder="Search"><span class="small muted" id="rg-count"></span></div>
 <div class="rg-hist"><span class="small muted">Average grade{c.info("rating")}</span>{hist}<button class="filter small gclear" hidden>Clear grade</button></div>
@@ -1303,8 +1303,8 @@ def page_coverage(generated, inner: bool = False):
     heads = "".join(f'<th class="num" data-sort="col" title="periods held and the years they span">{c.esc(l)}</th>' for _, l in AUDIT_COLS)
     body = "".join(trs)
     content = (
-        '<div class="page-head"><div><h1>Coverage</h1><div class="lede">What is held for every name. In each ratio column, '
-        'the number is how many reporting dates are held, and beneath it the first and last year.</div></div></div>'
+        '<div class="page-head"><div><h1>Coverage</h1><div class="lede">What is held for every name.<span class="desk-only"> In each ratio column, '
+        'the number is how many reporting dates are held, and beneath it the first and last year.</span></div></div></div>'
         f'<div class="rtiles rtiles-cov">{tiles}</div>'
         f'<div class="card cov-card" style="margin-top:16px;padding:14px 16px"><div class="toolbar rg-tools"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>'
         '<div class="table-wrap"><table id="board" class="plain coverage"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Score</th>'
