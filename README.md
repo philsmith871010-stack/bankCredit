@@ -5,6 +5,7 @@ Free, transparent credit view of banks and building societies that UK treasury t
 - `docs/data-sources-investigation.md`: where every number comes from and what was verified.
 - `docs/build-plan.md`: product, architecture, method, phases and decisions.
 - `docs/pathways.md`: the site's shape - a landing page, and the tool laid out as three pathways in PWLBtoday's shell.
+- `docs/local-dev.md`: developing the site locally - `bash tools/dev.sh` builds, serves and reloads on every edit.
 - `design/`: screen designs matching PWLBtoday's tokens.
 - `bankcredit/`: pipeline (adapters, store, export) and static site generator.
 - `research/`: probe scripts used during the investigation.

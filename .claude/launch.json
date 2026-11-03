@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Counterparty site",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "tools/dev.sh"
+      ],
+      "port": 8000,
+      "autoPort": true
+    }
+  ]
+}
