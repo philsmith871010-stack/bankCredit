@@ -1108,7 +1108,10 @@ def test_the_sidebar_is_the_pathways_and_follows_the_open_panel(page, server):
     assert groups == ["Build your strategy", "Monitor", "Compare", "Reference"], groups
     hrefs = page.eval_on_selector_all("#side .side-a", "e => e.map(x => x.getAttribute('href'))")
     assert hrefs[:3] == ["../" + TOOL + "#strategy", "../" + TOOL + "#weights", "../" + TOOL + "#universe"], hrefs
-    assert any(h.endswith("admin/index.html#method") for h in hrefs) and any(h.endswith("index.html") for h in hrefs)
+    assert any(h.endswith("admin/index.html#method") for h in hrefs)
+    assert not any(h.endswith("index.html") and "admin" not in h and "tool" not in h for h in hrefs), \
+        "no Overview item: the wordmark is the way back to the landing page"
+    assert page.eval_on_selector(".top .brand", "e => e.getAttribute('href')").endswith("index.html")
     assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "strategy"
     assert page.eval_on_selector_all(".tabs-card .tabs", "e => e.map(x => getComputedStyle(x).display)") == ["none"], "the tab strip steps aside for the sidebar"
     assert page.query_selector('#side .side-a[data-nav="events"]') is None, "the Events page is gone"

@@ -21,7 +21,7 @@ landing page.
 | Build your strategy | Start here · Weightings · Choose names | the three-step panel; the weightings dialog; the table every name is on |
 | Monitor | Your counterparties | the list with what moved since each name was approved (the Events page was removed on 3 November 2026; each name's rating actions and reports are on its own profile) |
 | Compare | Alternatives · Analysis · Ratings | names at least as strong as your weakest at each tenor; any names side by side; the universe by the average and the weakest of the three |
-| Reference | Overview · Method · Data status | the landing page; the method; what ran and when |
+| Reference | Method · Data status | the method; what ran and when (Overview went on 3 November 2026: the PWLBtoday wordmark already leads to the landing page) |
 
 The groups are the three jobs a reader arrives with, in the order the jobs come, and the
 reference last because it is read second. The sidebar is defined once, in `components.NAV`,

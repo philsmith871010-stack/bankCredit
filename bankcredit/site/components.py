@@ -287,7 +287,6 @@ NAV = [
         ("ratings", "Ratings", TOOL + "#ratings", "star"),
     ]),
     ("Reference", [
-        ("overview", "Overview", "index.html", "book"),
         ("method", "Method", "admin/index.html#method", "doc"),
         ("status", "Data status", "admin/index.html#status", "status"),
     ]),
