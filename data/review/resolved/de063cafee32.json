@@ -1,0 +1,19 @@
+{
+ "id": "de063cafee32",
+ "entity_id": "darlington-bs",
+ "url": "https://www.darlington.co.uk/wp-content/uploads/2026/03/DBS-ARA-2025-final-final-17.3.26.pdf",
+ "page": 19,
+ "reference_date": "2025-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 55.8,
+  "total_capital": 57.1,
+  "rwa": 386.3,
+  "cet1_ratio": 14.4,
+  "total_capital_ratio": 14.8,
+  "leverage_exposure": 940.8,
+  "leverage_ratio": 5.9,
+  "lcr": 172.0
+ },
+ "note": "Annual report and accounts 2025, capital table p19. CET1 55.8, total capital 57.1, RWEA 386.3, leverage exposure 940.8, leverage 5.9%, total capital ratio 14.8% (57.1/386.3 = 14.78%). The report states no CET1 ratio: 14.4% is its own CET1 over its own RWEA (55.8/386.3 = 14.44%). LCR 172% p18. SDDT from 2025, so no further Pillar 3."
+}

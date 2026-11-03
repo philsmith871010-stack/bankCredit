@@ -1,0 +1,18 @@
+{
+ "id": "28b59df1daf4",
+ "entity_id": "cumberland-bs",
+ "url": "https://www.cumberland.co.uk/neon/download/file/2025-26/pdf/cumberland/24-25-report-and-accounts.pdf",
+ "page": 57,
+ "reference_date": "2025-03-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 234.9,
+  "total_capital": 234.9,
+  "rwa": 1288.9,
+  "cet1_ratio": 18.18,
+  "total_capital_ratio": 18.18,
+  "leverage_ratio": 7.69,
+  "lcr": 217.0
+ },
+ "note": "Annual report and accounts to 31 March 2025, capital table p57 (Group). CET1 234.9 / RWA 1,288.9 = 18.22%, stated 18.18% (year's profit excluded from the regulatory figure; 18.23% with it). Total capital equals CET1. UK leverage 7.69%. LCR 217% p56."
+}

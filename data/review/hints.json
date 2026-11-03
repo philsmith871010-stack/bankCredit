@@ -447,20 +447,18 @@
   }
  },
  "cumberland-bs": {
-  "page": 20,
+  "page": 57,
   "currency": "GBP",
   "last_verified": {
-   "reference_date": "2017-03-31",
+   "reference_date": "2026-03-31",
    "values": {
-    "cet1_capital": 152.234,
-    "tier1_capital": 152.234,
-    "total_capital": 153.831,
-    "rwa": 883.252,
-    "cet1_ratio": 17.24,
-    "leverage_exposure": 2666.831,
-    "leverage_ratio": 5.71,
-    "lcr": 216.0,
-    "nsfr": 138.0
+    "cet1_capital": 222.4,
+    "total_capital": 222.4,
+    "rwa": 1339.4,
+    "cet1_ratio": 16.61,
+    "total_capital_ratio": 16.61,
+    "leverage_ratio": 6.81,
+    "lcr": 195.0
    },
    "method": "pdf_manual"
   },
@@ -1051,29 +1049,16 @@
  },
  "monmouthshire-bs": {
   "last_verified": {
-   "reference_date": "2023-04-30",
+   "reference_date": "2026-04-30",
    "values": {
-    "cet1_capital": 82.151,
-    "total_capital": 82.764,
-    "rwa": 576.1510000000001,
-    "cet1_ratio": 14.3,
-    "tier1_ratio": 14.3,
-    "total_capital_ratio": 14.4,
-    "total_srep_requirement": 8.6,
-    "combined_buffer": 3.5,
-    "overall_capital_requirement": 12.1,
-    "cet1_headroom": 2.2,
-    "leverage_exposure": 1477.027,
-    "leverage_ratio": 5.6,
-    "hqla": 247.179,
-    "net_cash_outflows": 145.324,
-    "lcr": 170.0,
-    "available_stable_funding": 1442.934,
-    "required_stable_funding": 997.755,
-    "nsfr": 145.0
+    "cet1_capital": 90.6,
+    "cet1_ratio": 14.5,
+    "total_capital_ratio": 14.5
    },
-   "method": "pdf_rules"
-  }
+   "method": "pdf_manual"
+  },
+  "page": 10,
+  "currency": "GBP"
  },
  "close-brothers": {
   "last_verified": {
@@ -2063,6 +2048,24 @@
     "leverage_ratio": 47.48,
     "lcr": 143.7,
     "nsfr": 173.34
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "darlington-bs": {
+  "page": 19,
+  "currency": "GBP",
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 55.8,
+    "total_capital": 57.1,
+    "rwa": 386.3,
+    "cet1_ratio": 14.4,
+    "total_capital_ratio": 14.8,
+    "leverage_exposure": 940.8,
+    "leverage_ratio": 5.9,
+    "lcr": 172.0
    },
    "method": "pdf_manual"
   }

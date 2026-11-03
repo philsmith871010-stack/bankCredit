@@ -1,0 +1,18 @@
+{
+ "id": "da7c855b294e",
+ "entity_id": "cumberland-bs",
+ "url": "https://www.cumberland.co.uk/neon/download/file/2026-27/pdf/cumberland/25-26-report-and-accounts.pdf",
+ "page": 57,
+ "reference_date": "2026-03-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 222.4,
+  "total_capital": 222.4,
+  "rwa": 1339.4,
+  "cet1_ratio": 16.61,
+  "total_capital_ratio": 16.61,
+  "leverage_ratio": 6.81,
+  "lcr": 195.0
+ },
+ "note": "Annual report and accounts to 31 March 2026, strategic report capital table p57 (Group). CET1 222.4 / RWA 1,339.4 = 16.60%, stated 16.61%. Total capital equals CET1, so the total capital ratio is the CET1 ratio. UK leverage ratio 6.81%. LCR 195% from the liquidity section p56. No NSFR: the society has adopted the SDDT regime and no longer produces Pillar 3."
+}

@@ -1,0 +1,14 @@
+{
+ "id": "c561a2ced382",
+ "entity_id": "monmouthshire-bs",
+ "url": "https://media.monbs.com/corporate-governance/annual-report-accounts-2026/",
+ "page": 10,
+ "reference_date": "2026-04-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 90.6,
+  "cet1_ratio": 14.5,
+  "total_capital_ratio": 14.5
+ },
+ "note": "Annual report and accounts to 30 April 2026, KPI table p10 and strategic report p11: CET1 capital £90.6m (audited), CET1 ratio 14.5%, solvency ratio (total regulatory capital to RWA) 14.5%. The report gives no RWA, leverage ratio, LCR or NSFR."
+}

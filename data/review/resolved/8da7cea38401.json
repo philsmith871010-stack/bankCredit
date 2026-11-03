@@ -1,0 +1,19 @@
+{
+ "id": "8da7cea38401",
+ "entity_id": "darlington-bs",
+ "url": "https://www.darlington.co.uk/wp-content/uploads/2025/03/DBS-ARA-2024-BOARD-FINAL-FINAL-SIGNED.pdf",
+ "page": 16,
+ "reference_date": "2024-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 54.5,
+  "total_capital": 55.4,
+  "rwa": 342.6,
+  "cet1_ratio": 15.9,
+  "total_capital_ratio": 16.2,
+  "leverage_exposure": 829.2,
+  "leverage_ratio": 6.6,
+  "lcr": 248.0
+ },
+ "note": "Annual report and accounts 2024, capital table p16. CET1 54.5, total capital 55.4, RWEA 342.6, leverage exposure 829.2, leverage 6.6%, total capital ratio 16.2% (55.4/342.6 = 16.17%). The report states no CET1 ratio: 15.9% is its own CET1 over its own RWEA (54.5/342.6 = 15.91%). LCR 248% p15."
+}
