@@ -154,7 +154,23 @@ def _norm_text(text: str) -> str:
     # percentage. Left alone, the number ends at the point and the row's value is read from
     # whatever follows, which for a numbered template is the next row's number.
     text = re.sub(r"(\d)\.\s+(?=\d)", r"\1.", text)
-    return re.sub(r"(\d)\s+%", r"\1%", text)
+    text = re.sub(r"(\d)\s+%", r"\1%", text)
+    return _join_space_thousands(text)
+
+
+# "2 604": Investec and the continental banks print a space where others print a comma, and the
+# tokeniser then reads one amount as two values. Joined only on a page that uses no commas as
+# thousands separators and does so more than once, so a stray "Table 1 234" elsewhere is left
+# alone. Three whole-number ratios side by side ("150 160 155") would be joined too; the
+# validator then rejects the impossible figure and the document goes to the queue.
+SPACE_THOUSANDS = re.compile(r"(?<![\d.,])(\d{1,3})((?: \d{3})+)(?![\d,])")
+COMMA_THOUSANDS = re.compile(r"\d,\d{3}")
+
+
+def _join_space_thousands(text: str) -> str:
+    if COMMA_THOUSANDS.search(text) or len(SPACE_THOUSANDS.findall(text)) < 2:
+        return text
+    return SPACE_THOUSANDS.sub(lambda m: m.group(1) + m.group(2).replace(" ", ","), text)
 
 
 # Rows printed beside a base row on a different basis. The template asks for the base row, so

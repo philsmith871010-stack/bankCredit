@@ -398,3 +398,24 @@ def test_a_bare_year_run_is_required_before_years_are_read_as_columns():
     assert km1.bare_year_columns("2025\n2019\n") == [], "not consecutive"
     assert km1.bare_year_columns("2,575\n9,141\n") == [], "figures are not years"
     assert km1.bare_year_columns("2025\n2024\n", "03-31") == [date(2025, 3, 31), date(2024, 3, 31)]
+
+
+
+def test_a_space_before_the_thousands_is_read_as_one_number(tmp_path):
+    """Investec prints "2 604" where others print "2,604". Read token by token, the amount became
+    two values and every figure on the row shifted one column: CET1 capital of 2, a ratio of 604."""
+    spaced = KM1_TEXT.replace(",", " ")
+    res = km1.extract(make_pdf(tmp_path, spaced, name="spaced-thousands.pdf"))
+    assert res.ok, res.checks
+    assert res.values["cet1_capital"] == 2575.0 and res.values["rwa"] == 9141.4
+    assert res.values["cet1_ratio"] == 28.2
+
+
+def test_the_space_join_is_conservative():
+    # joined: a page with no comma-grouped numbers and more than one spaced amount
+    assert km1._norm_text("1 Common Equity Tier 1 (CET1)\n2 604 2 590 2 580\n") == "1 Common Equity Tier 1 (CET1)\n2,604 2,590 2,580\n"
+    assert km1._norm_text("1 234 567 and 12 345") == "1,234,567 and 12,345"
+    # left alone: a page that groups with commas, a single occurrence, percentages, dates, years
+    assert km1._norm_text("2,575.0 2 604 2 590") == "2,575.0 2 604 2 590"
+    assert km1._norm_text("Table 1 234") == "Table 1 234"
+    assert km1._norm_text("198% 190% 185%\n31 Dec 2025 30 Sep 2025") == "198% 190% 185%\n31 Dec 2025 30 Sep 2025"
