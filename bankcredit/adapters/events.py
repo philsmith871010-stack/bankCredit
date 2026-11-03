@@ -94,10 +94,24 @@ AMBIGUOUS = {"nationwide", "starling", "coventry", "leeds", "skipton", "nottingh
              "monmouthshire", "hinckley and rugby", "yorkshire", "west brom", "paragon", "chase", "first direct", "atom",
              "virgin money uk", "co-operative bank", "handelsbanken plc", "national bank of canada", "westpac", "nab"}
 BANKWORD = r"(building society|bank|banking|bs\b|plc|group|lender|society)"
+# A bank's own fight against fraud (its detection tools, checks and customer warnings) is not a
+# fraud at the bank. These phrases are taken out before the credit and severity words are read,
+# so "Lloyds deploys AI to boost fraud detection" is neither credit news nor "bad". A failure of
+# those controls ("an insider bribed to bypass fraud controls") still reads as fraud.
+FRAUD_CONTROL = re.compile(r"\b(anti-?fraud|fraud (detection|prevention|checks?|protection|alerts?|warnings?|awareness|"
+                           r"team|teams|tools?|systems?|models?|screening|monitoring)|"
+                           r"(fight\w*|tackl\w*|combat\w*|detect\w*|prevent\w*|stop\w*|spot\w*) (\w+ ){0,2}fraud)\b", re.I)
+
+
+def _plain(title: str) -> str:
+    return FRAUD_CONTROL.sub(" ", title)
+
+
 GOOD = re.compile(r"\b(upgrad\w*|positive outlook|outlook (revised )?to positive|record profit|beats?|raised guidance)\b", re.I)
 
 
 def severity(title: str) -> str:
+    title = _plain(title)
     if BAD.search(title):
         return "bad"
     if WARN.search(title):
@@ -221,7 +235,7 @@ class EventsAdapter(Adapter):
                 continue
             if when < cutoff or not title or not link:
                 continue
-            if NOISE.search(title) or not CREDIT.search(title):
+            if NOISE.search(title) or not CREDIT.search(_plain(title)):
                 continue
             if blocked_source(source) or STOCKSPAM.search(title) or ANALYST.search(title) or ECON.search(title) or ROUTINE.search(title):
                 continue
@@ -278,7 +292,7 @@ def sweep_rows(entities, items) -> list[dict]:
 
 def keep_headline(entity: Entity, title: str, source: str) -> bool:
     """The full news filter, applied to a stored row as well as to a fresh one."""
-    if NOISE.search(title) or not CREDIT.search(title):
+    if NOISE.search(title) or not CREDIT.search(_plain(title)):
         return False
     if blocked_source(source) or STOCKSPAM.search(title) or ANALYST.search(title) or ECON.search(title) or ROUTINE.search(title):
         return False
@@ -346,7 +360,9 @@ def prune_news() -> int:
         if v is not None:
             ok = ok and bool(v.get("keep", True))
         keep.append(ok)
-        sev.append(v.get("severity") or r.severity if v and v.get("severity") in ("bad", "warn", "good", "info") else r.severity)
+        # a reviewer's severity stands; otherwise the current rules, so a corrected rule
+        # corrects the stored rows too
+        sev.append(v["severity"] if v and v.get("severity") in ("bad", "warn", "good", "info") else severity(str(r.title)))
     ev = ev.assign(severity=sev)
     dropped = int(len(keep) - sum(keep))
     ev[keep].to_parquet(store.path("events"), index=False)

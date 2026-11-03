@@ -309,6 +309,15 @@ def sidebar(root: str, active: str) -> str:
     return f'<aside class="side" id="side" aria-label="Pathways">{out}</aside>'
 
 
+# The page-to-page fade (@view-transition in site.css) is skipped whenever the browser cannot run
+# it, such as a navigation to the same page with a new address or a second click mid-fade, and a
+# skipped transition rejects its promises. Nothing waits on them, so each surfaced as an uncaught
+# error in the console. Handled here, in the head, so the listener is in place before the new page's
+# first frame.
+QUIET_TRANSITIONS = ("['pageswap','pagereveal'].forEach(function(n){addEventListener(n,function(e){var t=e.viewTransition;"
+                     "if(t)['ready','finished','updateCallbackDone'].forEach(function(k){if(t[k])t[k].catch(function(){})})})})")
+
+
 def shell(title: str, content: str, active: str, root: str = "", generated: str = "", subtitle: str = "",
           preload: tuple[str, ...] = (), body_class: str = "") -> str:
     """The platform's shell: the wordmark and a title bar across the top, the pathways down the
@@ -327,6 +336,7 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
      fallback from the first paint and changes typeface when the font lands. -->
 <link rel="stylesheet" href="{root}assets/site.css?v={stamp(generated)}">
 <script type="speculationrules">{SPECULATION}</script>
+<script>{QUIET_TRANSITIONS}</script>
 </head><body{f' class="{body_class}"' if body_class else ''}>{symbols()}
 <header class="top"><button type="button" class="side-toggle" id="side-toggle" aria-label="Open the pathways" aria-controls="side" aria-expanded="false">{ico("menu", 18)}</button>
 <a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>

@@ -1196,3 +1196,40 @@ def test_on_a_phone_the_pathways_slide_in_from_a_button(page, server):
         assert not page.errors, page.errors
     finally:
         page.set_viewport_size({"width": 1280, "height": 900})
+
+
+# ---- what the browser recomputes agrees with what was published ----------------------------
+def test_a_withheld_score_is_never_recomputed_in_the_browser(page, server):
+    """NRW.BANK and Rentenbank publish no Basel ratios since 2018 and the export withholds their
+    score, but the browser re-weighed their old pillars into 98.0 and 93.9 and ranked them second and
+    fourth on the table of every name. With the published weights, every row must come back as the
+    export wrote it, a withheld score included."""
+    visit(page, server, TOOL)
+    out = page.evaluate("""async () => {
+        const d = await fetch('../data/policy.json').then(r => r.json()); const w = CPW.weights();
+        return d.rows.filter(e => { const r = CPW.rescore({...e}, w);
+            return (e.score == null) !== (r.score == null) || (e.score != null && Math.abs(e.score - r.score) > 0.15) })
+          .map(e => e.id) }""")
+    assert out == [], out
+
+
+def test_the_rating_tiles_count_what_the_bars_count(page, server):
+    """An average of 4.33 is AA- on the letter and in the bar, and was counted in the A range tile."""
+    visit(page, server, TOOL + "#ratings")
+    bars = page.eval_on_selector_all(".gbar.gfilter[data-grade]",
+                                     "e => Object.fromEntries(e.map(b => [b.dataset.grade, +(b.querySelector('.gcount').textContent.trim() || 0)]))")
+    tiles = page.eval_on_selector_all(".rtile.bfilter",
+                                      "e => Object.fromEntries(e.map(t => [t.dataset.band, +t.querySelector('.rtile-n').textContent]))")
+    at = lambda lo, hi: sum(n for g, n in bars.items() if g != "nr" and lo <= int(g) <= hi)
+    assert tiles["AA- and above"] == at(1, 4)
+    assert tiles["A range"] == at(5, 7)
+    assert tiles["BBB range"] == at(8, 10)
+    assert tiles["Below BBB-"] == at(11, 17)
+
+
+def test_the_window_title_and_the_sidebar_name_the_open_panel(page, server):
+    visit(page, server, TOOL + "#ratings")
+    assert page.title().startswith("Ratings ·")
+    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "ratings"
+    visit(page, server, "admin/index.html#status")
+    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "status"

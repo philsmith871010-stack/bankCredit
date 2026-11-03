@@ -364,7 +364,9 @@
     if(!pts.length)return '<div class="muted small">no scored names</div>';
     var w=260,h=52,pad=14;
     var maxT=Math.max.apply(null,pts.map(function(p){return p.t}));
-    var X=function(t){return maxT<=0?w/2:8+(t/maxT)*(w-20)};
+    // On a square-root scale: on a straight one 100 days and six months sit a dot's width apart
+    // against five years, and the one drew over the other.
+    var X=function(t){return maxT<=0?w/2:8+Math.sqrt(t/maxT)*(w-20)};
     var Y=function(s){return (h-pad)-(s/100)*(h-pad-6)};
     var inner='<line x1="0" x2="'+w+'" y1="'+Y(50).toFixed(1)+'" y2="'+Y(50).toFixed(1)+'" stroke="#e9ecef" stroke-width="1"/>';
     var weakest=Math.min.apply(null,pts.map(function(p){return p.s}));

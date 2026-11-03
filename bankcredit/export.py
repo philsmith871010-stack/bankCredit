@@ -780,8 +780,11 @@ def export_json() -> None:
                             # The six pillar sub-scores and the market overlay, so the browser can
                             # weigh them the reader's own way rather than ours. An array, in the
                             # order PILLAR_ORDER names, because six keys a row is 18 KB of JSON on
-                            # the file the page waits for.
-                            "pw": [_clean(sc.pillars.get(k, (None,))[0]) for k in PILLAR_ORDER],
+                            # the file the page waits for. None where the score is withheld (figures
+                            # too old, or not published at this entity): the pillars are still worked
+                            # out, and the browser would otherwise weigh them into a score we refuse.
+                            "pw": None if row["public_score"] is None else
+                                  [_clean(sc.pillars.get(k, (None,))[0]) for k in PILLAR_ORDER],
                             "overlay": _clean(sc.overlay),
                             # the latest value of each further ratio the universe table can show on
                             # request; one object, absent keys for figures never collected

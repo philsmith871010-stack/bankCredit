@@ -18,7 +18,6 @@ from ..composite import SCALE as GRADE_LETTERS
 from . import components as c
 
 ROOT = Path(__file__).resolve().parent.parent.parent
-JSON = ROOT / "data" / "json"
 OUT = ROOT / "site"
 ASSETS = Path(__file__).resolve().parent / "assets"
 REGION_LABEL = {"uk": "UK", "eu": "EU and EEA", "aus_can": "Australia and Canada", "asia": "Asia", "gulf": "Gulf", "us_ch": "US and Swiss"}
@@ -64,7 +63,9 @@ def sc(r):
 
 
 def load(name):
-    return json.loads((JSON / f"{name}.json").read_text())
+    # through the store, so a build pointed at another copy of the data (the dev server's, under
+    # .dev/) reads that copy's export rather than the pipeline's
+    return json.loads((store.DATA / "json" / f"{name}.json").read_text())
 
 
 def qlabel(d: str) -> str:
@@ -348,6 +349,10 @@ def page_bank(b, generated):
     peer = b.get("peer") or {}
     score = b["score"]
     score_html = f'<span class="mono huge">{score:.0f}</span>' if score is not None else '<span class="mono huge muted">—</span>'
+    # the pillars the browser re-weighs with the reader's own weights; none where the score is
+    # withheld, so a reader's weights cannot draw a number the method refuses
+    pw_attr = (f' data-pw="{c.esc(json.dumps([b["score_detail"]["pillars"].get(k, (None,))[0] for k in c.PILLAR_KEYS]))}"'
+               if score is not None else "")
     pct = f'<span class="mono">{b["percentile"]}th</span> percentile of {peer.get("n", 0)} peers' if b.get("percentile") is not None else "not enough data to place among peers"
     cov = b.get("coverage") or 0
     overlay = b.get("overlay")
@@ -515,7 +520,7 @@ def page_bank(b, generated):
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
 <div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {sovereign_pill(b)}{c.info("sovereign")}{" · " + c.chip("LEI " + c.esc(b["lei"])) + c.info("lei") if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
 <div class="actions"><a class="btn btn-back" href="../tool/index.html#universe">&lsaquo; All names</a><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button></div></div>
-<div class="grid-12"><div class="score-card" data-pw="{c.esc(json.dumps([b["score_detail"]["pillars"].get(k, (None,))[0] for k in c.PILLAR_KEYS]))}" data-overlay="{overlay if overlay is not None else 0}" data-grade="{b.get("rating_grade") if b.get("rating_grade") is not None else ""}" data-coverage="{cov}"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span><span class="score-band">{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</span></div>
+<div class="grid-12"><div class="score-card"{pw_attr} data-overlay="{overlay if overlay is not None else 0}" data-grade="{b.get("rating_grade") if b.get("rating_grade") is not None else ""}" data-coverage="{cov}"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span><span class="score-band">{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</span></div>
 <div class="score-main"><div class="score-fig">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div>
 {c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12, fluid=True)}</div>
 <div class="pillars">{prow}</div></div>
@@ -701,6 +706,12 @@ def digest(board, status, generated):
     def bank_links(xs):
         return ", ".join(f'<a href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a>' for r in xs) or "none"
 
+    # The first 25 stale names, oldest figures first, and a count of the rest with the way to the
+    # whole list, so a short list never reads as the complete one.
+    stale_all = sorted((r for r in rows if r["age_days"] and r["age_days"] > 150), key=lambda r: -r["age_days"])
+    stale_links = bank_links(stale_all[:25]) + (
+        f' and <a href="../admin/index.html#status">{len(stale_all) - 25} more</a>' if len(stale_all) > 25 else "")
+
     market_line = ('<div class="rtiles brief-bm">' + "".join(f'<div class="rtile" title="{c.esc(BENCH_NOTE.get(b["label"], b["label"]))}"><div class="rtile-n mono">{b["value"]:.0f}<small>bp</small></div><div class="rtile-l">{c.esc(b["label"])}</div><div class="small {"bad" if b["change30"] > 4 else "good" if b["change30"] < -4 else "muted"}">{"+" if b["change30"] > 0 else ""}{b["change30"]:.0f} bp, 30 days</div></div>' for b in bm if b.get("change30") is not None) + '</div><p class="note">A basis point is one hundredth of a percentage point. These are index levels for the whole credit market, not for any bank on this site: wider means the market is charging more to take credit risk, tighter means less. They are context for a name that moved, not a judgement on it.</p>') if bm else "<p>Credit benchmark series not yet collected.</p>"
     lead = []
     if widen:
@@ -711,7 +722,7 @@ def digest(board, status, generated):
         lead.append("Benchmark spreads are little changed on the month.")
     lead.append(f'{len(ratings)} rating action{"s" if len(ratings) != 1 else ""} and {len(news)} flagged headline{"s" if len(news) != 1 else ""} in the last seven days across {len(rows)} entities.')
     content = f'''<div class="card pad digest"><div class="pc-head" style="padding:0 0 8px"><h3>This week <span class="muted small">· written by fixed rules, not a model · {c.esc(today.isoformat())}</span></h3></div><p class="lead">{" ".join(lead)}</p>{market_line}</div>
-<div class="grid-2 brief-grid"><div class="card pad"><h3>Watch points</h3><div class="kv"><div><span>Band D, weakest public score</span><span>{bank_links(band_d)}</span></div><div><span>Market signal widening or equity weak</span><span>{bank_links(weak_mkt)}</span></div><div><span>Regulatory figures older than 150 days</span><span>{bank_links([r for r in rows if r["age_days"] and r["age_days"] > 150][:25])}</span></div></div></div>
+<div class="grid-2 brief-grid"><div class="card pad"><h3>Watch points</h3><div class="kv"><div><span>Band D, weakest public score</span><span>{bank_links(band_d)}</span></div><div><span>Market signal widening or equity weak</span><span>{bank_links(weak_mkt)}</span></div><div><span>Regulatory figures older than 150 days</span><span>{stale_links}</span></div></div></div>
 <div class="brief-side"><div class="card pad"><h3>New Pillar 3 documents</h3><p>{len(docs)} collected in the last seven days. {len(unverified)} loaded with warnings and shown as unverified; {len(queue)} waiting in the review queue.</p><a class="filter" href="../admin/index.html#status">Status</a></div>
 <div class="card pad"><h3>When this refreshes</h3><div class="kv"><div><span>Headlines</span><span>every two hours, 07:00 to 19:00 UK, weekdays</span></div><div><span>Ratings and rating actions</span><span>with the morning run, daily</span></div><div><span>Prices and market signals</span><span>with the morning run, daily</span></div><div><span>Pillar 3 figures</span><span>as each firm publishes, checked daily</span></div></div><a class="filter" href="feed.xml" title="RSS feed of flagged events">RSS feed of flagged events</a></div></div></div>'''
     return content
@@ -973,16 +984,22 @@ def page_ratings(generated, inner: bool = False):
     hist += f'<button class="gbar gfilter" data-grade="nr" title="Unrated: {len(rows) - len(rated)}"><span class="gcount mono">{len(rows) - len(rated)}</span><i style="height:{max(3, (len(rows) - len(rated)) / mx * 64):.0f}px;background:#dfe5eb"></i><span class="glabel">NR</span></button>'
     # a group takes the colour of a rating in the middle of it, so the tiles, the bars and the
     # grid are all reading off the same ramp
-    band_tiles = [("AA- and above", sum(1 for r in rated if r["grade"] <= 4), grade_colour(3)),
-                  ("A range", sum(1 for r in rated if 4 < r["grade"] <= 7), grade_colour(6)),
-                  ("BBB range", sum(1 for r in rated if 7 < r["grade"] <= 10), grade_colour(9)),
-                  ("Below BBB-", sum(1 for r in rated if r["grade"] > 10), grade_colour(13)),
+    # An average grade sits between notches (4.33 is AA- by a third); every count here takes the
+    # notch it rounds to, the one its letter shows and its bar counts it under, so a name shown as
+    # AA- is never counted in the A range.
+    def notch(g):
+        return max(1, min(17, int(g + 0.5)))
+    def group(g):
+        n = notch(g)
+        return "AA- and above" if n <= 4 else "A range" if n <= 7 else "BBB range" if n <= 10 else "Below BBB-"
+    band_tiles = [(k, sum(1 for r in rated if group(r["grade"]) == k), grade_colour(m))
+                  for k, m in (("AA- and above", 3), ("A range", 6), ("BBB range", 9), ("Below BBB-", 13))] + [
                   ("Unrated", len(rows) - len(rated), "#6c757d")]
     tiles = "".join(f'<button class="rtile bfilter" data-band="{k}"><div class="rtile-n mono" style="color:{col}">{n}</div><div class="rtile-l">{c.esc(k)}</div></button>' for k, n, col in band_tiles)
     tiles += f'<a class="rtile" href="#actions"><div class="rtile-n mono"><span style="color:#1e7a3a">{ups}▲</span> <span style="color:#b04632">{downs}▼</span></div><div class="rtile-l">Actions, 30 days</div></a>'
     # the grid: one row per entity, the average, the weakest and the outlooks across the three
     def band_key(g):
-        return "Unrated" if g is None else "AA- and above" if g <= 4 else "A range" if g <= 7 else "BBB range" if g <= 10 else "Below BBB-"
+        return "Unrated" if g is None else group(g)
     DOT = ('<span class="chip-dot" title="one of the three agencies moved this rating within 90 days: an upgrade, '
            'downgrade, outlook or watch change, not an affirmation"></span> ')
     def letter_cell(letter, grade, sub=""):
@@ -1010,7 +1027,7 @@ def page_ratings(generated, inner: bool = False):
         gs = [r.get(key) for r in rows if r.get(key) is not None]
         if not gs:
             continue
-        cnts = [sum(1 for g in gs if g <= 4), sum(1 for g in gs if 4 < g <= 7), sum(1 for g in gs if 7 < g <= 10), sum(1 for g in gs if g > 10)]
+        cnts = [sum(1 for g in gs if group(g) == k) for k in ("AA- and above", "A range", "BBB range", "Below BBB-")]
         segs = "".join(f'<div class="dseg" style="flex:{n};background:{col}" title="{lab}: {n}"></div>' for n, col, lab in zip(cnts, [grade_colour(3), grade_colour(6), grade_colour(9), grade_colour(13)], ["AA- and above", "A range", "BBB range", "below BBB-"]) if n)
         dist += f'<div class="drow"><div class="dlabel">{label} <span class="muted small">{sum(cnts)} rated</span></div><div class="dbar">{segs}</div></div>'
     content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">One row per entity: the average and the weakest of the three main agencies' long-term ratings, on one scale, and their outlooks. Click a band, bar or region to filter. Source: the ESMA register, daily.</div></div></div>

@@ -476,8 +476,9 @@ document.addEventListener('click',function(e){
   }).catch(function(){var w=el.querySelector('.attr-wait'); if(w)w.innerHTML='Not available in this build.'});
 })();
 
-// The sidebar is the pathways. On the tool it also says which panel is open: a tab change marks
-// the item that opens that panel. The two items that open a dialog rather than a panel
+// The sidebar is the pathways. On a page with tabs (the tool, and Method and data) it also says
+// which panel is open: a tab change marks the item that opens that panel, and on the tool the
+// browser tab's title names it too. The two items that open a dialog rather than a panel
 // (weightings, choose names) are never marked, because the panel under them has not changed.
 (function(){
   var side=document.getElementById('side'); if(!side)return;
@@ -487,8 +488,17 @@ document.addEventListener('click',function(e){
     var hit=side.querySelector('.side-a[data-nav="'+name+'"]'); if(!hit)return;
     items.forEach(function(a){a.classList.toggle('active',a===hit)});
   }
-  if(document.body.classList.contains('tool')){
-    function sync(){var t=document.querySelector('.tabs-card .tab.active'); if(t)mark(t.dataset.tab)}
+  // Coverage has no item of its own: it is read as part of the data's status.
+  var NAV_FOR={coverage:'status'};
+  var tool=document.body.classList.contains('tool');
+  var rest=document.title.split(' \u00b7 ').slice(1).join(' \u00b7 ');
+  function sync(){
+    var t=document.querySelector('.tabs-card .tab.active'); if(!t)return;
+    mark(NAV_FOR[t.dataset.tab]||t.dataset.tab);
+    if(tool&&rest){var label=(t.firstChild&&t.firstChild.nodeType===3?t.firstChild.nodeValue:t.textContent).trim();
+      if(label)document.title=label+' \u00b7 '+rest}
+  }
+  if(document.querySelector('.tabs-card .tab')){
     document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.tabs-card .tab'))setTimeout(sync,0)});
     addEventListener('hashchange',function(){setTimeout(sync,0)});
     sync();

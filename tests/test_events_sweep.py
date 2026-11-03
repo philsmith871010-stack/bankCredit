@@ -122,3 +122,14 @@ def test_no_verdicts_anywhere_is_not_an_error(tmp_path, monkeypatch):
     monkeypatch.setattr(E, "VERDICTS", tmp_path / "nothing.json")
     monkeypatch.setattr(E, "VERDICT_PARTS", tmp_path / "nowhere")
     assert E.load_verdicts() == {}
+
+
+def test_a_banks_own_fraud_tools_are_not_a_fraud_at_the_bank():
+    lloyds = Entity(id="lloyds-bank", name="Lloyds Bank plc", short_name="Lloyds", country="GB", type="bank", region="uk", group="", lei="", tickers="", fdic_cert="", peer_group="uk_large", active=True)
+    tool = "Lloyds Banking Group Deploys Agentic AI to Boost Fraud Detection Accuracy Beyond 90% - FF News"
+    assert E.severity(tool) == "info"
+    assert not E.keep_headline(lloyds, tool, "FF News")
+    # a failure of those controls, or a fraud finding against the bank, still reads as fraud
+    assert E.severity("How bribes bought a TD Bank insider to bypass fraud controls") == "bad"
+    assert E.severity("Bank of America Sued for Securities Fraud") == "bad"
+    assert E.severity("Barclays fined by FCA over fraud prevention failings") == "warn"
