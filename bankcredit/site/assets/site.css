@@ -1272,3 +1272,20 @@ table.coverage td:first-child{min-width:190px}
 /* phone rows: the region alone under a name; the type is in the table's own filters */
 @media (max-width:640px){table.rgrid td:first-child .small .ty,table.coverage td:first-child .small .ty{display:none}}
 .src-t td{font-variant-numeric:tabular-nums}.src-t td.mono,.src-t td .mono{font-family:inherit}
+/* One number face across the site: the sans with tabular figures. Monospace stays only for the
+   LEI, an identifier, and for the small uppercase kickers. */
+.mono,.age,.pv-ax,.sc-n,.delta,table.coverage td.cov b,.rp-e,.ll-cpc b,.rl-ramp,.wt-o,.wt-mv i,.wt-mv em{font-family:inherit;font-variant-numeric:tabular-nums}
+.lei,.lei .mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+svg .axis{font-family:inherit;font-variant-numeric:tabular-nums}
+.rn-more{display:inline}.rn-more summary{display:inline;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line)}.rn-more[open] summary{margin-right:4px}
+table.subscores{table-layout:fixed;width:100%}table.subscores td{text-align:center;padding:6px 2px;line-height:1.5}
+/* the weights bar is colour alone; the caption under it names every part */
+.wbar span,.wbar span *{font-size:0!important;padding:0}
+.wbar{height:14px}
+/* the profile's ratio tiles keep the verdict and the requirement; peer detail is in the Trends band */
+.tiles .tile-peers{display:none}
+/* Ratings on a phone: the tiles filter by band, so the grade chart waits for a wider screen and the names come first */
+@media (max-width:640px){.rg-hist{display:none}}
+/* Choose names on a phone: a long name takes a second line rather than an ellipsis */
+@media (max-width:640px){#uni-table td.uni-nm .b{white-space:normal;text-overflow:clip;line-height:1.25}}
+@media (max-width:640px){table.rgrid td:first-child a,table.coverage td:first-child a{white-space:normal;text-overflow:clip;line-height:1.25}}

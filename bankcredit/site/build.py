@@ -563,7 +563,7 @@ def page_method(generated, inner: bool = False):
 <p>A score is withheld, with the reason, when a bank has no agency rating, no capital ratio, or capital figures older than eighteen months. A rating in the BBB range caps the score at 74.9 (band B), and one below investment grade at 64.9 (band C).</p>
 <div class="bandscale" aria-hidden="true">{"".join(f'<span class="band-{b}" style="flex:{(100 if b == "A" else 80 if b == "B" else 65 if b == "C" else 50 if b == "D" else 35) - f}">{b} · {f}+</span>' for f, b in BANDS)}</div>
 <table class="plain"><thead><tr><th>Component</th><th>Weight</th><th>Inputs</th></tr></thead><tbody><tr><td class="b">{c.PILLAR_LABEL["rating"]}</td><td class="mono">{RATING_WEIGHT}</td><td>Composite long-term agency rating; required for a score; caps of 74.9 for the BBB range and 64.9 below investment grade</td></tr>{pillar_rows}</tbody></table>
-<h3>Rating sub-scores</h3><div class="table-wrap"><table class="plain"><tbody><tr>{grade_cells}</tr></tbody></table></div>
+<h3>Rating sub-scores</h3><div class="table-wrap"><table class="plain subscores"><tbody><tr>{grade_cells}</tr></tbody></table></div>
 <h3>Thresholds (value → sub-score)</h3><table class="plain"><tbody>{thr}</tbody></table>
 <h3>Bands</h3><p>{bands}.</p>
 <h2>Ratings</h2><p>The site shows one rating per name: the average of the long-term ratings Fitch, S&amp;P and Moody's hold on it, on one scale, with the weakest of the three beside it and one outlook mark per agency. Ratings come from the ESMA European Rating Platform, refreshed daily, and each profile carries the history the register publishes back to July 2015. Agencies outside the three are not averaged in.</p>
@@ -692,12 +692,19 @@ def run_note(msg, names: dict | None = None) -> str:
         return ""
     names_of = names
     names = re.findall(r"(?:^|; )([a-z0-9][a-z0-9-]+): ", msg)
+    # a collector that logged its findings as a record rather than a sentence names them inside it
+    names = names or list(dict.fromkeys(re.findall(r"'entity': '([a-z0-9][a-z0-9-]+)'", msg)))
     if names:
         label = lambda i: (names_of or {}).get(i, i)
-        shown = ", ".join(label(n) for n in names[:3]) + (f" and {len(names) - 3} more" if len(names) > 3 else "")
-        text = f'{len(names)} could not be read: {shown}'
-    else:
-        text = msg if len(msg) <= 110 else msg[:107].rstrip() + "…"
+        head = ", ".join(c.esc(label(n)) for n in names[:3])
+        rest = names[3:]
+        # the rest are a click away rather than "and 2 more" with no way to see them
+        more = (f' and <details class="rn-more"><summary>{len(rest)} more</summary>{", ".join(c.esc(label(n)) for n in rest)}</details>'
+                if rest else "")
+        return f'<span title="{c.esc(msg)}">{len(names)} could not be read: {head}{more}</span>'
+    if msg.lstrip().startswith(("{", "[")):
+        return '<span>see the run log for details</span>'
+    text = msg if len(msg) <= 110 else msg[:107].rstrip() + "…"
     return f'<span title="{c.esc(msg)}">{c.esc(text)}</span>'
 
 

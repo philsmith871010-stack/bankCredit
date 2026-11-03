@@ -205,7 +205,9 @@
     return '<span class="sov" title="'+esc(sv.name+' sovereign rating: '+describeRating({letter:sv.composite,worst_letter:sv.worst||sv.composite,n:sv.n,tones:sv.tones})+
            '. Context, not part of the score.')+'">'+esc(e.country||'')+'<b>'+esc(sv.composite)+'</b></span>';
   }
-  function mkt(m,terse){if(!m||m.direction==='none')return terse?'<span class="na">\u2014</span>'  :'<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');
+  // One rule everywhere: a market chip appears only when the market has moved; a quiet market,
+  // or none, leaves the cell empty rather than saying "Stable" on half the rows
+  function mkt(m,terse){if(!m||m.direction==='none'||(terse&&m.direction==='flat'))return terse?'':'<span class="muted">no market data</span>';var k=m.direction==='down'?'bad':(m.direction==='up'?'good':'muted');
     // one word on the chip; whether the signal is the group's own, and against what, is in its title
     var grp=/ \(group\)$/.test(m.label||''), shown=(m.label||'').replace(/ \(group\)$/,'').replace(/ \((with the market|bank-specific)\)$/,'');
     return chip(shown,k,m.label+(grp?': the signal is the group\u2019s, which carries the market prices':''))}
@@ -369,7 +371,7 @@
       '</div>'+
       '<div class="pv-charts">'+
         '<figure><figcaption>Band mix'+mk('band')+'<span class="tm-key">names \u00b7 weakest</span></figcaption>'+bandMix(es)+'</figure>'+
-        '<figure><figcaption>Composite rating'+mk('composite')+'</figcaption>'+ratingHist(es)+'</figure>'+
+        '<figure><figcaption>Composite rating'+mk('composite')+'<span class="tm-key">names</span></figcaption>'+ratingHist(es)+'</figure>'+
         '<figure><figcaption>By tenor'+mk('tenor')+'<span class="tm-key">names \u00b7 weakest</span></figcaption>'+tenorMix(items)+'</figure>'+
       '</div></div>';
   }
@@ -390,7 +392,7 @@
   // it answers "is this bank ahead of its peers now", which the line alone cannot.
   function trend(pts,label,unit,pq,gk){
     if(!pts||pts.length<2)return '';
-    var w=150,h=94,pad=5,vals=pts.map(function(p){return p.v});
+    var w=150,h=106,pad=5,vals=pts.map(function(p){return p.v});
     var lo=Math.min.apply(null,vals),hi=Math.max.apply(null,vals);
     if(pq){lo=Math.min(lo,pq.p25);hi=Math.max(hi,pq.p75)}
     var rng=(hi-lo)||1; lo-=rng*0.08; hi+=rng*0.08; rng=hi-lo;
@@ -471,7 +473,7 @@
         : '<span class="md-scn"><span class="cp-score" style="color:'+scoreColour(e.score)+'">'+e.score.toFixed(0)+'</span>'+
           '<span class="band mono band-'+esc(e.band)+'">'+esc(e.band)+'</span></span>'+
           '<span class="md-scl">counterparty score</span>')+'</div>'+
-      ((e.market&&e.market.direction!=='none')?'<div class="md-mkt">'+mkt(e.market)+'</div>':'')+
+      ((e.market&&e.market.direction!=='none'&&e.market.direction!=='flat')?'<div class="md-mkt">'+mkt(e.market)+'</div>':'')+
       '<div class="md-act">'+act+'<a class="filter" href="'+ROOT+'banks/'+esc(id)+'.html">Full profile</a>'+
       '<button class="filter" id="md-close" aria-label="Close">Close</button></div></div>'+
       '<div id="md-body"><div class="md-grid">'+
@@ -797,7 +799,7 @@
     };
     var rows=cands.map(function(e,i){
       var vs=(w.score!=null)?(e.score-w.score):null;
-      var mp=(e.market&&e.market.direction!=='none')?mkt(e.market):'';
+      var mp=(e.market&&e.market.direction!=='none'&&e.market.direction!=='flat')?mkt(e.market):'';
       var bar=(vs!=null&&vs>0)?'<span class="ll-bar2" style="width:'+Math.max(3,vs/span*100).toFixed(0)+
         '%;background:'+(BANDC[e.band]||'#c9d3de')+'" title="'+vs.toFixed(1)+' points above the weakest name you accept at this tenor"></span>':'';
       return '<tr class="ll-r" data-id="'+esc(e.id)+'" data-tenor="'+t+'" tabindex="0" role="button" aria-label="'+

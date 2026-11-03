@@ -76,7 +76,7 @@
     vals.forEach(function(x,i){var y=26+i*rowH,c=colourOf(x.r.id);
       out+='<a href="../banks/'+x.r.id+'.html"><text data-id="'+x.r.id+'" class="cp-lbl" x="'+(left-10)+'" y="'+(y+14)+'" text-anchor="end" fill="'+(c||INK)+'" font-weight="'+(c?'700':'500')+'"><title>'+esc(x.r.name)+'</title>'+esc(fit(x.r.short,left-16))+'</text></a>';
       out+='<rect class="cp-bar" data-id="'+x.r.id+'" x="'+sc(Math.max(lo,Math.min(0,x.p.v))).toFixed(0)+'" y="'+(y+4)+'" width="'+Math.max(1,Math.abs(sc(x.p.v)-sc(Math.max(lo,0)))).toFixed(0)+'" height="'+(rowH-9)+'" rx="4" fill="'+(c||MID)+'" fill-opacity="'+(c?1:0.55)+'"><title>'+esc(x.r.name)+': '+fmt(x.p.v,m)+' at '+x.p.d+'</title></rect>';
-      out+='<text x="'+(sc(Math.max(x.p.v,0))+8).toFixed(0)+'" y="'+(y+14)+'" fill="'+INK+'" font-family="ui-monospace,monospace" font-size="12">'+fmt(x.p.v,m)+'</text>'});
+      out+='<text x="'+(sc(Math.max(x.p.v,0))+8).toFixed(0)+'" y="'+(y+14)+'" fill="'+INK+'" font-family="inherit" style="font-variant-numeric:tabular-nums" font-size="12">'+fmt(x.p.v,m)+'</text>'});
     chart.innerHTML=out+'</svg>';
     }
 
@@ -105,7 +105,7 @@
     // touch, the whole stack then centred on where the lines really end, and a short leader joins
     // any label that had to move to its dot.
     labels.sort(function(a,b){return a.y0-b.y0});
-    var GAP=14,i;labels.forEach(function(lb){lb.y=lb.y0});
+    var GAP=15,i;labels.forEach(function(lb){lb.y=lb.y0});
     for(i=1;i<labels.length;i++)labels[i].y=Math.max(labels[i].y,labels[i-1].y+GAP);
     if(labels.length){var drift=0;labels.forEach(function(lb){drift+=lb.y-lb.y0});drift/=labels.length;
       labels.forEach(function(lb){lb.y-=drift});
@@ -114,7 +114,7 @@
       if(labels[labels.length-1].y>hi){var d2=labels[labels.length-1].y-hi;labels.forEach(function(lb){lb.y-=d2})}}
     var lx=w-R+10;
     labels.forEach(function(lb){
-      if(Math.abs(lb.y-lb.y0)>2||lb.x0<w-R-2)out+='<path d="M'+(lb.x0+5).toFixed(1)+' '+lb.y0.toFixed(1)+'L'+(w-R+2)+' '+lb.y0.toFixed(1)+'L'+(lx-3)+' '+lb.y.toFixed(1)+'" fill="none" stroke="'+lb.c+'" stroke-width="1" stroke-dasharray="2 2" opacity=".6"/>';
+      if(Math.abs(lb.y-lb.y0)>2||lb.x0<w-R-2)out+='<path d="M'+(lb.x0+5).toFixed(1)+' '+lb.y0.toFixed(1)+'L'+(w-R+2)+' '+lb.y0.toFixed(1)+'L'+(lx-3)+' '+lb.y.toFixed(1)+'" fill="none" stroke="'+lb.c+'" stroke-width="1" stroke-dasharray="2 2" opacity=".9"/>';
       out+='<text x="'+lx+'" y="'+(lb.y+4).toFixed(0)+'" fill="'+lb.c+'" font-weight="'+lb.w+'" font-size="11.5">'+esc(lb.t)+'</text>'});
     out+='<line id="cp-hair" x1="0" x2="0" y1="'+T+'" y2="'+(H-B)+'" stroke="'+INK+'" stroke-width="1" opacity="0" pointer-events="none"/>';
     out+='<rect x="'+L+'" y="'+T+'" width="'+(w-L-R)+'" height="'+(H-T-B)+'" fill="transparent" id="cp-hit"/>';
@@ -139,7 +139,7 @@
   function renderBump(rows,m){var code=m[0],bs=buckets(rows,code,16);if(bs.length<2){chart.innerHTML='<div class="empty">Not enough history in the set.</div>';side.innerHTML='';return}
     var lines=rows.map(function(r){return{r:r,pts:bs.map(function(b){return atBucket(r,code,b)}),rank:[]}}).filter(function(l){return l.pts.some(function(v){return v!=null})});
     bs.forEach(function(b,i){var have=lines.filter(function(l){return l.pts[i]!=null}).sort(function(a,b){return m[4]?b.pts[i]-a.pts[i]:a.pts[i]-b.pts[i]});lines.forEach(function(l){l.rank[i]=null});have.forEach(function(l,k){l.rank[i]=k+1})});
-    var n=lines.length,w=W(),H=Math.max(260,Math.min(600,n*22+50)),L=36,R=Math.min(190,Math.max(130,w*0.17)),T=18,B=30,X=function(i){return L+i*(w-L-R)/(bs.length-1)},Y=function(rk){return T+(rk-1)/Math.max(1,n-1)*(H-T-B)};
+    var n=lines.length,w=W(),H=Math.max(260,Math.min(600,n*22+50)),L=36,R=Math.min(220,Math.max(150,w*0.2)),T=18,B=30,X=function(i){return L+i*(w-L-R)/(bs.length-1)},Y=function(rk){return T+(rk-1)/Math.max(1,n-1)*(H-T-B)};
     var out=svgOpen(w,H)+xLabels(bs,X,H-8,w);
     var path=function(rk){var d='',on=false;rk.forEach(function(v,i){if(v==null){on=false;return}d+=(on?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1);on=true});return d};
     var lastR=function(l){for(var i=l.rank.length-1;i>=0;i--)if(l.rank[i]!=null)return l.rank[i];return null};
