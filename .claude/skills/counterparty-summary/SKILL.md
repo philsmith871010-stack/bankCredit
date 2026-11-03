@@ -6,7 +6,7 @@ description: Write the short summary on a bank's profile for the Counterparty si
 # Counterparty summaries
 
 Every profile carries a paragraph the pipeline writes from the data on each build: standing,
-peers, ratings, trends, news, every figure dated. You write the two things that paragraph
+peers, ratings, trends, rating actions, every figure dated. You write the two things that paragraph
 cannot: who this is, and what the numbers mean. A summary is rewritten only when the inputs it
 rested on have moved or it is over ninety days old, so most nights this list is empty.
 
@@ -59,10 +59,13 @@ Three things the check allows today but will fail tomorrow, so leave them out:
 
 - **The peer medians.** Say "above the peer median", never "above the 16.4% median": the
   median moves whenever any peer reports, and a quoted one is owed a rewrite the next morning.
-- **Dates of older headlines.** The paragraph shows only the newest three flagged items, so
-  cite the newest by date at most and the rest in words.
+- **Dates of older rating actions.** The paragraph shows only the newest three, so cite the
+  newest by date at most and the rest in words.
 - **The site's score or band.** They depend on weightings the reader may have changed. The
   check refuses them outright.
+
+Never report news or headlines, even from general knowledge. The site carries the record and the
+prices, not the press, and the check refuses a summary that does.
 
 `written` is today's date. `inputs` is the entry's `inputs`, unchanged - it is how the site
 knows, later, what has moved since you wrote this.

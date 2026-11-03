@@ -19,7 +19,7 @@ landing page.
 | Group | Items | What opens |
 |---|---|---|
 | Build your strategy | Start here · Weightings · Choose names | the three-step panel; the weightings dialog; the table every name is on |
-| Monitor | Your counterparties · Events | the list with what moved since each name was approved; rating actions and headlines |
+| Monitor | Your counterparties | the list with what moved since each name was approved (the Events page was removed on 3 November 2026; each name's rating actions and reports are on its own profile) |
 | Compare | Alternatives · Analysis · Ratings | names at least as strong as your weakest at each tenor; any names side by side; the universe by the average and the weakest of the three |
 | Reference | Overview · Method · Data status | the landing page; the method; what ran and when |
 

@@ -26,9 +26,10 @@ def bank(**over):
         "history": {"score": [["2026-03-31", 65.0], ["2026-06-30", 66.4]]},
         "series": {"lcr": [{"d": f"2025-{m:02d}-30", "v": v} for m, v in ((3, 170), (6, 165), (9, 160), (12, 155))] + [{"d": "2026-03-30", "v": 150}],
                    "cet1_ratio": [{"d": "2025-03-30", "v": 13.9}, {"d": "2026-03-30", "v": 14.0}]},
-        "events": [{"date": "2026-08-10", "severity": "warn", "type": "news", "title": "TSB fined over outage - FT"},
-                   {"date": "2026-01-10", "severity": "bad", "type": "news", "title": "old"},
-                   {"date": "2026-09-01", "severity": "info", "type": "news", "title": "noise"}],
+        "events": [{"date": "2026-08-10", "severity": "warn", "type": "rating", "title": "outlook to negative: long-term issuer rating A"},
+                   {"date": "2026-01-10", "severity": "bad", "type": "rating", "title": "old"},
+                   {"date": "2026-09-01", "severity": "info", "type": "rating", "title": "noise"},
+                   {"date": "2026-08-20", "severity": "bad", "type": "news", "title": "TSB fined over outage - FT"}],
     }
     b.update(over)
     return b
@@ -40,9 +41,10 @@ def test_the_paragraph_reads_as_plain_english_and_never_quotes_the_sites_score()
     assert b["capital"] == "Capital is strong against UK mid-sized banks: CET1 of 14.0% is above the median (median 13.8%); leverage is 5.0%.", "no peer figure for leverage, so it is stated but not judged"
     assert b["liquidity"] == "Liquidity is on the weak side of UK mid-sized banks: LCR of 150% is below the median (median 160%); NSFR is 130%."
     assert b["trends"] == "Since 30 Mar 2025, LCR has fallen 20 points, while CET1 has been broadly flat (figures to 30 Jun 2026)."
-    assert b["news"] == "Flagged in the last 90 days: 10 Aug 2026, warn: TSB fined over outage."
+    assert b["actions"] == "Rating actions in the last 90 days: 10 Aug 2026, outlook to negative: long-term issuer rating A."
     text = S.brief_text(b)
     assert "noise" not in text and "old" not in text
+    assert "fined" not in text, "a stored headline is never quoted"
     assert "score" not in text.lower() and "band" not in text.lower(), "the score and band depend on the reader's weightings"
 
 
@@ -69,7 +71,7 @@ def test_a_withdrawal_a_first_rating_and_a_two_notch_move_read_as_english():
 def test_an_unscored_unrated_name_still_gets_an_honest_paragraph():
     b = S.brief(bank(score=None, unscored="unrated", rating=None, rating_composite=None, unrated=True, events=[], type="building_society"), TODAY)
     assert b["standing"] == "TSB is a building society in the UK with no public rating from any of the three main agencies."
-    assert b["news"] == "Nothing has been flagged in the last 90 days."
+    assert b["actions"] == "No rating action in the last 90 days."
 
 
 def test_the_fingerprint_is_what_a_written_summary_rests_on():
@@ -80,7 +82,7 @@ def test_the_fingerprint_is_what_a_written_summary_rests_on():
 def test_what_moved_since_is_said_in_words():
     then = S.fingerprint(bank())
     now = S.fingerprint(bank(band="C", rating=dict(three(("negative", "stable"), 6.5, 7), n=2), rating_composite="A-", asof="2026-09-30",
-                             events=[{"date": "2026-09-12", "severity": "bad", "title": "x"}]))
+                             events=[{"date": "2026-09-12", "severity": "bad", "type": "rating", "title": "x"}]))
     got = S.changes_since(then, now)
     assert got == ["band moved from B to C", "average rating moved from A to A-", "weakest rating moved from A to A-",
                    "outlooks moved from stable to negative, stable", "rated by two of the three (was one of the three)",
@@ -90,7 +92,7 @@ def test_what_moved_since_is_said_in_words():
 
 def summary(**over):
     s = {"id": "tsb", "written": "2026-09-16", "background": "TSB is a UK retail bank owned by Sabadell.",
-         "synthesis": "Capital is sound, with CET1 of 14.0% a touch above the peer median of 13.8%, and the one agency that rates the bank has it at A with a stable outlook. Liquidity is the weak spot: LCR at 150% sits below the group's 160% and has come down 20 points over four periods. One adverse headline, a fine over an outage, in the last 90 days.",
+         "synthesis": "Capital is sound, with CET1 of 14.0% a touch above the peer median of 13.8%, and the one agency that rates the bank has it at A with a stable outlook. Liquidity is the weak spot: LCR at 150% sits below the group's 160% and has come down 20 points over four periods. The outlook was moved to negative within the last 90 days.",
          "inputs": S.fingerprint(bank())}
     s.update(over)
     return s
@@ -124,6 +126,8 @@ def test_a_figure_the_paragraph_did_not_give_fails_the_check():
     named = S.check(summary(synthesis="Fitch rates the bank A with a stable outlook and Moody's has it at A2, which is comfortable for a bank of its size and funding model, and its capital at 14.0% is above the peer median."), para)
     assert any("names a rating agency (Fitch, Moody)" in f for f in named), named
     assert any("own rating symbol" in f for f in named), named
+    press = S.check(summary(synthesis="Capital is sound, with CET1 of 14.0% a touch above the peer median of 13.8%, and the news flow is mostly benign, the newest headline a fine over an outage, which matters little for a bank of its size."), para)
+    assert any("news or headlines" in f for f in press), press
 
 
 def test_the_profile_shows_both_layers_and_says_what_moved(tmp_path, monkeypatch):
@@ -140,4 +144,4 @@ def test_the_profile_shows_both_layers_and_says_what_moved(tmp_path, monkeypatch
     assert "Since then: band moved from B to C. This summary predates that." in html
     quoted = bank(peer_ratios={"cet1_ratio": {"p25": 13.5, "p50": 13.7, "p75": 14.2, "n": 16}, "lcr": {"p25": 140, "p50": 160, "p75": 180, "n": 16}})
     html = build.summary_block(quoted, "2026-09-16T05:00:00Z")
-    assert "owned by Sabadell" not in html and "rests on figures that have since moved" in html, "a stale figure is never shown as current"
+    assert "owned by Sabadell" not in html and "no longer matches the data" in html, "a stale figure is never shown as current"

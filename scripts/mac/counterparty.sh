@@ -51,11 +51,6 @@ if command -v claude >/dev/null 2>&1; then
   echo "-- working the review queue (this is the slow one)"
   claude -p "/counterparty-review" --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --max-turns 80 || echo "claude review step failed"
 fi
-# 2b. judge the fortnight's headlines (subscription login, no API key); verdicts are applied by every pipeline run
-if command -v claude >/dev/null 2>&1; then
-  echo "-- judging the headlines"
-  claude -p "/counterparty-news" --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --max-turns 40 || echo "claude news step failed"
-fi
 # 2c. the written summary on each profile: only the names whose inputs have moved since it was
 # written, or whose summary is over ninety days old, so most nights this is nothing at all
 if command -v claude >/dev/null 2>&1; then
@@ -71,7 +66,7 @@ python -m bankcredit.cli learn > /dev/null 2>&1 || true
 # which sources have stopped working, and which never did; the report is committed and shown on Status
 python -m bankcredit.cli health || true
 # One push path for every runner: the same script the cloud routines call, which commits the
-# answers and nothing else. data/review includes browser-links.json and news_verdicts.json.
+# answers and nothing else. data/review includes browser-links.json.
 echo "-- pushing the answers"
 bash tools/push-data.sh "Local run $(date -u +%F): Pillar 3 collection and review" || true
 # Then ask for the day's collection, if it is still owed. The marker used to go in the message

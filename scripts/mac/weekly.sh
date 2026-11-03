@@ -8,9 +8,9 @@
 # hours, not every hour, and a lock left behind by a run the laptop was shut on is cleared.
 #
 # The run itself is scripts/mac/counterparty.sh: Pillar 3 from the bank sites that refuse a
-# data-centre address, on this home connection; the browser-only sites; the review queue and the
-# headlines under Claude Code; the summaries that are owed; then the push. The daily collection of
-# ratings, prices, CDS and headlines does not depend on this job at all. It runs in the cloud.
+# data-centre address, on this home connection; the browser-only sites; the review queue under
+# Claude Code; the summaries that are owed; then the push. The daily collection of ratings, prices
+# and CDS does not depend on this job at all. It runs in the cloud.
 #
 # Install once:
 #   cp ~/Counterparty/scripts/mac/com.pwlbtoday.counterparty-weekly.plist ~/Library/LaunchAgents/

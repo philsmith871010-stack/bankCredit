@@ -443,7 +443,7 @@ def test_the_policy_page_is_tabs(page, server):
     """The approved names ran the length of the page with the shortlist under them."""
     _seed_many(page, server, 4)
     tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
-    expected = [t for t in ["strategy", "policy", "events", "likeforlike", "analysis", "ratings"] if t not in HOME_TABS_HIDDEN]
+    expected = [t for t in ["strategy", "policy", "likeforlike", "analysis", "ratings"] if t not in HOME_TABS_HIDDEN]
     assert tabs == expected
     assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 4
     assert page.eval_on_selector("#tn-policy", "e => e.textContent") == "4"
@@ -867,7 +867,8 @@ def test_the_home_page_stays_small():
     """Two tabs nobody had clicked were 426 KB of the home page's 441 KB."""
     kb = (SITE / TOOL).stat().st_size / 1024
     assert kb < 60, f"the tool page is {kb:.0f} KB; the heavy panels belong in data/panels"
-    for name in ("ratings", "events"):
+    assert not (SITE / "data" / "panels" / "events.html").exists(), "the Events tab is gone, fragment and all"
+    for name in ("ratings",):
         fragment = SITE / "data" / "panels" / f"{name}.html"
         if name in HOME_TABS_HIDDEN:
             assert not fragment.exists(), "a tab that is held back publishes nothing, not even a fragment"
@@ -876,8 +877,7 @@ def test_the_home_page_stays_small():
 
 
 @pytest.mark.parametrize(("tab", "rows"), [
-    pytest.param("ratings", "#board tbody tr", marks=held("ratings")),
-    pytest.param("events", "#events .event", marks=held("events"))])
+    pytest.param("ratings", "#board tbody tr", marks=held("ratings"))])
 def test_a_deferred_panel_fills_and_still_filters(page, server, tab, rows):
     visit(page, server, TOOL)
     assert page.eval_on_selector_all(rows, "e => e.length") == 0
@@ -902,42 +902,6 @@ def test_no_page_ships_an_unrendered_placeholder(name):
     html = (SITE / name).read_text(encoding="utf-8")
     for tell in ['{c.', '{e.', '{esc(', 'None</', '>undefined<']:
         assert tell not in html, f"{name} contains {tell!r}"
-
-
-# ---- long lists stand a page at a time -------------------------------------------------------
-@held("events")
-def test_a_long_feed_stands_a_page_at_a_time(page, server):
-    """Three hundred events rendered at once was thirty thousand pixels, and the oldest was
-    unreachable. The rows are all in the page; only a page of them stands on it."""
-    visit(page, server, TOOL)
-    page.eval_on_selector('.tab[data-tab="events"]', "e => e.click()")
-    page.wait_for_timeout(900)
-    held = page.eval_on_selector_all("#events .event", "e => e.length")
-    assert held > 100, "the feed still carries every event it was built with"
-    shown = lambda: page.eval_on_selector_all("#events .event", "e => e.filter(x => !x.hidden).length")
-    first = shown()
-    assert 0 < first < held, "only a page of them is on screen"
-    assert f"{first} of {held}" in page.inner_text("#ev-more")
-    page.eval_on_selector("#ev-more .more", "e => e.click()")
-    page.wait_for_timeout(300)
-    assert shown() > first, "the control reveals the next page"
-    assert not page.errors, page.errors
-
-
-@held("events")
-def test_a_change_of_filter_starts_the_list_at_the_top_again(page, server):
-    """Otherwise a reader who has paged deep into 'All' meets a filtered list already exhausted."""
-    visit(page, server, TOOL)
-    page.eval_on_selector('.tab[data-tab="events"]', "e => e.click()")
-    page.wait_for_timeout(900)
-    step = page.eval_on_selector("#ev-more", "e => +e.dataset.step")
-    page.eval_on_selector("#ev-more .more", "e => e.click()")
-    page.wait_for_timeout(250)
-    page.eval_on_selector("#event-filters button:nth-child(2)", "e => e.click()")
-    page.wait_for_timeout(300)
-    shown = page.eval_on_selector_all("#events .event", "e => e.filter(x => !x.hidden).length")
-    assert shown <= step, "the reveal count resets when what qualifies changes"
-    assert not page.errors, page.errors
 
 
 def test_the_shortlist_opens_on_a_tenor_that_has_something_to_show(page, server):
@@ -1027,7 +991,7 @@ def test_the_policy_can_be_read_as_a_table_and_sorted(page, server):
     assert page.eval_on_selector_all("#pol-table tbody tr.pol-tr", "e => e.length") == 4
     assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 0
     heads = page.eval_on_selector_all("#pol-table thead th", "e => e.map(x => x.textContent.trim())")
-    assert heads[:9] == ["Name", "Score", "Agency rating", "CET1", "Lev", "LCR", "NSFR", "Figures", "News 30d"], heads
+    assert heads[:9] == ["Name", "Score", "Agency rating", "CET1", "Lev", "LCR", "NSFR", "Figures", "Market"], heads
     page.eval_on_selector('#pol-table th[data-k="score"]', "e => e.click()")
     page.wait_for_timeout(300)
     scores = page.eval_on_selector_all("#pol-table tbody tr.pol-tr td:nth-child(2)", "e => e.map(x => parseFloat(x.textContent))")
@@ -1147,15 +1111,15 @@ def test_the_sidebar_is_the_pathways_and_follows_the_open_panel(page, server):
     assert any(h.endswith("admin/index.html#method") for h in hrefs) and any(h.endswith("index.html") for h in hrefs)
     assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "strategy"
     assert page.eval_on_selector_all(".tabs-card .tabs", "e => e.map(x => getComputedStyle(x).display)") == ["none"], "the tab strip steps aside for the sidebar"
-    page.eval_on_selector('#side .side-a[data-nav="events"]', "e => e.click()")
+    assert page.query_selector('#side .side-a[data-nav="events"]') is None, "the Events page is gone"
+    page.eval_on_selector('#side .side-a[data-nav="policy"]', "e => e.click()")
     page.wait_for_timeout(700)
-    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "events"
-    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "events"
-    assert page.eval_on_selector('[data-panel="events"] .ph h2', "e => e.textContent") == "Events"
+    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "policy"
+    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "policy"
     page.eval_on_selector('#side .side-a[data-nav="weights"]', "e => e.click()")
     page.wait_for_timeout(500)
     assert page.eval_on_selector("#wt-dlg", "e => e.open"), "the weightings item opens the dialog"
-    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "events", "a dialog does not move the mark"
+    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "policy", "a dialog does not move the mark"
     # the same frame round a bank page
     visit(page, server, "banks/barclays-bank.html")
     assert page.eval_on_selector_all("#side .side-g", "e => e.length") == 4

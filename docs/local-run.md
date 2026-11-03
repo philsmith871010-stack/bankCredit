@@ -7,14 +7,14 @@ Three things run without any Anthropic API key:
    rules (`bankcredit/extract/km1.py`), validates every figure against the
    template's own arithmetic, and publishes the site. Figures that pass with
    warnings are shown as *unverified*; failures go to `data/review/queue.json`.
-2. **Scheduled cloud sessions** resolve the review queue and judge the headlines every
-   morning. They are Claude Code routines running the same two repository skills,
-   `.claude/skills/counterparty-review/SKILL.md` and `counterparty-news`, and they push
+2. **Scheduled cloud sessions** resolve the review queue every morning. They are Claude
+   Code routines running the repository skill `.claude/skills/counterparty-review/SKILL.md`,
+   and they push
    their answers with `tools/push-data.sh`. Nothing on your machine has to be awake.
 3. **A weekly run on your Mac**, for what a cloud address cannot reach: the bank sites
    that refuse data-centre addresses or scripted fetches (Lloyds Banking Group and its
-   banks, BMO, the small societies), the review queue and the headlines under Claude
-   Code, and the summaries that are owed. The eight sites that refuse even a headless
+   banks, BMO, the small societies), the review queue under Claude Code, and the
+   summaries that are owed. The eight sites that refuse even a headless
    browser are section 3 of the review skill, a quarterly job with Chrome. The job takes
    the same lock and pushes through the same script as everything else, so it cannot
    collide with the cloud runs.
@@ -42,9 +42,9 @@ waiting for next week; a run that fails is retried after six hours; and a lock l
 a run the laptop was shut on is cleared rather than stopping every later run in silence.
 
 What a run does is the whole local sequence below: Pillar 3 from the bank sites that refuse a
-data-centre address, the browser-only sites, the review queue and the headlines under Claude
-Code, the summaries that are owed, and the push. The daily collection of ratings, prices, CDS
-and headlines does not depend on this job: it runs in the cloud, and missing a week here costs
+data-centre address, the browser-only sites, the review queue under Claude Code, the
+summaries that are owed, and the push. The daily collection of ratings, prices and CDS does
+not depend on this job: it runs in the cloud, and missing a week here costs
 a week of Pillar 3 catch-up and nothing else.
 
 Run it now, whatever the stamp says, with `zsh scripts/mac/weekly.sh --now`. The log is
@@ -83,7 +83,6 @@ ls -d ~/Counterparty/data/cache/run.lock 2>/dev/null && echo "a scheduled run is
 | Collect | `python -m bankcredit.cli run pillar3` | Same collector the pipeline runs, from your home connection |
 | Browser sites | `python -m bankcredit.cli browser` | Bot-blocked sites: browser headers, then headless Chromium; reports what is still blocked |
 | Review | `claude -p "/counterparty-review"` | Opens each queued PDF page, writes `data/review/resolved/<id>.json` |
-| News | `claude -p "/counterparty-news"` | Judges the fortnight's headlines; verdicts in `data/review/news_verdicts.json` are applied by every pipeline run |
 | Load | `python -m bankcredit.cli review ingest` | Answers become facts with method `pdf_manual` |
 | Publish | `git add data/facts.parquet data/documents.parquet data/runs.parquet data/events.parquet data/review && git push` | The pipeline rebuilds and deploys the site |
 

@@ -13,7 +13,7 @@ rendered as dated sentences, tested like everything else:
 - against peers: each of the four policy ratios placed in its peer quartile, with the median
 - ratings: the average and the weakest of the three main agencies on one scale, how many of the three hold each outlook, the last move and its date; never which agency said what (docs/ratings-composite.md)
 - trends: which held series moved past a threshold over one, four and twelve quarters
-- latest news: flagged headlines and rating actions of the last 90 days, one line each
+- rating actions: the agencies' own actions of the last 90 days, one line each (headlines were quoted here until 3 November 2026; docs/news-removed.md)
 
 **Layer 2 — written by Claude, rarely.** The two things arithmetic cannot do:
 

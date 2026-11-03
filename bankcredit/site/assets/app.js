@@ -213,21 +213,6 @@ whenIdle(function(){
   document.querySelectorAll('.panel[data-src]').forEach(warmPanel);
 });
 
-// Events page: type filter
-function initEventFilter(){var f=document.getElementById('event-filters');if(!f||f.dataset.init)return;f.dataset.init='1';var q=document.getElementById('evq');
-  function apply(){var a=(f.querySelector('.filter.active')||{}).dataset||{},t=(q&&q.value||'').trim().toLowerCase(),keep=[];
-    document.querySelectorAll('#events .event').forEach(function(e){
-      var ok=(!a.type||a.type==='all'||e.dataset.type===a.type)&&(!t||e.textContent.toLowerCase().indexOf(t)>=0);
-      e.hidden=!ok;if(ok)keep.push(e)});
-    window.pageRows('ev-more',keep,function(e){e.hidden=true},'events',apply);
-    // a date heading belongs to the lines under it, so it goes when the last of them does
-    document.querySelectorAll('#events .ev-day').forEach(function(h){var n=h.nextElementSibling,any=false;while(n&&!n.classList.contains('ev-day')){if(!n.hidden)any=true;n=n.nextElementSibling}h.hidden=!any})}
-  function refilter(){window.pageReset('ev-more');apply()}
-  f.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;f.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x===b)});refilter()});
-  if(q)q.addEventListener('input',refilter);apply();}
-initEventFilter();
-(window.__panelInit=window.__panelInit||[]).push(initEventFilter);
-
 // A profile's event list has no filter above it, only a length: eight years of a big bank's
 // rating actions and documents is a panel nobody reaches the bottom of.
 function initProfileEvents(){var box=document.getElementById('pevents');if(!box||box.dataset.init)return;box.dataset.init='1';

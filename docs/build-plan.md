@@ -505,3 +505,11 @@ Measured against the live sources, concurrent run first so the warm cache works 
 Yahoo 12.3s to 3.6s, the news feed 22.5s to 10.3s over fourteen banks with no throttled response.
 Ten tests cover it, including that every item is loaded exactly once, that an unreachable source
 does not take the rest of the run with it, and that concurrent writes lose nothing.
+
+### Headlines removed, 3 November 2026
+
+The headline collection, its two-hourly pipeline mode, the word-match severity, the
+`counterparty-news` skill and every place a headline reached a page are gone. A review of the 3,214
+held found about one in fourteen bore on a deposit decision, and those reached the ratings, the
+filings or the market signal within days. The events feed is now the ESMA register's rating actions
+and the Pillar 3 reports. The reasoning and the list of what changed are in docs/news-removed.md.

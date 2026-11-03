@@ -1,6 +1,6 @@
 # Counterparty (PWLBtoday)
 
-Free, transparent credit view of banks and building societies that UK treasury teams place money with. Public regulatory data, public rating registers, traded market prices and primary-source news, every figure traceable to its document.
+Free, transparent credit view of banks and building societies that UK treasury teams place money with. Public regulatory data, public rating registers and traded market prices, every figure traceable to its document. Headlines are not collected; docs/news-removed.md says why.
 
 - `docs/data-sources-investigation.md`: where every number comes from and what was verified.
 - `docs/build-plan.md`: product, architecture, method, phases and decisions.
@@ -22,7 +22,7 @@ python -m bankcredit.cli build        # writes site/
 ```
 
 Adapters: `fdic`, `eba`, `edgar` (quarterly), `esma` ratings, `yahoo` prices, `pillar3`
-documents, `events` (rating actions, disclosures, filtered news), `fred`
+documents, `events` (rating actions and disclosures), `fred`
 benchmark spreads, `ice` and `dtcc` CDS, `bonds` (daily) and `te`, the EBA Transparency Exercise
 (quarterly, six years of EU capital history). Bond quotes come from Börse Frankfurt's
 public price pages and are rebuilt on every run rather than committed; the site shows only each bank's

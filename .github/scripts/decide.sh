@@ -10,7 +10,6 @@
 # anything is still owed:
 #
 #   full   the day's collection has not happened yet, so run every adapter and publish
-#   news   the collection is done, but the headlines are over an hour and a half old
 #   build  a code push: rebuild and republish the site from the data already committed
 #   skip   nothing owed; leave in a few seconds without touching the data or the site
 #
@@ -22,13 +21,10 @@ set -euo pipefail
 
 now=$(date -u +%s)
 owed_from=$(date -u -d 'today 05:00' +%s)   # the day's collection is owed from 05:00 UTC
-dow=$(date -u +%u)                          # 1-7, Monday first
-hour=$((10#$(date -u +%H)))
 
 # A stamp the last run committed, as a unix time; nothing yet, or anything unreadable, is 0.
 stamp() { [ -f "data/state/$1" ] && date -u -d "$(cat "data/state/$1")" +%s 2>/dev/null || echo 0; }
 collected=$(stamp last-collect)
-headlined=$(stamp last-headlines)
 
 mode=auto
 case "${EVENT:-}" in
@@ -51,11 +47,10 @@ case "${EVENT:-}" in
 esac
 
 if [ "$mode" = auto ]; then
+  # There used to be a third answer here, a headline refresh every ninety minutes of the working
+  # day. Headlines left the site on 3 November 2026, so a slot after the collection has nothing to do.
   if [ "$now" -ge "$owed_from" ] && [ "$collected" -lt "$owed_from" ]; then
     mode=full
-  elif [ "$dow" -le 5 ] && [ "$hour" -ge 6 ] && [ "$hour" -le 19 ] \
-       && [ $((now - headlined)) -ge 5400 ]; then
-    mode=news
   else
     mode=skip
   fi
@@ -70,5 +65,4 @@ echo "mode=$mode" >> "${GITHUB_OUTPUT:-/dev/stdout}"
   echo "| event | ${EVENT:-none} |"
   echo "| now | $(date -u +%FT%TZ) |"
   echo "| last collection | $(ago "$collected") |"
-  echo "| last headlines | $(ago "$headlined") |"
 } >> "${GITHUB_STEP_SUMMARY:-/dev/null}"

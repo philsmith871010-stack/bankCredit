@@ -1,7 +1,7 @@
 # Counterparty
 
 Bank credit for UK local-authority treasury desks: who they can place money with, and for how long,
-from regulatory filings, rating registers, market prices and the news. A static site built by Python
+from regulatory filings, rating registers and market prices. A static site built by Python
 from the data a daily GitHub Actions pipeline collects, published on GitHub Pages at
 https://philsmith871010-stack.github.io/bankCredit/. The product is to be renamed PWLBinvest.
 
@@ -31,6 +31,6 @@ https://philsmith871010-stack.github.io/bankCredit/. The product is to be rename
   See docs/attributed-ratings.md.
 - Links and fetches stay relative to the page, resolved through `data-root`, because the site
   lives under /bankCredit/. The dev server serves it there too, so a link that escapes 404s locally.
-- Data answers, such as review-queue resolutions and headline verdicts, are pushed with
+- Data answers, such as review-queue resolutions, are pushed with
   `tools/push-data.sh`, never with a broad `git add`.
 - Every push to main deploys, so run the tests first.

@@ -1,7 +1,7 @@
 """The written summary on every profile, in two layers.
 
 Layer one is arithmetic on what is already held, rendered as dated sentences by every build -
-standing, peers, ratings, trends, news - and costs nothing. Layer two is the two things
+standing, peers, ratings, trends, rating actions - and costs nothing. Layer two is the two things
 arithmetic cannot do, one background sentence and a short synthesis, written by Claude on the
 maintainer's machine under the subscription, and rewritten only when the inputs it was written
 from have moved or it is over ninety days old. The design is docs/entity-summaries.md.
@@ -110,7 +110,7 @@ def brief(d: dict, today: date | None = None) -> dict:
     today = today or date.today()
     name = d.get("short") or d.get("name") or d.get("id")
     group = PEER_LABEL.get(d.get("peer_group") or "", "its peer group")
-    out = {"standing": "", "capital": "", "liquidity": "", "trends": "", "news": "", "asof": d.get("asof")}
+    out = {"standing": "", "capital": "", "liquidity": "", "trends": "", "actions": "", "asof": d.get("asof")}
 
     # who, and what the agencies say
     kind = TYPE_WORD.get(d.get("type") or "", "bank")
@@ -182,29 +182,31 @@ def brief(d: dict, today: date | None = None) -> dict:
     elif flat:
         out["trends"] = f"None of the ratios has moved materially over the past four periods{asof}."
 
-    # the flagged events of the last 90 days
+    # the agencies' own actions of the last 90 days: an upgrade, a downgrade, an outlook or watch
+    # change. Headlines used to be quoted here too; they left the site on 3 November 2026.
     cut = (today - timedelta(days=90)).isoformat()
-    flagged = sorted((e for e in (d.get("events") or []) if (e.get("severity") or "info") in FLAGGED and str(e.get("date") or "") >= cut),
+    flagged = sorted((e for e in (d.get("events") or []) if e.get("type") == "rating"
+                      and (e.get("severity") or "info") in FLAGGED and str(e.get("date") or "") >= cut),
                      key=lambda e: e["date"], reverse=True)
     if flagged:
-        items = "; ".join(f"{fdate(e['date'])}, {e.get('severity')}: {headline(e.get('title'))}" for e in flagged[:3])
+        items = "; ".join(f"{fdate(e['date'])}, {headline(e.get('title'))}" for e in flagged[:3])
         more = f", and {len(flagged) - 3} more" if len(flagged) > 3 else ""
-        out["news"] = f"Flagged in the last 90 days: {items}{more}."
+        out["actions"] = f"Rating actions in the last 90 days: {items}{more}."
     else:
-        out["news"] = "Nothing has been flagged in the last 90 days."
+        out["actions"] = "No rating action in the last 90 days."
     out["fingerprint"] = fingerprint(d)
     return out
 
 
 def headline(title) -> str:
-    """A headline without the outlet Google News appends to it, cut to a line."""
+    """An event's title without a trailing " - source", cut to a line."""
     s = str(title or "").strip()
     if " - " in s:
         s = s.rsplit(" - ", 1)[0].strip()
     return s if len(s) <= 90 else s[:87].rstrip() + "\u2026"
 
 
-SENTENCES = ("standing", "capital", "liquidity", "trends", "news")
+SENTENCES = ("standing", "capital", "liquidity", "trends", "actions")
 
 
 def brief_text(b: dict) -> str:
@@ -214,7 +216,8 @@ def brief_text(b: dict) -> str:
 # ---- the fingerprint: what a written summary rests on ---------------------------------------------
 def fingerprint(d: dict) -> dict:
     comp = d.get("rating") or {}
-    flagged = [str(e.get("date"))[:10] for e in (d.get("events") or []) if (e.get("severity") or "info") in FLAGGED]
+    flagged = [str(e.get("date"))[:10] for e in (d.get("events") or [])
+               if e.get("type") == "rating" and (e.get("severity") or "info") in FLAGGED]
     return {"band": d.get("band") or "", "composite": d.get("rating_composite") or "",
             "worst": comp.get("worst_letter") or "", "outlooks": ", ".join(comp.get("tones") or []),
             "n": comp.get("n") or 0,
@@ -316,6 +319,10 @@ def check(s: dict, brief_para: str) -> list[str]:
     named = sorted({m.group(1) for m in AGENCY_NAME.finditer(text)})
     if named:
         faults.append("names a rating agency (" + ", ".join(named) + "); the site shows the average and the weakest of the three, never which said what")
+    # the site carries the record and the prices, not the press: a summary that reports headlines
+    # rests on something no page shows (headlines left the site on 3 November 2026)
+    if re.search(r"\b(news|headlines?|press|reported)\b", s["synthesis"], re.I):
+        faults.append("reports news or headlines, which the site no longer carries")
     if re.search(r"\b(Aaa|Aa[123]|A[123]|Baa[123]|Ba[123]|B[123]|Caa)\b", s["synthesis"]):
         faults.append("uses an agency's own rating symbol; the site's letters are AAA, AA+, A- and so on")
     return faults

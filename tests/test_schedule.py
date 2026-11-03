@@ -20,11 +20,11 @@ KICK = Path(__file__).resolve().parent.parent / "tools" / "kick.sh"
 PUSH = Path(__file__).resolve().parent.parent / "tools" / "push-data.sh"
 
 
-def decide(tmp_path, *, collect=None, headlines=None, when=None, **env) -> str:
+def decide(tmp_path, *, collect=None, when=None, **env) -> str:
     """Run the guard against a state directory built for the moment described."""
     state = tmp_path / "data" / "state"
     state.mkdir(parents=True, exist_ok=True)
-    for name, at in (("last-collect", collect), ("last-headlines", headlines)):
+    for name, at in (("last-collect", collect),):
         if at is not None:
             (state / name).write_text(at.strftime("%Y-%m-%dT%H:%M:%SZ") if isinstance(at, datetime) else at)
     out = tmp_path / "out"
@@ -51,8 +51,7 @@ def test_a_slot_arriving_hours_late_still_collects(tmp_path):
 
 
 def test_a_second_slot_the_same_day_does_not_collect_again(tmp_path):
-    mode = decide(tmp_path, collect=datetime.now(timezone.utc), headlines=datetime.now(timezone.utc),
-                  EVENT="schedule")
+    mode = decide(tmp_path, collect=datetime.now(timezone.utc), EVENT="schedule")
     assert mode == "skip"
 
 
@@ -65,23 +64,16 @@ def test_an_unreadable_stamp_is_treated_as_never(tmp_path):
     assert decide(tmp_path, collect="not a date", EVENT="schedule") == "full"
 
 
-# ---- headlines -------------------------------------------------------------------------------
-def test_headlines_refresh_once_the_collection_is_done_and_they_are_stale(tmp_path):
-    now = datetime.now(timezone.utc)
-    if not (1 <= now.isoweekday() <= 5 and 6 <= now.hour <= 19):
-        pytest.skip("headline hours are weekdays 06:00-19:00 UTC")
-    assert decide(tmp_path, collect=now, headlines=now - timedelta(hours=3), EVENT="schedule") == "news"
-
-
-def test_fresh_headlines_are_left_alone(tmp_path):
-    now = datetime.now(timezone.utc)
-    assert decide(tmp_path, collect=now, headlines=now - timedelta(minutes=20), EVENT="schedule") == "skip"
+# ---- after the collection -------------------------------------------------------------------
+def test_a_slot_after_the_collection_has_nothing_to_do_even_in_the_working_day(tmp_path):
+    """Headlines used to be refreshed in these slots. They left the site on 3 November 2026."""
+    assert decide(tmp_path, collect=datetime.now(timezone.utc), EVENT="schedule") == "skip"
 
 
 # ---- pushes ----------------------------------------------------------------------------------
 def test_a_code_push_rebuilds_the_site_once_the_day_is_collected(tmp_path):
     now = datetime.now(timezone.utc)
-    assert decide(tmp_path, collect=now, headlines=now,
+    assert decide(tmp_path, collect=now,
                   EVENT="push", MESSAGE="Tidy the glossary wording") == "build"
 
 
@@ -103,7 +95,7 @@ def test_a_push_on_a_repository_that_has_never_collected_collects(tmp_path):
 def test_a_push_carrying_the_marker_collects_whatever_the_clock_says(tmp_path):
     """How the on-time kick asks for the day's collection, and how a person asks by hand."""
     now = datetime.now(timezone.utc)
-    assert decide(tmp_path, collect=now, headlines=now,
+    assert decide(tmp_path, collect=now,
                   EVENT="push", MESSAGE="Collect 2026-09-09 [collect]") == "full"
 
 
@@ -114,10 +106,10 @@ def test_a_commit_message_cannot_reach_the_shell(tmp_path):
 
 
 # ---- asking by hand --------------------------------------------------------------------------
-@pytest.mark.parametrize("wanted", ["full", "news", "build"])
+@pytest.mark.parametrize("wanted", ["full", "build"])
 def test_a_dispatch_can_force_a_mode(tmp_path, wanted):
     now = datetime.now(timezone.utc)
-    assert decide(tmp_path, collect=now, headlines=now,
+    assert decide(tmp_path, collect=now,
                   EVENT="workflow_dispatch", WANTED=wanted) == wanted
 
 

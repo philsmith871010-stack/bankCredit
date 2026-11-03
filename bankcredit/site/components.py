@@ -280,7 +280,6 @@ NAV = [
     ]),
     ("Monitor", [
         ("policy", "Your counterparties", TOOL + "#policy", "bank"),
-        ("events", "Events", TOOL + "#events", "bell"),
     ]),
     ("Compare", [
         ("likeforlike", "Alternatives", TOOL + "#likeforlike", "compare"),

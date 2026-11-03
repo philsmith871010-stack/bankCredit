@@ -83,10 +83,6 @@ def main(argv=None):
         if res["failed"]:
             print(f"  failed: {', '.join(res['failed'])}")
         return 1 if res["failed"] else 0
-    if cmd == "prune-news":
-        from .adapters.events import prune_news
-        print(f"dropped {prune_news()} rows")
-        return 0
     if cmd == "reprocess":
         from .adapters.pillar3 import Pillar3Adapter
         print(Pillar3Adapter().reprocess(args[0] if args else None))

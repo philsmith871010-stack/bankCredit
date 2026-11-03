@@ -1,5 +1,5 @@
 // My policy: the user's approved counterparties and tenors, kept in this browser (or carried in a share link),
-// checked every visit against the latest public standing, market signal and news. Nothing leaves the browser.
+// checked every visit against the latest public standing, rating actions and market signal. Nothing leaves the browser.
 (function(){
   // An empty data-root is the site root, not a missing one: the home page sets it to "" and
   // a falsy test would send every fetch to ../, which escapes the project directory on Pages.
@@ -43,7 +43,7 @@
   function setPolView(v){try{localStorage.setItem(VIEW,v)}catch(e){}}
   function polVal(it,e,k){
     if(k==='tenor')return it.tenor; if(k==='short')return (e&&e.short)||it.id;
-    if(k==='news30')return e?news30Rank(e):-1; if(k==='rating_grade')return e&&e.rating_grade!=null?-e.rating_grade:null;
+    if(k==='rating_grade')return e&&e.rating_grade!=null?-e.rating_grade:null;
     return e?e[k]:null;
   }
   function polTable(p,flagsOf){
@@ -66,7 +66,6 @@
         '<td class="num mono">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
         '<td class="num mono">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
         asofCell(e)+
-        '<td class="num">'+news30Cell(e)+'</td>'+
         '<td>'+mkt(e.market,1)+'</td>'+
         '<td class="pt-ten">'+tenorPick(it)+'</td>'+
         '<td class="pt-flag">'+(worst?chip(worst[2]||worst[1],worst[0]):'<span class="na">—</span>')+'</td>'+
@@ -74,7 +73,7 @@
     }).join('');
     return '<div class="table-wrap"><table class="plain pol-t" id="pol-table"><thead><tr>'+
       th('short','Name')+th('score','Score','num')+th('rating_grade','Agency rating')+th('cet1','CET1','num')+th('leverage','Lev','num')+
-      th('lcr','LCR','num')+th('nsfr','NSFR','num')+th('age_days','Figures')+th('news30','News 30d','num')+'<th>Market</th>'+th('tenor','Tenor')+'<th>Since approval</th><th></th>'+
+      th('lcr','LCR','num')+th('nsfr','NSFR','num')+th('age_days','Figures')+'<th>Market</th>'+th('tenor','Tenor')+'<th>Since approval</th><th></th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   function save(p){try{localStorage.setItem(KEY,JSON.stringify(p))}catch(e){}}
@@ -186,16 +185,16 @@
   // nothing makes a share link any more; a link already sent still opens one
   function decode(s){try{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))))}catch(e){return null}}
 
-  // A headline is clipped to a line on a card and to two in the dialog, so the row carries the
+  // An event title is clipped to a line on a card and to two in the dialog, so the row carries the
   // whole of it in a tooltip, with the date, what kind of event it is and where it came from.
   var EV_WORD={bad:'adverse',warn:'one to watch',good:'positive'};
   function evRow(x){
     var k=x.severity==='bad'?'bad':(x.severity==='warn'?'warn':'good'), w=EV_WORD[k];
     var tip=tipd(tipHead(esc(x.date||''),w)+'<i>'+esc(x.title||'')+'</i>'+
-      // a headline usually ends in its own publication, so the source is only worth a line of its own
+      // a title can end in its own source, so the source is only worth a line of its own
       // when it is not already there
       ((x.source&&String(x.title||'').toLowerCase().indexOf(String(x.source).toLowerCase())<0)?'<i>'+esc(x.source)+'</i>':'')+
-      (x.type?'<i>'+esc(x.type==='news'?'headline':x.type+' action')+'</i>':''));
+      (x.type?'<i>'+esc(x.type==='disclosure'?'new report':x.type+' action')+'</i>':''));
     var t=esc(x.title||'');
     return '<div'+tip+'><span class="dot dot-'+k+'" title="'+w+'"></span>'+
       '<span class="mono muted">'+esc(x.date||'')+'</span><span class="hd">'+
@@ -213,7 +212,6 @@
     if(b.grade!=null&&e.rating_grade!=null&&e.rating_grade>b.grade+0.4)f.push(['bad','Ratings weaker: '+GRADES[Math.floor(b.grade+0.5)-1]+' → '+e.rating_composite,'Rating weaker']);
     (e.negative||[]).forEach(function(n){if(!item.added||n.date>=item.added)f.push(['bad',n.date+' '+n.title,'Adverse action'])});
     if(e.market&&e.market.direction==='down')f.push(['warn',e.market.label,e.market.label]);
-    if(e.news30&&e.news30.bad)f.push(['warn',e.news30.bad+' adverse headline'+(e.news30.bad>1?'s':'')+' in 30 days',e.news30.bad+' adverse headline'+(e.news30.bad>1?'s':'')]);
     if(e.age_days!=null&&e.age_days>180)f.push(['warn','Regulatory figures '+e.age_days+' days old','Figures '+e.age_days+'d old']);
     if(e.inherited&&e.inherited.length)f.push(['muted','Some figures from the group or lead bank','Group figures']);
     return f;
@@ -515,7 +513,7 @@
           (b.percentile!=null?'<p class="md-foot">Stronger than <b>'+Math.round(b.percentile)+'%</b> of its peer group'+
             mk('percentile')+' ('+esc(String(b.peer_group||'').replace(/_/g,' '))+').</p>':''))+
       '</div>'+
-      sect('Events',(e.news30&&(e.news30.bad+e.news30.warn+e.news30.good)?newsMix(e):''),
+      sect('Events','',
         '<div class="cp-news md-news">'+ev+'</div>')+
     '</div>';
   }
@@ -603,7 +601,7 @@
       return true;
     }).map(function(e){return {e:e,tenor:have[e.id]}}).sort(function(a,b){
       var k=uniSort.key, isx=XCOLS.some(function(c){return c[0]===k});
-      var va=k==='news30'?news30Rank(a.e):(isx?xval(a.e,k):a.e[k]), vb=k==='news30'?news30Rank(b.e):(isx?xval(b.e,k):b.e[k]);
+      var va=isx?xval(a.e,k):a.e[k], vb=isx?xval(b.e,k):b.e[k];
       if(va==null&&vb==null)return 0; if(va==null)return 1; if(vb==null)return -1;
       if(typeof va==='string')return uniSort.dir*va.localeCompare(vb);
       return uniSort.dir*(va-vb);
@@ -655,15 +653,6 @@
     var old=(e.age_days||0)>180;
     return '<td class="mono small asof '+(old?'stale':'muted')+'"'+(old?' title="'+e.age_days+' days old"':'')+'>'+esc(e.asof||'\u2014')+'</td>';
   }
-  // The month's news by severity - the count a treasurer scans for, not the headlines themselves.
-  function news30Cell(e){
-    var n=e.news30||{}, parts=[];
-    if(n.bad)parts.push('<span class="n30 bad" title="'+n.bad+' serious">'+n.bad+'</span>');
-    if(n.warn)parts.push('<span class="n30 warn" title="'+n.warn+' adverse">'+n.warn+'</span>');
-    if(n.good)parts.push('<span class="n30 good" title="'+n.good+' positive">'+n.good+'</span>');
-    return parts.length?parts.join(' '):'<span class="na">\u2014</span>';
-  }
-  function news30Rank(e){ var n=e.news30||{}; return (n.bad||0)*10+(n.warn||0)*3+(n.good||0); }
   function renderUni(){
     var body=document.getElementById('uni-body'); if(!body||!data)return;
     var rows=uniRows(), t=+document.getElementById('uni-tenor').value;
@@ -693,7 +682,6 @@
         '<td class="num mono">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
         xcells(e)+
         asofCell(e)+
-        '<td class="num">'+news30Cell(e)+'</td>'+
         '<td>'+mkt(e.market,1)+'</td>'+
         '<td class="num">'+(r.tenor!=null
             ? '<span class="chip chip-good" title="already in your list">In your list \u00b7 '+esc(tenorLabel(r.tenor))+'</span>'
@@ -766,14 +754,6 @@
     return UNI[k];
   }
   function below(st,x){var n=0;for(var i=0;i<st.v.length;i++)if(st.v[i]<x)n++;return Math.round(n/st.v.length*100)}
-  // the 30-day mix, on the headline panel's own heading: how much has been said about this bank
-  // lately, and in what temper, without making the reader count the lines below
-  function newsMix(e){
-    var n=e.news30||{}, out=['bad','warn','good'].filter(function(k){return n[k]}).map(function(k){
-      return '<span class="dot dot-'+k+'"></span>'+n[k];
-    }).join('');
-    return (out?out+' in 30 days':'nothing in 30 days')+' \u00b7 90-day window';
-  }
   function sk(n){var s='';for(var i=0;i<n;i++)s+='<span class="sk"></span>';
     return '<div class="sk-rows" aria-hidden="true">'+s+'</div>'}
   function sect(title,meta,body,cls){
@@ -877,13 +857,12 @@
           '<span class="ll-ags">'+(e.rating?toneGlyphs(e.rating.tones):'')+'</span></td>'+
         kpi('cet1',e.cet1,1)+kpi('leverage',e.leverage,1)+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
         asofCell(e)+
-        '<td class="num">'+news30Cell(e)+'</td>'+
         '<td class="ll-mkt">'+mp+'</td>'+
         '<td class="ll-addc"><button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></td></tr>';
     }).join('');
     return '<div class="table-wrap scrollbox"><table class="plain ll-t2"><thead><tr>'+
       '<th></th><th>Name</th><th>Score'+mk('score')+'</th><th>Agency rating</th>'+
-      '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Figures</th><th>News 30d</th><th>Market</th><th></th>'+
+      '<th>CET1</th><th>LEV</th><th>LCR</th><th>NSFR</th><th>Figures</th><th>Market</th><th></th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   // The agencies' own ratings: fetched once from the members path, and absent (a build
@@ -957,11 +936,11 @@
         '<td class="mono"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'\u2014')+'</b></td>'+
         '<td class="num mono">'+(e.cet1==null?'\u2014':e.cet1.toFixed(1))+'</td>'+
         '<td class="num mono">'+(e.lcr==null?'\u2014':Math.round(e.lcr)+'%')+'</td>'+
-        asofCell(e)+'<td class="num">'+news30Cell(e)+'</td><td>'+mkt(e.market,1)+'</td>'+
+        asofCell(e)+'<td>'+mkt(e.market,1)+'</td>'+
         '<td class="num"><button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add at '+esc(tenorLabel(t))+'</button></td></tr>';
     }).join('');
     return '<div class="pol-watch" id="pol-watch"><h4>Watching <span class="small muted">\u00b7 '+ws.length+(ws.length===1?' name':' names')+' you follow but do not hold; adding one moves it up</span></h4>'+
-      '<div class="table-wrap"><table class="plain pw-t"><thead><tr><th></th><th>Name</th><th class="num">Score</th><th>Agency rating</th><th class="num">CET1</th><th class="num">LCR</th><th>Figures</th><th class="num">News 30d</th><th>Market</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+      '<div class="table-wrap"><table class="plain pw-t"><thead><tr><th></th><th>Name</th><th class="num">Score</th><th>Agency rating</th><th class="num">CET1</th><th class="num">LCR</th><th>Figures</th><th>Market</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
   }
   // The Build-your-strategy panel: three steps, each saying where the reader has got to. Painted
   // with the list, so adding a name on the universe table moves step two the moment it happens.
@@ -990,7 +969,7 @@
       // an instruction and the open table under it: the survey of the market is the empty state
       html+='<div class="pol-empty"><p><b>Your list is empty.</b> The button below opens every covered name: sort on any column, '+
         'filter by region, type or band, and press Add on a row. Every name you hold is re-checked each night '+
-        'against its regulatory filings, its agency ratings and the news.</p>'+
+        'against its regulatory filings, its agency ratings and the market.</p>'+
         '<p class="small muted">Everything stays in this browser; nothing is sent anywhere. '+
         'To see the page with names on it, <button class="linky" id="pol-demo" type="button">load an example list</button>.</p>'+
         uniBtn('Choose from every covered name')+'</div>'+

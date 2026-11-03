@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "auto, or force one of: full, news, build"
+        description: "auto, or force one of: full, build"
         default: auto
       adapters:
         description: "Adapters for a full run, space separated; blank for the daily set"
@@ -78,11 +78,6 @@ jobs:
           d=$(date -u +%d); case "$d" in 01|15|25) python -m bankcredit.cli run fdic eba edgar te esef fundamentals nsm_release ;; *) echo "skip";; esac
         continue-on-error: true
 
-      - name: Headlines only (Google News per entity plus the agency sweep)
-        if: ${{ needs.decide.outputs.mode == 'news' }}
-        run: BANKCREDIT_NEWS_ONLY=1 python -m bankcredit.cli run events
-        continue-on-error: true
-
       # Bond quotes are fetched afresh for every build (45 days of history per bond) and never committed:
       # the exchange's terms allow private use, not redistribution. Only the change against peers is published.
       - name: Bond quotes (private, rebuilt each run)
@@ -101,17 +96,12 @@ jobs:
           mkdir -p data/state
           # The stamps the next run reads to decide whether anything is owed. Written here, with the
           # data they describe, so a run that fails before publishing leaves the work still owed.
-          date -u +%FT%TZ > data/state/last-headlines
-          if [ "$MODE" = full ]; then
-            date -u +%FT%TZ > data/state/last-collect
-            git add data/
-          else
-            git add data/events.parquet data/runs.parquet data/history.parquet data/json data/state
-          fi
+          date -u +%FT%TZ > data/state/last-collect
+          git add data/
           git config user.name "counterparty-bot"
           git config user.email "philsmith871010@gmail.com"
           git checkout -- . 2>/dev/null || true
-          git diff --cached --quiet || git commit -m "$([ "$MODE" = full ] && echo "Pipeline data $(date -u +%F)" || echo "Headlines $(date -u +%FT%H:%M)")"
+          git diff --cached --quiet || git commit -m "Pipeline data $(date -u +%F)"
           # -X theirs settles the rebuilt JSON, where the fresh data wins. It must not settle the
           # tables: a local run's answers, pushed while this one was collecting, are not stale and
           # -X theirs would drop them. .gitattributes sends those through merge-data.py instead,

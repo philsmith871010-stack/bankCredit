@@ -137,20 +137,8 @@ BOND_MIN_WINDOW_DAYS = 5  # the shortest history a bond change may be measured o
 BOND_WINDOW_DAYS = 30
 
 
-def _story_key(title: str) -> str:
-    """The same story from several outlets: strip the outlet suffix and punctuation, keep the first eight words."""
-    t = re.sub(r"\s+[-–|]\s+[^-–|]{2,40}$", "", str(title)).lower()
-    words = re.findall(r"[a-z0-9€$£]+", t)
-    return " ".join(w for w in words if w not in ("the", "a", "an", "of", "to", "and", "in", "on", "for", "with", "by", "at", "its"))[:80]
-
-
 def _dedupe_events(ev: pd.DataFrame) -> pd.DataFrame:
-    ev = ev.sort_values("date", ascending=False).drop_duplicates(["date", "title"])
-    news = ev.type == "news"
-    key = ev.title.map(_story_key)
-    week = pd.to_datetime(ev.date).dt.to_period("W").astype(str)
-    dup = news & ev.assign(_k=key, _w=week).duplicated(["_k", "_w"])
-    return ev[~dup]
+    return ev.sort_values("date", ascending=False).drop_duplicates(["date", "title"])
 
 
 def _bond_changes(bonds: pd.DataFrame, quotes: pd.DataFrame) -> dict[str, dict]:
@@ -453,7 +441,14 @@ def compare_rows(board: list[dict], series_all: dict, books: dict | None = None)
         h = r.get("history") or {}
         sc_series = list(h.get("score") or [])
         last_back = sc_series[-1][0] if sc_series else ""
-        sc_series += [[d, v] for d, v, _g in (h.get("snapshots") or []) if d > last_back and v is not None]
+        # After the last quarter end, one snapshot per quarter: the latest. Analysis draws by quarter,
+        # and from 1 November a month of daily snapshots filled the whole COMPARE_POINTS window,
+        # pushing every earlier quarter out, so the trend was one point and the rank had no history.
+        latest_in_q = {}
+        for d, v, _g in (h.get("snapshots") or []):
+            if d > last_back and v is not None:
+                latest_in_q[f"{d[:4]}Q{(int(d[5:7]) - 1) // 3 + 1}"] = [d, v]
+        sc_series += sorted(latest_in_q.values())
         if len(sc_series) >= 2:
             ser["score"] = sc_series[-COMPARE_POINTS:]
         # the composite as the register has it, not three days of our own snapshots
@@ -580,39 +575,12 @@ def peer_quartiles(details: dict) -> dict:
 
 
 
-def news_todo(events: pd.DataFrame, names: dict[str, str], limit: int = 400) -> dict:
-    """The headlines nobody has judged yet, as plain JSON.
-
-    The news review is the one job here that needs a judgement rather than a rule, and the only
-    thing it needs to start is this list. Publishing it means the scheduled run does not have to
-    clone the repository or read a parquet file to find its work - it fetches one file, judges what
-    is in it, and writes the verdicts back. Newest first, because a headline about a bank in
-    trouble is worth judging today and a year-old one is not.
-    """
-    from .adapters.events import load_verdicts
-    if events is None or events.empty:
-        return {"unjudged": 0, "rows": []}
-    news = events[events.type == "news"]
-    if news.empty:
-        return {"unjudged": 0, "rows": []}
-    seen = load_verdicts()
-    todo = news[~news.event_id.isin(seen)].sort_values("date", ascending=False)
-    # The same columns the skill's own working file has. Not the link: these are Google News
-    # redirect URLs, 400 of them is most of the file, and the judgement is made on the headline.
-    rows = [{"event_id": r.event_id, "entity_id": r.entity_id, "short": names.get(r.entity_id, r.entity_id),
-             "date": str(r.date), "severity": _clean(r.severity), "source": _clean(r.source),
-             "title": _clean(r.title)}
-            for r in todo.head(limit).itertuples()]
-    return {"unjudged": int(len(todo)), "judged": len(seen), "rows": rows}
-
-
 def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=None) -> list[dict]:
     """What we hold for each entity: regulatory history (periods, first, last, sources) overall and per
-    metric, ratings by agency, prices, CDS, bonds and news, with the score the board gives it."""
+    metric, ratings by agency, prices, CDS and bonds, with the score the board gives it."""
     rows = []
     core = facts[facts.metric == "cet1_ratio"] if not facts.empty else facts
     by_board = {r["id"]: r for r in (board or [])}
-    cutoff90 = (date.today() - timedelta(days=90)).isoformat()
     for e in active:
         f = facts[facts.entity_id == e.id] if not facts.empty else facts
         g = core[core.entity_id == e.id] if not core.empty else core
@@ -641,7 +609,6 @@ def data_audit(active, facts, ratings, prices, cds, bonds, events=None, board=No
                      "symbol": str(p.symbol.iloc[-1]) if not p.empty and "symbol" in p else "",
                      "cds_days": int(c.date.nunique()) if not c.empty else 0,
                      "bonds": int(len(b)) if b is not None else 0,
-                     "news90": int(((ev.type == "news") & (ev.date.astype(str).str[:10] >= cutoff90)).sum()) if ev is not None else 0,
                      "events": int(len(ev)) if ev is not None else 0,
                      "ticker": bool(e.tickers),
                      "score": bd.get("score"), "band": bd.get("band", ""), "coverage": bd.get("coverage")})
@@ -652,6 +619,10 @@ def export_json() -> None:
     entities = load_entities()
     facts, ratings, prices, cds, events, runs = (store.read(t) for t in ["facts", "ratings", "prices", "cds", "events", "runs"])
     events = public_events(events)
+    # Headlines left the site on 3 November 2026 (docs/news-removed.md). The rows already stored
+    # stay in the table and are dropped here, once, so no page can reach them.
+    if not events.empty and "type" in events:
+        events = events[events.type != "news"]
     sov = _sovereigns(store.read("sovereign_ratings"))
     bonds_tbl, quotes_tbl = store.read("bonds"), store.read("bond_quotes")
     bond_changes = _bond_changes(bonds_tbl, quotes_tbl)
@@ -760,23 +731,19 @@ def export_json() -> None:
                          "rating_grade": composite, "coverage": sc.coverage})
         board.append(row)
         # the policy page carries everything a treasurer checks on an approved name, in one record
-        recent, negative, news30 = [], [], {"bad": 0, "warn": 0, "good": 0}
+        recent, negative = [], []
         if not ev.empty:
-            cutoff30 = (today - timedelta(days=30)).isoformat()
             e2 = ev.sort_values("date", ascending=False).drop_duplicates(["date", "title"])
             for x in e2.itertuples():
-                if x.type == "news" and str(x.date)[:10] >= cutoff30 and x.severity in news30:
-                    news30[x.severity] += 1
                 if x.type == "rating" and re.search(r"downgrade|negative|withdr", str(x.title), re.I):
                     negative.append({"date": str(x.date)[:10], "title": str(x.title)[:140]})
-                # three is what a card draws, and the dialog has the bank's own file; a fourth
-                # headline is a 178-character news URL nobody follows from here
+                # three is what a card draws, and the dialog has the bank's own file
                 if x.severity != "info" and len(recent) < 3:
                     recent.append({"date": str(x.date)[:10], "type": x.type, "severity": x.severity, "title": str(x.title)[:160], "url": _clean(getattr(x, "url", "")) or ""})
         policy_rows.append({**{k: row[k] for k in ("id", "name", "short", "country", "type", "region", "group", "peer_group", "public_score", "band",
                                                     "coverage", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "rating", "market", "asof", "age_days",
                                                     "rating_grade", "rating_composite", "rating_worst", "inherited")},
-                            "score": row["public_score"], "negative": negative[:3], "news30": news30,
+                            "score": row["public_score"], "negative": negative[:3],
                             # The six pillar sub-scores and the market overlay, so the browser can
                             # weigh them the reader's own way rather than ours. An array, in the
                             # order PILLAR_ORDER names, because six keys a row is 18 KB of JSON on
@@ -867,8 +834,8 @@ def export_json() -> None:
         store.upsert("history", pd.DataFrame(new_hist))
     store.write_json("board", {"generated": generated, "rows": [{k: v for k, v in r.items() if k != "history"} for r in board], "benchmarks": benchmarks})
     # The sovereign block is a fact about a country, not about a bank, and 152 banks share 25 of
-    # them: repeating it per row was 65 KB of the file the page waits for. The headlines went the
-    # same way - the dialog reads them from the name's own detail file, which every name has.
+    # them: repeating it per row was 65 KB of the file the page waits for. Events went the same way:
+    # the dialog reads them from the name's own detail file, which every name has.
     store.write_json("policy", {"generated": generated, "sovereigns": sov, "rows": policy_rows})
     store.write_json("audit", {"generated": generated, "rows": data_audit(active, facts, ratings, prices, cds, store.read("bonds"), events, board)})
     store.write_json("compare", {"generated": generated, "metrics": COMPARE_METRICS, "rows": compare_rows(board, series_all, books)})
@@ -890,7 +857,7 @@ def export_json() -> None:
                              "title": r.title, "url": r.url, "fetched_at": str(r.fetched_at)})
     from . import review
     queue = [{k: i.get(k) for k in ("id", "entity_id", "reference_date", "page", "reason", "url")} for i in review.load()]
-    store.write_json("news_todo", {"generated": generated, **news_todo(events, {e.id: e.short_name for e in entities})})
+    (store.DATA / "json" / "news_todo.json").unlink(missing_ok=True)   # the headline review's worklist, retired with it
     store.write_json("status", {"generated": datetime.utcnow().isoformat(timespec="seconds") + "Z", "runs": status,
                                 "documents": doc_rows, "document_counts": counts, "review": queue,
                                 "learning": __import__("bankcredit.learn", fromlist=["summary"]).summary()})

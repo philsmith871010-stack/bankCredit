@@ -331,8 +331,9 @@ def summary_block(b: dict, generated: str) -> str:
     if not s:
         l2 = '<div class="brief-meta muted">No written summary yet; the paragraph above is drawn from the data on every build.</div>'
     elif S.check(s, S.brief_text(br)):
-        # it quotes a figure the paragraph no longer carries; it is owed a rewrite and is not shown as current
-        l2 = (f'<div class="brief-meta muted">The written summary of {S.fdate(s["written"])} rests on figures that have since moved '
+        # it quotes a figure the paragraph no longer carries, or headlines the site no longer shows;
+        # it is owed a rewrite and is not shown as current
+        l2 = (f'<div class="brief-meta muted">The written summary of {S.fdate(s["written"])} no longer matches the data '
               'and is being rewritten; the paragraph above is drawn from the data on every build.</div>')
     else:
         moved = S.changes_since(s.get("inputs") or {}, br["fingerprint"])
@@ -533,199 +534,21 @@ def page_bank(b, generated):
 <section class="panel active" data-panel="trends">{f'<div class="sm-intro small muted">{n_charts} series held, up to 48 periods each. Click a card to open it full size with every point and its date.{" The grey band on a ratio is where this bank" + chr(8217) + "s peer group stands today, quartile to quartile, with the median dashed — not a peer history." if b.get("peer_ratios") else ""}</div>' if n_charts else ''}{f'<div class="sm-flow">{"".join(charts)}</div>' if charts else '<div class="empty">Trends appear once two or more periods have been collected.</div>'}</section>
 <section class="panel" data-panel="ratings">{ratings_html}</section>
 <section class="panel" data-panel="market">{market_html}</section>
-<section class="panel" data-panel="events">{f'<div class="sm-intro small muted">Every event held for this name: the flagged ones first, then the rest, each newest first. Rating actions, Pillar 3 documents and filtered headlines; severity is rules-based &mdash; read the source.</div>' if b["events"] else ''}<div id="pevents">{events_rows}</div>{'<div class="pager" id="pe-more" data-step="25"></div>' if b["events"] else ''}</section>
+<section class="panel" data-panel="events">{f'<div class="sm-intro small muted">Every event held for this name: the flagged ones first, then the rest, each newest first. Rating actions from the ESMA register and Pillar 3 documents; severity follows the agency&rsquo;s own action.</div>' if b["events"] else ''}<div id="pevents">{events_rows}</div>{'<div class="pager" id="pe-more" data-step="25"></div>' if b["events"] else ''}</section>
 {debug_panel(b) if b.get("debug") else ''}
 <section class="panel" data-panel="sources"><h3>Documents and feeds</h3>{src_rows or '<div class="empty">Nothing collected yet.</div>'}<h3>Latest value of every metric held</h3><div class="table-wrap"><table class="plain sortable"><thead><tr><th data-sortable>Metric</th><th data-sortable class="num">Value</th><th data-sortable>Reference date</th><th data-sortable>Source</th><th data-sortable class="num">Confidence</th></tr></thead><tbody>{metric_rows}</tbody></table></div></section></div>'''
     return c.shell(b["name"], content, "", "../", generated)
 
 
 def page_brief_redirect(generated):
-    return '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../events/index.html"><title>Brief moved</title><p>The brief now opens the <a href="../events/index.html">Events</a> page.</p>'
+    return '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=../tool/index.html#policy"><title>Brief moved</title><p>The brief has gone; <a href="../tool/index.html#policy">your counterparties</a> carry what has moved on each name.</p>'
 
 
-# Two tabs held back while their scope is settled: the universe-wide ratings grid and the events
-# feed. Both are the most complete public reproduction on the site of what the agencies and the
-# press have said, and neither answers a question the covered-name table and a bank's own page do
-# not answer better. Nothing behind them is torn out - the profile pages, the RSS feed and the
-# flags on a reader's own list all still build - so bringing them back is this line.
+# A tab named here is held back: its fragment is not written and its button is not drawn. The
+# Events tab was removed outright on 3 November 2026 (docs/news-removed.md): a name's rating
+# actions are on its Ratings tab and its documents on Sources, so the feed added nothing a reader
+# could not find on the name itself.
 HOME_TABS_HIDDEN = ()
-
-
-def event_items(board):
-    """Every event held for every covered name, newest first. The feed and the page share it."""
-    items = []
-    recent = (datetime.utcnow() - timedelta(days=45)).date().isoformat()
-    for r in board["rows"]:
-        for e in (load(f"banks/{r['id']}").get("events") or []):
-            d = str(e.get("date"))[:10]
-            # routine affirmations stay on the profile page; the universe feed shows them only when fresh
-            if e.get("type") == "rating" and "affirm" in str(e.get("title", "")).lower() and d < recent:
-                continue
-            items.append((d, r, e))
-    items.sort(key=lambda x: x[0], reverse=True)
-    return items
-
-
-def write_events_feed(board, generated) -> None:
-    """The RSS feed outlives the page. Someone subscribed to it should not lose it because a tab
-    was put away, so it is written from the build rather than as a side effect of drawing the page."""
-    items = event_items(board)
-    flagged = [(d, r, e) for d, r, e in items
-               if e.get("severity") in ("bad", "warn", "good")
-               or (e.get("type") == "rating" and "affirm" not in str(e.get("title", "")).lower())][:100]
-    (OUT / "events").mkdir(exist_ok=True)
-    _write(OUT / "events" / "feed.xml", events_feed(flagged, generated))
-
-
-def page_events(board, status, generated, inner: bool = False):
-    items = event_items(board)
-    tone = {"bad": "bad", "warn": "warn", "good": "good", "info": "muted"}
-    def row(d, r, e):
-        url = e.get("url") or ""
-        title = f'<a href="{c.esc(url)}" target="_blank" rel="noopener">{c.esc(e.get("title"))}</a>' if url and str(url).startswith("http") else c.esc(e.get("title"))
-        return (f'<div class="event" data-type="{c.esc(e.get("type") or "")}"><span class="mono muted">{d}</span><div><a class="b" href="../banks/{r["id"]}.html">{c.esc(r["name"])}</a>'
-                f'<div>{title}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(e.get("type") or ""), "navy")} {c.chip(c.esc(e.get("severity") or "info"), tone.get(e.get("severity"), "muted"))}</div>')
-    # a bank's documents collected on one day collapse into a single line
-    merged, seen_batch = [], {}
-    for d, r, e in items:
-        if e.get("type") == "disclosure":
-            key = (d, r["id"])
-            if key in seen_batch:
-                seen_batch[key]["n"] += 1
-                m = re.search(r"period (\d{4})", str(e.get("title", "")))
-                if m:
-                    seen_batch[key]["years"].add(m.group(1))
-                continue
-            m = re.search(r"period (\d{4})", str(e.get("title", "")))
-            seen_batch[key] = {"n": 1, "years": {m.group(1)} if m else set()}
-            merged.append((d, r, dict(e, _batch=seen_batch[key])))
-        else:
-            merged.append((d, r, e))
-    def row2(d, r, e):
-        bt = e.get("_batch")
-        if bt and bt["n"] > 1:
-            yrs = sorted(bt["years"])
-            span = f' ({yrs[0]}–{yrs[-1]})' if len(yrs) > 1 else (f' ({yrs[0]})' if yrs else "")
-            e = dict(e, title=f'{bt["n"]} Pillar 3 documents collected{span}')
-        return row(d, r, e)
-    rows, last_day = "", None
-    for d, r, e in merged[:300]:
-        if d != last_day:
-            rows += f'<div class="ev-day"><span>{d}</span></div>'
-            last_day = d
-        rows += row2(d, r, e)
-    counts = {}
-    for _, _, e in items:
-        counts[e.get("type")] = counts.get(e.get("type"), 0) + 1
-    filters = f'<button class="filter active" data-type="all">All · {len(items)}</button>' + "".join(f'<button class="filter" data-type="{c.esc(t)}">{c.esc(t.title())} · {n}</button>' for t, n in sorted(counts.items()))
-    shown_note = f'<span class="small muted ev-shown">The last {min(300, len(merged))} entries, newest first; one line per bank per day. Full history on each profile.</span>'
-    content = (f'<div class="page-head"><div><h1>Events</h1><div class="lede">Newest first: rating actions, Pillar 3 reports and filtered headlines.</div></div></div>'
-               + digest(board, status, generated) +
-               f'<div class="sev-key small">Severity is a word match on the headline, not a judgement: '
-               f'{c.chip("bad", "bad")} names a failure, fraud, loss, resolution or default; '
-               f'{c.chip("warn", "warn")} a downgrade, negative outlook, probe or fine; '
-               f'{c.chip("good", "good")} an upgrade or a positive outlook. Anything else is '
-               f'{c.chip("info", "muted")}. Read the source before you act on it.</div>'
-               f'<div class="toolbar ev-toolbar"><div class="filters" id="event-filters">{filters}<a class="filter" href="feed.xml" title="RSS feed of flagged events">RSS feed</a></div><div class="search">{c.ico("search", 16, c.MUTED)}<input id="evq" placeholder="Bank or headline" autocomplete="off"></div>{shown_note}</div><div class="card pad" id="events">{rows or "<div class=empty>Nothing collected yet.</div>"}</div><div class="pager" id="ev-more" data-step="60"></div>'
-               f'<p class="note">One line per bank per day; a bank\'s full history is on its own profile. The RSS feed carries the last 100 flagged events.</p>')
-    return content if inner else c.shell("Events", content, "events", "../", generated)
-
-
-def events_feed(flagged, generated) -> str:
-    from email.utils import format_datetime
-    from datetime import timezone
-    def rfc(d):
-        try:
-            return format_datetime(datetime.fromisoformat(d).replace(tzinfo=timezone.utc))
-        except Exception:
-            return ""
-    items = "".join(
-        f'<item><title>{c.esc(r["short"])}: {c.esc(e.get("title"))}</title><link>{c.esc(e.get("url") or "")}</link>'
-        f'<guid isPermaLink="false">{c.esc(e.get("event_id") or "")}</guid><pubDate>{rfc(d)}</pubDate>'
-        f'<category>{c.esc(e.get("type") or "")}</category><category>{c.esc(e.get("severity") or "")}</category>'
-        f'<description>{c.esc(r["name"])} · {c.esc(e.get("source") or "")} · {c.esc(e.get("severity") or "")}</description></item>'
-        for d, r, e in flagged)
-    return (f'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Counterparty · flagged events</title>'
-            f'<link>https://philsmith871010-stack.github.io/bankCredit/events/index.html</link>'
-            f'<description>Rating actions and credit-relevant headlines for the covered banks, rules-based severity. Information, not advice.</description>'
-            f'<lastBuildDate>{rfc(generated[:19])}</lastBuildDate>{items}</channel></rss>')
-
-
-
-# The credit indices under the weekly brief. A treasurer knows these; a councillor reading over
-# their shoulder may not, and a number with "bp" after it explains nothing on its own.
-BENCH_NOTE = {
-    "CDX IG 5y": "The cost of insuring a basket of 125 investment-grade North American companies "
-                 "against default for five years.",
-    "iTraxx Europe 5y": "The same for 125 investment-grade European companies.",
-    "iTraxx Senior Financials 5y": "Senior debt of 30 large European banks and insurers - the "
-                                   "closest index to the risk on this site.",
-    "iTraxx Sub Financials 5y": "The subordinated debt of the same 30 firms, which absorbs losses "
-                                "before senior debt does and so trades wider.",
-    "iTraxx Crossover 5y": "75 European companies rated below investment grade: the market's "
-                           "appetite for risk, seen at its most sensitive.",
-}
-
-
-def digest(board, status, generated):
-    """Rules-based daily brief: what moved in the last seven days, drawn from the same tables as the site."""
-    today = datetime.utcnow().date()
-    since7 = (today - timedelta(days=7)).isoformat()
-    since30 = (today - timedelta(days=30)).isoformat()
-    rows = board["rows"]
-    by_id = {r["id"]: r for r in rows}
-    ratings, news, docs = [], [], []
-    for r in rows:
-        for e in (load(f"banks/{r['id']}").get("events") or []):
-            d = str(e.get("date"))[:10]
-            if d < since7:
-                continue
-            if e.get("type") == "rating" and "affirm" not in str(e.get("title", "")).lower():
-                ratings.append((d, r, e))
-            elif e.get("type") == "news" and e.get("severity") in ("bad", "warn", "good"):
-                news.append((d, r, e))
-            elif e.get("type") == "disclosure":
-                docs.append((d, r, e))
-    ratings.sort(key=lambda x: x[0], reverse=True); news.sort(key=lambda x: (x[2].get("severity") != "bad", x[0]), reverse=False)
-    bm = board.get("benchmarks") or []
-    widen = [b for b in bm if (b.get("change30") or 0) >= 5]
-    tighten = [b for b in bm if (b.get("change30") or 0) <= -5]
-    band_d = [r for r in rows if r.get("band") == "D"]
-    weak_mkt = [r for r in rows if (r.get("market_public") or r.get("market") or {}).get("direction") == "down"]
-    unverified = [d for d in (status.get("documents") or []) if d["status"] == "unverified" and d["fetched_at"][:10] >= since7]
-    queue = status.get("review") or []
-
-    tone = {"bad": "bad", "warn": "warn", "good": "good"}
-    def ev_line(d, r, e):
-        url = e.get("url") or ""
-        t = f'<a href="{c.esc(url)}" target="_blank" rel="noopener">{c.esc(e.get("title"))}</a>' if str(url).startswith("http") else c.esc(e.get("title"))
-        sev = e.get("severity")
-        return (f'<div class="event"><span class="mono muted">{d}</span><div><a class="b" href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a>'
-                f'<div>{t}</div><div class="muted small">{c.esc(e.get("source"))}</div></div>{c.chip(c.esc(sev), tone[sev]) if sev in tone else ""}</div>')
-
-    def bank_links(xs):
-        return ", ".join(f'<a href="../banks/{r["id"]}.html">{c.esc(r["short"])}</a>' for r in xs) or "none"
-
-    # The first 25 stale names, oldest figures first, and a count of the rest with the way to the
-    # whole list, so a short list never reads as the complete one.
-    stale_all = sorted((r for r in rows if r["age_days"] and r["age_days"] > 150), key=lambda r: -r["age_days"])
-    stale_links = bank_links(stale_all[:25]) + (
-        f' and <a href="../admin/index.html#status">{len(stale_all) - 25} more</a>' if len(stale_all) > 25 else "")
-
-    market_line = ('<div class="rtiles brief-bm">' + "".join(f'<div class="rtile" title="{c.esc(BENCH_NOTE.get(b["label"], b["label"]))}"><div class="rtile-n mono">{b["value"]:.0f}<small>bp</small></div><div class="rtile-l">{c.esc(b["label"])}</div><div class="small {"bad" if b["change30"] > 4 else "good" if b["change30"] < -4 else "muted"}">{"+" if b["change30"] > 0 else ""}{b["change30"]:.0f} bp, 30 days</div></div>' for b in bm if b.get("change30") is not None) + '</div><p class="note">A basis point is one hundredth of a percentage point. These are index levels for the whole credit market, not for any bank on this site: wider means the market is charging more to take credit risk, tighter means less. They are context for a name that moved, not a judgement on it.</p>') if bm else "<p>Credit benchmark series not yet collected.</p>"
-    lead = []
-    if widen:
-        lead.append(f'Spreads are wider on the month in {", ".join(c.esc(b["label"]) for b in widen)}.')
-    if tighten:
-        lead.append(f'Tighter on the month: {", ".join(c.esc(b["label"]) for b in tighten)}.')
-    if not widen and not tighten and bm:
-        lead.append("Benchmark spreads are little changed on the month.")
-    lead.append(f'{len(ratings)} rating action{"s" if len(ratings) != 1 else ""} and {len(news)} flagged headline{"s" if len(news) != 1 else ""} in the last seven days across {len(rows)} entities.')
-    content = f'''<div class="card pad digest"><div class="pc-head" style="padding:0 0 8px"><h3>This week <span class="muted small">· written by fixed rules, not a model · {c.esc(today.isoformat())}</span></h3></div><p class="lead">{" ".join(lead)}</p>{market_line}</div>
-<div class="grid-2 brief-grid"><div class="card pad"><h3>Watch points</h3><div class="kv"><div><span>Band D, weakest public score</span><span>{bank_links(band_d)}</span></div><div><span>Market signal widening or equity weak</span><span>{bank_links(weak_mkt)}</span></div><div><span>Regulatory figures older than 150 days</span><span>{stale_links}</span></div></div></div>
-<div class="brief-side"><div class="card pad"><h3>New Pillar 3 documents</h3><p>{len(docs)} collected in the last seven days. {len(unverified)} loaded with warnings and shown as unverified; {len(queue)} waiting in the review queue.</p><a class="filter" href="../admin/index.html#status">Status</a></div>
-<div class="card pad"><h3>When this refreshes</h3><div class="kv"><div><span>Headlines</span><span>every two hours, 07:00 to 19:00 UK, weekdays</span></div><div><span>Ratings and rating actions</span><span>with the morning run, daily</span></div><div><span>Prices and market signals</span><span>with the morning run, daily</span></div><div><span>Pillar 3 figures</span><span>as each firm publishes, checked daily</span></div></div><a class="filter" href="feed.xml" title="RSS feed of flagged events">RSS feed of flagged events</a></div></div></div>'''
-    return content
 
 
 def page_method(generated, inner: bool = False):
@@ -735,7 +558,7 @@ def page_method(generated, inner: bool = False):
     grade_cells = "".join(f'<td class="mono small">{c.esc(l)}<br>{RATING_SCORE[i + 1]}</td>' for i, l in enumerate(GRADE_LETTERS))
     ratio_weight = sum(w for w, _ in PILLARS.values())
     body = f'''<div class="card pad prose" id="method-prose">
-<h2>Sources</h2><p>Regulatory figures come from the FDIC API (US banks, lead bank subsidiary), the EBA Pillar 3 Data Hub and Transparency Exercises (EU and EEA banks, consolidated), and each firm's own Pillar 3 disclosures (UK and other regions, read from PDF by a rules-based KM1 extractor with arithmetic validation; no AI service). Ratings and rating actions come from the ESMA European Rating Platform. Prices come from public market data. Bond quotes come from Börse Frankfurt's public price pages for each bank's senior fixed-rate bonds (two to eight years to run); they stay private and only the 30-day yield change against other bank bonds in the same currency is shown. CDS levels are medians of the day's reported trades in DTCC's public swap-data files (indicative, inferred from upfront payments), and the iTraxx and CDX index levels shown as credit benchmarks are index prints from the same source. The ICE BofA option-adjusted spread indices published by FRED are collected only where a FRED API key is configured, and nothing on this site is currently built from them. Headlines are discovered through Google News and kept only when they pass a credit vocabulary and noise filter. Every figure on a profile carries its source, method and reference date.</p>
+<h2>Sources</h2><p>Regulatory figures come from the FDIC API (US banks, lead bank subsidiary), the EBA Pillar 3 Data Hub and Transparency Exercises (EU and EEA banks, consolidated), and each firm's own Pillar 3 disclosures (UK and other regions, read from PDF by a rules-based KM1 extractor with arithmetic validation; no AI service). Ratings and rating actions come from the ESMA European Rating Platform. Prices come from public market data. Bond quotes come from Börse Frankfurt's public price pages for each bank's senior fixed-rate bonds (two to eight years to run); they stay private and only the 30-day yield change against other bank bonds in the same currency is shown. CDS levels are medians of the day's reported trades in DTCC's public swap-data files (indicative, inferred from upfront payments), and the iTraxx and CDX index levels shown as credit benchmarks are index prints from the same source. The ICE BofA option-adjusted spread indices published by FRED are collected only where a FRED API key is configured, and nothing on this site is currently built from them. Every figure on a profile carries its source, method and reference date.</p>
 <h2>Score</h2><p>Two parts. The <span class="b">rating anchor</span> is {RATING_WEIGHT} percent of the score: the composite agency rating (the average of the long-term ratings Fitch, S&amp;P and Moody's hold on the bank, whichever of them rate it, on a common scale from AAA to CCC) converted to a sub-score by the table below. The <span class="b">ratio pillars</span> are the other {ratio_weight} percent: each regulatory metric is converted to a 0 to 100 sub-score by straight-line interpolation between the thresholds below, averaged within its pillar and weighted. Missing metrics do not score zero: the ratio weights are re-scaled over what is available and the coverage percentage is shown. A band is only assigned when coverage is at least 50 percent.</p>
 <p>A score needs three things, and is withheld with the reason stated when any is missing: an agency rating (ratios alone say too little, and a young or small bank's ratios are often high because its balance sheet is small or immature), a capital ratio (a rating alone says nothing about today's balance sheet), and capital figures no older than eighteen months. Unrated banks and banks whose latest Pillar 3 figures are stale therefore show "not scored" rather than a number, and they can still be sorted and compared on the ratios and ratings they do have. A bank rated in the BBB range is capped at 74.9 (band B) and a bank rated below investment grade at 64.9 (band C): strong ratios can lift a bank at most one band above what its rating says.</p>
 <div class="wbar" aria-hidden="true"><span style="flex:{RATING_WEIGHT}" class="w-rating">Rating {RATING_WEIGHT}</span>{"".join(f'<span style="flex:{w}" class="w-{k}{" w-narrow" if w < 10 else ""}" title="{k.replace("_", " ").title()} {w}">{({"capital": "Capital", "liquidity": "Liquidity", "stability": "Stability", "asset_quality": "Assets", "profitability": "Profit"}[k] + " ") if w >= 10 else ""}{w}</span>' for k, (w, _) in PILLARS.items())}</div>
@@ -1099,7 +922,7 @@ UNIVERSE_PANEL = f"""<p class="small muted">Every name, sortable on any column, 
   <th class="uni-st" title="watching"></th><th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score{c.info("score")}</th>
   <th data-sort="rating_grade">Agency rating{c.info("composite")}</th><th data-sort="cet1" class="num">CET1{c.info("cet1_ratio")}</th><th data-sort="leverage" class="num">Lev{c.info("leverage_ratio")}</th>
   <th data-sort="lcr" class="num">LCR{c.info("lcr")}</th><th data-sort="nsfr" class="num">NSFR{c.info("nsfr")}</th>
-  <th data-sort="asof" class="uni-fig">Figures{c.info("as_at")}</th><th data-sort="news30" class="num" title="headlines and rating actions kept in the last 30 days, by severity">News 30d</th><th>Market{c.info("market_signal")}</th><th></th></tr></thead><tbody id="uni-body"><tr class="sk-tr"><td colspan="12"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr></tbody></table></div><div class="tfoot small muted" id="uni-count2"></div>
+  <th data-sort="asof" class="uni-fig">Figures{c.info("as_at")}</th><th>Market{c.info("market_signal")}</th><th></th></tr></thead><tbody id="uni-body"><tr class="sk-tr"><td colspan="12"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr></tbody></table></div><div class="tfoot small muted" id="uni-count2"></div>
 """
 
 
@@ -1115,8 +938,6 @@ def home_panels(board, status, generated) -> dict[str, str]:
     # and the feed are not sitting at a guessable URL for anyone who looks
     if "ratings" not in HOME_TABS_HIDDEN:
         out["ratings"] = _panel_content(page_ratings(generated, inner=True), "Compare", "Ratings")
-    if "events" not in HOME_TABS_HIDDEN:
-        out["events"] = _panel_content(page_events(board, status, generated, inner=True), "Monitor", "Events")
     return out
 
 
@@ -1136,17 +957,15 @@ def page_tool(board, status, generated):
         '<div class="tabs" role="tablist">'
         '<button class="tab active" data-tab="strategy">Build your strategy</button>'
         '<button class="tab" data-tab="policy">Your counterparties<span class="tab-n" id="tn-policy"></span></button>'
-        '<button class="tab" data-tab="events">Events</button>'
         '<button class="tab" data-tab="likeforlike">Alternatives<span class="tab-n" id="tn-ll"></span></button>'
         '<button class="tab" data-tab="analysis">Analysis</button>'
         '<button class="tab" data-tab="ratings">Ratings</button></div>'
         + strategy_panel()
         + '<section class="panel" data-panel="policy">'
         + panel_head("Monitor", "Your counterparties",
-                     "Every name on your list, re-checked each night against its filings, its ratings and the news, with what has moved since you approved it. Names you are only watching sit beneath.")
+                     "Every name on your list, re-checked each night against its filings, its ratings and the market, with what has moved since you approved it. Names you are only watching sit beneath.")
         + '<div id="policy-body"><div class="sk-cards" aria-hidden="true">' + '<span class="sk"></span>' * 4 + '</div></div>'
         '<div class="pol-share" id="pol-share" hidden><button class="filter" id="pol-clear">Clear all</button></div></section>'
-        f'<section class="panel" data-panel="events" data-src="data/panels/events.html?v={v}"></section>'
         '<section class="panel" data-panel="likeforlike">'
         + panel_head("Compare", "Alternatives",
                      "At each tenor, the covered names at least as strong as the weakest you already accept: same or better band, ratings and score, and no widening market signal.")
@@ -1206,7 +1025,7 @@ def page_landing(board, status, generated):
             '<rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>')
     return (f'<!doctype html>\n<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\n'
             f'<title>{P} · PWLBtoday</title>\n'
-            '<meta name="description" content="Who can you deal with, and for how long? Every covered bank and building society scored from its regulatory filings, its agency ratings and the news, against the weightings you choose. Build a counterparty policy, watch every name on it, and find the next one. From PWLBtoday.">\n'
+            '<meta name="description" content="Who can you deal with, and for how long? Every covered bank and building society scored from its regulatory filings and its agency ratings, with the market&rsquo;s own signal, against the weightings you choose. Build a counterparty policy, watch every name on it, and find the next one. From PWLBtoday.">\n'
             '<meta name="color-scheme" content="dark">\n'
             '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Ccircle cx=\'16\' cy=\'16\' r=\'9\' fill=\'%23fd7e14\'/%3E%3C/svg%3E">\n'
             f'<link rel="stylesheet" href="assets/landing.css?v={c.stamp(generated)}">\n</head><body>\n'
@@ -1214,7 +1033,7 @@ def page_landing(board, status, generated):
             f'<a class="mini" href="#paths">Three pathways</a><a class="mini" href="#how">How it works</a><a class="mini" href="#rests">What it rests on</a><a class="mini" href="{T}">Open the tool &rarr;</a></div></div>\n'
             '<header class="hero"><div class="wrap"><div class="herogrid"><div>\n'
             '<h1 class="rv">Who can you deal with,<br><span class="em">and for how long</span>?</h1>\n'
-            '<p class="sub rv">Every covered bank and building society, scored from its regulatory filings, its agency ratings and the news, against the weightings you choose. Build a counterparty policy, watch every name on it, and find the next one.</p>\n'
+            '<p class="sub rv">Every covered bank and building society, scored from its regulatory filings and its agency ratings, with the market&rsquo;s own signal, against the weightings you choose. Build a counterparty policy, watch every name on it, and find the next one.</p>\n'
             f'<div class="cta rv"><a class="btn" href="{T}">Open {P} {arrow}</a><a class="btn ghost" href="#paths">See the three pathways</a></div>\n'
             f'<p class="freeline rv">{lock}Your list stays in your browser. Nothing is sent anywhere.</p>\n'
             f'<div class="returning" id="returning" hidden><span>Welcome back. <b id="returning-n"></b></span><a href="{T}#policy">Go straight to your counterparties &rarr;</a></div>\n'
@@ -1231,8 +1050,8 @@ def page_landing(board, status, generated):
             '<div class="cards">\n'
             f'<a class="card rv" href="{T}#strategy"><span class="n">01 &middot; Build your strategy</span><h3>Three steps to a policy</h3><p>Set how the score is made, choose the names you accept, and say how long you would lend to each.</p>'
             '<ul><li>Weightings you can change, for you alone</li><li>Every covered name on one table</li><li>A tenor on every name, and a link that carries the list</li></ul><span class="go">Start here &rarr;</span></a>\n'
-            f'<a class="card rv" href="{T}#policy"><span class="n">02 &middot; Monitor your counterparties</span><h3>Re-checked every night</h3><p>Every name on your list, against its filings, its ratings and the news, with what has moved since you approved it.</p>'
-            '<ul><li>What changed, flagged on the card</li><li>Names you are only watching, beneath</li><li>Rating actions and headlines, judged daily</li></ul><span class="go">Open your counterparties &rarr;</span></a>\n'
+            f'<a class="card rv" href="{T}#policy"><span class="n">02 &middot; Monitor your counterparties</span><h3>Re-checked every night</h3><p>Every name on your list, against its filings, its ratings and the market, with what has moved since you approved it.</p>'
+            '<ul><li>What changed, flagged on the card</li><li>Names you are only watching, beneath</li><li>Rating actions and new filings, on each name</li></ul><span class="go">Open your counterparties &rarr;</span></a>\n'
             f'<a class="card rv" href="{T}#likeforlike"><span class="n">03 &middot; Compare</span><h3>The next name, and the whole universe</h3><p>Alternatives at least as strong as your weakest at each tenor, any names side by side, and the universe by rating.</p>'
             '<ul><li>Alternatives, tenor by tenor</li><li>Analysis: any names, any ratio, over time</li><li>Ratings: the average and the weakest of the three</li></ul><span class="go">Compare &rarr;</span></a>\n'
             '</div></div></section>\n\n<div class="wrap"><div class="rule"></div></div>\n\n'
@@ -1240,16 +1059,16 @@ def page_landing(board, status, generated):
             '<h2 class="rv">Four passes a day, and nothing typed by hand.</h2>\n'
             '<p class="lede rv">Every figure on a profile carries its source, its method and its date. The score is one published method applied the same way to every name.</p>\n'
             '<div class="steps">\n'
-            "<div class=\"step rv\"><span class=\"k\">01</span><div><h3>The public record is read</h3></div><p>Pillar 3 reports and regulatory returns for the capital and liquidity ratios; the ESMA register for the agencies' ratings; traded prices for the market signal; the day's headlines, judged for what they say about credit.</p></div>\n"
+            "<div class=\"step rv\"><span class=\"k\">01</span><div><h3>The public record is read</h3></div><p>Pillar 3 reports and regulatory returns for the capital and liquidity ratios; the ESMA register for the agencies' ratings; and traded prices for the market signal. Nothing is typed by hand and nothing is taken from the press.</p></div>\n"
             "<div class=\"step rv\"><span class=\"k\">02</span><div><h3>Every name is scored</h3></div><p>The agency rating is the anchor and the bank's own ratios the pillars, weighed by the published method, or by your weightings when you have set them. A name without a rating or without current capital figures is not scored, and says so.</p></div>\n"
-            '<div class="step rv"><span class="k">03</span><div><h3>Your list is checked against it</h3></div><p>Each night every name you hold is read again. A rating that moved, a ratio that fell, a headline that was flagged: each is marked on the card beside the date you approved the name.</p></div>\n'
+            '<div class="step rv"><span class="k">03</span><div><h3>Your list is checked against it</h3></div><p>Each night every name you hold is read again. A rating that moved, a ratio that fell, a market signal that turned: each is marked on the card beside the date you approved the name.</p></div>\n'
             '<div class="step rv"><span class="k">04</span><div><h3>The next name is found</h3></div><p>Alternatives shows the names at least as strong as your weakest at each tenor; Analysis puts any names side by side; the Ratings view lays out the whole universe by the average and the weakest of the three.</p></div>\n'
             '</div></div></section>\n\n'
             '<section id="rests"><div class="wrap">\n<p class="eyebrow rv">What it rests on</p>\n'
             '<h2 class="rv">Public data, one method, every date on the page.</h2>\n<div class="cards">\n'
             "<div class=\"card rv\"><span class=\"n\">Regulatory filings</span><h3>The banks' own figures</h3><p>CET1, leverage, liquidity and funding ratios from Pillar 3 reports, the EBA and the FDIC, read by a rules-based extractor with every figure checked against the ones around it.</p></div>\n"
             "<div class=\"card rv\"><span class=\"n\">Agency ratings</span><h3>The average and the weakest of three</h3><p>The long-term ratings of Fitch, S&amp;P and Moody's on one scale, as the average and the weakest, with one outlook mark per agency, from the ESMA European Rating Platform every day.</p></div>\n"
-            '<div class="card rv"><span class="n">Market and news</span><h3>What the market and the press say</h3><p>CDS, bond yields and the share price as a bounded signal, never more than a few points either way; headlines judged daily for what they tell a treasurer.</p></div>\n'
+            '<div class="card rv"><span class="n">Market</span><h3>What the market says</h3><p>CDS, bond yields and the share price as a bounded signal, never more than a few points either way. The market prices the news faster than any reading of it can.</p></div>\n'
             "<div class=\"card rv\"><span class=\"n\">Not advice</span><h3>Information, and a published method</h3><p>Scores use the published method and can be wrong. Nothing here is a recommendation, and nothing stands in for your own policy or your adviser's advice.</p></div>\n"
             '</div></div></section>\n\n'
             '<section class="close"><div class="wrap">\n<h2 class="rv">Open the tool and build your list.</h2>\n'
@@ -1363,7 +1182,6 @@ def page_coverage(generated, inner: bool = False):
                    f'<td class="mono" data-v="{a["price_days"]}">{price}</td>'
                    f'<td class="mono" data-v="{a["cds_days"]}">{a["cds_days"] or "—"}</td>'
                    f'<td class="mono" data-v="{a["bonds"]}">{a["bonds"] or "—"}</td>'
-                   f'<td class="mono" data-v="{a["news90"]}">{a["news90"] or "—"}</td>'
                    f'<td class="mono" data-v="{a["years"]}">{a["years"] or "—"}</td>'
                    f'<td class="small muted">{c.esc(sources)}</td>{cells}</tr>')
     regions = [("all", "All"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
@@ -1372,14 +1190,13 @@ def page_coverage(generated, inner: bool = False):
     body = "".join(trs)
     content = (
         '<div class="page-head"><div><h1>Coverage</h1><div class="lede">What is held for every entity: the score it earns, ratings by agency, '
-        'share price, CDS and bond data, news, and for each ratio the number of reporting periods and the years they span. '
+        'share price, CDS and bond data, and for each ratio the number of reporting periods and the years they span. '
         'A build-time view, so gaps are visible before they are trusted.</div></div></div>'
         f'<div class="rtiles">{tiles}</div>'
         f'<div class="card" style="margin-top:16px"><div class="toolbar"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>'
         '<div class="table-wrap"><table id="board" class="plain coverage"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Score</th>'
         '<th data-sort="col">Rating</th><th class="num" data-sort="col" title="trading days of closing prices held">Price days</th>'
         '<th class="num" data-sort="col" title="settlement days with a CDS level">CDS days</th><th class="num" data-sort="col">Bonds</th>'
-        '<th class="num" data-sort="col" title="headlines kept in the last 90 days">News 90d</th>'
         f'<th class="num" data-sort="col" title="span of the CET1 history in years">Years</th><th>Sources</th>{heads}</tr></thead><tbody>{body}</tbody></table></div><div class="pager" id="cov-more" data-step="40"></div>'
         '<div class="table-foot"><span>Ratio cells: periods held, then the first and last year. Shading: light under 4 periods, mid under 12, dark 12 and over. '
         "The rating column is the average across the three main agencies, and how many of the three rate the name. Click a column heading to sort.</span></div></div>")
@@ -1497,11 +1314,10 @@ def build():
     (OUT / "data" / "panels").mkdir(parents=True, exist_ok=True)
     for name, html in home_panels(board, status, generated).items():
         _write(OUT / "data" / "panels" / f"{name}.html", html)
-    write_events_feed(board, generated)
     _write(OUT / "banks" / "index.html", page_gone("Banks", generated, "../tool/index.html#universe", "universe"))
     for r in board["rows"]:
         _write(OUT / "banks" / f"{r['id']}.html", page_bank(load(f"banks/{r['id']}"), generated))
-    _write(OUT / "events" / "index.html", page_gone("Events", generated, "../tool/index.html#events", "events"))
+    _write(OUT / "events" / "index.html", page_gone("Events", generated, "../tool/index.html#policy", "policy"))
     (OUT / "admin").mkdir(exist_ok=True)
     _write(OUT / "admin" / "index.html", page_admin(status, board, generated))
     _write(OUT / "method" / "index.html", page_gone("Method", generated, "../admin/index.html#method", "admin"))
