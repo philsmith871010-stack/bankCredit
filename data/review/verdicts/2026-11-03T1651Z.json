@@ -1,0 +1,8 @@
+{
+  "news:3ce83273451eb7d5": {"keep": false, "severity": null, "why": "customer scam alert, not news about the bank"},
+  "news:6fa4239b325a59e6": {"keep": false, "severity": null, "why": "a customer robbed, not news about the bank"},
+  "news:b1ff612c7a806a9f": {"keep": false, "severity": null, "why": "a customer robbed, not news about the bank"},
+  "news:42454bde25bdbbcf": {"keep": false, "severity": null, "why": "impersonation scam on a customer"},
+  "news:740a4c55748d6a22": {"keep": false, "severity": null, "why": "the bank's own fraud-detection tool"},
+  "news:8383f965c9257a81": {"keep": false, "severity": null, "why": "the bank's own fraud-detection tool"}
+}
