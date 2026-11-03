@@ -1,1 +1,42 @@
-[]
+[
+ {
+  "id": "dd9ca9b4f19f",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/citibank-canada-pillar-3-disclosure_ye-2024-en.pdf",
+  "local": "cache/pdf/citigroup/dd9ca9b4f19f76e9.pdf",
+  "title": "citibank-canada-pillar-3-disclosure_ye-2024-en.pdf",
+  "page": null,
+  "reference_date": "2024-12-31",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T13:49:39"
+ },
+ {
+  "id": "dea51d194ef7",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/Canada/basel-III/citibank-canada-basel-III-pillar3-osfi-q4-2024-fr.pdf",
+  "local": "cache/pdf/citigroup/dea51d194ef7fae5.pdf",
+  "title": "citibank-canada-basel-III-pillar3-osfi-q4-2024-fr.pdf",
+  "page": null,
+  "reference_date": "2013-01-31",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T13:49:40"
+ }
+]
