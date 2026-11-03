@@ -78,8 +78,10 @@ def test_the_locator_matched_is_the_one_the_document_came_from():
            "financial-results-and-reports/2025/TSB-Bank-ARA-2025.pdf")
     quarterly = ("https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/"
                  "Q1-2026-Pillar-3-Quarterly-Disclosure.pdf")
+    lsd = ("https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/LSD-document-Q2-2026.pdf")
     assert Pillar3Adapter._locator_for("tsb", ara).get("narrative")
     assert not Pillar3Adapter._locator_for("tsb", quarterly).get("narrative")
+    assert not Pillar3Adapter._locator_for("tsb", lsd).get("narrative"), "the half-year Large Subsidiary Disclosure carries a KM1"
 
 
 def test_a_narrative_locator_says_what_the_reviewer_should_do():
@@ -90,3 +92,52 @@ def test_a_narrative_locator_says_what_the_reviewer_should_do():
         note = loc.get("narrative")
         if note:
             assert len(note) > 30 and "read" in note.lower(), loc["entity"]
+
+
+# ---- an index page is followed on what its link says, not only on its address --------------------
+def test_an_index_page_is_followed_on_its_link_text():
+    """Bank of China (UK) lists one item page per Pillar 3 under an address that is only a posting
+    stamp (t20260714_25679507.html); the anchor text is all that says what sits behind it. A page
+    whose text says something else is left alone."""
+    from bankcredit.adapters.pillar3 import Pillar3Adapter
+
+    ad = Pillar3Adapter()
+    loc = {"entity": "x", "page": "https://www.bankofchina.com/uk/aboutus/ab5/", "match": r"P\d+\.pdf"}
+    body = ('<a href="./202607/t20260714_25679507.html">Bank of China (UK) Limited Pillar 3 Disclosure 31 December 2025</a>'
+            '<a href="./202603/t20260331_25657715.html">2025 Gender Pay Gap Report</a>')
+    assert ad._index_pages(loc, body) == ["https://www.bankofchina.com/uk/aboutus/ab5/202607/t20260714_25679507.html"]
+
+
+def test_a_text_matched_document_is_dated_by_its_text_before_its_posting_stamp():
+    """The PDF behind that item page is named P020260716391457618567.pdf, a posting stamp a day or
+    two after the upload; the link text names the reporting date."""
+    from bankcredit.adapters.pillar3 import Pillar3Adapter
+    from bankcredit.adapters.pillar3_locators import LOCATORS, P3
+
+    ad = Pillar3Adapter()
+    loc = next(l for l in LOCATORS if l["entity"] == "bank-of-china-uk")
+    sub = "https://www.bankofchina.com/uk/aboutus/ab5/202607/t20260714_25679507.html"
+    body = ('<a href="https://pic.bankofchina.com/bocappd/uk/202607/P020260716391457618567.pdf">'
+            'Bank of China (UK) Limited Pillar 3 Disclosure 31 December 2025</a>'
+            '<a href="https://pic.bankofchina.com/bocappd/uk/202605/P020260506389809417235.pdf">'
+            'Bank of China (UK) Limited Annual Report and Financial Statements 2025</a>')
+    got = ad._matches(loc, sub, body)
+    assert [(u.rsplit("/", 1)[-1], str(d)) for u, d, _ in got] == [("P020260716391457618567.pdf", "2025-12-31")]
+
+
+def test_an_annual_url_template_is_tried_once_a_year_dated_to_the_year_end():
+    """ICBC London's Pillar 3 sits at one address per year. Filled for every quarter, the template
+    asked for the same missing file four times a run."""
+    from datetime import date as _date
+    from unittest import mock
+    from bankcredit.adapters import pillar3 as p3
+    loc = {"entity": "icbc-london", "kind": "pattern",
+           "urls": ["https://example.org/download/{year}/{year}_pillar_3_disclosure.pdf"]}
+    with mock.patch.object(p3, "date", wraps=_date) as d:
+        d.today.return_value = _date(2027, 5, 1)
+        got = p3.Pillar3Adapter._pattern_candidates(p3.Pillar3Adapter.__new__(p3.Pillar3Adapter), loc)
+    urls = [u for u, _, _ in got]
+    assert len(urls) == len(set(urls)), urls
+    assert [(u.rsplit("/", 1)[-1], str(e)) for u, e, _ in got][:2] == [
+        ("2027_pillar_3_disclosure.pdf", "2027-03-31"), ("2026_pillar_3_disclosure.pdf", "2026-12-31")]
+

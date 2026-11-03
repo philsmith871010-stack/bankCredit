@@ -1,1 +1,750 @@
-[]
+[
+ {
+  "id": "56f53945be5e",
+  "entity_id": "tsb",
+  "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/LSD-document-Q2-2023.pdf",
+  "local": "cache/pdf/tsb/56f53945be5eacc4.pdf",
+  "title": "LSD-document-Q2-2023.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:10:26"
+ },
+ {
+  "id": "bdbd5625ff8a",
+  "entity_id": "west-brom-bs",
+  "url": "https://www.westbrom.co.uk/-/media/wbbs/files/pdfs/financial-information/agm-2026-annual-report-and-accounts.pdf",
+  "local": "cache/pdf/west-brom-bs/bdbd5625ff8a671a.pdf",
+  "title": "agm-2026-annual-report-and-accounts.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts, not a Pillar 3 disclosure: read the capital ratios from the strategic report, for a year whose Pillar 3 has not been published (2026 onward)",
+  "status": "open",
+  "created": "2026-11-03T15:10:29"
+ },
+ {
+  "id": "4c5a7b412a2c",
+  "entity_id": "gatehouse-bank",
+  "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2025",
+  "local": "cache/pdf/gatehouse-bank/4c5a7b412a2ca2d0.pdf",
+  "title": "gatehouse-bank-annual-report-2025",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report, not a Pillar 3 disclosure: read the capital position from the notes, for a year whose Pillar 3 has not been published",
+  "status": "open",
+  "created": "2026-11-03T15:10:36"
+ },
+ {
+  "id": "ec4d0850d3e8",
+  "entity_id": "nwb-bank",
+  "url": "https://nwbbank.com/application/files/8717/9023/4333/Pillar_3_Full_Year_Disclosure_2025.pdf",
+  "local": "cache/pdf/nwb-bank/ec4d0850d3e89afd.pdf",
+  "title": "Pillar_3_Full_Year_Disclosure_2025.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:10:39"
+ },
+ {
+  "id": "777220be08a0",
+  "entity_id": "nwb-bank",
+  "url": "https://nwbbank.com/application/files/1017/6338/7950/Pillar_3_Half_Year_Disclosure_2025.pdf",
+  "local": "cache/pdf/nwb-bank/777220be08a0d71f.pdf",
+  "title": "Pillar_3_Half_Year_Disclosure_2025.pdf",
+  "page": 7,
+  "reference_date": "2025-06-30",
+  "currency": "EUR",
+  "values": {
+   "cet1_capital": 2022953.0,
+   "tier1_capital": 2351607.0,
+   "total_capital": 2351607.0,
+   "cet1_ratio": 35.26,
+   "tier1_ratio": 40.98,
+   "total_capital_ratio": 40.98,
+   "combined_buffer": 4.46,
+   "overall_capital_requirement": 14.71,
+   "cet1_headroom": 29.49,
+   "leverage_exposure": 20654565.0,
+   "leverage_ratio": 11.39,
+   "hqla": 15175169.0,
+   "net_cash_outflows": 8480834.0,
+   "lcr": 237.31,
+   "available_stable_funding": 60485045.0,
+   "required_stable_funding": 42403199.0,
+   "nsfr": 142.64,
+   "total_srep_requirement": 10.25
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "warn",
+    "lcr 237.3 vs implied 178.9"
+   ]
+  ],
+  "reason": "error:missing core row rwa; warn:lcr 237.3 vs implied 178.9",
+  "status": "open",
+  "created": "2026-11-03T15:10:39"
+ },
+ {
+  "id": "4ac566658ef0",
+  "entity_id": "nwb-bank",
+  "url": "https://nwbbank.com/application/files/9417/4981/1016/Pillar_3_Full_Year_Disclosure_2024.pdf",
+  "local": "cache/pdf/nwb-bank/4ac566658ef02fea.pdf",
+  "title": "Pillar_3_Full_Year_Disclosure_2024.pdf",
+  "page": 8,
+  "reference_date": "2024-12-31",
+  "currency": "EUR",
+  "values": {
+   "cet1_capital": 1978528.0,
+   "tier1_capital": 2299028.0,
+   "total_capital": 2299028.0,
+   "cet1_ratio": 35.65,
+   "tier1_ratio": 41.43,
+   "total_capital_ratio": 41.43,
+   "total_srep_requirement": 10.25,
+   "combined_buffer": 4.45,
+   "overall_capital_requirement": 14.7,
+   "cet1_headroom": 29.89,
+   "leverage_exposure": 9596138.0,
+   "leverage_ratio": 23.96,
+   "hqla": 16238058.0,
+   "net_cash_outflows": 8345343.0,
+   "lcr": 256.79,
+   "available_stable_funding": 58523540.0,
+   "required_stable_funding": 43587991.0,
+   "nsfr": 134.27
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "warn",
+    "lcr 256.8 vs implied 194.6"
+   ]
+  ],
+  "reason": "error:missing core row rwa; warn:lcr 256.8 vs implied 194.6",
+  "status": "open",
+  "created": "2026-11-03T15:10:39"
+ },
+ {
+  "id": "eaec61f2c42b",
+  "entity_id": "bng-bank",
+  "url": "https://www.bngbank.nl/v3/assets/bltd8a6f23fc3c861a3/blt568ff43f4ba3c093/6a26985396c75ada84cb78aa/Pillar_3_Disclosure_report_BNG_2025-v1.pdf",
+  "local": "cache/pdf/bng-bank/eaec61f2c42b7a47.pdf",
+  "title": "Pillar_3_Disclosure_report_BNG_2025-v1.pdf",
+  "page": 9,
+  "reference_date": "2025-12-31",
+  "currency": "EUR",
+  "values": {
+   "cet1_capital": 4320.0,
+   "tier1_capital": 4629.0,
+   "total_capital": 4629.0,
+   "cet1_ratio": 41.84,
+   "tier1_ratio": 44.84,
+   "total_capital_ratio": 44.84,
+   "combined_buffer": 4.71,
+   "overall_capital_requirement": 14.71,
+   "cet1_headroom": 34.84,
+   "leverage_exposure": 31985.0,
+   "leverage_ratio": 14.47,
+   "hqla": 24960.0,
+   "total_srep_requirement": 10.0
+  },
+  "checks": [
+   [
+    "warn",
+    "no period date found in the template header; using the expected date"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:no period date found in the template header; using the expected date; error:missing core row rwa; info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-11-03T15:10:48"
+ },
+ {
+  "id": "d55c7793a607",
+  "entity_id": "credit-mutuel",
+  "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2026/2025-informations-relatives-au-pilier-3-de-bale-III-exercice-2025.pdf",
+  "local": "cache/pdf/credit-mutuel/d55c7793a60704d3.pdf",
+  "title": "2025-informations-relatives-au-pilier-3-de-bale-III-exercice-2025.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:10:53"
+ },
+ {
+  "id": "305cf650642a",
+  "entity_id": "credit-mutuel",
+  "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2026/2025-informations-relatives-au-pilier-3-de-bale-III-exercice-2026-30062026.pdf",
+  "local": "cache/pdf/credit-mutuel/305cf650642a10d5.pdf",
+  "title": "2025-informations-relatives-au-pilier-3-de-bale-III-exercice-2026-30062026.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:10:53"
+ },
+ {
+  "id": "6f27e75f8ecf",
+  "entity_id": "credit-mutuel",
+  "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2025/2024-informations-relatives-au-pilier-3-de-bale-III-exercice-2024.pdf",
+  "local": "cache/pdf/credit-mutuel/6f27e75f8ecfa1aa.pdf",
+  "title": "2024-informations-relatives-au-pilier-3-de-bale-III-exercice-2024.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:10:53"
+ },
+ {
+  "id": "2c1c28a05c6b",
+  "entity_id": "bny",
+  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-corporate-pillar-3-disclosure-march-2025.pdf",
+  "local": "cache/pdf/bny/2c1c28a05c6b8061.pdf",
+  "title": "bny-corporate-pillar-3-disclosure-march-2025.pdf",
+  "page": null,
+  "reference_date": "2025-03-31",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:10:53"
+ },
+ {
+  "id": "3a06cb127def",
+  "entity_id": "bny",
+  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-corporate-pillar-3-disclosure-december-2024.pdf",
+  "local": "cache/pdf/bny/3a06cb127def01f5.pdf",
+  "title": "bny-corporate-pillar-3-disclosure-december-2024.pdf",
+  "page": null,
+  "reference_date": "2024-12-31",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:10:53"
+ },
+ {
+  "id": "fda1dc6a7f28",
+  "entity_id": "bny",
+  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-corporate-pillar-3-disclosure-september-2024.pdf",
+  "local": "cache/pdf/bny/fda1dc6a7f28ed99.pdf",
+  "title": "bny-corporate-pillar-3-disclosure-september-2024.pdf",
+  "page": null,
+  "reference_date": "2024-09-30",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:10:53"
+ },
+ {
+  "id": "de063cafee32",
+  "entity_id": "darlington-bs",
+  "url": "https://www.darlington.co.uk/wp-content/uploads/2026/03/DBS-ARA-2025-final-final-17.3.26.pdf",
+  "local": "cache/pdf/darlington-bs/de063cafee324c36.pdf",
+  "title": "DBS-ARA-2025-final-final-17.3.26.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, for the years after the last Pillar 3 (December 2023)",
+  "status": "open",
+  "created": "2026-11-03T15:11:01"
+ },
+ {
+  "id": "8da7cea38401",
+  "entity_id": "darlington-bs",
+  "url": "https://www.darlington.co.uk/wp-content/uploads/2025/03/DBS-ARA-2024-BOARD-FINAL-FINAL-SIGNED.pdf",
+  "local": "cache/pdf/darlington-bs/8da7cea384015015.pdf",
+  "title": "DBS-ARA-2024-BOARD-FINAL-FINAL-SIGNED.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, for the years after the last Pillar 3 (December 2023)",
+  "status": "open",
+  "created": "2026-11-03T15:11:01"
+ },
+ {
+  "id": "2109a96147f7",
+  "entity_id": "progressive-bs",
+  "url": "https://theprogressive.com/media/025gvmtp/021372-pbs-agm-2026-annual-report-web.pdf",
+  "local": "cache/pdf/progressive-bs/2109a96147f78ed7.pdf",
+  "title": "021372-pbs-agm-2026-annual-report-web.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, since Progressive publishes no Pillar 3 disclosure (its document hub carries none)",
+  "status": "open",
+  "created": "2026-11-03T15:11:04"
+ },
+ {
+  "id": "ea95341cc3be",
+  "entity_id": "hinckley-and-rugby-bs",
+  "url": "https://www.hrbs.co.uk/wp-content/uploads/2026/02/Hinckley-and-Rugby-Building-Society-Annual-Report-and-Accounts-2025.pdf",
+  "local": "cache/pdf/hinckley-and-rugby-bs/ea95341cc3bebb50.pdf",
+  "title": "Hinckley-and-Rugby-Building-Society-Annual-Report-and-Accounts-2025.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, since the society stopped publishing a Pillar 3 after 2023 under the small domestic deposit taker regime",
+  "status": "open",
+  "created": "2026-11-03T15:11:07"
+ },
+ {
+  "id": "8b7e96785de2",
+  "entity_id": "hinckley-and-rugby-bs",
+  "url": "https://www.hrbs.co.uk/wp-content/uploads/2025/02/Annual-Accounts-and-Reports-2024-Final.pdf",
+  "local": "cache/pdf/hinckley-and-rugby-bs/8b7e96785de2b6a8.pdf",
+  "title": "Annual-Accounts-and-Reports-2024-Final.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, since the society stopped publishing a Pillar 3 after 2023 under the small domestic deposit taker regime",
+  "status": "open",
+  "created": "2026-11-03T15:11:07"
+ },
+ {
+  "id": "0e8719acf219",
+  "entity_id": "leek-bs",
+  "url": "https://www.leekbs.co.uk/content/images/page/files/Leek%20Building%20Society%20ARA%202025%20-%20Website.pdf",
+  "local": "cache/pdf/leek-bs/0e8719acf2198861.pdf",
+  "title": "Leek Building Society ARA 2025 - Website.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, since Leek stopped publishing a Pillar 3 after 2023",
+  "status": "open",
+  "created": "2026-11-03T15:11:08"
+ },
+ {
+  "id": "29d1371f938b",
+  "entity_id": "leek-bs",
+  "url": "https://www.leekbs.co.uk/content/images/page/files/Report%20and%20Accounts%202024%20-%20Web.pdf",
+  "local": "cache/pdf/leek-bs/29d1371f938b090c.pdf",
+  "title": "Report and Accounts 2024 - Web.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, since Leek stopped publishing a Pillar 3 after 2023",
+  "status": "open",
+  "created": "2026-11-03T15:11:08"
+ },
+ {
+  "id": "c561a2ced382",
+  "entity_id": "monmouthshire-bs",
+  "url": "https://media.monbs.com/corporate-governance/annual-report-accounts-2026/",
+  "local": "cache/pdf/monmouthshire-bs/c561a2ced3827783.pdf",
+  "title": "",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, for the years after the last Pillar 3 (April 2023). The recent years sit on media.monbs.com at addresses without a .pdf extension, but the body is a PDF",
+  "status": "open",
+  "created": "2026-11-03T15:11:11"
+ },
+ {
+  "id": "be2adafd82e3",
+  "entity_id": "monmouthshire-bs",
+  "url": "https://media.monbs.com/corporate-governance/annual-report-accounts-202425/",
+  "local": "cache/pdf/monmouthshire-bs/be2adafd82e38805.pdf",
+  "title": "",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, for the years after the last Pillar 3 (April 2023). The recent years sit on media.monbs.com at addresses without a .pdf extension, but the body is a PDF",
+  "status": "open",
+  "created": "2026-11-03T15:11:12"
+ },
+ {
+  "id": "ba916f1c3f57",
+  "entity_id": "monmouthshire-bs",
+  "url": "https://media.monbs.com/corporate-governance/annual-report-accounts-202324/",
+  "local": "cache/pdf/monmouthshire-bs/ba916f1c3f57c67f.pdf",
+  "title": "",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, for the years after the last Pillar 3 (April 2023). The recent years sit on media.monbs.com at addresses without a .pdf extension, but the body is a PDF",
+  "status": "open",
+  "created": "2026-11-03T15:11:12"
+ },
+ {
+  "id": "da7c855b294e",
+  "entity_id": "cumberland-bs",
+  "url": "https://www.cumberland.co.uk/neon/download/file/2026-27/pdf/cumberland/25-26-report-and-accounts.pdf",
+  "local": "cache/pdf/cumberland-bs/da7c855b294efd09.pdf",
+  "title": "25-26-report-and-accounts.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes. The named Pillar 3 files stop at March 2023; 25-26-report-and-accounts.pdf is the year to 31 March 2026 (the old Cumberland-Annual-Report.pdf is no longer listed)",
+  "status": "open",
+  "created": "2026-11-03T15:11:16"
+ },
+ {
+  "id": "28b59df1daf4",
+  "entity_id": "cumberland-bs",
+  "url": "https://www.cumberland.co.uk/neon/download/file/2025-26/pdf/cumberland/24-25-report-and-accounts.pdf",
+  "local": "cache/pdf/cumberland-bs/28b59df1daf4e5f5.pdf",
+  "title": "24-25-report-and-accounts.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes. The named Pillar 3 files stop at March 2023; 25-26-report-and-accounts.pdf is the year to 31 March 2026 (the old Cumberland-Annual-Report.pdf is no longer listed)",
+  "status": "open",
+  "created": "2026-11-03T15:11:16"
+ },
+ {
+  "id": "98e692a19f94",
+  "entity_id": "cumberland-bs",
+  "url": "https://www.cumberland.co.uk/neon/download/file/2024-25/pdf/cumberland/23-24-report-and-accounts.pdf",
+  "local": "cache/pdf/cumberland-bs/98e692a19f94ce57.pdf",
+  "title": "23-24-report-and-accounts.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes. The named Pillar 3 files stop at March 2023; 25-26-report-and-accounts.pdf is the year to 31 March 2026 (the old Cumberland-Annual-Report.pdf is no longer listed)",
+  "status": "open",
+  "created": "2026-11-03T15:11:16"
+ },
+ {
+  "id": "1ba4d965f936",
+  "entity_id": "saffron-bs",
+  "url": "https://www.saffronbs.co.uk/sites/default/files/2026-03/Report%20and%20Accounts_FINAL%20no%20signatures.pdf",
+  "local": "cache/pdf/saffron-bs/1ba4d965f936890d.pdf",
+  "title": "Report and Accounts_FINAL no signatures.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, since Saffron publishes no Pillar 3 disclosure of its own",
+  "status": "open",
+  "created": "2026-11-03T15:11:20"
+ },
+ {
+  "id": "f5fdd68f4720",
+  "entity_id": "saffron-bs",
+  "url": "https://www.saffronbs.co.uk/sites/default/files/2025-03/Report%20and%20Accounts_v23_web.pdf",
+  "local": "cache/pdf/saffron-bs/f5fdd68f472091b0.pdf",
+  "title": "Report and Accounts_v23_web.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, since Saffron publishes no Pillar 3 disclosure of its own",
+  "status": "open",
+  "created": "2026-11-03T15:11:20"
+ },
+ {
+  "id": "7fc483923316",
+  "entity_id": "op-corporate-bank",
+  "url": "https://www.op.fi/documents/485141/1755533655/OP-Corporate-Bank-plc-Interim-Report-1-January%E2%80%9330-September-2026.pdf/684180eb-9117-f6f5-edd2-6cb437432866?t=1793028524923",
+  "local": "cache/pdf/op-corporate-bank/7fc483923316e11f.pdf",
+  "title": "684180eb-9117-f6f5-edd2-6cb437432866?t=1793028524923",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "interim report, not a Pillar 3 disclosure: read the capital adequacy section (CET1 ratio, own funds and risk exposure amount of OP Corporate Bank plc) behind the narrative",
+  "status": "open",
+  "created": "2026-11-03T15:11:59"
+ },
+ {
+  "id": "29142396ceb1",
+  "entity_id": "op-corporate-bank",
+  "url": "https://www.op.fi/documents/485141/1381428136/OP-Corporate-Bank-plcs-Interim-Report-Q1-2026.pdf/0d31b46a-ed90-caf1-fd77-4af8a2a07d2c?t=1778010867608",
+  "local": "cache/pdf/op-corporate-bank/29142396ceb1dd52.pdf",
+  "title": "0d31b46a-ed90-caf1-fd77-4af8a2a07d2c?t=1778010867608",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "interim report, not a Pillar 3 disclosure: read the capital adequacy section (CET1 ratio, own funds and risk exposure amount of OP Corporate Bank plc) behind the narrative",
+  "status": "open",
+  "created": "2026-11-03T15:12:01"
+ },
+ {
+  "id": "cb96a37caef0",
+  "entity_id": "op-corporate-bank",
+  "url": "https://www.op.fi/documents/485141/1560144993/OP-Corporate-Bank-plcs-Half-year-Financial-Report-1-January%E2%80%9330+June-2026.pdf/f6ea3e1e-21ad-166e-0061-b1a6b5f7805b?t=1784793062456",
+  "local": "cache/pdf/op-corporate-bank/cb96a37caef02f42.pdf",
+  "title": "f6ea3e1e-21ad-166e-0061-b1a6b5f7805b?t=1784793062456",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "interim report, not a Pillar 3 disclosure: read the capital adequacy section (CET1 ratio, own funds and risk exposure amount of OP Corporate Bank plc) behind the narrative",
+  "status": "open",
+  "created": "2026-11-03T15:12:03"
+ },
+ {
+  "id": "c55f0250e7cc",
+  "entity_id": "bny",
+  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-pillar-3-report-2q26.pdf",
+  "local": "cache/pdf/bny/c55f0250e7cc7db2.pdf",
+  "title": "bny-pillar-3-report-2q26.pdf",
+  "page": null,
+  "reference_date": "2026-06-30",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:18:08"
+ },
+ {
+  "id": "e6ec5ca59576",
+  "entity_id": "bny",
+  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-pillar-3-report-1q26.pdf",
+  "local": "cache/pdf/bny/e6ec5ca59576825d.pdf",
+  "title": "bny-pillar-3-report-1q26.pdf",
+  "page": null,
+  "reference_date": "2026-03-31",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:18:08"
+ },
+ {
+  "id": "3c293b45055f",
+  "entity_id": "bny",
+  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-4q2025-pillar-3-report.pdf",
+  "local": "cache/pdf/bny/3c293b45055f4001.pdf",
+  "title": "bny-4q2025-pillar-3-report.pdf",
+  "page": null,
+  "reference_date": "2025-12-31",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T15:18:08"
+ }
+]

@@ -1,4 +1,5 @@
-"""Where each firm publishes its Pillar 3 PDFs. Verified 6 September 2026 (docs section 12.4).
+"""Where each firm publishes its Pillar 3 PDFs. Verified 6 September 2026 (docs section 12.4); the
+names the health report listed as overdue or never collected were re-checked on 3 November 2026.
 
 Fields
   entity    id in data/entities.csv
@@ -27,9 +28,21 @@ LBG_SIBLINGS = r"lbcm|corporate-markets|bank-of-scotland|[-_]bos[-_]|lloyds-bank
 HKMA = "https://vpr.hkma.gov.hk/eng/regulatory-resources/registers/register-of-ais-and-lros/info/"
 # The HKMA public register carries every Hong Kong authorised institution's disclosure documents
 # at a stable address, which beats three bank sites that each redesign on their own schedule.
-# fd_int is the interim disclosure statement: the March and September ones carry KM1, the June
-# and December ones are the shorter financial disclosures and do not. A new HK bank is one id away.
-HKMA_KM1 = r"/fd_int/fd_int_(?:03|09)\d\d_eng\.pdf"
+# fd_int is the interim disclosure statement: the March and September ones carry KM1, and so do
+# the June regulatory-disclosure part ("_pt01_eng", filed beside the interim financial report,
+# which does not) and the December statement where a bank files one (BOCHK does; Standard
+# Chartered HK's year end is in its annual report). Verified 3 November 2026 by reading the June
+# 2026 and December 2025 files. A new HK bank is one id away.
+HKMA_KM1 = r"/fd_int/fd_int_(?:(?:03|09|12)\d\d|06\d\d_pt01)_eng\.pdf"
+
+# Virgin Money UK PLC and Clydesdale Bank PLC publish from one site: quarterlies on the
+# financial-results page, the year-end report on the annual-reports page. Since Nationwide's
+# acquisition the year end is 31 March (an 18-month period to 31 March 2025). The PRA revoked
+# Virgin Money UK's sub-consolidation direction on 1 December 2025, so its September 2025 interim
+# is its last disclosure (data/reference/capital-not-published.json). Clydesdale Bank's report for
+# 31 March 2026 expects no Pillar 3 for later periods, most of its business having moved to
+# Nationwide under a Part VII scheme on 2 April 2026 (cb-2026-pillar-3-report.pdf, section 1).
+VMUK = "https://www.virginmoneyukplc.com/investor-relations/results-and-reporting/"
 
 
 LOCATORS: list[dict] = [
@@ -75,27 +88,47 @@ LOCATORS: list[dict] = [
     dict(entity="santander-uk", page="https://www.santander.co.uk/about-santander/investor-relations/santander-uk-group-holdings-plc",
          match=r"(acrmd|additional[ _-]capital)", exclude=r"remuneration|q1_16|2017_"),
     # ---- UK mid-size ----------------------------------------------------
-    dict(entity="virgin-money-uk", page="https://www.virginmoneyukplc.com/investor-relations/results-and-reporting/financial-results/",
-         match=r"downloads/pdf/.*" + P3 + r".*\.pdf", exclude=r"cbplc|clydesdale", year_end="09-30"),
-    dict(entity="clydesdale-bank", page="https://www.virginmoneyukplc.com/investor-relations/results-and-reporting/financial-results/",
-         match=r"downloads/pdf/(cbplc|clydesdale).*" + P3 + r".*\.pdf", year_end="09-30"),
+    dict(entity="virgin-money-uk", page=VMUK + "financial-results/",
+         match=r"downloads/pdf/.*" + P3 + r".*\.pdf", exclude=r"cbplc|clydesdale|/cb-", year_end="09-30",
+         note="the quarterlies name their month, and the financial years these files cover ended 30 "
+              "September; the year end only dates a bare year"),
+    dict(entity="virgin-money-uk", page=VMUK + "annual-reports/",
+         match=r"downloads/pdf/(?:vmukplc|vm|virgin-money-uk-plc|cybg)-[^/]*" + P3 + r"[^/]*\.pdf", exclude=r"cbplc|clydesdale|/cb-",
+         year_end="03-31", note="the year-end reports; vmukplc-2025-pillar-3-report is the 18 months to 31 March 2025"),
+    dict(entity="clydesdale-bank", page=VMUK + "financial-results/",
+         match=r"downloads/pdf/(?:cbplc|clydesdale|cb-).*" + P3 + r".*\.pdf", year_end="03-31"),
+    dict(entity="clydesdale-bank", page=VMUK + "annual-reports/",
+         match=r"downloads/pdf/cb-\d{4}-pillar-3-report\.pdf", year_end="03-31",
+         note="cb-2026-pillar-3-report.pdf is the year to 31 March 2026. Most of the bank's business "
+              "transferred to Nationwide under a Part VII scheme on 2 April 2026, and the report says no "
+              "Pillar 3 is expected for later periods, so this is likely the last"),
     dict(entity="tsb", page="https://www.tsb.co.uk/investors/regulatory-news-service.html",
-         match=r"tsb-public/.*" + P3 + r".*\.pdf", exclude=r"quarterly",
-         note="the quarterly disclosures carry OV1 and LCR only, so no capital ratio comes from them"),
+         match=r"tsb-public/.*(?:" + P3 + r"|LSD-document).*\.pdf", exclude=r"quarterly",
+         note="the Q1 and Q3 'Pillar 3 Quarterly Disclosure' files carry OV1 and LCR only, so no capital "
+              "ratio comes from them; the half-year Large Subsidiary Disclosures (LSD-document-Q2-2026.pdf, "
+              "found 3 November 2026) carry a full KM1 that reads at 0.95"),
     dict(entity="tsb", page="https://www.tsb.co.uk/investors/debt-investors.html",
          match=r"financial-results-and-reports/\d{4}/TSB-Bank-ARA-\d{4}\.pdf", exclude=r"Banking-Group",
          narrative="annual report, not a Pillar 3 disclosure: read the capital resources table "
                    "behind the narrative (CET1, RWA and the ratio are stated there)",
-         note="TSB publishes no KM1 anywhere. Its capital ratio is stated in the annual report's "
-              "narrative - 16.7% at December 2025 - so the report is collected for the reviewer to "
-              "read rather than left looking like a collection failure. TSB Bank plc is the entity "
-              "we assess; TSB Banking Group is its parent"),
+         note="TSB's only KM1 is in the half-year disclosure above. The year-end capital ratio is stated "
+              "in the annual report's narrative - 16.7% at December 2025 - so the report is collected for "
+              "the reviewer to read rather than left looking like a collection failure. TSB Bank plc is "
+              "the entity we assess; TSB Banking Group plc stopped being its parent in the restructuring "
+              "that followed TSB joining Grupo Santander on 1 May 2026 (LSD-document-Q2-2026.pdf, section 1)"),
     # ---- found by crawling the societies' own sites, September 2026 --------------------------
     dict(entity="west-brom-bs",
          page="https://www.westbrom.co.uk/about-us/financial-information/financial-reports-and-results",
          match=r"pillar-3-capital-disclosures.*\.pdf", year_end="03-31",
-         note="a real Pillar 3, annual to 31 March; the investor-relations page it was pointed at "
-              "carries no documents of its own"),
+         note="a real Pillar 3, annual to 31 March with a September interim; the investor-relations "
+              "page it was once pointed at no longer exists. On 3 November 2026 the page listed the "
+              "2026 annual report but no Pillar 3 for 31 March 2026"),
+    dict(entity="west-brom-bs",
+         page="https://www.westbrom.co.uk/about-us/financial-information/financial-reports-and-results",
+         match=r"financial-information/[^/]*(?:annual-report-and-accounts|report-and-accounts|report--accounts)[^/]*\.pdf",
+         exclude=r"20(?:1\d|2[0-5])(?!\d)|-05-2[0-4]-01-", year_end="03-31",
+         narrative="annual report and accounts, not a Pillar 3 disclosure: read the capital ratios from "
+                   "the strategic report, for a year whose Pillar 3 has not been published (2026 onward)"),
     dict(entity="furness-bs", page="https://www.furnessbs.co.uk/financial-reports/",
          match=r"pillar-3.*\.pdf", year_end="12-31",
          note="one Pillar 3 for 2022; the annual report below is what carries the recent years"),
@@ -104,26 +137,35 @@ LOCATORS: list[dict] = [
          narrative="annual report, not a Pillar 3 disclosure: read the capital table behind the "
                    "narrative (Furness publishes a Pillar 3 only for 2022)"),
     dict(entity="saffron-bs", page="https://www.saffronbs.co.uk/financial-results",
-         match=r"(?:annual%20report|annual-report|report%20and%20accounts).*\.pdf", exclude=r"members",
+         match=r"sites/default/files/20(?:2[5-9]|[3-9]\d)-\d\d/(?:annual[ -]report|report[ -]and[ -]accounts)[^/]*\.pdf",
+         exclude=r"members|review|summary",
          narrative="annual report and accounts: read the capital position from the notes, since "
-                   "Saffron publishes no Pillar 3 disclosure of its own"),
+                   "Saffron publishes no Pillar 3 disclosure of its own",
+         note="matched against the decoded address, so the spaces in 'Report and Accounts_FINAL no "
+              "signatures.pdf' are spaces, not %20 (the old pattern never matched them). The upload "
+              "folder is the only date in the name; the reviewer dates the document"),
     dict(entity="suffolk-bs", page="https://www.suffolkbuildingsociety.co.uk/about/governance/",
          match=r"Report-and-Accounts-\d{4}\.pdf",
          narrative="report and accounts: read the capital position from the notes, since Suffolk "
                    "publishes no Pillar 3 disclosure of its own"),
     dict(entity="monmouthshire-bs", page="https://www.monbs.com/about-us/corporate-governance/",
-         match=r"annual-report-accounts.*\.pdf",
-         narrative="annual report and accounts: read the capital position from the notes. The "
-                   "recent years are published as web pages under media.monbs.com rather than as "
-                   "PDFs on this one"),
-    dict(entity="cumberland-bs", page="https://www.cumberland.co.uk/about/results-archive",
-         match=r"Cumberland-Annual-Report\.pdf",
-         narrative="annual report: read the capital position from the notes. The named Pillar 3 "
-                   "files stop at 2023, and this is the current document"),
-    dict(entity="darlington-bs", page="https://www.darlington.co.uk/who-we-are/corporate-governance/",
-         match=r"wp-content/uploads/\d{4}/\d{2}/.*Annual-Report.*\.pdf", exclude=r"Minutes|General-Meeting",
+         match=r"media\.monbs\.com/corporate-governance/annual-report-accounts-\d{4,6}/?$", exclude=r"-20(?:20|2122)/",
+         year_end="04-30",
          narrative="annual report and accounts: read the capital position from the notes, for the "
-                   "years after the last Pillar 3"),
+                   "years after the last Pillar 3 (April 2023). The recent years sit on "
+                   "media.monbs.com at addresses without a .pdf extension, but the body is a PDF"),
+    dict(entity="cumberland-bs", page="https://www.cumberland.co.uk/about/results-archive",
+         match=r"neon/download/file/.*/\d\d-\d\d-report-and-accounts\.pdf", exclude=r"/(?:1\d|2[0-2])-\d\d-report",
+         year_end="03-31",
+         narrative="annual report and accounts: read the capital position from the notes. The named "
+                   "Pillar 3 files stop at March 2023; 25-26-report-and-accounts.pdf is the year to "
+                   "31 March 2026 (the old Cumberland-Annual-Report.pdf is no longer listed)"),
+    dict(entity="darlington-bs", page="https://www.darlington.co.uk/who-we-are/corporate-governance/key-society-documents/",
+         match=r"wp-content/uploads/\d{4}/\d{2}/(?:DBS-)?ARA-20(?:2[4-9]|[3-9]\d)[^/]*\.pdf", exclude=r"Minutes|General-Meeting",
+         narrative="annual report and accounts: read the capital position from the notes, for the "
+                   "years after the last Pillar 3 (December 2023)",
+         note="the reports are named DBS-ARA-2025-...; the governance page itself lists no documents, "
+              "the key-society-documents page beneath it does"),
     dict(entity="family-bs", page="https://www.familybuildingsociety.co.uk/about-us/corporate-and-financial-information",
          match=r"agm-documents/.*report-20\d\d[^/]*\.pdf",
          narrative="the society's report for the year: read the capital position from the notes, "
@@ -146,8 +188,14 @@ LOCATORS: list[dict] = [
          match=r"document-library/pillar-3", note="extension-less document URLs"),
     dict(entity="vanquis", page="https://www.vanquis.com/investors/results-reports-presentations/",
          match=r"wp-content/uploads/.*" + P3 + r".*\.pdf"),
-    dict(entity="investec", page="https://www.investec.com/en_gb/welcome-to-investec/about-us/investor-relations.html",
-         match=P3, kind="browser", year_end="03-31", note="Cloudflare on pages"),
+    dict(entity="investec", page="https://www.investec.com/en_gb/welcome-to-investec/about-us/investor-relations/integrated-reporting.html",
+         match=r"content/dam/investor-relations/financial-information/.*" + P3 + r"[^/]*\.pdf", exclude=r"investec-limited|investec-bank",
+         kind="browser", year_end="03-31",
+         note="Cloudflare on pages and a 403 to a cloud address. The integrated-reporting page is where the "
+              "Mac's browser pass found the June 2026 quarterly (group-financial-results/2026/Investec-plc-"
+              "group-Pillar-3-quarterly-disclosure-report-30-June-2026.pdf, data/review/hints.json); the "
+              "investor-relations landing page it replaced only linked onward. Investec Limited is the "
+              "South African group and is left to its own entity"),
     dict(entity="monzo", page="https://monzo.com/annual-report",
          match=r"(Monzo-MBL-Pillar-3|monzo-pillar-3).*\.pdf", year_end="03-31", note="MBL = Monzo Bank Limited; MBHG = group"),
     dict(entity="starling", page="https://www.starlingbank.com/investors/",
@@ -184,8 +232,6 @@ LOCATORS: list[dict] = [
          match=P3 + r".*\.pdf", exclude=r"\.jpg|covers"),
     dict(entity="principality-bs", page="https://www.principality.co.uk/home/corporate-governance/financial-reports",
          match=r"getmedia/.*" + P3 + r".*\.pdf"),
-    dict(entity="west-brom-bs", page="https://www.westbrom.co.uk/about-us/investor-relations",
-         match=r"pillar-3-capital-disclosures.*\.pdf", year_end="03-31", kind="browser", note="document list now rendered by script"),
     dict(entity="nottingham-bs", page="https://www.thenottingham.com/about-us/accounts-and-statements",
          match=r"/media/.*" + P3 + r".*\.pdf"),
     dict(entity="cumberland-bs", page="https://www.cumberland.co.uk/about/results-archive",
@@ -193,32 +239,83 @@ LOCATORS: list[dict] = [
     dict(entity="darlington-bs", page="https://www.darlington.co.uk/who-we-are/corporate-governance/key-society-documents/",
          match=r"wp-content/uploads/.*" + P3 + r".*\.pdf"),
     dict(entity="melton-bs", page="https://www.themelton.co.uk/about-us/corporate-information/pillar-3-disclosure/",
-         match=r"tmbs-content/uploads/.*" + P3 + r".*\.pdf"),
+         match=r"tmbs-content/uploads/.*" + P3 + r".*\.pdf",
+         note="the last Pillar 3 is for December 2023. The site answers a cloud address with an "
+              "anti-robot page about two requests in three; the one that gets through sees the list"),
+    dict(entity="melton-bs", page="https://www.themelton.co.uk/about-us/corporate-information/annual-report-and-accounts/",
+         match=r"tmbs-content/uploads/\d{4}/\d{2}/M+BS-Annual-Report-(?:and-)?Accounts-20(?:2[4-9]|[3-9]\d)[^/]*\.pdf",
+         narrative="annual report and accounts: read the capital position from the notes, for the "
+                   "years after the last Pillar 3 (December 2023)"),
     dict(entity="monmouthshire-bs", page="https://www.monbs.com/about-us/corporate-governance/",
          match=r"media\.monbs\.com/.*pillar-3", year_end="04-30", note="one URL overwritten yearly"),
     dict(entity="family-bs", page="https://www.familybuildingsociety.co.uk/about-us/corporate-and-financial-information",
          match=r"pillar-3-risk-disclosure.*\.pdf"),
-    dict(entity="newcastle-bs", page="https://newcastle.co.uk/about-us/financial-results/", match=P3 + r".*\.pdf", kind="browser"),
-    dict(entity="saffron-bs", page="https://www.saffronbs.co.uk/about-us/", match=P3 + r".*\.pdf", kind="browser"),
-    dict(entity="suffolk-bs", page="https://www.suffolkbuildingsociety.co.uk/about/governance/", match=P3 + r".*\.pdf", kind="browser"),
-    dict(entity="progressive-bs", page="https://theprogressive.com/about-us/your-society", match=P3 + r".*\.pdf", kind="browser"),
-    dict(entity="leek-bs", page="https://www.leekbs.co.uk/about-us/", match=r"content/images/page/files/.*Pillar 3.*\.pdf", kind="browser"),
-    dict(entity="hinckley-and-rugby-bs", page="https://www.hrbs.co.uk/the-society/governance/", match=P3 + r".*\.pdf", kind="browser",
-         note="stopped publishing after 2023 under the small domestic deposit taker regime"),
-    dict(entity="furness-bs", page="https://www.furnessbs.co.uk/about-us/", match=P3 + r".*\.pdf", kind="browser"),
+    dict(entity="newcastle-bs", page="https://newcastle.co.uk/media-centre/financial-results",
+         match=r"kc-usercontent\.com(?::443)?/.*" + P3 + r"[^/]*\.pdf", exclude=r"AMR|post-Board",
+         note="verified 3 November 2026: the old financial-results address is a 404; the media-centre "
+              "page is server-rendered, readable from a cloud address, and lists every Pillar 3 since "
+              "2011 on a Kontent CDN, the June 2026 interim newest"),
+    dict(entity="progressive-bs", page="https://theprogressive.com/document-hub",
+         match=r"/media/[a-z0-9]+/[^/]*agm-20\d\d-annual-report[^/]*\.pdf",
+         narrative="annual report and accounts: read the capital position from the notes, since "
+                   "Progressive publishes no Pillar 3 disclosure (its document hub carries none)",
+         note="named for the AGM year, so agm-2026 is the 2025 accounts and the inferred date runs a "
+              "year ahead; the reviewer dates it"),
+    dict(entity="leek-bs", page="https://www.leekbs.co.uk/corporate/financial-information/",
+         match=r"page/files/(?:Leek Building Society ARA|Report\s+(?:and|&)\s+Accounts|Annual Report)[^/]*20(?:2[4-9]|[3-9]\d)[^/]*\.pdf",
+         exclude=r"Member|Business Review|Summary",
+         narrative="annual report and accounts: read the capital position from the notes, since Leek "
+                   "stopped publishing a Pillar 3 after 2023",
+         note="the about-us page the locator pointed at carries no reports; this one does, with "
+              "spaces in the file names, matched against the decoded address"),
+    dict(entity="hinckley-and-rugby-bs", page="https://www.hrbs.co.uk/the-society/governance/annual-report-account-summary/",
+         match=r"wp-content/uploads/\d{4}/\d{2}/[^/]*Annual-(?:Report|Accounts)[^/]*20(?:2[4-9]|[3-9]\d)[^/]*\.pdf",
+         exclude=r"Summary|Review",
+         narrative="annual report and accounts: read the capital position from the notes, since the "
+                   "society stopped publishing a Pillar 3 after 2023 under the small domestic deposit "
+                   "taker regime"),
     # ---- UK subsidiaries of overseas banks -------------------------------
-    dict(entity="al-rayan-bank", page="https://www.alrayanbank.co.uk/about-us/", match=P3 + r".*\.pdf", kind="browser"),
-    dict(entity="gatehouse-bank", page="https://www.gatehousebank.com/about-us", match=P3 + r".*\.pdf", kind="browser"),
+    dict(entity="al-rayan-bank", page="https://www.alrayanbank.co.uk/investor-relations-regulatory-information",
+         match=r"file-uploads/\d{4}-\d{2}/[^/]*pillar[_ -]?(?:3|three)[^/]*\.pdf",
+         note="verified 3 November 2026: the regulatory-information page under investor relations lists "
+              "every Pillar 3 since 2018 (the 2025 report was uploaded in September 2026); the about-us "
+              "page the locator pointed at has no documents"),
+    dict(entity="gatehouse-bank", page="https://gatehousebank.com/about-us/corporate-governance",
+         match=r"downloads/Gatehouse-Bank-Pillar-III-Disclosure-\d{4}[^/]*\.pdf",
+         note="verified 3 November 2026: the governance page, where the browser pass had been finding the "
+              "files, is server-rendered and reachable from a cloud address. The 2024 report, published "
+              "August 2025, is the newest; nothing for 2025 is listed yet"),
+    dict(entity="gatehouse-bank", page="https://gatehousebank.com/about-us/corporate-governance",
+         match=r"gatehousebank\.com/downloads/gatehouse-bank-annual-report-20(?:2[5-9]|[3-9]\d)$",
+         narrative="annual report, not a Pillar 3 disclosure: read the capital position from the "
+                   "notes, for a year whose Pillar 3 has not been published",
+         note="an extension-less stub that redirects to the PDF on assets.gatehousebank.com; GFGL is "
+              "the group holding company and is not taken"),
     dict(entity="sbi-uk", page="https://www.sbiuk.com/about-us/financial-information", match=P3 + r".*\.pdf", year_end="03-31", kind="browser",
          note="certificate hostname mismatch and script-rendered page"),
     dict(entity="icici-bank-uk", page="https://www.icicibank.co.uk/about-us/basel-disclosures",
          match=r"basel-pillar-3-disclosures.*\.pdf", year_end="03-31"),
-    dict(entity="bank-of-china-uk", page="https://www.bankofchina.com/uk/en/aboutus/ab1/", match=P3 + r".*\.pdf", kind="browser"),
-    dict(entity="icbc-london", page="https://www.icbclondon.com/en/about-us/", match=P3 + r".*\.pdf", kind="browser",
-         note="london.icbc.com.cn no longer resolves; site address to be confirmed from the Mac"),
+    dict(entity="bank-of-china-uk", page="https://www.bankofchina.com/uk/aboutus/ab5/",
+         match=r"(?:pic\.bankofchina\.com/bocappd/uk/|bankofchina\.com/uk/aboutus/ab5/)\d{6}/P\d+\.pdf", text=P3,
+         note="verified 3 November 2026: the English /uk/en/ site redirects to a notice on boc.cn; the "
+              "/uk/ site's Regulations section (ab5) lists one item page per disclosure and the PDF is "
+              "one level down, named only by its upload stamp, so the link text picks it. The Pillar 3 "
+              "for 31 December 2025 was posted in July 2026"),
+    dict(entity="icbc-london", kind="pattern",
+         urls=["https://v.icbc.com.cn/userfiles/Resources/ICBC/haiwai/ICBCLondon/download/{year}/{year}_pillar_3_disclosure.pdf"],
+         note="verified 3 November 2026: ICBC (London) plc's annual Pillar 3 to 31 December, with a full UK "
+              "KM1, sits on the parent group's file server at one address per year; the 2025 report says it "
+              "was approved on 23 April 2026 and is published on the bank's website. icbclondon.com, and at "
+              "times this host, refuse a cloud address, so the Mac's weekly run may be the one that gets it"),
     dict(entity="bank-of-baroda-uk", page="https://www.bankofbarodauk.com/about-us",
          match=r"ukretail/pdf/disclosures-as-on.*\.pdf", year_end="03-31"),
-    dict(entity="qib-uk", page="https://www.qib-uk.com/about-us/financial-information/", match=P3 + r".*\.pdf", kind="browser"),
+    dict(entity="qib-uk", page="https://www.qib-uk.com/en/qibs-financial-reports",
+         match=r"/finance-reports/pillar-3-disclosure-document[^/]*\.pdf",
+         note="verified 3 November 2026: the financial-information page the locator named, and "
+              "/financial-reports, now answer with a 'Request Rejected' page, to headless Chromium too; the home "
+              "page's own link is this one, server-rendered and readable from a cloud address, listing every "
+              "Pillar 3 since 2020 with pillar-3-disclosure-document--2025-approved.pdf the newest. An "
+              "annual filer to 31 December"),
     # ---- Australia and Canada (Basel KM1 in APS 330 / OSFI Pillar 3) --------
     dict(entity="anz", page="https://www.anz.com.au/shareholder/centre/reporting/", match=r"aps ?330|pillar-?3.*\.pdf",
          year_end="09-30", currency="AUD", note="files every APS 330 on the FCA NSM; site listing is script-rendered"),
@@ -241,12 +338,14 @@ LOCATORS: list[dict] = [
                "https://www.td.com/content/dam/tdcom/canada/about-td/pdf/quarterly-results/{year}/q{q}/{year}-q{q}-supp-regulatory-disclosure-en.pdf"]),
     dict(entity="scotiabank", kind="pattern", year_end="10-31", currency="CAD",
          urls=["https://www.scotiabank.com/content/dam/scotiabank/corporate/quarterly-reports/{year}/q{q}/Q{q}{yy}_Supplementary_Regulatory_Capital_Disclosures-EN.pdf"]),
-    dict(entity="bmo", page="https://www.bmo.com/main/about-bmo/investor-relations/regulatory-disclosure/",
+    dict(entity="bmo", page="https://www.bmo.com/en-ca/main/about-bmo/banking/investor-relations/regulatory-disclosure/",
          match=r"/ir/qtrinfo/\d+/\d{4}-q\d/RegSupp[^/]*\.pdf", year_end="10-31", currency="CAD",
          kind="browser",
          note="the file was renamed from SuppRegCapitalDisclosure_Q{q}{yy} to RegSuppQ{q}{yy}, so the "
-              "URL template stopped resolving and nothing said so. bmo.com refuses the collector's "
-              "own user agent but serves a browser one, so the browser pass gets it without Chromium"),
+              "URL template stopped resolving and nothing said so. The page is the one the Mac's browser "
+              "pass found RegSuppQ326.pdf on (data/review/hints.json); the old /main/ address redirects to "
+              "it. bmo.com refuses the collector's own user agent and resets a cloud address at the TLS "
+              "handshake, so this stays with the Mac"),
     dict(entity="cibc", kind="pattern", year_end="10-31", currency="CAD",
          urls=["https://www.cibc.com/content/dam/cibc-public-assets/about-cibc/investor-relations/pdfs/quarterly-results/{year}/q{q}{yy}disclosure-en.pdf"]),
     dict(entity="national-bank-of-canada", page="https://www.nbc.ca/about-us/investors/quarterly-results.html",
@@ -256,6 +355,29 @@ LOCATORS: list[dict] = [
     dict(entity="rentenbank", page="https://www.rentenbank.de/en/investor-relations/business-development/",
          match=r"documents/(?:publications/)?(?:Disclosure-Report|Offenlegung|EN_Offenlegung|FINAL_EN_Offenlegung)[^/]*\.pdf",
          currency="EUR", note="verified 7 Sep 2026; the group left the EBA Transparency Exercise after 2018"),
+    # ---- Netherlands, France, Finland: verified 3 November 2026. The EBA hub supplies the capital figures
+    #      for the first three; their own reports are the primary source and arrive months earlier
+    dict(entity="bng-bank", page="https://www.bngbank.nl/over-bng/resultaten-en-verslagen/pillar-3-rapportages",
+         match=r"bngbank\.nl/v3/assets/.*Pillar_?3_[^/]*BNG[^/]*\.pdf", currency="EUR",
+         note="the Dutch site lists the English reports, a year end and an interim at 30 June (the "
+              "interim 2025 appeared in December 2025); bngbank.com and the /en/ pages refuse a cloud "
+              "address. The same files are also linked on eu-assets.contentstack.com and taken once"),
+    dict(entity="nwb-bank", page="https://nwbbank.com/en/about-nwb-bank/publications/pillar-3-disclosure",
+         match=r"application/files/.*Pillar_3_(?:Full|Half)_Year_Disclosure_\d{4}[^/]*\.pdf", currency="EUR",
+         note="full-year and half-year reports back to 2021"),
+    dict(entity="credit-mutuel", page="https://www.creditmutuel.com/en/publications/annual-report.html",
+         match=r"publications/\d{4}/\d{4}-informations-relatives-au-pilier-3[^/]*\.pdf", currency="EUR",
+         note="the group's 'Informations relatives au Pilier 3' sits on the publications page in French, "
+              "a year end and a 30 June; the Caisse Centrale's own report is a different entity. The KM1 "
+              "extractor does not read the French template (Tableau KM1), so these go to the reviewer"),
+    dict(entity="op-corporate-bank", page="https://www.op.fi/en/op-financial-group/to-the-media/publications/op-corporate-bank",
+         match=r"op\.fi/documents/\d+/\d+/OP[-+]Corporate[-+]Bank[-+]plcs?[-+](?:Interim[-+]Report|Half-year[-+](?:Financial[-+])?[Rr]eport|Financial[-+]Statements[-+]Bulletin)[^/]*\.pdf",
+         kind="browser", currency="EUR",
+         narrative="interim report, not a Pillar 3 disclosure: read the capital adequacy section (CET1 "
+                   "ratio, own funds and risk exposure amount of OP Corporate Bank plc) behind the narrative",
+         note="the publications list is rendered by script. The bank publishes no Pillar 3 of its own "
+              "(OP Financial Group's covers it) and its quarterly capital position is in these reports, "
+              "which the NSM release adapter had been reading until September 2025"),
     # ---- Japan, Hong Kong: verified 7 September 2026 by following each group's own disclosure index
     dict(entity="mufg", page="https://www.mufg.jp/english/ir/report/basel3/index.html",
          match=r"/basel3/[\w-]+/pdf/mufg\d+_09_en\.pdf", year_end="03-31", currency="JPY",
@@ -289,15 +411,24 @@ LOCATORS: list[dict] = [
          note="verified 7 Sep 2026: the investor-information page lists every Pillar 3 PDF by year"),
     dict(entity="uob", kind="pattern", currency="SGD",
          urls=["https://www.uobgroup.com/investor-relations/assets/pdfs/investor/financial/{year}/"
-               "regulatory-disclosures-pillar-3-disclosures-{q}q-{year}.pdf"],
-         note="the results page is rendered client side; the files themselves are at a stable address"),
+               "regulatory-disclosures-pillar-3-disclosures-{q}q-{year}.pdf",
+               "https://www.uobgroup.com/investor-relations/assets/pdfs/investor/financial/{year}/"
+               "regulatory-disclosures-pillar-3-disclosures-q{q}-{year}.pdf"],
+         note="the results page is rendered client side; the files themselves are at a stable address, "
+              "but the quarter is written either way round (1q-2026, then q2-2026 for June 2026, as "
+              "q2-2024 was), so both spellings are tried"),
     dict(entity="first-abu-dhabi-bank", page="https://www.bankfab.com/en-ae/about-fab/investor-relations", match=r"(basel|pillar).*\.pdf", currency="AED", kind="browser"),
     dict(entity="emirates-nbd", page="https://www.emiratesnbd.com/en/investor-relations",
          match=r"pillar[_ -]?iii[_ -]?disclosures?[^/]*|pillar_iii_disclosure[^/]*", exclude=r"/ar/",
          currency="AED",
          note="files sit on cdn.emiratesnbd.com under three different paths over the years; the "
               "investor relations page links them all"),
-    dict(entity="adcb", page="https://www.adcb.com/en/about-us/investor-relations/basel-iii/", match=r"(basel|pillar).*\.pdf", currency="AED", kind="browser"),
+    dict(entity="adcb", page="https://www.adcb.com/en/about-us/investor-relations/basel-iii/", match=r"(basel|pillar).*\.pdf", currency="AED", kind="browser",
+         note="the Mac's browser pass on 30 September 2026 was served ADCB's internal-server-error page "
+              "here, and every adcb.com page answers a cloud address with a Cloudflare challenge, but the "
+              "PDFs themselves download: on 3 November 2026 the newest were multimedia/pdfs/2026/august/"
+              "pillar3-Q2-2026.pdf and multimedia/pdfs/2026/may/pillar3-Q1-2026.pdf. The page that now "
+              "lists them is still to be found from the Mac"),
     dict(entity="qnb", page="https://www.qnb.com/sites/qnb/qnbglobal/page/en/eninvestorrelations.html", match=r"(basel|pillar).*\.pdf", currency="QAR", kind="browser"),
 ]
 
@@ -324,6 +455,15 @@ LOCATORS += [
          note="capital ratios come from EDGAR XBRL; the Pillar 3 report states them only as excess over minimum"),
     dict(entity="bny", kind="pattern", template="us_lcr", currency="USD",
          urls=["https://www.bny.com/assets/corporate/documents/pdf/investor-relations/liquidity-coverage-ratio-disclosure-{q}q{yy}.pdf"]),
+    dict(entity="bny", template="us_capital", currency="USD",
+         page="https://www.bny.com/corporate/global/en/investor-relations/regulatory-filings.html",
+         match=r"investor-relations/bny(?:-mellon)?-(?:corporate-)?(?:\dq20\d\d-)?pillar-?3-(?:report|disclosure)[^/]*\.pdf",
+         note="verified 3 November 2026: the SEC Filings & Other Disclosures page lists the holding "
+              "company's quarterly Pillar 3 report under three naming styles (bny-pillar-3-report-2q26, "
+              "bny-4q2025-pillar-3-report, bny-corporate-pillar-3-disclosure-march-2025); the EMEA and "
+              "SA/NV subsidiaries' reports sit beside them and are not matched. The US capital extractor "
+              "finds no CET1 ratio in the 2Q26 report, so these go to the reviewer; EDGAR carries only "
+              "the year-end ratios for this name"),
     dict(entity="citigroup", kind="pattern", template="us_lcr", currency="USD",
          urls=["https://www.citigroup.com/rcs/citigpa/storage/public/lcr{yymmdd}.pdf"]),
     dict(entity="citigroup", kind="pattern", template="us_capital", currency="USD",
@@ -337,7 +477,11 @@ LOCATORS += [
          text=r"pillar ?3|pillar iii|liquidity coverage|\bLCR\b", exclude=r"financial statement|securities llc|bank,? n\.?a\b|chase bank",
          note="the page named in the nav lists one sub-page per document type and no files, and the "
               "anchors there carry no text either; pillar-bhc is the holding company's own Pillar 3. "
-              "Download addresses are opaque, so link text picks the report. Answers 403 to a script"),
+              "Download addresses are opaque, so link text picks the report. Answers 403 to a script. "
+              "The 2Q26 report the maintainer loaded from Chrome on 3 November 2026 is static-files/"
+              "a6238e39-fd7d-4c3e-b75f-e2fd5f003736; from a cloud address this host resets the connection "
+              "(curl and headless Chromium alike), so the anchor text the text pattern reads has not yet "
+              "been seen on this page"),
     dict(entity="citigroup", kind="browser", template="us_capital", currency="USD",
          page="https://www.citigroup.com/global/investors", match=r"rcs/citigpa/storage/public/.*(basel|pillar).*\.pdf"),
     dict(entity="state-street", kind="browser", template="us_capital", currency="USD",

@@ -41,6 +41,9 @@ NSM_ARTEFACTS = "https://data.fca.org.uk/artefacts/"
 # the files rather than the rest of the website.
 INDEX_PAGE = re.compile(r"(?:19|20)\d\d(?:[-_/]?(?:q[1-4]|[1-4]q|h[12]|fy))?(?:/|/index|\.html?)?$|"
                         r"basel|pillar|disclos|regulatory|capital", re.I)
+# Link text that says a Pillar 3 sits behind a link whose address says nothing (Bank of China (UK)
+# posts one item page per disclosure under a posting stamp such as t20260714_25679507.html).
+INDEX_TEXT = re.compile(r"pillar[-_ ]?(?:3|iii)|basel[-_ ]?(?:3|iii)", re.I)
 MAX_NEW_PER_ENTITY = int(os.environ.get("BANKCREDIT_MAX_NEW", "3"))    # newest unseen PDFs fetched per run (raise for a one-off deep pass)
 LINK_RE = re.compile(r"""(?:https?:)?//[^\s"'<>\\)]+|/[^\s"'<>\\)]+""")
 # an href attribute keeps its literal spaces (OCBC names files "Pillar 3 Disclosures.pdf"); those are
@@ -88,6 +91,9 @@ def infer_period(text: str, year_end: str = "12-31") -> date | None:
     m = re.search(r"(20\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])", t)
     if m:
         return date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    m = re.search(r"\b([1-4])q[-_ ]?(20\d{2}|\d{2})\b", t)                        # 1q26, 2q2025, 2q-2026
+    if m:
+        return _quarter_end(int(m.group(2)) if len(m.group(2)) == 4 else 2000 + int(m.group(2)), int(m.group(1)), ye_m, ye_d)
     tag = re.search(r"\b(q[1-4]|h[12]|hy|half[ -]?year(?:ly)?|interim)(?=\d{2}\b|\b)", t)
     span = re.search(r"\b(20\d{2})[-/](?:20)?(\d{2})\b", t)          # 2025-2026 or 2025-26
     year = None
@@ -105,7 +111,11 @@ def infer_period(text: str, year_end: str = "12-31") -> date | None:
         return None
     if not tag:
         return date(year, ye_m, ye_d)
-    n = TAGS.get(tag.group(1), 2)
+    return _quarter_end(year, TAGS.get(tag.group(1), 2), ye_m, ye_d)
+
+
+def _quarter_end(year: int, n: int, ye_m: int, ye_d: int) -> date:
+    """The end of fiscal quarter n of the year that ends on ye_m-ye_d of `year`."""
     if (ye_m, ye_d) == (12, 31):
         return _month_end(year, 3 * n)
     end = _shift(date(year, ye_m, ye_d), -(4 - n) * 3)
@@ -161,7 +171,11 @@ class Pillar3Adapter(Adapter):
                     u = tpl.format(year=y, yy=f"{y % 100:02d}", q=q, qend=end.isoformat(),
                                    qword=("first", "second", "third", "fourth")[q - 1],
                                    mm=f"{end.month:02d}", dd=f"{end.day:02d}", yymmdd=end.strftime("%y%m%d"))
-                    out.append((u, end, u.rsplit("/", 1)[-1]))
+                    # an annual template names only the year, so the four quarters fill it alike: keep
+                    # the first, the latest quarter end already past, which for any earlier year is
+                    # its year end, the period an annual report covers
+                    if all(u != o[0] for o in out):
+                        out.append((u, end, u.rsplit("/", 1)[-1]))
         return out[:12]
 
     # ---- fetch ----
@@ -226,8 +240,10 @@ class Pillar3Adapter(Adapter):
             if trx and not (trx.search(text) and not (xrx and xrx.search(text))):
                 continue          # an opaque address says nothing; its link text is the only label
             name = d.rsplit("/", 1)[-1][:120]
-            found.append((u, infer_period(name, ye) or infer_period(d, ye) or infer_period(text, ye),
-                          (text[:120] if trx else name) or name))
+            # where the locator reads link text the address is opaque (a numeric id, a posting
+            # stamp), so the text's date is tried first; otherwise the file name is the best evidence
+            when = (infer_period(text, ye) if trx else None) or infer_period(name, ye) or infer_period(d, ye) or infer_period(text, ye)
+            found.append((u, when, (text[:120] if trx else name) or name))
         return found
 
     def _index_pages(self, loc: dict, body: str, limit: int = 6) -> list[str]:
@@ -235,17 +251,22 @@ class Pillar3Adapter(Adapter):
 
         Several banks publish an index of quarters rather than a list of files: MUFG's Basel 3
         page links to basel3/2026-3q/index.html and the PDFs live one level down. Without this
-        the locator's pattern is tested against a page that has no documents on it at all."""
+        the locator's pattern is tested against a page that has no documents on it at all.
+
+        A link is followed when its address names a period or a disclosure section, or when its
+        text names a Pillar 3: Bank of China (UK) lists one item page per report under an address
+        that is only a posting stamp, and the anchor text is all that says what sits behind it."""
         from urllib.parse import urlparse
         host = urlparse(loc["page"]).netloc.replace("www.", "")
         page = loc["page"].rstrip("/")
+        texts = {urljoin(loc["page"], h).split("#")[0]: t for h, t in self._anchor_text(body).items()}
         out = []
         for u in self._links(loc["page"], body):
             if urlparse(u).netloc.replace("www.", "") != host or u.rstrip("/") == page:
                 continue
             if re.search(r"\.(pdf|jpg|png|svg|css|js|xlsx?|docx?|zip)(\?|$)|#|mailto:", u, re.I):
                 continue
-            if not INDEX_PAGE.search(u) or u in out:
+            if not (INDEX_PAGE.search(u) or INDEX_TEXT.search(texts.get(u, ""))) or u in out:
                 continue
             out.append(u)
             if len(out) >= limit:

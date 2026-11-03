@@ -1,5 +1,5 @@
 {
-  "_note": "Entities whose Basel capital ratios are not published at the level we assess, with the last disclosure we hold and why. The score stays withheld because capital cannot be assessed at this entity, but the reason is stated plainly rather than implying we are behind on collection. Checked 7 September 2026.",
+  "_note": "Entities whose Basel capital ratios are not published at the level we assess, with the last disclosure we hold and why. The score stays withheld because capital cannot be assessed at this entity, but the reason is stated plainly rather than implying we are behind on collection. Checked 7 September 2026; the virgin-money-uk entry added 3 November 2026, each statement checked against the filing it cites.",
   "rentenbank": {
     "reason": "German promotional bank, exempt from CRR since 2021; last disclosure report September 2020",
     "last_report": "2020-09-30",
@@ -27,5 +27,12 @@
     "last_report": "",
     "source": "https://www.goldmansachs.com/disclosures",
     "standing": "Goldman Sachs Group UK Limited reported a CET1 ratio of 12.7% at March 2026, and the PRA reviews the bank's own capital adequacy assessment within that group"
+  },
+  "virgin-money-uk": {
+    "short": "capital reported at group level",
+    "reason": "the PRA revoked Virgin Money UK's sub-consolidation direction on 1 December 2025, ahead of the Part VII transfer of most of its subsidiary Clydesdale Bank PLC's business to Nationwide on 2 April 2026, so no Pillar 3 is published at this entity after the September 2025 interim; the company re-registered as Virgin Money UK Limited on 28 July 2026",
+    "last_report": "2025-09-30",
+    "source": "https://www.virginmoneyukplc.com/investor-relations/results-and-reporting/financial-results/",
+    "standing": "A wholly owned subsidiary of Nationwide Building Society since 1 October 2024; its outstanding AT1 instruments stopped counting as Nationwide group own funds when the direction was revoked, but they and its externally held eligible liabilities instrument remain eligible towards the group's MREL until 31 December 2028; Clydesdale Bank PLC's own Pillar 3 is collected separately, and its report for 31 March 2026 expects none for later periods"
   }
 }

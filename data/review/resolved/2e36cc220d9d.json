@@ -1,0 +1,23 @@
+{
+ "id": "2e36cc220d9d",
+ "entity_id": "icbc-london",
+ "url": "https://v.icbc.com.cn/userfiles/Resources/ICBC/haiwai/ICBCLondon/download/2025/2025_pillar_3_disclosure.pdf",
+ "page": 34,
+ "reference_date": "2025-12-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 547.9,
+  "tier1_capital": 547.9,
+  "total_capital": 547.9,
+  "rwa": 675.7,
+  "cet1_ratio": 81.09,
+  "tier1_ratio": 81.09,
+  "total_capital_ratio": 81.09,
+  "overall_capital_requirement": 16.87,
+  "leverage_exposure": 1153.9,
+  "leverage_ratio": 47.48,
+  "lcr": 143.7,
+  "nsfr": 173.34
+ },
+ "note": "ICBC (London) plc, Pillar 3 Disclosures 2025, Annex 2 UK KM1 (pages 34-35), in USD thousands, converted to millions, taking column T (31/12/2025). The validator rejected the ratios only because they exceed its plausibility bounds: ICBC London is a small wholesale bank holding far more capital than its risk-weighted assets need, and the figures are as printed. Check: CET1 capital 547,878.17 / RWA 675,667.75 = 81.09%, matching row 5; Tier 1 547,878.17 / leverage exposure 1,153,888.52 = 47.48%, matching row 14. The quarterly columns show the same picture (CET1 ratio 70.48% at December 2024)."
+}

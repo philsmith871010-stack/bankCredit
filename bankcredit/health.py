@@ -28,11 +28,29 @@ from .adapters.pillar3_locators import LOCATORS
 from .score import ALTERNATES, PILLARS
 
 REPORT = store.DATA / "review" / "locator-health.json"
-# a semi-annual filer plus a quarter's grace: past this, something has broken rather than slipped
+# How long a name may go without a new capital figure before something has broken rather than
+# slipped depends on how often it reports, and that is read from the gaps between the distinct
+# reference dates of its loaded documents. A flat 300 days made every annual filer look broken from
+# late October until its next report in spring, while letting a quarterly filer fall three quarters
+# behind in silence. A name with fewer than two dated documents keeps the flat window.
 OVERDUE_DAYS = 300
+WINDOW_DAYS = {"quarterly": 200, "half-yearly": 300, "annual": 480, "unknown": OVERDUE_DAYS}
 # the same metrics the score's capital pillar accepts, so this never reports a gap the score does
 # not see: a US bank reporting Tier 1 leverage on average assets has capital, in the terms we use
 CAPITAL = tuple(PILLARS["capital"][1]) + (ALTERNATES["leverage_ratio"][0],)
+
+
+def cadence(reference_dates) -> str:
+    """quarterly, half-yearly or annual from the median gap between distinct reference dates (100 and
+    200 days are the dividing lines, a quarter and a half-year plus some slack); unknown with fewer
+    than two dates, which is too few to tell."""
+    dates = sorted({date.fromisoformat(str(d)[:10]) for d in reference_dates if d and str(d)[:4].isdigit()})
+    if len(dates) < 2:
+        return "unknown"
+    gaps = sorted((b - a).days for a, b in zip(dates, dates[1:]))
+    mid = len(gaps) // 2
+    median = gaps[mid] if len(gaps) % 2 else (gaps[mid - 1] + gaps[mid]) / 2
+    return "quarterly" if median <= 100 else "half-yearly" if median <= 200 else "annual"
 
 
 def _faults() -> list[dict]:
@@ -78,10 +96,13 @@ def report(today: date | None = None) -> dict:
         sources = sorted(set(cap.source)) if not cap.empty else []
         n_docs = int((docs.entity_id == e.id).sum()) if not docs.empty else 0
         age = (today - date.fromisoformat(newest)).days if newest else None
+        # the documents whose figures were loaded say how often this name reports
+        mine = docs[(docs.entity_id == e.id) & docs.status.isin(("loaded", "unverified"))] if not docs.empty else docs
+        cad = cadence(mine.reference_date.dropna()) if not mine.empty else "unknown"
 
         if e.id in not_published:
             state = "by design"          # a stated reason, not a gap: never chase these
-        elif newest and age is not None and age <= OVERDUE_DAYS:
+        elif newest and age is not None and age <= WINDOW_DAYS[cad]:
             state = "ok"
         elif newest:
             state = "overdue"
@@ -91,7 +112,7 @@ def report(today: date | None = None) -> dict:
             state = "no source"
         rows.append({"entity": e.id, "short": e.short_name, "region": e.region,
                      "locators": len(locs), "kinds": sorted({l.get("kind", "html") for l in locs}),
-                     "documents": n_docs, "capital_as_of": newest, "age_days": age,
+                     "documents": n_docs, "capital_as_of": newest, "age_days": age, "cadence": cad,
                      "capital_sources": sources, "state": state})
 
     counts = {s: sum(1 for r in rows if r["state"] == s)

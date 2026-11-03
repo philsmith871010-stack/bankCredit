@@ -223,12 +223,27 @@
   "page": 70,
   "currency": "GBP",
   "last_verified": {
-   "reference_date": "2026-03-31",
+   "reference_date": "2026-06-30",
    "values": {
-    "rwa": 11809.08,
-    "lcr": 188.0
+    "cet1_capital": 1970.392,
+    "tier1_capital": 2220.392,
+    "total_capital": 2520.472,
+    "rwa": 11764.835000000001,
+    "cet1_ratio": 16.75,
+    "tier1_ratio": 18.87,
+    "total_capital_ratio": 21.42,
+    "total_srep_requirement": 10.6,
+    "overall_capital_requirement": 15.1,
+    "cet1_headroom": 10.79,
+    "leverage_ratio": 5.56,
+    "hqla": 6551.659000000001,
+    "net_cash_outflows": 3476.1330000000003,
+    "lcr": 189.0,
+    "available_stable_funding": 40458.735,
+    "required_stable_funding": 26542.338,
+    "nsfr": 152.0
    },
-   "method": "pdf_manual"
+   "method": "pdf_rules"
   },
   "skip_patterns": [
    "tsb\\-bank\\-ara\\-\\d+"
@@ -825,26 +840,26 @@
  },
  "clydesdale-bank": {
   "last_verified": {
-   "reference_date": "2025-12-31",
+   "reference_date": "2026-03-31",
    "values": {
-    "cet1_capital": 4168.0,
-    "tier1_capital": 4866.0,
-    "total_capital": 5659.0,
-    "rwa": 30103.0,
-    "cet1_ratio": 13.8,
-    "tier1_ratio": 16.2,
-    "total_capital_ratio": 18.8,
+    "cet1_capital": 4248.0,
+    "tier1_capital": 4946.0,
+    "total_capital": 5747.0,
+    "rwa": 29742.0,
+    "cet1_ratio": 14.3,
+    "tier1_ratio": 16.6,
+    "total_capital_ratio": 19.3,
     "total_srep_requirement": 11.6,
     "combined_buffer": 4.5,
     "overall_capital_requirement": 16.1,
-    "cet1_headroom": 7.3,
-    "leverage_exposure": 80070.0,
-    "leverage_ratio": 6.1,
-    "hqla": 15614.0,
-    "net_cash_outflows": 9821.0,
-    "lcr": 159.0,
-    "available_stable_funding": 77958.0,
-    "required_stable_funding": 54545.0,
+    "cet1_headroom": 7.8,
+    "leverage_exposure": 78792.0,
+    "leverage_ratio": 6.3,
+    "hqla": 16246.0,
+    "net_cash_outflows": 9912.0,
+    "lcr": 164.0,
+    "available_stable_funding": 78219.0,
+    "required_stable_funding": 54560.0,
     "nsfr": 143.0
    },
    "method": "pdf_rules"
@@ -1727,25 +1742,25 @@
  },
  "uob": {
   "last_verified": {
-   "reference_date": "2026-03-31",
+   "reference_date": "2026-06-30",
    "values": {
-    "cet1_capital": 42730.0,
-    "tier1_capital": 46179.0,
-    "total_capital": 49712.0,
-    "rwa": 278459.0,
-    "cet1_ratio": 15.3,
+    "cet1_capital": 42957.0,
+    "tier1_capital": 46406.0,
+    "total_capital": 49609.0,
+    "rwa": 278902.0,
+    "cet1_ratio": 15.4,
     "tier1_ratio": 16.6,
-    "total_capital_ratio": 17.9,
+    "total_capital_ratio": 17.8,
     "combined_buffer": 2.7,
-    "cet1_headroom": 7.9,
-    "leverage_exposure": 660597.0,
-    "leverage_ratio": 7.0,
-    "hqla": 108543.0,
-    "net_cash_outflows": 75341.0,
-    "lcr": 144.0,
-    "available_stable_funding": 359170.0,
-    "required_stable_funding": 312348.0,
-    "nsfr": 115.0
+    "cet1_headroom": 7.8,
+    "leverage_exposure": 681260.0,
+    "leverage_ratio": 6.8,
+    "hqla": 111840.0,
+    "net_cash_outflows": 70232.0,
+    "lcr": 159.0,
+    "available_stable_funding": 364094.0,
+    "required_stable_funding": 318663.0,
+    "nsfr": 114.0
    },
    "method": "pdf_rules"
   }
@@ -1880,8 +1895,6 @@
   }
  },
  "newcastle-bs": {
-  "browser_page": "https://newcastle.co.uk/media-centre/financial-results",
-  "browser_page_found": "2026-11-03",
   "last_verified": {
    "reference_date": "2026-06-30",
    "values": {
@@ -1946,6 +1959,110 @@
     "leverage_ratio": 8.9,
     "lcr": 354.0,
     "nsfr": 140.0
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "al-rayan-bank": {
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 227.3,
+    "tier1_capital": 230.3,
+    "total_capital": 232.8,
+    "rwa": 1471.7,
+    "cet1_ratio": 15.45,
+    "tier1_ratio": 15.65,
+    "total_capital_ratio": 15.82,
+    "total_srep_requirement": 9.54,
+    "combined_buffer": 3.88,
+    "overall_capital_requirement": 13.42,
+    "cet1_headroom": 38.0,
+    "leverage_exposure": 3027.0,
+    "leverage_ratio": 7.6,
+    "hqla": 249.5,
+    "net_cash_outflows": 52.1,
+    "lcr": 481.0,
+    "available_stable_funding": 2540.2,
+    "required_stable_funding": 1687.6,
+    "nsfr": 151.0
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "bank-of-china-uk": {
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 274.521,
+    "tier1_capital": 334.521,
+    "rwa": 1008.11,
+    "cet1_ratio": 27.2,
+    "tier1_ratio": 33.2,
+    "total_capital_ratio": 33.2,
+    "combined_buffer": 2.8,
+    "cet1_headroom": 21.9,
+    "leverage_exposure": 1373.968,
+    "leverage_ratio": 24.4,
+    "hqla": 1007.375,
+    "lcr": 324.1,
+    "available_stable_funding": 1389.486,
+    "required_stable_funding": 714.82,
+    "nsfr": 194.4,
+    "net_cash_outflows": 310.866
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "op-corporate-bank": {
+  "browser_page": "https://www.op.fi/en/op-financial-group/to-the-media/publications/op-corporate-bank",
+  "browser_page_found": "2026-11-03"
+ },
+ "qib-uk": {
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 124259.0,
+    "tier1_capital": 124259.0,
+    "total_capital": 137959.0,
+    "rwa": 693154.0,
+    "cet1_ratio": 17.93,
+    "tier1_ratio": 17.93,
+    "total_capital_ratio": 19.9,
+    "total_srep_requirement": 12.55,
+    "combined_buffer": 3.68,
+    "overall_capital_requirement": 16.23,
+    "cet1_headroom": 5.38,
+    "leverage_exposure": 1164862.0,
+    "leverage_ratio": 10.67,
+    "hqla": 208659.0,
+    "net_cash_outflows": 60378.0,
+    "lcr": 345.59,
+    "available_stable_funding": 881099.0,
+    "required_stable_funding": 688511.0,
+    "nsfr": 127.95
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "icbc-london": {
+  "page": 34,
+  "currency": "USD",
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 547.9,
+    "tier1_capital": 547.9,
+    "total_capital": 547.9,
+    "rwa": 675.7,
+    "cet1_ratio": 81.09,
+    "tier1_ratio": 81.09,
+    "total_capital_ratio": 81.09,
+    "overall_capital_requirement": 16.87,
+    "leverage_exposure": 1153.9,
+    "leverage_ratio": 47.48,
+    "lcr": 143.7,
+    "nsfr": 173.34
    },
    "method": "pdf_manual"
   }
