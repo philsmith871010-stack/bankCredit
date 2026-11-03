@@ -16,9 +16,12 @@ from __future__ import annotations
 
 import json
 import logging
+import time
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from urllib.parse import quote
+
+import requests
 
 from .. import store
 from ..models import Entity, Fact
@@ -29,6 +32,32 @@ API = "https://filings.xbrl.org/api/filings"
 HOST = "https://filings.xbrl.org"
 CACHE = store.DATA / "cache" / "esef"
 MAX_FILINGS = 8
+# On 1 November 2026 the register closed the connection on about two thirds of the filers in both
+# of that day's runs, and every one of them was lost for the fortnight, because each request was
+# tried once. A dropped connection, a timeout, a 429 or a 5xx is now tried again after a pause;
+# anything else (a 404, a filing that is not JSON) is an answer, not a hiccup, and is not retried.
+WAITS = (5, 20, 60)               # seconds before the second, third and fourth attempts
+# A register that is down, not merely busy, would cost every request the whole wait. After this many
+# requests have failed even with their retries, the rest of the run tries each request once.
+GIVE_UP_AFTER = 3
+TRANSIENT = (requests.ConnectionError, requests.Timeout, requests.exceptions.ChunkedEncodingError)
+
+
+def get(session, url: str, timeout: int, waits=WAITS, sleep=None):
+    """GET with a retry on the failures that pass: the response, or the last error raised."""
+    sleep = sleep or time.sleep          # looked up per call, so a test can stand in for the pause
+    for attempt in range(len(waits) + 1):
+        try:
+            r = session.get(url, timeout=timeout)
+        except TRANSIENT as exc:
+            if attempt == len(waits):
+                raise
+            log.info("esef: %s on attempt %d, retrying in %ss", type(exc).__name__, attempt + 1, waits[attempt])
+        else:
+            if (r.status_code != 429 and r.status_code < 500) or attempt == len(waits):
+                return r
+            log.info("esef: HTTP %s on attempt %d, retrying in %ss", r.status_code, attempt + 1, waits[attempt])
+        sleep(waits[attempt])
 
 # concept -> (code, kind); the first concept found wins for a code
 CONCEPTS = [
@@ -159,9 +188,21 @@ class EsefAdapter(Adapter):
     def discover(self):
         return [e for e in self.entities if e.lei]
 
+    def _get(self, url: str, timeout: int):
+        """One request, retried while the register still looks merely busy."""
+        lost = getattr(self, "_lost", 0)
+        try:
+            r = get(self.session, url, timeout, waits=WAITS if lost < GIVE_UP_AFTER else ())
+        except TRANSIENT:
+            self._lost = lost + 1
+            raise
+        if r.status_code == 429 or r.status_code >= 500:
+            self._lost = lost + 1
+        return r
+
     def _filings(self, e: Entity) -> list[dict]:
         flt = json.dumps([{"name": "entity.identifier", "op": "eq", "val": e.lei}])
-        r = self.session.get(f"{API}?filter={quote(flt)}&page%5Bsize%5D={MAX_FILINGS}&sort=-period_end", timeout=60)
+        r = self._get(f"{API}?filter={quote(flt)}&page%5Bsize%5D={MAX_FILINGS}&sort=-period_end", timeout=60)
         if r.status_code != 200:
             log.warning("esef: %s listing -> %s", e.id, r.status_code)
             return []
@@ -180,7 +221,7 @@ class EsefAdapter(Adapter):
         for a in self._filings(e):
             path = CACHE / f"{e.lei}-{a['period_end']}.json"
             if not path.exists():
-                r = self.session.get(HOST + a["json_url"], timeout=180)
+                r = self._get(HOST + a["json_url"], timeout=180)
                 if r.status_code != 200 or not r.content.startswith(b"{"):
                     log.warning("esef: %s %s -> %s", e.id, a["period_end"], r.status_code)
                     continue

@@ -51,5 +51,5 @@ news faster than any reading of it can.
 ## Not changed
 
 The verdict files under `data/review/` are left as they are. The "headline refresh pokes" cloud
-routine, which started a pipeline run three times a weekday to refresh headlines, now starts runs
-that decide to skip; it can be switched off.
+routine, which started a pipeline run three times a weekday to refresh headlines, was switched
+off the same day.
