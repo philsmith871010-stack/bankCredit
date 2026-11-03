@@ -190,28 +190,27 @@ def test_the_dialog_is_built_from_panels(page, server):
     visit(page, server, TOOL)
     _open_first_bank(page)
     heads = page.eval_on_selector_all("#md-body .cp-cell > h5 > span:first-child",
-                                      "e => e.map(x => x.textContent.trim())")
-    assert len(heads) == 4, heads
+                                      "e => e.map(x => x.firstChild.textContent.trim())")
+    assert heads == ["Trends", "Ratings", "Score make-up"], heads
     assert page.query_selector("#md-body .cr-scale") or page.query_selector("#md-body .cp-rt-none")
     assert not page.errors, page.errors
 
 
-def test_an_event_in_the_dialog_shows_its_whole_headline(page, server):
+def test_a_tooltip_in_the_dialog_shows_in_the_dialog(page, server):
     """A dialog paints in the top layer, so a tooltip left on the body sits behind it."""
     visit(page, server, TOOL)
     _open_first_bank(page)
-    row = page.query_selector("#md-body .md-news > div[data-tip]")
-    if row is None:
-        pytest.skip("the first bank has no events")
-    headline = page.eval_on_selector("#md-body .md-news > div[data-tip] .hd", "e => e.textContent.trim()")
-    row.hover()
+    pill = page.query_selector("#md-body .md-pill[data-tip]")
+    if pill is None:
+        pytest.skip("the first bank has no score make-up")
+    pill.hover()
     page.wait_for_timeout(350)
     tip = page.evaluate("""() => {
       const t = document.querySelector('.dtip');
       return {host: t.parentElement.tagName, hidden: t.hidden, text: t.textContent || ''};
     }""")
     assert tip["host"] == "DIALOG" and not tip["hidden"], tip
-    assert headline[:40] in tip["text"], tip["text"]
+    assert "of the score" in tip["text"], tip["text"]
 
 
 def test_the_dialog_fills_from_the_detail_file(page, server):
@@ -1017,14 +1016,10 @@ def test_a_profiles_metrics_table_sorts_on_its_headings(page, server):
     assert not page.errors, page.errors
 
 
-def test_a_profiles_flagged_events_come_first(page, server):
+def test_a_profile_keeps_sources_and_has_no_events_tab(page, server):
     visit(page, server, "banks/barclays-bank.html")
-    page.eval_on_selector('.tab[data-tab="events"]', "e => e.click()")
-    page.wait_for_timeout(300)
-    sev = page.eval_on_selector_all("#pevents .event .chip", "e => e.map(x => x.textContent.trim())")
-    flagged = [s for s in sev if s in ("bad", "warn", "good")]
-    assert sev[:len(flagged)] == flagged, "every flagged event precedes every unflagged one"
-    assert page.eval_on_selector_all("#pevents .ev-divider", "e => e.length") == (1 if flagged and len(flagged) < len(sev) else 0)
+    tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
+    assert "events" not in tabs and "sources" in tabs, tabs
 
 
 # ---- the universe's column chooser ---------------------------------------------------------

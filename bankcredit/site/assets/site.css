@@ -385,7 +385,7 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .md-mkt .chip{white-space:nowrap}
 .md-act{display:flex;align-items:center;gap:8px}
 #md-body{padding:11px;overflow:auto;background:var(--bg)}
-.md-grid{display:grid;grid-template-columns:minmax(310px,1.5fr) minmax(240px,.95fr) minmax(230px,.95fr);gap:9px;align-items:start}
+.md-grid{display:grid;grid-template-columns:minmax(320px,1.6fr) minmax(260px,1fr);gap:9px;align-items:start}
 .md-col{display:flex;flex-direction:column;gap:9px;min-width:0}
 .md-trends{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px 12px}
 .md-trends figure{margin:0;min-width:0}

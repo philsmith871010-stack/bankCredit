@@ -213,15 +213,7 @@ whenIdle(function(){
   document.querySelectorAll('.panel[data-src]').forEach(warmPanel);
 });
 
-// A profile's event list has no filter above it, only a length: eight years of a big bank's
-// rating actions and documents is a panel nobody reaches the bottom of.
-function initProfileEvents(){var box=document.getElementById('pevents');if(!box||box.dataset.init)return;box.dataset.init='1';
-  var rows=[].slice.call(box.querySelectorAll('.event'));
-  function apply(){rows.forEach(function(e){e.hidden=false});
-    window.pageRows('pe-more',rows,function(e){e.hidden=true},'events',apply)}
-  apply()}
-initProfileEvents();
-(window.__panelInit=window.__panelInit||[]).push(initProfileEvents);
+
 
 // Profile trends: a small multiple opens its full-size chart in a dialog
 (function(){var d=document.createElement('dialog');d.className='chart-dialog';d.innerHTML='<div class="cd-head"><div><h3></h3><div class="small muted"></div></div><button class="cd-close" aria-label="Close">×</button></div><div class="cd-body"></div><div class="cd-def"></div>';

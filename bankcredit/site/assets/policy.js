@@ -204,21 +204,6 @@
   // nothing makes a share link any more; a link already sent still opens one
   function decode(s){try{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))))}catch(e){return null}}
 
-  // An event title is clipped to a line on a card and to two in the dialog, so the row carries the
-  // whole of it in a tooltip, with the date, what kind of event it is and where it came from.
-  var EV_WORD={bad:'adverse',warn:'one to watch',good:'positive'};
-  function evRow(x){
-    var k=x.severity==='bad'?'bad':(x.severity==='warn'?'warn':'good'), w=EV_WORD[k];
-    var tip=tipd(tipHead(esc(x.date||''),w)+'<i>'+esc(x.title||'')+'</i>'+
-      // a title can end in its own source, so the source is only worth a line of its own
-      // when it is not already there
-      ((x.source&&String(x.title||'').toLowerCase().indexOf(String(x.source).toLowerCase())<0)?'<i>'+esc(x.source)+'</i>':'')+
-      (x.type?'<i>'+esc(x.type==='disclosure'?'new report':x.type+' action')+'</i>':''));
-    var t=esc(x.title||'');
-    return '<div'+tip+'><span class="dot dot-'+k+'" title="'+w+'"></span>'+
-      '<span class="mono muted">'+esc(x.date||'')+'</span><span class="hd">'+
-      (x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+t+'</a>':t)+'</span></div>';
-  }
 
   // ---- what changed since the name was approved, and what needs a look now
   function flags(item,e){
@@ -515,10 +500,8 @@
       return '<div class="md-pill"'+tip+'><span>'+esc(k.replace(/_/g,' '))+'</span>'+
              '<div class="meter meter-sm"><i style="width:'+(pc==null?0:Math.max(0,Math.min(100,pc)))+'%;background:'+col+'"></i></div>'+
              '<b style="color:'+col+'">'+(pc==null?'\u2014':pc.toFixed(0))+'</b><i>w'+(wt==null?'':wt)+'</i></div>'}).join(''):'';
-    var ev=(b.events||[]).slice(0,7).map(evRow).join('')
-           ||'<div class="muted small">Nothing recorded in the window.</div>';
-    // The same panels the open card uses: a ruled heading on a white box, four of them on a
-    // tinted ground. A dialog that looks like the row it came from is one thing to learn, not two.
+    // The same panels the open card uses: a ruled heading on a white box on a tinted ground. The
+    // trends and the standing; a name's events were dropped in November 2026, with the headlines. A dialog that looks like the row it came from is one thing to learn, not two.
     return '<div class="md-grid">'+
       sect('Trends',(n?n+' series held':''),
         '<div class="md-trends" id="md-trends">'+charts+'</div>'+
@@ -532,8 +515,6 @@
           (b.percentile!=null?'<p class="md-foot">Stronger than <b>'+Math.round(b.percentile)+'%</b> of its peer group'+
             mk('percentile')+' ('+esc(String(b.peer_group||'').replace(/_/g,' '))+').</p>':''))+
       '</div>'+
-      sect('Events','',
-        '<div class="cp-news md-news">'+ev+'</div>')+
     '</div>';
   }
   function openModal(id,tenor){
@@ -554,7 +535,7 @@
       '<div id="md-body"><div class="md-grid">'+
         sect('Trends','','<div class="md-wait">'+[0,1,2,3,4,5].map(function(){return '<div class="md-sk"></div>'}).join('')+'</div>','md-trend-panel')+
         '<div class="md-col">'+sect('Ratings','',sk(4))+sect('Score make-up','',sk(5))+'</div>'+
-        sect('Events','',sk(6))+'</div></div>';
+        '</div></div>';
     if(!dlg.open)dlg.showModal();
     var put=function(b){var t=document.getElementById('md-body');if(t)t.innerHTML=modalBody(b,e)};
     hideTip();
