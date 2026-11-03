@@ -73,9 +73,11 @@
   "last_verified": {
    "reference_date": "2026-06-30",
    "values": {
-    "lcr": 112.0,
-    "hqla": 683634.0,
-    "net_cash_outflows": 600009.0
+    "cet1_ratio": 11.2,
+    "tier1_ratio": 12.6,
+    "total_capital_ratio": 14.7,
+    "tier1_leverage": 6.6,
+    "leverage_ratio": 5.5
    },
    "method": "pdf_rules"
   },
@@ -530,27 +532,27 @@
   "page": 6,
   "currency": "USD",
   "last_verified": {
-   "reference_date": "2026-06-30",
+   "reference_date": "2026-09-30",
    "values": {
-    "cet1_capital": 127700.0,
-    "tier1_capital": 151300.0,
-    "total_capital": 178800.0,
-    "rwa": 906400.0,
-    "cet1_ratio": 14.1,
-    "tier1_ratio": 16.7,
-    "total_capital_ratio": 19.7,
+    "cet1_capital": 128100.0,
+    "tier1_capital": 150500.0,
+    "total_capital": 176800.0,
+    "rwa": 922400.0,
+    "cet1_ratio": 13.9,
+    "tier1_ratio": 16.3,
+    "total_capital_ratio": 19.2,
     "total_srep_requirement": 10.5,
-    "combined_buffer": 5.2,
+    "combined_buffer": 5.3,
     "overall_capital_requirement": 15.8,
-    "cet1_headroom": 8.2,
-    "leverage_exposure": 3076200.0,
+    "cet1_headroom": 8.0,
+    "leverage_exposure": 3090000.0,
     "leverage_ratio": 4.9,
-    "hqla": 713700.0,
-    "net_cash_outflows": 534500.0,
-    "lcr": 134.0,
-    "available_stable_funding": 1663600.0,
-    "required_stable_funding": 1184600.0,
-    "nsfr": 140.0
+    "hqla": 719400.0,
+    "net_cash_outflows": 544100.0,
+    "lcr": 132.0,
+    "available_stable_funding": 1685500.0,
+    "required_stable_funding": 1211900.0,
+    "nsfr": 139.0
    },
    "method": "pdf_rules"
   }
@@ -765,27 +767,27 @@
  },
  "hsbc-bank": {
   "last_verified": {
-   "reference_date": "2026-06-30",
+   "reference_date": "2026-09-30",
    "values": {
-    "cet1_capital": 19180.0,
-    "tier1_capital": 23783.0,
-    "total_capital": 41356.0,
-    "rwa": 112200.0,
-    "cet1_ratio": 17.1,
-    "tier1_ratio": 21.2,
-    "total_capital_ratio": 36.9,
+    "cet1_capital": 18760.0,
+    "tier1_capital": 23363.0,
+    "total_capital": 40229.0,
+    "rwa": 111243.0,
+    "cet1_ratio": 16.9,
+    "tier1_ratio": 21.0,
+    "total_capital_ratio": 36.2,
     "total_srep_requirement": 8.0,
     "combined_buffer": 3.5,
     "overall_capital_requirement": 11.5,
-    "cet1_headroom": 12.6,
-    "leverage_exposure": 585511.0,
-    "leverage_ratio": 4.1,
-    "hqla": 111863.0,
-    "net_cash_outflows": 80200.0,
+    "cet1_headroom": 12.4,
+    "leverage_exposure": 579848.0,
+    "leverage_ratio": 4.0,
+    "hqla": 114543.0,
+    "net_cash_outflows": 82570.0,
     "lcr": 139.0,
-    "available_stable_funding": 137205.0,
-    "required_stable_funding": 122399.0,
-    "nsfr": 112.0
+    "available_stable_funding": 141840.0,
+    "required_stable_funding": 125658.0,
+    "nsfr": 113.0
    },
    "method": "pdf_rules"
   }
