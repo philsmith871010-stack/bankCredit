@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.pwlbtoday.counterparty-weekly</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>-lc</string>
+    <string>$HOME/Counterparty/scripts/mac/weekly.sh</string>
+  </array>
+  <!-- Every hour the Mac is awake, and once at login. The script decides whether a run is owed
+       (more than six days since the last one finished), so the work happens about weekly on
+       whatever hour the laptop is on, and a week the laptop was closed on is caught up, not lost.
+       Hours the Mac spends asleep or off are simply not counted; launchd fires on the next wake. -->
+  <key>StartInterval</key><integer>3600</integer>
+  <key>RunAtLoad</key><true/>
+  <key>ProcessType</key><string>Background</string>
+  <key>StandardOutPath</key><string>/tmp/counterparty-weekly-launchd.log</string>
+  <key>StandardErrorPath</key><string>/tmp/counterparty-weekly-launchd.log</string>
+  <key>EnvironmentVariables</key>
+  <dict><key>PATH</key><string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string></dict>
+</dict>
+</plist>

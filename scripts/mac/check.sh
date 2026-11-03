@@ -3,7 +3,7 @@
 #
 #   bash ~/Counterparty/scripts/mac/check.sh
 #
-# The job runs itself, weekdays at 07:30, and says nothing when it works. That is the right
+# The job runs itself, weekly on whatever hour the Mac is on, and says nothing when it works. That is the right
 # behaviour and it is also how one dirty file stopped it for five days without anyone noticing.
 # This answers the four questions worth asking, and says plainly what to do about each.
 #
@@ -20,10 +20,15 @@ bad() { printf '%-22s !! %s\n' "$1" "$2"; ok=1; }
 # 1. Is it scheduled at all? An unloaded job is silent in exactly the same way as a working one.
 if ! command -v launchctl >/dev/null 2>&1; then
   say "scheduled" "not a Mac; skipping"
+elif launchctl list 2>/dev/null | grep -q com.pwlbtoday.counterparty-weekly; then
+  say "scheduled" "loaded, weekly (checked every hour the Mac is on)"
 elif launchctl list 2>/dev/null | grep -q com.pwlbtoday.counterparty; then
-  say "scheduled" "loaded, weekdays 07:30 local"
+  say "scheduled" "loaded, weekdays 07:30 local (the old daily job; the weekly one is the recommended one)"
 else
-  bad "scheduled" "NOT loaded. Fix: launchctl load ~/Library/LaunchAgents/com.pwlbtoday.counterparty.plist"
+  bad "scheduled" "NOT loaded. Fix: launchctl load ~/Library/LaunchAgents/com.pwlbtoday.counterparty-weekly.plist"
+fi
+if [ -f data/cache/last-weekly ]; then
+  say "last weekly run" "$(date -r "$(cat data/cache/last-weekly)" '+%Y-%m-%d %H:%M' 2>/dev/null || cat data/cache/last-weekly)"
 fi
 
 # 2. Did it finish? A run that started and never finished is the interesting case.

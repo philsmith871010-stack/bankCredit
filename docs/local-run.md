@@ -11,11 +11,13 @@ Three things run without any Anthropic API key:
    morning. They are Claude Code routines running the same two repository skills,
    `.claude/skills/counterparty-review/SKILL.md` and `counterparty-news`, and they push
    their answers with `tools/push-data.sh`. Nothing on your machine has to be awake.
-3. **A local run on your Mac** is now needed for one thing only: the handful of bank
-   sites that refuse everything but a real browser, which is section 3 of the review
-   skill and about a quarterly job. The Mac job below still does the whole run if you
-   want it to, and it is harmless to leave in place; it takes the same lock and pushes
-   through the same script, so it cannot collide with the cloud runs.
+3. **A weekly run on your Mac**, for what a cloud address cannot reach: the bank sites
+   that refuse data-centre addresses or scripted fetches (Lloyds Banking Group and its
+   banks, BMO, the small societies), the review queue and the headlines under Claude
+   Code, and the summaries that are owed. The eight sites that refuse even a headless
+   browser are section 3 of the review skill, a quarterly job with Chrome. The job takes
+   the same lock and pushes through the same script as everything else, so it cannot
+   collide with the cloud runs.
 
 ## Setup (once)
 
@@ -26,13 +28,33 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 npm install -g @anthropic-ai/claude-code && claude login      # subscription login, no key
 .venv/bin/pip install playwright && .venv/bin/playwright install chromium   # headless browser for bot-blocked sites
 brew install tesseract                                          # OCR for the few image-only PDFs
-cp scripts/mac/com.pwlbtoday.counterparty.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.pwlbtoday.counterparty.plist
+cp scripts/mac/com.pwlbtoday.counterparty-weekly.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/com.pwlbtoday.counterparty-weekly.plist
 ```
 
-The job runs weekdays at 07:30 local time (edit the plist to change it). Run it
-by hand any time with `scripts/mac/counterparty.sh`; the log is
-`data/cache/local-run.log`.
+## The weekly job
+
+The agent above calls `scripts/mac/weekly.sh` every hour the Mac is awake, and once at
+login. The script does nothing unless the last completed run is more than six days old, so
+the work happens about once a week, on whatever hour the laptop happens to be on. A laptop
+that was closed on the appointed morning gets its run the next time it is open, rather than
+waiting for next week; a run that fails is retried after six hours; and a lock left behind by
+a run the laptop was shut on is cleared rather than stopping every later run in silence.
+
+What a run does is the whole local sequence below: Pillar 3 from the bank sites that refuse a
+data-centre address, the browser-only sites, the review queue and the headlines under Claude
+Code, the summaries that are owed, and the push. The daily collection of ratings, prices, CDS
+and headlines does not depend on this job: it runs in the cloud, and missing a week here costs
+a week of Pillar 3 catch-up and nothing else.
+
+Run it now, whatever the stamp says, with `zsh scripts/mac/weekly.sh --now`. The log is
+`data/cache/local-run.log`; `bash scripts/mac/check.sh` says whether the job is loaded, when it
+last ran and whether its work reached GitHub.
+
+The older weekday-morning agent, `com.pwlbtoday.counterparty.plist`, still works and is
+harmless alongside, but it only runs if the Mac is awake at 07:30. Unload it with
+`launchctl unload ~/Library/LaunchAgents/com.pwlbtoday.counterparty.plist` if you keep the
+weekly one.
 
 To start the day's collection by hand at any time, from any clone:
 
