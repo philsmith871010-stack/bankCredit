@@ -294,7 +294,7 @@ def tone_glyphs(tones) -> str:
     """One glyph per agency, worst first, so the tile reads ▼▶▶ for one negative and two stable."""
     out = []
     for t in tones:
-        out.append(outlook_glyph(t) or '<span title="no outlook published" class="muted">–</span>')
+        out.append(outlook_glyph(t) or '<span title="no outlook published" class="ol-st">–</span>')
     return f'<span title="{c.esc(tone_words(tones) or "no outlook published")}">{"".join(out)}</span>'
 
 
