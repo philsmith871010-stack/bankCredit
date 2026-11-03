@@ -186,6 +186,9 @@
   var TONE_GLYPH={'watch negative':['\u25c6','wn','negative watch'],'negative':['\u25bc','dn','negative outlook'],
                   'watch positive':['\u25c6','wp','positive watch'],'positive':['\u25b2','up','positive outlook'],
                   'stable':['\u25b6','lv','stable outlook'],'':['\u2013','lv','no outlook published']};
+  // one rule for outlook marks in tables and the pop-up: shown when an outlook is not stable,
+  // since three grey arrows on every row said nothing and hid the one that did
+  function toneMarks(tones){return (tones||[]).every(function(t){return t==='stable'})?'':toneGlyphs(tones)}
   function toneGlyphs(tones){
     return '<span class="tones" title="'+esc(toneWords(tones)||'no outlook published')+'">'+(tones||[]).map(function(t){
       var g=TONE_GLYPH[t]||TONE_GLYPH[''];return '<span class="cr-o '+g[1]+'">'+g[0]+'</span>'}).join('')+'</span>';
@@ -627,7 +630,7 @@
           (e.score==null&&e.unscored?'<div class="small muted">'+esc(e.unscored)+'</div>':'')+'</td>'+
         // the same rating and ratio cells as Alternatives: one way to read a name across the tool
         '<td class="uni-rt ll-cpc"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
-          '<span class="ll-ags">'+(e.rating?toneGlyphs(e.rating.tones):'')+'</span></td>'+
+          '<span class="ll-ags">'+(e.rating?toneMarks(e.rating.tones):'')+'</span></td>'+
         '<td class="num">'+(e.cet1==null?'—':e.cet1.toFixed(1)+'%')+'</td>'+
         '<td class="num">'+(e.leverage==null?'—':e.leverage.toFixed(1)+'%')+'</td>'+
         '<td class="num">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
@@ -809,7 +812,7 @@
         '<td class="ll-sc">'+scoreNum(e.score,e.band,'sc-2')+
           '<span class="ll-track">'+bar+'</span></td>'+
         '<td class="ll-cpc"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
-          '<span class="ll-ags">'+(e.rating?toneGlyphs(e.rating.tones):'')+'</span></td>'+
+          '<span class="ll-ags">'+(e.rating?toneMarks(e.rating.tones):'')+'</span></td>'+
         kpi('cet1',e.cet1,1,'%')+kpi('leverage',e.leverage,1,'%')+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
         asofCell(e)+
         '<td class="ll-addc"><button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></td></tr>';

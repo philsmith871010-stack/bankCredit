@@ -1326,7 +1326,8 @@ table.subscores{table-layout:fixed;width:100%}table.subscores td{text-align:cent
 .thr-c{display:flex;flex-wrap:wrap;gap:4px}
 .thr{display:inline-grid;grid-template-rows:auto auto;min-width:46px;text-align:center;border:1px solid var(--line-soft);border-radius:6px;padding:3px 6px;font-variant-numeric:tabular-nums;font-size:12px}
 .thr b{font-weight:600}.thr i{font-style:normal;color:var(--muted);font-size:11px;border-top:1px solid var(--line-soft);margin-top:2px;padding-top:2px}
-@media (max-width:640px){table.rgrid thead th:nth-child(n+2),table.rgrid td:nth-child(2),table.rgrid td:nth-child(3),table.rgrid td:nth-child(4){text-align:center}}
-.thr-t td:first-child{width:34%;vertical-align:middle}
+.thr-t td:first-child{width:1%;white-space:nowrap;padding-right:24px;vertical-align:middle}
 /* a date reads as a date: proportional figures, the same on every page */
 .asof,td.asof,.src-t td,.cr-g.tnum,.tile-foot>span.mono,.rp-date{font-variant-numeric:normal}
+#uni-table td.asof,.ll-t2 td.asof,.rlt .mono{font-variant-numeric:normal}
+@media (max-width:640px){table.rgrid thead tr,table.rgrid tr{grid-template-columns:minmax(0,1fr) 44px 44px 44px;gap:0 8px}}
