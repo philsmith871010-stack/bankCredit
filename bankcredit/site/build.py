@@ -868,14 +868,30 @@ WT_LINE = (f'<div class="wt-line" id="wt-line"><span class="wt-l">Score weightin
            '<span class="wt-vals" id="wt-vals"><span class="sk"></span></span>'
            '<button class="filter" id="wt-change" type="button">Change</button></div>')
 
-TOOL_DIALOGS = ('<dialog id="wt-dlg" class="wt-dlg"><button class="cd-close wt-close" id="wt-close" aria-label="Close">×</button><div id="pol-weights"></div></dialog>'
-                '<dialog id="pol-modal" class="pol-modal"></dialog>')
+# A name's detail still opens over the page: it is a glance at one name from wherever it is listed.
+# Weightings and Choose names were dialogs too; they are pages of their own now (strategy pages below).
+TOOL_DIALOGS = '<dialog id="pol-modal" class="pol-modal"></dialog>'
+
+
+def strategy_pages() -> str:
+    """Weightings and Choose names: the first two of the three steps, as pages on the tool beside
+    Start here rather than dialogs over it. A reader working through the steps stays on the page,
+    and the navigation marks where they are like any other page."""
+    return ('<section class="panel" data-panel="weights">'
+            + panel_head("Build your strategy", "Weightings",
+                         "How the score is made: the agencies' ratings and the bank's own ratios, in the proportions you choose.")
+            + '<div class="card pad wt-page" id="pol-weights"></div></section>'
+            '<section class="panel" data-panel="universe">'
+            + panel_head("Build your strategy", "Choose names",
+                         "Every covered bank and building society on one table, to choose the names you accept.")
+            + '<div class="uni-page">' + UNIVERSE_PANEL + '</div></section>')
 
 
 def strategy_panel() -> str:
     """Build your strategy: the three steps, numbered the way PWLBreports numbers its passes, each
-    saying where the reader has got to. Step one carries the weightings line; the other two open
-    the table and the list. The counts are painted by the list's own script."""
+    saying where the reader has got to. Step one carries the weightings line and leads to the
+    Weightings page; step two leads to Choose names, step three to the list. The counts are painted
+    by the list's own script."""
     return ('<section class="panel active" data-panel="strategy">'
             '<div class="ph"><div><span class="ph-k">Build your strategy</span><h2>Three steps to a counterparty policy</h2>'
             '<span class="lede">Set how the score is made, choose the names you accept, and say how long you would lend to each. The list stays in your browser; a link carries it to a colleague.</span></div></div>'
@@ -956,11 +972,14 @@ def page_tool(board, status, generated):
         '<div class="card tabs-card" id="browse">'
         '<div class="tabs" role="tablist">'
         '<button class="tab active" data-tab="strategy">Build your strategy</button>'
+        '<button class="tab" data-tab="weights">Weightings</button>'
+        '<button class="tab" data-tab="universe">Choose names</button>'
         '<button class="tab" data-tab="policy">Your counterparties<span class="tab-n" id="tn-policy"></span></button>'
         '<button class="tab" data-tab="likeforlike">Alternatives<span class="tab-n" id="tn-ll"></span></button>'
         '<button class="tab" data-tab="analysis">Analysis</button>'
         '<button class="tab" data-tab="ratings">Ratings</button></div>'
         + strategy_panel()
+        + strategy_pages()
         + '<section class="panel" data-panel="policy">'
         + panel_head("Monitor", "Your counterparties",
                      "Every name on your list, re-checked each night against its filings, its ratings and the market, with what has moved since you approved it. Names you are only watching sit beneath.")
@@ -972,12 +991,7 @@ def page_tool(board, status, generated):
         + '<div id="pol-ll"></div></section>'
         f'<section class="panel" data-panel="analysis" data-src="data/panels/analysis.html?v={v}" data-js="assets/compare.js?v={v}"></section>'
         f'<section class="panel" data-panel="ratings" data-src="data/panels/ratings.html?v={v}"></section>'
-        '</div>'
-        # The table a name is chosen from opens over the page: on the page it ran into the list
-        # above it, and a survey of 152 names wants the whole window anyway.
-        '<dialog id="uni-dlg" class="uni-dlg"><div class="uni-head"><h4>Every covered name</h4>'
-        '<button class="cd-close" id="uni-close" aria-label="Close">×</button></div>'
-        + UNIVERSE_PANEL + '</dialog>' + TOOL_DIALOGS)
+        '</div>' + TOOL_DIALOGS)
     # the list is drawn from this file, and asking for it only after two scripts have been
     # fetched and run is a round trip the reader spends looking at an empty box
     return (c.shell("Your counterparties", content, "strategy", "../", generated,

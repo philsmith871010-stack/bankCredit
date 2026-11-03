@@ -19,7 +19,7 @@ landing page.
 
 | Group | Items | What opens |
 |---|---|---|
-| Build your strategy | Start here · Weightings · Choose names | the three-step panel; the weightings dialog; the table every name is on |
+| Build your strategy | Start here · Weightings · Choose names | the three steps; the weightings, as a page; the table every name is on, as a page |
 | Monitor | Your counterparties | the list with what moved since each name was approved (the Events page was removed on 3 November 2026; each name's rating actions and reports are on its own profile) |
 | Compare | Alternatives · Analysis · Ratings | names at least as strong as your weakest at each tenor; any names side by side; the universe by the average and the weakest of the three |
 | Reference | Method · Data status | the method; what ran and when (Overview went on 3 November 2026: the PWLBtoday wordmark already leads to the landing page) |
@@ -28,16 +28,16 @@ The groups are the three jobs a reader arrives with, in the order the jobs come,
 reference last because it is read second. They are defined once, in `components.NAV`, and
 drawn by `components.topnav()` as two rows: the four groups, then the pages of the open group.
 A group opens its first page. `app.js` marks the page for the open panel, its group, and shows
-that group's row, as the panel changes; the two pages that open a dialog rather than a panel are
-never marked. A page that belongs to no group, such as a bank's profile, shows the groups alone.
+that group's row, as the panel changes. A page that belongs to no group, such as a bank's profile, shows the groups alone.
 On a phone each row scrolls on its own and the four groups fit the width. Until 3 November 2026
 the pathways were a sidebar; they moved to make room for the platform's navigation.
 
 ## Build your strategy
 
 Three numbered steps, the way PWLBreports numbers its passes, each saying where the reader has
-got to: the weightings line (step one, with the dialog behind Change), the table every name is
-on (step two, with the count of names on the list), and the tenors (step three, with the range
+got to: the weightings line (step one, whose Change opens the Weightings page), the table every
+name is on (step two, whose button opens the Choose names page, with the count of names on the
+list), and the tenors (step three, with the range
 set). The counts are painted by the list's own script on every render, so adding a name on the
 table moves step two the moment it happens. A reader who already holds a list opens on the
 list; a reader without one opens on the steps.
@@ -58,3 +58,7 @@ read is where it was, so PWLBbenchmarking's read of `data/policy.json` is untouc
 - `bankcredit/site/assets/site.css`: the shell, the two rows of pathways, the strategy steps (at the end).
 - `bankcredit/site/assets/app.js`: the pathways' mark: the open page, its group and its row (at the end).
 - `bankcredit/site/assets/policy.js`: `paintStrategy()`, and the open-on-the-list rule in `init()`.
+
+Weightings and Choose names were dialogs over the page until November 2026. They are pages of the
+tool now, beside Start here, so a reader working through the steps stays on the page and the
+navigation marks where they are. A name's detail still opens over the page.

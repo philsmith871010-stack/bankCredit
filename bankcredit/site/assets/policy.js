@@ -912,12 +912,17 @@
 
   // a tab says how much is behind it, so a reader knows whether it is worth the click
   function tabCount(id,n){var el=document.getElementById(id); if(el)el.textContent=n?String(n):''}
-  // The table a name is chosen from is a dialog: one button opens it, an add inside it goes
-  // straight onto the list behind, and it stays open until it is closed, so several can be
-  // chosen in one sitting.
+  // Weightings and Choose names are pages of the tool, beside Start here: a button that used to
+  // open either as a dialog opens its page, the way the navigation does.
+  function openPage(name){
+    var t=document.querySelector('.tabs-card .tab[data-tab="'+name+'"]'); if(!t)return;
+    if(!t.classList.contains('active'))t.click();
+    window.scrollTo(0,0);
+  }
+  // The table every name is on: an add goes straight onto the list, so several can be chosen in
+  // one sitting.
   function openUni(){
-    var d=document.getElementById('uni-dlg'); if(!d)return;
-    if(!d.open)d.showModal();
+    openPage('universe');
     var q=document.getElementById('uni-q'); if(q)q.focus({preventScroll:true});
   }
   function uniBtn(label){return '<button class="filter filter-blue" id="uni-open" type="button">'+label+'</button>'}
@@ -1122,7 +1127,7 @@
         '<output class="wt-o" for="wt-'+k+'">'+(v/total*100).toFixed(0)+'%</output></div>';
     }).join('');
     box.innerHTML=
-      '<div class="wt-head"><div><h3>Your weightings</h3>'+
+      '<div class="wt-head"><div>'+
         '<p class="small muted">These are yours, not ours. Move a slider and every score on this site is '+
         'recomputed from the figures using your weights, on this device, at once. Nothing is sent anywhere. '+
         'The six are scaled to 100 percent between them, so what matters is their size against each other.</p></div>'+
@@ -1179,16 +1184,11 @@
     out.innerHTML=PILLARS.map(function(p){return '<span class="wt-v"><b>'+(w[p[0]]/total*100).toFixed(0)+'%</b>'+esc(p[1].toLowerCase())+'</span>'}).join('')+
       '<span class="wt-who small muted">'+(w.__custom?'set by you':'the starting point')+'</span>';
   }
-  function openWeights(){
-    var d=document.getElementById('wt-dlg'); if(!d)return;
-    weightPanel(); if(!d.open)d.showModal();
-  }
+  function openWeights(){weightPanel(); openPage('weights')}
   function bindWeights(){
     var box=document.getElementById('pol-weights'); if(!box)return;
     var chg=document.getElementById('wt-change'); if(chg)chg.addEventListener('click',openWeights);
-    var cls=document.getElementById('wt-close'); if(cls)cls.addEventListener('click',function(){document.getElementById('wt-dlg').close()});
-    var dlg=document.getElementById('wt-dlg');
-    if(dlg)dlg.addEventListener('click',function(ev){if(ev.target===dlg)dlg.close()});
+    weightPanel();          // the page is in the document from the start, so it is drawn from the start
     box.addEventListener('input',function(ev){
       var s=ev.target.closest('.wt-s'); if(!s)return;
       var w=weights(); delete w.__custom; w[s.dataset.k]=+s.value; saveWeights(w);
@@ -1206,8 +1206,6 @@
     document.addEventListener('click',function(ev){var b=ev.target.closest('.pol-rm');if(b){var p=load().filter(function(x){return x.id!==b.dataset.id});save(p);render();return}
       var st=ev.target.closest('.uni-star');if(st){toggleWatch(st.dataset.id);render();return}
       if(ev.target.closest('#uni-open,.uni-open')){openUni();return}
-      if(ev.target.id==='uni-close'){document.getElementById('uni-dlg').close();return}
-      var ud=document.getElementById('uni-dlg');if(ud&&ud.open&&ev.target===ud){ud.close();return}
       var a=ev.target.closest('.pol-add-ll');if(a){add(a.dataset.id,+a.dataset.tenor);var d=document.getElementById('pol-modal');if(d&&d.open)d.close();return}
       // one tenor at a time: the chips swap the pane rather than scroll four lists past you
       var tc=ev.target.closest('.ll-t')||ev.target.closest('.ll-jump');
@@ -1239,8 +1237,7 @@
     // the addresses the old tabs answered to still open the right thing
     function byHash(){
       var h=location.hash.replace('#','').split('&')[0];
-      if(h==='universe'){var t=document.querySelector('.tab[data-tab="policy"]');if(t&&!t.classList.contains('active'))t.click();openUni()}
-      if(h==='weights')openWeights();
+      if(h==='weights')weightPanel();      // the tab itself is opened by the address, like any other
     }
     byHash(); addEventListener('hashchange',byHash);
     // a reader with a list opens on the list; a reader without one opens on how to build it

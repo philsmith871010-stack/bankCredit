@@ -464,8 +464,8 @@ document.addEventListener('click',function(e){
 // The pathways run across the top in two rows: the groups, then the pages of the open one. On a
 // page with tabs (the tool, and Method and data) they also say which panel is open: a tab change
 // marks the page that opens that panel, marks its group and shows that group's row, and on the
-// tool the browser tab's title names it too. The two pages that open a dialog rather than a panel
-// (weightings, choose names) are never marked, because the panel under them has not changed.
+// tool the browser tab's title names it too. Weightings and Choose names are pages like the rest
+// (they were dialogs until November 2026), so they are marked like the rest.
 (function(){
   var nav=document.getElementById('tnav'); if(!nav)return;
   function mark(name){

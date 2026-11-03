@@ -443,7 +443,7 @@ def test_the_policy_page_is_tabs(page, server):
     """The approved names ran the length of the page with the shortlist under them."""
     _seed_many(page, server, 4)
     tabs = page.eval_on_selector_all(".tabs-card .tab", "e => e.map(x => x.dataset.tab)")
-    expected = [t for t in ["strategy", "policy", "likeforlike", "analysis", "ratings"] if t not in HOME_TABS_HIDDEN]
+    expected = [t for t in ["strategy", "weights", "universe", "policy", "likeforlike", "analysis", "ratings"] if t not in HOME_TABS_HIDDEN]
     assert tabs == expected
     assert page.eval_on_selector_all('[data-panel="policy"] .pol-card', "e => e.length") == 4
     assert page.eval_on_selector("#tn-policy", "e => e.textContent") == "4"
@@ -638,9 +638,10 @@ def test_a_first_visit_opens_empty_on_the_table_it_chooses_from(page, server):
     assert page.eval_on_selector("#uni-open", "e => e.textContent") == "Choose from every covered name"
     page.eval_on_selector("#uni-open", "e => e.click()")
     page.wait_for_timeout(300)
-    assert page.eval_on_selector("#uni-dlg", "e => e.open"), "the table opens over the page"
+    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "universe", "the button opens the Choose names page"
+    assert page.query_selector("dialog#uni-dlg") is None, "a page, not a dialog over the page"
     assert page.eval_on_selector_all("#uni-body tr.uni-row", "e => e.length") > 100
-    page.eval_on_selector("#uni-close", "e => e.click()")
+    page.eval_on_selector('.tab[data-tab="policy"]', "e => e.click()")
     page.wait_for_timeout(200)
     # nothing was laid in the browser behind the reader's back
     assert page.evaluate("localStorage.getItem('counterparty.policy')") in (None, "[]")
@@ -658,17 +659,17 @@ def test_a_first_visit_opens_empty_on_the_table_it_chooses_from(page, server):
     assert not page.errors, page.errors
 
 
-def test_the_table_opens_over_the_page_from_the_add_names_button(page, server):
+def test_the_add_names_button_opens_the_choose_names_page(page, server):
     """With names held the page leads with them; the table is one blue button away, beside the
-    Cards and Table switch, and opens over the page rather than under the list."""
+    Cards and Table switch, and opens on its own page, Choose names, rather than under the list."""
     _seed_many(page, server, 3)
-    assert not page.eval_on_selector("#uni-dlg", "e => e.open")
     assert page.eval_on_selector("#uni-open", "e => e.textContent") == "Add names"
     assert page.eval_on_selector("#uni-open", "e => e.closest('.pol-summary') !== null"), "up beside the view switch"
     assert page.eval_on_selector("#uni-open", "e => getComputedStyle(e).backgroundColor") == "rgb(42, 120, 214)"
     page.eval_on_selector("#uni-open", "e => e.click()")
     page.wait_for_timeout(300)
-    assert page.eval_on_selector("#uni-dlg", "e => e.open")
+    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "universe"
+    assert page.eval_on_selector("#tnav .tn-a.active", "e => e.dataset.nav") == "universe", "the navigation says where the reader is"
     # a name held shows as such in the table, and the chip pulls the held names out on their own
     assert page.eval_on_selector_all("#uni-body tr.uni-mine", "e => e.length") == 3
     page.eval_on_selector('#uni-chips [data-uf="mine"]', "e => e.click()")
@@ -677,20 +678,17 @@ def test_the_table_opens_over_the_page_from_the_add_names_button(page, server):
     page.eval_on_selector('#uni-chips [data-uf="top"]', "e => e.click()")
     page.wait_for_timeout(300)
     assert page.eval_on_selector_all("#uni-body tr.uni-row", "e => e.length") == 5, "the five strongest standings"
-    # an add from the open table does not fold it: the reader is choosing several
+    # an add from the table leaves the reader on it: they are choosing several
     page.eval_on_selector('#uni-chips [data-uf="top"]', "e => e.click()")
     page.wait_for_timeout(300)
     page.eval_on_selector("#uni-body tr.uni-row:not(.uni-mine) .pol-add-ll", "e => e.click()")
     page.wait_for_timeout(500)
     assert page.eval_on_selector_all(".pol-card", "e => e.length") == 4
-    assert page.eval_on_selector("#uni-dlg", "e => e.open"), "an add does not close the table"
-    page.keyboard.press("Escape")
-    page.wait_for_timeout(200)
-    assert not page.eval_on_selector("#uni-dlg", "e => e.open")
+    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "universe", "an add does not leave the table"
     assert not page.errors, page.errors
 
 
-def test_the_weightings_come_first_and_change_in_a_dialog(page, server):
+def test_the_weightings_come_first_and_change_on_their_own_page(page, server):
     """The score is the reader's arithmetic, so what it rests on is the first step of the strategy."""
     visit(page, server, TOOL)
     page.wait_for_timeout(900)
@@ -702,12 +700,12 @@ def test_the_weightings_come_first_and_change_in_a_dialog(page, server):
     assert "agency rating" in line and "%" in line and "starting point" in line
     page.eval_on_selector("#wt-change", "e => e.click()")
     page.wait_for_timeout(300)
-    assert page.eval_on_selector("#wt-dlg", "e => e.open")
+    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "weights", "Change opens the Weightings page"
+    assert page.query_selector("dialog#wt-dlg") is None, "a page, not a dialog over the page"
     page.eval_on_selector("#wt-rating", "e => { e.value = 0; e.dispatchEvent(new Event('input', {bubbles: true})) }")
     page.wait_for_timeout(400)
-    page.eval_on_selector("#wt-close", "e => e.click()")
-    page.wait_for_timeout(200)
-    assert not page.eval_on_selector("#wt-dlg", "e => e.open")
+    page.eval_on_selector('#tnav .tn-a[data-nav="strategy"]', "e => e.click()")
+    page.wait_for_timeout(300)
     assert "set by you" in page.inner_text("#wt-vals")
     assert not page.errors, page.errors
 
@@ -829,7 +827,7 @@ def test_a_weight_the_reader_sets_moves_every_score_on_the_site(page, server):
     before = page.eval_on_selector_all(".pol-card .ck-score b", "e => e.map(x => x.textContent.trim())")
     page.eval_on_selector("#wt-rating", "e => { e.value = 0; e.dispatchEvent(new Event('input', {bubbles: true})) }")
     page.wait_for_timeout(600)
-    page.eval_on_selector("#wt-close", "e => e.click()")
+    page.eval_on_selector('.tab[data-tab="policy"]', "e => e.click()")
     page.wait_for_timeout(300)
     after = page.eval_on_selector_all(".pol-card .ck-score b", "e => e.map(x => x.textContent.trim())")
     assert after != before, (before, after)
@@ -1103,8 +1101,7 @@ def test_a_returning_reader_is_offered_the_way_straight_to_the_list(page, server
 def test_the_pathways_run_across_the_top_and_follow_the_open_panel(page, server):
     """The site sits inside PWLBtoday, whose own navigation runs down the left, so Counterparty's
     pathways run across the top: four groups, in the order the jobs come, then the pages of the
-    open group. On the tool the page for the open panel is marked, with its group and its row, and
-    the two pages that open a dialog never are."""
+    open group. On the tool the page for the open panel is marked, with its group and its row."""
     visit(page, server, TOOL)
     assert page.query_selector("#side") is None and page.query_selector("#side-toggle") is None, "nothing down the side"
     groups = page.eval_on_selector_all("#tnav .tn-g", "e => e.map(x => x.textContent)")
@@ -1135,8 +1132,8 @@ def test_the_pathways_run_across_the_top_and_follow_the_open_panel(page, server)
     page.wait_for_timeout(700)
     page.eval_on_selector('#tnav .tn-a[data-nav="weights"]', "e => e.click()")
     page.wait_for_timeout(500)
-    assert page.eval_on_selector("#wt-dlg", "e => e.open"), "the weightings page opens the dialog"
-    assert state() == ("build", "strategy", ["build"]), "a dialog does not move the mark"
+    assert state() == ("build", "weights", ["build"]), "Weightings is a page like the rest, and marked like one"
+    assert page.eval_on_selector('[data-panel="weights"] .wt-s', "e => e.getBoundingClientRect().height") > 0
     # the same frame round a bank page, which belongs to no group
     visit(page, server, "banks/barclays-bank.html")
     assert page.eval_on_selector_all("#tnav .tn-g", "e => e.length") == 4
@@ -1154,8 +1151,7 @@ def test_the_strategy_is_three_steps_that_say_where_the_reader_is(page, server):
     assert page.eval_on_selector_all('[data-panel="strategy"] .step-done', "e => e.length") == 0
     page.eval_on_selector('[data-panel="strategy"] .uni-open', "e => e.click()")
     page.wait_for_timeout(400)
-    assert page.eval_on_selector("#uni-dlg", "e => e.open"), "step two opens the table every name is on"
-    page.eval_on_selector("#uni-close", "e => e.click()")
+    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "universe", "step two opens the table every name is on"
     _seed_many(page, server, 2)
     visit(page, server, TOOL)
     assert "2 names" in page.eval_on_selector("#st-names", "e => e.textContent")
