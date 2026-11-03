@@ -291,7 +291,9 @@
    "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-q\\d+\\-\\d+\\-en",
    "citibank\\-canada\\-basel\\-iii\\-pillar\\-\\d+\\-q\\d+\\-\\d+\\-fr",
    "citibank\\-canada\\-pillar\\-\\d+\\-disclosure\\-ye\\-\\d+\\-en",
-   "cgme\\-pillar\\-\\d+\\-disclosures_q\\d+\\-\\d+"
+   "cgme\\-pillar\\-\\d+\\-disclosures_q\\d+\\-\\d+",
+   "citibank\\-canada\\-pillar\\-\\d+\\-disclosure_ye\\-\\d+\\-en",
+   "citibank\\-canada\\-basel\\-iii\\-pillar\\d+\\-osfi\\-q\\d+\\-\\d+\\-fr"
   ]
  },
  "nab": {
@@ -1198,15 +1200,15 @@
   "page": 12,
   "currency": "USD",
   "last_verified": {
-   "reference_date": "2026-06-30",
+   "reference_date": "2026-09-30",
    "values": {
-    "cet1_capital": 72464.0,
-    "tier1_capital": 95977.0,
-    "total_capital": 95980.0,
-    "rwa": 503923.0,
-    "cet1_ratio": 14.38,
-    "tier1_ratio": 19.05,
-    "total_capital_ratio": 19.05
+    "cet1_capital": 73117.0,
+    "tier1_capital": 95909.0,
+    "total_capital": 95909.0,
+    "rwa": 496111.0,
+    "cet1_ratio": 14.74,
+    "tier1_ratio": 19.33,
+    "total_capital_ratio": 19.33
    },
    "method": "pdf_rules"
   }

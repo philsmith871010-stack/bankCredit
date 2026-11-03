@@ -1038,7 +1038,7 @@
     "browser",
     "pattern"
    ],
-   "documents": 38,
+   "documents": 41,
    "capital_as_of": "2026-06-30",
    "age_days": 126,
    "capital_sources": [
@@ -2228,9 +2228,9 @@
    "kinds": [
     "browser"
    ],
-   "documents": 2,
-   "capital_as_of": "2026-06-30",
-   "age_days": 126,
+   "documents": 3,
+   "capital_as_of": "2026-09-30",
+   "age_days": 34,
    "capital_sources": [
     "pillar3"
    ],
