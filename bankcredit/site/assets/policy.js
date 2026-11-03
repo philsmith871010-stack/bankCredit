@@ -188,7 +188,10 @@
                   'stable':['\u25b6','lv','stable outlook'],'':['\u2013','lv','no outlook published']};
   // one rule for outlook marks in tables and the pop-up: shown when an outlook is not stable,
   // since three grey arrows on every row said nothing and hid the one that did
-  function toneMarks(tones){return (tones||[]).every(function(t){return t==='stable'})?'':toneGlyphs(tones)}
+  function toneMarks(tones){
+    var moving=(tones||[]).filter(function(t){return t&&t!=='stable'});
+    return moving.length?toneGlyphs(moving):'';      // only the marks that say something
+  }
   function toneGlyphs(tones){
     return '<span class="tones" title="'+esc(toneWords(tones)||'no outlook published')+'">'+(tones||[]).map(function(t){
       var g=TONE_GLYPH[t]||TONE_GLYPH[''];return '<span class="cr-o '+g[1]+'">'+g[0]+'</span>'}).join('')+'</span>';

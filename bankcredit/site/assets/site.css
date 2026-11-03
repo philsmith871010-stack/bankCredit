@@ -1331,3 +1331,12 @@ table.subscores{table-layout:fixed;width:100%}table.subscores td{text-align:cent
 .asof,td.asof,.src-t td,.cr-g.tnum,.tile-foot>span.mono,.rp-date{font-variant-numeric:normal}
 #uni-table td.asof,.ll-t2 td.asof,.rlt .mono{font-variant-numeric:normal}
 @media (max-width:640px){table.rgrid thead tr,table.rgrid tr{grid-template-columns:minmax(0,1fr) 44px 44px 44px;gap:0 8px}}
+.rl-word{font-size:22px!important;font-weight:600;color:var(--text)}
+.ll-ags .cr-o{font-size:10px}
+.lede .lei{display:block;margin-top:2px}
+/* trend groups fill their row: the small charts carry no text inside, so a wider card only draws a longer line */
+.sm-block{flex-grow:1}
+/* a scroller fades at its foot until it reaches the end, so a cut row reads as more to come */
+.scrollbox:not(.at-end){-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 28px),rgba(0,0,0,.15));mask-image:linear-gradient(to bottom,#000 calc(100% - 28px),rgba(0,0,0,.15))}
+.lede span.lei{display:block!important;margin:3px 0 0;font-size:11.5px}
+.lede span.lei{flex-basis:100%;width:100%}

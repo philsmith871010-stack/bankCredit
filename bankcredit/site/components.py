@@ -135,7 +135,7 @@ def _chart_compact(pts_in, w, h, unit, req, dp, band=None, median=None, on_dark=
     return (f'<svg viewBox="0 0 {w} {h}" width="100%" class="chart chart-sm" preserveAspectRatio="none" aria-hidden="true">'
             f'{peer}{reqline}'
             f'<path d="{path}" fill="none" stroke="{NAVY}" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'
-            f'<circle cx="{X(n-1):.0f}" cy="{Y(last):.0f}" r="3.2" fill="{ORANGE}" vector-effect="non-scaling-stroke"/></svg>'
+            f'<line x1="{X(n-1):.0f}" y1="{Y(last):.0f}" x2="{X(n-1):.0f}" y2="{Y(last):.0f}" stroke="{ORANGE}" stroke-width="6.4" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>'
             f'<div class="csm-ax"><span>{esc(pts_in[0][0])}</span><span>{esc(pts_in[-1][0])}</span></div>')
 
 

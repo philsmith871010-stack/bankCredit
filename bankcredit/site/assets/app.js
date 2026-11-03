@@ -504,3 +504,12 @@ document.addEventListener('click',function(e){
   })}
   fltSel(); (window.__panelInit=window.__panelInit||[]).push(fltSel);   // and again for a panel loaded later
 })();
+
+// the scroll fade lifts at the end of a scroller, and on one with nothing to scroll
+(function(){
+  function mark(b){b.classList.toggle('at-end',b.scrollTop+b.clientHeight>=b.scrollHeight-2)}
+  document.addEventListener('scroll',function(e){var b=e.target;if(b&&b.classList&&b.classList.contains('scrollbox'))mark(b)},true);
+  function all(){document.querySelectorAll('.scrollbox').forEach(mark)}
+  all();new MutationObserver(function(){requestAnimationFrame(all)}).observe(document.body,{childList:true,subtree:true});
+  addEventListener('resize',all);
+})();

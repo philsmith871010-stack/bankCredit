@@ -256,7 +256,11 @@ def ratings_tile(b) -> str:
              f'<div class="rst small muted">of {c.esc(of_three(rs["n"]))}</div></div>'
              f'<div class="rcell"><div class="ragency">Weakest</div><div class="rlt"><span class="mono big" style="color:{grade_colour(wg)}">{c.esc(rs["worst_letter"])}</span></div>'
              f'<div class="rst small muted">{"the same" if rs["worst_letter"] == rs["letter"] else "one agency"}</div></div>'
-             f'<div class="rcell"><div class="ragency">Outlooks</div><div class="rlt"><span class="big">{tone_glyphs(rs.get("tones") or [])}</span></div>'
+             # three stable outlooks are a word, as everywhere else; the marks are for a move
+             + (f'<div class="rcell"><div class="ragency">Outlooks</div><div class="rlt"><span class="big rl-word">Stable</span></div>'
+                if (rs.get("tones") or []) and all(t == "stable" for t in rs.get("tones") or []) else
+                f'<div class="rcell"><div class="ragency">Outlooks</div><div class="rlt"><span class="big">{tone_glyphs(rs.get("tones") or [])}</span></div>')
+             + 
              f'<div class="rst small muted">{c.esc(tone_words(rs.get("tones") or []) or "none published")}</div></div>'
              f'<div class="rcell"><div class="ragency">Last action</div><div class="rlt"><span class="mono" style="font-size:16px">{c.esc(rs.get("date") or "—")}</span></div>'
              f'<div class="rst small muted">by any of the three</div></div>')
