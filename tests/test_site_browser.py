@@ -1208,3 +1208,30 @@ def test_the_window_title_and_the_pathways_name_the_open_panel(page, server):
     visit(page, server, "admin/index.html#status")
     assert page.eval_on_selector("#tnav .tn-a.active", "e => e.dataset.nav") == "status"
     assert page.eval_on_selector("#tnav .tn-g.active", "e => e.dataset.group") == "reference"
+
+
+def test_a_name_can_be_added_at_any_tenor_from_the_left_of_its_row(page, server):
+    """The tenors run from a day to ten years, Other takes any length, and the Add button leads
+    the row, so it is on screen however wide the table runs."""
+    visit(page, server, TOOL + "#universe")
+    opts = page.eval_on_selector_all("#uni-tenor option", "e => e.map(x => x.textContent)")
+    assert opts[0] == "1 day" and "18 months" in opts and opts[-2:] == ["10 years", "Other…"], opts
+    assert page.eval_on_selector("#uni-body tr.uni-row td:nth-child(2)", "e => e.classList.contains('uni-add')"), "Add is the second cell"
+    page.select_option("#uni-tenor", "other")
+    assert not page.eval_on_selector("#uni-other", "e => e.hidden")
+    page.fill("#uni-other-n", "9")
+    page.wait_for_timeout(200)
+    first = page.eval_on_selector("#uni-body tr.uni-row:not(.uni-mine)", "e => e.dataset.id")
+    page.eval_on_selector(f'#uni-body tr[data-id="{first}"] .pol-add-ll', "e => e.click()")
+    page.wait_for_timeout(400)
+    stored = json.loads(page.evaluate("localStorage.getItem('counterparty.policy')"))
+    assert [x["tenor"] for x in stored if x["id"] == first] == [274], "nine months, in days"
+    assert page.eval_on_selector(f'#uni-body tr[data-id="{first}"] td.uni-add', "e => e.textContent.trim()") == "9 months"
+    page.set_viewport_size({"width": 375, "height": 812})
+    try:
+        page.wait_for_timeout(300)
+        r = page.eval_on_selector("#uni-body .pol-add-ll", "e => { const b = e.getBoundingClientRect(); return [b.left, b.right] }")
+        assert 0 <= r[0] and r[1] <= 375, r
+    finally:
+        page.set_viewport_size({"width": 1440, "height": 900})
+    assert not page.errors, page.errors

@@ -5,7 +5,11 @@
   // a falsy test would send every fetch to ../, which escapes the project directory on Pages.
   var _r=document.body.getAttribute('data-root');
   var KEY='counterparty.policy', ROOT=(_r==null?'../':_r);
-  var TENORS=[[100,'100 days'],[182,'6 months'],[365,'12 months'],[730,'24 months'],[1825,'5 years']];
+  // The tenors a name can be accepted for, in days: from overnight to ten years, with the 100 days
+  // the advisers' lists use. Any other length can be typed in on Choose names (Other), and is shown
+  // in the plainest unit it divides into.
+  var TENORS=[[1,'1 day'],[7,'1 week'],[30,'1 month'],[91,'3 months'],[100,'100 days'],[182,'6 months'],[365,'12 months'],
+    [547,'18 months'],[730,'24 months'],[1095,'3 years'],[1825,'5 years'],[3650,'10 years']];
   var GRADES=['AAA','AA+','AA','AA-','A+','A','A-','BBB+','BBB','BBB-','BB+','BB','BB-','B+','B','B-','CCC'];
   var data=null, byId={};
 
@@ -81,7 +85,22 @@
   function mk(k){return window.tipMark?window.tipMark(k):''}
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function fmt(v,dp,suf){return v==null?'<span class="na">—</span>':'<span class="mono">'+Number(v).toFixed(dp==null?1:dp)+(suf||'')+'</span>'}
-  function tenorLabel(d){for(var i=0;i<TENORS.length;i++)if(TENORS[i][0]===d)return TENORS[i][1];return d+' days'}
+  function tenorLabel(d){
+    for(var i=0;i<TENORS.length;i++)if(TENORS[i][0]===d)return TENORS[i][1];
+    var n=function(x,u){return x+' '+u+(x===1?'':'s')};
+    if(d>=365&&d%365===0)return n(d/365,'year');
+    var m=Math.round(d/(365/12)); if(d>=28&&Math.abs(m*365/12-d)<1)return n(m,'month');
+    if(d%7===0)return n(d/7,'week');
+    return n(d,'day');
+  }
+  // The tenor the Add buttons on Choose names use: one from the list, or Other, a number and a unit.
+  function curTenor(){
+    var sel=document.getElementById('uni-tenor'); if(!sel)return 365;
+    if(sel.value!=='other')return +sel.value||365;
+    var n=+(document.getElementById('uni-other-n')||{}).value, u=+(document.getElementById('uni-other-u')||{}).value;
+    var d=Math.round(n*u);
+    return d>=1&&d<=3650?d:365;
+  }
   function bandRank(b){return {A:1,B:2,C:3,D:4,E:5}[b]||9}
   function chip(t,k,ti){return '<span class="chip chip-'+(k||'muted')+'"'+(ti?' title="'+esc(ti)+'"':'')+'>'+esc(t)+'</span>'}
   var TYPE_LABEL={holding:'Holding company',bank:'Bank',building_society:'Building society',subsidiary:'Subsidiary'};
@@ -655,7 +674,7 @@
   }
   function renderUni(){
     var body=document.getElementById('uni-body'); if(!body||!data)return;
-    var rows=uniRows(), t=+document.getElementById('uni-tenor').value;
+    var rows=uniRows(), t=curTenor();
     // Every row is here; the table scrolls inside a window rather than growing the page. Paging a
     // sorted list meant clicking through sixteen pages to read it, and the column headings went
     // off the top of the screen on the way. They stay put now, and the whole list is one scroll.
@@ -668,6 +687,10 @@
       var e=r.e;
       return '<tr class="uni-row'+(r.tenor!=null?' uni-mine':'')+'" data-id="'+esc(e.id)+'"'+(e.blurb?' title="'+esc(e.blurb)+'"':'')+'>'+
         '<td class="uni-st">'+(r.tenor!=null?'<span class="uni-own" title="in your list">\u2713</span>':starBtn(e.id))+'</td>'+
+        // the action leads the row, so it is on screen however wide the table runs
+        '<td class="uni-add">'+(r.tenor!=null
+            ? '<span class="chip chip-good" title="already in your list at this tenor">'+esc(tenorLabel(r.tenor))+'</span>'
+            : '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" title="Add at '+esc(tenorLabel(t))+'">Add</button>')+'</td>'+
         '<td><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
         '<td class="mono small">'+sovPill(e)+'</td>'+
         '<td class="num">'+(e.score==null?'<span class="na">—</span>':
@@ -682,10 +705,7 @@
         '<td class="num mono">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
         xcells(e)+
         asofCell(e)+
-        '<td>'+mkt(e.market,1)+'</td>'+
-        '<td class="num">'+(r.tenor!=null
-            ? '<span class="chip chip-good" title="already in your list">In your list \u00b7 '+esc(tenorLabel(r.tenor))+'</span>'
-            : '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button>')+'</td></tr>';
+        '<td>'+mkt(e.market,1)+'</td></tr>';
     }).join('')||'<tr><td colspan="13" class="empty">No name matches those filters.</td></tr>';
     // Measuring the box is no good here: renderUni first runs while this tab is still closed, a
     // hidden box measures nothing, and the answer would stick. The row count asks the same
@@ -701,7 +721,11 @@
     data.rows.forEach(function(e){if(e.region)regions[e.region]=1;if(e.type)types[e.type]=1});
     Object.keys(regions).sort().forEach(function(r){var o=document.createElement('option');o.value=r;o.textContent=REGION_LABEL[r]||r;reg.appendChild(o)});
     Object.keys(types).sort().forEach(function(x){var o=document.createElement('option');o.value=x;o.textContent=TYPE_LABEL[x]||x;typ.appendChild(o)});
-    TENORS.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent='Add at '+x[1];if(x[0]===365)o.selected=true;ten.appendChild(o)});
+    TENORS.forEach(function(x){var o=document.createElement('option');o.value=x[0];o.textContent=x[1];if(x[0]===365)o.selected=true;ten.appendChild(o)});
+    var oo=document.createElement('option');oo.value='other';oo.textContent='Other\u2026';ten.appendChild(oo);
+    var other=document.getElementById('uni-other');
+    ten.addEventListener('change',function(){if(other)other.hidden=ten.value!=='other';
+      if(ten.value==='other'){var nb=document.getElementById('uni-other-n');if(nb)nb.focus()}});
     renderColsMenu();
     var cb=document.getElementById('uni-cols-btn'), cm=document.getElementById('uni-cols-menu');
     if(cb&&cm){
@@ -711,7 +735,7 @@
       cm.addEventListener('click',function(ev){if(ev.target.id==='uni-cols-none'){setXcols([]);renderColsMenu();renderUni()}});
       document.addEventListener('click',function(ev){if(!cm.hidden&&!ev.target.closest('.uni-cols')){cm.hidden=true;cb.setAttribute('aria-expanded','false');cb.classList.remove('active')}});
     }
-    ['uni-q','uni-region','uni-type','uni-band','uni-scored','uni-tenor'].forEach(function(id){
+    ['uni-q','uni-region','uni-type','uni-band','uni-scored','uni-tenor','uni-other-n','uni-other-u'].forEach(function(id){
       var el=document.getElementById(id); if(el)el.addEventListener('input',renderUni);
     });
     var chips=document.getElementById('uni-chips');
@@ -933,7 +957,7 @@
     var ws=watchIds().map(function(id){return byId[id]}).filter(function(e){return e&&!have[e.id]});
     if(!ws.length)return '';
     ws.sort(function(a,b){return (b.score||0)-(a.score||0)});
-    var t=+((document.getElementById('uni-tenor')||{}).value||365);
+    var t=curTenor();
     var rows=ws.map(function(e){
       return '<tr class="pw-r" data-id="'+esc(e.id)+'"><td class="uni-st">'+starBtn(e.id)+'</td>'+
         '<td><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+' \u00b7 '+sovPill(e)+'</div></td>'+
@@ -1221,7 +1245,7 @@
       if(pth){var k=pth.dataset.k; polSort.dir=polSort.key===k?-polSort.dir:(k==='short'?1:-1); polSort.key=k; render();return}
       var card=ev.target.closest('.pol-card,.pol-tr,.ll-r,.uni-row');
       if(card&&!ev.target.closest('a,button,select,label')){
-        var tn=card.dataset.tenor?+card.dataset.tenor:(card.classList.contains('uni-row')?+document.getElementById('uni-tenor').value:0);
+        var tn=card.dataset.tenor?+card.dataset.tenor:(card.classList.contains('uni-row')?curTenor():0);
         openModal(card.dataset.id,tn);return}
       if(ev.target.id==='pol-demo-x'){save([]);render();return}
       if(ev.target.id==='pol-demo'){save(demoPolicy());render();return}

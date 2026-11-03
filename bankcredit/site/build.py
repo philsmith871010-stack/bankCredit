@@ -924,21 +924,27 @@ def _panel_content(html: str, kicker: str = "", title: str = "") -> str:
 
 
 UNIVERSE_PANEL = f"""<p class="small muted">Every name, sortable on any column, with the same detail on click. Add on any row; the star follows a name without adding it. Anything marked <span class="i i-static" aria-hidden="true">i</span> explains itself.</p>
-<div class="filters uni-chips" id="uni-chips"><button class="filter" data-uf="top" type="button" title="the five strongest published standings today">Top standing today</button><button class="filter" data-uf="mine" type="button">In my list</button><button class="filter" data-uf="watch" type="button">Watching</button></div>
-<div class="uni-bar">
-  <input id="uni-q" type="search" placeholder="Search name, country or LEI" autocomplete="off">
-  <select id="uni-region"><option value="">Every region</option></select>
-  <select id="uni-type"><option value="">Every type</option></select>
-  <select id="uni-band"><option value="">Any band</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+<div class="uni-tools">
+<div class="uni-row1">
+  <label class="uni-search">{c.ico("search", 16, c.MUTED)}<input id="uni-q" type="search" placeholder="Search name, country or LEI" autocomplete="off" aria-label="Search the names"></label>
+  <div class="uni-addat"><label for="uni-tenor">Add names at</label><select id="uni-tenor" title="The tenor the Add buttons in this table use"></select><span class="uni-other" id="uni-other" hidden><input id="uni-other-n" type="number" min="1" max="3650" step="1" value="9" aria-label="How many"><select id="uni-other-u" aria-label="Unit"><option value="1">days</option><option value="7">weeks</option><option value="30.4167" selected>months</option><option value="365">years</option></select></span></div>
+</div>
+<div class="uni-row2">
+  <div class="filters uni-chips" id="uni-chips"><button class="filter" data-uf="top" type="button" title="the five strongest published standings today">Top standing today</button><button class="filter" data-uf="mine" type="button">In my list</button><button class="filter" data-uf="watch" type="button">Watching</button></div>
+  <span class="uni-div" aria-hidden="true"></span>
+  <select id="uni-region" aria-label="Region"><option value="">Every region</option></select>
+  <select id="uni-type" aria-label="Type"><option value="">Every type</option></select>
+  <select id="uni-band" aria-label="Band"><option value="">Any band</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
   <label class="uni-chk"><input type="checkbox" id="uni-scored"> Scored only</label>
-  <select id="uni-tenor" title="Tenor used by the Add buttons in this table"></select> <span class="uni-cols"><button class="filter" id="uni-cols-btn" type="button" aria-expanded="false" aria-controls="uni-cols-menu">Columns</button><div class="uni-cols-menu" id="uni-cols-menu" hidden></div></span>
+  <span class="uni-cols"><button class="filter" id="uni-cols-btn" type="button" aria-expanded="false" aria-controls="uni-cols-menu">Columns</button><div class="uni-cols-menu" id="uni-cols-menu" hidden></div></span>
   <span class="uni-count small muted" id="uni-count"></span>
 </div>
+</div>
 <div class="table-wrap scrollbox"><table class="plain uni" id="uni-table"><thead><tr>
-  <th class="uni-st" title="watching"></th><th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score{c.info("score")}</th>
+  <th class="uni-st" title="watching"></th><th class="uni-add"><span class="sr-only">Add</span></th><th data-sort="short">Name</th><th data-sort="country">Country</th><th data-sort="score" class="num">Score{c.info("score")}</th>
   <th data-sort="rating_grade">Agency rating{c.info("composite")}</th><th data-sort="cet1" class="num">CET1{c.info("cet1_ratio")}</th><th data-sort="leverage" class="num">Lev{c.info("leverage_ratio")}</th>
   <th data-sort="lcr" class="num">LCR{c.info("lcr")}</th><th data-sort="nsfr" class="num">NSFR{c.info("nsfr")}</th>
-  <th data-sort="asof" class="uni-fig">Figures{c.info("as_at")}</th><th>Market{c.info("market_signal")}</th><th></th></tr></thead><tbody id="uni-body"><tr class="sk-tr"><td colspan="12"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr></tbody></table></div><div class="tfoot small muted" id="uni-count2"></div>
+  <th data-sort="asof" class="uni-fig">Figures{c.info("as_at")}</th><th>Market{c.info("market_signal")}</th></tr></thead><tbody id="uni-body"><tr class="sk-tr"><td colspan="12"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr><tr class="sk-tr"><td colspan="9"><span class="sk"></span></td></tr></tbody></table></div><div class="tfoot small muted" id="uni-count2"></div>
 """
 
 

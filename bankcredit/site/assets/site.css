@@ -449,11 +449,35 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
   text-transform:uppercase;vertical-align:1px;white-space:nowrap}
 
 /* ---- the universe, on the same page ---------------------------------------------------- */
-.uni-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
-.uni-bar input[type=search]{flex:1 1 220px;min-width:180px}
-.uni-bar select{max-width:190px}
-.uni-chk{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);white-space:nowrap}
-.uni-count{margin-left:auto}
+/* Choose names: the controls above the table, in one panel of two rows. The first is what a reader
+   came to do (find a name, and the tenor an Add puts it on the list at); the second narrows the
+   table. Every control is the same height and border, so the rows read as one bar. */
+.uni-tools{display:flex;flex-direction:column;gap:10px;margin:12px 0;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:12px}
+.uni-row1,.uni-row2{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
+.uni-search{flex:1 1 280px;min-width:0;display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:var(--white);border:1px solid var(--line);border-radius:8px;cursor:text}
+.uni-search:focus-within{border-color:var(--navy);box-shadow:0 0 0 3px rgba(10,37,64,.08)}
+.uni-search input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:14px;color:var(--text)}
+.uni-tools select,.uni-other input{height:34px;padding:0 30px 0 11px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;color:var(--text);cursor:pointer;
+  -webkit-appearance:none;appearance:none;background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236c757d' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 11px center}
+.uni-tools select:hover,.uni-other input:hover{border-color:#cfd6de}
+.uni-tools select:focus-visible,.uni-other input:focus-visible{outline:2px solid var(--navy);outline-offset:1px}
+.uni-addat{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.uni-addat>label{font-size:13px;font-weight:600;color:var(--navy);white-space:nowrap}
+.uni-addat #uni-tenor{border-color:#2a78d6;font-weight:600;color:var(--navy)}
+.uni-other{display:inline-flex;gap:6px;align-items:center}
+.uni-other[hidden]{display:none}
+.uni-other input{width:72px;padding:0 8px;background-image:none;cursor:text}
+.uni-row2 .uni-chips{margin:0}
+.uni-div{width:1px;height:22px;background:#d9dfe5}
+.uni-chk{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 11px;background:var(--white);border:1px solid var(--line);border-radius:8px;font-size:13px;cursor:pointer;white-space:nowrap}
+.uni-chk input{margin:0;accent-color:var(--navy)}
+.uni-count{margin-left:auto;white-space:nowrap}
+@media (max-width:640px){.uni-div{display:none}.uni-count{margin-left:0;flex-basis:100%}.uni-addat{flex-basis:100%}}
+/* the Add button leads each row, beside the star, so it is on screen however wide the table runs */
+th.uni-add,td.uni-add{width:1%;white-space:nowrap;padding-left:2px;padding-right:10px}
+td.uni-add .filter{height:28px;padding:0 13px;font-size:12.5px}
+td.uni-add .chip{white-space:nowrap}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 table.uni{font-size:13px}
 table.uni th{cursor:pointer;user-select:none;white-space:nowrap}
 table.uni th[data-sort]:hover{color:var(--orange)}
@@ -945,8 +969,7 @@ table.sortable th[aria-sort]::after{content:"▾";margin-left:4px;font-size:9px}
 /* the table a name is chosen from, a page of the tool beside Start here: it has the window's
    height to itself, less the title bar and the two rows of pathways above it */
 .uni-page .scrollbox{max-height:calc(100vh - 230px)}
-.uni-page td:nth-child(2){min-width:260px}
-.uni-chips{margin:4px 0 6px}
+.uni-page td:nth-child(3){min-width:240px}
 .filter.filter-blue,.filter.filter-blue:hover{background:#2a78d6;border-color:#2a78d6;color:#fff;font-weight:600}
 .pol-empty .filter-blue{margin-top:6px}
 .pol-view #uni-open{margin-right:8px}
