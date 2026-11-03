@@ -58,7 +58,7 @@ table.plain th{color:var(--muted);border-bottom:1px solid var(--line)}table.plai
 .prose p,.prose li{max-width:76ch}.group{margin-bottom:8px}
 @media(max-width:1000px){.brand{width:auto}.built{display:none}.grid-12,.grid-2{grid-template-columns:1fr}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.main{padding:16px}.pillars{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){.score-main{grid-template-columns:1fr}.pillars{border-left:0;padding-left:0;border-top:1px solid rgba(255,255,255,.14);padding-top:12px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tile{padding:10px 12px 10px}.big{font-size:22px}.pillars{grid-template-columns:repeat(3,minmax(0,1fr))}.sm-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.crumb-app{display:none}.search{width:100%}}
-@media print{.top,.foot,.actions,.filters,.tabs{display:none!important}.frame{display:block}.main{padding:0}.panel{display:block!important;page-break-inside:avoid}.card{box-shadow:none}}
+@media print{.top,.tnav,.foot,.actions,.filters,.tabs{display:none!important}.frame{display:block}.main{padding:0}.panel{display:block!important;page-break-inside:avoid}.card{box-shadow:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 .bm-strip{margin-bottom:14px}.bm-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}.bm-head h3{margin:0}.bm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:10px}.bm{border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0}.bm-label{font-size:12px;color:var(--muted);font-weight:600}.bm-val{display:flex;align-items:baseline;gap:6px;margin:4px 0}.big-sm{font-size:22px;font-weight:600;letter-spacing:-.02em}
@@ -999,40 +999,41 @@ tr.uni-mine td{background:#f6f9f4}
 .cr-attr{border-top:1px dashed var(--line);margin-top:4px;padding-top:6px}
 .cr-attr-l{font-weight:400;font-size:12px;white-space:normal}
 
-/* ---- the platform shell: title bar across the top, the pathways down the side ---------------
-   The same frame PWLBtoday puts round PWLBbenchmark and PWLBbrief. The sidebar is the pathways
-   rather than a list of pages: build a policy, watch it, find the next name, then the reference. */
-:root{--side:220px}
+/* ---- the platform shell: title bar across the top, the pathways beneath it in two rows ------------
+   Inside PWLBtoday the platform's own navigation runs down the left, so Counterparty keeps to the
+   top: its groups in the first row, the pages of the open group in the second. The rows scroll
+   away with the page rather than sticking: tables and the reference rail already pin themselves
+   under the title bar, and a sticky navigation would sit on top of them. */
 .top{gap:14px}
 .brand{width:auto;flex:0 0 auto;padding-right:14px;border-right:1px solid var(--line);height:34px}
 .ptitle{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
 .ptitle-name{font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--navy);white-space:nowrap}
 .ptitle-sep{width:1px;height:22px;background:var(--line)}
 .ptitle-strap{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.side-toggle{display:none;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--line);border-radius:8px;background:var(--white);color:var(--navy);cursor:pointer;padding:0}
-.frame{display:flex;align-items:stretch}
-.side{flex:0 0 var(--side);width:var(--side);background:var(--grad);color:#fff;padding:8px 10px 22px;position:sticky;top:var(--header);height:calc(100vh - var(--header));overflow-y:auto;overflow-x:hidden}
-.side-g{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.52);margin:16px 10px 5px}
-.side-g:first-child{margin-top:10px}
-.side-a{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;color:rgba(255,255,255,.86);font-size:13.5px;font-weight:500;text-decoration:none;white-space:nowrap}
-.side-a svg{flex:0 0 auto;opacity:.75}
-.side-a:hover{background:rgba(255,255,255,.08);color:#fff}
-.side-a.active{background:rgba(255,255,255,.14);color:#fff;font-weight:600;box-shadow:inset 3px 0 0 var(--orange)}
-.side-a.active svg{opacity:1;color:var(--orange)}
-.side-back{position:fixed;inset:var(--header) 0 0 0;background:rgba(10,37,64,.45);z-index:25}
-.side-back[hidden]{display:none}
+.tnav{background:var(--white);border-bottom:1px solid var(--line)}
+.tn-groups,.tn-pages{display:flex;align-items:center;padding:0 22px;overflow-x:auto;scrollbar-width:none}
+.tn-groups::-webkit-scrollbar,.tn-pages::-webkit-scrollbar{display:none}
+.tn-groups{gap:2px}
+.tn-g{flex:0 0 auto;padding:12px 12px 11px;font-size:14px;font-weight:600;color:var(--muted);white-space:nowrap;text-decoration:none}
+.tn-g:hover{color:var(--navy)}
+.tn-g.active{color:var(--navy);box-shadow:inset 0 -3px 0 var(--orange)}
+.tn-pages{gap:6px;padding-top:7px;padding-bottom:7px;background:var(--bg);border-top:1px solid var(--line)}
+.tn-pages[hidden]{display:none}
+.tn-a{flex:0 0 auto;padding:5px 12px;border:1px solid transparent;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--text);white-space:nowrap;text-decoration:none}
+.tn-a:hover{background:var(--white);border-color:var(--line);color:var(--navy)}
+.tn-a.active{background:var(--white);border-color:#ffd9b3;color:var(--navy);font-weight:600}
+.tn-g:focus-visible,.tn-a:focus-visible{outline:2px solid var(--orange);outline-offset:-2px;border-radius:8px}
 .main{flex:1;min-width:0}
 @media (max-width:1100px){.ptitle-strap{display:none}.ptitle-sep{display:none}}
 @media (max-width:900px){
-  .side-toggle{display:inline-flex}
   .brand{border-right:0;padding-right:0}
-  .side{position:fixed;left:0;top:var(--header);bottom:0;height:auto;z-index:30;transform:translateX(-100%);transition:transform .2s ease;box-shadow:0 10px 28px rgba(10,37,64,.3)}
-  .side.open{transform:none}
+  .tn-groups,.tn-pages{padding-left:14px;padding-right:14px}
+  .tn-g{padding:11px 9px 10px;font-size:13.5px}
   .main{padding:14px 14px 32px}
 }
-@media (max-width:600px){.built{display:none}.ptitle-name{font-size:17px}}
+@media (max-width:600px){.built{display:none}.ptitle-name{font-size:17px}.tn-groups{padding-left:8px;padding-right:8px}.tn-g{padding:11px 6px 10px;font-size:13px}}
 
-/* ---- the tool: the sidebar is the navigation, so the tab strip steps aside -------------------- */
+/* ---- the tool: the pathways are the navigation, so the tab strip steps aside -------------------- */
 body.tool .tabs-card>.tabs{display:none}
 body.tool .tabs-card{margin-top:0}
 .ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0 0 14px}

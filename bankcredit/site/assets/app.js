@@ -399,7 +399,7 @@ addEventListener('hashchange',openNamedTab);
 // A row that scrolls sideways says so. Without an edge, a phone reader has no way to know the tab
 // strip or a wide table carries on past the screen, and stops at whatever the screen ended on.
 (function(){
-  var SEL='.table-wrap,.tabs,.ll-tenors,.filters';
+  var SEL='.table-wrap,.tabs,.ll-tenors,.filters,.tn-groups,.tn-pages';
   function mark(el){
     var over=el.scrollWidth-el.clientWidth;
     el.classList.toggle('sc-r',over>4&&el.scrollLeft<over-4);
@@ -461,17 +461,23 @@ document.addEventListener('click',function(e){
   }).catch(function(){var w=el.querySelector('.attr-wait'); if(w)w.innerHTML='Not available in this build.'});
 })();
 
-// The sidebar is the pathways. On a page with tabs (the tool, and Method and data) it also says
-// which panel is open: a tab change marks the item that opens that panel, and on the tool the
-// browser tab's title names it too. The two items that open a dialog rather than a panel
+// The pathways run across the top in two rows: the groups, then the pages of the open one. On a
+// page with tabs (the tool, and Method and data) they also say which panel is open: a tab change
+// marks the page that opens that panel, marks its group and shows that group's row, and on the
+// tool the browser tab's title names it too. The two pages that open a dialog rather than a panel
 // (weightings, choose names) are never marked, because the panel under them has not changed.
 (function(){
-  var side=document.getElementById('side'); if(!side)return;
+  var nav=document.getElementById('tnav'); if(!nav)return;
   function mark(name){
     if(!name)return;
-    var items=side.querySelectorAll('.side-a[data-nav]'); if(!items.length)return;
-    var hit=side.querySelector('.side-a[data-nav="'+name+'"]'); if(!hit)return;
-    items.forEach(function(a){a.classList.toggle('active',a===hit)});
+    var hit=nav.querySelector('.tn-a[data-nav="'+name+'"]'); if(!hit)return;
+    var g=hit.parentNode.dataset.group;
+    nav.querySelectorAll('.tn-a').forEach(function(a){var on=a===hit;a.classList.toggle('active',on);
+      if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    nav.querySelectorAll('.tn-g').forEach(function(a){var on=a.dataset.group===g;a.classList.toggle('active',on);
+      if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
+    nav.querySelectorAll('.tn-pages').forEach(function(r){r.hidden=r.dataset.group!==g});
+    if(window.scrollMarks)window.scrollMarks();
   }
   // Coverage has no item of its own: it is read as part of the data's status.
   var NAV_FOR={coverage:'status'};
@@ -488,11 +494,4 @@ document.addEventListener('click',function(e){
     addEventListener('hashchange',function(){setTimeout(sync,0)});
     sync();
   }
-  // on a phone the pathways slide in from the left and a tap outside puts them away
-  var btn=document.getElementById('side-toggle'), back=document.getElementById('side-back');
-  function set(open){side.classList.toggle('open',open); if(back)back.hidden=!open; if(btn)btn.setAttribute('aria-expanded',open?'true':'false')}
-  if(btn)btn.addEventListener('click',function(){set(!side.classList.contains('open'))});
-  if(back)back.addEventListener('click',function(){set(false)});
-  side.addEventListener('click',function(e){if(e.target.closest('a')&&innerWidth<=900)set(false)});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&side.classList.contains('open'))set(false)});
 })();

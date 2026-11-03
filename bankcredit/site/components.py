@@ -267,11 +267,10 @@ PRODUCT = ("PWLB", "counterparty")
 STRAP = "Bank credit for treasury desks: who you can deal with, and for how long"
 TOOL = "tool/index.html"
 
-# The sidebar is the pathways. A reader arrives with one of three jobs - build a counterparty
-# policy, keep an eye on the names already on it, or find the next one - and each group is one
-# of those jobs, top to bottom in the order the jobs come. Reference sits last because it is
-# read second. Keys match the panel each item opens, so the tool can mark the item for the panel
-# under the reader's eye.
+# The pathways. A reader arrives with one of three jobs - build a counterparty policy, keep an eye
+# on the names already on it, or find the next one - and each group is one of those jobs, in the
+# order the jobs come. Reference sits last because it is read second. Keys match the panel each
+# item opens, so the tool can mark the item for the panel under the reader's eye.
 NAV = [
     ("Build your strategy", [
         ("strategy", "Start here", TOOL + "#strategy", "list"),
@@ -295,16 +294,35 @@ NAV = [
 _ACTIVE_ALIAS = {"home": "policy", "admin": "method", "coverage": "status"}
 
 
-def sidebar(root: str, active: str) -> str:
+def _slug(group: str) -> str:
+    return group.lower().split()[0]
+
+
+def topnav(root: str, active: str) -> str:
+    """The pathways across the top, in two rows: the four groups, then the pages of the group the
+    open page belongs to. The site sits inside PWLBtoday, whose own navigation runs down the left,
+    so Counterparty keeps to the top of its content and leaves the side to the platform.
+
+    Every group's row of pages is in the document and the script shows the one that holds the
+    open panel, because on the tool the panel changes without the page loading. A group opens its
+    first page. A page with no item of its own (a bank's profile) shows the groups alone."""
     active = _ACTIVE_ALIAS.get(active, active)
-    out = ""
+    open_group = next((_slug(g) for g, items in NAV if any(k == active for k, *_ in items)), "")
+    groups, rows = "", ""
     for group, items in NAV:
-        out += f'<div class="side-g">{esc(group)}</div>'
-        for key, label, href, icon in items:
-            cls = "side-a active" if key == active else "side-a"
-            out += (f'<a class="{cls}" href="{root}{href}" data-nav="{key}">{ico(icon, 15)}'
-                    f'<span>{esc(label)}</span></a>')
-    return f'<aside class="side" id="side" aria-label="Pathways">{out}</aside>'
+        g = _slug(group)
+        on = g == open_group
+        cur = ' aria-current="true"' if on else ""
+        groups += f'<a class="tn-g{" active" if on else ""}" href="{root}{items[0][2]}" data-group="{g}"{cur}>{esc(group)}</a>'
+        links = ""
+        for k, label, href, _icon in items:
+            here = k == active
+            page = ' aria-current="page"' if here else ""
+            links += f'<a class="tn-a{" active" if here else ""}" href="{root}{href}" data-nav="{k}"{page}>{esc(label)}</a>'
+        shown = "" if on else " hidden"
+        rows += f'<div class="tn-pages" data-group="{g}"{shown}>{links}</div>'
+    return (f'<nav class="tnav" id="tnav" aria-label="{esc(PRODUCT[0] + PRODUCT[1])}">'
+            f'<div class="tn-groups">{groups}</div>{rows}</nav>')
 
 
 # The page-to-page fade (@view-transition in site.css) is skipped whenever the browser cannot run
@@ -318,9 +336,9 @@ QUIET_TRANSITIONS = ("['pageswap','pagereveal'].forEach(function(n){addEventList
 
 def shell(title: str, content: str, active: str, root: str = "", generated: str = "", subtitle: str = "",
           preload: tuple[str, ...] = (), body_class: str = "") -> str:
-    """The platform's shell: the wordmark and a title bar across the top, the pathways down the
-    side, the page in the rest. The same frame PWLBtoday puts round every tool, so this reads as
-    one of them rather than a site of its own."""
+    """The platform's shell: the wordmark and a title bar across the top, the pathways beneath it in
+    two rows, the page in the rest. Nothing is drawn down the side: inside PWLBtoday the platform's
+    own navigation has it."""
     strap = subtitle or STRAP
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -336,11 +354,12 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 <script type="speculationrules">{SPECULATION}</script>
 <script>{QUIET_TRANSITIONS}</script>
 </head><body{f' class="{body_class}"' if body_class else ''}>{symbols()}
-<header class="top"><button type="button" class="side-toggle" id="side-toggle" aria-label="Open the pathways" aria-controls="side" aria-expanded="false">{ico("menu", 18)}</button>
+<header class="top">
 <a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>
 <div class="ptitle"><span class="ptitle-name">{PRODUCT[0]}<span class="brand-accent">{PRODUCT[1]}</span></span><span class="ptitle-sep"></span><span class="ptitle-strap">{esc(strap)}</span></div>
 <div class="top-right"><span class="built">{ico("clock", 13, MUTED)} Built {esc(generated[:16].replace("T", " "))} UTC</span><span class="beta">Beta</span></div></header>
-<div class="frame">{sidebar(root, active)}<div class="side-back" id="side-back" hidden></div><main class="main">{content}</main></div>
+{topnav(root, active)}
+<div class="frame"><main class="main">{content}</main></div>
 <dialog id="gloss-dlg" class="gloss-dlg"></dialog>
 <footer class="foot"><button type="button" class="glink" id="glink">What do these numbers mean?</button> {PRODUCT[0]}{PRODUCT[1]} is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}admin/index.html#method">Method</a> · <a href="{root}admin/index.html#status">Data status</a></footer>
 <script id="gloss" type="application/json">{glossary.payload()}</script>

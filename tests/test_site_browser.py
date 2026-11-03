@@ -1075,7 +1075,7 @@ def test_every_modal_softens_the_page_behind_it(page, server):
     assert not page.errors, page.errors
 
 
-# ---- the pathways: a landing page, a sidebar, and a strategy with three steps ------------------
+# ---- the pathways: a landing page, two rows across the top, and a strategy with three steps -----
 def test_the_root_is_a_landing_page_that_opens_into_the_tool(page, server):
     """The root used to be the tool. It is the page that explains the tool now, in the frame
     PWLBreports uses for the same job: one question, the three pathways, the way in."""
@@ -1100,32 +1100,47 @@ def test_a_returning_reader_is_offered_the_way_straight_to_the_list(page, server
     assert page.eval_on_selector("#returning a", "e => e.getAttribute('href')") == TOOL + "#policy"
 
 
-def test_the_sidebar_is_the_pathways_and_follows_the_open_panel(page, server):
-    """Four groups, in the order the jobs come, on every page; on the tool the item for the open
-    panel is marked, and the two that open a dialog never are."""
+def test_the_pathways_run_across_the_top_and_follow_the_open_panel(page, server):
+    """The site sits inside PWLBtoday, whose own navigation runs down the left, so Counterparty's
+    pathways run across the top: four groups, in the order the jobs come, then the pages of the
+    open group. On the tool the page for the open panel is marked, with its group and its row, and
+    the two pages that open a dialog never are."""
     visit(page, server, TOOL)
-    groups = page.eval_on_selector_all("#side .side-g", "e => e.map(x => x.textContent)")
+    assert page.query_selector("#side") is None and page.query_selector("#side-toggle") is None, "nothing down the side"
+    groups = page.eval_on_selector_all("#tnav .tn-g", "e => e.map(x => x.textContent)")
     assert groups == ["Build your strategy", "Monitor", "Compare", "Reference"], groups
-    hrefs = page.eval_on_selector_all("#side .side-a", "e => e.map(x => x.getAttribute('href'))")
+    firsts = page.eval_on_selector_all("#tnav .tn-g", "e => e.map(x => x.getAttribute('href'))")
+    assert firsts == ["../" + TOOL + "#strategy", "../" + TOOL + "#policy", "../" + TOOL + "#likeforlike", "../admin/index.html#method"], "a group opens its first page"
+    hrefs = page.eval_on_selector_all("#tnav .tn-a", "e => e.map(x => x.getAttribute('href'))")
     assert hrefs[:3] == ["../" + TOOL + "#strategy", "../" + TOOL + "#weights", "../" + TOOL + "#universe"], hrefs
     assert any(h.endswith("admin/index.html#method") for h in hrefs)
     assert not any(h.endswith("index.html") and "admin" not in h and "tool" not in h for h in hrefs), \
         "no Overview item: the wordmark is the way back to the landing page"
     assert page.eval_on_selector(".top .brand", "e => e.getAttribute('href')").endswith("index.html")
-    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "strategy"
-    assert page.eval_on_selector_all(".tabs-card .tabs", "e => e.map(x => getComputedStyle(x).display)") == ["none"], "the tab strip steps aside for the sidebar"
-    assert page.query_selector('#side .side-a[data-nav="events"]') is None, "the Events page is gone"
-    page.eval_on_selector('#side .side-a[data-nav="policy"]', "e => e.click()")
+    assert page.query_selector('#tnav .tn-a[data-nav="events"]') is None, "the Events page is gone"
+    shown = lambda: page.eval_on_selector_all("#tnav .tn-pages", "e => e.filter(x => !x.hidden).map(x => x.dataset.group)")
+    state = lambda: (page.eval_on_selector("#tnav .tn-g.active", "e => e.dataset.group"),
+                     page.eval_on_selector("#tnav .tn-a.active", "e => e.dataset.nav"), shown())
+    assert state() == ("build", "strategy", ["build"])
+    assert page.eval_on_selector_all(".tabs-card .tabs", "e => e.map(x => getComputedStyle(x).display)") == ["none"], "the tab strip steps aside"
+    page.eval_on_selector('#tnav .tn-g[data-group="compare"]', "e => e.click()")
     page.wait_for_timeout(700)
-    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "policy"
-    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "policy"
-    page.eval_on_selector('#side .side-a[data-nav="weights"]', "e => e.click()")
+    assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "likeforlike"
+    assert state() == ("compare", "likeforlike", ["compare"])
+    page.eval_on_selector('#tnav .tn-a[data-nav="analysis"]', "e => e.click()")
+    page.wait_for_timeout(900)
+    assert state() == ("compare", "analysis", ["compare"])
+    assert page.eval_on_selector("#tnav .tn-a.active", "e => e.getAttribute('aria-current')") == "page"
+    page.eval_on_selector('#tnav .tn-g[data-group="build"]', "e => e.click()")
+    page.wait_for_timeout(700)
+    page.eval_on_selector('#tnav .tn-a[data-nav="weights"]', "e => e.click()")
     page.wait_for_timeout(500)
-    assert page.eval_on_selector("#wt-dlg", "e => e.open"), "the weightings item opens the dialog"
-    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "policy", "a dialog does not move the mark"
-    # the same frame round a bank page
+    assert page.eval_on_selector("#wt-dlg", "e => e.open"), "the weightings page opens the dialog"
+    assert state() == ("build", "strategy", ["build"]), "a dialog does not move the mark"
+    # the same frame round a bank page, which belongs to no group
     visit(page, server, "banks/barclays-bank.html")
-    assert page.eval_on_selector_all("#side .side-g", "e => e.length") == 4
+    assert page.eval_on_selector_all("#tnav .tn-g", "e => e.length") == 4
+    assert page.query_selector("#tnav .tn-g.active") is None and shown() == []
     assert page.eval_on_selector(".ptitle-name", "e => e.textContent") == "PWLBcounterparty"
     assert not page.errors, page.errors
 
@@ -1149,17 +1164,13 @@ def test_the_strategy_is_three_steps_that_say_where_the_reader_is(page, server):
     assert not page.errors, page.errors
 
 
-def test_on_a_phone_the_pathways_slide_in_from_a_button(page, server):
-    page.set_viewport_size({"width": 390, "height": 844})
+def test_on_a_phone_the_pathways_fit_without_moving_the_page_sideways(page, server):
+    page.set_viewport_size({"width": 375, "height": 812})
     try:
         visit(page, server, TOOL)
-        assert page.eval_on_selector("#side", "e => e.getBoundingClientRect().right") <= 0, "off screen until asked for"
-        page.eval_on_selector("#side-toggle", "e => e.click()")
-        page.wait_for_timeout(400)
-        assert page.eval_on_selector("#side", "e => e.classList.contains('open') && e.getBoundingClientRect().left === 0")
-        page.eval_on_selector("#side-back", "e => e.click()")
-        page.wait_for_timeout(400)
-        assert not page.eval_on_selector("#side", "e => e.classList.contains('open')")
+        assert page.evaluate("document.documentElement.scrollWidth") <= 375, "the page itself never scrolls sideways"
+        assert page.eval_on_selector("#tnav .tn-groups", "e => e.scrollWidth <= e.clientWidth"), "all four groups fit"
+        assert page.eval_on_selector("#tnav .tn-pages:not([hidden])", "e => e.getBoundingClientRect().height") < 60, "one row of pages"
         assert not page.errors, page.errors
     finally:
         page.set_viewport_size({"width": 1280, "height": 900})
@@ -1194,9 +1205,10 @@ def test_the_rating_tiles_count_what_the_bars_count(page, server):
     assert tiles["Below BBB-"] == at(11, 17)
 
 
-def test_the_window_title_and_the_sidebar_name_the_open_panel(page, server):
+def test_the_window_title_and_the_pathways_name_the_open_panel(page, server):
     visit(page, server, TOOL + "#ratings")
     assert page.title().startswith("Ratings ·")
-    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "ratings"
+    assert page.eval_on_selector("#tnav .tn-a.active", "e => e.dataset.nav") == "ratings"
     visit(page, server, "admin/index.html#status")
-    assert page.eval_on_selector("#side .side-a.active", "e => e.dataset.nav") == "status"
+    assert page.eval_on_selector("#tnav .tn-a.active", "e => e.dataset.nav") == "status"
+    assert page.eval_on_selector("#tnav .tn-g.active", "e => e.dataset.group") == "reference"
