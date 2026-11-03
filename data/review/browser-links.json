@@ -10206,7 +10206,7 @@
  },
  "goldman-sachs-international-bank > updated-conference-call-number-for-4q25-": {
   "page": "https://www.goldmansachs.com/pressroom/press-releases/2025/updated-conference-call-number-for-4q25-and-2026-earnings-results",
-  "checked": "2026-10-12",
+  "checked": "2026-10-13",
   "links": [
    {
     "url": "https://www.goldmansachs.com/disclosures",
@@ -10232,7 +10232,7 @@
  },
  "goldman-sachs-international-bank > annual-reports": {
   "page": "https://www.goldmansachs.com/investor-relations/financials/annual-reports",
-  "checked": "2026-10-12",
+  "checked": "2026-10-13",
   "links": [
    {
     "url": "https://www.goldmansachs.com/disclosures",
@@ -10752,6 +10752,24 @@
    }
   ]
  },
+ "saffron-bs > estate-planning": {
+  "page": "https://www.saffronbs.co.uk/financial-services/financial-services/estate-planning",
+  "checked": "2026-11-03",
+  "links": [
+   {
+    "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/savings/manage-my-account/forms-downloads",
+    "text": ""
+   },
+   {
+    "url": "https://www.saffronbs.co.uk/useful-mortgage-documents",
+    "text": ""
+   }
+  ]
+ },
  "goldman-sachs-international-bank > 2026-10-13-q3-results": {
   "page": "https://www.goldmansachs.com/pressroom/press-releases/2026/2026-10-13-q3-results",
   "checked": "2026-11-03",
@@ -10832,24 +10850,6 @@
    },
    {
     "url": "https://www.goldmansachs.com/content/gs/gscom/insights/reports",
-    "text": ""
-   }
-  ]
- },
- "saffron-bs > estate-planning": {
-  "page": "https://www.saffronbs.co.uk/financial-services/financial-services/estate-planning",
-  "checked": "2026-11-03",
-  "links": [
-   {
-    "url": "https://www.saffronbs.co.uk/sites/default/files/2025-02/SaffronRulesApril2021.pdf",
-    "text": ""
-   },
-   {
-    "url": "https://www.saffronbs.co.uk/savings/manage-my-account/forms-downloads",
-    "text": ""
-   },
-   {
-    "url": "https://www.saffronbs.co.uk/useful-mortgage-documents",
     "text": ""
    }
   ]

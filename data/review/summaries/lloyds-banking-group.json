@@ -1,8 +1,8 @@
 {
  "id": "lloyds-banking-group",
- "written": "2026-10-09",
+ "written": "2026-10-13",
  "background": "Lloyds Banking Group is the holding company of the UK's largest retail and commercial bank, owner of Lloyds Bank, Halifax, Bank of Scotland and Scottish Widows, with almost all of its business in Britain.",
- "synthesis": "Rated A on average across two of the three, the weakest of them at A-, both on a stable outlook, with no move since a one-notch upgrade by one of the three on 10 Sep 2025. The balance sheet is mixed against UK majors: leverage of 5.1% is in the top quarter and LCR of 144% is above the peer median, but CET1 of 13.6% and NSFR of 123% are below it. Leverage has fallen 0.3 points since 30 Jun 2025, while CET1, LCR and NSFR have been broadly flat. Flagged news in the last 90 days is litigation over the Arena Television loans and online banking outages, the newest on 2 Oct 2026.",
+ "synthesis": "Rated A on average across two of the three, the weakest of them at A-, both on a stable outlook, the holding company sits below its ring-fenced operating bank, with the last move a one-notch upgrade by one of the three on 10 Sep 2025. Leverage of 5.1% is in the top quarter of UK majors, though it has fallen 0.3 points since 30 Jun 2025, while CET1 of 13.6% is just below the peer median. Liquidity is mixed, with LCR of 144% level with the peer median and NSFR of 123% below it, both broadly flat. The newest flagged item, on 9 Oct 2026, is an online banking outage across the group's brands, and the larger matter in the period is the fraud claims over the Arena Television loans.",
  "inputs": {
   "band": "C",
   "composite": "A",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable",
   "n": 2,
   "asof": "2026-06-30",
-  "last_flagged": "2026-10-02"
+  "last_flagged": "2026-10-09"
  }
 }
