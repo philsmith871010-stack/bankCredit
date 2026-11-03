@@ -1235,3 +1235,18 @@ def test_a_name_can_be_added_at_any_tenor_from_the_left_of_its_row(page, server)
     finally:
         page.set_viewport_size({"width": 1440, "height": 900})
     assert not page.errors, page.errors
+
+
+def test_the_ratings_grid_can_show_just_my_counterparties(page, server):
+    _seed_many(page, server, 4)
+    visit(page, server, TOOL + "#ratings")
+    page.wait_for_timeout(600)
+    chips = page.eval_on_selector_all(".filter[data-region]", "e => e.map(x => x.textContent)")
+    assert chips[:2] == ["All", "My counterparties"], chips
+    page.eval_on_selector('.filter[data-region="mine"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    mine = sorted(x["id"] for x in json.loads(page.evaluate("localStorage.getItem('counterparty.policy')")))
+    shown = sorted(page.eval_on_selector_all("table.rgrid tbody tr", "e => e.filter(x => x.style.display !== 'none').map(x => x.dataset.id)"))
+    assert shown == mine, (shown, mine)
+    assert "4 of" in page.inner_text("#rg-count")
+    assert not page.errors, page.errors

@@ -841,7 +841,8 @@ def page_ratings(generated, inner: bool = False):
         + f'<td class="rc-tones">{tone_glyphs(r.get("tones") or []) if r["n"] else "—"}</td>'
         + f'<td class="small">{DOT if r["id"] in moved else ""}<span class="mono muted">{c.esc(r["last_action"] or "—")}</span></td><td>{grade_trend(r)}</td></tr>'
         for r in sorted(rows, key=lambda r: (r["grade"] is None, r["grade"] or 99, r["short"])))
-    regions = [("all", "All"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
+    # the reader's own list first after All: it is the set a treasurer opens this page to check
+    regions = [("all", "All"), ("mine", "My counterparties"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
     filters = "".join(f'<button class="filter{" active" if k == "all" else ""}" data-region="{k}">{c.esc(l)}</button>' for k, l in regions)
     tone = {"bad": "bad", "warn": "warn", "good": "good", "info": "muted"}
     acts = "".join(f'<div class="ract"><span class="mono muted">{a["date"]}</span><a class="b" href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><span>{c.esc(a["title"])}</span>{c.chip(c.esc({"good": "positive", "warn": "watch", "bad": "adverse"}.get(a["severity"], a["severity"])), tone.get(a["severity"], "muted"))}</div>' for a in acts_all[:30]) or '<div class="empty">No rating actions other than affirmations in the last 90 days.</div>'

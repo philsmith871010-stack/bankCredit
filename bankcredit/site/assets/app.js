@@ -249,9 +249,10 @@ function initRatingActions(){var box=document.getElementById('racts');if(!box||b
   apply()}
 
 function initRatingGrid(){var tb=document.querySelector('table.rgrid tbody');if(!tb||tb.dataset.init)return;tb.dataset.init='1';var grade=null,band=null,cnt=document.getElementById('rg-count'),clear=document.querySelector('.gclear');
-  function apply(){var region=(document.querySelector('.filter.active[data-region]')||{}).dataset||{},term=((document.getElementById('q')||{}).value||'').toLowerCase(),w=[];try{w=JSON.parse(localStorage.getItem('counterparty.watch')||'[]')}catch(e){}
+  function apply(){var region=(document.querySelector('.filter.active[data-region]')||{}).dataset||{},term=((document.getElementById('q')||{}).value||'').toLowerCase(),w=[],mine=[];try{w=JSON.parse(localStorage.getItem('counterparty.watch')||'[]')}catch(e){}
+    try{mine=(JSON.parse(localStorage.getItem('counterparty.policy')||'[]')||[]).map(function(x){return x.id})}catch(e){}
     var keep=[];tb.querySelectorAll('tr').forEach(function(tr){var d=tr.dataset,ok=true;
-      if(region.region&&region.region!=='all'){ok=region.region==='watch'?w.indexOf(d.id)>=0:region.region==='moved'?d.moved==='1':d.region===region.region}
+      if(region.region&&region.region!=='all'){ok=region.region==='watch'?w.indexOf(d.id)>=0:region.region==='mine'?mine.indexOf(d.id)>=0:region.region==='moved'?d.moved==='1':d.region===region.region}
       if(ok&&grade)ok=d.grade===grade;if(ok&&band)ok=d.band===band;if(ok&&term)ok=tr.textContent.toLowerCase().indexOf(term)>=0;tr.style.display=ok?'':'none';if(ok)keep.push(tr)});
     var n=keep.length,all=tb.querySelectorAll('tr').length;
     window.pageRows('rg-more',keep,function(tr){tr.style.display='none'},'entities',apply);
