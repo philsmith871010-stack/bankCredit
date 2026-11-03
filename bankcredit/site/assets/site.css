@@ -182,7 +182,8 @@ table.board thead th,table.coverage thead th,table.ratings thead th{position:sti
 @media(max-width:1100px){.dash{grid-template-columns:1fr}}
 
 .rtiles-f .rtile{text-align:left;font:inherit;cursor:pointer;border:1px solid var(--line)}.rtiles-f .rtile.active{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}a.rtile{color:var(--text)}
-.rgrid-card{padding:14px 16px;margin-top:2px}.rg-tools{margin-bottom:8px}.rg-tools .search{width:220px;margin-left:auto}
+.rgrid-card{padding:14px 16px;margin-top:2px}.rg-tools{margin-bottom:8px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}.rg-tools .search{width:220px;margin-left:auto}#rg-count{white-space:nowrap}
+@media (max-width:640px){.rg-tools .search{width:100%;margin-left:0}}
 .rg-hist{display:flex;align-items:flex-end;gap:6px;padding:8px 0 12px;border-bottom:1px solid var(--line);margin-bottom:6px;flex-wrap:wrap}.rg-hist>.small{align-self:center;margin-right:6px}
 .gbar{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:0;padding:2px 3px;cursor:pointer;font:inherit;border-radius:6px;min-width:34px}.gbar i{display:block;width:26px;border-radius:3px 3px 0 0}.gbar .glabel{font-size:10.5px;color:var(--muted)}.gbar .gcount{font-size:11px;color:var(--text)}.gbar:hover,.gbar.active{background:var(--bg)}.gbar.active .glabel{color:var(--text);font-weight:700}.gbar:disabled{opacity:.35;cursor:default}
 table.rgrid td,table.rgrid th{padding:7px 8px}table.rgrid td.rc{min-width:88px}table.rgrid td.rc-na{color:#c4ccd6;text-align:left}
@@ -614,7 +615,8 @@ th .i,.uni th .i{margin-left:4px}
    to the name, and nothing is dropped. Placement is spelled out because auto-placement would put
    the block that spans the row ahead of the tag and the remove button. */
 @container (max-width:780px){
-  .cp-top{grid-template-columns:minmax(0,1fr) auto 20px;gap:12px;row-gap:6px;padding:8px 12px}
+  /* the name keeps at least half the row: the tags give way to it, not it to them */
+  .cp-top{grid-template-columns:minmax(50%,1fr) minmax(0,auto) 20px;gap:12px;row-gap:6px;padding:8px 12px}
   /* the legal name is the line that goes: the short name, what kind of entity it is and the
      country are all still here, and the card opens on the rest */
   .cp-id .cp-sub{display:none}
@@ -780,7 +782,7 @@ table.uni .sc-n{font-size:14px}
 .wt-o{font-family:var(--mono);font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
 /* The sliders and what they are allowed to mean, side by side: the disclosure is not a footnote
    under a long page, it is beside the control it qualifies. */
-.wt-body{display:grid;grid-template-columns:minmax(0,760px);gap:28px;align-items:start}
+.wt-body{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:start}
 @media (max-width:1000px){.wt-body{grid-template-columns:1fr;gap:18px}}
 .wt-foot{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
 @media (max-width:1000px){.wt-foot{margin-top:4px}}
@@ -1108,7 +1110,160 @@ body.tool .tabs-card{margin-top:0}
 /* the agencies' own ratings run long: the label sits above them rather than being squeezed to "Agen…" */
 .cr.cr-attr{grid-template-columns:1fr}.cr.cr-attr>span:empty{display:none}
 /* Alternatives on a phone: rank, name, score, rating, CET1 and Add; the rest is a tap away in the detail */
-@media (max-width:640px){.ll-t2 th:nth-child(n+6):not(:last-child),.ll-t2 td:nth-child(n+6):not(:last-child){display:none}}
+@media (max-width:640px){
+  .ll-t2 thead{display:none}
+  .ll-t2,.ll-t2 tbody{display:block;width:100%}
+  .ll-t2 tr.ll-r{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:"name name name add" "score rating cet .";gap:4px 14px;align-items:center;padding:10px 6px;border-bottom:1px solid var(--line-soft)}
+  .ll-t2 td{display:none;padding:0;border:0}
+  .ll-t2 td.ll-name{display:block;grid-area:name;min-width:0}
+  .ll-t2 td.ll-name .ll-co{display:none}
+  .ll-t2 td.ll-sc{display:flex;align-items:baseline;gap:6px;grid-area:score}.ll-t2 td.ll-sc .ll-track{display:none}
+  .ll-t2 td.ll-cpc{display:block;grid-area:rating}
+  .ll-t2 td.ll-v:nth-child(5){display:block;grid-area:cet;text-align:left}.ll-t2 td.ll-v:nth-child(5)::before{content:"CET1 ";color:var(--muted);font-size:11px}
+  .ll-t2 td.ll-addc{display:block;grid-area:add}
+}
 @media (max-width:640px){.rtiles-f{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.rtiles-f .rtile{padding:9px 10px}.rtiles-f .rtile-n{font-size:18px}.rtiles-f .rtile-l{font-size:11px}}
 /* a score part the bank does not report is left out of its card rather than drawn as a dash */
 .score-card .pillar-na{display:none}
+/* Coverage: the name column holds a name on one or two lines, not three */
+table.coverage td:first-child{min-width:190px}
+.cp-set-sel{display:none}
+@media (max-width:640px){#cp-sets{display:none}.cp-set-sel{display:block;width:100%;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:14px;background:var(--white);color:var(--text)}}
+.lede .lei{display:block;margin-top:4px}
+/* on a card, a flag outranks the holding-company tag, which the table, profile and pop-up still show */
+.pol-card .cp-tags:has(.chip) .tag-hold{display:none}
+.pol-card .cp-tags .chip{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.method-more{margin:10px 0 0;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--bg)}.method-more summary{cursor:pointer;font-weight:600;color:var(--navy)}.method-more[open] summary{margin-bottom:8px}
+/* the weightings card fits its sliders rather than the window, so nothing sits in an empty third */
+@media (max-width:640px){.src-t th:nth-child(n+3),.src-t td:nth-child(n+3){display:none}}
+/* a phone opens Your counterparties on the cards; the summary follows them */
+@media (max-width:640px){#policy-body{display:flex;flex-direction:column}#policy-body>.pv{order:5}}
+/* the pop-up's two columns end level */
+.md-grid{align-items:stretch}
+/* every trend group names itself above its charts, so two short groups share a row cleanly */
+.sm-block{grid-template-columns:1fr;gap:0;flex-basis:calc(var(--n,1) * 236px);min-width:min(100%,236px)}
+.sm-sec{padding:0 0 7px 8px}
+.tiles{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media(max-width:1250px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1000px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile-ratings .rcells{align-content:start;flex:0 0 auto;margin:16px 0 14px}
+.tile-ratings .rlt .big{font-size:30px}
+/* the pop-up's trends spread over the height the ratings column gives them */
+.md-trend-panel{display:flex;flex-direction:column}
+.md-trend-panel .md-trends{align-content:start;gap:14px 14px}.md-trend-panel .mt-legend{margin-top:auto;padding-top:10px}
+@media(max-width:760px){.sm-block{min-width:100%}}
+/* a phone's half-width tile keeps the figure, the verdict and the move; the date and peer detail wait for the trends */
+@media(max-width:600px){.tiles .tile-foot>span.mono,.tiles .tile-peers{display:none}.tiles .tile-label{letter-spacing:.03em}}
+/* Analysis on a phone: the two selects line up full width, the pins shrink to name and colour */
+@media (max-width:640px){
+  .cp-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 8px;align-items:end}
+  .cp-row label{display:flex;flex-direction:column;gap:4px;min-width:0}
+  .cp-row label select{margin:0;width:100%;height:36px}
+  .cp-row #cp-def{margin-bottom:9px}
+  .cp-row .cp-add,.cp-row #cp-count{grid-column:1 / -1;width:100%}
+  .cp-pins{gap:6px}
+  .pinchip{font-size:12.5px;padding:2px 6px}
+  .pinchip>.mono,.pinchip>span[title]{display:none}
+  .cp-pins>.small.muted:first-child{flex-basis:100%}
+}
+/* Alternatives on a phone: plain cards, no table scroller, no cell rules */
+@media (max-width:640px){
+  .ll-pane .table-wrap{max-height:none;overflow:visible;box-shadow:none}
+  .ll-t2 tr.ll-r{grid-template-columns:max-content max-content minmax(0,1fr) max-content}
+  .ll-t2 tr.ll-r>td{border:0!important;width:auto;min-width:0}
+}
+/* one numeric style for every name table: proportional figures, tabular so columns line up */
+#uni-table td.num,.ll-t2 .ll-v{font-family:inherit;font-variant-numeric:tabular-nums}
+#uni-table .ll-ags{margin-left:6px}
+/* Choose names on a phone: one line a name, the action first and the deciding figures last */
+@media (max-width:640px){
+  #uni-table{min-width:0!important;width:100%}
+  #uni-table thead{display:none}
+  #uni-table,#uni-table tbody{display:block}
+  #uni-table tr.uni-row{display:grid;grid-template-columns:max-content minmax(0,1fr) max-content 64px;gap:0 10px;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line-soft)}
+  #uni-table tr.uni-row>td{display:none;border:0!important;padding:0;width:auto;min-width:0}
+  #uni-table tr.uni-row>td.uni-add,#uni-table tr.uni-row>td.uni-nm,#uni-table tr.uni-row>td.uni-sc,#uni-table tr.uni-row>td.uni-rt{display:block}
+  #uni-table td.uni-nm{overflow:hidden}#uni-table td.uni-nm .b{white-space:nowrap}
+  #uni-table td.uni-nm .small,#uni-table td.uni-nm .tag{display:none}
+  #uni-table td.uni-rt{text-align:left}#uni-table td.uni-rt .ll-ags{display:none}
+  #uni-table td.uni-sc .small{display:none}
+  .uni-page .table-wrap{overflow-x:hidden;box-shadow:none}
+}
+/* Weightings: sliders beside their effect, inside the page's own card rather than a card within it */
+.wt-page{max-width:none;border:0;box-shadow:none;background:none;padding:4px 0 0}
+.wt-body{grid-template-columns:minmax(0,1fr) 360px;gap:40px}
+.wt-grid{max-width:none}
+.wt-side .wt-effect{margin-top:0}
+@media (max-width:1000px){.wt-body{grid-template-columns:1fr;gap:18px}}
+@media (max-width:640px){.wt-page{padding:0}}
+/* Choose names on a phone: the action column one width, the held rows tinted as a whole */
+@media (max-width:640px){
+  #uni-table tr.uni-row{grid-template-columns:86px minmax(0,1fr) max-content 44px}
+  #uni-table tr.uni-mine{background:#f6f9f4}#uni-table tr.uni-mine>td{background:none}
+  #uni-table td.uni-nm .b{display:block;overflow:hidden;text-overflow:ellipsis}
+  #uni-table td.uni-add .chip,#uni-table td.uni-add .filter{width:100%;justify-content:center;text-align:center}
+}
+/* the weights bar on a phone: the caption names the segments, so the bar carries none */
+@media (max-width:640px){.wbar span,.wbar span *{font-size:0!important;padding:0}}
+/* "unpin", not a cross: a cross read as remove, and unpinning keeps the name in the set */
+.pinchip .pin,.pinchip .cp-rmx{font-size:11px;text-decoration:none;padding:1px 6px;margin-left:2px;border-radius:999px;background:var(--line-soft);color:var(--muted)}
+.pinchip .pin:hover,.pinchip .cp-rmx:hover{color:var(--text);background:var(--line)}
+.tm-band{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:4px;color:#fff;font-size:10.5px;font-weight:700;margin-right:7px;vertical-align:-3px}
+.pv-n{font-size:10.5px;font-weight:600;fill:var(--text);font-variant-numeric:tabular-nums}
+.pillar .pz{color:#ff9b8a}
+@media(max-width:600px){.pillars{display:flex;flex-wrap:wrap;gap:12px 14px}.pillars .pillar{flex:1 1 28%;min-width:0}}
+.flt-sel{display:none}
+@media (max-width:640px){
+  .rg-tools > .filters{display:none}
+  .flt-sel{display:block;flex:1 1 100%;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:14px;background:var(--white);color:var(--text)}
+  .rtiles-cov{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.rtiles-cov .rtile{padding:9px 10px}.rtiles-cov .rtile-n{font-size:18px}.rtiles-cov .rtile-l{font-size:11px}
+}
+/* the grade chart on a phone: every grade in one row, the label above it */
+@media (max-width:640px){
+  .rg-hist{flex-wrap:wrap;gap:0}
+  .rg-hist>.small{flex-basis:100%;margin:0 0 6px}
+  .rg-hist .gbar{flex:1 1 0;min-width:0;padding:2px 1px}
+  .rg-hist .gbar i{width:100%;max-width:18px}
+  .rg-hist .gbar .glabel{font-size:8.5px;letter-spacing:0}
+  .rg-hist .gclear{flex-basis:100%;margin-top:6px}
+}
+.tile-ratings{justify-content:flex-start}.tile-ratings .tile-foot{margin-top:auto}
+/* one figure style in every table: the site's sans with tabular figures */
+.tnum,table.coverage .cov-sc,table.coverage .cov-yr,#uni-table td.asof,.ll-t2 td.asof{font-family:inherit;font-variant-numeric:tabular-nums}
+/* Ratings on a phone: one line a name, average, weakest and outlooks; no sideways scroll */
+@media (max-width:640px){
+  table.rgrid{min-width:0!important;width:100%}
+  table.rgrid thead{display:none}
+  table.rgrid,table.rgrid tbody{display:block}
+  table.rgrid tr{display:grid;grid-template-columns:minmax(0,1fr) 52px 46px 40px;gap:0 8px;align-items:center;padding:8px 2px;border-bottom:1px solid var(--line-soft)}
+  table.rgrid tr>td{border:0!important;padding:0;min-width:0}
+  table.rgrid tr>td:nth-child(n+5){display:none}
+  table.rgrid .rc-sub{display:none}
+  table.rgrid td:first-child a{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rgrid-card .table-wrap{overflow-x:hidden;box-shadow:none}
+  /* Coverage on a phone: name, score, rating and years held; the ratio detail is a desktop table */
+  table.coverage{min-width:0!important;width:100%}
+  table.coverage thead{display:none}
+  table.coverage,table.coverage tbody{display:block}
+  table.coverage tr{display:grid;grid-template-columns:minmax(0,1fr) 62px 48px 48px;gap:0 8px;align-items:center;padding:8px 2px;border-bottom:1px solid var(--line-soft)}
+  table.coverage tr>td{border:0!important;padding:0;min-width:0!important}
+  table.coverage tr>td:nth-child(n+5){display:none}
+  table.coverage td:first-child a{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  table.coverage td.cov-yr::after{content:" yrs";color:var(--muted);font-size:11px}
+  table.coverage .nowrap{white-space:normal}
+  .card .table-wrap:has(table.coverage){overflow-x:hidden;box-shadow:none}
+}
+.tl-s{display:none}
+@media (max-width:640px){.tl-l{display:none}.tl-s{display:inline}#uni-table tr.uni-row{grid-template-columns:56px minmax(0,1fr) max-content 44px}}
+/* the pop-up's outlook marks at the size the profile uses */
+.cr-rows .tones .cr-o{font-size:12px;opacity:1}
+/* the Monitor summary panels: each chart sits in the middle of its panel's height */
+.pv-charts>figure{display:flex;flex-direction:column}
+.pv-charts>figure>:not(figcaption){margin-block:auto}
+.rpath{display:flex;align-items:center;gap:14px;padding:10px 0 0;border-top:1px solid var(--line-soft)}.rpath svg{flex:0 1 220px;min-width:0}
+.pillar .pz + i b{width:7%!important;background:#ff7b6b!important}
+.cr-rows .tones .cr-o.lv{color:#8796a6}
+.panel #method-prose{border:0;box-shadow:none;background:none;padding:0}
+@media (max-width:640px){table.rgrid td:first-child .small,table.coverage td:first-child .small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.cr-rows .cr-g.tnum{font-weight:500;font-size:13px}
+.cr-rows .tones .cr-o{font-size:13px}

@@ -155,6 +155,7 @@
     if(i<0)return '#6c757d';
     return rampColour(1-Math.min(1,i/14));
   }
+  window.cpGradeColour=gradeColour;      // the Analysis table colours its ratings the same way
   // one number, one colour, one letter - used wherever a score is shown in a row or a card
   function scoreNum(v,band,cls){
     if(v==null)return '<span class="na">\u2014</span>';
@@ -221,7 +222,7 @@
     if(b.grade!=null&&e.rating_grade!=null&&e.rating_grade>b.grade+0.4)f.push(['bad','Ratings weaker: '+GRADES[Math.floor(b.grade+0.5)-1]+' → '+e.rating_composite,'Rating weaker']);
     (e.negative||[]).forEach(function(n){if(!item.added||n.date>=item.added)f.push(['bad',n.date+' '+n.title,'Adverse action'])});
     if(e.market&&e.market.direction==='down')f.push(['warn',e.market.label,e.market.label]);
-    if(e.age_days!=null&&e.age_days>180)f.push(['warn','Regulatory figures '+e.age_days+' days old','Figures '+e.age_days+'d old']);
+    if(e.age_days!=null&&e.age_days>180)f.push(['warn','Regulatory figures '+e.age_days+' days old','Old figures']);
     if(e.inherited&&e.inherited.length)f.push(['muted','Some figures from the group or lead bank','Group figures']);
     return f;
   }
@@ -279,26 +280,26 @@
   });
   addEventListener('scroll',hideTip,true);
 
+  // The band mix in the same form as the tenor rows beside it: one row a band, how many names
+  // sit there and the weakest score among them. A single stacked bar filled a third of its panel
+  // and needed a key to read; rows read straight off.
   function bandMix(es){
     var n={},who={},tot=0;BANDS.forEach(function(b){n[b]=0;who[b]=[]});
     es.forEach(function(e){if(e.band&&n[e.band]!=null){n[e.band]++;who[e.band].push(e);tot++}});
     if(!tot)return '<div class="muted small">no scored names</div>';
-    var w=260,h=16,x=0,parts='',key='';
-    BANDS.forEach(function(b){
-      if(!n[b])return;
-      var seg=n[b]/tot*w;
+    var SHORT={A:'80+',B:'65\u201379',C:'50\u201364',D:'35\u201349',E:'under 35'};
+    var most=Math.max.apply(null,BANDS.map(function(b){return n[b]}));
+    return '<div class="tmix">'+BANDS.filter(function(b){return n[b]}).map(function(b){
       var sc=who[b].map(function(e){return e.score}).sort(function(a,c){return a-c});
       var tip=tipd(tipHead('Band '+b,n[b]+' of '+tot)+
         '<i>'+Math.round(n[b]/tot*100)+'% of your scored names \u00b7 score '+BAND_RANGE[b]+'</i>'+
-        '<i>lowest here <em>'+sc[0].toFixed(1)+'</em>, highest '+sc[sc.length-1].toFixed(1)+'</i>'+
         '<i>'+names(who[b])+'</i>');
-      parts+='<rect x="'+x.toFixed(1)+'" y="0" width="'+Math.max(0,seg-2).toFixed(1)+'" height="'+h+'" rx="3" fill="'+BANDC[b]+'"'+tip+'/>';
-      x+=seg;
-      key+='<span class="pv-key"'+tip+'><i style="background:'+BANDC[b]+'"></i>'+b+' <b>'+n[b]+'</b></span>';
-    });
-    return svg(w,h,parts)+'<div class="pv-keys">'+key+'</div>';
+      return '<div class="tm-r"'+tip+'><span class="tm-t"><b class="tm-band" style="background:'+BANDC[b]+'">'+b+'</b>'+SHORT[b]+'</span>'+
+        '<span class="tm-b"><i style="width:'+(n[b]/most*100).toFixed(0)+'%;background:'+BANDC[b]+'"></i></span>'+
+        '<span class="tm-n mono">'+n[b]+'</span>'+
+        '<span class="tm-w mono" style="color:'+scoreColour(sc[0])+'" title="weakest score in this band">'+sc[0].toFixed(0)+'</span></div>';
+    }).join('')+'</div>';
   }
-
   function ratingHist(es){
     // the composite rating is an ordered scale, so the bars stay in grade order
     var n={},who={},tot=0;
@@ -309,9 +310,9 @@
     // how common that grade is across everything covered, so your mix has something to sit against
     var uni={},urated=0;
     (data&&data.rows||[]).forEach(function(e){if(e.rating_composite){uni[e.rating_composite]=(uni[e.rating_composite]||0)+1;urated++}});
-    var w=260,h=52,bw=w/present.length,bar=Math.min(bw-3,26),mx=Math.max.apply(null,present.map(function(g){return n[g]})),inner='';
+    var w=260,h=72,bw=w/present.length,bar=Math.min(bw-3,26),mx=Math.max.apply(null,present.map(function(g){return n[g]})),inner='';
     present.forEach(function(g,i){
-      var bh=Math.max(4,n[g]/mx*(h-16));
+      var bh=Math.max(4,n[g]/mx*(h-30));
       var ig=GRADES.indexOf(g);
       var tip=tipd(tipHead(esc(g),n[g]+' of '+tot)+
         '<i>'+(ig<=3?'the top of investment grade':ig<=6?'the strong end of investment grade':ig<=9?'the middle of investment grade':'below investment grade')+
@@ -320,6 +321,7 @@
         '<i>'+names(who[g])+'</i>');
       inner+='<rect x="'+(i*bw+(bw-bar)/2).toFixed(1)+'" y="'+(h-16-bh).toFixed(1)+'" width="'+bar.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="2" fill="#143659"/>'+
              '<rect x="'+(i*bw).toFixed(1)+'" y="0" width="'+bw.toFixed(1)+'" height="'+(h-16)+'" fill="transparent"'+tip+'/>'+
+             '<text x="'+(i*bw+bw/2).toFixed(1)+'" y="'+(h-19-bh).toFixed(1)+'" text-anchor="middle" class="pv-n">'+n[g]+'</text>'+
              '<text x="'+(i*bw+bw/2).toFixed(1)+'" y="'+h+'" text-anchor="middle" class="pv-ax">'+g+'</text>';
     });
     return svg(w,h,inner);
@@ -335,7 +337,7 @@
     var ts=Object.keys(by).map(Number).sort(function(a,b){return a-b});
     if(!ts.length)return '<div class="muted small">no tenors set</div>';
     var most=Math.max.apply(null,ts.map(function(t){return by[t].length}));
-    return '<div class="tmix">'+ts.map(function(t){
+    return '<div class="tmix tmix-t">'+ts.map(function(t){
       var es=by[t], sc=es.map(function(e){return e.score}).filter(function(v){return v!=null});
       var low=sc.length?Math.min.apply(null,sc):null;
       var tip=tipd(tipHead(esc(tenorLabel(t)),es.length+' name'+(es.length===1?'':'s'))+'<i>'+names(es)+'</i>');
@@ -363,7 +365,7 @@
         tile(stale,'figures over 180 days',stale?'pv-warn':'')+
       '</div>'+
       '<div class="pv-charts">'+
-        '<figure><figcaption>Band mix'+mk('band')+'</figcaption>'+bandMix(es)+'</figure>'+
+        '<figure><figcaption>Band mix'+mk('band')+'<span class="tm-key">names \u00b7 weakest</span></figcaption>'+bandMix(es)+'</figure>'+
         '<figure><figcaption>Composite rating'+mk('composite')+'</figcaption>'+ratingHist(es)+'</figure>'+
         '<figure><figcaption>By tenor'+mk('tenor')+'<span class="tm-key">names \u00b7 weakest</span></figcaption>'+tenorMix(items)+'</figure>'+
       '</div></div>';
@@ -385,7 +387,7 @@
   // it answers "is this bank ahead of its peers now", which the line alone cannot.
   function trend(pts,label,unit,pq,gk){
     if(!pts||pts.length<2)return '';
-    var w=150,h=46,pad=5,vals=pts.map(function(p){return p.v});
+    var w=150,h=94,pad=5,vals=pts.map(function(p){return p.v});
     var lo=Math.min.apply(null,vals),hi=Math.max.apply(null,vals);
     if(pq){lo=Math.min(lo,pq.p25);hi=Math.max(hi,pq.p75)}
     var rng=(hi-lo)||1; lo-=rng*0.08; hi+=rng*0.08; rng=hi-lo;
@@ -440,7 +442,7 @@
     // The same panels the open card uses: a ruled heading on a white box on a tinted ground. The
     // trends and the standing; a name's events were dropped in November 2026, with the headlines. A dialog that looks like the row it came from is one thing to learn, not two.
     return '<div class="md-grid">'+
-      sect('Trends',(n?n+' series held':''),
+      sect('Trends','',
         '<div class="md-trends" id="md-trends">'+charts+'</div>'+
         (n&&Object.keys(pg).length?'<p class="mt-legend"><span class="mt-key"></span>The band is where this bank\u2019s peer group stands today, quartile to quartile, median dashed.</p>':''),
         'md-trend-panel')+
@@ -575,7 +577,7 @@
     });
   }
   function xcells(e){
-    return xcols().map(function(k){var c=XCOLS.filter(function(x){return x[0]===k})[0];return '<td class="num mono uni-x">'+xfmt(xval(e,k),c[2],c[3])+'</td>'}).join('');
+    return xcols().map(function(k){var c=XCOLS.filter(function(x){return x[0]===k})[0];return '<td class="num uni-x">'+xfmt(xval(e,k),c[2],c[3])+'</td>'}).join('');
   }
   function renderColsMenu(){
     var m=document.getElementById('uni-cols-menu'); if(!m)return;
@@ -590,6 +592,8 @@
     var old=(e.age_days||0)>180;
     return '<td class="mono small asof '+(old?'stale':'muted')+'"'+(old?' title="'+e.age_days+' days old"':'')+'>'+esc(e.asof||'\u2014')+'</td>';
   }
+  // "24 months" as "24m": the held tenor in a phone row leaves the name its width
+  function tenorShort(t){return tenorLabel(t).replace(/ months?$/,'m').replace(/ years?$/,'y').replace(/ weeks?$/,'w').replace(/ days?$/,'d')}
   function renderUni(){
     var body=document.getElementById('uni-body'); if(!body||!data)return;
     var rows=uniRows(), t=curTenor();
@@ -607,20 +611,22 @@
         '<td class="uni-st">'+(r.tenor!=null?'<span class="uni-own" title="in your list">\u2713</span>':starBtn(e.id))+'</td>'+
         // the action leads the row, so it is on screen however wide the table runs
         '<td class="uni-add">'+(r.tenor!=null
-            ? '<span class="chip chip-good" title="already in your list at this tenor">'+esc(tenorLabel(r.tenor))+'</span>'
+            ? '<span class="chip chip-good" title="already in your list at this tenor"><span class="tl-l">'+esc(tenorLabel(r.tenor))+'</span><span class="tl-s">'+esc(tenorShort(r.tenor))+'</span></span>'
             : '<button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'" title="Add at '+esc(tenorLabel(t))+'">Add</button>')+'</td>'+
-        '<td><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
+        '<td class="uni-nm"><span class="b">'+esc(e.short)+'</span>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+'</div></td>'+
         '<td class="mono small">'+sovPill(e)+'</td>'+
-        '<td class="num">'+(e.score==null?'<span class="na">—</span>':
+        '<td class="num uni-sc">'+(e.score==null?'<span class="na">—</span>':
             // the number and its band already say where the name stands, and the table sorts on it;
             // a bar in every one of 152 rows only adds weight
             scoreNum(e.score,e.band,'sc-1'))+
           (e.score==null&&e.unscored?'<div class="small muted">'+esc(e.unscored)+'</div>':'')+'</td>'+
-        '<td class="mono">'+esc(e.rating_composite||'—')+'</td>'+
-        '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1)+'%')+'</td>'+
-        '<td class="num mono">'+(e.leverage==null?'—':e.leverage.toFixed(1)+'%')+'</td>'+
-        '<td class="num mono">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
-        '<td class="num mono">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
+        // the same rating and ratio cells as Alternatives: one way to read a name across the tool
+        '<td class="uni-rt ll-cpc"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
+          '<span class="ll-ags">'+(e.rating?toneGlyphs(e.rating.tones):'')+'</span></td>'+
+        '<td class="num">'+(e.cet1==null?'—':e.cet1.toFixed(1)+'%')+'</td>'+
+        '<td class="num">'+(e.leverage==null?'—':e.leverage.toFixed(1)+'%')+'</td>'+
+        '<td class="num">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
+        '<td class="num">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
         xcells(e)+
         asofCell(e)+
         '<td>'+mkt(e.market,1)+'</td></tr>';
@@ -818,8 +824,8 @@
     var rows=ATTR&&ATTR.rows&&ATTR.rows[e.id]; if(!rows||!rows.length)return '';
     var G={positive:'\u25b2',negative:'\u25bc',stable:'\u25b6','watch negative':'\u25c6','watch positive':'\u25c6'};
     return '<div class="cr cr-attr" title="the agencies\u2019 own current ratings, quoted from the ESMA register">'+
-      '<span class="cr-a">Agencies</span><span class="cr-g cr-attr-l">'+rows.map(function(r){return '<span><b>'+esc(r.name)+'</b> <span class="mono">'+esc(r.lt)+'</span> <span class="cr-o '+(r.outlook==='positive'?'up':r.outlook==='negative'?'dn':'lv')+'">'+(G[r.outlook]||'')+'</span></span>'}).join(' \u00b7 ')+'</span>'+
-      '<span></span><span class="cr-s small muted">quoted</span></div>';
+      '<span class="cr-a">Agencies (quoted)</span><span class="cr-g cr-attr-l">'+rows.map(function(r){return '<span><b>'+esc(r.name)+'</b> <span class="mono">'+esc(r.lt)+'</span> <span class="cr-o '+(r.outlook==='positive'?'up':r.outlook==='negative'?'dn':'lv')+'">'+(G[r.outlook]||'')+'</span></span>'}).join(' \u00b7 ')+'</span>'+
+      '</div>';
   }
   function ratingCell(e){
     var r=e.rating;
@@ -831,7 +837,7 @@
     var ia=r.avg-1, iw=r.worst-1;
     var lo=Math.min(st?Math.floor(st.lo)-1:2,Math.floor(ia)), hi=Math.max(st?Math.ceil(st.hi)-1:12,iw);
     if(hi-lo<3)hi=lo+3;
-    var X=function(i){return Math.max(2,Math.min(98,(i-lo)/(hi-lo)*100))};
+    var X=function(i){return 6+Math.max(0,Math.min(1,(i-lo)/(hi-lo)))*88};   // inset, so an end mark is not hard on the edge
     var spread=r.worst-Math.round(r.avg);
     var tip=tipd(tipHead('On the scale','average '+esc(r.letter))+
       '<i>'+esc(describeRating(r))+'</i>'+
@@ -846,10 +852,12 @@
       '<span class="cr-e cr-e2">'+esc(GRADES[Math.min(16,hi)])+'</span></div>';
     var rows='<div class="cr" title="the lowest of the three main agencies\u2019 ratings">'+
         '<span class="cr-a">Weakest</span><b class="cr-g" style="color:'+gradeColour(r.worst_letter)+'">'+esc(r.worst_letter)+'</b>'+
-        '<span></span><span class="cr-s mono" title="the most recent action by any of the three">'+esc(r.date||'')+'</span></div>'+
-      '<div class="cr" title="'+esc(toneWords(r.tones)||'no outlook published')+'">'+
+        '<span></span><span class="cr-s small muted">'+(r.n>1&&r.worst_letter===r.letter?'the same':'')+'</span></div>'+
+      '<div class="cr">'+
         '<span class="cr-a">Outlooks</span><span class="cr-g">'+toneGlyphs(r.tones)+'</span>'+
-        '<span></span><span class="cr-s small muted">'+ofThree(r.n)+'</span></div>'+attrLine(e);
+        '<span></span><span class="cr-s small muted">'+esc(toneWords(r.tones)||'none published')+'</span></div>'+
+      (r.date?'<div class="cr"><span class="cr-a">Last action</span><span class="cr-g tnum">'+esc(r.date)+'</span><span></span><span class="cr-s small muted">by any of the three</span></div>':'')+
+      attrLine(e);
     return '<div class="cr-top"><span class="cr-comp" style="color:'+gradeColour(r.letter)+'">'+
       esc(r.letter)+'</span><span class="small muted">average of '+ofThree(r.n)+' main agencies</span></div>'+strip+'<div class="cr-rows">'+rows+'</div>';
   }
@@ -941,7 +949,7 @@
             // legal name where there is room for a second line, and up beside the name where there
             // is not, which is a card in a two-column list. A pill is a dozen bytes; a layout that
             // has to choose between the country and a third line of wrapping is not.
-            '<div class="cp-id"><div class="cp-line"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html" title="'+esc(e.name)+'">'+esc(e.short)+'</a>'+typeTag(e)+
+            '<div class="cp-id"><div class="cp-line"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html" title="'+esc(e.name)+'">'+esc(e.short)+'</a>'+
               '<span class="cp-sov">'+sovPill(e)+'</span></div>'+
               '<div class="cp-sub">'+esc(e.name)+' · '+sovPill(e)+'</div></div>'+
             '<div class="cp-stats">'+
@@ -949,7 +957,8 @@
               kv('<span style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</span>','agency rating')+
             '</div>'+
             tenorPick(it)+
-            '<div class="cp-tags">'+(worst_fl?chip(worst_fl[2]||worst_fl[1],worst_fl[0])
+            // a holding company says so beside the flag, where it does not take the name's room
+            '<div class="cp-tags">'+typeTag(e)+(worst_fl?chip(worst_fl[2]||worst_fl[1],worst_fl[0],worst_fl[1])
               :((e.market&&e.market.direction!=='none')?mkt(e.market):''))+'</div>'+
             '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">×</button>'+
           '</div></div>';
@@ -1069,10 +1078,12 @@
         '<output class="wt-o" for="wt-'+k+'">'+(v/total*100).toFixed(0)+'%</output></div>';
     }).join('');
     box.innerHTML=
-      '<div class="wt-body"><div><div class="wt-grid">'+rows+'</div>'+weightEffect()+
-        '<div class="wt-actions"><button class="filter" id="wt-reset"'+(w.__custom?'':' disabled')+'>Back to the starting point</button></div></div></div>'+
+      // the sliders on the left, what they did on the right: the page uses its width, and the
+      // answer to "and so?" sits beside the control that asked it
+      '<div class="wt-body"><div class="wt-grid">'+rows+'</div><aside class="wt-side">'+weightEffect()+
+        '<div class="wt-actions"><button class="filter" id="wt-reset"'+(w.__custom?'':' disabled')+'>Back to the starting point</button></div>'+
       '<p class="wt-note small muted"><b>Not a credit rating</b> under the UK or EU Credit Rating Agency Regulations: arithmetic on '+
-        'published figures and ratings, combined your way. <b>Not advice:</b> your policy, limits and tenors remain yours.</p>';
+        'published figures and ratings, combined your way. <b>Not advice:</b> your policy, limits and tenors remain yours.</p></aside></div>';
   }
 
   // Moving a slider is abstract until you see what it did. This is the answer to "and so?": how far

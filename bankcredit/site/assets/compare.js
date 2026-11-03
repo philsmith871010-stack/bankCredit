@@ -69,7 +69,7 @@
     vals.sort(function(a,b){return m[4]?b.p.v-a.p.v:a.p.v-b.p.v});
     if(!vals.length){chart.innerHTML='<div class="empty">No figures for this measure in the set.</div>';side.innerHTML='';return}
     var vs=vals.map(function(x){return x.p.v}),lo=Math.min(0,Math.min.apply(null,vs)),hi=Math.max.apply(null,vs),med=median(vs);
-    var w=W(),rowH=26,left=Math.min(220,Math.max(140,w*0.22)),right=90,barW=w-left-right,H=vals.length*rowH+34;
+    var w=W(),rowH=26,left=Math.min(270,Math.max(150,w*0.3)),right=90,barW=w-left-right,H=vals.length*rowH+34;
     var sc=function(v){return left+(v-lo)/((hi-lo)||1)*barW};
     var out=svgOpen(w,H);
     out+='<line x1="'+sc(med).toFixed(0)+'" x2="'+sc(med).toFixed(0)+'" y1="20" y2="'+(H-8)+'" stroke="'+INK+'" stroke-dasharray="3 3" opacity=".5"/><text x="'+sc(med).toFixed(0)+'" y="13" text-anchor="middle" fill="'+INK+'" font-size="11">median '+fmt(med,m)+'</text>';
@@ -98,10 +98,24 @@
     var path=function(pts){var d='',on=false;pts.forEach(function(v,i){if(v==null){on=false;return}d+=(on?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1);on=true});return d};
     lines.filter(function(l){return !colourOf(l.r.id)}).forEach(function(l){out+='<path class="cp-line" data-id="'+l.r.id+'" d="'+path(l.pts)+'" fill="none" stroke="'+GREY+'" stroke-width="1.1" stroke-opacity=".6"/>'});
     out+='<path d="'+path(med)+'" fill="none" stroke="'+INK+'" stroke-width="2" stroke-dasharray="5 4" opacity=".75"/>';
-    var labels=[];var mi=med.length-1;while(mi>0&&med[mi]==null)mi--;if(med[mi]!=null)labels.push({y:Y(med[mi]),t:'median',c:INK,w:'600'});
+    var labels=[];   // the median is the dashed line, named in the panel's heading; its own end label only crowded the names
     lines.filter(function(l){return colourOf(l.r.id)}).forEach(function(l){var c=colourOf(l.r.id);out+='<path class="cp-line on" data-id="'+l.r.id+'" d="'+path(l.pts)+'" fill="none" stroke="'+c+'" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>';
-      var li=l.pts.length-1;while(li>=0&&l.pts[li]==null)li--;if(li>=0){out+='<circle cx="'+X(li).toFixed(1)+'" cy="'+Y(l.pts[li]).toFixed(1)+'" r="4" fill="'+c+'" stroke="#fff" stroke-width="2"/>';labels.push({y:Y(l.pts[li]),t:fit(l.r.short,R-14),c:c,w:'600'})}});
-    labels.sort(function(a,b){return a.y-b.y});var used=[];labels.forEach(function(lb){var y=lb.y;while(used.some(function(u){return Math.abs(u-y)<15}))y+=15;used.push(y);out+='<text x="'+(w-R+8)+'" y="'+(y+4).toFixed(0)+'" fill="'+lb.c+'" font-weight="'+lb.w+'" font-size="11.5">'+esc(lb.t)+'</text>'});
+      var li=l.pts.length-1;while(li>=0&&l.pts[li]==null)li--;if(li>=0){out+='<circle cx="'+X(li).toFixed(1)+'" cy="'+Y(l.pts[li]).toFixed(1)+'" r="4" fill="'+c+'" stroke="#fff" stroke-width="2"/>';labels.push({x0:X(li),y0:Y(l.pts[li]),t:fit(l.r.short,R-18),c:c,w:'600'})}});
+    // Each name sits as near its own line end as the others allow: pushed apart just enough not to
+    // touch, the whole stack then centred on where the lines really end, and a short leader joins
+    // any label that had to move to its dot.
+    labels.sort(function(a,b){return a.y0-b.y0});
+    var GAP=14,i;labels.forEach(function(lb){lb.y=lb.y0});
+    for(i=1;i<labels.length;i++)labels[i].y=Math.max(labels[i].y,labels[i-1].y+GAP);
+    if(labels.length){var drift=0;labels.forEach(function(lb){drift+=lb.y-lb.y0});drift/=labels.length;
+      labels.forEach(function(lb){lb.y-=drift});
+      for(i=1;i<labels.length;i++)labels[i].y=Math.max(labels[i].y,labels[i-1].y+GAP);
+      var lo=T+6,hi=H-B-2;if(labels[0].y<lo){var d1=lo-labels[0].y;labels.forEach(function(lb){lb.y+=d1})}
+      if(labels[labels.length-1].y>hi){var d2=labels[labels.length-1].y-hi;labels.forEach(function(lb){lb.y-=d2})}}
+    var lx=w-R+10;
+    labels.forEach(function(lb){
+      if(Math.abs(lb.y-lb.y0)>2||lb.x0<w-R-2)out+='<path d="M'+(lb.x0+5).toFixed(1)+' '+lb.y0.toFixed(1)+'L'+(w-R+2)+' '+lb.y0.toFixed(1)+'L'+(lx-3)+' '+lb.y.toFixed(1)+'" fill="none" stroke="'+lb.c+'" stroke-width="1" stroke-dasharray="2 2" opacity=".6"/>';
+      out+='<text x="'+lx+'" y="'+(lb.y+4).toFixed(0)+'" fill="'+lb.c+'" font-weight="'+lb.w+'" font-size="11.5">'+esc(lb.t)+'</text>'});
     out+='<line id="cp-hair" x1="0" x2="0" y1="'+T+'" y2="'+(H-B)+'" stroke="'+INK+'" stroke-width="1" opacity="0" pointer-events="none"/>';
     out+='<rect x="'+L+'" y="'+T+'" width="'+(w-L-R)+'" height="'+(H-T-B)+'" fill="transparent" id="cp-hit"/>';
     chart.innerHTML=out+'</svg>';
@@ -146,13 +160,13 @@
     }
 
   function pinsBarHtml(rows,m){var mk=marked();
-    var pinned=state.pins.map(function(id){var r=byId[id];if(!r)return '';var p=latest(r,m[0]);return '<span class="pinchip" data-id="'+id+'" style="--c:'+colourOf(id)+'"><i class="sw" style="background:'+colourOf(id)+'"></i>'+link(r)+'<span class="mono">'+fmt(p&&p.v,m)+'</span>'+(mk[id]?'<span title="watched or in your list">★</span>':'')+'<button class="pin" data-id="'+id+'" title="Unpin: it stays in the set, drawn in grey" aria-label="Unpin">unpin</button></span>'}).join('');
+    var pinned=state.pins.map(function(id){var r=byId[id];if(!r)return '';var p=latest(r,m[0]);return '<span class="pinchip" data-id="'+id+'" style="--c:'+colourOf(id)+'"><i class="sw" style="background:'+colourOf(id)+'"></i>'+link(r)+'<span class="mono">'+fmt(p&&p.v,m)+'</span>'+'<button class="pin" data-id="'+id+'" title="Unpin: it stays in the set, drawn in grey" aria-label="Unpin">unpin</button></span>'}).join('');
     var added=state.extra.map(function(id){var r=byId[id];if(!r)return '';return '<span class="pinchip pinchip-x" data-id="'+id+'">'+link(r)+'<button class="cp-rmx" data-id="'+id+'" title="Remove from the set" aria-label="Remove '+esc(r.short)+' from the set">remove</button></span>'}).join('');
     return '<span class="small muted">Pinned</span>'+(pinned||'<span class="small muted">none</span>')+
       (state.pins.length<SLOTS.length?'<span class="small muted">\u00b7 click any name, bar, line or dot to pin (up to six); unpinning keeps a name in the set</span>':'')+
       (added?'<span class="cp-addedbar"><span class="small muted">Added to the set</span>'+added+'</span>':'')}
   var COLS=[['score','Score',1],['rating','Rating',0],['cet1_ratio','CET1',1],['leverage_ratio','Leverage',1],['lcr','LCR',0],['nsfr','NSFR',0],['roe','ROE',1],['efficiency_ratio','Cost/income',0],['npl_ratio','NPL',2],['total_assets','Assets',0]];
-  function cell(r,code){if(code==='band')return '<td><span class="band mono band-'+esc(r.band||'x')+'">'+esc(r.band||'?')+'</span></td>';if(code==='rating')return '<td>'+(r.rating?'<b>'+esc(r.rating)+'</b>':'<span class="muted">unrated</span>')+'</td>';var p=latest(r,code),m=metric(code);return '<td class="num mono" data-v="'+(p?p.v:-1e9)+'">'+(p?fmt(p.v,m):'<span class="na">—</span>')+'</td>'}
+  function cell(r,code){if(code==='band')return '<td><span class="band mono band-'+esc(r.band||'x')+'">'+esc(r.band||'?')+'</span></td>';if(code==='rating')return '<td>'+(r.rating?'<b style="color:'+(window.cpGradeColour?window.cpGradeColour(r.rating):'inherit')+'">'+esc(r.rating)+'</b>':'<span class="muted">unrated</span>')+'</td>';var p=latest(r,code),m=metric(code);return '<td class="num tnum" data-v="'+(p?p.v:-1e9)+'">'+(p?fmt(p.v,m):'<span class="na">—</span>')+'</td>'}
   function sortVal(r,code){if(code==='name')return r.short.toLowerCase();if(code==='band')return r.band||'Z';if(code==='rating')return r.grade==null?99:r.grade;var p=latest(r,code);return p?p.v:-1e9}
   // "Everyone" is 152 rows. The set below the charts scrolls in a window of its own like every
   // other long table on the site, so the page does not grow with the peer group and the column
@@ -164,6 +178,7 @@
   function render(){var rows=members(),m=metric(state.metric);
     count.textContent=rows.length+' in the set';
     document.querySelectorAll('.cp-set').forEach(function(b){b.classList.toggle('active',b.dataset.set===state.set)});
+    var ssel=document.getElementById('cp-set-sel');if(ssel)ssel.value=state.set;
     var ids={};rows.forEach(function(r){ids[r.id]=1});state.pins=state.pins.filter(function(id){return ids[id]});
     if(!rows.length){var msg='<div class="empty">'+(state.set==='watch'?'You are not watching anyone yet. The star on any profile, or on a row of the covered-names table, adds a name.':state.set==='policy'?'Your list is empty. Add counterparties on the first tab and they appear here.':'Nothing in this set.')+'</div>';Object.keys(PANELS).forEach(function(k){document.getElementById(PANELS[k]).innerHTML=msg});pinsBar.innerHTML='';tableEl.innerHTML='';writeHash();return}
     defaultPins(rows,m);
@@ -182,6 +197,8 @@
     d.metrics.forEach(function(m){sel.insertAdjacentHTML('beforeend','<option value="'+m[0]+'">'+esc(m[1])+'</option>')});
     markMeasure(state.metric||(d.metrics[0]||[])[0]);
     readHash();sel.value=state.metric;counts();render();
+    // on a phone the sets are a menu, which picks the same chip the desktop row would
+    var ssel=document.getElementById('cp-set-sel');if(ssel)ssel.addEventListener('change',function(){var b=document.querySelector('.cp-set[data-set="'+ssel.value+'"]');if(b)b.click()});
     document.getElementById('cp-sets').addEventListener('click',function(e){var b=e.target.closest('.cp-set');if(!b||b.disabled)return;state.set=b.dataset.set;state.extra=[];state.pins=[];userPinned=false;render()});
     sel.addEventListener('change',function(){state.metric=sel.value;markMeasure(sel.value);if(!userPinned)state.pins=[];render()});
     document.addEventListener('click',function(e){var x0=e.target.closest('.cp-rmx');if(x0){removeExtra(x0.dataset.id);return}

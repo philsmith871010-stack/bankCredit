@@ -35,7 +35,7 @@ GLOSS = {"cet1_ratio": "cet1_ratio", "tier1_ratio": "tier1_ratio", "total_capita
 
 
 TILE_METRICS = [("cet1_ratio", "CET1 ratio", "%", 1), ("leverage_ratio", "Leverage ratio", "%", 1), ("total_capital_ratio", "Total capital", "%", 1),
-                ("lcr", "LCR", "%", 0), ("nsfr", "NSFR", "%", 0), ("rwa", "Risk-weighted assets", "m", 0)]
+                ("lcr", "LCR", "%", 0), ("nsfr", "NSFR", "%", 0)]
 
 
 TYPE_GLOSS = {"holding": c.info("holding"), "subsidiary": c.info("subsidiary"),
@@ -260,10 +260,22 @@ def ratings_tile(b) -> str:
              f'<div class="rst small muted">{c.esc(tone_words(rs.get("tones") or []) or "none published")}</div></div>'
              f'<div class="rcell"><div class="ragency">Last action</div><div class="rlt"><span class="mono" style="font-size:16px">{c.esc(rs.get("date") or "—")}</span></div>'
              f'<div class="rst small muted">by any of the three</div></div>')
+    # The average's own path since the register's log begins, so the card says where the rating has
+    # been as well as where it stands; the Ratings tab below holds every move.
+    path = ""
+    steps = (b.get("rating_history") or {}).get("composite") or []
+    if len(steps) >= 2:
+        pts = _at_year_ends(steps, int(steps[0][0][:4]), datetime.utcnow().year)
+        if len(pts) >= 2:
+            net = steps[0][1] - steps[-1][1]
+            n = f"{abs(net):.1f}".rstrip("0").rstrip(".")
+            lab = "no net change" if not net else f'{n} notch{"es" if abs(net) != 1 else ""} {"up" if net > 0 else "down"}'
+            path = (f'<div class="rpath"><span class="ragency">Since {c.esc(steps[0][0][:4])}</span>'
+                    + c.spark([-g for g in pts], w=220, h=26) + f'<span class="small muted">{c.esc(lab)}</span></div>')
     # The average sits large in the first cell, so the heading does not repeat it; the market signal
     # has its own tab and its own line on the score card.
     return (f'<div class="tile tile-ratings"><div class="tile-head"><span class="tile-label">Agency rating{c.info("rating")}</span></div>'
-            f'<div class="rcells">{cells}</div><div class="tile-foot"><span>Long-term ratings of {THREE} on one scale, from the ESMA register, checked daily · ▲ positive ▼ negative ◆ watch ▶ stable</span></div></div>')
+            f'<div class="rcells">{cells}</div>{path}<div class="tile-foot"><span>Long-term ratings of {THREE} on one scale, from the ESMA register, checked daily.</span></div></div>')
 
 
 def attributed_block(b) -> str:
@@ -300,6 +312,9 @@ def pillar_note(k: str, cell) -> str:
     what = PILLAR_INPUTS.get(k, "")
     if cell[0] is None:
         return f"{label}: {what}. Not published for this entity, so its weight is re-scaled over the rest."
+    if cell[0] == 0 and k == "stability":
+        return (f"{label}: {what}. Sub-score 0: CET1 is below the requirement the method measures it "
+                f"against, so there is no headroom to score.")
     return (f"{label}: {what}. Sub-score {cell[0]:.0f} out of 100. The weight beside it, w, is the "
             f"reader's: set it on the Weightings tab.")
 
@@ -347,7 +362,7 @@ def page_bank(b, generated):
     pillars = b["score_detail"]["pillars"]
     order = ["rating", "capital", "liquidity", "stability", "asset_quality", "profitability"]
     prow = "".join(f'<div class="pillar{" pillar-na" if pillars[k][0] is None else ""}" data-k="{k}" title="{c.esc(pillar_note(k, pillars[k]))}"><span class="pl">{c.PILLAR_LABEL[k]}</span>'
-                   f'<span class="mono">{"—" if pillars[k][0] is None else f"{pillars[k][0]:.0f}"}</span><i><b style="width:{0 if pillars[k][0] is None else pillars[k][0]:.0f}%"></b></i>'
+                   f'<span class="mono{" pz" if pillars[k][0] == 0 else ""}">{"—" if pillars[k][0] is None else f"{pillars[k][0]:.0f}"}</span><i><b style="width:{0 if pillars[k][0] is None else pillars[k][0]:.0f}%"></b></i>'
                    f'<span class="pw">w {pillars[k][1] if pillars[k][0] is not None else PILLARS.get(k, (0,))[0]}</span></div>' for k in order if k in pillars)
     # trends: small multiples grouped by theme, each opening a full-size chart
     TREND_GROUPS = [("Capital", [("cet1_ratio", "CET1 ratio", "%", 1), ("tier1_ratio", "Tier 1 ratio", "%", 1), ("total_capital_ratio", "Total capital ratio", "%", 1),
@@ -375,8 +390,9 @@ def page_bank(b, generated):
     # The published score, day by day, used to sit beside this. Each day's figure carries that day's
     # method and data fixes, so it stepped about in ways that say nothing about the bank; the
     # recomputed line above is the like-for-like path, and the one worth reading.
+    standing_block = ""
     if standing:
-        charts.append(f'<div class="sm-block" style="--n:{len(standing)}"><div class="sm-sec">Standing</div>'
+        standing_block = (f'<div class="sm-block" style="--n:{len(standing)}"><div class="sm-sec">Score</div>'
                       f'<div class="sm-cards">{"".join(standing)}</div></div>')
         n_charts += len(standing)
     for group, metrics in TREND_GROUPS:
@@ -433,6 +449,9 @@ def page_bank(b, generated):
             # the block asks for room for its own charts, so a section of one can share a row
             charts.append(f'<div class="sm-block" style="--n:{len(cards)}"><div class="sm-sec">{group}</div>'
                           f'<div class="sm-cards">{"".join(cards)}</div></div>')
+    # the score's own history closes the trends, where it shares a row with the other short section
+    if standing_block:
+        charts.append(standing_block)
     rs = b.get("rating")
     if rs:
         three = "Fitch, S&amp;P and Moody's"
@@ -499,7 +518,7 @@ def page_bank(b, generated):
                      f'<a class="filter" href="{c.esc(latest)}" target="_blank" rel="noopener">Latest source</a></div>')
     metric_rows = "".join(f'<tr><td>{c.esc(METRICS.get(m, m))}</td><td class="mono">{pts[-1]["v"]:,.2f}</td><td class="mono muted">{pts[-1]["d"]}</td><td class="muted">{c.esc(source_name(pts[-1]["src"]))} <span class="small">· {c.esc(METHOD_NAMES.get(pts[-1]["method"], pts[-1]["method"]))}</span></td><td class="mono muted">{pts[-1]["conf"]:.2f}{" " + c.chip("unverified", "warn") if (pts[-1]["conf"] or 1) < 0.9 and str(pts[-1]["method"]).startswith("pdf") else ""}{" " + c.chip("group figure", "navy") if pts[-1].get("basis") == "group" else ""}</td></tr>' for m, pts in series.items() if pts)
     content = f'''<div class="page-head"><div class="ident"><span class="avatar">{c.esc(b["short"][:2].upper())}</span><div><h1>{c.esc(b["name"])}</h1>
-<div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {sovereign_pill(b)}{" · " + '<span class="mono small muted" title="Legal Entity Identifier">LEI ' + c.esc(b["lei"]) + '</span>' if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
+<div class="lede">{TYPE_LABEL.get(b["type"], b["type"])}{TYPE_GLOSS.get(b["type"], "")} · {sovereign_pill(b)}{'<span class="lei mono small muted" title="Legal Entity Identifier">LEI ' + c.esc(b["lei"]) + '</span>' if b["lei"] else ""}{" · " + c.chip("Figures for lead bank subsidiary", "warn") if b.get("basis") == "lead_bank" else ""}</div></div></div>
 <div class="actions"><a class="btn btn-back" href="../tool/index.html#universe">&lsaquo; All names</a><button class="btn watch-btn" data-id="{b["id"]}">{c.ico("star", 16, c.ORANGE)}<span>Watch</span></button></div></div>
 <div class="grid-12"><div class="score-card"{pw_attr} data-overlay="{overlay if overlay is not None else 0}" data-grade="{b.get("rating_grade") if b.get("rating_grade") is not None else ""}" data-coverage="{cov}"><div class="score-head"><span class="tile-label light">Counterparty score{c.info("score")}</span><span class="score-band">{c.chip("Band " + (b["band"] or "?"), "orange") + c.info("band") if b["band"] and b["band"] != "?" else c.chip("Not scored: " + (b.get("unscored") or "insufficient data"), "warn") + c.info("not_scored")}</span></div>
 <div class="score-main"><div class="score-fig">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div>
@@ -538,20 +557,21 @@ def page_method(generated, inner: bool = False):
     grade_cells = "".join(f'<td class="mono small">{c.esc(l)}<br>{RATING_SCORE[i + 1]}</td>' for i, l in enumerate(GRADE_LETTERS))
     ratio_weight = sum(w for w, _ in PILLARS.values())
     body = f'''<div class="card pad prose" id="method-prose">
-<h2>Score</h2><p>Two parts. The <span class="b">rating anchor</span> is {RATING_WEIGHT} percent of the score: the composite agency rating (the average of the long-term ratings Fitch, S&amp;P and Moody's hold on the bank, whichever of them rate it, on a common scale from AAA to CCC) converted to a sub-score by the table below. The <span class="b">ratio pillars</span> are the other {ratio_weight} percent: each regulatory metric is converted to a 0 to 100 sub-score by straight-line interpolation between the thresholds below, averaged within its pillar and weighted. Missing metrics do not score zero: the ratio weights are re-scaled over what is available and the coverage percentage is shown. A band is only assigned when coverage is at least 50 percent.</p>
-<p>A score needs three things, and is withheld with the reason stated when any is missing: an agency rating (ratios alone say too little, and a young or small bank's ratios are often high because its balance sheet is small or immature), a capital ratio (a rating alone says nothing about today's balance sheet), and capital figures no older than eighteen months. Unrated banks and banks whose latest Pillar 3 figures are stale therefore show "not scored" rather than a number, and they can still be sorted and compared on the ratios and ratings they do have. A bank rated in the BBB range is capped at 74.9 (band B) and a bank rated below investment grade at 64.9 (band C): strong ratios can lift a bank at most one band above what its rating says.</p>
-<div class="wbar" aria-hidden="true"><span style="flex:{RATING_WEIGHT}" class="w-rating">{c.PILLAR_LABEL["rating"]} {RATING_WEIGHT}</span>{"".join(f'<span style="flex:{w}" class="w-{k}{" w-narrow" if w < 10 else ""}" title="{c.PILLAR_LABEL[k]} {w}">{(c.PILLAR_LABEL[k] + " ") if w >= 10 else ""}{w}</span>' for k, (w, _) in PILLARS.items())}</div>
+<h2>Score</h2><div class="wbar" aria-hidden="true"><span style="flex:{RATING_WEIGHT}" class="w-rating">{c.PILLAR_LABEL["rating"]} {RATING_WEIGHT}</span>{"".join(f'<span style="flex:{w}" class="w-{k}{" w-narrow" if w < 10 else ""}" title="{c.PILLAR_LABEL[k]} {w}">{(c.PILLAR_LABEL[k] + " ") if w >= 10 else ""}{w}</span>' for k, (w, _) in PILLARS.items())}</div>
+<p class="small muted wlegend">{" · ".join([c.PILLAR_LABEL["rating"] + " " + str(RATING_WEIGHT)] + [c.PILLAR_LABEL[k] + " " + str(w) for k, (w, _) in PILLARS.items()])}</p>
+<p>The score runs from 0 to 100. The agency rating counts for {RATING_WEIGHT}%: the average of the three main agencies' long-term ratings, converted by the table below. The bank's own ratios count for the other {ratio_weight}%: each is scored from 0 to 100 against the thresholds below and averaged within its part. A ratio the bank does not publish is left out and the rest re-weighted, and the coverage figure says how much of the method a score rests on.</p>
+<p>A score is withheld, with the reason, when a bank has no agency rating, no capital ratio, or capital figures older than eighteen months. A rating in the BBB range caps the score at 74.9 (band B), and one below investment grade at 64.9 (band C).</p>
 <div class="bandscale" aria-hidden="true">{"".join(f'<span class="band-{b}" style="flex:{(100 if b == "A" else 80 if b == "B" else 65 if b == "C" else 50 if b == "D" else 35) - f}">{b} · {f}+</span>' for f, b in BANDS)}</div>
-<table class="plain"><thead><tr><th>Component</th><th>Weight</th><th>Inputs</th></tr></thead><tbody><tr><td class="b">Rating anchor</td><td class="mono">{RATING_WEIGHT}</td><td>Composite long-term agency rating; required for a score; caps of 74.9 for the BBB range and 64.9 below investment grade</td></tr>{pillar_rows}</tbody></table>
+<table class="plain"><thead><tr><th>Component</th><th>Weight</th><th>Inputs</th></tr></thead><tbody><tr><td class="b">{c.PILLAR_LABEL["rating"]}</td><td class="mono">{RATING_WEIGHT}</td><td>Composite long-term agency rating; required for a score; caps of 74.9 for the BBB range and 64.9 below investment grade</td></tr>{pillar_rows}</tbody></table>
 <h3>Rating sub-scores</h3><div class="table-wrap"><table class="plain"><tbody><tr>{grade_cells}</tr></tbody></table></div>
 <h3>Thresholds (value → sub-score)</h3><table class="plain"><tbody>{thr}</tbody></table>
-<h3>Bands</h3><p>{bands}. Bands carry hysteresis in later versions so they do not flicker at boundaries.</p>
-<h2>Ratings</h2><p>The site shows one rating per entity: the average of the long-term ratings Fitch, S&amp;P and Moody's hold on it (issuer or issuer default rating where it exists, otherwise deposit or counterparty), on one scale, with the weakest of the three beside it and one outlook mark per agency. It does not say which agency holds which rating: a rating shown with its agency's name on it is that agency's product and republishing it needs a licence from the agency, whereas an average and a count worked out from the public register are this site's own. The letters are this site's notation for a position on the scale, never an agency's symbol. Agencies outside the three are not averaged in. Ratings come from the ESMA European Rating Platform, refreshed daily. Each profile also carries the rating history the register publishes under every live rating record, back to the platform's first day on 1 July 2015: the average and the weakest rebuilt from the agencies' own actions on every day either moved, and how many of the three held the name on each outlook. Nothing before July 2015 is on the platform, and a rating record an agency has removed from it takes its actions with it.</p>
-<h3>The agencies' own ratings</h3><p>Each profile also shows the current long-term rating and outlook and the current short-term rating that each of the three main agencies publishes on the name, with the agency named, the date and a link to the source. This view is a quotation, not a feed: current ratings only, no history by agency, no download. The basis on which it is shown is set out beside it and repeated here.</p><p class="note">{c.esc(attributed.BASIS)}</p>
-<h2>Market signal</h2><p>A layer built from five-year CDS levels and 30-day changes where a CDS market exists (otherwise the 30-day change in the bank's own bond yields against peers), 30-day equity volatility and drawdown from the 52-week high. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points. Provisional weighting (September 2026): the three signals count equally, each worth at most 2.5 points either way. A CDS move is measured within one source (settlement against settlement, or trade medians on days with three or more trades) and split into the part shared with iTraxx Senior Financials and the part that is the bank's own; the label says which. The direction and size of the adjustment are shown; CDS levels themselves are not redistributed.</p>
-<h2>Limitations</h2><ul><li>US banking groups appear twice, as in the UK: the operating bank a depositor faces (Call Report figures from the FDIC, with the US Tier 1 leverage ratio scored on its own scale, and the group's LCR shown as a group figure because banks do not publish their own) and the holding company (binding Basel ratios, the lower of the standardised and advanced approaches, from its Pillar 3 report or XBRL filings, the supplementary leverage ratio, the public LCR disclosure, and asset quality and profitability inherited from its lead bank, labelled).</li><li>UK and other-region figures depend on PDF extraction; failed validations are shown as unverified rather than hidden.</li><li>Peer percentiles are computed only among entities with a score, so they are unstable while coverage is low.</li><li>Asset quality and profitability are held only for US banks so far, so those pillars are re-scaled away for most of the universe; the Coverage page shows this per bank.</li><li>Back-tests against past failures are planned.</li></ul>
+<h3>Bands</h3><p>{bands}.</p>
+<h2>Ratings</h2><p>The site shows one rating per name: the average of the long-term ratings Fitch, S&amp;P and Moody's hold on it, on one scale, with the weakest of the three beside it and one outlook mark per agency. Ratings come from the ESMA European Rating Platform, refreshed daily, and each profile carries the history the register publishes back to July 2015. Agencies outside the three are not averaged in.</p>
+<details class="method-more"><summary>The agencies' own ratings, and the basis for quoting them</summary><p>Each profile also shows the current long-term rating and outlook and the current short-term rating that each of the three main agencies publishes on the name, with the agency named, the date and a link to the source. This view is a quotation, not a feed: current ratings only, no history by agency, no download. The basis on which it is shown is set out beside it and repeated here.</p><p class="note">{c.esc(attributed.BASIS)}</p></details>
+<h2>Market signal</h2><p>A layer built from five-year CDS levels and 30-day changes where a CDS market exists (otherwise the 30-day change in the bank's own bond yields against peers), 30-day equity volatility and drawdown from the 52-week high. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points.</p><details class="method-more"><summary>How the signal is weighted and measured</summary><p>Provisional weighting (September 2026): the three signals count equally, each worth at most 2.5 points either way. A CDS move is measured within one source (settlement against settlement, or trade medians on days with three or more trades) and split into the part shared with iTraxx Senior Financials and the part that is the bank's own; the label says which. The direction and size of the adjustment are shown; CDS levels themselves are not redistributed.</p></details>
+<h2>Limitations</h2><p>What the data cannot yet do: chiefly, UK figures come from reading PDFs, and some pillars are held only for some regions.</p><details class="method-more"><summary>Every limitation</summary><ul><li>US banking groups appear twice, as in the UK: the operating bank a depositor faces (Call Report figures from the FDIC, with the US Tier 1 leverage ratio scored on its own scale, and the group's LCR shown as a group figure because banks do not publish their own) and the holding company (binding Basel ratios, the lower of the standardised and advanced approaches, from its Pillar 3 report or XBRL filings, the supplementary leverage ratio, the public LCR disclosure, and asset quality and profitability inherited from its lead bank, labelled).</li><li>UK and other-region figures depend on PDF extraction; failed validations are shown as unverified rather than hidden.</li><li>Peer percentiles are computed only among entities with a score, so they are unstable while coverage is low.</li><li>Asset quality and profitability are held only for US banks so far, so those pillars are re-scaled away for most of the universe; the Coverage page shows this per bank.</li><li>Back-tests against past failures are planned.</li></ul></details>
 
-<h2>Sources</h2><p>Regulatory figures come from the FDIC API (US banks, lead bank subsidiary), the EBA Pillar 3 Data Hub and Transparency Exercises (EU and EEA banks, consolidated), and each firm's own Pillar 3 disclosures (UK and other regions, read from PDF by a rules-based KM1 extractor with arithmetic validation; no AI service). Ratings and rating actions come from the ESMA European Rating Platform. Prices come from public market data. Bond quotes come from Börse Frankfurt's public price pages for each bank's senior fixed-rate bonds (two to eight years to run); they stay private and only the 30-day yield change against other bank bonds in the same currency is shown. CDS levels are medians of the day's reported trades in DTCC's public swap-data files (indicative, inferred from upfront payments), and the iTraxx and CDX index levels shown as credit benchmarks are index prints from the same source. Every figure on a profile carries its source, method and reference date.</p></div>'''
+<h2>Sources</h2><p>Regulators' and banks' own published figures, the ESMA rating register and public market prices.</p><details class="method-more"><summary>Every source</summary><p>Regulatory figures come from the FDIC API (US banks, lead bank subsidiary), the EBA Pillar 3 Data Hub and Transparency Exercises (EU and EEA banks, consolidated), and each firm's own Pillar 3 disclosures (UK and other regions, read from PDF by a rules-based KM1 extractor with arithmetic validation; no AI service). Ratings and rating actions come from the ESMA European Rating Platform. Prices come from public market data. Bond quotes come from Börse Frankfurt's public price pages for each bank's senior fixed-rate bonds (two to eight years to run); they stay private and only the 30-day yield change against other bank bonds in the same currency is shown. CDS levels are medians of the day's reported trades in DTCC's public swap-data files (indicative, inferred from upfront payments), and the iTraxx and CDX index levels shown as credit benchmarks are index prints from the same source. Every figure on a profile carries its source, method and reference date.</p></details></div>'''
     content = (f'<div class="page-head"><div><h1>Method</h1><div class="lede">Version {VERSION}, '
                f'published in full. Information, not advice.</div></div></div>' + with_contents(body))
     return content if inner else c.shell("Method", content, "method", "../", generated)
@@ -664,15 +684,17 @@ SOURCE_LABEL = {"bonds": "Bond quotes", "dtcc": "CDS trades (DTCC)", "eba": "EBA
                 "te": "EBA Transparency Exercise", "yahoo": "Share prices"}
 
 
-def run_note(msg) -> str:
+def run_note(msg, names: dict | None = None) -> str:
     """A run's message as a line a reader can take in: how many names failed and which, rather than
     the Python exception, which stays in the cell's title for whoever needs it."""
     msg = "" if msg is None or str(msg) == "nan" else str(msg)
     if not msg:
         return ""
+    names_of = names
     names = re.findall(r"(?:^|; )([a-z0-9][a-z0-9-]+): ", msg)
     if names:
-        shown = ", ".join(names[:3]) + (f" and {len(names) - 3} more" if len(names) > 3 else "")
+        label = lambda i: (names_of or {}).get(i, i)
+        shown = ", ".join(label(n) for n in names[:3]) + (f" and {len(names) - 3} more" if len(names) > 3 else "")
         text = f'{len(names)} could not be read: {shown}'
     else:
         text = msg if len(msg) <= 110 else msg[:107].rstrip() + "…"
@@ -688,10 +710,12 @@ def page_status(status, board, generated, inner: bool = False):
     def fresh(r):
         state = {"ok": ("Up to date", "good"), "partial": ("Partly collected", "warn"), "failed": ("Failed", "bad"),
                  "skipped": ("Skipped", "muted")}.get(r["status"], (r["status"], "muted"))
-        note = run_note(r["message"]) if r["status"] in ("partial", "failed") else ""
-        return (f'<tr><td class="b">{c.esc(SOURCE_LABEL.get(r["source"], r["source"]))}</td><td>{c.chip(state[0], state[1])}</td>'
-                f'<td class="mono muted nowrap">{c.esc(r["finished"][:10])}</td><td class="small muted nowrap">{cadence(r["source"])}</td>'
-                f'<td class="small muted">{note}</td></tr>')
+        note = run_note(r["message"], short_of) if r["status"] in ("partial", "failed") else ""
+        note_html = f'<div class="small muted">{note}</div>' if note else ""
+        return (f'<tr><td><span class="b">{c.esc(SOURCE_LABEL.get(r["source"], r["source"]))}</span>'
+                f'{note_html}</td><td>{c.chip(state[0], state[1])}</td>'
+                f'<td class="mono muted nowrap">{c.esc(r["finished"][:10])}</td><td class="small muted nowrap">{cadence(r["source"])}</td></tr>')
+    short_of = {r["id"]: r["short"] for r in board["rows"]}
     runs = "".join(fresh(r) for r in sorted(status["runs"], key=lambda r: SOURCE_LABEL.get(r["source"], r["source"]))) \
         or '<tr><td colspan="5" class="empty">No runs recorded yet.</td></tr>'
     rows = board["rows"]
@@ -702,9 +726,9 @@ def page_status(status, board, generated, inner: bool = False):
     # and which names' figures are old or missing. The pipeline's own diagnostics (source health,
     # the review queue, how the rules did, the data audit) are on the maintainer's page.
     content = f'''<div class="page-head"><div><h1>Data status</h1><div class="lede">How fresh the data is, source by source and name by name.</div></div></div>
-<div class="card pad"><h3>Sources</h3>{punctuality(status, generated)}<div class="table-wrap"><table class="plain"><thead><tr><th>Source</th><th>State</th><th>Last run</th><th>Runs</th><th></th></tr></thead><tbody>{runs}</tbody></table></div></div>
+<div class="card pad"><h3>Sources</h3>{punctuality(status, generated)}<div class="table-wrap"><table class="plain src-t"><thead><tr><th>Source</th><th>State</th><th>Last run</th><th>Runs</th></tr></thead><tbody>{runs}</tbody></table></div></div>
 <div class="card pad"><h3>Names</h3><p class="small">{len(rows) - len(missing)} of {len(rows)} have regulatory figures, {sum(1 for r in rows if r["score"] is not None)} are scored and {sum(1 for r in rows if r.get("rating"))} carry an agency rating.</p>
-<p class="small"><span class="b">Figures older than 150 days, oldest first:</span> {lst(stale)}</p><p class="small"><span class="b">No regulatory figures yet:</span> {lst(missing)}</p></div>'''
+<p class="small"><span class="b">Figures older than 150 days, oldest first: </span>{lst(stale)}</p><p class="small"><span class="b">No regulatory figures yet: </span>{lst(missing)}</p></div>'''
     return content if inner else c.shell("Status", content, "status", "../", generated)
 
 
@@ -738,6 +762,7 @@ def documents_card(status):
 # almost every covered bank in the same one or two shades: 120 of the 130 rated names sit between
 # AAA and A-, so the grid was a wall of blue on a page whose whole job is telling them apart.
 grade_colour = c.grade_colour
+LETTER_GRADES = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-", "B+", "B", "B-", "CCC"]
 
 
 def outlook_glyph(o: str) -> str:
@@ -792,7 +817,9 @@ def grade_trend(r) -> str:
             # an average of three moves in thirds of a notch as often as whole ones
             n = f"{abs(net):.1f}".rstrip("0").rstrip(".")
             lab = "flat" if not net else f'{n} notch{"es" if abs(net) != 1 else ""} {"up" if net > 0 else "down"}'
-            col = c.MUTED if not net else (c.GREEN if net > 0 else c.RED)
+            # the path is history; the outlooks beside it are what is expected next, so the path is told
+            # in a neutral voice and never reads as a warning against a positive outlook
+            col = c.MUTED
             # the start year is the same for nearly every row, so it belongs on the cell rather
             # than under it, where it would cost a line of height on 150 rows
             return (f'<span class="gpath" title="the composite grade at each year end from '
@@ -859,8 +886,8 @@ def page_ratings(generated, inner: bool = False):
     band_tiles = [(k, sum(1 for r in rated if group(r["grade"]) == k), grade_colour(m))
                   for k, m in (("AA- and above", 3), ("A range", 6), ("BBB range", 9), ("Below BBB-", 13))] + [
                   ("Unrated", len(rows) - len(rated), "#6c757d")]
-    tiles = "".join(f'<button class="rtile bfilter" data-band="{k}"><div class="rtile-n mono" style="color:{col}">{n}</div><div class="rtile-l">{c.esc(k)}</div></button>' for k, n, col in band_tiles)
-    tiles += f'<a class="rtile" href="#actions"><div class="rtile-n mono"><span style="color:#1e7a3a">{ups} up</span> <span class="muted">·</span> <span style="color:#b04632">{downs} down</span></div><div class="rtile-l">Rating actions, 30 days</div></a>'
+    tiles = "".join(f'<button class="rtile bfilter" data-band="{k}"><div class="rtile-n" style="color:{col}">{n}</div><div class="rtile-l">{c.esc(k)}</div></button>' for k, n, col in band_tiles)
+    tiles += f'<a class="rtile" href="#actions"><div class="rtile-n"><span style="color:#1e7a3a">{ups}▲</span> <span style="color:#b04632">{downs}▼</span></div><div class="rtile-l">Moves, 30 days</div></a>'
     # the grid: one row per entity, the average, the weakest and the outlooks across the three
     def band_key(g):
         return "Unrated" if g is None else group(g)
@@ -880,7 +907,7 @@ def page_ratings(generated, inner: bool = False):
         + letter_cell(r["composite"] or ("NR" if r["grade"] is None else ""), r["grade"], f'{c.esc(of_three(r["n"]))}' if r["n"] else "")
         + letter_cell(r["worst"], r.get("worst_grade"))
         + f'<td class="rc-tones">{tone_glyphs(r.get("tones") or []) if r["n"] else "—"}</td>'
-        + f'<td class="small">{DOT if r["id"] in moved else ""}<span class="mono muted">{c.esc(r["last_action"] or "—")}</span></td><td>{grade_trend(r)}</td></tr>'
+        + f'<td class="small">{DOT if r["id"] in moved else ""}<span class="muted tnum">{c.esc(r["last_action"] or "—")}</span></td><td>{grade_trend(r)}</td></tr>'
         for r in sorted(rows, key=lambda r: (r["grade"] is None, r["grade"] or 99, r["short"])))
     # the reader's own list first after All: it is the set a treasurer opens this page to check
     regions = [("all", "All"), ("mine", "My counterparties"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
@@ -888,16 +915,16 @@ def page_ratings(generated, inner: bool = False):
     tone = {"bad": "bad", "warn": "warn", "good": "good", "info": "muted"}
     def ract(a):
         words, tone_ = action_words(a["title"])
-        label = {"good": "positive", "warn": "negative", "bad": "adverse"}.get(tone_)
+        label = {"good": "positive", "warn": "negative", "bad": "adverse"}.get(tone_, "neutral")
         return (f'<div class="ract"><span class="mono muted">{a["date"]}</span><a class="b" href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a>'
-                f'<span title="{c.esc(a["title"])}">{c.esc(words)}</span>{c.chip(label, tone.get(tone_, "muted")) if label else ""}</div>')
+                f'<span title="{c.esc(a["title"])}">{c.esc(words)}</span>{c.chip(label, tone.get(tone_, "muted"))}</div>')
     acts = "".join(ract(a) for a in acts_all[:30]) or '<div class="empty">No rating actions other than affirmations in the last 90 days.</div>'
-    content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">One row per entity: the average and the weakest of the three main agencies' long-term ratings, on one scale, and their outlooks. Click a band, bar or region to filter. Source: the ESMA register, daily.</div></div></div>
+    content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">The three main agencies' long-term ratings for every name, on one scale, from the ESMA register. Click a tile, bar or region to filter.</div></div></div>
 <div class="rtiles rtiles-f">{tiles}</div>
 <div class="card rgrid-card"><div class="toolbar rg-tools"><div class="filters">{filters}<button class="filter" data-region="moved">Moved in 90 days</button></div><input id="q" class="search" placeholder="Search"><span class="small muted" id="rg-count"></span></div>
 <div class="rg-hist"><span class="small muted">Average grade{c.info("rating")}</span>{hist}<button class="filter small gclear" hidden>Clear grade</button></div>
 <div class="table-wrap"><table id="board" class="plain rgrid"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Average{c.info("composite")}</th><th>Weakest</th><th>Outlooks</th><th>Last action</th><th title="the average grade at each year end, from the register\'s own action log">Path since 2015</th></tr></thead><tbody>{trs}</tbody></table></div><div class="pager" id="rg-more" data-step="40"></div>
-<div class="table-foot"><span><b>Average</b> and <b>weakest</b> are taken over the long-term ratings of Fitch, S&amp;P and Moody's, on one scale; which of them said what is not shown. <b>Outlooks</b> is one mark per agency: ▲ positive · ▼ negative · ◆ on watch · ▶ stable. <b>Last action</b> is the date of the most recent action by any of the three, and an orange dot beside it means one of them moved this rating within 90 days rather than merely affirming it. <b>Path</b> is the average at each year end since the register opened, and how far it has travelled.</span></div></div>
+<div class="table-foot"><span>Average and weakest of the three main agencies' long-term ratings, on one scale. Outlooks, one mark per agency: ▲ positive · ▼ negative · ◆ watch · ▶ stable. An orange dot marks a move in the last 90 days.</span></div></div>
 <div class="rgrid2"><div class="card pad" id="actions"><h3>Latest rating actions <span class="muted small">· 90 days, affirmations excluded</span></h3><div class="racts" id="racts">{acts}</div><div class="pager" id="ract-more" data-step="12"></div></div>
 </div>'''
     return content if inner else c.shell("Ratings", content, "ratings", "../", generated)
@@ -1233,7 +1260,7 @@ def page_coverage(generated, inner: bool = False):
 
     def cnt(fn):
         return sum(1 for a in A if fn(a))
-    tiles = "".join(f'<div class="rtile"><div class="rtile-n mono">{v}</div><div class="rtile-l">{c.esc(l)}</div></div>' for v, l in [
+    tiles = "".join(f'<div class="rtile"><div class="rtile-n">{v}</div><div class="rtile-l">{c.esc(l)}</div></div>' for v, l in [
         (n, "entities"), (cnt(lambda a: a["score"] is not None), "scored"), (cnt(lambda a: a["agencies"]), "rated"),
         (cnt(lambda a: a["years"] >= 5), "5+ years of ratios"), (cnt(lambda a: a["metrics"]["lcr"]["n"]), "with LCR"),
         (cnt(lambda a: a["metrics"]["npl_ratio"]["n"]), "with asset quality"), (cnt(lambda a: a["price_days"]), "with a share price"),
@@ -1241,23 +1268,19 @@ def page_coverage(generated, inner: bool = False):
     trs = []
     for a in sorted(A, key=lambda a: (-(a["score"] or -1), a["short"])):
         band = c.chip(c.esc(a["band"] or "—"), "muted") if a["band"] else ""
-        rating = f'<b>{c.esc(a["rating"])}</b> <span class="muted small">· {a["agencies"]}/3</span>' if a["agencies"] else '<span class="muted">unrated</span>'
-        price = f'<span title="{c.esc(a["symbol"])}">{a["price_days"]}</span>' if a["price_days"] else ('<span class="muted">0</span>' if a["ticker"] else '<span class="muted">—</span>')
+        rating = f'<b style="color:{grade_colour(LETTER_GRADES.index(a["rating"]) + 1 if a["rating"] in LETTER_GRADES else None)}">{c.esc(a["rating"])}</b><div class="muted small">{a["agencies"]} of 3</div>' if a["agencies"] else '<span class="muted">unrated</span>'
         cells = "".join(_depth_cell(a["metrics"][m]) for m, _ in AUDIT_COLS)
         score = a["score"] if a["score"] is not None else -1
+        shown_score = f"{a['score']:.0f}" if a["score"] is not None else "—"
         # the source a reader knows, not the adapter that read it
         sources = ", ".join(dict.fromkeys({"eba": "EBA", "eba_te": "EBA", "esef": "annual accounts", "nsm_release": "results",
                                            "pillar3": "Pillar 3", "fdic": "FDIC", "edgar": "SEC", "fundamentals": "accounts",
                                            "te": "EBA"}.get(x, x) for x in a["sources"]))
         trs.append(f'<tr data-id="{c.esc(a["id"])}" data-name="{c.esc(a["short"].lower())}" data-region="{c.esc(a["region"])}" data-score="{score}">'
-                   f'<td class="b"><a href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><div class="muted small">{c.esc(REGION_LABEL.get(a["region"], a["region"]))} · {c.esc(TYPE_LABEL.get(a["type"], a["type"]))}</div></td>'
-                   f'<td class="mono" data-v="{score}">{a["score"] if a["score"] is not None else "—"} {band}</td>'
+                   f'<td class="b"><a href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a><div class="muted small nowrap">{c.esc(REGION_LABEL.get(a["region"], a["region"]))} · {c.esc(TYPE_LABEL.get(a["type"], a["type"]))}</div></td>'
+                   f'<td class="nowrap cov-sc" data-v="{score}">{shown_score} {band}</td>'
                    f'<td data-v="{a["agencies"]}">{rating}</td>'
-                   f'<td class="mono" data-v="{a["price_days"]}">{price}</td>'
-                   f'<td class="mono" data-v="{a["cds_days"]}">{a["cds_days"] or "—"}</td>'
-                   f'<td class="mono" data-v="{a["bonds"]}">{a["bonds"] or "—"}</td>'
-                   f'<td class="mono" data-v="{a["years"]}">{a["years"] or "—"}</td>'
-                   f'<td class="small muted">{c.esc(sources)}</td>{cells}</tr>')
+                   f'<td class="cov-yr" data-v="{a["years"]}" title="{c.esc(sources)}">{a["years"] or "—"}</td>{cells}</tr>')
     regions = [("all", "All"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
     filters = "".join(f'<button class="filter{" active" if k == "all" else ""}" data-region="{k}">{c.esc(l)}</button>' for k, l in regions)
     heads = "".join(f'<th class="num" data-sort="col" title="periods held and the years they span">{c.esc(l)}</th>' for _, l in AUDIT_COLS)
@@ -1266,13 +1289,11 @@ def page_coverage(generated, inner: bool = False):
         '<div class="page-head"><div><h1>Coverage</h1><div class="lede">What is held for every name. In each ratio column, '
         'the number is how many reporting dates are held, and beneath it the first and last year.</div></div></div>'
         f'<div class="rtiles rtiles-cov">{tiles}</div>'
-        f'<div class="card" style="margin-top:16px"><div class="toolbar"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>'
+        f'<div class="card" style="margin-top:16px;padding:14px 16px"><div class="toolbar rg-tools"><div class="filters">{filters}</div><input id="q" class="search" placeholder="Search"></div>'
         '<div class="table-wrap"><table id="board" class="plain coverage"><thead><tr><th data-sort="name">Entity</th><th data-sort="score">Score</th>'
-        '<th data-sort="col">Rating</th><th class="num" data-sort="col" title="trading days of closing prices held">Price days</th>'
-        '<th class="num" data-sort="col" title="settlement days with a CDS level">CDS days</th><th class="num" data-sort="col">Bonds</th>'
-        f'<th class="num" data-sort="col" title="span of the CET1 history in years">Years</th><th>Sources</th>{heads}</tr></thead><tbody>{body}</tbody></table></div><div class="pager" id="cov-more" data-step="40"></div>'
-        '<div class="table-foot"><span>Ratio cells: periods held, then the first and last year. Shading: light under 4 periods, mid under 12, dark 12 and over. '
-        "The rating column is the average across the three main agencies, and how many of the three rate the name. Click a column heading to sort.</span></div></div>")
+        '<th data-sort="col">Rating</th>'
+        f'<th class="num" data-sort="col" title="span of the CET1 history in years; hover a cell for its sources">Years</th>{heads}</tr></thead><tbody>{body}</tbody></table></div><div class="pager" id="cov-more" data-step="40"></div>'
+        '<div class="table-foot"><span>Shading: light under 4 reporting dates, mid under 12, dark 12 and over. The rating is the average of the three main agencies and how many of them rate the name.</span></div></div>')
     return content if inner else c.shell("Coverage", content, "coverage", "../", generated)
 
 
@@ -1297,6 +1318,7 @@ def compare_content() -> str:
     head = panel_head("Compare", "Analysis", "Pick a peer set and a measure: where the names stand today, where the measure has been, and how their order has changed. Pin up to six names to follow them through every view.")
     return head + f'''<div class="card cp-card"><div class="cp-tools">
 <div class="filters" id="cp-sets">{chips}</div>
+<select id="cp-set-sel" class="cp-set-sel" aria-label="Peer set">{"".join(f'<option value="{k}">{c.esc(l)}</option>' for k, l in sets)}</select>
 <div class="cp-row"><label class="small muted">Measure <select id="cp-metric"></select></label><button type="button" class="i" id="cp-def" data-t="score" aria-expanded="false" aria-label="What is this measure?">i</button>
 <div class="search cp-add">{c.ico("search", 16, c.MUTED)}<input id="cp-q" placeholder="Add a name to the set" autocomplete="off"><div class="cp-sugg" id="cp-sugg" hidden></div></div>
 <span class="small muted" id="cp-count"></span></div>

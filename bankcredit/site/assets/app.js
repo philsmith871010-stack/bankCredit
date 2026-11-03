@@ -487,3 +487,20 @@ document.addEventListener('click',function(e){
     sync();
   }
 })();
+
+// On a phone a row of region chips takes a screen before any row shows. Each chip row in a
+// table toolbar gets a select beside it that the phone shows instead; choosing in it presses the
+// matching chip, and a chip pressed any other way (a bar on the chart) moves the select with it.
+(function(){
+  function fltSel(){document.querySelectorAll('.rg-tools > .filters').forEach(function(f){
+    if(f.nextElementSibling&&f.nextElementSibling.classList.contains('flt-sel'))return;
+    var bs=[].slice.call(f.querySelectorAll('button.filter')); if(bs.length<5)return;
+    var sel=document.createElement('select'); sel.className='flt-sel'; sel.setAttribute('aria-label','Show');
+    bs.forEach(function(b,i){var o=document.createElement('option');o.value=i;o.textContent=b.textContent.trim();sel.appendChild(o)});
+    var sync=function(){bs.forEach(function(b,i){if(b.classList.contains('active'))sel.value=i})};
+    sel.addEventListener('change',function(){bs[+sel.value].click()});
+    new MutationObserver(sync).observe(f,{subtree:true,attributes:true,attributeFilter:['class']});
+    sync(); f.parentNode.insertBefore(sel,f.nextSibling);
+  })}
+  fltSel(); (window.__panelInit=window.__panelInit||[]).push(fltSel);   // and again for a panel loaded later
+})();

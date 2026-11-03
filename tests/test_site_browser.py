@@ -740,7 +740,7 @@ def test_a_name_is_watched_from_the_table_and_listed_under_the_portfolio(page, s
 def test_the_list_says_how_many_names_sit_at_each_tenor(page, server):
     """A row a tenor, in words: the scatter of dots it replaced could not be read at a glance."""
     _seed_many(page, server, 6)               # six names at 12 months
-    rows = page.eval_on_selector_all(".tmix .tm-r", "e => e.map(x => [x.querySelector('.tm-t').textContent, +x.querySelector('.tm-n').textContent])")
+    rows = page.eval_on_selector_all(".tmix-t .tm-r", "e => e.map(x => [x.querySelector('.tm-t').textContent, +x.querySelector('.tm-n').textContent])")
     assert sum(n for _, n in rows) == 6, rows
     assert all(t for t, _ in rows), rows
     assert not page.errors, page.errors
@@ -1220,7 +1220,7 @@ def test_a_name_can_be_added_at_any_tenor_from_the_left_of_its_row(page, server)
     page.wait_for_timeout(400)
     stored = json.loads(page.evaluate("localStorage.getItem('counterparty.policy')"))
     assert [x["tenor"] for x in stored if x["id"] == first] == [274], "nine months, in days"
-    assert page.eval_on_selector(f'#uni-body tr[data-id="{first}"] td.uni-add', "e => e.textContent.trim()") == "9 months"
+    assert page.eval_on_selector(f'#uni-body tr[data-id="{first}"] td.uni-add', "e => e.innerText.trim()") == "9 months"
     page.set_viewport_size({"width": 375, "height": 812})
     try:
         page.wait_for_timeout(300)
