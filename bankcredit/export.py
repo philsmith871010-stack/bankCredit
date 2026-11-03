@@ -453,7 +453,14 @@ def compare_rows(board: list[dict], series_all: dict, books: dict | None = None)
         h = r.get("history") or {}
         sc_series = list(h.get("score") or [])
         last_back = sc_series[-1][0] if sc_series else ""
-        sc_series += [[d, v] for d, v, _g in (h.get("snapshots") or []) if d > last_back and v is not None]
+        # The quarterly back history, then the latest snapshot in each quarter after it (they come
+        # in date order). The snapshots are daily: kept as they were, a month of them filled the
+        # window and left the panels that bucket by quarter end a single quarter to draw.
+        per_quarter = {}
+        for d, v, _g in h.get("snapshots") or []:
+            if d > last_back and v is not None:
+                per_quarter[f"{d[:4]}Q{(int(d[5:7]) + 2) // 3}"] = [d, v]
+        sc_series += [per_quarter[q] for q in sorted(per_quarter)]
         if len(sc_series) >= 2:
             ser["score"] = sc_series[-COMPARE_POINTS:]
         # the composite as the register has it, not three days of our own snapshots
