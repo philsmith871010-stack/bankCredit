@@ -734,7 +734,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 473,
+   "documents": 479,
    "capital_as_of": "2026-06-30",
    "age_days": 126,
    "capital_sources": [
@@ -793,7 +793,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 22,
+   "documents": 23,
    "capital_as_of": "2026-06-30",
    "age_days": 126,
    "capital_sources": [
@@ -1038,7 +1038,7 @@
     "browser",
     "pattern"
    ],
-   "documents": 41,
+   "documents": 44,
    "capital_as_of": "2026-06-30",
    "age_days": 126,
    "capital_sources": [
@@ -1519,9 +1519,9 @@
    "kinds": [
     "browser"
    ],
-   "documents": 30,
-   "capital_as_of": "2026-06-30",
-   "age_days": 126,
+   "documents": 31,
+   "capital_as_of": "2026-09-30",
+   "age_days": 34,
    "capital_sources": [
     "pillar3"
    ],
@@ -1535,7 +1535,7 @@
    "kinds": [
     "browser"
    ],
-   "documents": 22,
+   "documents": 23,
    "capital_as_of": "2026-06-30",
    "age_days": 126,
    "capital_sources": [
@@ -1551,9 +1551,9 @@
    "kinds": [
     "browser"
    ],
-   "documents": 55,
-   "capital_as_of": "2026-06-30",
-   "age_days": 126,
+   "documents": 56,
+   "capital_as_of": "2026-09-30",
+   "age_days": 34,
    "capital_sources": [
     "eba_te",
     "pillar3"

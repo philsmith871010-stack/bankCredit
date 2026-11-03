@@ -1,1 +1,64 @@
-[]
+[
+ {
+  "id": "05b02710abfd",
+  "entity_id": "bank-of-scotland",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q3/2026-bos-q3-pillar-3.pdf",
+  "local": "cache/pdf/bank-of-scotland/05b02710abfd75d0.pdf",
+  "title": "2026-bos-q3-pillar-3.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T14:21:22"
+ },
+ {
+  "id": "d9ea0192d5af",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-corporate-markets-plc/2026/q3/2026-lbcm-q3-pillar-3.pdf",
+  "local": "cache/pdf/lloyds-bank-corporate-markets/d9ea0192d5af858a.pdf",
+  "title": "2026-lbcm-q3-pillar-3.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-03T14:21:24"
+ },
+ {
+  "id": "40e9a636c900",
+  "entity_id": "citigroup",
+  "url": "https://www.citigroup.com/rcs/citigpa/storage/public/cgml-pillar-3-disclosures-q2-2024.pdf",
+  "local": "cache/pdf/citigroup/40e9a636c90012b9.pdf",
+  "title": "cgml-pillar-3-disclosures-q2-2024.pdf",
+  "page": null,
+  "reference_date": "2024-06-30",
+  "currency": "USD",
+  "values": {
+   "net_cash_outflows": 12352.0
+  },
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "error:no LCR found",
+  "status": "open",
+  "created": "2026-11-03T14:26:44"
+ }
+]
