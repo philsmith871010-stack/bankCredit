@@ -791,7 +791,7 @@ def outlook_glyph(o: str) -> str:
     if "watch" in o or "review" in o or "developing" in o:
         return '<span title="on watch" style="color:#c77d1a">◆</span>'
     if "stab" in o:
-        return '<span title="stable outlook" class="muted">▶</span>'
+        return '<span title="stable outlook" class="ol-st">▶</span>'
     return ""
 
 
@@ -924,7 +924,7 @@ def page_ratings(generated, inner: bool = False):
         + letter_cell(r["composite"] or ("NR" if r["grade"] is None else ""), r["grade"], f'{c.esc(of_three(r["n"]))}' if r["n"] else "")
         + letter_cell(r["worst"], r.get("worst_grade"))
         + f'<td class="rc-tones">{tone_glyphs(r.get("tones") or []) if r["n"] else "—"}</td>'
-        + f'<td class="small">{DOT if r["id"] in moved else ""}<span class="muted tnum">{c.esc(r["last_action"] or "—")}</span></td><td>{grade_trend(r)}</td></tr>'
+        + f'<td class="small">{DOT if r["id"] in moved else ""}<span class="muted rdate">{c.esc(r["last_action"] or "—")}</span></td><td>{grade_trend(r)}</td></tr>'
         for r in sorted(rows, key=lambda r: (r["grade"] is None, r["grade"] or 99, r["short"])))
     # the reader's own list first after All: it is the set a treasurer opens this page to check
     regions = [("all", "All"), ("mine", "My counterparties"), ("uk", "UK"), ("eu", "EU"), ("us_ch", "US and Switzerland"), ("aus_can", "Australia and Canada"), ("asia", "Asia"), ("gulf", "Gulf"), ("watch", "Watching")]
@@ -933,7 +933,7 @@ def page_ratings(generated, inner: bool = False):
     def ract(a):
         words, tone_ = action_words(a["title"])
         label = {"good": "positive", "warn": "negative", "bad": "adverse"}.get(tone_, "neutral")
-        return (f'<div class="ract"><span class="mono muted">{a["date"]}</span><a class="b" href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a>'
+        return (f'<div class="ract"><span class="muted rdate">{a["date"]}</span><a class="b" href="../banks/{c.esc(a["id"])}.html">{c.esc(a["short"])}</a>'
                 f'<span title="{c.esc(a["title"])}">{c.esc(words)}</span>{c.chip(label, tone.get(tone_, "muted"))}</div>')
     acts = "".join(ract(a) for a in acts_all[:30]) or '<div class="empty">No rating actions other than affirmations in the last 90 days.</div>'
     content = f'''<div class="page-head"><div><h1>Ratings</h1><div class="lede">The three main agencies' long-term ratings for every name, on one scale, from the ESMA register. Filter with a tile or a region.</div></div></div>

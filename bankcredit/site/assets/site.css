@@ -1343,3 +1343,6 @@ table.subscores{table-layout:fixed;width:100%}table.subscores td{text-align:cent
 @media (max-width:640px){.desk-only{display:none}}
 /* a row's spare width is shared by card, not by group, so every card in a row is one width */
 .sm-block{flex-grow:var(--n,1)}
+/* stable outlook marks recede, so the one that moved is what the eye finds */
+.ol-st{color:#b9c4cf}
+.rdate{font-family:inherit;font-variant-numeric:normal;letter-spacing:0}
