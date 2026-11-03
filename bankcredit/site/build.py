@@ -557,7 +557,9 @@ HOME_TABS_HIDDEN = ()
 def page_method(generated, inner: bool = False):
     mname = lambda m: METRICS.get(m) or {"cet1_headroom": "CET1 above the bank's own requirement (points)"}.get(m, m.replace("_", " "))
     pillar_rows = "".join(f'<tr><td class="b">{c.PILLAR_LABEL.get(k, k)}</td><td class="tnum">{w}</td><td>{", ".join(mname(m) for m in ms)}</td></tr>' for k, (w, ms) in PILLARS.items())
-    thr = "".join(f'<tr><td>{mname(m)}</td><td class="tnum small">{" · ".join(f"{v}→{s}" for v, s in pts)}</td></tr>' for _, (w, ms) in PILLARS.items() for m, pts in ms.items())
+    # each threshold as a small cell, the ratio's value over the sub-score it earns
+    steps = lambda pts: "".join(f'<span class="thr"><b>{v:g}</b><i>{sc}</i></span>' for v, sc in pts)
+    thr = "".join(f'<tr><td>{mname(m)}</td><td><div class="thr-c">{steps(pts)}</div></td></tr>' for _, (w, ms) in PILLARS.items() for m, pts in ms.items())
     grade_cells = "".join(f'<td class="tnum small">{c.esc(l)}<br>{RATING_SCORE[i + 1]}</td>' for i, l in enumerate(GRADE_LETTERS))
     ratio_weight = sum(w for w, _ in PILLARS.values())
     body = f'''<div class="card pad prose" id="method-prose">
@@ -568,7 +570,7 @@ def page_method(generated, inner: bool = False):
 <div class="bandscale" aria-hidden="true">{"".join(f'<span class="band-{b}" style="flex:{(100 if b == "A" else 80 if b == "B" else 65 if b == "C" else 50 if b == "D" else 35) - f}"></span>' for f, b in BANDS)}</div><p class="small muted wlegend">{" · ".join(f"Band {b} {f}+" if f else f"Band {b} below 35" for f, b in BANDS)}</p>
 <table class="plain"><thead><tr><th>Component</th><th>Weight</th><th>Inputs</th></tr></thead><tbody><tr><td class="b">{c.PILLAR_LABEL["rating"]}</td><td class="mono">{RATING_WEIGHT}</td><td>Composite long-term agency rating; required for a score; caps of 74.9 for the BBB range and 64.9 below investment grade</td></tr>{pillar_rows}</tbody></table>
 <h3>Rating sub-scores</h3><div class="table-wrap"><table class="plain subscores"><tbody><tr>{grade_cells}</tr></tbody></table></div>
-<h3>Thresholds (value → sub-score)</h3><table class="plain"><tbody>{thr}</tbody></table>
+<h3>Thresholds <span class="small muted">ratio value over the sub-score it earns</span></h3><table class="plain thr-t"><tbody>{thr}</tbody></table>
 
 <h2>Ratings</h2><p>The site shows one rating per name: the average of the long-term ratings Fitch, S&amp;P and Moody's hold on it, on one scale, with the weakest of the three beside it and one outlook mark per agency. Ratings come from the ESMA European Rating Platform, refreshed daily, and each profile carries the history the register publishes back to July 2015. Agencies outside the three are not averaged in.</p>
 <details class="method-more"><summary>The agencies' own ratings, and the basis for quoting them</summary><p>Each profile also shows the current long-term rating and outlook and the current short-term rating that each of the three main agencies publishes on the name, with the agency named, the date and a link to the source. This view is a quotation, not a feed: current ratings only, no history by agency, no download. The basis on which it is shown is set out beside it and repeated here.</p><p class="note">{c.esc(attributed.BASIS)}</p></details>

@@ -1306,7 +1306,7 @@ table.subscores{table-layout:fixed;width:100%}table.subscores td{text-align:cent
 @media (max-width:640px){.rtiles-cov{grid-template-columns:repeat(2,minmax(0,1fr))}.rtiles-cov .rtile:nth-child(n+5){display:none}}
 .md-grid .cr-rows .cr-g.tnum{font-size:12.5px!important;font-weight:500!important}
 .src-t td,.src-t td *{letter-spacing:0}
-#uni-table th:nth-child(4),#uni-table td:nth-child(4){width:48px;max-width:48px}
+#uni-table th:nth-child(4),#uni-table td:nth-child(4){width:68px;max-width:68px;white-space:nowrap}
 @media (max-width:640px){
   /* names wrap at spaces only */
   table.rgrid td:first-child a,table.coverage td:first-child a,#uni-table td.uni-nm .b{overflow-wrap:normal;word-break:normal;hyphens:none}
@@ -1320,3 +1320,13 @@ table.subscores{table-layout:fixed;width:100%}table.subscores td{text-align:cent
   table.rgrid thead tr,table.rgrid tr{grid-template-columns:minmax(0,1fr) 42px 44px 50px}
   .cov-card{padding:12px 0 0!important;border:0;box-shadow:none;background:none}
 }
+/* every date and figure tracked alike */
+.mono,.tnum,.asof,td.asof,.cr-g.tnum,.tile-foot .mono,.src-t td{letter-spacing:0!important}
+/* Method thresholds: value over sub-score, a small table per ratio */
+.thr-c{display:flex;flex-wrap:wrap;gap:4px}
+.thr{display:inline-grid;grid-template-rows:auto auto;min-width:46px;text-align:center;border:1px solid var(--line-soft);border-radius:6px;padding:3px 6px;font-variant-numeric:tabular-nums;font-size:12px}
+.thr b{font-weight:600}.thr i{font-style:normal;color:var(--muted);font-size:11px;border-top:1px solid var(--line-soft);margin-top:2px;padding-top:2px}
+@media (max-width:640px){table.rgrid thead th:nth-child(n+2),table.rgrid td:nth-child(2),table.rgrid td:nth-child(3),table.rgrid td:nth-child(4){text-align:center}}
+.thr-t td:first-child{width:34%;vertical-align:middle}
+/* a date reads as a date: proportional figures, the same on every page */
+.asof,td.asof,.src-t td,.cr-g.tnum,.tile-foot>span.mono,.rp-date{font-variant-numeric:normal}
