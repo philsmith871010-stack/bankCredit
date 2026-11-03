@@ -1,0 +1,5 @@
+{"id": "d9ea0192d5af", "entity_id": "lloyds-bank-corporate-markets",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-bank-corporate-markets-plc/2026/q3/2026-lbcm-q3-pillar-3.pdf",
+ "page": 3, "reference_date": "2026-09-30", "currency": "GBP",
+ "values": {"rwa": 25276.0, "leverage_exposure": 96092.0, "leverage_ratio": 7.6},
+ "note": "Q3 interim report carries only LR2, OV1 and CR8; no KM1. Took leverage exposure excl. central banks (LR2 UK-24b, 96,092) and UK leverage ratio (row 25, 7.6%) from p.3, total RWA (OV1 row 29, 25,276) from p.4, 30 Sep 2026 column. Tier 1 excludes Q3 profits per footnote. Not a skip: H1 and year-end reports of this shape carry KM1."}

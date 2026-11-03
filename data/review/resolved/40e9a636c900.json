@@ -1,0 +1,1 @@
+{"id": "40e9a636c900", "skip": true, "note": "Citigroup Global Markets Limited (UK subsidiary) Pillar 3, not Citigroup Inc. The citigroup entity is the US holding company on the us_capital template; loading CGML figures under it would mix entities."}

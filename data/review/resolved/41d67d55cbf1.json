@@ -1,0 +1,8 @@
+{"id": "41d67d55cbf1", "entity_id": "investec",
+ "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2026/Investec-plc-group-Pillar-3-quarterly-disclosure-report-30-June-2026.pdf",
+ "page": 8, "reference_date": "2026-06-30", "currency": "GBP",
+ "values": {"cet1_capital": 2604.0, "tier1_capital": 2954.0, "total_capital": 3675.0, "rwa": 20530.0,
+            "cet1_ratio": 12.7, "tier1_ratio": 14.4, "total_capital_ratio": 17.9,
+            "overall_capital_requirement": 12.4, "leverage_exposure": 33046.0, "leverage_ratio": 8.9,
+            "lcr": 354.0, "nsfr": 140.0},
+ "note": "Investec plc group UK KM1, 30 Jun 2026 column (header split across lines; date confirmed). Template prints thousands with a space separator ('2 604'), which the extractor truncated to the leading digit group. CET1 2604/20530 = 12.68% matches 12.7%; T1 14.39%, total 17.90%, leverage 2954/33046 = 8.94% all consistent. LCR is the 12-month average and NSFR the 4-quarter average, so they do not equal the quarter-end component ratios. Capital excludes unverified Q1 profits per the footnote."}

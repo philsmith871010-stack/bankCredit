@@ -4342,5 +4342,89 @@
   "entity_id": "citigroup",
   "reason": "no KM1 template found",
   "skip": true
+ },
+ {
+  "date": "2026-11-03T14:39:23",
+  "id": "41d67d55cbf1",
+  "entity_id": "investec",
+  "reason": "warn:column headers split month and year across lines; reference date needs a ch",
+  "skip": false,
+  "compared": 12,
+  "matched": 7,
+  "mismatches": {
+   "cet1_capital": [
+    2.0,
+    2604.0
+   ],
+   "tier1_capital": [
+    2.0,
+    2954.0
+   ],
+   "total_capital": [
+    3.0,
+    3675.0
+   ],
+   "rwa": [
+    20.0,
+    20530.0
+   ],
+   "leverage_exposure": [
+    33.0,
+    33046.0
+   ]
+  },
+  "page_extractor": 8,
+  "page_reviewer": 8,
+  "date_extractor": "2026-06-30",
+  "date_reviewer": "2026-06-30"
+ },
+ {
+  "date": "2026-11-03T14:45:42",
+  "id": "05b02710abfd",
+  "entity_id": "bank-of-scotland",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2026-09-30"
+ },
+ {
+  "date": "2026-11-03T14:45:46",
+  "id": "40e9a636c900",
+  "entity_id": "citigroup",
+  "reason": "error:no LCR found",
+  "skip": true
+ },
+ {
+  "date": "2026-11-03T14:45:54",
+  "id": "d9ea0192d5af",
+  "entity_id": "lloyds-bank-corporate-markets",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2026-09-30"
+ },
+ {
+  "date": "2026-11-03T14:45:56",
+  "id": "f3049fb55f1b",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
+ },
+ {
+  "date": "2026-11-03T14:45:56",
+  "id": "fbdc186b682a",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": true
  }
 ]

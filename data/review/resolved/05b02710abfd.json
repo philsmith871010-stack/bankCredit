@@ -1,0 +1,5 @@
+{"id": "05b02710abfd", "entity_id": "bank-of-scotland",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q3/2026-bos-q3-pillar-3.pdf",
+ "page": 3, "reference_date": "2026-09-30", "currency": "GBP",
+ "values": {"rwa": 83013.0, "leverage_exposure": 323243.0, "leverage_ratio": 4.7},
+ "note": "Q3 interim report for a large subsidiary carries only LR2, OV1 and CR8; there is no KM1, so no capital amounts or capital/liquidity ratios are available. Took leverage exposure excl. central banks (LR2 UK-24b, 323,243) and UK leverage ratio (LR2 row 25, 4.7%) from p.3, and total RWA (OV1 row 29, 83,013) from p.4, all 30 Sep 2026 column. Not a skip: the half-year and year-end reports with this filename shape do carry KM1."}

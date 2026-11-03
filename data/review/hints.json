@@ -293,7 +293,9 @@
    "citibank\\-canada\\-pillar\\-\\d+\\-disclosure\\-ye\\-\\d+\\-en",
    "cgme\\-pillar\\-\\d+\\-disclosures_q\\d+\\-\\d+",
    "citibank\\-canada\\-pillar\\-\\d+\\-disclosure_ye\\-\\d+\\-en",
-   "citibank\\-canada\\-basel\\-iii\\-pillar\\d+\\-osfi\\-q\\d+\\-\\d+\\-fr"
+   "citibank\\-canada\\-basel\\-iii\\-pillar\\d+\\-osfi\\-q\\d+\\-\\d+\\-fr",
+   "cgme\\-pillar\\-\\d+\\-disclosures\\-dez\\-ye\\-\\d+",
+   "\\d+\\-citibankcanada\\-pillar\\d+\\-disclosure\\-en"
   ]
  },
  "nab": {
@@ -1603,33 +1605,17 @@
  },
  "lloyds-bank-corporate-markets": {
   "last_verified": {
-   "reference_date": "2026-06-30",
+   "reference_date": "2026-09-30",
    "values": {
-    "cet1_capital": 3260.0,
-    "tier1_capital": 7311.0,
-    "total_capital": 7311.0,
-    "rwa": 24223.0,
-    "cet1_ratio": 13.5,
-    "tier1_ratio": 30.2,
-    "total_capital_ratio": 30.2,
-    "total_srep_requirement": 12.0,
-    "combined_buffer": 3.3,
-    "overall_capital_requirement": 15.3,
-    "cet1_headroom": 6.7,
-    "leverage_exposure": 90922.0,
-    "leverage_ratio": 8.0,
-    "hqla": 27178.0,
-    "net_cash_outflows": 15712.0,
-    "lcr": 173.0,
-    "available_stable_funding": 32157.0,
-    "required_stable_funding": 24017.0,
-    "nsfr": 134.0
+    "rwa": 25276.0,
+    "leverage_exposure": 96092.0,
+    "leverage_ratio": 7.6
    },
-   "method": "pdf_rules"
+   "method": "pdf_manual"
   },
   "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
   "browser_page_found": "2026-09-08",
-  "page": 4,
+  "page": 3,
   "currency": "GBP"
  },
  "furness-bs": {
@@ -1676,17 +1662,17 @@
  },
  "bank-of-scotland": {
   "last_verified": {
-   "reference_date": "2026-03-31",
+   "reference_date": "2026-09-30",
    "values": {
-    "rwa": 83108.0,
-    "leverage_exposure": 322922.0,
-    "leverage_ratio": 4.4
+    "rwa": 83013.0,
+    "leverage_exposure": 323243.0,
+    "leverage_ratio": 4.7
    },
    "method": "pdf_manual"
   },
   "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
   "browser_page_found": "2026-09-08",
-  "page": 5,
+  "page": 3,
   "currency": "GBP"
  },
  "standard-chartered-hk": {
@@ -1889,6 +1875,77 @@
     "cet1_ratio": 17.8,
     "leverage_ratio": 6.1,
     "lcr": 235.0
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "newcastle-bs": {
+  "browser_page": "https://newcastle.co.uk/media-centre/financial-results",
+  "browser_page_found": "2026-11-03",
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 311.1,
+    "tier1_capital": 350.9,
+    "total_capital": 404.0,
+    "rwa": 2648.2,
+    "cet1_ratio": 11.7,
+    "tier1_ratio": 13.3,
+    "total_capital_ratio": 15.3,
+    "total_srep_requirement": 8.0,
+    "combined_buffer": 4.5,
+    "overall_capital_requirement": 12.5,
+    "cet1_headroom": 3.7,
+    "leverage_exposure": 7291.6,
+    "leverage_ratio": 4.8,
+    "hqla": 891.6,
+    "net_cash_outflows": 472.5,
+    "lcr": 189.0
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "bmo": {
+  "browser_page": "https://www.bmo.com/en-ca/main/about-bmo/banking/investor-relations/regulatory-disclosure/",
+  "browser_page_found": "2026-11-03",
+  "last_verified": {
+   "reference_date": "2026-07-31",
+   "values": {
+    "cet1_capital": 59273.0,
+    "tier1_capital": 66864.0,
+    "total_capital": 75467.0,
+    "rwa": 454757.0,
+    "cet1_ratio": 13.0,
+    "tier1_ratio": 14.7,
+    "total_capital_ratio": 16.6,
+    "combined_buffer": 3.5,
+    "cet1_headroom": 8.5,
+    "leverage_exposure": 1586178.0,
+    "leverage_ratio": 4.2
+   },
+   "method": "pdf_rules"
+  }
+ },
+ "investec": {
+  "browser_page": "https://www.investec.com/en_gb/welcome-to-investec/about-us/investor-relations/integrated-reporting.html",
+  "browser_page_found": "2026-11-03",
+  "page": 8,
+  "currency": "GBP",
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 2604.0,
+    "tier1_capital": 2954.0,
+    "total_capital": 3675.0,
+    "rwa": 20530.0,
+    "cet1_ratio": 12.7,
+    "tier1_ratio": 14.4,
+    "total_capital_ratio": 17.9,
+    "overall_capital_requirement": 12.4,
+    "leverage_exposure": 33046.0,
+    "leverage_ratio": 8.9,
+    "lcr": 354.0,
+    "nsfr": 140.0
    },
    "method": "pdf_manual"
   }
