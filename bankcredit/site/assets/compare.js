@@ -8,7 +8,8 @@
   var panelId=((dash.closest&&dash.closest('.panel[data-panel]'))||{dataset:{}}).dataset.panel||'';var chart=null;var PANELS={rank:'c-rank',trend:'c-trend',bump:'c-bump'};
   var ylab={hidden:false},side={innerHTML:''},pinsBar=document.getElementById('cp-pins'),tableEl=document.getElementById('c-table'),count=document.getElementById('cp-count'),sel=document.getElementById('cp-metric'),q=document.getElementById('cp-q'),sugg=document.getElementById('cp-sugg');
   var NAVY='#0a2540',GREY='#d3dae3',MID='#7d93ad',INK='#243240',MUTED='#6c757d';
-  var SLOTS=['#2a78d6','#eb6834','#1baf7a','#eda100','#e87ba4','#008300'];   // validated categorical order; never cycled past six
+  // six that stay apart from one another: the sixth was a second green, too near the third to tell from it
+  var SLOTS=['#2a78d6','#eb6834','#1baf7a','#eda100','#e87ba4','#7d5ba6'];
   var D=null,byId={},state={set:'uk_large',extra:[],metric:'score',view:'rank',pins:[],sort:'score',dir:'desc'},userPinned=false,tipEl=null;
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function ls(k){try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}}
@@ -95,12 +96,12 @@
     ticks.forEach(function(v){out+='<line x1="'+L+'" x2="'+(w-R)+'" y1="'+Y(v).toFixed(0)+'" y2="'+Y(v).toFixed(0)+'" stroke="#eef1f4"/><text x="'+(L-8)+'" y="'+(Y(v)+4).toFixed(0)+'" text-anchor="end" fill="'+MUTED+'" font-size="11">'+fmt(v,m)+'</text>'});
     out+=xLabels(bs,X,H-10,w);
     var path=function(pts){var d='',on=false;pts.forEach(function(v,i){if(v==null){on=false;return}d+=(on?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1);on=true});return d};
-    lines.filter(function(l){return !colourOf(l.r.id)}).forEach(function(l){out+='<path class="cp-line" data-id="'+l.r.id+'" d="'+path(l.pts)+'" fill="none" stroke="'+GREY+'" stroke-width="1.4"/>'});
+    lines.filter(function(l){return !colourOf(l.r.id)}).forEach(function(l){out+='<path class="cp-line" data-id="'+l.r.id+'" d="'+path(l.pts)+'" fill="none" stroke="'+GREY+'" stroke-width="1.1" stroke-opacity=".6"/>'});
     out+='<path d="'+path(med)+'" fill="none" stroke="'+INK+'" stroke-width="2" stroke-dasharray="5 4" opacity=".75"/>';
     var labels=[];var mi=med.length-1;while(mi>0&&med[mi]==null)mi--;if(med[mi]!=null)labels.push({y:Y(med[mi]),t:'median',c:INK,w:'600'});
     lines.filter(function(l){return colourOf(l.r.id)}).forEach(function(l){var c=colourOf(l.r.id);out+='<path class="cp-line on" data-id="'+l.r.id+'" d="'+path(l.pts)+'" fill="none" stroke="'+c+'" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>';
-      var li=l.pts.length-1;while(li>=0&&l.pts[li]==null)li--;if(li>=0){out+='<circle cx="'+X(li).toFixed(1)+'" cy="'+Y(l.pts[li]).toFixed(1)+'" r="4" fill="'+c+'" stroke="#fff" stroke-width="2"/>';labels.push({y:Y(l.pts[li]),t:l.r.short.slice(0,20),c:c,w:'600'})}});
-    labels.sort(function(a,b){return a.y-b.y});var used=[];labels.forEach(function(lb){var y=lb.y;while(used.some(function(u){return Math.abs(u-y)<13}))y+=13;used.push(y);out+='<text x="'+(w-R+8)+'" y="'+(y+4).toFixed(0)+'" fill="'+lb.c+'" font-weight="'+lb.w+'" font-size="11.5">'+esc(lb.t)+'</text>'});
+      var li=l.pts.length-1;while(li>=0&&l.pts[li]==null)li--;if(li>=0){out+='<circle cx="'+X(li).toFixed(1)+'" cy="'+Y(l.pts[li]).toFixed(1)+'" r="4" fill="'+c+'" stroke="#fff" stroke-width="2"/>';labels.push({y:Y(l.pts[li]),t:fit(l.r.short,R-14),c:c,w:'600'})}});
+    labels.sort(function(a,b){return a.y-b.y});var used=[];labels.forEach(function(lb){var y=lb.y;while(used.some(function(u){return Math.abs(u-y)<15}))y+=15;used.push(y);out+='<text x="'+(w-R+8)+'" y="'+(y+4).toFixed(0)+'" fill="'+lb.c+'" font-weight="'+lb.w+'" font-size="11.5">'+esc(lb.t)+'</text>'});
     out+='<line id="cp-hair" x1="0" x2="0" y1="'+T+'" y2="'+(H-B)+'" stroke="'+INK+'" stroke-width="1" opacity="0" pointer-events="none"/>';
     out+='<rect x="'+L+'" y="'+T+'" width="'+(w-L-R)+'" height="'+(H-T-B)+'" fill="transparent" id="cp-hit"/>';
     chart.innerHTML=out+'</svg>';
@@ -131,8 +132,8 @@
     var dense=n>40, placed=[];
     lines.filter(function(l){return !colourOf(l.r.id)}).concat(lines.filter(function(l){return colourOf(l.r.id)})).forEach(function(l){var c=colourOf(l.r.id),lr=lastR(l);
       if(dense&&!c){out+='<path class="cp-line" data-id="'+l.r.id+'" d="'+path(l.rank)+'" fill="none" stroke="'+GREY+'" stroke-width="1" stroke-opacity=".28" stroke-linejoin="round"><title>'+esc(l.r.name)+'</title></path>';return}
-      out+='<path class="cp-line'+(c?' on':'')+'" data-id="'+l.r.id+'" d="'+path(l.rank)+'" fill="none" stroke="'+(c||GREY)+'" stroke-width="'+(c?2.4:1.4)+'" stroke-linejoin="round"><title>'+esc(l.r.name)+'</title></path>';
-      l.rank.forEach(function(rk,i){if(rk!=null)out+='<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(rk).toFixed(1)+'" r="'+(c?4:2.5)+'" fill="'+(c||GREY)+'"'+(c?' stroke="#fff" stroke-width="1.5"':'')+'><title>'+esc(l.r.short)+' #'+rk+' at '+bs[i]+' ('+fmt(l.pts[i],m)+')</title></circle>'});
+      out+='<path class="cp-line'+(c?' on':'')+'" data-id="'+l.r.id+'" d="'+path(l.rank)+'" fill="none" stroke="'+(c||GREY)+'" stroke-width="'+(c?2.4:1.1)+'"'+(c?'':' stroke-opacity=".55"')+' stroke-linejoin="round"><title>'+esc(l.r.name)+'</title></path>';
+      l.rank.forEach(function(rk,i){if(rk!=null&&c)out+='<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(rk).toFixed(1)+'" r="'+(c?4:2.5)+'" fill="'+(c||GREY)+'"'+(c?' stroke="#fff" stroke-width="1.5"':'')+'><title>'+esc(l.r.short)+' #'+rk+' at '+bs[i]+' ('+fmt(l.pts[i],m)+')</title></circle>'});
       if(lr!=null&&(c||(!dense&&(lr<=8||lr>n-2)))){
         var ly=Y(lr)+4;
         if(!c){for(var k=0;k<placed.length;k++)if(Math.abs(placed[k]-ly)<13){ly=null;break}}
@@ -150,7 +151,7 @@
     return '<span class="small muted">Pinned</span>'+(pinned||'<span class="small muted">none</span>')+
       (state.pins.length<SLOTS.length?'<span class="small muted">\u00b7 click any name, bar, line or dot to pin (up to six); unpinning keeps a name in the set</span>':'')+
       (added?'<span class="cp-addedbar"><span class="small muted">Added to the set</span>'+added+'</span>':'')}
-  var COLS=[['score','Score',1],['band','Band',0],['rating','Rating',0],['cet1_ratio','CET1',1],['leverage_ratio','Leverage',1],['lcr','LCR',0],['nsfr','NSFR',0],['roe','ROE',1],['efficiency_ratio','Cost/income',0],['npl_ratio','NPL',2],['total_assets','Assets',0]];
+  var COLS=[['score','Score',1],['rating','Rating',0],['cet1_ratio','CET1',1],['leverage_ratio','Leverage',1],['lcr','LCR',0],['nsfr','NSFR',0],['roe','ROE',1],['efficiency_ratio','Cost/income',0],['npl_ratio','NPL',2],['total_assets','Assets',0]];
   function cell(r,code){if(code==='band')return '<td><span class="band mono band-'+esc(r.band||'x')+'">'+esc(r.band||'?')+'</span></td>';if(code==='rating')return '<td>'+(r.rating?'<b>'+esc(r.rating)+'</b>':'<span class="muted">unrated</span>')+'</td>';var p=latest(r,code),m=metric(code);return '<td class="num mono" data-v="'+(p?p.v:-1e9)+'">'+(p?fmt(p.v,m):'<span class="na">—</span>')+'</td>'}
   function sortVal(r,code){if(code==='name')return r.short.toLowerCase();if(code==='band')return r.band||'Z';if(code==='rating')return r.grade==null?99:r.grade;var p=latest(r,code);return p?p.v:-1e9}
   // "Everyone" is 152 rows. The set below the charts scrolls in a window of its own like every

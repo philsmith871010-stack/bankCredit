@@ -167,7 +167,7 @@ TERMS: dict[str, tuple[str, str, str]] = {
     "score": (
         "Counterparty score",
         "This site's 0-100 summary of a bank's published standing.",
-        "Ratings carry 40% of it and published ratios the other 60%: capital, liquidity, stability, "
+        "Ratings carry 40% of it and published ratios the other 60%: capital, liquidity, headroom, "
         "asset quality and profitability. It is worked out from public data with a method you can "
         "read, and it is deliberately not a probability of default or a recommendation.",
     ),
@@ -202,7 +202,7 @@ TERMS: dict[str, tuple[str, str, str]] = {
     "pillar": (
         "Pillar",
         "One of the five things the score is built from, each with a fixed weight.",
-        "Rating 40, capital 25, liquidity 15, stability 10, asset quality and profitability 10. "
+        "Agency rating 40, capital 25, liquidity 15, headroom 10, asset quality and profitability 5 each. "
         "Each pillar is scored 0-100 on its own, then weighted. A bank's make-up shows exactly "
         "which pillar is carrying it and which is holding it back.",
     ),

@@ -233,7 +233,7 @@ def test_a_collection_hours_late_says_so_and_says_why():
     out = punct("2026-09-14T10:39:00", "2026-09-14T11:30:00", finished="2026-09-14T10:50:00")
     assert "punct warn" in out
     assert "5h 39m" in out, out
-    assert "morning kick" in out
+    assert "later than the usual 05:00" in out
 
 
 def test_a_day_with_no_collection_is_not_a_quiet_line():

@@ -464,7 +464,7 @@ table.rgrid tbody tr{contain-intrinsic-size:auto 62px}.nv-row{contain-intrinsic-
 .uni-tools select:focus-visible,.uni-other input:focus-visible{outline:2px solid var(--navy);outline-offset:1px}
 .uni-addat{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .uni-addat>label{font-size:13px;font-weight:600;color:var(--navy);white-space:nowrap}
-.uni-addat #uni-tenor{border-color:#2a78d6;font-weight:600;color:var(--navy)}
+.uni-addat #uni-tenor{border-color:var(--navy);font-weight:600;color:var(--navy)}
 .uni-other{display:inline-flex;gap:6px;align-items:center}
 .uni-other[hidden]{display:none}
 .uni-other input{width:72px;padding:0 8px;background-image:none;cursor:text}
@@ -780,7 +780,7 @@ table.uni .sc-n{font-size:14px}
 .wt-o{font-family:var(--mono);font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
 /* The sliders and what they are allowed to mean, side by side: the disclosure is not a footnote
    under a long page, it is beside the control it qualifies. */
-.wt-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,340px);gap:28px;align-items:start}
+.wt-body{display:grid;grid-template-columns:minmax(0,760px);gap:28px;align-items:start}
 @media (max-width:1000px){.wt-body{grid-template-columns:1fr;gap:18px}}
 .wt-foot{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
 @media (max-width:1000px){.wt-foot{margin-top:4px}}
@@ -971,7 +971,8 @@ table.sortable th[aria-sort]::after{content:"▾";margin-left:4px;font-size:9px}
    height to itself, less the title bar and the two rows of pathways above it */
 .uni-page .scrollbox{max-height:calc(100vh - 230px)}
 .uni-page td:nth-child(3){min-width:240px}
-.filter.filter-blue,.filter.filter-blue:hover{background:#2a78d6;border-color:#2a78d6;color:#fff;font-weight:600}
+.filter.filter-blue,.filter.filter-blue:hover{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600}
+.filter.filter-blue:hover{background:#143659}
 .pol-empty .filter-blue{margin-top:6px}
 .pol-view #uni-open{margin-right:8px}
 /* every modal: the page behind it goes soft, so the box is the only thing in focus */
@@ -1072,7 +1073,7 @@ body.tool .tabs-card{margin-top:0}
 .step-now b{color:var(--text)}
 .step .wt-line{margin:4px 0 0;border:0;padding:0;background:none;box-shadow:none;flex-wrap:wrap}
 .step .wt-line .wt-who{margin-left:0}
-.step-done .k{color:var(--green)}
+
 @media (max-width:760px){.step{grid-template-columns:48px minmax(0,1fr)}.step-act{grid-column:2;align-items:flex-start}.step-now{text-align:left}}
 /* on a phone the header keeps the product and the way in; the platform wordmark folds to its mark */
 @media (max-width:600px){.brand{font-size:0;gap:0;padding-right:0;border-right:0;width:auto}.brand .dot{width:12px;height:12px}.ptitle{gap:8px}.ptitle-name{overflow:hidden;text-overflow:ellipsis}.top{gap:10px;padding:0 12px}}
@@ -1081,3 +1082,33 @@ body.tool .tabs-card{margin-top:0}
 .nowrap{white-space:nowrap}
 /* a panel head takes the width it is given, so its lede wraps at its own measure, not early */
 .ph>div{flex:1 1 auto;min-width:0}
+/* the build time sits in the footer, out of the header's way */
+.foot .built{display:inline!important;margin-left:6px;white-space:nowrap}
+/* Choose names on a phone: the filters fold behind one button, so the table is on the first screen */
+.uni-ftoggle{display:none}
+@media (max-width:640px){.uni-ftoggle{display:inline-flex;align-self:flex-start}.uni-row2:not(.open){display:none}}
+.wt-actions{margin-top:12px}
+.wt-note{margin:14px 0 0;max-width:none;line-height:1.5}
+/* By tenor: a row a tenor, how many names, and the weakest score among them */
+.tmix{display:flex;flex-direction:column;gap:3px}
+.tm-r{display:grid;grid-template-columns:72px minmax(0,1fr) 22px 26px;gap:8px;align-items:center;font-size:12px}
+.tm-t{color:var(--text);white-space:nowrap}
+.tm-b{height:8px;background:var(--line-soft);border-radius:4px;overflow:hidden}.tm-b i{display:block;height:100%;background:#143659;border-radius:4px}
+.tm-n{text-align:right;color:var(--text)}.tm-w{text-align:right;font-weight:600}
+.tm-key{float:right;font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted)}
+/* a card's first line stays one line: a long name gives way with an ellipsis, so every card in a
+   row is the same height */
+.cp-line{display:flex;align-items:baseline;gap:6px;min-width:0;flex:1 0 100%;white-space:nowrap}
+.cp-line .cp-nm{overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1 auto}
+.cp-line .tag-hold{flex:0 0 auto}
+/* the country and its rating give way on a card, where the name needs the room; the table and the
+   profile both show them */
+.cp-line .cp-sov{display:none}
+.pol-summary{margin-top:12px}
+/* the agencies' own ratings run long: the label sits above them rather than being squeezed to "Agen…" */
+.cr.cr-attr{grid-template-columns:1fr}.cr.cr-attr>span:empty{display:none}
+/* Alternatives on a phone: rank, name, score, rating, CET1 and Add; the rest is a tap away in the detail */
+@media (max-width:640px){.ll-t2 th:nth-child(n+6):not(:last-child),.ll-t2 td:nth-child(n+6):not(:last-child){display:none}}
+@media (max-width:640px){.rtiles-f{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.rtiles-f .rtile{padding:9px 10px}.rtiles-f .rtile-n{font-size:18px}.rtiles-f .rtile-l{font-size:11px}}
+/* a score part the bank does not report is left out of its card rather than drawn as a dash */
+.score-card .pillar-na{display:none}

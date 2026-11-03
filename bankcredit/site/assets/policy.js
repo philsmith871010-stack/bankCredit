@@ -16,6 +16,11 @@
   // The weighting model lives in app.js, because a profile page carries no policy.js and must
   // still show the reader's own weights rather than ours.
   var CPW=window.CPW, PILLARS=CPW.PILLARS;
+  // the score parts by the names the Weightings page gives them, so every view uses the same words
+  var PLABEL={}; PILLARS.forEach(function(p){PLABEL[p[0]]=p[1]});
+  // the peer groups by name, as the summaries write them
+  var PEER_LABEL={uk_large:'UK majors',uk_mid:'UK mid-sized banks',uk_small:'UK small banks',uk_bs:'UK building societies',
+    eu_large:'EU and Nordic banks',us:'US banks',ch:'Swiss banks',aus:'Australian banks',can:'Canadian banks',asia:'Asian banks',gulf:'Gulf banks'};
   function weights(){return CPW.weights()}
   function saveWeights(w){CPW.save(w)}
   function rescore(e,w){return CPW.rescore(e,w)}
@@ -65,8 +70,8 @@
         '<td class="pt-name"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+' · '+sovPill(e)+'</div></td>'+
         '<td class="num">'+scoreNum(e.score,e.band,'sc-1')+'</td>'+
         '<td class="mono"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b></td>'+
-        '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1))+'</td>'+
-        '<td class="num mono">'+(e.leverage==null?'—':e.leverage.toFixed(1))+'</td>'+
+        '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1)+'%')+'</td>'+
+        '<td class="num mono">'+(e.leverage==null?'—':e.leverage.toFixed(1)+'%')+'</td>'+
         '<td class="num mono">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
         '<td class="num mono">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
         asofCell(e)+
@@ -153,7 +158,7 @@
   // one number, one colour, one letter - used wherever a score is shown in a row or a card
   function scoreNum(v,band,cls){
     if(v==null)return '<span class="na">\u2014</span>';
-    return '<span class="sc-n'+(cls?' '+cls:'')+'" style="color:'+scoreColour(v)+'">'+v.toFixed(cls==='sc-1'?1:0)+'</span>'+
+    return '<span class="sc-n'+(cls?' '+cls:'')+'" style="color:'+scoreColour(v)+'">'+v.toFixed(0)+'</span>'+
            (band?'<span class="sc-b">'+esc(band)+'</span>':'');
   }
   // A score is a ratio against a scale, so it reads as a meter on the band ramp - one hue,
@@ -320,53 +325,25 @@
     return svg(w,h,inner);
   }
 
-  function tenorScore(items){
-    // the question this answers: are the longest tenors on the weakest names?
-    var pts=items.map(function(it){var e=byId[it.id];return e&&e.score!=null?{t:it.tenor,s:e.score,e:e}:null}).filter(Boolean);
-    if(!pts.length)return '<div class="muted small">no scored names</div>';
-    var w=260,h=52,pad=14;
-    var maxT=Math.max.apply(null,pts.map(function(p){return p.t}));
-    // On a square-root scale: on a straight one 100 days and six months sit a dot's width apart
-    // against five years, and the one drew over the other.
-    var X=function(t){return maxT<=0?w/2:8+Math.sqrt(t/maxT)*(w-20)};
-    var Y=function(s){return (h-pad)-(s/100)*(h-pad-6)};
-    var inner='<line x1="0" x2="'+w+'" y1="'+Y(50).toFixed(1)+'" y2="'+Y(50).toFixed(1)+'" stroke="#e9ecef" stroke-width="1"/>';
-    var weakest=Math.min.apply(null,pts.map(function(p){return p.s}));
-    var longest=Math.max.apply(null,pts.map(function(p){return p.t}));
-    // Two names at the same tenor and much the same score drew one dot on top of the other, and
-    // the box could only speak for the one on top. Marks closer than a dot's width now become one
-    // marker with a count, and one box that lists every name in it.
-    var groups=[];
-    pts.slice().sort(function(a,b){return a.t-b.t||b.s-a.s}).forEach(function(p){
-      var g=groups[groups.length-1];
-      if(g&&g.t===p.t&&Math.abs(Y(g.pts[g.pts.length-1].s)-Y(p.s))<9)g.pts.push(p);else groups.push({t:p.t,pts:[p]});
-    });
-    groups.forEach(function(g){
-      var p=g.pts[0], e=p.e, atOrAbove=pts.filter(function(o){return o.t>=g.t});
-      var minAt=Math.min.apply(null,atOrAbove.map(function(o){return o.s}));
-      var cy=g.pts.reduce(function(a,o){return a+Y(o.s)},0)/g.pts.length;
-      var tip;
-      if(g.pts.length===1){
-        tip=tipd(tipHead(esc(e.short),e.score.toFixed(1)+' \u00b7 band '+esc(e.band||'?'))+
-          '<i>accepted to <em>'+esc(tenorLabel(p.t))+'</em>'+(p.t===longest?' \u2014 your longest':'')+
-          (p.s===weakest?' \u00b7 your weakest score':'')+'</i>'+
-          '<i>'+(e.rating_composite?'rated '+esc(e.rating_composite)+' \u00b7 ':'')+
-          (e.cet1!=null?'CET1 '+e.cet1.toFixed(1)+'% \u00b7 ':'')+(e.lcr!=null?'LCR '+Math.round(e.lcr)+'%':'')+'</i>'+
-          '<i>weakest you accept at '+esc(tenorLabel(p.t))+' or longer: '+minAt.toFixed(1)+'</i>');
-        inner+='<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.s).toFixed(1)+'" r="4.5" fill="'+(BANDC[e.band]||'#7d93ad')+'" stroke="#fff" stroke-width="1.5"/>'+
-               '<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.s).toFixed(1)+'" r="10" fill="transparent"'+tip+'/>';
-      }else{
-        tip=tipd(tipHead(g.pts.length+' names at '+esc(tenorLabel(g.t)),(g.t===longest?'your longest tenor':''))+
-          g.pts.map(function(o){return '<i><em>'+esc(o.e.short)+'</em> '+o.s.toFixed(1)+' \u00b7 band '+esc(o.e.band||'?')+
-            (o.e.rating_composite?' \u00b7 '+esc(o.e.rating_composite):'')+(o.s===weakest?' \u00b7 your weakest':'')+'</i>'}).join('')+
-          '<i>weakest you accept at '+esc(tenorLabel(g.t))+' or longer: '+minAt.toFixed(1)+'</i>');
-        inner+='<circle cx="'+X(g.t).toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="7" fill="'+(BANDC[e.band]||'#7d93ad')+'" stroke="#fff" stroke-width="1.5"/>'+
-               '<text x="'+X(g.t).toFixed(1)+'" y="'+(cy+2.6).toFixed(1)+'" text-anchor="middle" class="pv-n">'+g.pts.length+'</text>'+
-               '<circle cx="'+X(g.t).toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="11" fill="transparent"'+tip+'/>';
-      }
-    });
-    inner+='<text x="0" y="'+h+'" class="pv-ax">short</text><text x="'+w+'" y="'+h+'" text-anchor="end" class="pv-ax">'+tenorLabel(maxT)+'</text>';
-    return svg(w,h,inner);
+  // How the list is spread across tenors: one row a tenor, shortest first, with how many names
+  // are accepted there and the weakest score among them. The question it answers is whether the
+  // longest tenors sit on the weakest names, and a row of words answers it at a glance where a
+  // scatter of dots did not.
+  function tenorMix(items){
+    var by={};
+    items.forEach(function(it){var e=byId[it.id];if(!e)return;var t=+it.tenor||0;(by[t]=by[t]||[]).push(e)});
+    var ts=Object.keys(by).map(Number).sort(function(a,b){return a-b});
+    if(!ts.length)return '<div class="muted small">no tenors set</div>';
+    var most=Math.max.apply(null,ts.map(function(t){return by[t].length}));
+    return '<div class="tmix">'+ts.map(function(t){
+      var es=by[t], sc=es.map(function(e){return e.score}).filter(function(v){return v!=null});
+      var low=sc.length?Math.min.apply(null,sc):null;
+      var tip=tipd(tipHead(esc(tenorLabel(t)),es.length+' name'+(es.length===1?'':'s'))+'<i>'+names(es)+'</i>');
+      return '<div class="tm-r"'+tip+'><span class="tm-t">'+esc(tenorLabel(t))+'</span>'+
+        '<span class="tm-b"><i style="width:'+(es.length/most*100).toFixed(0)+'%"></i></span>'+
+        '<span class="tm-n mono">'+es.length+'</span>'+
+        '<span class="tm-w mono" style="color:'+(low==null?'var(--muted)':scoreColour(low))+'" title="weakest score at this tenor">'+(low==null?'\u2014':low.toFixed(0))+'</span></div>';
+    }).join('')+'</div>';
   }
 
   function overview(items){
@@ -379,16 +356,16 @@
     return '<div class="pv">'+
       '<div class="pv-tiles">'+
         tile(items.length,'counterparties')+
-        tile(w.score!=null?w.score.toFixed(1):'—','weakest score')+
+        tile(w.score!=null?w.score.toFixed(0):'—','weakest score')+
         tile(w.band||'—','weakest band')+
-        tile(med!=null?med.toFixed(1):'—','median score')+
+        tile(med!=null?med.toFixed(0):'—','median score')+
         tile(sc.length+'/'+items.length,'scored')+
         tile(stale,'figures over 180 days',stale?'pv-warn':'')+
       '</div>'+
       '<div class="pv-charts">'+
         '<figure><figcaption>Band mix'+mk('band')+'</figcaption>'+bandMix(es)+'</figure>'+
         '<figure><figcaption>Composite rating'+mk('composite')+'</figcaption>'+ratingHist(es)+'</figure>'+
-        '<figure><figcaption>Score by tenor accepted'+mk('tenor')+'</figcaption>'+tenorScore(items)+'</figure>'+
+        '<figure><figcaption>By tenor'+mk('tenor')+'<span class="tm-key">names \u00b7 weakest</span></figcaption>'+tenorMix(items)+'</figure>'+
       '</div></div>';
   }
 
@@ -453,10 +430,11 @@
     var sd=(b.score_detail&&b.score_detail.pillars)||null;
     var pill=sd?Object.keys(sd).map(function(k){var v=sd[k]||[];var pc=v[0],wt=v[1];
       var col=pillarColour(pc);
-      var tip=tipd(tipHead(esc(k.replace(/_/g,' ')),(pc==null?'not held':pc.toFixed(0)+' of 100'))+
+      var lab=PLABEL[k]||k;
+      var tip=tipd(tipHead(esc(lab),(pc==null?'not held':pc.toFixed(0)+' of 100'))+
         '<i>worth <em>'+(wt==null?'0':wt)+'%</em> of the score'+(pc==null?' \u2014 re-scaled away, since this bank does not publish it':'')+'</i>'+
         (pc!=null?'<i>'+(pc>=80?'strong':pc>=60?'middling':pc>=40?'weak':'very weak')+' against the method\u2019s thresholds</i>':''));
-      return '<div class="md-pill"'+tip+'><span>'+esc(k.replace(/_/g,' '))+'</span>'+
+      return '<div class="md-pill"'+tip+'><span>'+esc(lab)+'</span>'+
              '<div class="meter meter-sm"><i style="width:'+(pc==null?0:Math.max(0,Math.min(100,pc)))+'%;background:'+col+'"></i></div>'+
              '<b style="color:'+col+'">'+(pc==null?'\u2014':pc.toFixed(0))+'</b><i>w'+(wt==null?'':wt)+'</i></div>'}).join(''):'';
     // The same panels the open card uses: a ruled heading on a white box on a tinted ground. The
@@ -472,7 +450,7 @@
         sect('Score make-up'+mk('pillar'),(e.score==null?'':'score '+e.score.toFixed(0)),
           (pill?'<div class="md-pills">'+pill+'</div>':'<div class="muted small">No public score for this entity.</div>')+
           (b.percentile!=null?'<p class="md-foot">Stronger than <b>'+Math.round(b.percentile)+'%</b> of its peer group'+
-            mk('percentile')+' ('+esc(String(b.peer_group||'').replace(/_/g,' '))+').</p>':''))+
+            mk('percentile')+(PEER_LABEL[b.peer_group]?', '+esc(PEER_LABEL[b.peer_group]):'')+'.</p>':''))+
       '</div>'+
     '</div>';
   }
@@ -639,8 +617,8 @@
             scoreNum(e.score,e.band,'sc-1'))+
           (e.score==null&&e.unscored?'<div class="small muted">'+esc(e.unscored)+'</div>':'')+'</td>'+
         '<td class="mono">'+esc(e.rating_composite||'—')+'</td>'+
-        '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1))+'</td>'+
-        '<td class="num mono">'+(e.leverage==null?'—':e.leverage.toFixed(1))+'</td>'+
+        '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1)+'%')+'</td>'+
+        '<td class="num mono">'+(e.leverage==null?'—':e.leverage.toFixed(1)+'%')+'</td>'+
         '<td class="num mono">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
         '<td class="num mono">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
         xcells(e)+
@@ -678,6 +656,9 @@
     ['uni-q','uni-region','uni-type','uni-band','uni-scored','uni-tenor','uni-other-n','uni-other-u'].forEach(function(id){
       var el=document.getElementById(id); if(el)el.addEventListener('input',renderUni);
     });
+    var ft=document.getElementById('uni-ftoggle'), fr=document.getElementById('uni-row2');
+    if(ft&&fr)ft.addEventListener('click',function(){var o=!fr.classList.contains('open');fr.classList.toggle('open',o);
+      ft.setAttribute('aria-expanded',String(o));ft.classList.toggle('active',o)});
     var chips=document.getElementById('uni-chips');
     if(chips)chips.addEventListener('click',function(ev){
       var b=ev.target.closest('[data-uf]'); if(!b)return;
@@ -819,7 +800,7 @@
           '<span class="ll-track">'+bar+'</span></td>'+
         '<td class="ll-cpc"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
           '<span class="ll-ags">'+(e.rating?toneGlyphs(e.rating.tones):'')+'</span></td>'+
-        kpi('cet1',e.cet1,1)+kpi('leverage',e.leverage,1)+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
+        kpi('cet1',e.cet1,1,'%')+kpi('leverage',e.leverage,1,'%')+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
         asofCell(e)+
         '<td class="ll-mkt">'+mp+'</td>'+
         '<td class="ll-addc"><button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></td></tr>';
@@ -903,7 +884,7 @@
         '<td><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+'<div class="small muted">'+esc(e.name)+' \u00b7 '+sovPill(e)+'</div></td>'+
         '<td class="num">'+scoreNum(e.score,e.band,'sc-1')+'</td>'+
         '<td class="mono"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'\u2014')+'</b></td>'+
-        '<td class="num mono">'+(e.cet1==null?'\u2014':e.cet1.toFixed(1))+'</td>'+
+        '<td class="num mono">'+(e.cet1==null?'\u2014':e.cet1.toFixed(1)+'%')+'</td>'+
         '<td class="num mono">'+(e.lcr==null?'\u2014':Math.round(e.lcr)+'%')+'</td>'+
         asofCell(e)+'<td>'+mkt(e.market,1)+'</td>'+
         '<td class="num"><button class="filter pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add at '+esc(tenorLabel(t))+'</button></td></tr>';
@@ -960,8 +941,8 @@
             // legal name where there is room for a second line, and up beside the name where there
             // is not, which is a card in a two-column list. A pill is a dozen bytes; a layout that
             // has to choose between the country and a third line of wrapping is not.
-            '<div class="cp-id"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>'+typeTag(e)+
-              '<span class="cp-sov">'+sovPill(e)+'</span>'+
+            '<div class="cp-id"><div class="cp-line"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html" title="'+esc(e.name)+'">'+esc(e.short)+'</a>'+typeTag(e)+
+              '<span class="cp-sov">'+sovPill(e)+'</span></div>'+
               '<div class="cp-sub">'+esc(e.name)+' · '+sovPill(e)+'</div></div>'+
             '<div class="cp-stats">'+
               kv(scoreNum(e.score,e.band),'score','ck-score ck-sep')+
@@ -1021,7 +1002,7 @@
           '<span class="ll-bar">the weakest you accept at '+esc(tenorLabel(t))+
             '<b class="band mono band-'+esc(w.band||'')+'">'+esc(w.band||'?')+'</b>'+
             '<b style="color:'+gradeColour(wg)+'">'+esc(wg)+'</b>'+
-            '<b style="color:'+scoreColour(w.score)+'">'+(w.score!=null?w.score.toFixed(1):'?')+'</b></span></div>'+
+            '<b style="color:'+scoreColour(w.score)+'">'+(w.score!=null?w.score.toFixed(0):'?')+'</b></span></div>'+
           '<div class="ll-body">'+llBody(x)+'</div></div>';
       });
       ll=(tenors.length>1?'<div class="ll-tenors filters">'+chips+'</div>':'')+panes;
@@ -1088,16 +1069,10 @@
         '<output class="wt-o" for="wt-'+k+'">'+(v/total*100).toFixed(0)+'%</output></div>';
     }).join('');
     box.innerHTML=
-      '<div class="wt-head"><p class="small muted">Move a slider and every score on the site is recomputed with your weights, '+
-        'on this device only. The six are scaled to add up to 100%.</p>'+
-        '<button class="filter" id="wt-reset"'+(w.__custom?'':' disabled')+'>Back to the starting point</button></div>'+
-      '<div class="wt-body"><div><div class="wt-grid">'+rows+'</div>'+weightEffect()+'</div>'+
-      '<aside class="wt-foot">'+
-        '<p><b>Not a credit rating.</b> Arithmetic on the figures banks publish and the ratings their agencies '+
-        'publish, combined your way. It is not a credit rating under the UK or EU Credit Rating Agency Regulations.</p>'+
-        '<p><b>Not advice.</b> Your counterparty policy, limits and tenors remain yours. The starting weights are '+
-        'one reasonable set, not a recommendation.</p>'+
-      '</aside></div>';
+      '<div class="wt-body"><div><div class="wt-grid">'+rows+'</div>'+weightEffect()+
+        '<div class="wt-actions"><button class="filter" id="wt-reset"'+(w.__custom?'':' disabled')+'>Back to the starting point</button></div></div></div>'+
+      '<p class="wt-note small muted"><b>Not a credit rating</b> under the UK or EU Credit Rating Agency Regulations: arithmetic on '+
+        'published figures and ratings, combined your way. <b>Not advice:</b> your policy, limits and tenors remain yours.</p>';
   }
 
   // Moving a slider is abstract until you see what it did. This is the answer to "and so?": how far

@@ -664,7 +664,7 @@ def test_the_add_names_button_opens_the_choose_names_page(page, server):
     _seed_many(page, server, 3)
     assert page.eval_on_selector("#uni-open", "e => e.textContent") == "Add names"
     assert page.eval_on_selector("#uni-open", "e => e.closest('.pol-summary') !== null"), "up beside the view switch"
-    assert page.eval_on_selector("#uni-open", "e => getComputedStyle(e).backgroundColor") == "rgb(42, 120, 214)"
+    assert page.eval_on_selector("#uni-open", "e => getComputedStyle(e).backgroundColor") == "rgb(10, 37, 64)", "the navy primary"
     page.eval_on_selector("#uni-open", "e => e.click()")
     page.wait_for_timeout(300)
     assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "universe"
@@ -692,11 +692,9 @@ def test_the_weightings_come_first_and_change_on_their_own_page(page, server):
     visit(page, server, TOOL)
     page.wait_for_timeout(900)
     # the weightings are step one of Build your strategy, the panel a first visit opens on
-    assert page.eval_on_selector("#wt-line", "e => e.closest('[data-panel=\"strategy\"]') !== null")
+    assert page.eval_on_selector("#wt-change", "e => e.closest('[data-panel=\"strategy\"] #st-1') !== null")
     assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "strategy"
-    assert page.eval_on_selector("#wt-line", "e => e.getBoundingClientRect().height") > 0, "the line is drawn"
-    line = page.inner_text("#wt-vals")
-    assert "agency rating" in line and "%" in line and "starting point" in line
+    assert "published" in page.inner_text("#st-weights").lower()
     page.eval_on_selector("#wt-change", "e => e.click()")
     page.wait_for_timeout(300)
     assert page.eval_on_selector(".tabs-card .tab.active", "e => e.dataset.tab") == "weights", "Change opens the Weightings page"
@@ -705,7 +703,7 @@ def test_the_weightings_come_first_and_change_on_their_own_page(page, server):
     page.wait_for_timeout(400)
     page.eval_on_selector('#tnav .tn-a[data-nav="strategy"]', "e => e.click()")
     page.wait_for_timeout(300)
-    assert "set by you" in page.inner_text("#wt-vals")
+    assert "your own" in page.inner_text("#st-weights").lower()
     assert not page.errors, page.errors
 
 
@@ -739,26 +737,26 @@ def test_a_name_is_watched_from_the_table_and_listed_under_the_portfolio(page, s
     assert not page.errors, page.errors
 
 
-def test_names_on_the_same_spot_of_the_tenor_chart_become_one_marker(page, server):
-    """Two dots on top of each other could only speak for the one on top."""
-    _seed_many(page, server, 6)               # six names at 12 months, scores within a few points
-    assert page.eval_on_selector_all(".pv-n", "e => e.length") >= 1
-    assert sum(int(x) for x in page.eval_on_selector_all(".pv-n", "e => e.map(x => x.textContent)")) + \
-        page.eval_on_selector_all("figure:has(.pv-n) circle[r='4.5']", "e => e.length") == 6
+def test_the_list_says_how_many_names_sit_at_each_tenor(page, server):
+    """A row a tenor, in words: the scatter of dots it replaced could not be read at a glance."""
+    _seed_many(page, server, 6)               # six names at 12 months
+    rows = page.eval_on_selector_all(".tmix .tm-r", "e => e.map(x => [x.querySelector('.tm-t').textContent, +x.querySelector('.tm-n').textContent])")
+    assert sum(n for _, n in rows) == 6, rows
+    assert all(t for t, _ in rows), rows
     assert not page.errors, page.errors
 
 
 def test_a_definition_opened_by_hovering_closes_when_the_pointer_leaves(page, server):
     """It stayed until it was clicked away, and a reader who had only brushed a mark was stuck with it."""
-    visit(page, server, TOOL)
+    visit(page, server, TOOL + "#universe")
     page.wait_for_timeout(900)
-    page.hover("#wt-line .i")
+    page.hover("#uni-table thead .i >> nth=0")
     page.wait_for_timeout(400)
     assert not page.eval_on_selector(".tip", "e => e.hidden")
     page.mouse.move(600, 700)
     page.wait_for_timeout(400)
     assert page.eval_on_selector(".tip", "e => e.hidden"), "a hover-opened box goes when the pointer does"
-    page.click("#wt-line .i")
+    page.click("#uni-table thead .i >> nth=0")
     page.wait_for_timeout(300)
     page.mouse.move(600, 700)
     page.wait_for_timeout(400)
@@ -840,7 +838,7 @@ def test_the_panel_says_what_this_is_not(page, server):
     visit(page, server, TOOL)
     page.eval_on_selector("#wt-change", "e => e.click()")
     page.wait_for_timeout(400)
-    said = page.eval_on_selector(".wt-foot", "e => e.textContent").lower()
+    said = page.eval_on_selector(".wt-note", "e => e.textContent").lower()
     for phrase in ("not a credit rating", "not advice", "credit rating agency regulations"):
         assert phrase in said, phrase
 

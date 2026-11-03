@@ -43,7 +43,7 @@
                ['liquidity','Liquidity',15,'LCR and NSFR'],
                ['asset_quality','Asset quality',5,'non-performing loan ratio'],
                ['profitability','Profitability',5,'return on equity and assets, cost-income'],
-               ['stability','Capital headroom',10,'CET1 over the overall requirement'],
+               ['stability','Headroom',10,'CET1 above the bank\'s own requirement'],
                ['rating','Agency rating',40,'the average of the three main agencies\' long-term ratings on it']];
   var DEFAULTW={};PILLARS.forEach(function(p){DEFAULTW[p[0]]=p[2]});
   // the thresholds and caps the published method uses; the weights are the only part you set
@@ -469,7 +469,7 @@ document.addEventListener('click',function(e){
       if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
     nav.querySelectorAll('.tn-g').forEach(function(a){var on=a.dataset.group===g;a.classList.toggle('active',on);
       if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
-    nav.querySelectorAll('.tn-pages').forEach(function(r){r.hidden=r.dataset.group!==g});
+    nav.querySelectorAll('.tn-pages').forEach(function(r){r.hidden=r.dataset.group!==g||r.classList.contains('tn-solo')});
     if(window.scrollMarks)window.scrollMarks();
   }
   var NAV_FOR={};

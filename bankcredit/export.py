@@ -416,7 +416,7 @@ AUDIT_METRICS = ["cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_r
 # The order the pillar sub-scores are exported in, and the order the weighting panel lists them.
 PILLAR_ORDER = ("capital", "liquidity", "asset_quality", "profitability", "stability", "rating")
 
-COMPARE_METRICS = [("score", "Counterparty score", "", 1, True), ("rating_grade", "Composite rating (grade, 1 = AAA)", "", 1, False), ("cet1_ratio", "CET1 ratio", "%", 1, True), ("leverage_ratio", "Leverage ratio", "%", 1, True),
+COMPARE_METRICS = [("score", "Counterparty score", "", 0, True), ("rating_grade", "Composite rating (grade, 1 = AAA)", "", 1, False), ("cet1_ratio", "CET1 ratio", "%", 1, True), ("leverage_ratio", "Leverage ratio", "%", 1, True),
                    ("total_capital_ratio", "Total capital ratio", "%", 1, True), ("lcr", "LCR", "%", 0, True), ("nsfr", "NSFR", "%", 0, True),
                    ("roe", "Return on equity", "%", 1, True), ("roa", "Return on assets", "%", 2, True), ("nim", "Net interest margin", "%", 2, True),
                    ("efficiency_ratio", "Cost to income", "%", 0, False), ("npl_ratio", "Non-performing loans", "%", 2, False),

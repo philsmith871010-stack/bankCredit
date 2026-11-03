@@ -321,7 +321,11 @@ def topnav(root: str, active: str) -> str:
             page = ' aria-current="page"' if here else ""
             links += f'<a class="tn-a{" active" if here else ""}" href="{root}{href}" data-nav="{k}"{page}>{esc(label)}</a>'
         shown = "" if on else " hidden"
-        rows += f'<div class="tn-pages" data-group="{g}"{shown}>{links}</div>'
+        # a group of one page needs no second row: the group is the page
+        if len(items) > 1:
+            rows += f'<div class="tn-pages" data-group="{g}"{shown}>{links}</div>'
+        else:
+            rows += f'<div class="tn-pages tn-solo" data-group="{g}" hidden>{links}</div>'
     return (f'<nav class="tnav" id="tnav" aria-label="{esc(PRODUCT[0] + PRODUCT[1])}">'
             f'<div class="tn-groups">{groups}</div>{rows}</nav>')
 
@@ -357,12 +361,12 @@ def shell(title: str, content: str, active: str, root: str = "", generated: str 
 </head><body{f' class="{body_class}"' if body_class else ''}>{symbols()}
 <header class="top">
 <a class="brand" href="{root}index.html"><span class="dot"></span>PWLB<span class="brand-accent">today</span></a>
-<div class="ptitle"><span class="ptitle-name">{PRODUCT[0]}<span class="brand-accent">{PRODUCT[1]}</span></span><span class="ptitle-sep"></span><span class="ptitle-strap">{esc(strap)}</span></div>
-<div class="top-right"><span class="built">{ico("clock", 13, MUTED)} Built {esc(generated[:16].replace("T", " "))} UTC</span><span class="beta">Beta</span></div></header>
+<div class="ptitle"><span class="ptitle-name">{PRODUCT[0]}<span class="brand-accent">{PRODUCT[1]}</span></span></div>
+<div class="top-right"><span class="beta">Beta</span></div></header>
 {topnav(root, active)}
 <div class="frame"><main class="main">{content}</main></div>
 <dialog id="gloss-dlg" class="gloss-dlg"></dialog>
-<footer class="foot"><button type="button" class="glink" id="glink">What do these numbers mean?</button> {PRODUCT[0]}{PRODUCT[1]} is information, not advice. Public regulatory data, public rating registers and traded market prices; every figure carries its source and date. Scores use the published method and can be wrong. <a href="{root}admin/index.html#method">Method</a> · <a href="{root}admin/index.html#status">Data status</a></footer>
+<footer class="foot"><button type="button" class="glink" id="glink">What do these numbers mean?</button> Information, not advice: every figure carries its source and date, and scores can be wrong. <span class="built">Built {esc(generated[:16].replace("T", " "))} UTC</span></footer>
 <script id="gloss" type="application/json">{glossary.payload()}</script>
 <script src="{root}assets/app.js?v={stamp(generated)}"></script></body></html>"""
 
@@ -378,6 +382,10 @@ AGENCY_NAME = {"fitch": "Fitch", "sp": "S&P", "moodys": "Moody's", "dbrs": "DBRS
 # would be unreadable, so the letter grades get the lines and the notches sit between them.
 # The order the weighting model reads a bank's pillar sub-scores in, shared with export.PILLAR_ORDER.
 PILLAR_KEYS = ("capital", "liquidity", "asset_quality", "profitability", "stability", "rating")
+# One name for each part of the score, everywhere it is shown: the Weightings page, the profile's
+# score card, a card's pop-up and the Method. The key "stability" predates the name and stays.
+PILLAR_LABEL = {"rating": "Agency rating", "capital": "Capital", "liquidity": "Liquidity",
+                "asset_quality": "Asset quality", "profitability": "Profitability", "stability": "Headroom"}
 
 SCALE = ["AAA", "AA+", "AA", "AA-", "A+", "A", "A-", "BBB+", "BBB", "BBB-", "BB+", "BB", "BB-",
          "B+", "B", "B-", "CCC"]
