@@ -372,6 +372,22 @@ def page_bank(b, generated):
     peer = b.get("peer") or {}
     score = b["score"]
     score_html = f'<span class="mono huge">{score:.0f}</span>' if score is not None else '<span class="mono huge muted">—</span>'
+    # why the entity's own Pillar 3 has stopped. Most such names have no score at all; one whose
+    # last disclosure is recent enough still carries the score it supports, and says so
+    npub = b.get("not_published")
+    np_note = ""
+    if npub:
+        last = npub.get("last_report") or ""
+        if score is not None and last:
+            d = date.fromisoformat(last)
+            close = (f"The score shown rests on that last disclosure, for {d.day} {d:%B %Y}, until its "
+                     "figures are too old to carry one.")
+        else:
+            close = ("A score needs current capital ratios for this entity, so none is shown; the rating "
+                     "and the standing above are what to judge this name on.")
+        np_note = (f'<div class="np-note"><b>{c.esc(npub["reason"][0].upper() + npub["reason"][1:])}.</b> '
+                   f'{c.esc(npub.get("standing") or "")}. {close} <a href="{c.esc(npub.get("source") or "")}" '
+                   f'target="_blank" rel="noopener">Source</a></div>')
     # the pillars the browser re-weighs with the reader's own weights; none where the score is
     # withheld, so a reader's weights cannot draw a number the method refuses
     pw_attr = (f' data-pw="{c.esc(json.dumps([b["score_detail"]["pillars"].get(k, (None,))[0] for k in c.PILLAR_KEYS]))}"'
@@ -549,7 +565,7 @@ def page_bank(b, generated):
 <div class="score-main"><div class="score-fig">{score_html}<div class="score-meta"><div>{pct}{c.info("percentile") if b.get("percentile") is not None else c.info("peer_group")}</div><div>coverage{c.info("coverage")} <span class="mono">{cov*100:.0f}%</span> of the method</div></div>
 {c.ribbon(score, peer.get("p25"), peer.get("p50"), peer.get("p75"), 330, 12, fluid=True)}</div>
 <div class="pillars">{prow}</div></div>
-{f'<div class="np-note"><b>{c.esc(b["not_published"]["reason"][0].upper() + b["not_published"]["reason"][1:])}.</b> {c.esc(b["not_published"].get("standing") or "")}. A score needs current capital ratios for this entity, so none is shown; the rating and the standing above are what to judge this name on. <a href="{c.esc(b["not_published"].get("source") or "")}" target="_blank" rel="noopener">Source</a></div>' if b.get("not_published") else ''}
+{np_note}
 <div class="score-note">The agency rating and the bank's own ratios, each weighted (w).{c.info("pillar")}{' <span class="b" style="color:#ffd9b3">No score: a score needs an agency rating and current capital ratios.</span>' if b.get("unscored") else (' <span class="b" style="color:#ffd9b3">Capped by rating at ' + f"{score_cap(b.get('rating_grade')):.0f}" + '.</span>' if b.get("rating_grade") is not None and score_cap(b.get("rating_grade")) < 100 else '')} {('Market signal <span class="mono" style="color:#fff;font-weight:600">' + ("+" if overlay > 0 else "") + f"{overlay:.1f}" + '</span>. ') if overlay else ''}<a href="../admin/index.html#method">Method</a></div></div>
 {ratings_tile(b)}</div>
 {summary_block(b, generated)}
