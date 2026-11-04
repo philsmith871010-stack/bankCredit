@@ -304,7 +304,7 @@ PILLAR_INPUTS = {
     "rating": "the average of the three main agencies' long-term ratings on this entity",
     "capital": "CET1, leverage and total capital ratios against Basel thresholds",
     "liquidity": "liquidity coverage ratio and net stable funding ratio",
-    "stability": "CET1 ratio over the entity's overall capital requirement",
+    "stability": "total capital ratio over the entity's overall capital requirement",
     "asset_quality": "the non-performing or noncurrent loan ratio",
     "profitability": "return on equity, return on assets and cost to income",
 }
@@ -317,8 +317,8 @@ def pillar_note(k: str, cell) -> str:
     if cell[0] is None:
         return f"{label}: {what}. Not published for this entity, so its weight is re-scaled over the rest."
     if cell[0] == 0 and k == "stability":
-        return (f"{label}: {what}. Sub-score 0: CET1 is below the requirement the method measures it "
-                f"against, so there is no headroom to score.")
+        return (f"{label}: {what}. Sub-score 0: total capital is at or below the requirement, so "
+                f"there is no headroom to score.")
     return (f"{label}: {what}. Sub-score {cell[0]:.0f} out of 100. The weight beside it, w, is the "
             f"reader's: set it on the Weightings tab.")
 
@@ -559,7 +559,7 @@ HOME_TABS_HIDDEN = ()
 
 
 def page_method(generated, inner: bool = False):
-    mname = lambda m: METRICS.get(m) or {"cet1_headroom": "CET1 above the bank's own requirement (points)"}.get(m, m.replace("_", " "))
+    mname = lambda m: METRICS.get(m) or {"capital_headroom": "Total capital above the bank's own requirement (points)"}.get(m, m.replace("_", " "))
     pillar_rows = "".join(f'<tr><td class="b">{c.PILLAR_LABEL.get(k, k)}</td><td class="tnum">{w}</td><td>{", ".join(mname(m) for m in ms)}</td></tr>' for k, (w, ms) in PILLARS.items())
     # each threshold as a small cell, the ratio's value over the sub-score it earns
     steps = lambda pts: "".join(f'<span class="thr"><b>{v:g}</b><i>{sc}</i></span>' for v, sc in pts)

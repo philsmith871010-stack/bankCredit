@@ -1,7 +1,8 @@
+import pytest
 from bankcredit import score as S
 
 
-FULL = {"cet1_ratio": 27.0, "leverage_ratio": 8.0, "total_capital_ratio": 28.0, "lcr": 1000.0, "nsfr": 700.0, "cet1_headroom": 7.5}
+FULL = {"cet1_ratio": 27.0, "leverage_ratio": 8.0, "total_capital_ratio": 28.0, "lcr": 1000.0, "nsfr": 700.0, "overall_capital_requirement": 20.5}
 
 
 def test_rating_anchor_and_unrated_cap():
@@ -68,3 +69,13 @@ def test_the_shipped_records_each_carry_a_reason_and_a_source():
         assert r.get("reason"), entity
         assert r.get("source", "").startswith("http"), entity
         assert r.get("standing"), entity
+
+
+def test_headroom_is_total_capital_over_the_overall_requirement():
+    """The overall requirement is a total-capital figure, so CET1 measured against it read a bank
+    with 19.6% total capital against an 18.0% requirement as having no headroom at all."""
+    r = S.compute({"cet1_ratio": 13.8, "total_capital_ratio": 19.6, "overall_capital_requirement": 18.0}, 0.0, 5.0)
+    assert r.inputs["capital_headroom"][0] == pytest.approx(1.6)
+    assert 0 < r.pillars["stability"][0] < 60
+    no_tc = S.compute({"cet1_ratio": 13.8, "overall_capital_requirement": 18.0}, 0.0, 5.0)
+    assert no_tc.pillars["stability"][0] is None, "without total capital there is nothing like for like to score"

@@ -43,7 +43,7 @@
                ['liquidity','Liquidity',15,'LCR and NSFR'],
                ['asset_quality','Asset quality',5,'non-performing loan ratio'],
                ['profitability','Profitability',5,'return on equity and assets, cost-income'],
-               ['stability','Headroom',10,'CET1 above the bank\'s own requirement'],
+               ['stability','Headroom',10,'total capital above the bank\'s own requirement'],
                ['rating','Agency rating',40,'the average of the three main agencies\' long-term ratings on it']];
   var DEFAULTW={};PILLARS.forEach(function(p){DEFAULTW[p[0]]=p[2]});
   // the thresholds and caps the published method uses; the weights are the only part you set

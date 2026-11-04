@@ -44,8 +44,10 @@ PILLARS = {
         "efficiency_ratio": [(40.0, 100), (55.0, 80), (65.0, 60), (75.0, 35), (90.0, 10), (110.0, 0)],
     }),
     "stability": (10, {
-        # headroom of CET1 over overall requirement, in percentage points
-        "cet1_headroom": [(0.0, 0), (1.5, 35), (3.0, 60), (5.0, 80), (8.0, 100)],
+        # total capital over the overall capital requirement (KM1 rows 3 and 11a), in percentage points.
+        # Like for like: the requirement is a total-capital figure, so CET1 against it read 44 of 91
+        # banks as having none (docs/headroom.md)
+        "capital_headroom": [(0.0, 0), (1.5, 35), (3.0, 60), (5.0, 80), (8.0, 100)],
     }),
 }
 BANDS = [(80, "A"), (65, "B"), (50, "C"), (35, "D"), (0, "E")]
@@ -113,11 +115,8 @@ def compute(latest: dict[str, float], overlay: float = 0.0, rating_grade: float 
     """latest: metric code -> latest value. overlay: signed adjustment from the private layer, capped.
     rating_grade: composite agency grade, 1 (AAA) to 17 (CCC), or None when no agency rates the bank."""
     latest = dict(latest)
-    if "cet1_ratio" in latest and "overall_capital_requirement" in latest and "cet1_headroom" not in latest:
-        # approximate CET1 headroom as CET1 ratio minus overall requirement (KM1 row) when a CET1-specific requirement is absent
-        latest["cet1_headroom"] = latest["cet1_ratio"] - latest["overall_capital_requirement"]
-    if "cet1_ratio" in latest and "cet1_requirement" in latest:
-        latest["cet1_headroom"] = latest["cet1_ratio"] - latest["cet1_requirement"]
+    if latest.get("total_capital_ratio") is not None and latest.get("overall_capital_requirement") is not None:
+        latest["capital_headroom"] = latest["total_capital_ratio"] - latest["overall_capital_requirement"]
     pillars, weighted, weight_used, inputs = {}, 0.0, 0.0, {}
     for name, (weight, metrics) in PILLARS.items():
         subs = []

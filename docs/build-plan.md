@@ -94,7 +94,7 @@ Public component, published in full on the Method page. Two parts:
 | Rating anchor | Composite long-term agency rating (median across agencies, AAA to CCC on a common scale) mapped to a sub-score; 40 when unrated | 40 |
 | Capital | CET1 ratio, leverage ratio, total capital ratio | 25 |
 | Liquidity and funding | LCR, NSFR | 15 |
-| Stability | CET1 headroom over the stated requirement | 10 |
+| Stability | Total capital headroom over the overall requirement | 10 |
 | Asset quality | Non-performing loan ratio | 5 |
 | Profitability | Return on equity, return on assets, cost-to-income | 5 |
 

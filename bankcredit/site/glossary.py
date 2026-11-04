@@ -66,7 +66,8 @@ TERMS: dict[str, tuple[str, str, str]] = {
     "headroom": (
         "Headroom",
         "How far the bank's capital sits above the minimum its regulator requires.",
-        "Measured in percentage points. Fall into it and the bank faces limits on dividends, "
+        "Measured in percentage points: the total capital ratio less the overall capital requirement, "
+        "both from the bank's own KM1 table. Fall into it and the bank faces limits on dividends, "
         "bonuses and coupon payments long before there is any question about deposits.",
     ),
 
