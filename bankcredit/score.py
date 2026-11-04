@@ -51,6 +51,12 @@ PILLARS = {
     }),
 }
 BANDS = [(80, "A"), (65, "B"), (50, "C"), (35, "D"), (0, "E")]
+# 8% Pillar 1 plus the 2.5% conservation buffer: no total-capital requirement can be lower, so a
+# smaller "overall requirement" was disclosed on a CET1 basis (Standard Chartered to March 2026)
+OCR_FLOOR = 10.5
+# a total SREP requirement of 8% is Pillar 1 alone: an overall requirement built on it leaves out
+# Pillar 2A, and headroom over it is not comparable with a bank whose requirement includes it
+PILLAR1_TOTAL = 8.0
 OVERLAY_CAP = 10.0
 
 
@@ -115,8 +121,9 @@ def compute(latest: dict[str, float], overlay: float = 0.0, rating_grade: float 
     """latest: metric code -> latest value. overlay: signed adjustment from the private layer, capped.
     rating_grade: composite agency grade, 1 (AAA) to 17 (CCC), or None when no agency rates the bank."""
     latest = dict(latest)
-    if latest.get("total_capital_ratio") is not None and latest.get("overall_capital_requirement") is not None:
-        latest["capital_headroom"] = latest["total_capital_ratio"] - latest["overall_capital_requirement"]
+    tcr, ocr, srep = (latest.get(m) for m in ("total_capital_ratio", "overall_capital_requirement", "total_srep_requirement"))
+    if tcr is not None and ocr is not None and ocr >= OCR_FLOOR and not (srep is not None and srep <= PILLAR1_TOTAL + 0.005):
+        latest["capital_headroom"] = tcr - ocr
     pillars, weighted, weight_used, inputs = {}, 0.0, 0.0, {}
     for name, (weight, metrics) in PILLARS.items():
         subs = []

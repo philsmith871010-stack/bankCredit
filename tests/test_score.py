@@ -79,3 +79,28 @@ def test_headroom_is_total_capital_over_the_overall_requirement():
     assert 0 < r.pillars["stability"][0] < 60
     no_tc = S.compute({"cet1_ratio": 13.8, "overall_capital_requirement": 18.0}, 0.0, 5.0)
     assert no_tc.pillars["stability"][0] is None, "without total capital there is nothing like for like to score"
+
+
+def test_headroom_needs_a_total_capital_requirement_that_includes_pillar_2a():
+    base = {"cet1_ratio": 14.0, "total_capital_ratio": 19.0}
+    cet1_basis = S.compute({**base, "overall_capital_requirement": 10.3}, 0.0, 5.0)
+    assert cet1_basis.pillars["stability"][0] is None, "below 8% plus the conservation buffer it is a CET1 figure"
+    no_p2a = S.compute({**base, "overall_capital_requirement": 12.5, "total_srep_requirement": 8.0}, 0.0, 5.0)
+    assert no_p2a.pillars["stability"][0] is None, "a requirement without Pillar 2A is not comparable"
+    full = S.compute({**base, "overall_capital_requirement": 15.0, "total_srep_requirement": 10.6}, 0.0, 5.0)
+    assert full.inputs["capital_headroom"][0] == 4.0
+
+
+def test_a_score_uses_only_current_figures_and_a_requirement_from_the_same_period():
+    from datetime import date
+    from bankcredit.export import scoring_inputs
+    pt = lambda d, v: {"d": d, "v": v}
+    series = {"cet1_ratio": [pt("2026-06-30", 14.0)], "npl_ratio": [pt("2020-06-30", 1.1)],
+              "total_capital_ratio": [pt("2025-12-31", 19.0)],
+              "overall_capital_requirement": [pt("2022-12-31", 13.1)], "roe": [pt("2025-12-31", 9.0)]}
+    got = scoring_inputs(series, date(2026, 11, 4))
+    assert "npl_ratio" not in got, "an NPL ratio from 2020 is not today's"
+    assert got["roe"] == 9.0 and got["cet1_ratio"] == 14.0
+    assert "overall_capital_requirement" not in got, "a 2022 requirement against 2025 capital"
+    series["overall_capital_requirement"].append(pt("2025-12-31", 14.1))
+    assert scoring_inputs(series, date(2026, 11, 4))["overall_capital_requirement"] == 14.1

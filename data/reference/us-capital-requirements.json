@@ -1,0 +1,237 @@
+{
+  "_note": "US capital requirements on the Standardized approach, the requirement the Federal Reserve publishes and the ratio the US extractor reads (bankcredit/extract/us.py). No US filing states an overall capital requirement, so it is built here: for a holding company, the minimum (CET1 4.5, Tier 1 6, total 8) plus its stress capital buffer and GSIB surcharge, which together form its Standardized approach capital conservation buffer (12 CFR 217.11(c)); the countercyclical buffer is 0 in the US. For an insured bank subsidiary, the minimum plus the fixed 2.5 capital conservation buffer (12 CFR 3.11 for national banks, 217.11 for state member banks; 324.11 would apply to a state nonmember bank and none is held). Each entity lists its periods oldest first; a period holds from its effective date until the next. The SCBs effective 1 October 2025 were kept unchanged for 2026 (Board vote, 4 February 2026; Large Bank Capital Requirements, June 2026), so no requirement effective 1 October 2026 exists. The GSIB surcharge is reset each 1 January: the June 2026 table gives those in effect from 1 January 2026, where only Goldman Sachs's changed (3.0 to 3.5). Checked 4 November 2026 against the Fed tables cited.",
+  "jpmorgan-chase": [
+    {
+      "effective": "2025-10-01",
+      "cet1_requirement": 11.5,
+      "tier1_requirement": 13.0,
+      "overall_capital_requirement": 15.0,
+      "scb": 2.5,
+      "gsib_surcharge": 4.5,
+      "basis": "Standardized approach: minimum 4.5 + stress capital buffer 2.5 + GSIB surcharge 4.5; Tier 1 and total capital add the same buffer to their 6 and 8 minimums",
+      "source": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20250829.pdf",
+      "confirmed": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20260624.pdf"
+    }
+  ],
+  "bank-of-america": [
+    {
+      "effective": "2025-10-01",
+      "cet1_requirement": 10.0,
+      "tier1_requirement": 11.5,
+      "overall_capital_requirement": 13.5,
+      "scb": 2.5,
+      "gsib_surcharge": 3.0,
+      "basis": "Standardized approach: minimum 4.5 + stress capital buffer 2.5 + GSIB surcharge 3.0; Tier 1 and total capital add the same buffer to their 6 and 8 minimums",
+      "source": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20250829.pdf",
+      "confirmed": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20260624.pdf"
+    }
+  ],
+  "citigroup": [
+    {
+      "effective": "2025-10-01",
+      "cet1_requirement": 11.6,
+      "tier1_requirement": 13.1,
+      "overall_capital_requirement": 15.1,
+      "scb": 3.6,
+      "gsib_surcharge": 3.5,
+      "basis": "Standardized approach: minimum 4.5 + stress capital buffer 3.6 + GSIB surcharge 3.5; Tier 1 and total capital add the same buffer to their 6 and 8 minimums",
+      "source": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20250829.pdf",
+      "confirmed": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20260624.pdf"
+    }
+  ],
+  "wells-fargo": [
+    {
+      "effective": "2025-10-01",
+      "cet1_requirement": 8.5,
+      "tier1_requirement": 10.0,
+      "overall_capital_requirement": 12.0,
+      "scb": 2.5,
+      "gsib_surcharge": 1.5,
+      "basis": "Standardized approach: minimum 4.5 + stress capital buffer 2.5 + GSIB surcharge 1.5; Tier 1 and total capital add the same buffer to their 6 and 8 minimums",
+      "source": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20250829.pdf",
+      "confirmed": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20260624.pdf"
+    }
+  ],
+  "goldman-sachs": [
+    {
+      "effective": "2025-10-01",
+      "cet1_requirement": 10.9,
+      "tier1_requirement": 12.4,
+      "overall_capital_requirement": 14.4,
+      "scb": 3.4,
+      "gsib_surcharge": 3.0,
+      "basis": "Standardized approach: minimum 4.5 + stress capital buffer 3.4 + GSIB surcharge 3.0; Tier 1 and total capital add the same buffer to their 6 and 8 minimums",
+      "source": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20250829.pdf"
+    },
+    {
+      "effective": "2026-01-01",
+      "cet1_requirement": 11.4,
+      "tier1_requirement": 12.9,
+      "overall_capital_requirement": 14.9,
+      "scb": 3.4,
+      "gsib_surcharge": 3.5,
+      "basis": "Standardized approach: minimum 4.5 + stress capital buffer 3.4 + GSIB surcharge 3.5; Tier 1 and total capital add the same buffer to their 6 and 8 minimums",
+      "source": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20260624.pdf"
+    }
+  ],
+  "morgan-stanley": [
+    {
+      "effective": "2025-10-01",
+      "cet1_requirement": 11.8,
+      "tier1_requirement": 13.3,
+      "overall_capital_requirement": 15.3,
+      "scb": 4.3,
+      "gsib_surcharge": 3.0,
+      "basis": "Standardized approach: minimum 4.5 + stress capital buffer 4.3 + GSIB surcharge 3.0; Tier 1 and total capital add the same buffer to their 6 and 8 minimums; Morgan Stanley's SCB as modified on reconsideration, https://www.federalreserve.gov/newsevents/pressreleases/bcreg20250930a.htm",
+      "source": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20250829.pdf",
+      "confirmed": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20260624.pdf"
+    }
+  ],
+  "bny": [
+    {
+      "effective": "2025-10-01",
+      "cet1_requirement": 8.5,
+      "tier1_requirement": 10.0,
+      "overall_capital_requirement": 12.0,
+      "scb": 2.5,
+      "gsib_surcharge": 1.5,
+      "basis": "Standardized approach: minimum 4.5 + stress capital buffer 2.5 + GSIB surcharge 1.5; Tier 1 and total capital add the same buffer to their 6 and 8 minimums",
+      "source": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20250829.pdf",
+      "confirmed": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20260624.pdf"
+    }
+  ],
+  "state-street": [
+    {
+      "effective": "2025-10-01",
+      "cet1_requirement": 8.0,
+      "tier1_requirement": 9.5,
+      "overall_capital_requirement": 11.5,
+      "scb": 2.5,
+      "gsib_surcharge": 1.0,
+      "basis": "Standardized approach: minimum 4.5 + stress capital buffer 2.5 + GSIB surcharge 1.0; Tier 1 and total capital add the same buffer to their 6 and 8 minimums",
+      "source": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20250829.pdf",
+      "confirmed": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20260624.pdf"
+    }
+  ],
+  "northern-trust": [
+    {
+      "effective": "2025-10-01",
+      "cet1_requirement": 7.0,
+      "tier1_requirement": 8.5,
+      "overall_capital_requirement": 10.5,
+      "scb": 2.5,
+      "gsib_surcharge": 0.0,
+      "basis": "Standardized approach: minimum 4.5 + stress capital buffer 2.5; Tier 1 and total capital add the same buffer to their 6 and 8 minimums",
+      "source": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20250829.pdf",
+      "confirmed": "https://www.federalreserve.gov/publications/files/large-bank-capital-requirements-20260624.pdf"
+    }
+  ],
+  "jpmorgan-chase-bank": [
+    {
+      "effective": "2019-01-01",
+      "cet1_requirement": 7.0,
+      "tier1_requirement": 8.5,
+      "overall_capital_requirement": 10.5,
+      "ccb": 2.5,
+      "basis": "insured depository institution (national bank, primary regulator OCC per FDIC BankFind): minimum 4.5 / 6 / 8 plus the 2.5 capital conservation buffer, fully phased in from 1 January 2019; no stress capital buffer or GSIB surcharge applies to the bank",
+      "regulation": "12 CFR 3.11",
+      "source": "https://www.law.cornell.edu/cfr/text/12/3.11"
+    }
+  ],
+  "bank-of-america-na": [
+    {
+      "effective": "2019-01-01",
+      "cet1_requirement": 7.0,
+      "tier1_requirement": 8.5,
+      "overall_capital_requirement": 10.5,
+      "ccb": 2.5,
+      "basis": "insured depository institution (national bank, primary regulator OCC per FDIC BankFind): minimum 4.5 / 6 / 8 plus the 2.5 capital conservation buffer, fully phased in from 1 January 2019; no stress capital buffer or GSIB surcharge applies to the bank",
+      "regulation": "12 CFR 3.11",
+      "source": "https://www.law.cornell.edu/cfr/text/12/3.11"
+    }
+  ],
+  "citibank": [
+    {
+      "effective": "2019-01-01",
+      "cet1_requirement": 7.0,
+      "tier1_requirement": 8.5,
+      "overall_capital_requirement": 10.5,
+      "ccb": 2.5,
+      "basis": "insured depository institution (national bank, primary regulator OCC per FDIC BankFind): minimum 4.5 / 6 / 8 plus the 2.5 capital conservation buffer, fully phased in from 1 January 2019; no stress capital buffer or GSIB surcharge applies to the bank",
+      "regulation": "12 CFR 3.11",
+      "source": "https://www.law.cornell.edu/cfr/text/12/3.11"
+    }
+  ],
+  "wells-fargo-bank": [
+    {
+      "effective": "2019-01-01",
+      "cet1_requirement": 7.0,
+      "tier1_requirement": 8.5,
+      "overall_capital_requirement": 10.5,
+      "ccb": 2.5,
+      "basis": "insured depository institution (national bank, primary regulator OCC per FDIC BankFind): minimum 4.5 / 6 / 8 plus the 2.5 capital conservation buffer, fully phased in from 1 January 2019; no stress capital buffer or GSIB surcharge applies to the bank",
+      "regulation": "12 CFR 3.11",
+      "source": "https://www.law.cornell.edu/cfr/text/12/3.11"
+    }
+  ],
+  "goldman-sachs-bank-usa": [
+    {
+      "effective": "2019-01-01",
+      "cet1_requirement": 7.0,
+      "tier1_requirement": 8.5,
+      "overall_capital_requirement": 10.5,
+      "ccb": 2.5,
+      "basis": "insured depository institution (state member bank, primary regulator FED per FDIC BankFind): minimum 4.5 / 6 / 8 plus the 2.5 capital conservation buffer, fully phased in from 1 January 2019; no stress capital buffer or GSIB surcharge applies to the bank",
+      "regulation": "12 CFR 217.11",
+      "source": "https://www.law.cornell.edu/cfr/text/12/217.11"
+    }
+  ],
+  "morgan-stanley-bank": [
+    {
+      "effective": "2019-01-01",
+      "cet1_requirement": 7.0,
+      "tier1_requirement": 8.5,
+      "overall_capital_requirement": 10.5,
+      "ccb": 2.5,
+      "basis": "insured depository institution (national bank, primary regulator OCC per FDIC BankFind): minimum 4.5 / 6 / 8 plus the 2.5 capital conservation buffer, fully phased in from 1 January 2019; no stress capital buffer or GSIB surcharge applies to the bank",
+      "regulation": "12 CFR 3.11",
+      "source": "https://www.law.cornell.edu/cfr/text/12/3.11"
+    }
+  ],
+  "bank-of-new-york-mellon": [
+    {
+      "effective": "2019-01-01",
+      "cet1_requirement": 7.0,
+      "tier1_requirement": 8.5,
+      "overall_capital_requirement": 10.5,
+      "ccb": 2.5,
+      "basis": "insured depository institution (state member bank, primary regulator FED per FDIC BankFind): minimum 4.5 / 6 / 8 plus the 2.5 capital conservation buffer, fully phased in from 1 January 2019; no stress capital buffer or GSIB surcharge applies to the bank",
+      "regulation": "12 CFR 217.11",
+      "source": "https://www.law.cornell.edu/cfr/text/12/217.11"
+    }
+  ],
+  "state-street-bank": [
+    {
+      "effective": "2019-01-01",
+      "cet1_requirement": 7.0,
+      "tier1_requirement": 8.5,
+      "overall_capital_requirement": 10.5,
+      "ccb": 2.5,
+      "basis": "insured depository institution (state member bank, primary regulator FED per FDIC BankFind): minimum 4.5 / 6 / 8 plus the 2.5 capital conservation buffer, fully phased in from 1 January 2019; no stress capital buffer or GSIB surcharge applies to the bank",
+      "regulation": "12 CFR 217.11",
+      "source": "https://www.law.cornell.edu/cfr/text/12/217.11"
+    }
+  ],
+  "northern-trust-company": [
+    {
+      "effective": "2019-01-01",
+      "cet1_requirement": 7.0,
+      "tier1_requirement": 8.5,
+      "overall_capital_requirement": 10.5,
+      "ccb": 2.5,
+      "basis": "insured depository institution (state member bank, primary regulator FED per FDIC BankFind): minimum 4.5 / 6 / 8 plus the 2.5 capital conservation buffer, fully phased in from 1 January 2019; no stress capital buffer or GSIB surcharge applies to the bank",
+      "regulation": "12 CFR 217.11",
+      "source": "https://www.law.cornell.edu/cfr/text/12/217.11"
+    }
+  ]
+}

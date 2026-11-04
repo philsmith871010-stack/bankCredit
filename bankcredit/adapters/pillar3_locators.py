@@ -433,6 +433,7 @@ LOCATORS: list[dict] = [
 ]
 
 # ---- United States: holding-company Pillar 3 reports and LCR disclosures ----------
+CITI_FILINGS = "https://www.citigroup.com/global/investors/other-regulatory-filings"
 LOCATORS += [
     dict(entity="wells-fargo", kind="pattern", template="us_capital", currency="USD",
          urls=["https://www.wellsfargo.com/assets/pdf/about/investor-relations/basel-disclosures/{year}-{qword}-quarter-pillar-3-disclosure.pdf"]),
@@ -461,14 +462,23 @@ LOCATORS += [
          note="verified 3 November 2026: the SEC Filings & Other Disclosures page lists the holding "
               "company's quarterly Pillar 3 report under three naming styles (bny-pillar-3-report-2q26, "
               "bny-4q2025-pillar-3-report, bny-corporate-pillar-3-disclosure-march-2025); the EMEA and "
-              "SA/NV subsidiaries' reports sit beside them and are not matched. The US capital extractor "
-              "finds no CET1 ratio in the 2Q26 report, so these go to the reviewer; EDGAR carries only "
-              "the year-end ratios for this name"),
-    dict(entity="citigroup", kind="pattern", template="us_lcr", currency="USD",
-         urls=["https://www.citigroup.com/rcs/citigpa/storage/public/lcr{yymmdd}.pdf"]),
-    dict(entity="citigroup", kind="pattern", template="us_capital", currency="USD",
-         urls=["https://www.citigroup.com/rcs/citigpa/storage/public/c-basel-iii-adv-approach-{mm}-{dd}-{year}.pdf",
-               "https://www.citigroup.com/rcs/citigpa/storage/public/c-baseI-iii-adv-approach-{mm}-{dd}-{year}.pdf"]),
+              "SA/NV subsidiaries' reports sit beside them and are not matched. All three styles carry the "
+              "'Basel III RWA and risk-based capital ratios' table (one row per entity, SA | AA under "
+              "each column), which the US capital extractor reads for the holding company's "
+              "Standardized figures (4Q25: CET1 11.9%, as EDGAR has it); EDGAR carries only the "
+              "year-end ratios for this name"),
+    # The other-regulatory-filings page is plain HTML and lists every Citi entity's reports in one
+    # folder: the subsidiaries' (cep-, cgme-, cgml-, cukl-, Canada) carry their own KM1 and LCR, so
+    # only Citigroup Inc.'s own two documents are named. The file names change style most quarters
+    # (lcr240630, lcr093024, c-12-31-24-, q2-2025-, 6-30-26-lcr-public-disclosure), hence no template.
+    dict(entity="citigroup", template="us_lcr", currency="USD", page=CITI_FILINGS,
+         match=r"storage/public/(?:(?:c-)?(?:\d{1,2}-\d{1,2}-\d{2}|q[1-4]-20\d{2})-lcr-public-disclosure[^/]*"
+               r"|lcr(?:2[3-9]\d{4}|\d{4}2[3-9]))\.pdf$",
+         note="verified 4 November 2026: 6-30-26-lcr-public-disclosure.pdf is Citigroup's 2Q26 LCR (113.0%)"),
+    dict(entity="citigroup", template="us_capital", currency="USD", page=CITI_FILINGS,
+         match=r"storage/public/(?:c-base[li]-iii-adv-approach-|[1-4]q-?\d{2,4}-base[li]-iii-advanced-approach)[^/]*\.pdf$",
+         note="Citigroup Inc.'s Basel III Advanced Approaches disclosure, named c-baseI-iii-adv-approach-06-30-2026, "
+              "1q26-basel-iii-advanced-approaches-disclosures or 2q-2025-baseI-iii-advanced-approach-disclosure"),
     dict(entity="northern-trust", kind="pattern", template="us_lcr", currency="USD",
          urls=["https://www.northerntrust.com/content/dam/northerntrust/pws/nt/documents/earnings/disclosures/liquidity-coverage-ratio-disclosure-{q}q{year}.pdf"]),
     dict(entity="jpmorgan-chase", kind="browser", template="us_capital", currency="USD",
@@ -482,8 +492,6 @@ LOCATORS += [
               "a6238e39-fd7d-4c3e-b75f-e2fd5f003736; from a cloud address this host resets the connection "
               "(curl and headless Chromium alike), so the anchor text the text pattern reads has not yet "
               "been seen on this page"),
-    dict(entity="citigroup", kind="browser", template="us_capital", currency="USD",
-         page="https://www.citigroup.com/global/investors", match=r"rcs/citigpa/storage/public/.*(basel|pillar).*\.pdf"),
     dict(entity="state-street", kind="browser", template="us_capital", currency="USD",
          page="https://investors.statestreet.com/filings-and-reports/supplemental-public-disclosure-of-basel-iii-regulatory-capital/default.aspx", match=r"q4cdn\.com/.*P3-Capital.*\.pdf"),
     dict(entity="goldman-sachs", kind="browser", template="us_capital", currency="USD",

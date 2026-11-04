@@ -79,6 +79,7 @@ METRICS = {
     "leverage_exposure": "Leverage exposure measure (currency millions)",
     "cet1_requirement": "Overall CET1 requirement incl. buffers",
     "overall_capital_requirement": "Overall capital requirement",
+    "total_srep_requirement": "Total SREP own funds requirement (Pillar 1 plus Pillar 2A)",
     "total_assets": "Total assets (currency millions)",
     "npl_ratio": "Non-performing or noncurrent loan ratio",
     "roa": "Return on assets",

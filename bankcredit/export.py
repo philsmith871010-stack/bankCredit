@@ -21,6 +21,7 @@ from .composite import AGENCIES, THREE, composite as composite_of, grade_letter,
 from .entities import load as load_entities
 from .models import METRICS
 from .score import compute
+from . import us_requirements
 
 SITE_METRICS = ["cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "lcr", "nsfr", "rwa",
                 "overall_capital_requirement", "cet1_requirement", "npl_ratio", "roe", "roa", "efficiency_ratio",
@@ -48,6 +49,14 @@ def _series(facts: pd.DataFrame) -> dict:
         cons = g[g.basis == "consolidated"]
         if not cons.empty and (pd.Timestamp(g.reference_date.max()) - pd.Timestamp(cons.reference_date.max())).days <= 120:
             g = cons
+        if "currency" in g and (g.unit == "ccy_m").all():
+            # one currency per amount series: the Transparency Exercise files every bank in euros and the
+            # annual reports in the bank's own, and a chart that steps between SEK and EUR is a 10x cliff
+            ccy = g.currency.fillna("").astype(str)
+            own = ccy[~g.source.isin(["eba", "eba_te"]) & (ccy != "")]       # the bank's own filings set it
+            keep = own.iloc[-1] if not own.empty else ccy.iloc[-1]
+            if keep:
+                g = g[ccy == keep]
         g = g.assign(_basis_rank=(g.basis == "consolidated").astype(int), _src_rank=(g.source != "eba_te").astype(int))
         g = g.sort_values(["reference_date", "_basis_rank", "_src_rank", "confidence"]).drop_duplicates("reference_date", keep="last")
         out[metric] = [{"d": str(r.reference_date)[:10], "v": _clean(float(r.value)), "src": r.source, "basis": r.basis,
@@ -58,6 +67,44 @@ def _series(facts: pd.DataFrame) -> dict:
 
 def _latest(series: dict) -> dict:
     return {m: pts[-1]["v"] for m, pts in series.items() if pts and pts[-1]["v"] is not None}
+
+
+# how long before the ratio it is set against a requirement may date: a requirement changes once
+# or twice a year, but a 2022 one beside a 2025 ratio misses a whole countercyclical buffer rise
+REQUIREMENT_WINDOW_DAYS = 120
+REQUIREMENTS = {"overall_capital_requirement": "total_capital_ratio", "total_srep_requirement": "total_capital_ratio",
+                "cet1_requirement": "cet1_ratio"}
+
+
+def aligned_point(pts: list | None, on: str | None, window: int = REQUIREMENT_WINDOW_DAYS) -> dict | None:
+    """The latest point dated on or up to `window` days before `on`, or None."""
+    if not pts or not on:
+        return None
+    for p in reversed(pts):
+        if p["v"] is not None and p["d"] <= on:
+            return p if (date.fromisoformat(on) - date.fromisoformat(p["d"])).days <= window else None
+    return None
+
+
+def scoring_inputs(series: dict, asof: date) -> dict:
+    """The figures a score dated `asof` may use. Each metric's latest point on or before it, and only
+    if it is under STALE_DAYS old: an NPL ratio from 2020 says nothing about the bank today, and the
+    score history already refused it. A requirement only from the period of the ratio it is set
+    against, so headroom never subtracts one year's requirement from another year's capital."""
+    latest, when = {}, {}
+    for m, pts in series.items():
+        if m in REQUIREMENTS:
+            continue
+        for p in reversed(pts):
+            if p["v"] is not None and p["d"] <= asof.isoformat():
+                if (asof - date.fromisoformat(p["d"])).days <= STALE_DAYS:
+                    latest[m], when[m] = p["v"], p["d"]
+                break
+    for m, ratio in REQUIREMENTS.items():
+        p = aligned_point(series.get(m), when.get(ratio))
+        if p:
+            latest[m] = p["v"]
+    return latest
 
 
 def _headline_ratings(r: pd.DataFrame) -> list[dict]:
@@ -526,13 +573,7 @@ def score_history(series: dict, composite: float | None, today: date, book=None)
         comp = (book.composite_at(q) if book else None)
         if comp is None:
             comp = composite
-        latest = {}
-        for m, pts in series.items():
-            for p in reversed(pts):
-                if p["v"] is not None and p["d"] <= q.isoformat():
-                    if (q - date.fromisoformat(p["d"])).days <= 550:
-                        latest[m] = p["v"]
-                    break
+        latest = scoring_inputs(series, q)
         if not latest:
             continue
         sc = compute(latest, 0.0, comp)
@@ -543,7 +584,7 @@ def score_history(series: dict, composite: float | None, today: date, book=None)
     return out
 
 
-PEER_METRICS = ("cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "lcr",
+PEER_METRICS = ("cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "tier1_leverage", "lcr",
                 "nsfr", "npl_ratio", "roe", "efficiency_ratio", "nim", "roa")
 
 
@@ -631,6 +672,7 @@ def export_json() -> None:
     snrfin = series_tbl[series_tbl.series_id == "ITRAXX_SNRFIN_5Y"] if not series_tbl.empty else None
     board, today, details, policy_rows = [], date.today(), {}, []
     NOT_PUBLISHED = capital_not_published()
+    US_REQ = us_requirements.load()
     WITHDRAWN_ALL = withdrawn_summary()
     # the register's own action log, read back as the state on every day it changed
     books = timeline.by_entity(store.read("rating_actions"))
@@ -659,6 +701,12 @@ def export_json() -> None:
                 p, price_owner = gp, e.group
         ev = events[events.entity_id == e.id] if not events.empty else events
         series = dict(series_all[e.id])
+        if e.id in US_REQ:
+            # no US filing states an overall requirement: it is the Fed's published buffers, set at
+            # the bank's own ratio dates (data/reference/us-capital-requirements.json)
+            dates = [p["d"] for m in ("total_capital_ratio", "cet1_ratio") for p in series.get(m, [])]
+            for m, pts in us_requirements.series_for(e.id, dates, US_REQ).items():
+                series.setdefault(m, pts)
         inherited = []
         subs = [x for x in active if x.group == e.id and x.type == "bank"]
         if subs:
@@ -682,17 +730,19 @@ def export_json() -> None:
         latest = _latest(series)
         comp = _composite(r)
         market = market_all[e.id]
+        # the overlay is worked from this entity's own market evidence: the group's is shown, named
+        # as the group's, but its share price and CDS are not this entity's and do not move its score
+        overlay = _overlay(market, [])
         if market["direction"] == "none" and e.group in market_all and market_all[e.group]["direction"] != "none":
             market = dict(market_all[e.group], label=market_all[e.group]["label"] + " (group)")
             inherited.append("market")
-        overlay = _overlay(market, [])
         composite = comp["avg"] if comp else None
-        sc = compute(latest, overlay, composite)
+        sc = compute(scoring_inputs(series, today), overlay, composite)
         asof = max((pts[-1]["d"] for pts in series.values() if pts), default=None)
         age = (today - date.fromisoformat(asof)).days if asof else None
         cap_pts = series.get("cet1_ratio") or []
         cap_age = (today - date.fromisoformat(cap_pts[-1]["d"])).days if cap_pts else None
-        if sc.final_score is not None and cap_age is not None and cap_age > STALE_DAYS:
+        if cap_age is not None and cap_age > STALE_DAYS and sc.reason != "unrated":
             sc.final_score, sc.public_score, sc.band, sc.reason = None, None, "", f"capital ratios from {cap_pts[-1]['d'][:7]}"
         wd = WITHDRAWN_ALL.get(e.id)
         if sc.reason == "unrated" and wd:
@@ -708,7 +758,10 @@ def export_json() -> None:
             "score": sc.final_score, "public_score": sc.public_score, "band": sc.band, "coverage": sc.coverage, "unscored": sc.reason,
             "not_published": NOT_PUBLISHED.get(e.id),
             "overlay": sc.overlay if sc.final_score is not None else None,
-            "cet1": latest.get("cet1_ratio"), "leverage": latest.get("leverage_ratio", latest.get("tier1_leverage")),
+            "cet1": latest.get("cet1_ratio"), "leverage": latest.get("leverage_ratio"),
+            # the US Tier 1 leverage ratio is Tier 1 over average assets, not the Basel exposure measure:
+            # its own field, so no list or peer median sets one against the other
+            "lev_us": None if "leverage_ratio" in latest else latest.get("tier1_leverage"),
             "leverage_basis": "basel" if "leverage_ratio" in latest else ("us_tier1" if "tier1_leverage" in latest else ""),
             "lcr": latest.get("lcr"),
             "nsfr": latest.get("nsfr"), "rating": comp,
@@ -741,7 +794,7 @@ def export_json() -> None:
                 if x.severity != "info" and len(recent) < 3:
                     recent.append({"date": str(x.date)[:10], "type": x.type, "severity": x.severity, "title": str(x.title)[:160], "url": _clean(getattr(x, "url", "")) or ""})
         policy_rows.append({**{k: row[k] for k in ("id", "name", "short", "country", "type", "region", "group", "peer_group", "public_score", "band",
-                                                    "coverage", "cet1", "leverage", "leverage_basis", "lcr", "nsfr", "rating", "market", "asof", "age_days",
+                                                    "coverage", "cet1", "leverage", "lev_us", "leverage_basis", "lcr", "nsfr", "rating", "market", "asof", "age_days",
                                                     "rating_grade", "rating_composite", "rating_worst", "inherited")},
                             "score": row["public_score"], "negative": negative[:3],
                             # The six pillar sub-scores and the market overlay, so the browser can
@@ -767,7 +820,7 @@ def export_json() -> None:
                 "bonds": [{"isin": x.isin, "name": x.name, "currency": x.currency, "date": str(x.date)[:10], "price": _clean(float(x.price)), "yield": _clean(float(x["yield"]))}
                           for _, x in bq.iterrows()] if bq is not None else [],
                 "market": {k: _clean(v) for k, v in market.items()},
-                "overlay": [{"part": k, "adj": v} for k, v in overlay_parts(market, [])],
+                "overlay": [{"part": k, "adj": v} for k, v in overlay_parts(market_all[e.id], [])],
                 "overlay_total": sc.overlay, "score_public": sc.public_score, "score_final": sc.final_score,
                 "facts": [{"metric": x.metric, "date": str(x.reference_date)[:10], "value": _clean(float(x.value)), "unit": x.unit, "basis": x.basis,
                            "source": x.source, "method": x.method, "confidence": _clean(float(x.confidence)), "document": x.document, "page": _clean(x.page)}

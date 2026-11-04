@@ -1346,3 +1346,7 @@ table.subscores{table-layout:fixed;width:100%}table.subscores td{text-align:cent
 /* stable outlook marks recede, so the one that moved is what the eye finds */
 .ol-st{color:#b9c4cf}
 .rdate{font-family:inherit;font-variant-numeric:normal;letter-spacing:0}
+
+/* a US Tier 1 leverage figure in a leverage column: the same place, a different measure */
+.lv-w{position:relative}
+.lv-us{position:absolute;left:100%;top:-1px;font-size:8.5px;color:var(--muted);margin-left:2px;letter-spacing:.02em}

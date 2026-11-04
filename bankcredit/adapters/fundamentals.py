@@ -19,10 +19,24 @@ from .yahoo import HEADERS
 
 log = logging.getLogger("bankcredit.fundamentals")
 URL = "https://query2.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/{symbol}"
-ANNUAL = {"annualTotalAssets": "assets", "annualTotalDeposits": "deposits", "annualStockholdersEquity": "equity",
-          "annualNetIncome": "profit", "annualPretaxIncome": "pretax", "annualNetInterestIncome": "nii",
-          "annualOperatingExpense": "opex", "annualTotalRevenue": "revenue"}
+# Yahoo's NetIncome and StockholdersEquity are the owners' share and go together into return on
+# equity; return on assets takes the profit with minorities in, as the ESEF reading does. TotalRevenue
+# is a bank's net operating income, the income cost to income needs, since the feed has no impairment
+# line to rebuild it from pre-tax profit (pre-tax plus costs is income net of provisions).
+ANNUAL = {"annualTotalAssets": "assets", "annualTotalDeposits": "deposits",
+          "annualStockholdersEquity": "equity_parent", "annualTotalEquityGrossMinorityInterest": "equity",
+          "annualNetIncome": "profit_parent", "annualNetIncomeIncludingNoncontrollingInterests": "profit",
+          "annualPretaxIncome": "pretax", "annualNetInterestIncome": "nii",
+          "annualOperatingExpense": "opex", "annualTotalRevenue": "income_total"}
 QUARTERLY = {"quarterlyTotalAssets": "assets", "quarterlyTotalDeposits": "deposits", "quarterlyStockholdersEquity": "equity"}
+# Entities whose ticker is a listed parent's. The share price is the nearest market signal a subsidiary
+# without a listing of its own has, so the price adapter reads the ticker; the accounts behind it are
+# the group's, so they are not read here. DBS Bank stays: DBS Group Holdings is a non-operating holding
+# company over that one bank, and its accounts are the bank's to within rounding.
+GROUP_TICKER = {
+    "macquarie-bank": "MQG.AX is Macquarie Group, whose non-bank half Macquarie Bank does not own",
+    "investec": "INVP.L reports the Investec plc and Investec Ltd DLC, about twice Investec plc",
+}
 
 
 @register
@@ -37,7 +51,7 @@ class FundamentalsAdapter(Adapter):
     def discover(self):
         # configured tickers only: a name search returns the parent, a bond line or another bank entirely
         # (TSB found Permanent TSB), and a parent's accounts must never stand for a subsidiary's
-        return [e for e in self.entities if (e.tickers or "").strip()]
+        return [e for e in self.entities if (e.tickers or "").strip() and e.id not in GROUP_TICKER]
 
     def fetch(self, e: Entity):
         symbol = next((t.strip() for t in (e.tickers or "").split(",") if t.strip()), None)
@@ -71,10 +85,6 @@ class FundamentalsAdapter(Adapter):
                     continue
                 ccy = ccy or v.get("currencyCode", "")
                 (annual if t in ANNUAL else quarterly).setdefault(d, {})[code] = val
-        # cost to income needs total income: Yahoo's TotalRevenue is net revenue for banks
-        for d, v in annual.items():
-            if "opex" in v and "revenue" in v and v["revenue"] > 0:
-                v["pretax"] = v.get("pretax", v["revenue"] - v["opex"])
         out = []
         doc = f"https://finance.yahoo.com/quote/{raw['symbol']}/financials"
         for d, m in ratios(annual).items():

@@ -27,8 +27,12 @@ log = logging.getLogger("bankcredit.te")
 CACHE = store.DATA / "cache" / "te"
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
 
-# exercise -> the "other" file (key metrics, capital, leverage, RWA); newest first
+# exercise -> the "other" file (key metrics, capital, leverage, RWA); newest first. TE2025 (September 2024
+# to June 2025, published December 2025) is the last: the EBA discontinued the exercise from June 2025 in
+# favour of the Pillar 3 data hub, so nothing newer will come. Its layout is TE2024's less the Footnote
+# column, and Erste is not in its sample.
 FILES = {
+    "TE2025": "https://www.eba.europa.eu/assets/TE2025/Full_database/883401/tr_oth.csv",
     "TE2024": "https://www.eba.europa.eu/assets/TE2024/Full_database/256109/tr_oth.csv",
     "TE2023": "https://www.eba.europa.eu/assets/TE2023/Full_database/837203/tr_oth.csv",
     "TE2022": "https://www.eba.europa.eu/assets/TE2022/Full_database/tr_oth.csv",
@@ -56,7 +60,11 @@ LABELS = [
 ]
 PCT = {"cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "npl_ratio"}
 # Assets sheet: gross carrying amount of loans and advances at amortised cost, by IFRS 9 stage.
-# Stage 3 over the total is the non-performing share a treasurer means by an NPL ratio.
+# Stage 3 over the total is the non-performing share a treasurer means by an NPL ratio. It is not the
+# EBA's headline NPL ratio, which takes non-performing loans (defaulted or unlikely to pay, some of them
+# stage 2) over all gross loans, at fair value too, from the 120MB credit file. Stage 3 runs a tenth to a
+# fifth under it (June 2025: KBC 1.37 against 1.54, SEB 0.36 against 0.43) and is in the same rows of
+# every exercise since 2018.
 LOANS_AC = r"^gross carrying amount: financial assets at amortised cost, loans and advances$"
 TOTAL_ASSETS = r"^total assets$"
 
@@ -76,6 +84,15 @@ def period_date(p) -> date | None:
     y, mth = int(s[:4]), int(s[4:])
     last = {3: 31, 6: 30, 9: 30, 12: 31}.get(mth)
     return date(y, mth, last) if last else None
+
+
+def _fact(e, d: date, metric: str, value: float, item: str, confidence: float) -> Fact:
+    """Every amount in the exercise is in EUR millions whatever the bank reports in, and says so, so
+    that an amount series is never read across a euro point and a krona one; ratios carry no currency."""
+    pct = metric in PCT
+    return Fact(entity_id=e.id, reference_date=d, metric=metric, value=value, unit="pct" if pct else "ccy_m",
+                currency="" if pct else "EUR", basis="consolidated", source="eba_te", document=FILES[item],
+                page=None, method="csv", confidence=confidence)
 
 
 @register
@@ -135,10 +152,7 @@ class TransparencyAdapter(Adapter):
             if key in seen:
                 continue
             seen.add(key)
-            e = by_lei[r.LEI_Code]
-            out.append(Fact(entity_id=e.id, reference_date=d, metric=m, value=round(v, 4), unit="pct" if m in PCT else "ccy_m",
-                            currency="" if m in PCT else "EUR", basis="consolidated", source="eba_te",
-                            document=FILES[item], page=None, method="csv", confidence=0.9))
+            out.append(_fact(by_lei[r.LEI_Code], d, m, round(v, 4), item, 0.9))
         log.info("te: %s -> %d facts for %d entities", item, len(out), len({f.entity_id for f in out}))
         return out
 
@@ -157,9 +171,7 @@ class TransparencyAdapter(Adapter):
             except ValueError:
                 continue
             if d and v > 0:
-                e = by_lei[r.LEI_Code]
-                out.append(Fact(entity_id=e.id, reference_date=d, metric="total_assets", value=round(v, 2), unit="ccy_m", currency="EUR",
-                                basis="consolidated", source="eba_te", document=FILES[item], method="csv", confidence=0.9))
+                out.append(_fact(by_lei[r.LEI_Code], d, "total_assets", round(v, 2), item, 0.9))
         if not loans.empty:
             piv = loans.assign(_st=loans.ASSETS_Stages.fillna(0).astype(int), _v=pd.to_numeric(loans.Amount.astype(str).str.replace(",", ""), errors="coerce"))
             piv = piv.pivot_table(index=["LEI_Code", "Period"], columns="_st", values="_v", aggfunc="first")
@@ -172,9 +184,7 @@ class TransparencyAdapter(Adapter):
                 d = period_date(period)
                 npl = row[3] / total * 100
                 if d and 0 <= npl < 40:
-                    e = by_lei[lei]
-                    out.append(Fact(entity_id=e.id, reference_date=d, metric="npl_ratio", value=round(npl, 3), unit="pct", currency="",
-                                    basis="consolidated", source="eba_te", document=FILES[item], method="csv", confidence=0.85))
+                    out.append(_fact(by_lei[lei], d, "npl_ratio", round(npl, 3), item, 0.85))
         return out
 
     def validate(self, records):

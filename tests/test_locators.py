@@ -141,3 +141,40 @@ def test_an_annual_url_template_is_tried_once_a_year_dated_to_the_year_end():
     assert [(u.rsplit("/", 1)[-1], str(e)) for u, e, _ in got][:2] == [
         ("2027_pillar_3_disclosure.pdf", "2027-03-31"), ("2026_pillar_3_disclosure.pdf", "2026-12-31")]
 
+
+
+# ---- Citigroup Inc. and the Citi subsidiaries that publish beside it ------------------------------
+CITI = "https://www.citigroup.com/rcs/citigpa/storage/public/"
+CITI_FILES = {
+    "6-30-26-lcr-public-disclosure.pdf": "us_lcr",
+    "q2-2025-lcr-public-disclosure.pdf": "us_lcr",
+    "c-3-31-25-lcr-public-disclosure-final.pdf": "us_lcr",
+    "c-12-31-24-lcr-public-disclosure.pdf": "us_lcr",
+    "lcr093024.pdf": "us_lcr",
+    "lcr240630.pdf": "us_lcr",
+    "c-baseI-iii-adv-approach-06-30-2026.pdf": "us_capital",
+    "c-basel-III-adv-approach-03-31-2025-forum.pdf": "us_capital",
+    "1q26-basel-iii-advanced-approaches-disclosures.pdf": "us_capital",
+    "2q-2025-baseI-iii-advanced-approach-disclosure.pdf": "us_capital",
+    # Citibank Europe plc, Citigroup Global Markets Europe / Ltd, Citibank UK, Citibank Canada:
+    # their own KM1s and LCRs, which once gave Citigroup an LCR of 128-148% against its own ~115%
+    "cep-pillar-3-disclosures-q1-2026.pdf": None,
+    "Pillar-3-Disclosures-Q4-2023.pdf": None,
+    "cgme-pillar-3-disclosure-q2-2026.pdf": None,
+    "cgml-pillar-3-disclosures-q4-2025.pdf": None,
+    "cukl-pillar-3-disclosures-2025.pdf": None,
+    "Canada/basel-III/citibank-canada-basel-iii-pillar-3-osfi-q2-2026-en.pdf": None,
+    "12-31-25-nsfr-public-disclosure .pdf": None,
+}
+
+
+@pytest.mark.parametrize("name,template", CITI_FILES.items())
+def test_citigroup_takes_only_its_own_lcr_and_capital_reports(name, template):
+    claimed = [l.get("template") for l in LOCATORS if l["entity"] == "citigroup" and _takes(l, CITI + name)]
+    assert claimed == ([template] if template else []), claimed
+
+
+def test_a_citigroup_document_is_read_with_the_template_of_the_locator_that_found_it():
+    from bankcredit.adapters.pillar3 import Pillar3Adapter
+    assert Pillar3Adapter._locator_for("citigroup", CITI + "6-30-26-lcr-public-disclosure.pdf")["template"] == "us_lcr"
+    assert Pillar3Adapter._locator_for("citigroup", CITI + "c-baseI-iii-adv-approach-06-30-2026.pdf")["template"] == "us_capital"

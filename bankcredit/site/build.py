@@ -13,7 +13,8 @@ from pathlib import Path
 from ..composite import THREE, describe, of_three, tone_words
 from .. import attributed
 from ..models import METRICS
-from ..score import PILLARS, BANDS, OVERLAY_CAP, RATING_WEIGHT, RATING_SCORE, UNRATED_SCORE, UNRATED_CAP, VERSION, score_cap
+from ..export import aligned_point
+from ..score import OCR_FLOOR, PILLARS, BANDS, OVERLAY_CAP, RATING_WEIGHT, RATING_SCORE, UNRATED_SCORE, UNRATED_CAP, VERSION, score_cap
 from ..composite import SCALE as GRADE_LETTERS
 from . import components as c
 
@@ -96,20 +97,31 @@ FLOORS = {"lcr": (100.0, "minimum"), "nsfr": (100.0, "minimum")}
 def requirement(metric: str, series: dict, country: str | None) -> tuple[float | None, str]:
     """What the figure is measured against first: the bank's own requirement where it is published,
     the regulator's floor where it is the same for everyone, nothing for a currency amount."""
+    def own(req_metric):
+        # the requirement of the ratio's own period: a 2022 requirement beside a 2025 ratio misses
+        # a whole countercyclical buffer rise
+        reqs, ratio = series.get(req_metric), series.get(metric)
+        if not reqs:
+            return None
+        if not ratio:
+            return reqs[-1] if reqs[-1].get("v") is not None else None
+        return aligned_point(reqs, str(ratio[-1]["d"])[:10])
     if metric == "cet1_ratio":
         # only a CET1 requirement will do: the overall requirement is a total-capital figure, and a
         # CET1 ratio measured against it reads as a breach on nearly every bank
-        pts = series.get("cet1_requirement")
-        if pts and pts[-1].get("v") is not None:
-            return float(pts[-1]["v"]), "CET1 requirement"
+        p = own("cet1_requirement")
+        if p:
+            return float(p["v"]), "CET1 requirement"
         return 4.5, "Pillar 1 minimum"
     if metric == "total_capital_ratio":
-        pts = series.get("overall_capital_requirement")
-        if pts and pts[-1].get("v") is not None:
-            return float(pts[-1]["v"]), "overall requirement"
+        p = own("overall_capital_requirement")
+        if p and p["v"] >= OCR_FLOOR:              # lower is a CET1-basis figure disclosed in the wrong row
+            return float(p["v"]), "overall requirement"
         return 8.0, "Pillar 1 minimum"
     if metric == "leverage_ratio":
         return (3.25, "UK minimum") if country == "GB" else (3.0, "Basel minimum")
+    if metric == "tier1_leverage":
+        return 4.0, "US minimum"
     if metric in FLOORS:
         return FLOORS[metric]
     return None, ""
@@ -315,7 +327,7 @@ def pillar_note(k: str, cell) -> str:
     label = c.PILLAR_LABEL[k]
     what = PILLAR_INPUTS.get(k, "")
     if cell[0] is None:
-        return f"{label}: {what}. Not published for this entity, so its weight is re-scaled over the rest."
+        return f"{label}: {what}. No figure under eighteen months old for this entity, so its weight is re-scaled over the rest."
     if cell[0] == 0 and k == "stability":
         return (f"{label}: {what}. Sub-score 0: total capital is at or below the requirement, so "
                 f"there is no headroom to score.")
@@ -352,7 +364,11 @@ def summary_block(b: dict, generated: str) -> str:
 
 def page_bank(b, generated):
     series = b["series"]
-    tiles = "".join(tile(m, l, u, dp, series, b.get("peer_ratios"), b.get("country")) for m, l, u, dp in TILE_METRICS)
+    # a US operating bank publishes Tier 1 leverage on average assets in place of the Basel ratio:
+    # the tile shows that, under its own name and against its own minimum
+    tms = [("tier1_leverage", "Tier 1 leverage (US)", u, dp) if m == "leverage_ratio" and not series.get(m) and series.get("tier1_leverage")
+           else (m, l, u, dp) for m, l, u, dp in TILE_METRICS]
+    tiles = "".join(tile(m, l, u, dp, series, b.get("peer_ratios"), b.get("country")) for m, l, u, dp in tms)
     peer = b.get("peer") or {}
     score = b["score"]
     score_html = f'<span class="mono huge">{score:.0f}</span>' if score is not None else '<span class="mono huge muted">—</span>'
@@ -579,7 +595,7 @@ def page_method(generated, inner: bool = False):
 <h2>Ratings</h2><p>The site shows one rating per name: the average of the long-term ratings Fitch, S&amp;P and Moody's hold on it, on one scale, with the weakest of the three beside it and one outlook mark per agency. Ratings come from the ESMA European Rating Platform, refreshed daily, and each profile carries the history the register publishes back to July 2015. Agencies outside the three are not averaged in.</p>
 <details class="method-more"><summary>The agencies' own ratings, and the basis for quoting them</summary><p>Each profile also shows the current long-term rating and outlook and the current short-term rating that each of the three main agencies publishes on the name, with the agency named, the date and a link to the source. This view is a quotation, not a feed: current ratings only, no history by agency, no download. The basis on which it is shown is set out beside it and repeated here.</p><p class="note">{c.esc(attributed.BASIS)}</p></details>
 <h2>Market signal</h2><p>A layer built from five-year CDS levels and 30-day changes where a CDS market exists (otherwise the 30-day change in the bank's own bond yields against peers), 30-day equity volatility and drawdown from the 52-week high. It adjusts the public score by at most ±{OVERLAY_CAP:.0f} points.</p><details class="method-more"><summary>How the signal is weighted and measured</summary><p>Provisional weighting (September 2026): the three signals count equally, each worth at most 2.5 points either way. A CDS move is measured within one source (settlement against settlement, or trade medians on days with three or more trades) and split into the part shared with iTraxx Senior Financials and the part that is the bank's own; the label says which. The direction and size of the adjustment are shown; CDS levels themselves are not redistributed.</p></details>
-<h2>Limitations</h2><p>What the data cannot yet do: chiefly, UK figures come from reading PDFs, and some pillars are held only for some regions.</p><details class="method-more"><summary>Every limitation</summary><ul><li>US banking groups appear twice, as in the UK: the operating bank a depositor faces (Call Report figures from the FDIC, with the US Tier 1 leverage ratio scored on its own scale, and the group's LCR shown as a group figure because banks do not publish their own) and the holding company (binding Basel ratios, the lower of the standardised and advanced approaches, from its Pillar 3 report or XBRL filings, the supplementary leverage ratio, the public LCR disclosure, and asset quality and profitability inherited from its lead bank, labelled).</li><li>UK and other-region figures depend on PDF extraction; failed validations are shown as unverified rather than hidden.</li><li>Peer percentiles are computed only among entities with a score, so they are unstable while coverage is low.</li><li>Asset quality and profitability are held only for US banks so far, so those pillars are re-scaled away for most of the universe; the Coverage page shows this per bank.</li><li>Back-tests against past failures are planned.</li></ul></details>
+<h2>Limitations</h2><p>What the data cannot yet do: chiefly, UK figures come from reading PDFs, and some pillars are held only for some regions.</p><details class="method-more"><summary>Every limitation</summary><ul><li>US banking groups appear twice, as in the UK: the operating bank a depositor faces (Call Report figures from the FDIC, with the US Tier 1 leverage ratio scored on its own scale, and the group's LCR shown as a group figure because banks do not publish their own) and the holding company (binding Basel ratios, the lower of the standardised and advanced approaches, from its Pillar 3 report or XBRL filings, the supplementary leverage ratio, the public LCR disclosure, and asset quality and profitability inherited from its lead bank, labelled).</li><li>UK and other-region figures depend on PDF extraction; failed validations are shown as unverified rather than hidden.</li><li>Peer percentiles are computed only among entities with a score, so they are unstable while coverage is low.</li><li>A figure counts towards today's score only while it is under eighteen months old, and a capital requirement only beside a ratio from the same period; anything older is shown with its date but re-scaled away, as the Coverage page shows per bank.</li><li>Headroom needs a total-capital requirement that includes Pillar 2A. Where a bank discloses one without it, or on a CET1 basis, Headroom is left out rather than overstated. US requirements are the Federal Reserve's published buffers on the standardised approach, since no US filing states one.</li><li>The non-performing loan ratio is defined three ways: Stage 3 loans for EU banks, the FDIC's noncurrent loans for US banks, and the banks' own disclosures elsewhere. The US measure reads somewhat lower.</li><li>US operating banks publish Tier 1 leverage on average assets rather than the Basel exposure measure. It is scored on its own scale and named wherever it is shown.</li><li>Back-tests against past failures are planned.</li></ul></details>
 
 <h2>Sources</h2><p>Regulators' and banks' own published figures, the ESMA rating register and public market prices.</p><details class="method-more"><summary>Every source</summary><p>Regulatory figures come from the FDIC API (US banks, lead bank subsidiary), the EBA Pillar 3 Data Hub and Transparency Exercises (EU and EEA banks, consolidated), and each firm's own Pillar 3 disclosures (UK and other regions, read from PDF by a rules-based KM1 extractor with arithmetic validation; no AI service). Ratings and rating actions come from the ESMA European Rating Platform. Prices come from public market data. Bond quotes come from Börse Frankfurt's public price pages for each bank's senior fixed-rate bonds (two to eight years to run); they stay private and only the 30-day yield change against other bank bonds in the same currency is shown. CDS levels are medians of the day's reported trades in DTCC's public swap-data files (indicative, inferred from upfront payments), and the iTraxx and CDX index levels shown as credit benchmarks are index prints from the same source. Every figure on a profile carries its source, method and reference date.</p></details></div>'''
     content = (f'<div class="page-head"><div><h1>Method</h1><div class="lede">Version {VERSION}, '

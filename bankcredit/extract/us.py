@@ -1,10 +1,16 @@
 """US disclosures: Pillar 3 capital tables and the public LCR / NSFR documents. Rules only.
 
 US holding companies do not use the KM1 template. Their Pillar 3 report carries a
-capital-ratio table with Standardized and Advanced columns (the binding ratio is the
-lower), states the supplementary leverage ratio (SLR) and Tier 1 leverage ratio in
-prose, and publishes the LCR in a separate quarterly document ("Table 1: Liquidity
-Coverage Ratio ... LCR 119%"). This module reads both.
+capital-ratio table with Standardized and Advanced columns, states the supplementary
+leverage ratio (SLR) and Tier 1 leverage ratio in prose, and publishes the LCR in a
+separate quarterly document ("Table 1: Liquidity Coverage Ratio ... LCR 119%"). This
+module reads both.
+
+Every ratio and amount from one report comes from one approach column, the Standardized
+one wherever the column headings say which it is: the requirement a US bank is held to
+(data/reference/us-capital-requirements.json) is set on the Standardized approach, and the
+lower ratio is not always the binding one (Citi's Advanced CET1 is lower, but further above
+its own, smaller, requirement). Without headings the column of the lower CET1 ratio is read.
 
     from bankcredit.extract import us
     res = us.extract_capital("wfc-pillar-3.pdf")   -> km1.Result with cet1_ratio, tier1_ratio,
@@ -29,17 +35,73 @@ RATIO_ROWS = [
 ]
 
 
-def _pick(vals: list[float], required_mode: bool, single: bool = False) -> float | None:
-    """Binding value from a row. Tables that list required ratios beside actual ones (Citi) carry the
-    actual figures in the second half of the row; otherwise the columns are approaches (Wells)."""
+def _actual(vals: list[float], required_mode: bool) -> list[float]:
+    """Tables that list required ratios beside actual ones (Citi) carry the actual figures in the
+    second half of the row; otherwise the columns are approaches (Wells)."""
+    return vals[len(vals) // 2:] if required_mode and len(vals) >= 2 else vals
+
+
+def _pick(vals: list[float], required_mode: bool, single: bool = False, col: int | None = None) -> float | None:
+    """The value in approach column col of a row; the lower of the two when col is not known."""
     if not vals:
         return None
-    if required_mode and len(vals) >= 2:
-        actual = vals[len(vals) // 2:]
-        return actual[-1] if single else min(actual[:2])
-    return vals[0] if single else min(vals[:2])
+    vals = _actual(vals, required_mode)
+    if single:
+        return vals[-1] if required_mode else vals[0]
+    pair = vals[:2]
+    return pair[col] if col is not None and col < len(pair) else min(pair)
+
+
+def _lower_col(vals: list[float], required_mode: bool) -> int | None:
+    pair = _actual(vals, required_mode)[:2]
+    return pair.index(min(pair)) if len(pair) == 2 else None
+
+
+def _std_col(lines, i, back: int = 40) -> int | None:
+    """Which of row i's two approach columns is the Standardized one, from the column headings above it
+    on the same page (Wells and Citi head Advanced then Standardized, Bank of America the reverse).
+    None when the headings do not name both approaches."""
+    seen = []
+    for j in range(i - 1, max(-1, i - back), -1):
+        if lines[j][0] != lines[i][0]:
+            break
+        s = lines[j][1].strip()
+        if len(s) > 40 or re.search(r"\d+\.\d", s):     # prose, or a row of figures: not a heading
+            continue
+        m = re.search(r"\b(standardi[sz]ed|advanced)\b", s, re.I)
+        if m:
+            seen.append(m.group(1)[0].lower())
+            if len(seen) == 2:
+                break
+    if len(seen) == 2 and seen[0] != seen[1]:
+        return 1 if seen[0] == "s" else 0          # the nearest heading is the right-hand column
+    return None
+
+
+def _period_cols(lines, i, back: int = 25) -> bool:
+    """True when the columns above row i are periods, not approaches: Goldman's Table 2 heads
+    'June 2026 | December 2025', so its second column is last quarter, never a required ratio."""
+    years = set()
+    for j in range(i - 1, max(-1, i - back), -1):
+        if lines[j][0] != lines[i][0]:
+            break
+        m = re.fullmatch(r"(?:[a-z]+\s+)?(?:\d{1,2},?\s+)?(20\d{2})", lines[j][1].strip().lower())
+        if m:
+            years.add(m.group(1))
+    return len(years) >= 2
+
+
+def _advanced_only(lines, i, back: int = 30) -> bool:
+    """True when the text above a single-column ratio row says the table is on the Advanced approach
+    (JPMorgan's 'present the Advanced risk-based ... capital metrics', Goldman's Table 2)."""
+    above = " ".join(l for p, l in lines[max(0, i - back):i] if p == lines[i][0])
+    return bool(re.search(r"\badvanced\b", above, re.I)) and not re.search(r"standardi[sz]ed", above, re.I)
+
+
+STD_PROSE = re.compile(r"standardi[sz]ed\s+(?:capital\s+)?ratios\s+were\s+" + PCT + r"\s+for\s+cet1\s+capital,?\s+"
+                       + PCT + r"\s+for\s+tier\s+1\s+capital,?\s+and\s+" + PCT + r"\s+for\s+total\s+capital", re.I)
 AMOUNT_ROWS = [
-    ("cet1_capital", r"^common equity tier 1 capital$"),
+    ("cet1_capital", r"^(?:common equity tier 1|cet1) capital$"),
     ("tier1_capital", r"^tier 1 capital$"),
     ("rwa", r"^(?:total )?risk[- ]weighted assets$"),
 ]
@@ -94,6 +156,8 @@ def _nums_after(lines, i, limit=6, decimals=False) -> list[float]:
     j = i + 1
     while j < len(lines) and len(vals) < limit:
         toks = [t for t in _tokens(lines[j][1]) if t not in ("*", "$", "%")]
+        if not toks and lines[j][1].strip() == "$":
+            j += 1; continue                  # Citi sets the currency sign on a line of its own
         if toks and all(_is_num_tok(t.rstrip("*").rstrip("%")) or re.fullmatch(r"\d", t) for t in toks):
             vals += [v for v in (_num(t.rstrip("*")) for t in toks if ok(t)) if v is not None]
             j += 1
@@ -155,11 +219,61 @@ def _capital_block(lines) -> tuple[dict, int | None]:
                     cur = v
                 elif cur:
                     vals[cur].append(v)
+        # one approach column for every ratio: Standardized by the headings, else the lower CET1
+        col = _std_col(lines, start)
+        cet = vals.get("cet1_ratio", [])[:2]
+        if col is None and len(cet) == 2 and None not in cet:
+            col = cet.index(min(cet))
         out = {}
         for lab, vs in vals.items():
-            vs = [v for v in vs if v is not None and 2 < v < 60]
-            if vs:
-                out[lab] = min(vs[:2]) if lab not in ("tier1_leverage", "leverage_ratio") else vs[0]
+            ok = [v for v in vs if v is not None and 2 < v < 60]
+            if not ok:
+                continue
+            if lab in ("tier1_leverage", "leverage_ratio"):
+                out[lab] = ok[0]
+                continue
+            v = vs[col] if col is not None and col < len(vs) else None
+            out[lab] = v if v is not None and 2 < v < 60 else min(ok[:2])
+        if "cet1_ratio" in out:
+            return out, p + 1
+    return {}, None
+
+
+MATRIX_COLS = {"rwa": "rwa", "cet1": "cet1_ratio", "tier 1": "tier1_ratio", "total capital": "total_capital_ratio"}
+
+
+def _entity_matrix(lines) -> tuple[dict, int | None]:
+    """BNY's 'Basel III RWA and risk-based capital ratios' table: a row per legal entity, the columns
+    RWA, CET1, Tier 1 and Total Capital each split SA | AA. The first row after 'BHC:' is the group's."""
+    for i, (p, l) in enumerate(lines):
+        if not re.search(r"rwa and risk-based capital ratios", l, re.I):
+            continue
+        cols, tags, j = [], [], i + 1
+        while j < min(len(lines), i + 40):
+            s = lines[j][1].strip().lower()
+            if s in MATRIX_COLS:
+                cols.append(MATRIX_COLS[s])
+            elif s in ("sa", "aa"):
+                tags.append(s)
+            elif s.startswith("bhc"):
+                break
+            j += 1
+        if len(cols) < 2 or len(tags) != 2 * len(cols):
+            continue
+        j += 1
+        if j < len(lines) and not re.search(r"\d", lines[j][1]):
+            j += 1                                     # the holding company's name
+        nums: list[float] = []
+        while j < len(lines) and len(nums) < len(tags) and not re.search(r"[a-z]", lines[j][1], re.I):
+            nums += [float(x.replace(",", "")) for x in re.findall(r"\d[\d,]*(?:\.\d+)?", lines[j][1])]
+            j += 1
+        if len(nums) != len(tags):
+            continue
+        out = {}
+        for k, metric in enumerate(cols):
+            v = nums[2 * k + tags[2 * k:2 * k + 2].index("sa")]
+            if (metric == "rwa" and v > 1000) or (metric != "rwa" and 2 < v < 60):
+                out[metric] = v
         if "cet1_ratio" in out:
             return out, p + 1
     return {}, None
@@ -174,10 +288,21 @@ def extract_capital(pdf_path: str, hint_date: date | None = None) -> Result:
         res.checks.append(("warn", "text recovered by OCR from an image-only document"))
     pages = list(range(len(texts)))
     lines = _lines(texts, pages)
-    block, page = _capital_block(lines)
-    if block:
-        res.values.update(block); res.page = page
+    text = "\n".join(l for _, l in lines)
+    # Goldman's tables are on the Advanced approach; the binding Standardized ratios are stated in prose
+    m = STD_PROSE.search(text)
+    std_prose = bool(m)
+    if m:
+        res.values.update(cet1_ratio=float(m.group(1)), tier1_ratio=float(m.group(2)), total_capital_ratio=float(m.group(3)))
+        res.checks.append(("info", "Standardized ratios from the report's own statement; its tables are Advanced"))
+    block, page = _entity_matrix(lines)
+    if not block:
+        block, page = _capital_block(lines)
+    for k, v in block.items():
+        res.values.setdefault(k, v)
+    res.page = page
     required_pages = {p for p, l in lines if re.search(r"\brequired\b", l, re.I)}
+    col = None          # the approach column the CET1 row was read from; every other row follows it
     for metric, pat in RATIO_ROWS:
         if metric in res.values:
             continue
@@ -187,12 +312,20 @@ def extract_capital(pdf_path: str, hint_date: date | None = None) -> Result:
                 if _under_requirement_heading(lines, i):
                     continue
                 vals = [v for v in _nums_after(lines, i, decimals=True) if 3 < v < 60]
-                v = _pick(vals, p in required_pages)
+                if not vals:
+                    continue
+                req = p in required_pages and not _period_cols(lines, i)
+                if metric == "cet1_ratio":
+                    col = _std_col(lines, i)
+                    if col is None:
+                        col = _lower_col(vals, req)
+                        if col is None and _advanced_only(lines, i):
+                            res.checks.append(("warn", "ratios are on the Advanced approach only; the binding Standardized ones are not in this table"))
+                v = _pick(vals, req, col=col)
                 if v is not None:
                     res.values[metric] = v
                     res.page = res.page or p + 1
                     break
-    text = "\n".join(l for _, l in lines)
     if "leverage_ratio" not in res.values:
         for m in re.finditer(r"(?:SLR|supplementary leverage ratio)[^.]{0,120}?(?:were|was|of)\s+" + PCT + r"(?:\s+and\s+" + PCT + r")?", text, re.I):
             if re.search(r"minimum|requirement|at least|buffer", m.group(0), re.I):
@@ -203,24 +336,34 @@ def extract_capital(pdf_path: str, hint_date: date | None = None) -> Result:
             break
     if "leverage_ratio" not in res.values:
         for i, (p, l) in enumerate(lines):
-            if re.search(r"^supplementary leverage ratio", l.lower()):
+            if re.search(r"^supplementary leverage ratio", l.lower()) and not _under_requirement_heading(lines, i):
                 vals = [v for v in _nums_after(lines, i, decimals=True) if 2 < v < 30]
-                v = _pick(vals, p in required_pages, single=True)
+                v = _pick(vals, p in required_pages and not _period_cols(lines, i), single=True)
                 if v is not None:
                     res.values["leverage_ratio"] = v; break
     if "tier1_leverage" not in res.values:
         for i, (p, l) in enumerate(lines):
-            if re.search(r"^(?:tier 1 )?leverage ratio(?:\(\d\))?$", l.lower().strip()):
+            if re.search(r"^(?:tier 1 )?leverage ratio(?:\(\d\))?$", l.lower().strip()) and not _under_requirement_heading(lines, i):
                 vals = [v for v in _nums_after(lines, i, decimals=True) if 2 < v < 30]
-                v = _pick(vals, p in required_pages, single=True)
+                v = _pick(vals, p in required_pages and not _period_cols(lines, i), single=True)
                 if v is not None:
                     res.values["tier1_leverage"] = v; break
     for metric, pat in AMOUNT_ROWS:
+        if metric in res.values or (std_prose and metric == "rwa"):
+            continue                          # Goldman's RWAs are its Advanced ones
+        found = []
         for i, (p, l) in enumerate(lines):
-            if re.search(pat, l.lower().rstrip(":")):
+            if re.search(pat, re.sub(r"\s*\(\d\)$", "", l.lower().rstrip(":").strip())):    # "Risk Weighted Assets(3)"
                 vals = [v for v in _nums_after(lines, i) if v > 1000]
                 if vals:
-                    res.values[metric] = vals[0]; break
+                    found.append((i, p, vals))
+        # the row on the page the ratios came from, else the first; under approach headings its
+        # Standardized figure (Wells, Citi). Two bare columns are as likely this quarter and the last.
+        on_page = [f for f in found if res.page and f[1] + 1 == res.page]
+        if found:
+            i, p, vals = (on_page or found)[0]
+            c = _std_col(lines, i) if len(vals) == 2 else None
+            res.values[metric] = vals[c] if c is not None else vals[0]
     res.reference_date = _period(texts) or hint_date
     if not res.reference_date:
         res.checks.append(("error", "no reference date"))
@@ -228,11 +371,12 @@ def extract_capital(pdf_path: str, hint_date: date | None = None) -> Result:
         res.checks.append(("error", "no CET1 ratio found"))
     if "leverage_ratio" not in res.values:
         res.checks.append(("warn", "SLR not found"))
-    if "cet1_capital" in res.values and "rwa" in res.values and "cet1_ratio" in res.values:
-        implied = res.values["cet1_capital"] / res.values["rwa"] * 100
-        if abs(implied - res.values["cet1_ratio"]) > 0.6:
-            res.checks.append(("warn", f"cet1_ratio {res.values['cet1_ratio']:.2f} vs implied {implied:.2f}; capital and RWA may be on different approaches"))
-            res.values.pop("cet1_capital", None); res.values.pop("rwa", None)
+    for cap, ratio in (("cet1_capital", "cet1_ratio"), ("tier1_capital", "tier1_ratio")):
+        if cap in res.values and "rwa" in res.values and ratio in res.values:
+            implied = res.values[cap] / res.values["rwa"] * 100
+            if abs(implied - res.values[ratio]) > 0.6:
+                res.checks.append(("warn", f"{ratio} {res.values[ratio]:.2f} vs implied {implied:.2f}; capital and RWA may be on different approaches"))
+                res.values.pop(cap, None); res.values.pop("rwa", None)
     _grade(res)
     return res
 

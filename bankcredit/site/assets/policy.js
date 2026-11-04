@@ -71,7 +71,7 @@
         '<td class="num">'+scoreNum(e.score,e.band,'sc-1')+'</td>'+
         '<td class="mono"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b></td>'+
         '<td class="num mono">'+(e.cet1==null?'—':e.cet1.toFixed(1)+'%')+'</td>'+
-        '<td class="num mono">'+(e.leverage==null?'—':e.leverage.toFixed(1)+'%')+'</td>'+
+        '<td class="num mono">'+levTxt(e)+'</td>'+
         '<td class="num mono">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
         '<td class="num mono">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
         asofCell(e)+
@@ -635,7 +635,7 @@
         '<td class="uni-rt ll-cpc"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
           '<span class="ll-ags">'+(e.rating?toneMarks(e.rating.tones):'')+'</span></td>'+
         '<td class="num">'+(e.cet1==null?'—':e.cet1.toFixed(1)+'%')+'</td>'+
-        '<td class="num">'+(e.leverage==null?'—':e.leverage.toFixed(1)+'%')+'</td>'+
+        '<td class="num">'+levTxt(e)+'</td>'+
         '<td class="num">'+(e.lcr==null?'—':Math.round(e.lcr)+'%')+'</td>'+
         '<td class="num">'+(e.nsfr==null?'—':Math.round(e.nsfr)+'%')+'</td>'+
         xcells(e)+
@@ -704,6 +704,12 @@
   // keeps, so every measure is drawn against the spread of the same measure across the covered
   // universe - middle half shaded, median marked, this bank in orange. That is the idiom the
   // profile trends already use for a peer group, at the size of a card.
+  // US banks publish Tier 1 leverage on average assets, not the Basel ratio: shown, and named
+  function levTxt(e){
+    if(e.leverage!=null)return e.leverage.toFixed(1)+'%';
+    if(e.lev_us!=null)return '<span class="lv-w" title="US Tier 1 leverage: Tier 1 capital over average assets, not the Basel exposure measure">'+e.lev_us.toFixed(1)+'%<sup class="lv-us">US</sup></span>';
+    return '—';
+  }
   var UNI=null;
   function qt(v,p){var i=(v.length-1)*p,a=Math.floor(i),b=Math.ceil(i);return v[a]+(v[b]-v[a])*(i-a)}
   function uni(k){
@@ -816,7 +822,7 @@
           '<span class="ll-track">'+bar+'</span></td>'+
         '<td class="ll-cpc"><b style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</b>'+
           '<span class="ll-ags">'+(e.rating?toneMarks(e.rating.tones):'')+'</span></td>'+
-        kpi('cet1',e.cet1,1,'%')+kpi('leverage',e.leverage,1,'%')+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
+        kpi('cet1',e.cet1,1,'%')+(e.leverage==null&&e.lev_us!=null?'<td class="ll-v">'+levTxt(e)+'</td>':kpi('leverage',e.leverage,1,'%'))+kpi('lcr',e.lcr,0,'%')+kpi('nsfr',e.nsfr,0,'%')+
         asofCell(e)+
         '<td class="ll-addc"><button class="filter ll-add pol-add-ll" data-id="'+esc(e.id)+'" data-tenor="'+t+'">Add</button></td></tr>';
     }).join('');

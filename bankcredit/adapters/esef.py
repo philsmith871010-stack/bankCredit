@@ -5,9 +5,10 @@ includes most banks and the larger building societies through their listed debt)
 Each filing is fetched as xBRL-JSON and its undimensioned IFRS facts read: total assets,
 customer deposits, equity, profit, net interest income, operating costs and the loan impairment
 charge. From those the profitability ratios a treasurer looks at are computed on the same
-definitions for every filer: return on equity and on assets (profit over the average of opening
-and closing balances), net interest margin (net interest income over average assets), cost to
-income (operating costs over net interest, fee and other operating income) and cost of risk
+definitions for every filer: return on equity (owners' profit over owners' equity, or the whole
+profit over the whole equity) and on assets (the whole profit), both over the average of opening
+and closing balances; net interest margin (net interest income over average assets); cost to
+income (operating costs over total operating income before impairments); and cost of risk
 (impairment charge over customer loans). A filing carries its prior year too, so the history
 starts a year before the first filing. Nothing here is scored until the ratio's inputs are
 both present.
@@ -59,34 +60,75 @@ def get(session, url: str, timeout: int, waits=WAITS, sleep=None):
             log.info("esef: HTTP %s on attempt %d, retrying in %ss", r.status_code, attempt + 1, waits[attempt])
         sleep(waits[attempt])
 
-# concept -> (code, kind); the first concept found wins for a code
+# concept -> (code, kind). Where several concepts give one code they are listed in order of preference,
+# and the first of them a filing tags wins whatever order its facts come in.
 CONCEPTS = [
     ("ifrs-full:Assets", "assets", "instant"),
     ("ifrs-full:DepositsFromCustomers", "deposits", "instant"),
     ("ifrs-full:LoansAndAdvancesToCustomers", "loans", "instant"),
-    ("ifrs-full:EquityAttributableToOwnersOfParent", "equity", "instant"),
+    # owners' profit goes over owners' equity and the whole profit over the whole equity, never one over the other
+    ("ifrs-full:EquityAttributableToOwnersOfParent", "equity_parent", "instant"),
     ("ifrs-full:Equity", "equity", "instant"),
     ("ifrs-full:ProfitLoss", "profit", "duration"),
+    ("ifrs-full:ProfitLossAttributableToOwnersOfParent", "profit_parent", "duration"),
     ("ifrs-full:ProfitLossBeforeTax", "pretax", "duration"),
     ("ifrs-full:InterestRevenueExpense", "nii", "duration"),
-    ("ifrs-full:InterestRevenueCalculatedUsingEffectiveInterestMethod", "interest_income", "duration"),
+    # total interest income, the only kind that nets against total interest expense; the effective-interest
+    # subtotal leaves out interest on loans at fair value (Nykredit's mortgages), so it only marks that the
+    # filer split its interest income and a total cannot be trusted to be one
     ("ifrs-full:InterestIncome", "interest_income", "duration"),
+    ("ifrs-full:RevenueFromInterest", "interest_income", "duration"),
+    ("ifrs-full:InterestRevenueCalculatedUsingEffectiveInterestMethod", "interest_eir", "duration"),
     ("ifrs-full:InterestExpense", "interest_expense", "duration"),
-    ("ifrs-full:FeeAndCommissionIncome", "fee_income", "duration"),
-    ("ifrs-full:FeeAndCommissionExpense", "fee_expense", "duration"),
-    ("ifrs-full:MiscellaneousOtherOperatingIncome", "other_income", "duration"),
-    ("ifrs-full:OtherOperatingIncome", "other_income", "duration"),
     ("ifrs-full:OperatingExpense", "opex", "duration"),
     ("ifrs-full:AdministrativeExpense", "admin", "duration"),
+    ("ifrs-full:GeneralAndAdministrativeExpense", "admin", "duration"),
+    ("ifrs-full:EmployeeBenefitsExpense", "staff", "duration"),
     ("ifrs-full:DepreciationAndAmortisationExpense", "da", "duration"),
     ("ifrs-full:AmortisationIntangibleAssetsOtherThanGoodwill", "amort", "duration"),
     ("ifrs-full:DepreciationPropertyPlantAndEquipment", "depr", "duration"),
+    # credit impairment, loans first; a charge is positive and a net release negative
     ("ifrs-full:ImpairmentLossReversalOfImpairmentLossRecognisedInProfitOrLossLoansAndAdvances", "impairment", "duration"),
     ("ifrs-full:ImpairmentLossRecognisedInProfitOrLossLoansAndAdvances", "impairment", "duration"),
+    ("ifrs-full:ImpairmentLossImpairmentGainAndReversalOfImpairmentLossDeterminedInAccordanceWithIFRS9", "impairment", "duration"),
     ("ifrs-full:ImpairmentLossReversalOfImpairmentLossRecognisedInProfitOrLossFinancialAssets", "impairment", "duration"),
+    ("ifrs-full:ImpairmentLossOnFinancialAssets", "impairment", "duration"),
+    # every impairment on the income statement: enough to rebuild income from pre-tax profit, too wide for cost of risk
+    ("ifrs-full:ImpairmentLossReversalOfImpairmentLossRecognisedInProfitOrLoss", "impairment_any", "duration"),
+    # total operating income as the bank reports it; plain Revenue is last because a bancassurer puts
+    # gross premiums or gross interest there (Lloyds: 37bn one year, 6bn the next)
+    ("ifrs-full:RevenueAndOperatingIncome", "income_total", "duration"),
+    ("ifrs-full:Revenue", "revenue", "duration"),
 ]
+# Filers' own concepts for lines IFRS has no element for, by local name: net interest income
+# (Danske, Nykredit), total income, and profit before impairments (income less costs).
+EXTENSIONS = {
+    "NetInterestIncome": "nii", "InterestIncomeNet": "nii",
+    "TotalIncome": "income_total", "NetOperatingIncome": "income_total", "TotalOperatingIncome": "income_total",
+    "NetBankingIncome": "income_total", "RevenuesFromContinuingActivities": "income_total",
+    "TotalNetInterestIncomeAndNetNonInterestIncome": "income_total",
+    "OperatingIncomeBeforeExpectedCreditLossAndImpairmentCharges": "income_total",
+    "ProfitBeforeLoanImpairmentCharges": "pre_impairment", "ProfitBeforeImpairmentLossesReleases": "pre_impairment",
+    "ProfitLossFromOperatingActivitiesBeforeImpairmentLossReversalOfImpairmentLossRecognisedInProfitOrLoss": "pre_impairment",
+    "GrossOperatingIncome": "pre_impairment", "GrossOperatingIncomeFromContinuingActivities": "pre_impairment",
+    "OperatingProfitBeforeImpairmentsAndProvisions": "pre_impairment",
+}
 CODES = {c: (k, kind) for c, k, kind in CONCEPTS}
+RANK = {c: i for i, (c, _, _) in enumerate(CONCEPTS)}
 STOCK = {"assets": "total_assets", "deposits": "deposits"}
+# costs a filer writes with the taxonomy's sign are positive; one that writes them negative writes its
+# impairment charge negative too, so the sign of its costs says which way its impairment line points
+COSTS = ("opex", "admin", "staff", "interest_expense")
+
+
+def _concept(concept: str):
+    """(code, kind, rank) for a concept read here, or None."""
+    if concept in CODES:
+        return CODES[concept] + (RANK[concept],)
+    prefix, _, local = concept.partition(":")
+    if prefix != "ifrs-full" and local in EXTENSIONS:
+        return EXTENSIONS[local], "duration", len(CONCEPTS)
+    return None
 
 
 def _end(period: str) -> date:
@@ -103,23 +145,28 @@ def _start(period: str) -> date | None:
 
 def read_filing(doc: dict) -> tuple[dict, str]:
     """{period end: {code: value}} for the undimensioned consolidated facts, and the currency."""
-    out: dict[date, dict] = {}
+    durations: dict[date, dict] = {}
+    instants: dict[date, dict] = {}
+    year_ends: set[date] = set()
     ccy = ""
     for f in doc.get("facts", {}).values():
         dims = f.get("dimensions", {})
-        concept = dims.get("concept")
-        if concept not in CODES or any(d not in ("concept", "entity", "period", "unit", "language") for d in dims):
+        hit = _concept(dims.get("concept", ""))
+        if hit is None or any(d not in ("concept", "entity", "period", "unit", "language") for d in dims):
             continue
-        code, kind = CODES[concept]
+        code, kind, rank = hit
         period = dims.get("period", "")
         if kind == "duration":
             s, e = _start(period), _end(period)
             if s is None or not 350 <= (e - s).days <= 380:       # full years only
                 continue
+            year_ends.update((e, s - timedelta(days=1)))
+            into = durations
         else:
             if "/" in period:
                 continue
             e = _end(period)
+            into = instants
         try:
             v = float(f["value"])
         except (TypeError, ValueError):
@@ -127,7 +174,18 @@ def read_filing(doc: dict) -> tuple[dict, str]:
         unit = dims.get("unit", "")
         if unit.startswith("iso4217:"):
             ccy = ccy or unit.split(":")[1]
-        out.setdefault(e, {}).setdefault(code, v)                  # first (undimensioned, most specific) wins
+        held = into.setdefault(e, {}).get(code)
+        if held is None or rank < held[0]:                       # the preferred concept, wherever it sits in the file
+            into[e][code] = (rank, v)
+    out: dict[date, dict] = {}
+    for e, vals in durations.items():
+        out.setdefault(e, {}).update({k: v for k, (_, v) in vals.items()})
+    # A balance sheet date is a year end of the filing's own full years, or the opening of one. An
+    # IFRS 17 restatement's 1 January balance is neither, and would otherwise become a year of its own
+    # and the opening balance the next year averaged with.
+    for e, vals in instants.items():
+        if e in year_ends or not year_ends:
+            out.setdefault(e, {}).update({k: v for k, (_, v) in vals.items()})
     return out, ccy
 
 
@@ -137,43 +195,62 @@ def ratios(by_end: dict) -> dict:
     out: dict[date, dict] = {}
     for i, e in enumerate(ends):
         v = by_end[e]
-        prev = by_end[ends[i - 1]] if i else {}
+        # the opening balance is the prior year end's, not whatever date came before
+        prev = by_end[ends[i - 1]] if i and 350 <= (e - ends[i - 1]).days <= 380 else {}
         m: dict[str, float] = {}
         for code, metric in STOCK.items():
             if code in v:
                 m[metric] = v[code] / 1e6
-        nii = v.get("nii")
-        if nii is None and "interest_income" in v and "interest_expense" in v:
+        # net interest income as reported, or total interest income less total interest expense; an
+        # effective-interest subtotal beside the total means the total may be only the rest of it
+        nii, reported = v.get("nii"), "nii" in v
+        if nii is None and "interest_income" in v and "interest_expense" in v and "interest_eir" not in v:
             nii = v["interest_income"] - abs(v["interest_expense"])
         opex = v.get("opex")
         if opex is None and "admin" in v:
-            opex = abs(v["admin"]) + abs(v.get("da", 0) or (abs(v.get("amort", 0)) + abs(v.get("depr", 0))))
-        # total income is exact as pre-tax profit plus costs and impairments (trading and other income
-        # included); net interest plus fees is the fallback and understates a markets business
+            # many banks tag only other administrative expenses with the admin concept, staff costs apart;
+            # an admin line smaller than staff costs cannot contain them
+            staff = abs(v.get("staff", 0) or 0)
+            opex = abs(v["admin"]) + (staff if staff > abs(v["admin"]) else 0) \
+                + abs(v.get("da", 0) or (abs(v.get("amort", 0)) + abs(v.get("depr", 0))))
+        if opex is None and "income_total" in v and "pre_impairment" in v:
+            opex = v["income_total"] - v["pre_impairment"]       # Societe Generale: net banking income less gross operating income
+        inverted = sum(v[c] for c in COSTS if c in v) < 0
+        charge = v.get("impairment", v.get("impairment_any"))
+        if charge is not None and inverted:
+            charge = -charge
+        # Total income is exact as pre-tax profit plus costs plus the impairment charge, a net release
+        # taking income down. Without an impairment line that sum is income net of provisions and
+        # overstates cost to income, so the bank's own total income is used, then profit before
+        # impairments plus costs; with none of them there is no ratio.
         income = None
-        if "pretax" in v and opex is not None:
-            income = v["pretax"] + abs(opex) + abs(v.get("impairment", 0) or 0)
+        if "pretax" in v and opex is not None and charge is not None:
+            income = v["pretax"] + abs(opex) + charge
+        elif "income_total" in v:
+            income = v["income_total"]
+        elif "pre_impairment" in v and opex is not None:
+            income = v["pre_impairment"] + abs(opex)
         elif "revenue" in v:
             income = v["revenue"]
-        elif nii is not None:
-            income = nii + abs(v.get("fee_income", 0)) - abs(v.get("fee_expense", 0)) + (v.get("other_income", 0) or 0)
 
         def avg(code):
             if code not in v:
                 return None
             return (v[code] + prev[code]) / 2 if code in prev else v[code]
-        if "profit" in v and avg("equity"):
+        if "profit_parent" in v and avg("equity_parent"):
+            m["roe"] = v["profit_parent"] / avg("equity_parent") * 100
+        elif "profit" in v and avg("equity"):
             m["roe"] = v["profit"] / avg("equity") * 100
         if "profit" in v and avg("assets"):
             m["roa"] = v["profit"] / avg("assets") * 100
-        if nii is not None and avg("assets"):
+        if nii is not None and avg("assets") and (nii >= 0 or reported):
             m["nim"] = nii / avg("assets") * 100
         if opex is not None and income and income > 0:
             ci = abs(opex) / income * 100
             if 20 <= ci <= 150:                       # outside that the income line is incomplete
                 m["efficiency_ratio"] = ci
         if "impairment" in v and avg("loans"):
-            m["cost_of_risk"] = abs(v["impairment"]) / avg("loans") * 100
+            m["cost_of_risk"] = (-v["impairment"] if inverted else v["impairment"]) / avg("loans") * 100
         # only durations that belong to a balance sheet date (a filing's own year or its comparative)
         if m and ("assets" in v or "profit" in v):
             out[e] = {k: round(x, 4) for k, x in m.items() if x == x}

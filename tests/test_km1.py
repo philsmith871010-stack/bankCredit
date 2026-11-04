@@ -419,3 +419,244 @@ def test_the_space_join_is_conservative():
     assert km1._norm_text("2,575.0 2 604 2 590") == "2,575.0 2 604 2 590"
     assert km1._norm_text("Table 1 234") == "Table 1 234"
     assert km1._norm_text("198% 190% 185%\n31 Dec 2025 30 Sep 2025") == "198% 190% 185%\n31 Dec 2025 30 Sep 2025"
+
+
+# ---- metric accuracy: units, dates, columns, bases --------------------------------------------
+def test_a_currency_code_before_000s_is_thousands():
+    """FAB prints "All numbers in AED 000s"; read as millions its CET1 was AED 92,996,560m."""
+    for head in ("All numbers in AED 000s", "USD'000", "HK$'000", "Amounts in thousands of US dollars", "(000s)"):
+        assert km1.detect_units(head + "\n1 Common Equity Tier 1 92,996,560")[1] == 0.001, head
+
+
+def test_the_unit_statement_nearest_the_table_wins():
+    """A "bn" in the commentary above the table must not multiply its £m figures by a thousand."""
+    text = ("Capital strengthened by £1.2bn in the period, and the Group's CET1 capital is now £40bn, an increase of\n"
+            "UK KM1 Key metrics\n£m\n1\nCommon Equity Tier 1 (CET1) capital\n40,700\n")
+    anchor = text.index("1\nCommon")
+    assert km1.detect_units(text, anchor)[1] == 1.0
+    assert km1.detect_units("Key metrics\n£'000\n" + "x" * 50 + "\n1 CET1 capital 40,700\nRWA rose £2bn\n", 60)[1] == 0.001
+
+
+def test_amounts_beyond_any_bank_are_rescaled():
+    res = km1.Result(values={"cet1_capital": 92996560.0, "rwa": 652036770.0, "cet1_ratio": 14.26}, currency="AED",
+                     history={"2024-06-30": {"rwa": 620464998.0, "cet1_ratio": 13.96}})
+    km1.check_size(res)
+    assert res.values["rwa"] == 652036.77 and round(res.history["2024-06-30"]["rwa"], 3) == 620464.998
+    assert res.values["cet1_ratio"] == 14.26 and any("thousands" in m for _, m in res.checks)
+    big = km1.Result(values={"rwa": 110984102.0}, currency="JPY")          # MUFG's ¥111tn RWA is real
+    km1.check_size(big)
+    assert big.values["rwa"] == 110984102.0
+
+
+def test_a_footnote_glued_to_the_year_does_not_lose_the_column():
+    """Lloyds prints "31 Mar / 20222" and "Q1 20182": the year with footnote 2 attached. Unread, the
+    first column took the second column's date, a quarter early."""
+    dates, left = km1.join_split_headers("31 Mar \n20222\n31 Dec \n2021\n30 Sep \n2021")
+    assert dates == [date(2022, 3, 31), date(2021, 12, 31), date(2021, 9, 30)] and left == 0
+    assert km1.parse_dates("Q1 20182\nQ4 2017\nQ3 2017")[:2] == [date(2018, 3, 31), date(2017, 12, 31)]
+    assert km1.parse_dates("Jun-24\nMar-24\nDec-23\nSep-231\nJun-23")[3] == date(2023, 9, 30)
+
+
+def test_the_creation_stamp_decides_between_header_and_file_name():
+    checks = []
+    # NatWest's Q1 2026 header read as 30 June, weeks after the PDF was made: the file name is right
+    assert km1.choose_reference(date(2026, 6, 30), date(2026, 3, 31), date(2026, 4, 30), checks) == date(2026, 3, 31)
+    # Secure Trust's interim dated to the year before: both could be reported, the later one is
+    assert km1.choose_reference(date(2025, 12, 31), date(2026, 6, 30), date(2026, 8, 12), checks) == date(2026, 6, 30)
+    # a file name that names only the year: the header's quarter stands, the year end is still ahead
+    assert km1.choose_reference(date(2024, 3, 31), date(2024, 12, 31), date(2024, 5, 1), checks) == date(2024, 3, 31)
+    # no stamp: the header is direct evidence and is kept
+    assert km1.choose_reference(date(2025, 12, 31), date(2026, 6, 30), None, checks) == date(2025, 12, 31)
+    # no stamp, but a "Q1 2018" report cannot hold December 2019's figures
+    assert km1.choose_reference(date(2019, 12, 31), date(2018, 3, 31), None, checks) == date(2018, 3, 31)
+
+
+def test_a_stray_day_moves_to_the_period_end():
+    checks = []
+    assert km1.snap_to_period_end(date(2023, 12, 3), "12-31", checks) == date(2023, 12, 31)
+    assert km1.snap_to_period_end(date(2022, 12, 30), "12-31", checks) == date(2022, 12, 31)
+    assert km1.snap_to_period_end(date(2025, 4, 4), "04-04", checks) == date(2025, 4, 4)      # Nationwide's year end
+    assert km1.snap_to_period_end(date(2025, 9, 30), "04-04", checks) == date(2025, 9, 30)
+    assert km1.snap_to_period_end(date(2023, 3, 14), "12-31", checks) == date(2023, 3, 14)   # a board date, not a slip
+
+
+def test_a_reference_date_after_the_pdf_was_made_is_not_taken(tmp_path):
+    res = km1.extract(make_pdf(tmp_path, KM1_TEXT), hint_date=date(2025, 9, 30), published=date(2025, 11, 5))
+    assert res.reference_date == date(2025, 9, 30) and not res.history
+    res = km1.extract(make_pdf(tmp_path, KM1_TEXT, "b.pdf"), published=date(2025, 11, 5))
+    assert any(s == "error" and "after the document was produced" in m for s, m in res.checks)
+
+
+def test_leverage_rows_that_fail_their_arithmetic_are_left_out(tmp_path):
+    """Metro's annual KM1 gave the half-year leverage rows (7.90% against 5.96% implied); the
+    document loads, without them."""
+    text = KM1_TEXT.replace("6.7 6.4 6.6", "9.9 6.4 6.6")
+    res = km1.extract(make_pdf(tmp_path, text))
+    assert res.ok, res.checks
+    assert "leverage_ratio" not in res.values and "leverage_exposure" not in res.values
+    assert not any(s == "error" for s, _ in res.checks)
+
+
+def test_an_lcr_far_from_its_own_inputs_is_left_out(tmp_path):
+    res = km1.extract(make_pdf(tmp_path, KM1_TEXT.replace("186.7 190.8 191.0", "427.0 190.8 191.0")))
+    assert "lcr" not in res.values and res.ok
+    # an average of month-end ratios a few points off the ratio of averages stays
+    res = km1.extract(make_pdf(tmp_path, KM1_TEXT.replace("186.7 190.8 191.0", "205.0 190.8 191.0"), "b.pdf"))
+    assert res.values["lcr"] == 205.0
+
+
+def test_a_cet1_basis_overall_requirement_is_not_loaded(tmp_path):
+    """Standard Chartered's row 11a read 10.38%: CET1 4.5% plus Pillar 2A's CET1 part plus buffers."""
+    res = km1.extract(make_pdf(tmp_path, KM1_TEXT.replace("14.9 14.9 14.3", "10.4 10.4 10.3")))
+    assert "overall_capital_requirement" not in res.values and res.ok
+    assert not any(s == "error" for s, _ in res.checks)
+    # above 10.5 but short of the total SREP requirement plus the combined buffer (10.6 + 4.3)
+    res = km1.extract(make_pdf(tmp_path, KM1_TEXT.replace("14.9 14.9 14.3", "12.0 12.0 12.0"), "b.pdf"))
+    assert "overall_capital_requirement" not in res.values
+    res = km1.extract(make_pdf(tmp_path, KM1_TEXT, "c.pdf"))
+    assert res.values["overall_capital_requirement"] == 14.9 and res.values["total_srep_requirement"] == 10.6
+    assert "total_srep_requirement" in km1.PUBLISH
+
+
+def test_a_helper_row_out_of_range_does_not_send_the_document_to_review(tmp_path):
+    res = km1.extract(make_pdf(tmp_path, KM1_TEXT.replace("4.3 4.3 4.3", "43.0 4.3 4.3")))
+    assert "combined_buffer" not in res.values and res.ok
+
+
+def test_small_subsidiaries_keep_their_high_ratios():
+    """Bank of Baroda UK: CET1 220%, leverage 85%."""
+    res = km1.Result(values={"cet1_capital": 220.0, "tier1_capital": 220.0, "rwa": 100.0, "cet1_ratio": 220.0,
+                             "tier1_ratio": 220.0, "leverage_exposure": 258.8, "leverage_ratio": 85.0}, currency="GBP",
+                     template="UK KM1")
+    km1.validate(res)
+    assert res.ok and res.values["leverage_ratio"] == 85.0, res.checks
+    h = km1.prior_columns([("lcr", ["1,450", "1,520"], "17"), ("nsfr", ["160", "158"], "20")],
+                          [date(2025, 12, 31), date(2025, 6, 30)], True, 1.0)
+    assert h["2025-06-30"]["lcr"] == 1520.0              # Close Brothers and Vanquis hold more than ten times their outflows
+
+
+def test_a_continuation_line_is_not_read_as_a_label():
+    lines = ["CET1 available after meeting the", "total SREP own funds", "requirements", "7.09%", "7.35%",
+             "Total capital", "as if IFRS 9 transitional arrangements had not been applied", "52,318", "53,035",
+             "Overall capital requirements", "15.24%"]
+    got = km1.parse_by_label(lines)
+    assert "total_srep_requirement" not in got and "total_capital" not in got
+    assert got["overall_capital_requirement"] == ["15.24%"]
+    assert km1.VARIANT_RE.search("Tier 1 capital as if IFRS 9 or analogous ECLs transitional arrangements had not been applied")
+
+
+def test_a_leverage_requirement_row_is_never_the_leverage_ratio():
+    eu = ["13", "Total exposure measure", "100,000", "EU 14a", "Additional own funds requirements to address the risk of excessive leverage (%)",
+          "0.00%", "EU 14c", "Total SREP leverage ratio requirements (%)", "3.00%"]
+    vals, _ = km1.parse_rows(eu)
+    assert "14" not in vals
+    uk = ["13", "Total exposure measure excluding claims on central banks", "100,000",
+          "14b", "Leverage ratio including claims on central banks (%)", "4.2%",
+          "14c", "Average leverage ratio excluding claims on central banks (%)", "4.6%"]
+    vals, _ = km1.parse_rows(uk)
+    assert "14" not in vals
+
+
+CET1_REQ_TEXT = KM1_TEXT.replace("UK 7d\n", "UK 7a\nAdditional CET1 SREP requirements (%)\n2.4 2.4 2.4\n"
+                                             "UK 7b\nAdditional AT1 SREP requirements (%)\n0.8 0.8 0.8\nUK 7d\n")
+
+
+def test_the_bank_specific_cet1_requirement_is_built(tmp_path):
+    """4.5% Pillar 1, the CET1 part of Pillar 2A (UK 7a) and the combined buffer (row 11)."""
+    res = km1.extract(make_pdf(tmp_path, CET1_REQ_TEXT))
+    assert res.ok, res.checks
+    assert res.values["cet1_requirement"] == round(4.5 + 2.4 + 4.3, 2) and "cet1_requirement" in km1.PUBLISH
+    assert res.values["total_capital_ratio"] == 28.3       # rows 7a and 7b do not disturb row 7
+    eu = KM1_TEXT.replace("UK 7d\n", "EU 7a\nAdditional own funds requirements to address risks other than the risk of excessive leverage (%)\n"
+                                     "2.0 2.0 2.0\nEU 7b\nof which: to be made up of CET1 capital (percentage points)\n1.13 1.13 1.13\nUK 7d\n")
+    res = km1.extract(make_pdf(tmp_path, eu, "eu.pdf"))
+    assert res.values["cet1_requirement"] == round(4.5 + 1.13 + 4.3, 2)
+
+
+def test_tier1_capital_that_fails_its_ratio_is_left_out():
+    res = km1.Result(values={"cet1_capital": 826.0, "tier1_capital": 1068.0, "rwa": 6437.0, "cet1_ratio": 12.8,
+                             "tier1_ratio": 12.8, "leverage_ratio": 5.0}, currency="GBP", template="UK KM1")
+    km1.validate(res)
+    assert "tier1_capital" not in res.values and "tier1_ratio" not in res.values and res.ok
+
+
+def test_the_rwa_row_survives_a_hyphen_on_its_own_line():
+    vals, labels = km1.parse_rows(["4", "Total risk", "-weighted exposure amount", "250,893", "244,711"])
+    assert vals["4"] == ["250,893", "244,711"] and km1._confirm("4", labels["4"]) == "rwa"
+
+
+def _facts(rows):
+    import pandas as pd
+    return pd.DataFrame([dict(entity_id="x", reference_date=d, metric=m, value=v, currency="GBP", source=src,
+                              method=meth, document=doc) for d, m, v, src, meth, doc in rows])
+
+
+def test_amounts_a_thousand_times_the_banks_own_record_are_rescaled():
+    from bankcredit.adapters.pillar3 import check_scale
+    res = km1.Result(values={"cet1_capital": 124259.0, "rwa": 693154.0, "cet1_ratio": 17.93}, currency="GBP",
+                     reference_date=date(2025, 12, 31), history={"2024-12-31": {"rwa": 601928.0}})
+    check_scale(res, _facts([("2024-12-31", "rwa", 601.9, "pillar3", "pdf_manual", "a")]), {})
+    assert round(res.values["rwa"], 3) == 693.154 and round(res.history["2024-12-31"]["rwa"], 3) == 601.928
+    # the rules' own baseline, which may share the slip, scales down but never up
+    ok = km1.Result(values={"rwa": 693.0}, currency="GBP", reference_date=date(2026, 12, 31))
+    check_scale(ok, _facts([]), {"reference_date": "2025-12-31", "values": {"rwa": 693154.0}, "method": "pdf_rules"})
+    assert ok.values["rwa"] == 693.0
+    slip = km1.Result(values={"rwa": 701000.0}, currency="GBP", reference_date=date(2026, 12, 31))
+    check_scale(slip, _facts([]), {"reference_date": "2025-12-31", "values": {"rwa": 693.0}, "method": "pdf_rules"})
+    assert slip.values["rwa"] == 701.0
+
+
+def test_figures_that_repeat_another_period_are_flagged():
+    from bankcredit.adapters.pillar3 import check_repeats
+    other = _facts([("2025-03-31", m, v, "pillar3", "pdf_rules", "q1") for m, v in
+                    (("cet1_capital", 35122.0), ("rwa", 253596.0), ("tier1_capital", 42629.0), ("leverage_exposure", 909072.0))])
+    res = km1.Result(values={"cet1_capital": 35122.0, "rwa": 253596.0, "tier1_capital": 42629.0, "cet1_ratio": 13.8},
+                     reference_date=date(2025, 6, 30))
+    check_repeats(res, other)
+    assert any(s == "error" and "2025-03-31" in m for s, m in res.checks)
+    # Metro: only the leverage and liquidity block repeats the half year; those rows go, the rest stay
+    h1 = _facts([("2025-06-30", "leverage_exposure", 13560.0, "pillar3", "pdf_rules", "h1"),
+                 ("2025-06-30", "leverage_ratio", 7.9, "pillar3", "pdf_rules", "h1"),
+                 ("2025-06-30", "lcr", 427.0, "pillar3", "pdf_rules", "h1"),
+                 ("2025-06-30", "cet1_capital", 826.0, "pillar3", "pdf_rules", "h1")])
+    fy = km1.Result(values={"cet1_capital": 808.0, "rwa": 6442.0, "leverage_exposure": 13560.0, "leverage_ratio": 7.9,
+                            "lcr": 427.0, "nsfr": 150.0}, reference_date=date(2025, 12, 31))
+    check_repeats(fy, h1)
+    assert set(fy.values) == {"cet1_capital", "rwa", "nsfr"} and not any(s == "error" for s, _ in fy.checks)
+
+
+def test_tier1_above_cet1_without_any_at1_goes_to_review():
+    from bankcredit.adapters.pillar3 import check_tier1
+    near = _facts([("2025-12-31", "cet1_capital", 808.0, "pillar3", "pdf_rules", "fy"),
+                   ("2025-12-31", "tier1_capital", 808.0, "pillar3", "pdf_rules", "fy")])
+    res = km1.Result(values={"cet1_capital": 867.0, "tier1_capital": 1109.0}, reference_date=date(2026, 6, 30))
+    check_tier1(res, near)
+    assert any(s == "error" and "AT1" in m for s, m in res.checks)
+    at1 = _facts([("2025-12-31", "cet1_capital", 808.0, "pillar3", "pdf_rules", "fy"),
+                  ("2025-12-31", "tier1_capital", 1050.0, "pillar3", "pdf_rules", "fy")])
+    res = km1.Result(values={"cet1_capital": 867.0, "tier1_capital": 1109.0}, reference_date=date(2026, 6, 30))
+    check_tier1(res, at1)
+    assert not res.checks
+
+
+def test_a_year_digit_on_the_next_line_is_joined(tmp_path):
+    """Standard Chartered's header reads "31.03.2" over "3": unread, the document took the file name's date."""
+    text = KM1_TEXT.replace("31 Dec 25 30 Sep 25 30 Jun 25", "31.03.2\n3\n31.12.2 2\n30.09.2 2")
+    res = km1.extract(make_pdf(tmp_path, text))
+    assert res.period_dates[:2] == [date(2023, 3, 31), date(2022, 12, 31)]
+
+
+def test_a_document_no_locator_claims_is_not_read_with_the_first_one():
+    """Citibank Europe's KM1 filed under Citigroup went through Citigroup's LCR extractor because the
+    first locator was taken whatever the URL. A UK bank's NSM copy, which no listing pattern matches,
+    is still read with its KM1 locator."""
+    from bankcredit.adapters.pillar3 import Pillar3Adapter as P
+    from bankcredit.adapters.pillar3_locators import LOCATORS
+    cep = "https://www.citigroup.com/rcs/citigpa/storage/public/cep-pillar-3-disclosures-q2-2026.pdf"
+    assert P._locator_for("citigroup", cep) == {} and P._unclaimed("citigroup", {})
+    nsm = "https://data.fca.org.uk/artefacts/NSM/Portal/NI-000126938/NI-000126938.pdf"
+    assert P._locator_for("tsb", nsm) == next(l for l in LOCATORS if l["entity"] == "tsb")
+    assert P._locator_for("standard-chartered", nsm).get("entity") == "standard-chartered"
+    wf = "https://www.wellsfargo.com/assets/pdf/about/investor-relations/lcr-disclosures/2026-first-quarter-lcr-disclosure.pdf"
+    assert P._locator_for("wells-fargo", wf)["template"] == "us_lcr"     # URL templates claim their documents too
+    assert not P._unclaimed("no-such-bank", {})                          # no locators at all: read as KM1, as before

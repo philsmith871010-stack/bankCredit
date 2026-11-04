@@ -31,10 +31,13 @@ ROWS = {
     "1": ("cet1_capital", r"(common equity tier ?1|cet ?1)(?!.*ratio)", "amount"),
     "2": ("tier1_capital", r"^(?:total )?tier ?1\b(?!.*ratio)", "amount"),
     "3": ("total_capital", r"^total (?:own funds|capital)(?!.*ratio)", "amount"),
-    "4": ("rwa", r"risk[- ]?weighted|rwea|rwa", "amount"),
+    "4": ("rwa", r"risk\s?-?\s?weighted|rwea|rwa", "amount"),
     "5": ("cet1_ratio", r"(common equity tier ?1|cet ?1).*ratio|cet ?1.*\(%\)", "pct"),
     "6": ("tier1_ratio", r"^tier ?1 (?:capital )?ratio", "pct"),
     "7": ("total_capital_ratio", r"total (?:capital|own funds) ratio", "pct"),
+    # Pillar 2A: the UK template's 7a is its CET1 part, the EU template's 7a the whole and 7b the CET1 part
+    "7a": ("p2r_7a", r"additional|srep|own funds requirement", "pct"),
+    "7b": ("p2r_7b", r"of which|additional|srep", "pct"),
     "7d": ("total_srep_requirement", r"total srep", "pct"),
     "11": ("combined_buffer", r"combined buffer|total.*buffer", "pct"),
     "11a": ("overall_capital_requirement", r"overall capital requirement", "pct"),
@@ -59,7 +62,7 @@ LABEL_ROWS = [
     ("cet1_capital", r"^(?:total )?(?:common equity tier ?1|cet ?1)(?: capital)?$"),
     ("tier1_capital", r"^(?:total )?tier ?1(?: capital)?$"),
     ("total_capital", r"^total capital$"),
-    ("rwa", r"^(?:total )?risk[- ]?w ?eighted (?:exposure amounts?|assets)|^total (?:rweas?|rwas?)$"),
+    ("rwa", r"^(?:total )?risk\s?-?\s?w ?eighted (?:exposure amounts?|assets)|^total (?:rweas?|rwas?)$"),
     ("total_srep_requirement", r"^total srep own funds requirements?$"),
     ("overall_capital_requirement", r"^overall capital requirements?$"),
     ("leverage_exposure", r"^(?:uk )?(?:total exposure measure|leverage(?: ratio)? (?:total )?exposure(?: measure)?)"),
@@ -73,15 +76,24 @@ LABEL_ROWS = [
 ]
 KIND = {m: k for _, (m, _, k) in ROWS.items()}
 KIND["tier1_leverage"] = "pct"
+KIND["cet1_requirement"] = "pct"
 CORE = ("cet1_capital", "rwa", "cet1_ratio", "leverage_ratio")
 # metrics that go to the facts table (the rest are kept in the document record only)
 PUBLISH = ("cet1_capital", "tier1_capital", "total_capital", "rwa", "cet1_ratio", "tier1_ratio",
-           "total_capital_ratio", "overall_capital_requirement", "leverage_exposure", "leverage_ratio",
-           "lcr", "nsfr", "tier1_leverage")
-BOUNDS = {"cet1_ratio": (3, 80), "tier1_ratio": (3, 80), "total_capital_ratio": (3, 90),
-          "leverage_ratio": (1.5, 40), "lcr": (60, 2500), "nsfr": (60, 1200),
-          "overall_capital_requirement": (6, 30), "total_srep_requirement": (3, 25),
-          "combined_buffer": (0, 15), "cet1_headroom": (0, 70)}
+           "total_capital_ratio", "overall_capital_requirement", "total_srep_requirement", "cet1_requirement",
+           "leverage_exposure", "leverage_ratio", "lcr", "nsfr", "tier1_leverage")
+# Small subsidiaries of foreign banks hold far more capital than they lend against: Bank of Baroda
+# UK at a CET1 ratio of 220% and leverage of 85%, ICBC London at 81% and 47%, are genuine.
+# A total SREP requirement is at least the 8% Pillar 1 minimum, and an overall capital requirement
+# at least that plus the 2.5% conservation buffer; a lower figure is a CET1-basis one.
+BOUNDS = {"cet1_ratio": (3, 300), "tier1_ratio": (3, 300), "total_capital_ratio": (3, 300),
+          "leverage_ratio": (1.5, 95), "lcr": (60, 2500), "nsfr": (60, 1200),
+          "overall_capital_requirement": (10.5, 30), "total_srep_requirement": (8, 25),
+          "combined_buffer": (0, 15), "cet1_headroom": (0, 300), "cet1_requirement": (7, 25)}
+# rows that are not read for their own sake: out of range, the row is left out rather than the
+# document sent to review
+SOFT = ("overall_capital_requirement", "total_srep_requirement", "combined_buffer", "cet1_headroom",
+        "cet1_requirement", "p2r_7a", "p2r_7b")
 
 NUM_RE = re.compile(r"^\(?[-–]?[£$€]?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?%?$|^\(?[-–]?\d+\.\d+\)?%?$|^\(?[-–]?\d{3,}\)?%?$")
 DASH_RE = re.compile(r"^(?:[-–—]+%?|n/?a|nm|n\.a\.)$", re.I)
@@ -89,12 +101,15 @@ STRONG_RE = re.compile(r"[,.%()]|\d{3}")   # a real cell value, as opposed to a 
 MONTHS = {m.lower(): i for i, m in enumerate(calendar.month_abbr) if m}
 MON = r"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*"
 _MONTH_AHEAD = r"(?![ \t./-]*(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))"
+# a footnote mark glued to the year: Lloyds' "31 Mar 20222" and "Q1 20182", Leeds' "Sep-231"
+_FOOTNOTE = r"(?:[1-9](?!\d))?"
 
 
 def _year_group(tag: str) -> str:
     """A four-digit year may sit on the next line; a two-digit year must share the line with its month
     and must not be followed on that line by another month name ("June 31 December")."""
-    return r"(?:[\s./,'-]*(?P<y4" + tag + r">\d{4})|[ \t./,'-]*(?P<y2" + tag + r">\d{2}" + _MONTH_AHEAD + r"))\b"
+    return (r"(?:[\s./,'-]*(?P<y4" + tag + r">\d{4})" + _FOOTNOTE + r"|[ \t./,'-]*(?P<y2" + tag + r">\d{2}" + _MONTH_AHEAD + r")"
+            + _FOOTNOTE + r")\b")
 
 
 # One scanner with ordered alternatives, so "Mar-26" is read as month-year before "26 Dec" could be read as a day.
@@ -103,7 +118,7 @@ DATE_SCAN = re.compile(
     + r"|\b(?P<d2>\d{1,2})[./](?P<m2>\d{1,2})[./](?P<y2>\d{4}|\d{2})\b"      # 31.12.25 and UBS's 30.6.26
     + r"|\b" + MON.replace("(", "(?P<m4>", 1) + r"\s+(?P<d4>\d{1,2})(?!\d)[,.]?" + _year_group("c")
     + r"|\b" + MON.replace("(", "(?P<m3>", 1) + _year_group("b")
-    + r"|\b(?P<qh>[QH])(?P<n>[1-4])\s?[-']?\s?(?P<y4>\d{4}|\d{2})\b", re.I)
+    + r"|\b(?P<qh>[QH])(?P<n>[1-4])\s?[-']?\s?(?P<y4>\d{4}|\d{2})" + _FOOTNOTE + r"\b", re.I)
 CURRENCY = [("£", "GBP"), ("A$", "AUD"), ("C$", "CAD"), ("S$", "SGD"), ("HK$", "HKD"), ("US$", "USD"),
             ("$", "USD"), ("€", "EUR"), ("¥", "JPY"), ("AED", "AED"), ("QAR", "QAR"), ("CHF", "CHF"),
             ("USD", "USD"), ("EUR", "EUR"), ("GBP", "GBP")]      # codes, as in UBS's "USD m"
@@ -177,7 +192,10 @@ def _join_space_thousands(text: str) -> str:
 # these are never read: "fully loaded" next to the transitional figure, "pre-floor" next to the
 # floored one (the Hong Kong and Basel 3.1 layouts), the pre-IFRS 9 comparatives.
 VARIANT_RE = re.compile(r"fully[- ]loaded|fully[- ]phased|ecl accounting model|pre[- ]ifrs ?9|"
-                        r"pre[- ]?floor|floor[- ]adjusted|excluding (?:the )?(?:ifrs ?9|ecl)", re.I)
+                        r"pre[- ]?floor|floor[- ]adjusted|excluding (?:the )?(?:ifrs ?9|ecl)|"
+                        # "Total capital as if IFRS 9 transitional arrangements had not been applied"
+                        r"\bas if\b|(?:had|have) not been applied|without (?:the )?(?:application of )?(?:the )?"
+                        r"(?:ifrs ?9 |ecl )?transitional|no transitional", re.I)
 
 
 def _norm_label(label: str) -> str:
@@ -314,8 +332,9 @@ def join_split_headers(cells: str, year_end: str = "12-31") -> tuple[list[date],
         t = l.strip()
         if not t:
             continue
-        if re.fullmatch(r"(?:20\d{2}[\s,]*)+", t) or (pending and re.fullmatch(r"(?:\d{2}[\s,]*)+", t)):
-            for y in re.findall(r"\d{4}|\d{2}", t):
+        if re.fullmatch(r"(?:20\d{2}[1-9]?[\s,]*)+", t) or (pending and re.fullmatch(r"(?:\d{2}[\s,]*)+", t)):
+            # "20222": the year with a footnote mark glued on, which left the day-month unpaired
+            for y in re.findall(r"20\d{2}(?=[1-9]?(?:[\s,]|$))|\d{4}|\d{2}", t):
                 if not pending:
                     break
                 y = int(y) if len(y) == 4 else 2000 + int(y)          # "31 Dec" over "22" (Co-operative Bank)
@@ -342,21 +361,36 @@ def _is_cell_line(line: str) -> bool:
     return len(words) <= 2 and len(_tokens(line)) <= 24
 
 
-def detect_units(text: str) -> tuple[str, float]:
-    head = text[:4000]
-    low = head.lower()
-    scale = 1.0
-    # the unit statement nearest the top of the table wins: RBC's "(Millions of Canadian dollars)" header
-    # must not lose to "RWA increased by $29 billion" in the commentary below it
-    hits = [(m.start(), sc) for pat, sc in ((r"[£$€]\s?'?\s?000s?\b|\bthousands?\b|\(000s?\)", 0.001),
-                                           (r"[£$€]\s?m\b|\bmillions?\b|\(m\)|\bmn\b", 1.0),
-                                           (r"[£$€]\s?bn\b|\bbillions?\b", 1000.0))
-            for m in [re.search(pat, low)] if m]
-    if hits:
-        scale = min(hits)[1]
+_CODES = r"(?:aed|aud|cad|chf|cny|rmb|eur|gbp|hkd|inr|jpy|kwd|qar|sar|sgd|usd|sek|nok|dkk)"
+_UNIT = r"(?:[£$€¥]|\b" + _CODES + r")"
+UNIT_PATTERNS = (
+    # FAB's "All numbers in AED 000s", "USD'000", "HK$'000", "in thousands of", "(000s)"
+    (r"(?:" + _UNIT + r"|\bin)\s?'?\s?000s?\b|(?<![\d,.])'000s?\b|\bthousands?\b|\(000s?\)", 0.001),
+    (_UNIT + r"\s?(?:m|mn|mio|millions?)\b|\bmillions?\b|\(m\)|\bmn\b", 1.0),
+    (_UNIT + r"\s?(?:bn|billions?)\b|\bbillions?\b", 1000.0))
+
+
+def detect_units(text: str, anchor: int | None = None) -> tuple[str, float]:
+    """(currency, scale to millions). The unit statement nearest the table wins: RBC's "(Millions of
+    Canadian dollars)" header must not lose to "RWA increased by $29 billion" in the commentary, nor a
+    £m column head to "£1.2bn" in the prose above it. anchor is where the table starts (row 1); a
+    statement on a short line (a column head) beats one inside a sentence, and one above the anchor
+    beats one below it."""
+    low = text.lower()
+    if anchor is None:
+        anchor = 0            # no table found: the earliest statement wins
+    hits = []
+    for pat, sc in UNIT_PATTERNS:
+        for m in re.finditer(pat, low):
+            ls, le = low.rfind("\n", 0, m.start()) + 1, low.find("\n", m.end())
+            line = low[ls:le if le >= 0 else len(low)].strip()
+            prose = len(line) > 60
+            below = m.start() > anchor
+            hits.append((prose, below, abs(m.start() - anchor), sc))
+    scale = min(hits)[3] if hits else 1.0
     ccy = ""
     for sym, code in CURRENCY:
-        if sym.lower() in low:
+        if sym.lower() in low[:anchor + 4000]:
             ccy = code
             break
     return ccy, scale
@@ -460,7 +494,9 @@ def parse_rows(lines: list[str]) -> tuple[dict, dict]:
         labels[key] = label
     for alt in ("14a", "14b", "14c"):
         if alt in values:
-            if "14" not in values:
+            # row 13 is the exposure excluding central bank claims, so the ratio stands in only on that basis
+            same_basis = not re.search(r"including claims on central banks", labels[alt], re.I)
+            if "14" not in values and same_basis:
                 values["14"], labels["14"] = values[alt], labels[alt]
             del values[alt], labels[alt]
     return values, labels
@@ -479,7 +515,7 @@ def _confirm(row: str, label: str) -> str | None:
                  "total_capital_ratio": r"^total capital$"}[metric]
         return metric if re.search(short, _norm_label(low)) else None
     if metric == "rwa":
-        pat = r"total.*risk[- ]?w ?eighted|risk[- ]?w ?eighted (?:exposure amount|assets)|\brweas?\b|\brwas?\b"
+        pat = r"total.*risk\s?-?\s?w ?eighted|risk\s?-?\s?w ?eighted (?:exposure amount|assets)|\brweas?\b|\brwas?\b"
     if re.search(pat, low):
         if re.search(r"\bnotes?\b$|pillar 3|page \d|overview|key metrics|template|annex|contents", low):
             return None
@@ -489,6 +525,10 @@ def _confirm(row: str, label: str) -> str | None:
         if metric == "tier1_ratio" and re.search(r"common equity|cet", low):
             return None
         if metric in ("cet1_capital", "tier1_capital", "total_capital") and "ratio" in low:
+            return None
+        # the EU template's 14a-14c are the leverage requirements ("Total SREP leverage ratio
+        # requirements"), and the UK's 14c and 14d averages: none of them is the period-end ratio
+        if metric == "leverage_ratio" and re.search(r"requirement|srep|additional own funds|of which|buffer|average|mean", low):
             return None
         return metric
     return None
@@ -503,10 +543,19 @@ def parse_by_label(lines: list[str]) -> dict[str, list[str]]:
         if not line or _is_value_line(line):
             i += 1
             continue
+        # a line that starts in lower case continues a wrapped label: SC's row 12 "CET1 available after
+        # meeting the / total SREP own funds / requirements" is not the total SREP row
+        if re.match(r"[a-z]", line):
+            i += 1
+            continue
         # allow a wrapped label: try the line alone, then joined with the next non-value line
         cands = [line]
         if i + 1 < n and not _is_value_line(lines[i + 1]):
-            cands.append(line + " " + _norm_text(lines[i + 1]).strip())
+            nxt = _norm_text(lines[i + 1]).strip()
+            if VARIANT_RE.search(nxt) and re.match(r"[a-z(]", nxt):
+                i += 1
+                continue         # "Total capital" / "as if IFRS 9 ... not been applied": the variant row
+            cands.append(line + " " + nxt)
         hit, used = None, 1
         for k, cand in enumerate(cands):
             if VARIANT_RE.search(cand):
@@ -597,7 +646,8 @@ def looks_like_contents(text: str) -> bool:
 
 
 def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 250, currency_hint: str = "",
-            year_end: str = "12-31", page_hint: int | None = None) -> Result:
+            year_end: str = "12-31", page_hint: int | None = None, published: date | None = None) -> Result:
+    """published: the PDF's own creation stamp, which no period it reports can postdate."""
     res = Result()
     doc = fitz.open(pdf_path)
     raw_texts, ocr = page_texts(doc, max_pages)
@@ -661,6 +711,8 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 250, 
         header = "\n".join(plines[:k])
     # column dates: short header cells first, then date-only lines anywhere on the pages, then narrative text
     cells = "\n".join(l for l in header.splitlines() if _is_cell_line(l))
+    # Standard Chartered sets "31.03.2" over "3": the year's last digit falls to the next line
+    cells = re.sub(r"\b(\d{1,2}\.\d{1,2}\.\d)[ \t]*\n?[ \t]*(\d)\b", r"\1\2", cells)
     res.period_dates = parse_dates(cells, year_end=year_end)
     joined, unresolved = join_split_headers(cells, year_end)
     if len(joined) > len(res.period_dates):
@@ -691,7 +743,20 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 250, 
         descending = False
     if unresolved:
         res.checks.append(("warn", "column headers split month and year across lines; reference date needs a check"))
-    res.currency, res.scale = detect_units(text)
+    k1 = next((k for k in range(len(lines)) if (_row_start(lines, k) or ("",))[0] == "1"), None)
+    if k1 is None:
+        k1 = next((k for k, l in enumerate(lines) if re.search(r"common equity tier|cet ?1", l, re.I)), None)
+    anchor = None
+    if k1 is not None:
+        pos, seen = 0, -1
+        for raw_line in text.splitlines(True):
+            if raw_line.strip():
+                seen += 1
+                if seen == k1:
+                    anchor = pos
+                    break
+            pos += len(raw_line)
+    res.currency, res.scale = detect_units(text, anchor)
     if currency_hint and (not res.currency or (res.currency == "USD" and currency_hint != "USD" and "US$" not in text)):
         res.currency = currency_hint
 
@@ -723,14 +788,15 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 250, 
                 res.checks.append(("warn", f"{metric}: value read as a fraction and scaled to percent"))
         res.values[metric] = v
         res.rows_found[row] = labels.get(row, metric)
+    cet1_requirement(res, picked, labels)
 
     # reference date
     split_header = any("split month and year" in m for _, m in res.checks)
     if res.period_dates and not (split_header and hint_date):
-        res.reference_date = res.period_dates[0] if descending else res.period_dates[-1]
-        if hint_date and abs((res.reference_date - hint_date).days) > 45:
-            # the file name is weak evidence and the header is direct; keep the header's date but say so
-            res.checks.append(("warn", f"header date {res.reference_date} disagrees with expected {hint_date}"))
+        header_ref = res.period_dates[0] if descending else res.period_dates[-1]
+        res.reference_date = choose_reference(header_ref, hint_date, published, res.checks)
+        if res.reference_date != header_ref:
+            res.history = {}        # the header misdated its first column, so its other columns are no better
     elif split_header and hint_date:
         res.reference_date = hint_date
     elif hint_date:
@@ -738,9 +804,83 @@ def extract(pdf_path: str, hint_date: date | None = None, max_pages: int = 250, 
         res.checks.append(("warn", "no period date found in the template header; using the expected date"))
     else:
         res.checks.append(("error", "no reference date"))
+    if res.reference_date:
+        res.reference_date = snap_to_period_end(res.reference_date, year_end, res.checks)
+        if published and res.reference_date > published and not (hint_date and hint_date > published):
+            res.checks.append(("error", f"reference date {res.reference_date} is after the document was produced ({published})"))
 
     validate(res)
     return res
+
+
+def _p2r_cet1(vals: dict, labels: dict) -> float | None:
+    """The CET1 part of Pillar 2A: the UK template's 7a ("Additional CET1 SREP requirements"), the EU
+    template's 7b ("of which: to be made up of CET1 capital"). Printed as a share of 7a rather than in
+    points, or larger than 7a, it is not the figure."""
+    for row, metric in (("7a", "p2r_7a"), ("7b", "p2r_7b")):
+        if metric in vals and re.search(r"\bcet ?1\b|common equity", labels.get(row, ""), re.I):
+            p = vals[metric]
+            if not 0 <= p <= 6 or (row == "7b" and "p2r_7a" in vals and p > vals["p2r_7a"] + 0.01):
+                return None
+            return p
+    return None
+
+
+def cet1_requirement(res: Result, picked: list, labels: dict) -> None:
+    """The bank's own CET1 requirement: the 4.5% Pillar 1 minimum, the CET1 part of Pillar 2A and the
+    combined buffer, when the template gives both rows for the same columns."""
+    toks = {m: t for m, t, _ in picked}
+    p2r_metric = next((m for row, m in (("7a", "p2r_7a"), ("7b", "p2r_7b"))
+                       if m in toks and re.search(r"\bcet ?1\b|common equity", labels.get(row, ""), re.I)), None)
+    if not p2r_metric or "combined_buffer" not in toks or len(toks[p2r_metric]) != len(toks["combined_buffer"]):
+        return
+    p = _p2r_cet1(res.values, labels)
+    lo, hi = BOUNDS["cet1_requirement"]
+    if p is not None and "combined_buffer" in res.values:
+        res.values["cet1_requirement"] = round(4.5 + p + res.values["combined_buffer"], 2)
+        res.derived.add("cet1_requirement")      # validate() leaves it out if it falls outside its range
+    for vals in res.history.values():
+        p = _p2r_cet1(vals, labels)
+        if p is not None and "combined_buffer" in vals and lo <= 4.5 + p + vals["combined_buffer"] <= hi:
+            vals["cet1_requirement"] = round(4.5 + p + vals["combined_buffer"], 2)
+
+
+def choose_reference(header_ref: date, hint: date | None, published: date | None, checks: list) -> date:
+    """The template header's date, unless the file name says otherwise and the document's own creation
+    stamp sides with the file name. A KM1 header misread by a column (a footnote glued to the year, a
+    day-month block paired with the wrong year) is the usual cause: NatWest's Q1 2026 dated 30 June
+    2026, weeks after it was published, and Lloyds' Q1 reports dated to the year end before. The latest
+    of the two dates that the document could have reported wins. With no stamp the header is kept,
+    unless it is half a year or more after the period the file name gives: Standard Chartered's Q1
+    2018 report cannot hold figures for December 2019, while a file name that names only a year, and
+    so defaults to the year end, is often later than the period inside."""
+    if not hint or abs((header_ref - hint).days) <= 45:
+        return header_ref
+    # a stamp three years after the file name's period is a re-saved file or a stray name (Mizuho's
+    # "1q01"), and settles nothing
+    if published and hint <= published and (published - hint).days <= 3 * 366:
+        if header_ref > published or hint > header_ref:
+            checks.append(("warn", f"header date {header_ref} disagrees with expected {hint}; "
+                                   f"the document was produced {published}, so the expected date is used"))
+            return hint
+    elif not published and (header_ref - hint).days > 183:
+        checks.append(("warn", f"header date {header_ref} is long after the period the file name gives ({hint}); "
+                               "the expected date is used"))
+        return hint
+    checks.append(("warn", f"header date {header_ref} disagrees with expected {hint}"))
+    return header_ref
+
+
+def snap_to_period_end(d: date, year_end: str, checks: list) -> date:
+    """A period ends on a month end, or on the year end's own day (Nationwide's 4 April). "3 Dec" read
+    for "31 Dec", or a 30 December stamp, would otherwise make a second point beside the right one.
+    A day mid-month is not a slip of that kind (a board date read as the period) and is left alone."""
+    ye_m, ye_d = (int(x) for x in year_end.split("-"))
+    end = _month_end(d.year, d.month)
+    if d == end or (ye_d < 28 and d.day == ye_d) or 5 < d.day < 26:
+        return d
+    checks.append(("info", f"reference date {d} moved to the period end {end}"))
+    return end
 
 
 def _cell(metric: str, tok: str, scale: float) -> float | None:
@@ -779,16 +919,56 @@ def prior_columns(picked: list, period_dates: list, descending: bool, scale: flo
         if "cet1_capital" in vals and "rwa" in vals and "cet1_ratio" in vals and vals["rwa"]:
             if abs(vals["cet1_capital"] / vals["rwa"] * 100 - vals["cet1_ratio"]) > 0.35:
                 continue
-        if any(not (0 < vals[m] < 80) for m in ("cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio") if m in vals):
+        # the same ranges as the current column: an LCR above 1000 is real for Close Brothers and Vanquis
+        if any(not (BOUNDS[m][0] <= vals[m] <= BOUNDS[m][1]) for m in
+               ("cet1_ratio", "tier1_ratio", "total_capital_ratio", "leverage_ratio", "lcr", "nsfr") if m in vals):
             continue
-        if any(not (20 < vals[m] < 1000) for m in ("lcr", "nsfr") if m in vals):
-            continue
+        for m in SOFT:
+            if m in vals and m in BOUNDS and not (BOUNDS[m][0] <= vals[m] <= BOUNDS[m][1]):
+                vals.pop(m)
+        if {"overall_capital_requirement", "total_srep_requirement", "combined_buffer"} <= set(vals):
+            if vals["overall_capital_requirement"] < vals["total_srep_requirement"] + vals["combined_buffer"] - 0.3:
+                vals.pop("overall_capital_requirement")
         keep[d] = vals
     return keep
 
 
+AMOUNTS = tuple(m for m, k in KIND.items() if k == "amount")
+# Rough US dollars per unit, for a size test only: no bank holds more than about $4tn of RWA or
+# $500bn of CET1, so a figure many times that is a table in thousands read as millions.
+USD_PER = {"USD": 1, "GBP": 1.3, "EUR": 1.1, "CHF": 1.1, "JPY": 0.007, "HKD": 0.13, "CNY": 0.14, "AED": 0.27,
+           "QAR": 0.27, "SAR": 0.27, "KWD": 3.3, "CAD": 0.73, "AUD": 0.65, "SGD": 0.75, "INR": 0.012,
+           "SEK": 0.095, "NOK": 0.095, "DKK": 0.15}
+SIZE_CEILING_USD_M = {"rwa": 8e6, "leverage_exposure": 15e6, "cet1_capital": 1e6, "tier1_capital": 1.2e6, "total_capital": 1.5e6}
+
+
+def rescale(res: Result, factor: float, why: str) -> None:
+    """Multiply every amount, current and prior columns, by factor (a units slip the ratios cannot show)."""
+    for m in AMOUNTS:
+        if m in res.values:
+            res.values[m] = res.values[m] * factor
+    for vals in res.history.values():
+        for m in AMOUNTS:
+            if m in vals:
+                vals[m] = vals[m] * factor
+    res.scale *= factor
+    res.checks.append(("warn", why))
+
+
+def check_size(res: Result) -> None:
+    """Capital, RWA and exposure in thousands read as millions agree with their own ratios, so only
+    their size gives them away."""
+    usd = USD_PER.get(res.currency)
+    if not usd:
+        return
+    over = [m for m, cap in SIZE_CEILING_USD_M.items() if m in res.values and res.values[m] * usd > cap]
+    if over:
+        rescale(res, 0.001, f"amounts far beyond any bank's size ({', '.join(over)}); read as thousands")
+
+
 def validate(res: Result) -> None:
     v = res.values
+    check_size(res)
     # a table stating capital and RWA but omitting the ratio row (SMFG's single-table KM1) gives the
     # ratio exactly; it is recorded as derived so a profile can say where the figure came from
     for cap, ratio in (("cet1_capital", "cet1_ratio"), ("tier1_capital", "tier1_ratio"), ("total_capital", "total_capital_ratio")):
@@ -811,7 +991,19 @@ def validate(res: Result) -> None:
         res.checks.append(("info", "no LCR row (not disclosed at this level, or not read)"))
     for m, (lo, hi) in BOUNDS.items():
         if m in v and not (lo <= v[m] <= hi):
-            res.checks.append(("error", f"{m} {v[m]:g} outside {lo}..{hi}"))
+            if m in SOFT:
+                # a requirement row on another basis (Santander's 7d is Pillar 2A alone) says nothing
+                # about the rest of the table, so the document keeps its standing
+                res.checks.append(("info", f"{m} {v.pop(m):g} outside {lo}..{hi}, not loaded"))
+            else:
+                res.checks.append(("error", f"{m} {v[m]:g} outside {lo}..{hi}"))
+    # an overall capital requirement below the total SREP requirement plus the combined buffer is
+    # not on a total-capital basis: Standard Chartered printed its CET1 one (10.38%) in row 11a
+    if "overall_capital_requirement" in v and "total_srep_requirement" in v and "combined_buffer" in v:
+        floor = v["total_srep_requirement"] + v["combined_buffer"]
+        if v["overall_capital_requirement"] < floor - 0.3:
+            res.checks.append(("info", f"overall_capital_requirement {v.pop('overall_capital_requirement'):g} below "
+                                       f"the total SREP requirement plus buffers ({floor:.2f}), not loaded"))
 
     def close(a, b, tol):
         return a in v and b in v and abs(v[a] - v[b]) <= tol
@@ -824,6 +1016,14 @@ def validate(res: Result) -> None:
             # capital, RWA and the ratio agree: rows matched by label alone are confirmed by arithmetic
             res.checks = [("info", m + "; confirmed by capital arithmetic") if s == "warn" and m.startswith("rows identified by label only") else (s, m)
                           for s, m in res.checks]
+    # Tier 1 and total capital against their own ratios: a row read from the wrong line (OCR loses a
+    # row's figures and the next row's take their place) fails here, and is left out
+    for cap, ratio in (("tier1_capital", "tier1_ratio"), ("total_capital", "total_capital_ratio")):
+        if cap in v and ratio in v and ratio not in res.derived and v.get("rwa"):
+            implied = v[cap] / v["rwa"] * 100
+            if abs(implied - v[ratio]) > 0.35 and abs(implied - v[ratio]) > 0.03 * v[ratio]:
+                res.checks.append(("warn", f"{ratio} {v[ratio]:.2f} vs implied {implied:.2f} from capital/RWA, not loaded"))
+                v.pop(cap), v.pop(ratio)
     if "tier1_capital" in v and "leverage_exposure" in v and "leverage_ratio" in v and v["leverage_exposure"]:
         implied = v["tier1_capital"] / v["leverage_exposure"] * 100
         if v["leverage_ratio"] and 800 < implied / v["leverage_ratio"] < 1250:
@@ -831,14 +1031,29 @@ def validate(res: Result) -> None:
             implied /= 1000
             res.checks.append(("warn", "leverage_exposure was in billions; scaled to millions"))
         if abs(implied - v["leverage_ratio"]) > 0.6:
-            res.checks.append(("warn", f"leverage_ratio {v['leverage_ratio']:.2f} vs implied {implied:.2f}"))
+            # the ratio and the exposure are not on one basis, or not from one column (Metro's annual
+            # KM1 gave its half-year leverage rows): neither can be trusted, so neither is loaded
+            res.checks.append(("warn", f"leverage_ratio {v['leverage_ratio']:.2f} vs implied {implied:.2f}, "
+                                       "so the leverage rows are not loaded"))
+            v.pop("leverage_ratio"), v.pop("leverage_exposure")
+    # The LCR row is the average of twelve month-end ratios and HQLA and outflows are averages of
+    # their own, so the two legitimately differ by a fifth or more for a volatile buffer (Goldman
+    # Sachs by 20%, Vanquis by 31%); a larger gap is a different column or a different table.
     if "hqla" in v and "net_cash_outflows" in v and "lcr" in v and v["net_cash_outflows"]:
         implied = v["hqla"] / v["net_cash_outflows"] * 100
-        if abs(implied - v["lcr"]) > 5:
+        if abs(implied - v["lcr"]) > max(5, 0.4 * v["lcr"]):
+            res.checks.append(("warn", f"lcr {v['lcr']:.1f} vs implied {implied:.1f}, so the liquidity rows are not loaded"))
+            for m in ("lcr", "hqla", "net_cash_outflows"):
+                v.pop(m)
+        elif abs(implied - v["lcr"]) > 5:
             res.checks.append(("warn", f"lcr {v['lcr']:.1f} vs implied {implied:.1f}"))
     if "available_stable_funding" in v and "required_stable_funding" in v and "nsfr" in v and v["required_stable_funding"]:
         implied = v["available_stable_funding"] / v["required_stable_funding"] * 100
-        if abs(implied - v["nsfr"]) > 3:
+        if abs(implied - v["nsfr"]) > max(3, 0.15 * v["nsfr"]):
+            res.checks.append(("warn", f"nsfr {v['nsfr']:.1f} vs implied {implied:.1f}, so the funding rows are not loaded"))
+            for m in ("nsfr", "available_stable_funding", "required_stable_funding"):
+                v.pop(m)
+        elif abs(implied - v["nsfr"]) > 3:
             res.checks.append(("warn", f"nsfr {v['nsfr']:.1f} vs implied {implied:.1f}"))
     if "cet1_ratio" in v and "tier1_ratio" in v and v["tier1_ratio"] < v["cet1_ratio"] - 0.05:
         res.checks.append(("error", "tier1_ratio below cet1_ratio"))

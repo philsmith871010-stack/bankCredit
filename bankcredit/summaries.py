@@ -35,6 +35,7 @@ PEER_LABEL = {"uk_large": "UK majors", "uk_mid": "UK mid-sized banks", "uk_small
               "ch": "Swiss banks", "aus": "Australian banks", "can": "Canadian banks", "asia": "Asian banks",
               "gulf": "Gulf banks"}
 RATIOS = (("cet1", "cet1_ratio", "CET1", "%", 1, 0.5), ("leverage", "leverage_ratio", "leverage", "%", 1, 0.3),
+          ("lev_us", "tier1_leverage", "Tier 1 leverage", "%", 1, 0.3),
           ("lcr", "lcr", "LCR", "%", 0, 10.0), ("nsfr", "nsfr", "NSFR", "%", 0, 5.0))
 FLAGGED = ("bad", "warn", "good")
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -151,7 +152,7 @@ def brief(d: dict, today: date | None = None) -> dict:
         else:
             lead = f"{noun} is mixed against {group}: "
         return lead + "; ".join(clauses) + "."
-    out["capital"] = block(("cet1", "leverage"), "Capital")
+    out["capital"] = block(("cet1", "leverage", "lev_us"), "Capital")
     out["liquidity"] = block(("lcr", "nsfr"), "Liquidity")
 
     # trends over the last four periods, in points

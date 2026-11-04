@@ -30,6 +30,18 @@ def test_the_requirement_is_the_banks_own_where_it_is_published():
     assert build.requirement("rwa", {}, "GB") == (None, ""), "a currency amount has no floor"
 
 
+def test_the_requirement_is_the_one_in_force_when_the_ratio_was_reported():
+    ratio = [{"d": "2025-12-31", "v": 18.9}]
+    old = {"total_capital_ratio": ratio, "overall_capital_requirement": [{"d": "2022-12-31", "v": 13.1}]}
+    assert build.requirement("total_capital_ratio", old, "GB") == (8.0, "Pillar 1 minimum"), \
+        "a 2022 requirement predates the 2023 countercyclical buffer rise"
+    same = {"total_capital_ratio": ratio, "overall_capital_requirement": [{"d": "2025-12-31", "v": 14.1}]}
+    assert build.requirement("total_capital_ratio", same, "GB") == (14.1, "overall requirement")
+    cet1_basis = {"total_capital_ratio": ratio, "overall_capital_requirement": [{"d": "2025-12-31", "v": 10.3}]}
+    assert build.requirement("total_capital_ratio", cet1_basis, "GB")[1] == "Pillar 1 minimum", \
+        "below 8% plus the conservation buffer the figure is on a CET1 basis"
+
+
 def test_the_verdict_is_the_requirement_first_then_the_peers():
     assert build.ratio_verdict(12.6, PEERS["cet1_ratio"], 15.9, "overall requirement") == ("bad", "Below the 15.9% overall requirement")
     assert build.ratio_verdict(14.5, PEERS["cet1_ratio"], 11.2) == ("good", "Top quarter of peers")

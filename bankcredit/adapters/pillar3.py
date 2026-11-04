@@ -124,6 +124,105 @@ def _quarter_end(year: int, n: int, ye_m: int, ye_d: int) -> date:
     return end if end.day >= 15 else _month_end(end.year, end.month - 1)
 
 
+# ---- checks against the bank's own record ------------------------------
+SCALE_METRICS = ("rwa", "cet1_capital", "leverage_exposure")
+SCALE_WINDOW_DAYS = 6 * 366
+AMOUNT_METRICS = ("cet1_capital", "tier1_capital", "total_capital", "rwa", "leverage_exposure")
+
+
+def _by_date(facts, res: km1.Result, methods: tuple) -> dict:
+    """{reference date: {metric: value}} from the bank's other Pillar 3 documents, the period read excluded."""
+    if facts.empty:
+        return {}
+    f = facts[(facts.source == "pillar3") & facts.method.isin(methods)]
+    out: dict = {}
+    ref = res.reference_date.isoformat() if res.reference_date else ""
+    for d, m, v in zip(f.reference_date.astype(str).str[:10], f.metric, f.value):
+        if d != ref:
+            out.setdefault(d, {}).setdefault(m, float(v))
+    return out
+
+
+def check_scale(res: km1.Result, facts, last_verified: dict) -> None:
+    """A table in thousands read as millions agrees with its own ratios; only the bank's own figures for
+    other periods show it, as RWA a thousand times what it was (QIB UK's 693,154 "£m"). The nearest
+    figure from a reviewer's answer or another source moves the amounts either way; the rules' own last
+    verified figure, which may share the slip, only ever scales them down."""
+    if not res.reference_date:
+        return
+    refs = []          # (days apart, metric, value, label, both_ways)
+    if not facts.empty:
+        f = facts[facts.metric.isin(SCALE_METRICS) & ((facts.method == "pdf_manual") | (facts.source != "pillar3"))]
+        if res.currency:
+            f = f[f.currency == res.currency]
+        for d, m, v, src in zip(f.reference_date.astype(str).str[:10], f.metric, f.value, f.source):
+            gap = abs((date.fromisoformat(d) - res.reference_date).days)
+            if gap <= SCALE_WINDOW_DAYS and v:
+                refs.append((gap, m, float(v), f"{src} {d}", True))
+    lv, ld = last_verified.get("values") or {}, str(last_verified.get("reference_date") or "")[:10]
+    if lv and ld:
+        gap = abs((date.fromisoformat(ld) - res.reference_date).days)
+        both = last_verified.get("method") == "pdf_manual"
+        for m in SCALE_METRICS:
+            if lv.get(m) and gap <= SCALE_WINDOW_DAYS:
+                refs.append((gap, m, float(lv[m]), f"last verified {ld}", both))
+    for m in SCALE_METRICS:
+        mine = [r for r in refs if r[1] == m]
+        if m not in res.values or not mine or not res.values[m]:
+            continue
+        gap, _, ref, label, both = min(mine)
+        r = res.values[m] / ref
+        if 300 <= r <= 3000:
+            km1.rescale(res, 0.001, f"{m} {res.values[m]:,.0f} is {r:,.0f}x the {label} figure; amounts read as thousands")
+        elif both and 1 / 3000 <= r <= 1 / 300:
+            km1.rescale(res, 1000.0, f"{m} {res.values[m]:,.3f} is 1/{1 / r:,.0f} of the {label} figure; amounts read as billions")
+        return
+
+
+def check_repeats(res: km1.Result, facts) -> None:
+    """Figures that repeat another period's to the unit were read from that period's column: Standard
+    Chartered's half-year 2025 PDF gave exactly its first-quarter figures, and Metro's 2023 annual
+    report its 2022 ones. Three amounts alike is a whole column, and the document goes to review; an
+    exposure alike alone is the leverage and liquidity block (Metro's annual KM1 repeating its
+    half-year rows), and those rows are left out."""
+    # only earlier periods: the misread column is a prior one, and a later document that repeats this
+    # one is that later document's fault, not this one's. A date within a week is the same period
+    # stored under a slipped day (Lloyds Bank's 2019-12-30).
+    if not res.reference_date:
+        return
+    other = {d: x for d, x in _by_date(facts, res, ("pdf_rules", "pdf_manual", "pdf_rules_prior")).items()
+             if (res.reference_date - date.fromisoformat(d)).days > 7}
+    v = res.values
+    for d, vals in sorted(other.items()):
+        same = [m for m in AMOUNT_METRICS if m in v and m in vals and abs(v[m] - vals[m]) < 0.01 and v[m] > 50]
+        # CET1, Tier 1 and total capital are often one figure, and a small bank's may stand still a
+        # quarter, so the column must repeat its RWA or exposure too
+        if len(same) >= 3 and {"rwa", "leverage_exposure"} & set(same):
+            res.checks.append(("error", f"figures repeat the {d} disclosure ({', '.join(same)}): an earlier column was read"))
+            return
+    for d, vals in sorted(other.items()):
+        # to the printed digit: Yorkshire's 58,724.6 a year after 58,724.7 is chance, not a repeat
+        if "leverage_exposure" in v and "leverage_exposure" in vals and abs(v["leverage_exposure"] - vals["leverage_exposure"]) < 0.01:
+            gone = ["leverage_exposure"] + [m for m in ("leverage_ratio", "lcr", "nsfr") if m in v and m in vals and abs(v[m] - vals[m]) < 0.05]
+            for m in gone:
+                v.pop(m)
+            res.checks.append(("warn", f"{', '.join(gone)} repeat the {d} disclosure, not loaded"))
+            return
+
+
+def check_tier1(res: km1.Result, facts) -> None:
+    """Tier 1 above CET1 needs AT1 in issue. Where the bank's neighbouring disclosures show none, the
+    excess is a misread row (Metro's OCR-read half years: Tier 1 1,068 against CET1 826)."""
+    v = res.values
+    if not res.reference_date or not ("tier1_capital" in v and "cet1_capital" in v and v["tier1_capital"] > v["cet1_capital"] + 0.5):
+        return
+    near = [vals for d, vals in _by_date(facts, res, ("pdf_rules", "pdf_manual")).items()
+            if abs((date.fromisoformat(d) - res.reference_date).days) <= 400 and "tier1_capital" in vals and "cet1_capital" in vals]
+    if near and all(abs(x["tier1_capital"] - x["cet1_capital"]) <= 0.5 for x in near):
+        res.checks.append(("error", f"tier1_capital {v['tier1_capital']:g} above cet1_capital {v['cet1_capital']:g}, "
+                                    "though the neighbouring disclosures show no AT1"))
+
+
 # ---- adapter ------------------------------------------------------------
 @register
 class Pillar3Adapter(Adapter):
@@ -377,10 +476,13 @@ class Pillar3Adapter(Adapter):
         for ent, url, path, sha, hint, title, origin in raw:
             e = self.by_id[ent]
             loc = self._locator_for(ent, url)
+            if self._unclaimed(ent, loc):
+                self._record(ent, url, sha, None, None, "skipped", 0.0, "no locator for this bank claims the document", title, origin, {})
+                continue
             h = learn.hint_for(ent)
             ccy = loc.get("currency") or h.get("currency") or COUNTRY_CCY.get(e.country, "")
             try:
-                res = self._extract(loc, str(path), hint, ccy, h)
+                res = self._extract(loc, str(path), hint, ccy, h, url)
             except Exception as exc:
                 self._record(ent, url, sha, None, None, "error", 0.0, f"extract failed: {exc}", title, origin, {})
                 continue
@@ -436,9 +538,15 @@ class Pillar3Adapter(Adapter):
             cached.write_bytes(data)
         url = url or f"file:{Path(path).name}"
         e = self.by_id[entity_id]
-        loc = next((l for l in LOCATORS if l["entity"] == entity_id), {})
+        # the locator the document belongs to, as reprocess finds it: the entity's first one read
+        # Citibank Europe's KM1 with Citigroup's LCR extractor
+        loc = self._locator_for(entity_id, url)
+        if self._unclaimed(entity_id, loc):
+            self._record(entity_id, url, sha, None, None, "skipped", 0.0, "no locator for this bank claims the document",
+                         title or Path(path).name, origin, {})
+            return "skipped", km1.Result(checks=[("error", "no locator for this bank claims the document")])
         ccy = loc.get("currency") or COUNTRY_CCY.get(e.country, "")
-        res = self._extract(loc, str(cached), infer_period(Path(path).name, loc.get("year_end", "12-31")), ccy)
+        res = self._extract(loc, str(cached), infer_period(Path(path).name, loc.get("year_end", "12-31")), ccy, url=url)
         self.load([(entity_id, url, cached, sha, title or Path(path).name, origin, res)])
         row = self.docs = store.read("documents")
         status = row[row.url == url].status.iloc[-1] if not row.empty and (row.url == url).any() else "error"
@@ -464,11 +572,19 @@ class Pillar3Adapter(Adapter):
             if not path.exists():
                 continue
             e = self.by_id.get(r.entity_id)
-            loc = next((l for l in LOCATORS if l["entity"] == r.entity_id), {})
+            loc = self._locator_for(r.entity_id, r.url)
+            if self._unclaimed(r.entity_id, loc):
+                # a stray document (another legal entity's report under this bank's name): whatever an
+                # earlier pass read from it with the wrong locator goes, the reviewer's answers stay
+                store.drop("facts", ne={"method": "pdf_manual"}, document=r.url, source=self.name)
+                self._record(r.entity_id, r.url, r.sha256, None, None, "skipped", 0.0, "no locator for this bank claims the document",
+                             r.title, r.origin, {})
+                counts["skipped"] = counts.get("skipped", 0) + 1
+                continue
             ccy = loc.get("currency") or (COUNTRY_CCY.get(e.country, "") if e else "")
             hint = infer_period(r.title or "", loc.get("year_end", "12-31"))
             try:
-                res = self._extract(self._locator_for(r.entity_id, r.url), str(path), hint, ccy, learn.hint_for(r.entity_id))
+                res = self._extract(loc, str(path), hint, ccy, learn.hint_for(r.entity_id), r.url)
             except Exception as exc:
                 self._record(r.entity_id, r.url, r.sha256, None, None, "error", 0.0, f"extract failed: {exc}", r.title, r.origin, {})
                 counts["error"] = counts.get("error", 0) + 1
@@ -483,7 +599,7 @@ class Pillar3Adapter(Adapter):
         return counts
 
     @staticmethod
-    def _extract(loc: dict, path: str, hint, ccy: str, hints: dict | None = None) -> km1.Result:
+    def _extract(loc: dict, path: str, hint, ccy: str, hints: dict | None = None, url: str = "") -> km1.Result:
         hints = hints or {}
         tpl = (loc or {}).get("template", "km1")
         if tpl == "us_capital":
@@ -491,13 +607,19 @@ class Pillar3Adapter(Adapter):
         elif tpl == "us_lcr":
             res = us.extract_lcr(path, hint_date=hint)
         else:
+            pub = Pillar3Adapter.published_on(path)
             res = km1.extract(path, hint_date=hint, currency_hint=ccy, year_end=(loc or {}).get("year_end", "12-31"),
-                              page_hint=hints.get("page"))
+                              page_hint=hints.get("page"), published=date.fromisoformat(pub) if pub else None)
             if hints.get("trust_labels"):       # the reviewer confirmed this bank's table carries no row numbers
                 res.checks = [c for c in res.checks if "label only" not in c[1]]
         # continuity with the last verified figures: agreement earns a little confidence, contradiction goes to review
         ent = (loc or {}).get("entity")
         if ent and res.values and res.fixed_confidence is None:
+            facts = store.read("facts")
+            facts = facts[(facts.entity_id == ent) & (facts.document != url)] if not facts.empty else facts
+            check_scale(res, facts, hints.get("last_verified") or {})
+            check_repeats(res, facts)
+            check_tier1(res, facts)
             verdict, msg = learn.continuity(ent, res.values, res.reference_date)
             if verdict == "ok":
                 res.confidence_bonus = learn.CONTINUITY_BONUS
@@ -520,15 +642,6 @@ class Pillar3Adapter(Adapter):
         except Exception:
             pass
         return None
-
-    @staticmethod
-    def _locator_for(entity_id: str, url: str = "") -> dict:
-        """The locator that produced a document: match on URL when an entity has several."""
-        cands = [l for l in LOCATORS if l["entity"] == entity_id]
-        for l in cands:
-            if url and (l.get("match") and re.search(l["match"], unquote(url), re.I) or any(u.split("{")[0] in url for u in l.get("urls", []))):
-                return l
-        return cands[0] if cands else {}
 
     def _facts(self, ent: str, url: str, res: km1.Result) -> list[Fact]:
         kinds = km1.KIND
@@ -560,21 +673,38 @@ class Pillar3Adapter(Adapter):
         return out
 
     @staticmethod
-    def _locator_for(ent: str, url: str) -> dict:
+    def _locator_for(ent: str, url: str = "") -> dict:
         """The locator this document actually came from, not merely the first one for the entity.
 
         An entity often has several - TSB has one for its quarterly disclosures and one for its
-        annual report - and they say different things about what the document is.
+        annual report - and they say different things about what the document is. A locator claims a
+        document by its match pattern or its URL template; one with neither claims all its bank's.
+        A document none claims is read with the entity's first locator only when every locator is a
+        KM1 one (an NSM or hand-delivered copy of a UK bank's Pillar 3 matches no listing pattern);
+        otherwise it gets no locator ({}), so a Citibank Europe KM1 filed under Citigroup is not read
+        as Citigroup's LCR disclosure. An entity with no locator at all also gets {}.
         """
-        for l in LOCATORS:
-            if l["entity"] != ent:
-                continue
+        cands = [l for l in LOCATORS if l["entity"] == ent]
+        target = unquote(url or "")
+        for l in cands:
             try:
-                if re.search(l.get("match", ""), url, re.I):
+                if l.get("match") and re.search(l["match"], target, re.I):
                     return l
             except re.error:
                 continue
-        return next((l for l in LOCATORS if l["entity"] == ent), {})
+            if target and any(u.split("{")[0] in target for u in l.get("urls") or [] if "{" in u):
+                return l
+        for l in cands:
+            if not l.get("match") and not any("{" in u for u in l.get("urls") or []):
+                return l
+        if cands and all(l.get("template", "km1") == "km1" for l in cands):
+            return cands[0]
+        return {}
+
+    @staticmethod
+    def _unclaimed(ent: str, loc: dict) -> bool:
+        """The entity has locators and none of them produced this document."""
+        return not loc and any(l["entity"] == ent for l in LOCATORS)
 
     def _queue_item(self, ent, url, path, sha, res, title, reason) -> dict:
         return {"id": (sha or hashlib.sha1(url.encode()).hexdigest())[:12], "entity_id": ent, "url": url,

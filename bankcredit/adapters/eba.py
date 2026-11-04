@@ -291,10 +291,15 @@ class EBAHubAdapter(Adapter):
                 best[eid] = (rank, key)
         facts: list[Fact] = []
         for eid, (_, key) in best.items():
+            # a few filers send amounts already in millions (La Banque Postale, June 2025: RWA 96,061);
+            # no institution in the hub has under EUR 10m of exposure, so a smaller raw figure is millions
+            amounts = [by_hub[key][c] for c in by_hub[key] if ROW_MAP[c][0] in ("rwa", "leverage_exposure")]
+            in_millions = bool(amounts) and max(abs(a) for a in amounts) < 1e7
             for code, value in by_hub[key].items():
                 metric, kind = ROW_MAP[code]
+                v = value if kind == "amount" and in_millions else scale(value, kind)
                 facts.append(Fact(
-                    entity_id=eid, reference_date=item, metric=metric, value=scale(value, kind),
+                    entity_id=eid, reference_date=item, metric=metric, value=v,
                     unit="ccy_m" if kind == "amount" else "pct", currency="EUR" if kind == "amount" else "",
                     basis="consolidated", source=self.name, document=self.document, method="xbrl",
                     confidence=1.0))
