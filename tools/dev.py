@@ -105,15 +105,17 @@ def _tail(text: str, n: int = 25) -> str:
     return "\n".join(text.strip().splitlines()[-n:])
 
 
-def build(level: str, out: Path, swap: bool = True, attributed: bool = True) -> tuple[bool, str, float]:
+def build(level: str, out: Path, swap: bool = True, attributed: bool = True, work: Path | None = None) -> tuple[bool, str, float]:
     """Rebuild at `level` into `out`. With swap, the new site is built beside the old and moved into
     place only once it is complete, so the server never serves half a build and a failed build
-    leaves the last good one standing. Returns (ok, error text, seconds)."""
+    leaves the last good one standing. `work` is the copy of data/ the build reads and writes; the
+    one-shot build for the tests takes its own, because sharing the server's let a rebuild of the
+    pages land between that build's copy and its export. Returns (ok, error text, seconds)."""
     t = time.time()
-    work = DEV / "data"
+    work = work or DEV / "data"
     try:
         if level == "data" or not work.exists():
-            fresh = DEV / "data.next"
+            fresh = work.with_name(work.name + ".next")
             shutil.rmtree(fresh, ignore_errors=True)
             shutil.copytree(DATA, fresh, ignore=shutil.ignore_patterns("cache"))
             shutil.rmtree(work, ignore_errors=True)
@@ -292,7 +294,7 @@ def main(argv=None) -> int:
 
     if a.once:
         _say("building into site/ ...")
-        ok, err, secs = build("data", ROOT / "site", swap=False, attributed=not a.public)
+        ok, err, secs = build("data", ROOT / "site", swap=False, attributed=not a.public, work=DEV / "once-data")
         _say(f"built in {secs:.1f}s" if ok else f"build failed after {secs:.1f}s\n{err}")
         return 0 if ok else 1
 

@@ -55,6 +55,13 @@
     if(k==='rating_grade')return e&&e.rating_grade!=null?-e.rating_grade:null;
     return e?e[k]:null;
   }
+  // the table carries the acknowledgement too, beside the chip it is about
+  function revCell(it,e){
+    var mode=sinceMode(), r=verdictOf(signals(e,baseline(it,mode)));
+    if(!r.lead)return '';
+    if(mode==='approval'&&it.reviewed&&it.reviewed>=latestOf(r))return '<span class="cw-seen">reviewed '+esc(day(it.reviewed))+'</span>';
+    return revBtn(it.id);
+  }
   function polTable(p,flagsOf){
     var items=p.slice().sort(function(a,b){
       var k=polSort.key, va=polVal(a,byId[a.id],k), vb=polVal(b,byId[b.id],k);
@@ -77,7 +84,7 @@
         asofCell(e)+
         '<td>'+mkt(e.market,1)+'</td>'+
         '<td class="pt-ten">'+tenorPick(it)+'</td>'+
-        '<td class="pt-flag">'+(worst?chip(worst[2]||worst[1],worst[0]):'<span class="na">—</span>')+'</td>'+
+        '<td class="pt-flag">'+(worst?chip(worst[2]||worst[1],worst[0]):'<span class="na">—</span>')+revCell(it,e)+'</td>'+
         '<td><button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">×</button></td></tr>';
     }).join('');
     return '<div class="table-wrap"><table class="plain pol-t" id="pol-table"><thead><tr>'+
@@ -306,6 +313,10 @@
     if(good.length)return {v:'better',lead:good[0],rest:good.slice(1)};
     return {v:'same',lead:null,rest:[]};
   }
+  // The acknowledgement: you have looked at this name, so keep it quiet until something new happens.
+  // A button with a tick, on the card and in the table, because a link at the end of a line was missed.
+  function revBtn(id){return '<button class="pol-rev" type="button" data-id="'+esc(id)+'" title="Looked at it: keep it quiet until something new happens">\u2713 Mark reviewed</button>'}
+  function latestOf(r){return [r.lead].concat(r.rest).reduce(function(m,x){return x&&x[2]>m?x[2]:m},'')}
   // the table's one-chip column reads the same verdict, in the chip kinds the table already draws
   function flags(item,e){
     if(!e)return [['bad','No longer covered']];
@@ -1058,7 +1069,10 @@
       var groups={worse:[],better:[],same:[]};
       p.forEach(function(it){if(byId[it.id])groups[res[it.id].v].push(it)});
       // a name reviewed since its latest change has been dealt with: it keeps its group, quieter, at the foot of it
-      var seen=function(it){var r=res[it.id];return mode==='approval'&&!!it.reviewed&&!!r&&!!r.lead&&it.reviewed>=r.lead[2]};
+      // the review is held against the newest change on the card, not its headline: a milder change
+      // after the review is still news
+      var seen=function(it){var r=res[it.id];if(mode!=='approval'||!it.reviewed||!r||!r.lead)return false;
+        return it.reviewed>=latestOf(r)};
       var rank=function(r){return r.lead?TIERS.indexOf(r.lead[0]):3};
       var order=function(a,b){var ra=res[a.id],rb=res[b.id];
         return (seen(a)?1:0)-(seen(b)?1:0)||rank(ra)-rank(rb)||String((rb.lead||[])[2]||'').localeCompare(String((ra.lead||[])[2]||''))||b.tenor-a.tenor};
@@ -1075,7 +1089,7 @@
           why='<div class="cp-why cw-'+L[0]+'"><span class="cw-t">'+esc(L[3]+also)+'</span>'+
             r.rest.slice(0,2).map(function(x){return chip(x[4],TIER[x[0]],x[3])}).join('')+
             (sn?'<span class="cw-seen">reviewed '+esc(day(it.reviewed))+'</span>'
-               :'<button class="linky pol-rev" type="button" data-id="'+esc(it.id)+'">Mark reviewed</button>')+'</div>';
+               :revBtn(it.id))+'</div>';
         }
         return '<div class="pol-card'+(r.v==='worse'&&!sn?' pol-card-flag':'')+(r.v==='better'&&!sn?' pol-card-up':'')+(sn?' pol-card-seen':'')+'" data-id="'+esc(e.id)+'"'+(e.blurb?' title="'+esc(e.blurb)+'"':'')+'>'+
           '<div class="cp-top">'+
@@ -1111,7 +1125,8 @@
       html+='<div class="pol-since" role="group" aria-label="Compare with">'+
         [['approval','Since approval'],['review','Since last review'],['d30','Last 30 days']].map(function(m){
           return '<button class="filter'+(mode===m[0]?' active':'')+'" type="button" data-since="'+m[0]+'">'+m[1]+'</button>'}).join('')+
-        (mode==='approval'?'<label class="pol-appr">approved on <input type="date" id="pol-approved" value="'+esc(one||earliest)+'" max="'+todayIso()+'"></label>':'')+'</div>';
+        (mode==='approval'?'<label class="pol-appr">approved on <input type="date" id="pol-approved" value="'+esc(one||earliest)+'" max="'+todayIso()+'"></label>':'')+
+        (nW||nB?'<span class="pol-hint">Looked at a name? Press <b>\u2713 Mark reviewed</b> on it and it stays quiet until something new happens.</span>':'')+'</div>';
       html+=overview(p.filter(function(it){return byId[it.id]}));
       if(view==='table')html+=polTable(p,flags);
       else{

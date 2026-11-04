@@ -1364,3 +1364,40 @@ def test_the_example_list_is_approved_at_the_start_of_the_financial_year(page, s
     assert page.eval_on_selector(".pol-verdict", "e => e.textContent").startswith("Since you approved this list on 1 Apr 2026")
     assert not page.errors, page.errors
 
+
+def test_a_review_holds_only_until_the_next_change(page, server):
+    """A review on 20 October covers the September downgrade. An outlook turned negative on 30
+    October is news, though it is milder than the downgrade the card leads with."""
+    ids = _monitor_with(page, server, {
+        "old": {"m": [["2026-09-16", "downgrade", 1]]},
+        "new": {"m": [["2026-09-16", "downgrade", 1]], "t": [["2026-01-01", 3, 0, 0, 0, 0, 3], ["2026-10-30", 3, 0, 1, 0, 0, 2]]},
+    })
+    page.evaluate("() => {const p = JSON.parse(localStorage.getItem('counterparty.policy'));"
+                  " p.forEach(x => x.reviewed = '2026-10-20'); localStorage.setItem('counterparty.policy', JSON.stringify(p))}")
+    visit(page, server, TOOL)
+    cls = lambda k: page.eval_on_selector(f'.pol-card[data-id="{ids[k]}"]', "e => e.className")
+    assert "pol-card-seen" in cls("old")
+    assert "pol-card-seen" not in cls("new")
+    summary = page.eval_on_selector(".pol-verdict", "e => e.textContent")
+    assert "1 needs a look" in summary and "1 reviewed" in summary, summary
+    assert not page.errors, page.errors
+
+
+def test_the_acknowledgement_is_on_the_table_too(page, server):
+    """The Table view carried the verdict chip and nothing to acknowledge it with, so a reader who
+    keeps the table could not mark anything reviewed."""
+    ids = _monitor_with(page, server, {"down": {"m": [["2026-09-16", "downgrade", 1]]}, "flat": {}})
+    assert "Mark reviewed" in page.eval_on_selector(".pol-hint", "e => e.textContent"), "the page says what the button is for"
+    page.eval_on_selector("#pol-view-table", "e => e.click()")
+    page.wait_for_timeout(400)
+    row = f'#pol-table tr[data-id="{ids["down"]}"]'
+    assert page.eval_on_selector_all(row + " .pol-rev", "e => e.length") == 1
+    assert page.eval_on_selector_all(f'#pol-table tr[data-id="{ids["flat"]}"] .pol-rev', "e => e.length") == 0, "nothing to acknowledge"
+    page.eval_on_selector(row + " .pol-rev", "e => e.click()")
+    page.wait_for_timeout(400)
+    assert not page.evaluate("!!document.querySelector('dialog[open]')"), "the button does not open the row"
+    assert page.eval_on_selector(row + " .cw-seen", "e => e.textContent").startswith("reviewed ")
+    stored = json.loads(page.evaluate("localStorage.getItem('counterparty.policy')"))
+    assert next(x for x in stored if x["id"] == ids["down"])["reviewed"] == TODAY
+    assert not page.errors, page.errors
+

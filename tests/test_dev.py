@@ -115,3 +115,17 @@ def test_the_site_is_served_where_pages_serves_it_with_the_reload_script(server)
 def test_the_build_state_is_what_the_pages_poll(server):
     _, _, body = _get(server + "/__dev__/build")
     assert set(json.loads(body)) == {"id", "building", "error"}
+
+
+def test_a_build_can_be_given_its_own_copy_of_the_data(tmp_path, monkeypatch):
+    """The one-shot build for the tests and a running server each need their own copy: sharing one
+    let the server rebuild its pages between the other build's copy and its export."""
+    site = _sandbox(tmp_path, monkeypatch, "import os, sys, pathlib\n"
+                    "out = pathlib.Path(sys.argv[2]); out.mkdir(parents=True)\n"
+                    "(out / 'index.html').write_text(os.environ['BANKCREDIT_DATA'])\n")
+    own = tmp_path / ".dev" / "once-data"
+    ok, err, _ = dev.build("data", site, swap=False, work=own)
+    assert ok, err
+    assert (site / "index.html").read_text() == str(own)
+    assert (own / "facts.parquet").exists() and not (tmp_path / ".dev" / "data").exists()
+
