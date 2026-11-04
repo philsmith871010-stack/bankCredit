@@ -586,5 +586,367 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-11-03T15:18:08"
+ },
+ {
+  "id": "8680c75bd447",
+  "entity_id": "melton-bs",
+  "url": "https://www.themelton.co.uk/tmbs-content/uploads/2026/04/MBS-Annual-Report-Accounts-2025-1.pdf",
+  "local": "cache/pdf/melton-bs/8680c75bd447aa10.pdf",
+  "title": "MBS-Annual-Report-Accounts-2025-1.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, for the years after the last Pillar 3 (December 2023)",
+  "status": "open",
+  "created": "2026-11-04T05:15:04"
+ },
+ {
+  "id": "62aee6c6caef",
+  "entity_id": "melton-bs",
+  "url": "https://www.themelton.co.uk/tmbs-content/uploads/2025/03/MBS-Annual-Report-and-Accounts-2024.pdf",
+  "local": "cache/pdf/melton-bs/62aee6c6caefc92a.pdf",
+  "title": "MBS-Annual-Report-and-Accounts-2024.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "annual report and accounts: read the capital position from the notes, for the years after the last Pillar 3 (December 2023)",
+  "status": "open",
+  "created": "2026-11-04T05:15:04"
+ },
+ {
+  "id": "86744f17aa10",
+  "entity_id": "qib-uk",
+  "url": "https://www.qib-uk.com/-/media/project/uk/files/finance-reports/pillar-3-disclosure-document-2023.pdf?rev=92920adfd6b544c4a39ad38512eee63c",
+  "local": "cache/pdf/qib-uk/86744f17aa10d0cd.pdf",
+  "title": "pillar-3-disclosure-document-2023.pdf?rev=92920adfd6b544c4a39ad38512eee63c",
+  "page": 6,
+  "reference_date": "2022-12-31",
+  "currency": "GBP",
+  "values": {
+   "available_stable_funding": 728399.0,
+   "nsfr": 129.18,
+   "cet1_capital": 86739.0,
+   "tier1_capital": 86739.0,
+   "rwa": 499121.0,
+   "total_capital_ratio": 19.35,
+   "overall_capital_requirement": 14.8,
+   "cet1_headroom": 6.08,
+   "leverage_exposure": 1012682.0,
+   "hqla": 143649.0,
+   "cet1_ratio": 17.38,
+   "tier1_ratio": 17.38
+  },
+  "checks": [
+   [
+    "warn",
+    "text recovered by OCR from an image-only document"
+   ],
+   [
+    "warn",
+    "header date 2022-12-31 disagrees with expected 2023-12-31"
+   ],
+   [
+    "info",
+    "cet1_ratio derived from cet1_capital over RWA"
+   ],
+   [
+    "info",
+    "tier1_ratio derived from tier1_capital over RWA"
+   ],
+   [
+    "error",
+    "missing core row leverage_ratio"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:text recovered by OCR from an image-only document; warn:header date 2022-12-31 disagrees with expected 2023-12-31; info:cet1_ratio derived from cet1_capital over RWA; info:tier1_ratio derived from tier1_capital over RWA; error:missing core row leverage_ratio; info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-11-04T05:16:48"
+ },
+ {
+  "id": "313ad179d088",
+  "entity_id": "bng-bank",
+  "url": "https://www.bngbank.nl/v3/assets/bltd8a6f23fc3c861a3/blt9e3702d246ce1de8/68d293d4a500fb504f8a1a89/Pillar_3_Disclosure_report_BNG_Bank_2023_dated_June_2024.pdf",
+  "local": "cache/pdf/bng-bank/313ad179d088aefa.pdf",
+  "title": "Pillar_3_Disclosure_report_BNG_Bank_2023_dated_June_2024.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-04T05:16:51"
+ },
+ {
+  "id": "c99685fecbfd",
+  "entity_id": "nwb-bank",
+  "url": "https://nwbbank.com/application/files/2017/3141/4909/Pillar_3_Half_Year_Disclosure_2024.pdf",
+  "local": "cache/pdf/nwb-bank/c99685fecbfdeb13.pdf",
+  "title": "Pillar_3_Half_Year_Disclosure_2024.pdf",
+  "page": 8,
+  "reference_date": "2024-06-30",
+  "currency": "EUR",
+  "values": {
+   "cet1_capital": 1979466.0,
+   "tier1_capital": 2299966.0,
+   "total_capital": 2299966.0,
+   "cet1_ratio": 38.28,
+   "tier1_ratio": 44.48,
+   "total_capital_ratio": 44.48,
+   "total_srep_requirement": 10.25,
+   "combined_buffer": 4.45,
+   "overall_capital_requirement": 14.7,
+   "cet1_headroom": 32.52,
+   "leverage_exposure": 19085587.0,
+   "leverage_ratio": 12.05,
+   "hqla": 19254109.0,
+   "net_cash_outflows": 8339591.0,
+   "lcr": 289.51,
+   "available_stable_funding": 56865145.0,
+   "required_stable_funding": 40838742.0,
+   "nsfr": 139.24
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "warn",
+    "lcr 289.5 vs implied 230.9"
+   ]
+  ],
+  "reason": "error:missing core row rwa; warn:lcr 289.5 vs implied 230.9",
+  "status": "open",
+  "created": "2026-11-04T05:16:53"
+ },
+ {
+  "id": "364d86244b5a",
+  "entity_id": "nwb-bank",
+  "url": "https://nwbbank.com/application/files/9917/1818/7588/Pillar_3_Full_Year_Disclosure_2023.pdf",
+  "local": "cache/pdf/nwb-bank/364d86244b5a5aa7.pdf",
+  "title": "Pillar_3_Full_Year_Disclosure_2023.pdf",
+  "page": 7,
+  "reference_date": "2023-12-31",
+  "currency": "EUR",
+  "values": {
+   "cet1_capital": 1914434.0,
+   "tier1_capital": 2234934.0,
+   "total_capital": 2234934.0,
+   "cet1_ratio": 41.09,
+   "tier1_ratio": 47.97,
+   "total_capital_ratio": 47.97,
+   "total_srep_requirement": 10.25,
+   "combined_buffer": 3.52,
+   "overall_capital_requirement": 13.77,
+   "cet1_headroom": 35.32,
+   "leverage_exposure": 10832270.0,
+   "leverage_ratio": 20.63,
+   "hqla": 22785823.0,
+   "net_cash_outflows": 6487110.0,
+   "lcr": 335.89,
+   "available_stable_funding": 54526543.0,
+   "required_stable_funding": 40618774.0,
+   "nsfr": 134.24
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "warn",
+    "lcr 335.9 vs implied 351.2"
+   ]
+  ],
+  "reason": "error:missing core row rwa; warn:lcr 335.9 vs implied 351.2",
+  "status": "open",
+  "created": "2026-11-04T05:16:53"
+ },
+ {
+  "id": "d9210c43c897",
+  "entity_id": "nwb-bank",
+  "url": "https://nwbbank.com/application/files/7917/0169/3840/Pillar_3_Half_Year_Disclosure_2023_final.pdf",
+  "local": "cache/pdf/nwb-bank/d9210c43c897d253.pdf",
+  "title": "Pillar_3_Half_Year_Disclosure_2023_final.pdf",
+  "page": 7,
+  "reference_date": "2023-06-30",
+  "currency": "EUR",
+  "values": {
+   "cet1_capital": 1916406.0,
+   "tier1_capital": 2236906.0,
+   "total_capital": 2236906.0,
+   "cet1_ratio": 37.92,
+   "tier1_ratio": 44.26,
+   "total_capital_ratio": 44.26,
+   "total_srep_requirement": 10.25,
+   "combined_buffer": 3.47,
+   "overall_capital_requirement": 13.72,
+   "cet1_headroom": 32.15,
+   "leverage_exposure": 25995733.0,
+   "leverage_ratio": 8.6,
+   "hqla": 24238566.0,
+   "net_cash_outflows": 7239379.0,
+   "lcr": 406.66,
+   "available_stable_funding": 56078156.0,
+   "required_stable_funding": 37961980.0,
+   "nsfr": 147.72
+  },
+  "checks": [
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "warn",
+    "lcr 406.7 vs implied 334.8"
+   ]
+  ],
+  "reason": "error:missing core row rwa; warn:lcr 406.7 vs implied 334.8",
+  "status": "open",
+  "created": "2026-11-04T05:16:53"
+ },
+ {
+  "id": "8e919ca5e216",
+  "entity_id": "credit-mutuel",
+  "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2025/2024-informations-relatives-au-pilier-3-de-bale-III-exercice-2025.pdf",
+  "local": "cache/pdf/credit-mutuel/8e919ca5e2162368.pdf",
+  "title": "2024-informations-relatives-au-pilier-3-de-bale-III-exercice-2025.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-04T05:16:55"
+ },
+ {
+  "id": "504d73e614df",
+  "entity_id": "credit-mutuel",
+  "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2024/2024-informations-relatives-au-pilier-3-de-bale-III-exercice-juin-2024.pdf",
+  "local": "cache/pdf/credit-mutuel/504d73e614df3384.pdf",
+  "title": "2024-informations-relatives-au-pilier-3-de-bale-III-exercice-juin-2024.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-04T05:16:55"
+ },
+ {
+  "id": "c7535570048a",
+  "entity_id": "credit-mutuel",
+  "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2024/2023-informations-relatives-au-pilier-3-de-bale-III-exercice-2023.pdf",
+  "local": "cache/pdf/credit-mutuel/c7535570048abefc.pdf",
+  "title": "2023-informations-relatives-au-pilier-3-de-bale-III-exercice-2023.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-04T05:16:55"
+ },
+ {
+  "id": "564c61ccb20f",
+  "entity_id": "bny",
+  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-3q2025-pillar3-report.pdf",
+  "local": "cache/pdf/bny/564c61ccb20f2688.pdf",
+  "title": "bny-3q2025-pillar3-report.pdf",
+  "page": null,
+  "reference_date": "2025-09-30",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-04T05:16:58"
+ },
+ {
+  "id": "f39a534202f4",
+  "entity_id": "bny",
+  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-2q2025-pillar3-report.pdf",
+  "local": "cache/pdf/bny/f39a534202f41b82.pdf",
+  "title": "bny-2q2025-pillar3-report.pdf",
+  "page": null,
+  "reference_date": "2025-06-30",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-04T05:16:58"
+ },
+ {
+  "id": "8a226f4fc79a",
+  "entity_id": "bny",
+  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-mellon-corporate-pillar-3-disclosure-june-2024.pdf",
+  "local": "cache/pdf/bny/8a226f4fc79a78da.pdf",
+  "title": "bny-mellon-corporate-pillar-3-disclosure-june-2024.pdf",
+  "page": null,
+  "reference_date": "2024-06-30",
+  "currency": "USD",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no LCR found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-04T05:16:58"
  }
 ]

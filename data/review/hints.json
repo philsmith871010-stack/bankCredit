@@ -1727,25 +1727,25 @@
  },
  "uob": {
   "last_verified": {
-   "reference_date": "2026-06-30",
+   "reference_date": "2026-09-30",
    "values": {
-    "cet1_capital": 42957.0,
-    "tier1_capital": 46406.0,
-    "total_capital": 49609.0,
-    "rwa": 278902.0,
-    "cet1_ratio": 15.4,
-    "tier1_ratio": 16.6,
-    "total_capital_ratio": 17.8,
+    "cet1_capital": 41437.0,
+    "tier1_capital": 44138.0,
+    "total_capital": 47297.0,
+    "rwa": 284060.0,
+    "cet1_ratio": 14.6,
+    "tier1_ratio": 15.5,
+    "total_capital_ratio": 16.7,
     "combined_buffer": 2.7,
-    "cet1_headroom": 7.8,
-    "leverage_exposure": 681260.0,
-    "leverage_ratio": 6.8,
-    "hqla": 111840.0,
-    "net_cash_outflows": 70232.0,
-    "lcr": 159.0,
-    "available_stable_funding": 364094.0,
-    "required_stable_funding": 318663.0,
-    "nsfr": 114.0
+    "cet1_headroom": 6.7,
+    "leverage_exposure": 700153.0,
+    "leverage_ratio": 6.3,
+    "hqla": 106427.0,
+    "net_cash_outflows": 70091.0,
+    "lcr": 152.0,
+    "available_stable_funding": 364957.0,
+    "required_stable_funding": 325356.0,
+    "nsfr": 112.0
    },
    "method": "pdf_rules"
   }
