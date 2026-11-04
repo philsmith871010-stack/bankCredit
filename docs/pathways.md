@@ -32,6 +32,36 @@ that group's row, as the panel changes. A page that belongs to no group, such as
 On a phone each row scrolls on its own and the four groups fit the width. Until 3 November 2026
 the pathways were a sidebar; they moved to make room for the platform's navigation.
 
+## Monitor: what has moved since approval
+
+Your counterparties answers one question: since I approved this list, what got worse, what got
+better and what is unchanged. Each name is compared at two dates on one basis, read from the
+`hist` field every row of `policy.json` carries (`export._monitor_history`): its score recomputed
+on today's method at the quarter end before the baseline, against the same score now; the three
+agencies' ratings, outlooks and watches from the register's own path; its CET1 ratio and its
+total-capital headroom over the overall requirement, period to period.
+
+| Tier | Signals |
+|---|---|
+| Red | a downgrade; negative watch; a lower band, or the score down 5 or more; CET1 down 1.5 points or more; total capital under 1 point over its requirement |
+| Amber | outlook to negative; score down 3 to 5; CET1 down 0.75 to 1.5 points; headroom down 1 point or more |
+| Green | an upgrade; outlook to positive, or positive watch; a negative outlook or watch lifted; score up 3 or more |
+
+A downgrade stands until a later upgrade answers it, and an upgrade is undone by a later
+downgrade; an outlook ended by the rating move itself is the move. Anything red or amber still
+standing puts the name under Needs a look, worst then latest first; otherwise any green puts it
+under Improved; the rest are Unchanged, folded to a row of names unless nothing moved at all. A
+move that landed on three or more names the same day is said once above the cards, and the names
+whose only change it was fold into one line. Old figures and names too thin to score are listed
+apart under Data to check, because they are about our collection, not the bank, and never count
+as a name getting worse.
+
+The baseline is the reader's: since approval (each name's `added` date, which the approved-on
+date sets for the whole list), since the last review (Mark reviewed stamps `reviewed`), or the
+last 30 days. The example list is approved on 1 April 2026, the start of the financial year, so
+it has a year of changes to show. Headroom was first set at under 2 points; UK majors run total
+capital a point or two over the overall requirement by design, so that flagged them every quarter.
+
 ## Build your strategy
 
 Three numbered steps, the way PWLBreports numbers its passes, each saying where the reader has

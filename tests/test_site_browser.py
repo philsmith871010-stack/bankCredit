@@ -19,6 +19,7 @@ import http.server
 import json
 import socketserver
 import threading
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -35,6 +36,9 @@ SITE = ROOT / "site"
 TOOL = "tool/index.html"        # the tool; the root index.html is the landing page
 ASSETS = ROOT / "bankcredit" / "site" / "assets"
 BASE = "/bankCredit/"                                   # the project subdirectory Pages publishes under
+# A list seeded for a layout test is approved today, so nothing has moved since and every name
+# sits in one open list; what the monitor says about change is tested on histories made for it.
+TODAY = date.today().isoformat()
 
 playwright_api = pytest.importorskip("playwright.sync_api", reason="playwright not installed")
 
@@ -250,7 +254,7 @@ def _seed(pg, server):
                  and (r.get("market_detail") or {}).get("bond_change30") is not None), None)
     if pick is None:
         pytest.skip("no covered name carries a score, two ratings and a bond signal")
-    policy = [{"id": pick["id"], "tenor": 365, "added": "2026-01-01",
+    policy = [{"id": pick["id"], "tenor": 365, "added": TODAY,
                "base": {"score": pick["score"], "band": pick["band"], "grade": pick["rating_grade"]}}]
     pg.goto(server + TOOL, wait_until="domcontentloaded")
     pg.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
@@ -270,7 +274,7 @@ def _seed_many(pg, server, n=6):
     """Approve the first n scored names, so the list has something to lay out."""
     rows = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))["rows"]
     pick = [r for r in rows if r.get("score") is not None][:n]
-    policy = [{"id": r["id"], "tenor": 365, "added": "2026-01-01",
+    policy = [{"id": r["id"], "tenor": 365, "added": TODAY,
                "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}} for r in pick]
     pg.goto(server + TOOL, wait_until="domcontentloaded")
     pg.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
@@ -468,7 +472,7 @@ def test_the_shortlist_shows_one_tenor_at_a_time(page, server):
     pick = [r for r in rows if r.get("score") is not None][:3]
     if len(pick) < 3:
         pytest.skip("not enough scored names to seed three tenors")
-    policy = [{"id": r["id"], "tenor": t, "added": "2026-01-01",
+    policy = [{"id": r["id"], "tenor": t, "added": TODAY,
                "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}
               for r, t in zip(pick, (90, 365, 730))]
     page.goto(server + TOOL, wait_until="domcontentloaded")
@@ -582,7 +586,7 @@ def test_the_dialog_carries_the_path_the_composite_took(page, server):
     r = next((x for x in rows if x["id"] == who), None)
     if r is None:
         pytest.skip("that name is not on the policy list")
-    policy = [{"id": who, "tenor": 365, "added": "2026-01-01",
+    policy = [{"id": who, "tenor": 365, "added": TODAY,
                "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}]
     page.goto(server + TOOL, wait_until="domcontentloaded")
     page.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
@@ -908,7 +912,7 @@ def test_the_shortlist_opens_on_a_tenor_that_has_something_to_show(page, server)
     if len(pick) < 3:
         pytest.skip("not enough scored names")
     best, mid = pick[0], pick[len(pick) // 2]          # the strongest name at the longest tenor
-    policy = [{"id": r["id"], "tenor": t, "added": "2026-01-01",
+    policy = [{"id": r["id"], "tenor": t, "added": TODAY,
                "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}
               for r, t in ((best, 1825), (mid, 365))]
     page.goto(server + TOOL, wait_until="domcontentloaded")
@@ -962,7 +966,7 @@ def test_the_shortlist_shows_every_name_that_clears_the_bar(page, server):
     weak = [r for r in rows if r.get("score") is not None][-40:]
     if len(weak) < 2:
         pytest.skip("not enough scored names")
-    policy = [{"id": r["id"], "tenor": t, "added": "2026-01-01",
+    policy = [{"id": r["id"], "tenor": t, "added": TODAY,
                "base": {"score": r["score"], "band": r["band"], "grade": r["rating_grade"]}}
               for r, t in zip(weak[:2], (365, 90))]      # two tenors, so the chips carry counts
     page.goto(server + TOOL, wait_until="domcontentloaded")
@@ -1244,3 +1248,119 @@ def test_the_ratings_grid_can_show_just_my_counterparties(page, server):
     assert shown == mine, (shown, mine)
     assert "4 of" in page.inner_text("#rg-count")
     assert not page.errors, page.errors
+
+
+# ---- the monitor: what has moved since the reader approved each name ----------------------------
+def _monitor_with(pg, server, hists, added="2026-04-01"):
+    """Approve one real name per key, each given the made-up history beside it, so the verdicts do
+    not drift with the day's data. Returns {key: entity id}."""
+    data = json.loads((SITE / "data" / "policy.json").read_text(encoding="utf-8"))
+    rows = [r for r in data["rows"] if r.get("score") is not None]
+    ids = {}
+    for key, r in zip(hists, rows):
+        r["hist"] = hists[key]
+        ids[key] = r["id"]
+    body = json.dumps(data)
+    pg.route("**/data/policy.json", lambda route: route.fulfill(status=200, content_type="application/json", body=body))
+    policy = [{"id": ids[k], "tenor": 365, "added": added} for k in hists]
+    pg.goto(server + TOOL, wait_until="domcontentloaded")
+    pg.evaluate("v => localStorage.setItem('counterparty.policy', v)", json.dumps(policy))
+    visit(pg, server, TOOL)
+    return ids
+
+
+def _in(pg, group):
+    return pg.eval_on_selector_all(f".pol-grp-{group} .pol-card", "e => e.map(c => c.dataset.id)")
+
+
+def _why(pg, entity):
+    return pg.eval_on_selector(f'.pol-card[data-id="{entity}"] .cw-t', "e => e.textContent")
+
+
+def test_the_monitor_sorts_each_name_by_what_moved_since_approval(page, server):
+    """The page answers one question: since I approved this list, what got worse, what got better,
+    and what is unchanged. A downgrade stands until a later upgrade answers it; red comes before
+    amber, and the latest change first."""
+    ids = _monitor_with(page, server, {
+        "down": {"m": [["2026-05-12", "upgrade", 1], ["2026-09-16", "downgrade", 1]]},
+        "answered": {"m": [["2026-04-21", "downgrade", 1], ["2026-05-12", "upgrade", 1]]},
+        "outlook": {"t": [["2026-01-01", 3, 0, 0, 0, 0, 3], ["2026-09-30", 3, 0, 1, 0, 0, 2]]},
+        "capital": {"c": [["2026-03-31", 15.7], ["2026-09-30", 14.0]]},
+        "flat": {},
+    })
+    assert _in(page, "worse") == [ids["capital"], ids["down"], ids["outlook"]], "30 Sep, then 16 Sep, then the amber"
+    assert _in(page, "better") == [ids["answered"]]
+    assert _in(page, "same") == [ids["flat"]]
+    assert _why(page, ids["down"]) == "Downgraded a notch on 16 Sep 2026", "the upgrade came first, so the downgrade stands"
+    assert _why(page, ids["answered"]) == "Upgraded a notch on 12 May 2026", "a later upgrade answers the April downgrade"
+    assert _why(page, ids["outlook"]) == "Outlook negative by one agency since 30 Sep 2026"
+    assert _why(page, ids["capital"]) == "CET1 ratio 15.7% at 31 Mar 2026, 14.0% at 30 Sep 2026"
+    summary = page.eval_on_selector(".pol-verdict", "e => e.textContent")
+    assert summary.startswith("Since you approved this list on 1 Apr 2026")
+    for part in ("3 need a look", "1 improved", "1 unchanged"):
+        assert part in summary, summary
+    assert not page.errors, page.errors
+
+
+def test_a_move_shared_across_the_list_is_said_once(page, server):
+    """On 12 May one agency raised thirteen of the example's eighteen names. That is one line above
+    the cards, and the names whose only change it was fold into one line of their own."""
+    same_day = {"m": [["2026-05-12", "upgrade", 1]]}
+    ids = _monitor_with(page, server, {
+        "a": same_day, "b": same_day, "c": same_day,
+        "own": {"m": [["2026-05-12", "upgrade", 1]], "t": [["2026-01-01", 2, 0, 0, 0, 0, 2], ["2026-09-01", 2, 0, 0, 0, 1, 1]]},
+    })
+    assert page.eval_on_selector(".pol-common", "e => e.textContent").endswith("On 12 May 2026, 4 of your 4 names were upgraded.")
+    fold = page.eval_on_selector(".pol-grp-better .pol-fold > summary", "e => e.textContent")
+    assert fold.startswith("Upgraded on 12 May 2026 and nothing else")
+    assert page.eval_on_selector_all(".pol-grp-better .pol-fold .pol-card", "e => e.map(c => c.dataset.id)") == [ids["a"], ids["b"], ids["c"]]
+    assert _why(page, ids["own"]) == "Outlook positive by one agency since 1 Sep 2026", "a card leads with what is its own"
+    assert not page.errors, page.errors
+
+
+def test_reviewing_a_name_quiets_it_until_something_new_happens(page, server):
+    """Mark reviewed takes a name off the count while it stays on the page; compared since the last
+    review it is unchanged until the next move."""
+    ids = _monitor_with(page, server, {"down": {"m": [["2026-09-16", "downgrade", 1]]}, "flat": {}})
+    page.eval_on_selector(f'.pol-card[data-id="{ids["down"]}"] .pol-rev', "e => e.click()")
+    page.wait_for_timeout(300)
+    assert not page.evaluate("!!document.querySelector('dialog[open]')"), "the button does not open the card"
+    card = f'.pol-card[data-id="{ids["down"]}"]'
+    assert "pol-card-seen" in page.eval_on_selector(card, "e => e.className")
+    assert page.eval_on_selector(card + " .cw-seen", "e => e.textContent").startswith("reviewed ")
+    summary = page.eval_on_selector(".pol-verdict", "e => e.textContent")
+    assert "0 need a look" in summary and "1 reviewed" in summary, summary
+    stored = json.loads(page.evaluate("localStorage.getItem('counterparty.policy')"))
+    assert next(x for x in stored if x["id"] == ids["down"])["reviewed"] == TODAY
+    page.eval_on_selector('.pol-since [data-since="review"]', "e => e.click()")
+    page.wait_for_timeout(300)
+    assert ids["down"] in _in(page, "same")
+    assert page.eval_on_selector(".pol-verdict", "e => e.textContent").startswith("Since your last review")
+    assert not page.errors, page.errors
+
+
+def test_the_approval_date_is_the_readers_to_set(page, server):
+    """A policy typed in today was usually agreed months ago, so the date it was approved is an
+    input, and every comparison runs from it."""
+    ids = _monitor_with(page, server, {"down": {"m": [["2026-09-16", "downgrade", 1]]}})
+    assert _in(page, "worse") == [ids["down"]]
+    page.eval_on_selector("#pol-approved", "e => {e.value='2026-10-01'; e.dispatchEvent(new Event('change', {bubbles: true}))}")
+    page.wait_for_timeout(300)
+    assert _in(page, "same") == [ids["down"]], "a September downgrade is before an October approval"
+    stored = json.loads(page.evaluate("localStorage.getItem('counterparty.policy')"))
+    assert {x["added"] for x in stored} == {"2026-10-01"}
+    assert not page.errors, page.errors
+
+
+def test_the_example_list_is_approved_at_the_start_of_the_financial_year(page, server):
+    """Loaded today and approved today, the example had nothing to show but the age of its figures."""
+    visit(page, server, TOOL)
+    page.eval_on_selector('.tab[data-tab="policy"]', "e => e.click()")
+    page.wait_for_timeout(200)
+    page.eval_on_selector("#pol-demo", "e => e.click()")
+    page.wait_for_timeout(600)
+    stored = json.loads(page.evaluate("localStorage.getItem('counterparty.policy')"))
+    assert {x["added"] for x in stored} == {"2026-04-01"}
+    assert page.eval_on_selector(".pol-verdict", "e => e.textContent").startswith("Since you approved this list on 1 Apr 2026")
+    assert not page.errors, page.errors
+

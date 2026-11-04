@@ -148,6 +148,43 @@ def _rating_history(book) -> dict | None:
             "downs": sum(1 for m in moves if m["action"] == "downgrade")}
 
 
+MONITOR_YEARS = 3          # how far back the monitor can set a name's baseline
+
+
+def _monitor_history(back: list, book, series: dict, today: date) -> dict:
+    """What the monitor compares a name against: its state on the day the reader approved it,
+    whatever day that was. Compact, because every covered name rides in policy.json:
+
+      s  the score at each quarter end, recomputed on today's method, so a change of method never
+         reads as the bank getting worse; the row's own score is the same method today
+      r  the average of the three main agencies on every day it moved, [date, average]
+      t  how many of them held each tone, [date, rated, negative watch, negative outlook,
+         positive watch, positive outlook, stable]
+      m  each agency's moves, [date, action, notches], oldest first
+      c  the CET1 ratio by period, [period end, ratio]
+      h  total capital over the overall requirement, both from the same period
+
+    Three years of each, with the step in force at the start of the window kept, so a baseline
+    anywhere inside it reads the state the name had on that day."""
+    start = (today - timedelta(days=365 * MONITOR_YEARS)).isoformat()
+
+    def window(steps):
+        steps = [list(x) for x in steps or []]
+        before = [x for x in steps if x[0] < start]
+        return ([before[-1]] if before else []) + [x for x in steps if x[0] >= start]
+
+    out = {"s": [[h["date"], _clean(h["score"])] for h in back if h["date"] >= start and h["score"] is not None]}
+    if book:
+        out["r"] = [[x[0], _clean(x[1])] for x in window(book.composite_steps())]
+        out["t"] = window(book.tone_steps())
+        out["m"] = sorted([m["date"], m["action"], m["notches"]] for m in book.moves() if m["date"] >= start)
+    out["c"] = [[p["d"], _clean(p["v"])] for p in series.get("cet1_ratio") or [] if p["v"] is not None and p["d"] >= start][-12:]
+    tcr = {p["d"]: p["v"] for p in series.get("total_capital_ratio") or [] if p["v"] is not None}
+    ocr = {p["d"]: p["v"] for p in series.get("overall_capital_requirement") or [] if p["v"] is not None}
+    out["h"] = [[d, _clean(round(tcr[d] - ocr[d], 2))] for d in sorted(set(tcr) & set(ocr)) if d >= start][-8:]
+    return out
+
+
 def _sovereigns(df) -> dict[str, dict]:
     """One entry per country: the composite of its sovereign ratings, and the agencies behind it.
 
@@ -797,6 +834,9 @@ def export_json() -> None:
                                                     "coverage", "cet1", "leverage", "lev_us", "leverage_basis", "lcr", "nsfr", "rating", "market", "asof", "age_days",
                                                     "rating_grade", "rating_composite", "rating_worst", "inherited")},
                             "score": row["public_score"], "negative": negative[:3],
+                            # the name's own past, so the monitor can say what has moved since the
+                            # day the reader approved it, on one basis at both ends
+                            "hist": _monitor_history(back, book, series, today),
                             # The six pillar sub-scores and the market overlay, so the browser can
                             # weigh them the reader's own way rather than ours. An array, in the
                             # order PILLAR_ORDER names, because six keys a row is 18 KB of JSON on

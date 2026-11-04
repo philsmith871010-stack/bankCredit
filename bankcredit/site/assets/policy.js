@@ -82,7 +82,7 @@
     }).join('');
     return '<div class="table-wrap"><table class="plain pol-t" id="pol-table"><thead><tr>'+
       th('short','Name')+th('score','Score','num')+th('rating_grade','Agency rating')+th('cet1','CET1','num')+th('leverage','Lev','num')+
-      th('lcr','LCR','num')+th('nsfr','NSFR','num')+th('age_days','Figures')+'<th>Market</th>'+th('tenor','Tenor')+'<th>Since approval</th><th></th>'+
+      th('lcr','LCR','num')+th('nsfr','NSFR','num')+th('age_days','Figures')+'<th>Market</th>'+th('tenor','Tenor')+'<th>'+({approval:'Since approval',review:'Since review',d30:'Last 30 days'})[sinceMode()]+'</th><th></th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   function save(p){try{localStorage.setItem(KEY,JSON.stringify(p))}catch(e){}}
@@ -222,20 +222,111 @@
   function decode(s){try{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))))}catch(e){return null}}
 
 
-  // ---- what changed since the name was approved, and what needs a look now
+  // ---- what has moved since the reader approved each name ------------------------------------
+  // A name is compared at two dates on one basis: its score recomputed on today's method at the
+  // quarter end before the baseline, against the same score now; the three agencies' ratings and
+  // outlooks from the register's own path; the CET1 ratio period to period. A downgrade counts
+  // until a later upgrade answers it, and an outlook or a watch follows its own latest change.
+  // How old the figures are is reported apart, because that is our collection, not the bank.
+  var DEMO_APPROVED='2026-04-01';        // the example list starts the financial year, so it has a year to show
+  var SINCE=KEY+'.since', TIERS=['red','amber','green'], TIER={red:'bad',amber:'warn',green:'good'};
+  var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function day(d){var q=String(d||'').split('-');return q.length<3?String(d||''):(+q[2])+' '+MON[+q[1]-1]+' '+q[0]}
+  function todayIso(){return new Date().toISOString().slice(0,10)}
+  function isoDaysAgo(n){var d=new Date();d.setUTCDate(d.getUTCDate()-n);return d.toISOString().slice(0,10)}
+  function sinceMode(){try{var v=localStorage.getItem(SINCE);return v==='review'||v==='d30'?v:'approval'}catch(e){return 'approval'}}
+  function setSinceMode(v){try{localStorage.setItem(SINCE,v)}catch(e){}}
+  function baseline(it,mode){return mode==='d30'?isoDaysAgo(30):mode==='review'?(it.reviewed||it.added||todayIso()):(it.added||todayIso())}
+  function stepAt(steps,d){var v=null;(steps||[]).forEach(function(x){if(x[0]<=d)v=x});return v}
+  function bandOf(s){return s==null?'':s>=80?'A':s>=65?'B':s>=50?'C':s>=35?'D':'E'}
+  var NOTCHES=['','a notch','two notches','three notches','four notches','five notches','six notches'];
+  // One name's signals since `since`, each [tier, kind, date, sentence, chip, action].
+  function signals(e,since){
+    var out=[], h=e&&e.hist; if(!h)return out;
+    var by=function(n){return n===1?' by one agency':' by '+(n===2?'two':'three')+' agencies'};
+    // the agencies' moves, one line a day and a direction
+    var days={};
+    (h.m||[]).forEach(function(m){if(m[0]<since)return;var k=m[0]+'|'+m[1];(days[k]=days[k]||[]).push(m)});
+    Object.keys(days).sort().forEach(function(k){var ms=days[k],d=ms[0][0],down=ms[0][1]==='downgrade';
+      out.push([down?'red':'green','move',d,(down?'Downgraded ':'Upgraded ')+(ms.length>1?by(ms.length).slice(1):(NOTCHES[ms[0][2]]||ms[0][2]+' notches'))+' on '+day(d),
+                down?'Downgraded':'Upgraded',ms[0][1]])});
+    // outlooks and watches: how many agencies held each at the baseline and hold it now, dated by
+    // the day the count last changed
+    var t=h.t||[], t0=stepAt(t,since), tn=t[t.length-1];
+    if(t0&&tn&&tn[0]>since){
+      var when=function(i){var d=null,prev=t0[i];t.forEach(function(x){if(x[0]>since&&x[i]!==prev){d=x[0];prev=x[i]}});return d||tn[0]};
+      // an outlook that ends because the rating itself moved is the move, already said
+      var resolved=function(d){return out.some(function(x){return x[1]==='move'&&Math.abs(Date.parse(x[2])-Date.parse(d))<=7*864e5})};
+      var dif=function(i){return tn[i]-t0[i]}, w;
+      if(dif(2)>0){w=when(2);out.push(['red','watch',w,'Placed on negative watch'+by(dif(2))+' on '+day(w),'Negative watch'])}
+      if(dif(2)<0&&!resolved(w=when(2)))out.push(['green','watch',w,'Taken off negative watch'+by(-dif(2))+' on '+day(w),'Off negative watch']);
+      if(dif(3)>0){w=when(3);out.push(['amber','outlook',w,'Outlook negative'+by(dif(3))+' since '+day(w),'Outlook negative'])}
+      if(dif(3)<0&&!resolved(w=when(3)))out.push(['green','outlook',w,'Negative outlook lifted'+by(-dif(3))+' on '+day(w),'Outlook no longer negative']);
+      if(dif(4)>0){w=when(4);out.push(['green','watch',w,'Placed on positive watch'+by(dif(4))+' on '+day(w),'Positive watch'])}
+      if(dif(5)>0){w=when(5);out.push(['green','outlook',w,'Outlook positive'+by(dif(5))+' since '+day(w),'Outlook positive'])}
+    }
+    // the score, on today's method at both ends; pw0 is the published score before the reader's weights
+    var s0=stepAt(h.s,since), sn=e.pw0!==undefined?e.pw0:e.score;
+    if(s0&&s0[1]!=null&&sn!=null){
+      var ds=sn-s0[1], b0=bandOf(s0[1]), bn=bandOf(sn), sd=(h.s[h.s.length-1]||[])[0]||todayIso();
+      var was=': '+s0[1].toFixed(1)+' at '+day(s0[0])+', '+sn.toFixed(1)+' now';
+      if(bandRank(bn)>bandRank(b0))out.push(['red','score',sd,'Band '+b0+' to '+bn+was,'Band '+b0+'→'+bn]);
+      else if(ds<=-5)out.push(['red','score',sd,'Score down '+(-ds).toFixed(1)+was,'Score −'+(-ds).toFixed(1)]);
+      else if(ds<=-3)out.push(['amber','score',sd,'Score down '+(-ds).toFixed(1)+was,'Score −'+(-ds).toFixed(1)]);
+      else if(ds>=3)out.push(['green','score',sd,'Score up '+ds.toFixed(1)+was,'Score +'+ds.toFixed(1)]);
+    }
+    // capital, period to period, and headroom over the requirement once a new period has landed
+    var c=h.c||[], c0=stepAt(c,since), cn=c[c.length-1];
+    if(c0&&cn&&cn[0]>c0[0]){var dc=cn[1]-c0[1], said='CET1 ratio '+c0[1].toFixed(1)+'% at '+day(c0[0])+', '+cn[1].toFixed(1)+'% at '+day(cn[0]);
+      if(dc<=-1.5)out.push(['red','capital',cn[0],said,'CET1 −'+(-dc).toFixed(1)]);
+      else if(dc<=-0.75)out.push(['amber','capital',cn[0],said,'CET1 −'+(-dc).toFixed(1)]);
+    }
+    // UK majors run total capital a point or two over the overall requirement by design, with the
+    // confidential buffer above it, so a level of two points flagged them every quarter; under one
+    // point is red, and a fall of a point or more since the baseline is amber
+    var hr=h.h||[], h0=stepAt(hr,since), hn=hr[hr.length-1];
+    if(hn&&hn[0]>since){
+      var hs='Total capital '+hn[1].toFixed(1)+' points over its requirement at '+day(hn[0])+(h0?', against '+h0[1].toFixed(1)+' at '+day(h0[0]):'');
+      if(hn[1]<1)out.push(['red','headroom',hn[0],hs,'Thin headroom']);
+      else if(h0&&hn[1]-h0[1]<=-1)out.push(['amber','headroom',hn[0],hs,'Headroom \u2212'+(h0[1]-hn[1]).toFixed(1)]);
+    }
+    return out;
+  }
+  // Anything red or amber that still stands means a look. A downgrade stands until a later upgrade
+  // answers it, and an upgrade is undone by a later downgrade; the worst, then the latest, leads.
+  function verdictOf(sig){
+    var last={upgrade:'',downgrade:''};
+    sig.forEach(function(x){if(x[1]==='move'&&x[2]>last[x[5]])last[x[5]]=x[2]});
+    var live=sig.filter(function(x){return x[1]!=='move'||!(last[x[5]==='upgrade'?'downgrade':'upgrade']>x[2])});
+    // between two of a tier the concrete one leads: a rating move, then capital, then the score
+    var KIND=['move','watch','capital','headroom','outlook','score'];
+    var rank=function(x){return TIERS.indexOf(x[0])}, order=function(a,b){return rank(a)-rank(b)||KIND.indexOf(a[1])-KIND.indexOf(b[1])||(b[2]>a[2]?1:b[2]<a[2]?-1:0)};
+    var bad=live.filter(function(x){return x[0]!=='green'}).sort(order), good=live.filter(function(x){return x[0]==='green'}).sort(order);
+    if(bad.length)return {v:'worse',lead:bad[0],rest:bad.slice(1).concat(good)};
+    if(good.length)return {v:'better',lead:good[0],rest:good.slice(1)};
+    return {v:'same',lead:null,rest:[]};
+  }
+  // the table's one-chip column reads the same verdict, in the chip kinds the table already draws
   function flags(item,e){
-    var f=[], b=item.base||{};
     if(!e)return [['bad','No longer covered']];
-    // [kind, what happened, and a short form for the collapsed row, where a chip has one line]
-    if(e.score==null)f.push(['warn','Not enough public data for a score','Not scored']);
-    if(b.score!=null&&e.score!=null&&e.score<=b.score-5)f.push(['bad','Score down '+(b.score-e.score).toFixed(1)+' since approved','Score \u2212'+(b.score-e.score).toFixed(1)]);
-    if(b.band&&e.band&&bandRank(e.band)>bandRank(b.band))f.push(['bad','Band '+b.band+' → '+e.band,'Band '+b.band+'\u2192'+e.band]);
-    if(b.grade!=null&&e.rating_grade!=null&&e.rating_grade>b.grade+0.4)f.push(['bad','Ratings weaker: '+GRADES[Math.floor(b.grade+0.5)-1]+' → '+e.rating_composite,'Rating weaker']);
-    (e.negative||[]).forEach(function(n){if(!item.added||n.date>=item.added)f.push(['bad',n.date+' '+n.title,'Adverse action'])});
-    if(e.market&&e.market.direction==='down')f.push(['warn',e.market.label,e.market.label]);
-    if(e.age_days!=null&&e.age_days>180)f.push(['warn','Regulatory figures '+e.age_days+' days old','Old figures']);
-    if(e.inherited&&e.inherited.length)f.push(['muted','Some figures from the group or lead bank','Group figures']);
+    var r=verdictOf(signals(e,baseline(item,sinceMode()))), f=[];
+    if(r.lead)f.push([TIER[r.lead[0]],r.lead[3],r.lead[4]]);
+    r.rest.forEach(function(x){f.push([TIER[x[0]],x[3],x[4]])});
+    if(e.score==null)f.push(['muted','Not enough public data for a score','Not scored']);
+    if(e.age_days!=null&&e.age_days>180)f.push(['muted','Regulatory figures '+e.age_days+' days old','Old figures']);
     return f;
+  }
+  // Figures that are old, or too thin for a score, are about our collection rather than the bank's
+  // standing, so they are listed apart and never counted as a name getting worse.
+  function dataNotes(p){
+    var li=[];
+    p.forEach(function(it){var e=byId[it.id];
+      if(!e){li.push('<li><span class="b">'+esc(it.id)+'</span> is no longer covered <button class="pol-rm" type="button" data-id="'+esc(it.id)+'" title="Remove" aria-label="Remove '+esc(it.id)+'">×</button></li>');return}
+      var a='<a href="'+ROOT+'banks/'+esc(e.id)+'.html">'+esc(e.short)+'</a>';
+      if(e.score==null)li.push('<li>'+a+' has too little public data for a score</li>');
+      else if(e.age_days!=null&&e.age_days>180)li.push('<li>'+a+': figures to '+esc(day(e.asof))+', '+e.age_days+' days old</li>');
+    });
+    return li.length?'<div class="pol-data"><h4>Data to check</h4><p>About our figures, not the bank’s standing, so never counted as a name getting worse.</p><ul>'+li.join('')+'</ul></div>':'';
   }
   function worst(items){var w={band:null,grade:null,score:null};items.forEach(function(it){var e=byId[it.id];if(!e)return;
     if(e.band&&(w.band==null||bandRank(e.band)>bandRank(w.band)))w.band=e.band;
@@ -948,23 +1039,48 @@
         uniBtn('Choose from every covered name')+'</div>'+
         watchSection(p)}
     else{
-      var n_flag=0;
-      var rows=p.slice().sort(function(a,b){return b.tenor-a.tenor||(byId[a.id]&&byId[a.id].short||'').localeCompare(byId[b.id]&&byId[b.id].short||'')}).map(function(it){
-        var e=byId[it.id]; var fl=flags(it,e); if(fl.some(function(x){return x[0]!=='muted'}))n_flag++;
-        if(!e)return '<div class="pol-row"><div class="pr-name"><span class="b">'+esc(it.id)+'</span></div><div class="pr-flags">'+chip('No longer covered','bad')+'</div><button class="pol-rm" data-id="'+esc(it.id)+'" title="Remove">×</button></div>';
-        // a name that has moved since approval carries an edge, so a long list scans in one pass
-        var moved=fl.some(function(x){return x[0]!=='muted'&&x[0]!=='good'});
-        // A row, not a card: the name, what it is worth, what it is rated, and how long you accept
-        // it for. The four ratios and the events that used to sit here are all in the dialog a
-        // click away, and a policy of twenty names is a column of numbers rather than a scroll.
-        var worst_fl=fl.filter(function(x){return x[0]!=='muted'})[0];
+      var mode=sinceMode(), view=polView();
+      // the example list starts the financial year; one loaded before it carried that date is moved
+      // onto it, unless the reader has worked it
+      if(isDemo(p)&&p.some(function(x){return x.added!==DEMO_APPROVED&&!x.reviewed})){
+        p.forEach(function(x){if(!x.reviewed)x.added=DEMO_APPROVED});save(p)}
+      var res={}, shared={};
+      p.forEach(function(it){var e=byId[it.id];if(!e)return;
+        var s=signals(e,baseline(it,mode));res[it.id]=verdictOf(s);
+        s.forEach(function(x){if(x[1]==='move'){var k=x[2]+'|'+x[5];(shared[k]=shared[k]||{})[it.id]=1}})});
+      // a move that landed on several names on one day is one story, told once above the cards
+      var sharedN={};Object.keys(shared).forEach(function(k){var n=Object.keys(shared[k]).length;if(n>=3)sharedN[k]=n});
+      // the shared move is said once above the cards, so a card leads with what is this bank's own
+      Object.keys(res).forEach(function(id){var r=res[id],L=r.lead;
+        if(!L||L[1]!=='move'||!sharedN[L[2]+'|'+L[5]])return;
+        var j=-1;r.rest.some(function(x,i){if((x[0]==='green')===(L[0]==='green')&&!(x[1]==='move'&&sharedN[x[2]+'|'+x[5]])){j=i;return true}return false});
+        if(j>=0){var own=r.rest[j];r.rest.splice(j,1,L);r.lead=own}});
+      var groups={worse:[],better:[],same:[]};
+      p.forEach(function(it){if(byId[it.id])groups[res[it.id].v].push(it)});
+      // a name reviewed since its latest change has been dealt with: it keeps its group, quieter, at the foot of it
+      var seen=function(it){var r=res[it.id];return mode==='approval'&&!!it.reviewed&&!!r&&!!r.lead&&it.reviewed>=r.lead[2]};
+      var rank=function(r){return r.lead?TIERS.indexOf(r.lead[0]):3};
+      var order=function(a,b){var ra=res[a.id],rb=res[b.id];
+        return (seen(a)?1:0)-(seen(b)?1:0)||rank(ra)-rank(rb)||String((rb.lead||[])[2]||'').localeCompare(String((ra.lead||[])[2]||''))||b.tenor-a.tenor};
+      groups.worse.sort(order);groups.better.sort(order);
+      groups.same.sort(function(a,b){return b.tenor-a.tenor||(byId[a.id].short||'').localeCompare(byId[b.id].short||'')});
+      // A row, not a card: the name, what it is worth, what it is rated and how long you accept it
+      // for, and under it, when something has moved, the one line that says what.
+      var cardOf=function(it){
+        var e=byId[it.id], r=res[it.id]||{}, L=r.lead, sn=seen(it);
         var kv=function(v,l,cls){return '<div class="ck'+(cls?' '+cls:'')+'"><b>'+v+'</b><span>'+l+'</span></div>'};
-        return '<div class="pol-card'+(moved?' pol-card-flag':'')+'" data-id="'+esc(e.id)+'"'+(e.blurb?' title="'+esc(e.blurb)+'"':'')+'>'+
+        var why='';
+        if(L){
+          var k=L[1]==='move'?L[2]+'|'+L[5]:'', also=sharedN[k]?', with '+(sharedN[k]-1)+' others on your list':'';
+          why='<div class="cp-why cw-'+L[0]+'"><span class="cw-t">'+esc(L[3]+also)+'</span>'+
+            r.rest.slice(0,2).map(function(x){return chip(x[4],TIER[x[0]],x[3])}).join('')+
+            (sn?'<span class="cw-seen">reviewed '+esc(day(it.reviewed))+'</span>'
+               :'<button class="linky pol-rev" type="button" data-id="'+esc(it.id)+'">Mark reviewed</button>')+'</div>';
+        }
+        return '<div class="pol-card'+(r.v==='worse'&&!sn?' pol-card-flag':'')+(r.v==='better'&&!sn?' pol-card-up':'')+(sn?' pol-card-seen':'')+'" data-id="'+esc(e.id)+'"'+(e.blurb?' title="'+esc(e.blurb)+'"':'')+'>'+
           '<div class="cp-top">'+
             // The country and its rating are drawn twice and shown once: on the second line with the
-            // legal name where there is room for a second line, and up beside the name where there
-            // is not, which is a card in a two-column list. A pill is a dozen bytes; a layout that
-            // has to choose between the country and a third line of wrapping is not.
+            // legal name where there is room for a second line, and up beside the name where there is not.
             '<div class="cp-id"><div class="cp-line"><a class="cp-nm" href="'+ROOT+'banks/'+esc(e.id)+'.html" title="'+esc(e.name)+'">'+esc(e.short)+'</a>'+
               '<span class="cp-sov">'+sovPill(e)+'</span></div>'+
               '<div class="cp-sub">'+esc(e.name)+' · '+sovPill(e)+'</div></div>'+
@@ -973,21 +1089,53 @@
               kv('<span style="color:'+gradeColour(e.rating_composite)+'">'+esc(e.rating_composite||'—')+'</span>','agency rating')+
             '</div>'+
             tenorPick(it)+
-            // a holding company says so beside the flag, where it does not take the name's room
-            '<div class="cp-tags">'+typeTag(e)+(worst_fl?chip(worst_fl[2]||worst_fl[1],worst_fl[0],worst_fl[1])
-              // a card speaks when the market moves; "Stable" on twelve cards of eighteen was noise
-              :((e.market&&e.market.direction!=='none'&&e.market.direction!=='flat')?mkt(e.market):''))+'</div>'+
+            // a holding company says so here, and a card speaks when the market moves
+            '<div class="cp-tags">'+typeTag(e)+((e.market&&e.market.direction!=='none'&&e.market.direction!=='flat')?mkt(e.market):'')+'</div>'+
             '<button class="pol-rm" data-id="'+esc(e.id)+'" title="Remove from policy" aria-label="Remove '+esc(e.short)+'">×</button>'+
-          '</div></div>';
-      }).join('');
+          '</div>'+why+'</div>';
+      };
       if(isDemo(p))html='<div class="pol-demo">'+
-        '<b>An example list.</b> Eighteen names shaped like a local authority\u2019s. Change it freely, or clear it and start your own.'+
+        '<b>An example list, approved on '+day(DEMO_APPROVED)+'.</b> Eighteen names shaped like a local authority’s, approved at the start of the financial year, so the page has a year of changes to show. Change it freely, or clear it and start your own.'+
         '<button class="filter" id="pol-demo-x">Clear it and start mine</button></div>'+html;
-      var view=polView();
-      html+='<div class="pol-summary">'+(n_flag?chip(n_flag+' of '+p.length+' need a look','warn'):chip('All '+p.length+' names unchanged since approval','good'))+' <span class="small muted">Flags compare today with the day you approved each name.</span>'+
+      var adds={};p.forEach(function(it){adds[it.added||'']=1});
+      var keys=Object.keys(adds), one=keys.length===1?keys[0]:'', earliest=keys.filter(Boolean).sort()[0]||todayIso();
+      var lab=mode==='d30'?'In the last 30 days':mode==='review'?'Since your last review':(one?'Since you approved this list on '+day(one):'Since you approved each name');
+      // what still asks for attention: a name reviewed since its latest change no longer does
+      var unseen=function(xs){return xs.filter(function(it){return !seen(it)}).length};
+      var nW=unseen(groups.worse), nB=unseen(groups.better), nS=groups.same.length, nR=groups.worse.length+groups.better.length-nW-nB;
+      html+='<div class="pol-summary"><span class="pol-verdict"><b>'+esc(lab)+'</b>'+
+          '<span class="vd-n vd-worse">'+nW+(nW===1?' needs':' need')+' a look</span><span class="vd-sep">·</span>'+
+          '<span class="vd-n vd-better">'+nB+' improved</span><span class="vd-sep">·</span><span class="vd-n">'+nS+' unchanged</span>'+
+          (nR?'<span class="vd-sep">·</span><span class="vd-n vd-seen">'+nR+' reviewed</span>':'')+'</span>'+
         '<span class="pol-view" role="group" aria-label="Show as">'+uniBtn('Add names')+'<button class="filter'+(view==='cards'?' active':'')+'" id="pol-view-cards" type="button">Cards</button><button class="filter'+(view==='table'?' active':'')+'" id="pol-view-table" type="button">Table</button></span></div>';
+      html+='<div class="pol-since" role="group" aria-label="Compare with">'+
+        [['approval','Since approval'],['review','Since last review'],['d30','Last 30 days']].map(function(m){
+          return '<button class="filter'+(mode===m[0]?' active':'')+'" type="button" data-since="'+m[0]+'">'+m[1]+'</button>'}).join('')+
+        (mode==='approval'?'<label class="pol-appr">approved on <input type="date" id="pol-approved" value="'+esc(one||earliest)+'" max="'+todayIso()+'"></label>':'')+'</div>';
       html+=overview(p.filter(function(it){return byId[it.id]}));
-      html+=view==='table'?polTable(p,flags):'<div class="pol-list">'+rows+'</div>';
+      if(view==='table')html+=polTable(p,flags);
+      else{
+        html+=Object.keys(sharedN).sort().reverse().map(function(k){var d=k.split('|')[0],up=k.split('|')[1]==='upgrade';
+          return '<div class="pol-common">'+chip(up?'Upgraded':'Downgraded',up?'good':'bad')+'<span>On '+day(d)+', '+sharedN[k]+' of your '+p.length+' names were '+(up?'upgraded':'downgraded')+'.</span></div>'}).join('');
+        var grp=function(cls,title,items){if(!items.length)return '';
+          // a name whose only change is the move shared across the list folds into one line for that
+          // move, its card a click away: thirteen cards saying the same thing were the problem
+          var own=[], folds={};
+          items.forEach(function(it){var r=res[it.id], L=r.lead, k=L&&L[1]==='move'?L[2]+'|'+L[5]:'';
+            if(k&&sharedN[k]&&!r.rest.length)(folds[k]=folds[k]||[]).push(it);else own.push(it)});
+          var fold=Object.keys(folds).sort().reverse().map(function(k){var xs=folds[k], d=k.split('|')[0], up=k.split('|')[1]==='upgrade';
+            return '<details class="pol-fold"><summary><span class="pf-t">'+(up?'Upgraded':'Downgraded')+' on '+day(d)+' and nothing else</span>'+
+              '<span class="pol-same-names">'+esc(xs.map(function(it){return byId[it.id].short}).join(', '))+'</span></summary>'+
+              '<div class="pol-list">'+xs.map(cardOf).join('')+'</div></details>'}).join('');
+          return '<section class="pol-grp pol-grp-'+cls+'"><h4>'+title+'<span class="cnt">'+unseen(items)+'</span></h4>'+
+            (own.length?'<div class="pol-list">'+own.map(cardOf).join('')+'</div>':'')+fold+'</section>'};
+        html+=grp('worse','Needs a look',groups.worse)+grp('better','Improved',groups.better);
+        // nothing moved anywhere: then the list itself is the page, not a fold with everything in it
+        if(nS)html+='<details class="pol-grp pol-grp-same"'+(groups.worse.length||groups.better.length?'':' open')+'><summary><h4>Unchanged<span class="cnt">'+nS+'</span></h4>'+
+          '<span class="pol-same-names">'+esc(groups.same.map(function(it){return byId[it.id].short}).join(', '))+'</span></summary>'+
+          '<div class="pol-list">'+groups.same.map(cardOf).join('')+'</div></details>';
+        html+=dataNotes(p);
+      }
       html+=watchSection(p);
       // like-for-like: names at least as strong as the weakest you already accept at each tenor
       // One tenor at a time, chosen from a row of chips rather than four lists down a page. Each
@@ -1069,7 +1217,7 @@
     var out=[];
     DEMO.forEach(function(d){
       var e=byId[d[0]]; if(!e)return;
-      out.push({id:d[0],tenor:d[1],added:new Date().toISOString().slice(0,10),base:snapshot(e)});
+      out.push({id:d[0],tenor:d[1],added:DEMO_APPROVED,base:snapshot(e)});
     });
     return out;
   }
@@ -1157,6 +1305,8 @@
     data.rows.forEach(function(e){byId[e.id]=e});
     document.addEventListener('click',function(ev){var b=ev.target.closest('.pol-rm');if(b){var p=load().filter(function(x){return x.id!==b.dataset.id});save(p);render();return}
       var st=ev.target.closest('.uni-star');if(st){toggleWatch(st.dataset.id);render();return}
+      var rv=ev.target.closest('.pol-rev');if(rv){var pr=load();pr.forEach(function(x){if(x.id===rv.dataset.id)x.reviewed=todayIso()});save(pr);render();return}
+      var sm=ev.target.closest('.pol-since [data-since]');if(sm){setSinceMode(sm.dataset.since);render();return}
       if(ev.target.closest('#uni-open,.uni-open')){openUni();return}
       var a=ev.target.closest('.pol-add-ll');if(a){add(a.dataset.id,+a.dataset.tenor);var d=document.getElementById('pol-modal');if(d&&d.open)d.close();return}
       // one tenor at a time: the chips swap the pane rather than scroll four lists past you
@@ -1183,6 +1333,8 @@
     });
     // choosing a tenor is a policy change, so it is written the moment it is made
     document.addEventListener('change',function(ev){
+      // the day the list was approved is the reader's to set: a policy typed in today was usually agreed months ago
+      if(ev.target.id==='pol-approved'){var v=ev.target.value;if(/^\d{4}-\d{2}-\d{2}$/.test(v)&&v<=todayIso()){var pa=load();pa.forEach(function(x){x.added=v});save(pa);render()}return}
       var sel=ev.target.closest('.cp-ten select'); if(!sel)return;
       add(sel.dataset.id,+sel.value);
     });
