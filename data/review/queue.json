@@ -268,26 +268,6 @@
   "created": "2026-11-03T15:10:53"
  },
  {
-  "id": "3a06cb127def",
-  "entity_id": "bny",
-  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-corporate-pillar-3-disclosure-december-2024.pdf",
-  "local": "cache/pdf/bny/3a06cb127def01f5.pdf",
-  "title": "bny-corporate-pillar-3-disclosure-december-2024.pdf",
-  "page": null,
-  "reference_date": "2024-12-31",
-  "currency": "USD",
-  "values": {},
-  "checks": [
-   [
-    "error",
-    "no LCR found"
-   ]
-  ],
-  "reason": "no KM1 template found",
-  "status": "open",
-  "created": "2026-11-03T15:10:53"
- },
- {
   "id": "fda1dc6a7f28",
   "entity_id": "bny",
   "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-corporate-pillar-3-disclosure-september-2024.pdf",
@@ -808,46 +788,6 @@
   "reason": "no KM1 template found",
   "status": "open",
   "created": "2026-11-04T05:16:55"
- },
- {
-  "id": "564c61ccb20f",
-  "entity_id": "bny",
-  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-3q2025-pillar3-report.pdf",
-  "local": "cache/pdf/bny/564c61ccb20f2688.pdf",
-  "title": "bny-3q2025-pillar3-report.pdf",
-  "page": null,
-  "reference_date": "2025-09-30",
-  "currency": "USD",
-  "values": {},
-  "checks": [
-   [
-    "error",
-    "no LCR found"
-   ]
-  ],
-  "reason": "no KM1 template found",
-  "status": "open",
-  "created": "2026-11-04T05:16:58"
- },
- {
-  "id": "f39a534202f4",
-  "entity_id": "bny",
-  "url": "https://www.bny.com/content/dam/bnymellon/documents/pdf/investor-relations/bny-2q2025-pillar3-report.pdf",
-  "local": "cache/pdf/bny/f39a534202f41b82.pdf",
-  "title": "bny-2q2025-pillar3-report.pdf",
-  "page": null,
-  "reference_date": "2025-06-30",
-  "currency": "USD",
-  "values": {},
-  "checks": [
-   [
-    "error",
-    "no LCR found"
-   ]
-  ],
-  "reason": "no KM1 template found",
-  "status": "open",
-  "created": "2026-11-04T05:16:58"
  },
  {
   "id": "8a226f4fc79a",
@@ -1444,5 +1384,203 @@
   "reason": "error:missing core row cet1_ratio; info:no LCR row (not disclosed at this level, or not read)",
   "status": "open",
   "created": "2026-11-04T08:35:31"
+ },
+ {
+  "id": "eaeec740a4ec",
+  "entity_id": "credit-mutuel",
+  "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2023/2022-Informations-relatives-au-Pilier-3-de-Bale-III-Exercice-2022.pdf",
+  "local": "cache/pdf/credit-mutuel/eaeec740a4ecaa4b.pdf",
+  "title": "2022-Informations-relatives-au-Pilier-3-de-Bale-III-Exercice-2022.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-05T05:15:34"
+ },
+ {
+  "id": "66b82c0a9cf0",
+  "entity_id": "credit-mutuel",
+  "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2023/2022-informations-relatives-au-pilier-3-de-bale-III-exercice-juin-2023.pdf",
+  "local": "cache/pdf/credit-mutuel/66b82c0a9cf0ff27.pdf",
+  "title": "2022-informations-relatives-au-pilier-3-de-bale-III-exercice-juin-2023.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-05T05:15:34"
+ },
+ {
+  "id": "044f41c30b60",
+  "entity_id": "credit-mutuel",
+  "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2022/2022-Informations-relatives-au-Pilier-3-de-Bale-III-Exercice-juin-2022.pdf",
+  "local": "cache/pdf/credit-mutuel/044f41c30b609c81.pdf",
+  "title": "2022-Informations-relatives-au-Pilier-3-de-Bale-III-Exercice-juin-2022.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-05T05:15:34"
+ },
+ {
+  "id": "9988b25028b5",
+  "entity_id": "nwb-bank",
+  "url": "https://nwbbank.com/application/files/5716/8871/3726/Pillar_3_Full_Year_Disclosure_2022.pdf",
+  "local": "cache/pdf/nwb-bank/9988b25028b5c591.pdf",
+  "title": "Pillar_3_Full_Year_Disclosure_2022.pdf",
+  "page": 7,
+  "reference_date": "2022-12-31",
+  "currency": "EUR",
+  "values": {
+   "cet1_capital": 1834.637,
+   "tier1_capital": 2155.137,
+   "total_capital": 2155.137,
+   "cet1_ratio": 38.29,
+   "tier1_ratio": 44.97,
+   "total_capital_ratio": 44.97,
+   "p2r_7a": 2.0,
+   "p2r_7b": 1.13,
+   "total_srep_requirement": 10.0,
+   "combined_buffer": 2.58,
+   "overall_capital_requirement": 12.58,
+   "cet1_headroom": 32.66,
+   "leverage_exposure": 11428.293,
+   "leverage_ratio": 18.86,
+   "hqla": 24285.766,
+   "net_cash_outflows": 6972.358,
+   "lcr": 417.41,
+   "available_stable_funding": 53020.389,
+   "required_stable_funding": 37713.604,
+   "nsfr": 140.59,
+   "cet1_requirement": 8.21
+  },
+  "checks": [
+   [
+    "warn",
+    "amounts far beyond any bank's size (cet1_capital, tier1_capital, total_capital); read as thousands"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "warn",
+    "lcr 417.4 vs implied 348.3"
+   ]
+  ],
+  "reason": "warn:amounts far beyond any bank's size (cet1_capital, tier1_capital, total_capital); read as thousands; error:missing core row rwa; warn:lcr 417.4 vs implied 348.3",
+  "status": "open",
+  "created": "2026-11-05T05:15:37"
+ },
+ {
+  "id": "436a64035abf",
+  "entity_id": "nwb-bank",
+  "url": "https://nwbbank.com/application/files/4316/6852/3400/Pillar_3_Half_Year_Disclosure_2022.pdf",
+  "local": "cache/pdf/nwb-bank/436a64035abf7c33.pdf",
+  "title": "Pillar_3_Half_Year_Disclosure_2022.pdf",
+  "page": 5,
+  "reference_date": "2022-06-30",
+  "currency": "EUR",
+  "values": {
+   "cet1_capital": 1835.3880000000001,
+   "tier1_capital": 2155.888,
+   "total_capital": 2155.888,
+   "cet1_ratio": 35.97,
+   "tier1_ratio": 42.25,
+   "total_capital_ratio": 42.25,
+   "p2r_7a": 2.0,
+   "p2r_7b": 1.13,
+   "total_srep_requirement": 10.0,
+   "combined_buffer": 2.5,
+   "overall_capital_requirement": 12.5,
+   "cet1_headroom": 30.35,
+   "leverage_exposure": 27084.439000000002,
+   "leverage_ratio": 7.96,
+   "cet1_requirement": 8.13
+  },
+  "checks": [
+   [
+    "warn",
+    "amounts far beyond any bank's size (leverage_exposure, cet1_capital, tier1_capital, total_capital); read as thousands"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:amounts far beyond any bank's size (leverage_exposure, cet1_capital, tier1_capital, total_capital); read as thousands; error:missing core row rwa; info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-11-05T05:15:37"
+ },
+ {
+  "id": "3f1a917ee82c",
+  "entity_id": "nwb-bank",
+  "url": "https://nwbbank.com/application/files/5216/6436/3797/Pillar_3_Full_Year_Disclosure_2021.pdf",
+  "local": "cache/pdf/nwb-bank/3f1a917ee82c89fb.pdf",
+  "title": "Pillar_3_Full_Year_Disclosure_2021.pdf",
+  "page": 5,
+  "reference_date": "2021-12-31",
+  "currency": "EUR",
+  "values": {
+   "cet1_capital": 1762.584,
+   "tier1_capital": 2083.084,
+   "total_capital": 2083.084,
+   "cet1_ratio": 37.97,
+   "tier1_ratio": 44.87,
+   "total_capital_ratio": 44.87,
+   "p2r_7a": 2.25,
+   "p2r_7b": 1.27,
+   "total_srep_requirement": 10.25,
+   "combined_buffer": 2.5,
+   "overall_capital_requirement": 12.75,
+   "cet1_headroom": 32.2,
+   "leverage_exposure": 3917.242,
+   "leverage_ratio": 53.18,
+   "cet1_requirement": 8.27
+  },
+  "checks": [
+   [
+    "warn",
+    "amounts far beyond any bank's size (cet1_capital, tier1_capital, total_capital); read as thousands"
+   ],
+   [
+    "error",
+    "missing core row rwa"
+   ],
+   [
+    "info",
+    "no LCR row (not disclosed at this level, or not read)"
+   ]
+  ],
+  "reason": "warn:amounts far beyond any bank's size (cet1_capital, tier1_capital, total_capital); read as thousands; error:missing core row rwa; info:no LCR row (not disclosed at this level, or not read)",
+  "status": "open",
+  "created": "2026-11-05T05:15:37"
  }
 ]
