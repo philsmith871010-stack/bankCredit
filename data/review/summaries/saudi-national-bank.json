@@ -1,15 +1,15 @@
 {
  "id": "saudi-national-bank",
- "written": "2026-09-23",
+ "written": "2026-11-06",
  "background": "Saudi National Bank is the largest bank in Saudi Arabia, formed from the merger of National Commercial Bank and Samba, with the Public Investment Fund as its largest shareholder, funded by Saudi deposits and lending to Saudi corporates, government projects and households.",
- "synthesis": "The bank is rated A+ on average across all three main agencies, the weakest of them at A, all on a stable outlook, after a one-notch upgrade by one of the three on 8 Dec 2025, grades close to the Saudi sovereign's. No capital or liquidity ratios are held here, so there is no peer comparison to make on the figures. The one flagged item, on 22 Jul 2026, is rising profit. State ownership and the sovereign's wealth are the main support, and the bank is large enough to be systemically important at home.",
+ "synthesis": "Rated A+ on average across all three, the weakest of them at A, all on a stable outlook, with the last move a one-notch upgrade by one of the three on 8 Dec 2025. The paragraph carries no capital or liquidity figures, so the case for a deposit rests on the ratings alone. There has been no rating action in the last 90 days.",
  "inputs": {
   "band": "",
   "composite": "A+",
   "worst": "A",
   "outlooks": "stable, stable, stable",
   "n": 3,
-  "asof": "2026-06-30",
-  "last_flagged": "2026-07-22"
+  "asof": "2026-09-30",
+  "last_flagged": "2025-12-08"
  }
 }

@@ -1,15 +1,15 @@
 {
  "id": "natwest-bank",
- "written": "2026-10-12",
+ "written": "2026-11-06",
  "background": "National Westminster Bank is the main ring-fenced bank of NatWest Group, funded by UK personal and business deposits and lending on residential mortgages and to UK companies, where it is the largest business lender.",
- "synthesis": "Rated AA- on average across all three, the weakest of them at A+, all three on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. Capital is the weak spot against UK majors, with CET1 of 11.2% and leverage of 4.4% both in the bottom quarter, though the ratings reflect group support and a low-risk domestic book. Liquidity is mixed, with LCR of 140% below the peer median and NSFR of 132% above it, and LCR has fallen 10 points since 30 Jun 2025 while CET1, leverage and NSFR have been broadly flat. Flagged news in the last 90 days pairs strong half-year profits with trader job cuts at the group, the newest on 8 Oct 2026.",
+ "synthesis": "Rated AA- on average across all three, the weakest at A+, all on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. The ratings are stronger than the ratios: CET1 of 11.2% and leverage of 4.4% are both in the bottom quarter of UK majors, and LCR of 137% is in the bottom quarter too, having fallen 11 points since 30 Sep 2025. NSFR of 131% is above the peer median and the capital ratios have been broadly flat. There has been no rating action in the last 90 days.",
  "inputs": {
   "band": "B",
   "composite": "AA-",
   "worst": "A+",
   "outlooks": "stable, stable, stable",
   "n": 3,
-  "asof": "2026-06-30",
-  "last_flagged": "2026-10-08"
+  "asof": "2026-09-30",
+  "last_flagged": "2026-05-12"
  }
 }

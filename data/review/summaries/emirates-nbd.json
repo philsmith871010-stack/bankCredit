@@ -1,15 +1,15 @@
 {
  "id": "emirates-nbd",
- "written": "2026-10-09",
+ "written": "2026-11-06",
  "background": "Emirates NBD is the largest bank in Dubai, majority-owned by the Dubai government, funded by UAE deposits and lending to Dubai's corporates, government-related entities and households, with DenizBank in Turkey as its largest foreign subsidiary.",
- "synthesis": "Rated A+ on average across two of the three, both on a stable outlook, after a one-notch upgrade by one of the three on 13 May 2025. Capital is solid in absolute terms, with CET1 of 13.6% and leverage of 9.6%, and LCR of 148% and NSFR of 119% are comfortable. The direction is the point: since 30 Jun 2025 every ratio has fallen, CET1 by 1.1 points, leverage by 0.5 points, LCR by 36 points and NSFR by 11 points. Recent flags combine higher impairment charges with a mobile banking outage, the newest on 2 Oct 2026.",
+ "synthesis": "Two of the three main agencies rate the bank, A+ on average and both on a stable outlook, the last move being a one-notch upgrade by one of the three on 13 May 2025. CET1 is 13.6% and leverage a high 9.6%, with LCR at 148% and NSFR at 119%. Every ratio has fallen since 30 Jun 2025: CET1 by 1.1 points, leverage by 0.5 points, LCR by 36 points and NSFR by 11 points (figures to 30 Sep 2026), which is the trend to watch.",
  "inputs": {
   "band": "B",
   "composite": "A+",
   "worst": "A+",
   "outlooks": "stable, stable",
   "n": 2,
-  "asof": "2026-06-30",
-  "last_flagged": "2026-10-02"
+  "asof": "2026-09-30",
+  "last_flagged": ""
  }
 }

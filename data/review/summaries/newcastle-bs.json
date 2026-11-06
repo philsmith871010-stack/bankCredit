@@ -1,13 +1,15 @@
 {
  "id": "newcastle-bs",
- "written": "2026-09-15",
+ "written": "2026-11-06",
  "background": "Newcastle Building Society is a regional mutual in the north-east of England, funded by retail savings from its branch network and lending on residential mortgages, with a savings-administration subsidiary that serves other institutions.",
- "synthesis": "None of the three agencies rates the society, and the site holds no capital or liquidity figures for it, so there is nothing to set against its peers here. Nothing has been flagged in the last 90 days. For a depositor the position is simple: a regional mutual with no public rating and no published ratios on this site, so any placement rests on the society's own accounts and on the deposit guarantee rather than on anything shown here.",
+ "synthesis": "None of the three main agencies rates the society, so the filings are the only evidence. Capital is the weak spot, with CET1 of 11.7% and leverage of 4.8% both in the bottom quarter of UK building societies. Liquidity is sounder, NSFR of 154% in the top quarter and LCR of 189% just below the median, though LCR has fallen 23 points since 30 Jun 2024. The other ratios have been broadly flat to 30 Jun 2026.",
  "inputs": {
   "band": "",
   "composite": "",
-  "ratings": {},
-  "asof": "2025-12-31",
+  "worst": "",
+  "outlooks": "",
+  "n": 0,
+  "asof": "2026-06-30",
   "last_flagged": ""
  }
 }

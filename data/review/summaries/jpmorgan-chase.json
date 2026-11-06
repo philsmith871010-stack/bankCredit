@@ -1,15 +1,15 @@
 {
  "id": "jpmorgan-chase",
- "written": "2026-10-12",
+ "written": "2026-11-06",
  "background": "JPMorgan Chase & Co. is the holding company of the largest US bank, spanning consumer and community banking, the corporate and investment bank, commercial banking and asset and wealth management.",
- "synthesis": "Rated A+ on average across all three, the weakest of them at A, all three on a stable outlook, the holding company sits structurally below the operating bank it owns. Leverage of 7.5% is in the top quarter of US banks; the paragraph carries no current CET1 or liquidity figures to set beside it. Flagged news in the last 90 days is supervisory and staffing, an SEC censure without a fine and rounds of layoffs, the newest on 6 Oct 2026, none of it touching credit standing.",
+ "synthesis": "All three main agencies rate the holding company, A+ on average with the weakest at A, all on a stable outlook; the last move was a one-notch upgrade by one of the three on 15 Nov 2024. CET1 of 14.2% is above the US peer median and Tier 1 leverage of 6.6% just below it. No rating action has been taken in the last 90 days; the operating bank beneath it is rated higher.",
  "inputs": {
-  "band": "A",
+  "band": "B",
   "composite": "A+",
   "worst": "A",
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-10-06"
+  "last_flagged": "2025-11-04"
  }
 }

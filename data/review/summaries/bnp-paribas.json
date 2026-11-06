@@ -1,15 +1,15 @@
 {
  "id": "bnp-paribas",
- "written": "2026-10-12",
+ "written": "2026-11-06",
  "background": "BNP Paribas is the largest bank in the eurozone, a universal bank with retail networks in France, Belgium, Italy and Luxembourg, a large corporate and investment bank, and consumer finance, leasing and asset management arms.",
- "synthesis": "Rated A+ on average across all three, all three on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026, the ratings are stronger than the ratios. Against EU and Nordic banks every headline measure is in the bottom quarter: CET1 of 13.0%, leverage of 4.4%, LCR of 135% and NSFR of 109%. None of the ratios has moved materially over the past four periods, so this is a settled position for a very large diversified balance sheet rather than a deterioration. Flagged news in the last 90 days is all positive, led by strong half-year profits, the newest on 23 Jul 2026.",
+ "synthesis": "Rated A+ on average across all three, with one placed on a negative outlook on 3 Nov 2026, a few months after a one-notch upgrade by one of the three on 12 May 2026; the new outlook is the thing to watch. The balance sheet is on the weak side of EU and Nordic banks on every measure, with CET1 of 13.0%, leverage of 4.4%, LCR of 135% and NSFR of 109% all in the bottom quarter. CET1 has risen 0.6 points since 31 Mar 2025, while the other ratios have held flat. The ratings rest on the scale and diversity of the group rather than on its ratios.",
  "inputs": {
-  "band": "C",
+  "band": "B",
   "composite": "A+",
   "worst": "A+",
-  "outlooks": "stable, stable, stable",
+  "outlooks": "negative, stable, stable",
   "n": 3,
-  "asof": "2026-06-30",
-  "last_flagged": "2026-07-23"
+  "asof": "2026-09-30",
+  "last_flagged": "2026-11-03"
  }
 }

@@ -1,8 +1,8 @@
 {
  "id": "close-brothers",
- "written": "2026-10-05",
+ "written": "2026-11-06",
  "background": "Close Brothers Group is a UK merchant banking group, funded by retail and corporate deposits and lending on motor finance, asset finance, invoice finance and property development.",
- "synthesis": "Two of the three main agencies rate the group, BBB on average, both on a negative outlook, after a one-notch downgrade by one of the three on 17 Oct 2025. The balance sheet is strong against UK mid-sized banks: leverage of 13.5% is in the top quarter and CET1 of 14.1% above the peer median, while LCR of 1114% and NSFR of 144% are both in the top quarter. Since 31 Jul 2025 LCR has risen 102 points and leverage 0.6 points, with CET1 and NSFR broadly flat (figures to 31 Jul 2026). The weak spot is earnings: the newest item, on 30 Sep 2026, reports losses halved despite another £165m hit from the car finance compensation scheme, and the dividend has been dropped as cost cutting is stepped up.",
+ "synthesis": "Two of the three main agencies rate the group, BBB on average and both on a negative outlook, after a one-notch downgrade by one of the three on 17 Oct 2025; the ratings, not the balance sheet, are the weak spot. Capital is sound against UK mid-sized banks, CET1 of 14.1% just below the peer median and leverage of 13.5% in the top quarter. Liquidity is very strong, LCR of 1114% and NSFR of 144% both in the top quarter. Since 31 Jul 2025 leverage has risen 0.6 points and LCR 102 points.",
  "inputs": {
   "band": "C",
   "composite": "BBB",
@@ -10,6 +10,6 @@
   "outlooks": "negative, negative",
   "n": 2,
   "asof": "2026-07-31",
-  "last_flagged": "2026-09-30"
+  "last_flagged": "2026-04-17"
  }
 }

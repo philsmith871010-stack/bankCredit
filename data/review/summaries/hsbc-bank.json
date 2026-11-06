@@ -1,15 +1,15 @@
 {
  "id": "hsbc-bank",
- "written": "2026-10-08",
+ "written": "2026-11-06",
  "background": "HSBC Bank plc is the non-ring-fenced UK bank of HSBC, housing the group's European corporate and investment banking, markets and private banking, funded by corporate and institutional deposits and wholesale markets.",
- "synthesis": "Rated AA- on average across all three, the weakest of them at A+, two on a positive outlook and one on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026, the bank's ratings rest heavily on the support of its group. CET1 of 17.1% is in the top quarter of UK majors, but leverage of 4.1%, LCR of 139% and NSFR of 112% are all in the bottom quarter. Every ratio has fallen since 30 Jun 2025: CET1 by 2.3 points, leverage by 1.1 points, LCR by 15 points and NSFR by 5 points. The flagged news, the newest on 7 Oct 2026, is about planned job cuts in the UK wealth business, not credit.",
+ "synthesis": "All three main agencies rate the bank, AA- on average with the weakest at A+, two on a positive outlook and one on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026 and a move to positive outlook by one on 18 Sep 2026. CET1 of 16.9% is in the top quarter of UK majors, but leverage of 4.0% and NSFR of 113% are in the bottom quarter and LCR of 139% is below the median. Since 30 Sep 2025 CET1 has fallen 2.0 points, leverage 0.9 points and LCR 13 points (figures to 30 Sep 2026).",
  "inputs": {
   "band": "B",
   "composite": "AA-",
   "worst": "A+",
   "outlooks": "positive, positive, stable",
   "n": 3,
-  "asof": "2026-06-30",
-  "last_flagged": "2026-10-07"
+  "asof": "2026-09-30",
+  "last_flagged": "2026-09-18"
  }
 }

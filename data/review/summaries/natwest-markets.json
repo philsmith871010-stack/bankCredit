@@ -1,15 +1,15 @@
 {
  "id": "natwest-markets",
- "written": "2026-10-12",
+ "written": "2026-11-06",
  "background": "NatWest Markets is the non-ring-fenced bank of NatWest Group, providing rates, currencies and financing to the group's corporate and institutional clients, funded by wholesale markets and the parent.",
- "synthesis": "Rated A+ on average across all three, the weakest of them at A, all three on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026, a notch or so below the group's ring-fenced bank. Capital is strong, with CET1 of 18.3% in the top quarter of UK majors and leverage of 4.9% above the peer median, and LCR of 204% is in the top quarter, but NSFR of 122% is in the bottom quarter, reflecting wholesale funding. Since 30 Jun 2025 CET1 has risen 1.2 points and LCR 11 points while leverage has fallen 0.7 points and NSFR has been broadly flat. The one flagged item in the last 90 days, on 8 Oct 2026, is trader job cuts.",
+ "synthesis": "Rated A+ on average across all three, the weakest at A, all on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. CET1 of 18.3% and LCR of 204% are both in the top quarter of UK majors, with CET1 up 1.2 points and LCR up 11 points since 30 Jun 2025. The weak spots are NSFR of 122%, in the bottom quarter, and leverage, down 0.7 points to 4.9%, just above the peer median. There has been no rating action in the last 90 days.",
  "inputs": {
-  "band": "B",
+  "band": "A",
   "composite": "A+",
   "worst": "A",
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-10-08"
+  "last_flagged": "2026-05-12"
  }
 }

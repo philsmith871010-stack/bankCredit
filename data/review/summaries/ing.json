@@ -1,8 +1,8 @@
 {
  "id": "ing",
- "written": "2026-09-28",
+ "written": "2026-11-06",
  "background": "ING Groep is the holding company of the Netherlands' largest bank, a digital-first retail and wholesale bank funded by deposits across the Netherlands, Belgium, Germany and other European markets, lending on mortgages and to corporates worldwide.",
- "synthesis": "Two of the three main agencies rate the group, at A on average and the weakest of them at A-, both on a stable outlook; neither has moved since a one-notch upgrade by one of them on 14 Apr 2016. The ratios are the weak part: CET1 of 13.1%, leverage of 4.2% and LCR of 137% are all in the bottom quarter of peers, with only NSFR of 128% above the median. Little has shifted — NSFR down 5 points since 30 Jun 2025, the rest broadly flat (figures to 30 Jun 2026). The newest flagged item, on 2 Sep 2026, is an Australian regulator raising capital requirements at the local unit after it overstated liquidity, which is the one to follow; the rest are strong first-half results.",
+ "synthesis": "Two of the three main agencies rate the group, A on average with the weakest at A-, both on a stable outlook; the last move was a one-notch upgrade by one of the three on 14 Apr 2016. Capital is on the weak side of EU and Nordic banks, with CET1 of 13.1% and leverage of 4.2% both in the bottom quarter, and LCR of 137% is in the bottom quarter too. NSFR of 128% is above the median, though it has fallen 5 points since 30 Jun 2025; the other ratios have held steady (figures to 30 Jun 2026).",
  "inputs": {
   "band": "B",
   "composite": "A",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable",
   "n": 2,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-02"
+  "last_flagged": ""
  }
 }

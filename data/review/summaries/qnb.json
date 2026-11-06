@@ -1,15 +1,15 @@
 {
  "id": "qnb",
- "written": "2026-10-13",
+ "written": "2026-11-06",
  "background": "QNB is the largest bank in the Middle East and Africa by assets, majority-owned by the Qatar Investment Authority, funded by Qatari and Gulf deposits and lending to the Qatari government and its related entities, with subsidiaries in Turkey and Egypt.",
- "synthesis": "Rated A+ on average across all three, one on a negative outlook and two on a stable outlook, with the last move a one-notch upgrade by one of the three on 28 Mar 2024. No capital or liquidity ratios are shown here, so the ratings carry the assessment. The negative outlook taken by one of the three is the point to watch. The newest flagged item, on 8 Oct 2026, is third-quarter earnings ahead of estimates.",
+ "synthesis": "Rated A+ on average across all three, one on a negative outlook and two stable, after a one-notch upgrade by one of the three on 28 Mar 2024. On 10 Sep 2026 one of the three removed its negative watch and placed its rating on negative outlook instead, so the pressure has eased but not gone. The paragraph carries no capital or liquidity ratios, so the ratings, which lean on the Qatari state, are the whole of the published picture.",
  "inputs": {
   "band": "",
   "composite": "A+",
   "worst": "A+",
   "outlooks": "negative, stable, stable",
   "n": 3,
-  "asof": "2026-06-30",
-  "last_flagged": "2026-10-08"
+  "asof": "2026-09-30",
+  "last_flagged": "2026-09-10"
  }
 }

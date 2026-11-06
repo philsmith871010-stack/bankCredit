@@ -1,8 +1,8 @@
 {
  "id": "rabobank",
- "written": "2026-10-09",
+ "written": "2026-11-06",
  "background": "Rabobank is a Dutch cooperative bank owned by its local member banks, the leading lender to Dutch agriculture and a large domestic mortgage lender, with a global food and agriculture franchise, funded by Dutch deposits and wholesale markets.",
- "synthesis": "Rated AA- on average across all three, the weakest of them at A+, one on a positive outlook and two on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026 and a move to positive outlook by one of the three on 16 Sep 2026. Every ratio is in the top quarter of EU and Nordic banks: CET1 of 20.2%, leverage of 7.7%, LCR of 175% and NSFR of 130%. Since 31 Mar 2024 CET1 has risen 4.3 points and leverage 0.8 points, while LCR and NSFR have been broadly flat. The only cautionary flag is flat profit as the bank braces for loan losses, set against a balance sheet with no weak spot among its peers.",
+ "synthesis": "Rated AA- on average across all three, the weakest of them at A+, with one on a positive outlook since 16 Sep 2026 and the last move a one-notch upgrade on 12 May 2026. Every ratio sits in the top quarter of EU and Nordic banks: CET1 of 20.2%, leverage of 7.7%, LCR of 175% and NSFR of 130%. Since 31 Mar 2025 CET1 has risen 1.8 points and leverage 0.5 points, with liquidity broadly flat. There is no weak spot in the figures to 30 Jun 2026.",
  "inputs": {
   "band": "A",
   "composite": "AA-",

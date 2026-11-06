@@ -1,15 +1,15 @@
 {
  "id": "hsbc-holdings",
- "written": "2026-10-08",
+ "written": "2026-11-06",
  "background": "HSBC Holdings is the listed holding company of HSBC, one of the world's largest banks, with its main earnings in Hong Kong and the UK and a global transaction banking, wealth and trade franchise.",
- "synthesis": "Rated A on average across two of the three, the weakest of them at A-, one on a positive outlook and one on a stable outlook, the group holds a solid single-A standing. Capital is strong against UK majors, with CET1 of 14.1% and leverage of 4.9% both above the median. Liquidity is mixed, with NSFR of 140% in the top quarter but LCR of 134% in the bottom quarter. Since 30 Jun 2025 CET1 and leverage have each fallen 0.5 points and NSFR 5 points, modest declines, and the newest flagged items, on 7 Oct 2026, concern job cuts in the UK wealth business.",
+ "synthesis": "Two of the three main agencies rate the holding company, A on average with the weakest at A-, one on a positive outlook and one on a stable outlook; the last move was a one-notch downgrade by one of the three on 13 May 2020. Capital sits just above the UK majors median, with CET1 of 13.9% and leverage of 4.9%. Liquidity is mixed, LCR of 132% in the bottom quarter but NSFR of 139% in the top quarter. Since 30 Sep 2025 CET1 has fallen 0.6 points and NSFR 5 points (figures to 30 Sep 2026); the operating banks beneath it are rated higher.",
  "inputs": {
   "band": "B",
   "composite": "A",
   "worst": "A-",
   "outlooks": "positive, stable",
   "n": 2,
-  "asof": "2026-06-30",
-  "last_flagged": "2026-10-07"
+  "asof": "2026-09-30",
+  "last_flagged": "2026-05-26"
  }
 }

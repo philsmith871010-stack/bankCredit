@@ -1,15 +1,15 @@
 {
  "id": "ubs",
- "written": "2026-10-08",
+ "written": "2026-11-06",
  "background": "UBS Group is Switzerland's only remaining global bank after absorbing Credit Suisse, the world's largest wealth manager, with Swiss retail and corporate banking, asset management and an investment bank, and a balance sheet far larger than the Swiss economy.",
- "synthesis": "Rated A on average across two of the three, the weakest of them at A-, both on a stable outlook, after a one-notch upgrade by one of the three on 14 Apr 2026, UBS holds a solid single-A standing. CET1 is 14.4% and leverage 5.8%, with LCR of 177% and NSFR of 115%, and none of the ratios has moved materially over the past four periods to 30 Jun 2026. The issue to watch is regulatory: the flagged news, the newest on 2 Oct 2026, centres on Swiss proposals for higher capital requirements and their cost to the group.",
+ "synthesis": "Two of the three main agencies rate the group, A on average and the weakest at A-, both on a stable outlook after a one-notch upgrade by one of the three on 14 Apr 2026. CET1 is 14.7%, leverage 5.8%, LCR 177% and NSFR 115%, with no peer comparison drawn for Swiss banks. None of the ratios has moved materially over the past four periods to 30 Sep 2026, and there has been no rating action in the last 90 days.",
  "inputs": {
   "band": "B",
   "composite": "A",
   "worst": "A-",
   "outlooks": "stable, stable",
   "n": 2,
-  "asof": "2026-06-30",
-  "last_flagged": "2026-10-02"
+  "asof": "2026-09-30",
+  "last_flagged": "2026-04-14"
  }
 }

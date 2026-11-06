@@ -1,15 +1,15 @@
 {
  "id": "nationwide",
- "written": "2026-10-01",
+ "written": "2026-11-06",
  "background": "Nationwide Building Society is the largest building society in the world and the UK's second-largest mortgage lender, a mutual funded by retail savings and current accounts and lending mainly on residential mortgages, now also the owner of Virgin Money.",
- "synthesis": "The society is rated A+ on average across all three main agencies, all three on a stable outlook, with the last move a two-notch upgrade by one of the three on 12 May 2026. Capital is mixed against UK building societies: CET1 of 18.6% is above the peer median, but leverage of 5.2% is in the bottom quarter, the figure to watch. Liquidity is also mixed, with LCR of 174% below the peer median and NSFR of 145% level with it. None of the ratios has moved materially over the past four periods (figures to 30 Jun 2026), and nothing has been flagged in the last 90 days.",
+ "synthesis": "Rated A+ on average across all three, all on a stable outlook, after a two-notch upgrade by one of the three on 12 May 2026. CET1 of 18.6% is above the median for UK building societies, but leverage of 5.2% is in the bottom quarter, the usual pattern for a large prime mortgage book. Liquidity is adequate, LCR of 174% below the peer median and NSFR of 145% above it, and none of the ratios has moved materially over the past four periods to 30 Jun 2026. There has been no rating action in the last 90 days.",
  "inputs": {
-  "band": "B",
+  "band": "A",
   "composite": "A+",
   "worst": "A+",
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-07-02"
+  "last_flagged": "2026-05-12"
  }
 }

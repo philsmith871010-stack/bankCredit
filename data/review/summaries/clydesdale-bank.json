@@ -1,15 +1,15 @@
 {
  "id": "clydesdale-bank",
- "written": "2026-10-01",
+ "written": "2026-11-06",
  "background": "Clydesdale Bank PLC is the operating bank of Virgin Money, now a subsidiary of Nationwide Building Society, funded by UK retail and business deposits and lending on mortgages, cards and to smaller companies.",
- "synthesis": "Only one of the three main agencies rates the bank, A+ on a stable outlook; the last move was a withdrawal by one of the three on 29 Sep 2026. Capital is on the weak side of UK mid-sized banks, with CET1 of 13.8% and leverage of 6.1% both below the peer median, though leverage has risen 0.7 points since 31 Dec 2024. Liquidity is mixed: NSFR of 143% is in the top quarter but LCR of 159% is below the peer median. The figures are to 31 Dec 2025, and nothing has been flagged in the last 90 days.",
+ "synthesis": "Only one of the three main agencies now rates the bank, at A+ on a stable outlook, after one of the three withdrew its rating on 29 Sep 2026. Capital is middling for UK mid-sized banks: CET1 of 14.3% is at the median, but leverage of 6.3% is below it. Liquidity is mixed, LCR of 164% below the median and NSFR of 143% in the top quarter. Leverage has risen 0.8 points since 31 Mar 2025, with figures only to 31 Mar 2026.",
  "inputs": {
-  "band": "B",
+  "band": "A",
   "composite": "A+",
   "worst": "A+",
   "outlooks": "stable",
   "n": 1,
-  "asof": "2025-12-31",
+  "asof": "2026-03-31",
   "last_flagged": "2026-05-12"
  }
 }

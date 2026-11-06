@@ -1,15 +1,15 @@
 {
  "id": "aldermore",
- "written": "2026-10-01",
+ "written": "2026-11-06",
  "background": "Aldermore is a UK specialist lender owned by South Africa's FirstRand, funded by online retail and business savings and lending on buy-to-let and owner-occupied mortgages, asset finance and invoice finance, with MotoNovo in motor finance.",
- "synthesis": "One of the three main agencies rates the bank, BBB+ on a negative outlook, after a one-notch upgrade by one of the three on 16 Jan 2026. Capital is mixed against UK mid-sized banks: leverage of 8.3% is above the peer median, but CET1 of 13.6% is below it, and since 30 Jun 2023 CET1 has fallen 1.2 points and leverage 0.6 points. Liquidity is the weaker side, with LCR of 170% and NSFR of 129% both below the peer median and LCR down 41 points over the same period (figures to 30 Jun 2026). The item flagged on 30 Sep 2026 is a higher motor finance provision at MotoNovo as buyers circle the bank, which bears on earnings and on who owns it.",
+ "synthesis": "Only one of the three main agencies rates the bank, at BBB+ on a negative outlook despite a one-notch upgrade on 16 Jan 2026, which makes the outlook the thing to watch. Capital is middling for UK mid-sized banks, CET1 of 13.6% below the peer median but leverage of 8.3% above it. Liquidity is the weaker side, with LCR of 170% below the median and NSFR of 129% in the bottom quarter. Since 30 Jun 2023 CET1 has fallen 1.2 points, leverage 0.6 points and LCR 41 points, a steady erosion across the board.",
  "inputs": {
-  "band": "C",
+  "band": "B",
   "composite": "BBB+",
   "worst": "BBB+",
   "outlooks": "negative",
   "n": 1,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-30"
+  "last_flagged": "2026-04-10"
  }
 }

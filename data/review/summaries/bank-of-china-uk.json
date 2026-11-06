@@ -1,15 +1,15 @@
 {
  "id": "bank-of-china-uk",
- "written": "2026-09-23",
+ "written": "2026-11-06",
  "background": "Bank of China (UK) Limited is the UK-incorporated subsidiary of Bank of China, one of China's four large state-owned commercial banks, serving Chinese corporates, trade finance and the Chinese community in Britain.",
- "synthesis": "None of the three main agencies publishes a rating on the UK subsidiary, so any comfort comes from the state-owned parent rather than from the entity itself. No capital or liquidity figures are held on this site for it either, which leaves no peer comparison to make. Nothing has been flagged in the last 90 days. For a depositor this is a parental-support name: the question is how far Bank of China would stand behind its London subsidiary, and there is no public rating here to lean on.",
+ "synthesis": "None of the three main agencies rates the bank, so the assessment rests on its filings and on its parent. Capital is very strong for a UK small bank, with CET1 of 27.2% above the peer median and leverage of 24.4% in the top quarter. Liquidity is ample, LCR of 324% just below the median and NSFR of 194% in the top quarter. Since 31 Dec 2020 every ratio has risen, leverage by 10.1 points and LCR by 81 points, with figures only to 31 Dec 2025.",
  "inputs": {
   "band": "",
   "composite": "",
   "worst": "",
   "outlooks": "",
   "n": 0,
-  "asof": "",
+  "asof": "2025-12-31",
   "last_flagged": ""
  }
 }

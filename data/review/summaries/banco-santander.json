@@ -1,8 +1,8 @@
 {
  "id": "banco-santander",
- "written": "2026-09-29",
+ "written": "2026-11-06",
  "background": "Banco Santander is Spain's largest bank and one of the largest in the eurozone, run as a group of self-funded national subsidiaries across Spain, the UK, Brazil, Mexico, the US and elsewhere, with retail and commercial banking at its core.",
- "synthesis": "All three of the main agencies rate the group, A+ on average and A+ at the weakest of them, all three on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. Capital is the soft spot for a name of this standing: CET1 of 14.0% is in the bottom quarter of EU and Nordic banks and leverage of 4.8% is below the peer median. Liquidity is adequate rather than generous, with LCR of 147% below the peer median and NSFR of 124% just above it. Since 30 Jun 2025 CET1 has risen 1.0 points and the other three ratios have been broadly flat (figures to 30 Jun 2026), and nothing adverse has been flagged in the last 90 days, the newest item on 18 Sep 2026 being a subsidiary's results.",
+ "synthesis": "Rated A+ on average across all three, all three on a stable outlook, after a one-notch upgrade by one of the three on 12 May 2026. Capital is the weak side against EU and Nordic banks, with CET1 of 14.0% in the bottom quarter and leverage of 4.8% below the peer median, though CET1 has risen 1.0 points since 30 Jun 2025. Liquidity sits close to the middle, LCR of 147% just below the median and NSFR of 124% just above it. No rating action has been taken in the last 90 days.",
  "inputs": {
   "band": "B",
   "composite": "A+",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-18"
+  "last_flagged": "2026-05-12"
  }
 }

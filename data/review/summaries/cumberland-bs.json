@@ -1,13 +1,15 @@
 {
  "id": "cumberland-bs",
- "written": "2026-09-15",
+ "written": "2026-11-06",
  "background": "Cumberland Building Society is a regional mutual based in Carlisle, funded by retail savings from its branch network across Cumbria and neighbouring counties and lending on residential mortgages and to holiday-let and hospitality businesses.",
- "synthesis": "None of the three agencies rates the society, so the figures have to speak for themselves, and they are strong: CET1 of 20.2% and leverage of 8.4% are both in the top quarter of UK building societies, against the peer medians, and LCR of 239% and NSFR of 151% are also in the top quarter. Since 31 Mar 2017 every ratio has improved, with CET1 up 3.0 points, leverage up 2.7 points, LCR up 23 points and NSFR up 13 points. The catch is that the figures run only to 31 Mar 2023, so they are well out of date. Nothing has been flagged in the last 90 days.",
+ "synthesis": "None of the three main agencies rates the society, so the case rests on its own figures. Capital is solid, with CET1 of 16.6% just above the UK building society median and leverage of 6.8% in the top quarter, and liquidity is comfortable, with LCR of 195% and NSFR of 151% both above the median. The trend is the weak spot: CET1 has fallen 3.8 points and LCR 73 points since 31 Mar 2022, though leverage and NSFR have risen over longer runs (figures to 31 Mar 2026).",
  "inputs": {
   "band": "",
   "composite": "",
-  "ratings": {},
-  "asof": "2023-03-31",
+  "worst": "",
+  "outlooks": "",
+  "n": 0,
+  "asof": "2026-03-31",
   "last_flagged": ""
  }
 }

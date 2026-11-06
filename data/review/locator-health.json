@@ -1,9 +1,9 @@
 {
  "generated": "2026-11-06",
  "counts": {
-  "ok": 127,
-  "overdue": 9,
-  "never": 8,
+  "ok": 134,
+  "overdue": 6,
+  "never": 4,
   "no source": 2,
   "by design": 6
  },
@@ -18,36 +18,6 @@
     "browser"
    ],
    "documents": 0,
-   "capital_as_of": null,
-   "age_days": null,
-   "cadence": "unknown",
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
-   "entity": "hinckley-and-rugby-bs",
-   "short": "Hinckley and Rugby BS",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "html"
-   ],
-   "documents": 2,
-   "capital_as_of": null,
-   "age_days": null,
-   "cadence": "unknown",
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
-   "entity": "leek-bs",
-   "short": "Leek BS",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "html"
-   ],
-   "documents": 2,
    "capital_as_of": null,
    "age_days": null,
    "cadence": "unknown",
@@ -70,21 +40,6 @@
    "state": "never"
   },
   {
-   "entity": "progressive-bs",
-   "short": "Progressive BS",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "html"
-   ],
-   "documents": 1,
-   "capital_as_of": null,
-   "age_days": null,
-   "cadence": "unknown",
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
    "entity": "qnb",
    "short": "QNB",
    "region": "gulf",
@@ -93,21 +48,6 @@
     "browser"
    ],
    "documents": 0,
-   "capital_as_of": null,
-   "age_days": null,
-   "cadence": "unknown",
-   "capital_sources": [],
-   "state": "never"
-  },
-  {
-   "entity": "saffron-bs",
-   "short": "Saffron BS",
-   "region": "uk",
-   "locators": 1,
-   "kinds": [
-    "html"
-   ],
-   "documents": 3,
    "capital_as_of": null,
    "age_days": null,
    "cadence": "unknown",
@@ -144,58 +84,6 @@
    "capital_sources": [
     "eba",
     "eba_te",
-    "pillar3"
-   ],
-   "state": "overdue"
-  },
-  {
-   "entity": "credit-mutuel",
-   "short": "Credit Mutuel",
-   "region": "eu",
-   "locators": 1,
-   "kinds": [
-    "html"
-   ],
-   "documents": 12,
-   "capital_as_of": "2025-12-31",
-   "age_days": 310,
-   "cadence": "unknown",
-   "capital_sources": [
-    "eba",
-    "eba_te"
-   ],
-   "state": "overdue"
-  },
-  {
-   "entity": "gatehouse-bank",
-   "short": "Gatehouse Bank",
-   "region": "uk",
-   "locators": 2,
-   "kinds": [
-    "html"
-   ],
-   "documents": 4,
-   "capital_as_of": "2024-12-31",
-   "age_days": 675,
-   "cadence": "annual",
-   "capital_sources": [
-    "pillar3"
-   ],
-   "state": "overdue"
-  },
-  {
-   "entity": "melton-bs",
-   "short": "Melton BS",
-   "region": "uk",
-   "locators": 2,
-   "kinds": [
-    "html"
-   ],
-   "documents": 9,
-   "capital_as_of": "2023-12-31",
-   "age_days": 1041,
-   "cadence": "annual",
-   "capital_sources": [
     "pillar3"
    ],
    "state": "overdue"
@@ -245,27 +133,28 @@
    "documents": 10,
    "capital_as_of": "2025-12-31",
    "age_days": 310,
-   "cadence": "unknown",
+   "cadence": "half-yearly",
    "capital_sources": [
     "eba",
-    "eba_te"
+    "eba_te",
+    "pillar3"
    ],
    "state": "overdue"
   },
   {
-   "entity": "op-corporate-bank",
-   "short": "OP Corporate Bank",
-   "region": "eu",
+   "entity": "progressive-bs",
+   "short": "Progressive BS",
+   "region": "uk",
    "locators": 1,
    "kinds": [
-    "browser"
+    "html"
    ],
-   "documents": 3,
-   "capital_as_of": "2025-09-30",
-   "age_days": 402,
+   "documents": 1,
+   "capital_as_of": "2025-12-31",
+   "age_days": 310,
    "cadence": "unknown",
    "capital_sources": [
-    "nsm_release"
+    "pillar3"
    ],
    "state": "overdue"
   },
@@ -398,7 +287,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 31,
+   "documents": 32,
    "capital_as_of": "2025-09-30",
    "age_days": 402,
    "cadence": "quarterly",
@@ -514,7 +403,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 497,
+   "documents": 503,
    "capital_as_of": "2026-06-30",
    "age_days": 129,
    "cadence": "quarterly",
@@ -777,7 +666,7 @@
     "html",
     "pattern"
    ],
-   "documents": 16,
+   "documents": 19,
    "capital_as_of": "2026-06-30",
    "age_days": 129,
    "cadence": "quarterly",
@@ -795,7 +684,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 16,
+   "documents": 19,
    "capital_as_of": "2026-06-30",
    "age_days": 129,
    "cadence": "quarterly",
@@ -1017,6 +906,25 @@
    "state": "ok"
   },
   {
+   "entity": "credit-mutuel",
+   "short": "Credit Mutuel",
+   "region": "eu",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 15,
+   "capital_as_of": "2026-06-30",
+   "age_days": 129,
+   "cadence": "half-yearly",
+   "capital_sources": [
+    "eba",
+    "eba_te",
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
    "entity": "cumberland-bs",
    "short": "Cumberland BS",
    "region": "uk",
@@ -1216,6 +1124,23 @@
    "state": "ok"
   },
   {
+   "entity": "gatehouse-bank",
+   "short": "Gatehouse Bank",
+   "region": "uk",
+   "locators": 2,
+   "kinds": [
+    "html"
+   ],
+   "documents": 4,
+   "capital_as_of": "2025-12-31",
+   "age_days": 310,
+   "cadence": "annual",
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
    "entity": "goldman-sachs",
    "short": "Goldman Sachs",
    "region": "us_ch",
@@ -1278,6 +1203,23 @@
    "capital_sources": [
     "eba",
     "eba_te"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "hinckley-and-rugby-bs",
+   "short": "Hinckley and Rugby BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 2,
+   "capital_as_of": "2025-11-30",
+   "age_days": 341,
+   "cadence": "annual",
+   "capital_sources": [
+    "pillar3"
    ],
    "state": "ok"
   },
@@ -1424,10 +1366,10 @@
    "kinds": [
     "browser"
    ],
-   "documents": 1,
+   "documents": 4,
    "capital_as_of": "2026-06-30",
    "age_days": 129,
-   "cadence": "unknown",
+   "cadence": "annual",
    "capital_sources": [
     "pillar3"
    ],
@@ -1531,6 +1473,23 @@
    "state": "ok"
   },
   {
+   "entity": "leek-bs",
+   "short": "Leek BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 2,
+   "capital_as_of": "2025-12-31",
+   "age_days": 310,
+   "cadence": "annual",
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
    "entity": "lloyds-bank",
    "short": "Lloyds Bank",
    "region": "uk",
@@ -1578,6 +1537,23 @@
    "cadence": "quarterly",
    "capital_sources": [
     "eba_te",
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "melton-bs",
+   "short": "Melton BS",
+   "region": "uk",
+   "locators": 2,
+   "kinds": [
+    "html"
+   ],
+   "documents": 9,
+   "capital_as_of": "2025-12-31",
+   "age_days": 310,
+   "cadence": "annual",
+   "capital_sources": [
     "pillar3"
    ],
    "state": "ok"
@@ -1812,7 +1788,7 @@
    "kinds": [
     "html"
    ],
-   "documents": 13,
+   "documents": 16,
    "capital_as_of": "2026-06-30",
    "age_days": 129,
    "cadence": "half-yearly",
@@ -1914,6 +1890,24 @@
    "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "op-corporate-bank",
+   "short": "OP Corporate Bank",
+   "region": "eu",
+   "locators": 1,
+   "kinds": [
+    "browser"
+   ],
+   "documents": 6,
+   "capital_as_of": "2026-09-30",
+   "age_days": 37,
+   "cadence": "quarterly",
+   "capital_sources": [
+    "nsm_release",
     "pillar3"
    ],
    "state": "ok"
@@ -2046,6 +2040,23 @@
    "capital_as_of": "2026-07-31",
    "age_days": 98,
    "cadence": "quarterly",
+   "capital_sources": [
+    "pillar3"
+   ],
+   "state": "ok"
+  },
+  {
+   "entity": "saffron-bs",
+   "short": "Saffron BS",
+   "region": "uk",
+   "locators": 1,
+   "kinds": [
+    "html"
+   ],
+   "documents": 3,
+   "capital_as_of": "2025-12-31",
+   "age_days": 310,
+   "cadence": "annual",
    "capital_sources": [
     "pillar3"
    ],
@@ -2363,7 +2374,7 @@
    "documents": 16,
    "capital_as_of": "2026-06-30",
    "age_days": 129,
-   "cadence": "quarterly",
+   "cadence": "half-yearly",
    "capital_sources": [
     "pillar3"
    ],
@@ -2477,8 +2488,8 @@
     "html"
    ],
    "documents": 7,
-   "capital_as_of": "2025-09-30",
-   "age_days": 402,
+   "capital_as_of": "2026-03-31",
+   "age_days": 220,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"

@@ -1,8 +1,8 @@
 {
  "id": "anz",
- "written": "2026-09-23",
+ "written": "2026-11-06",
  "background": "ANZ is one of Australia's big four banks, with the largest presence of the four across New Zealand and Asia, funded by Australian and New Zealand deposits and wholesale markets and lending mainly on mortgages and to businesses.",
- "synthesis": "The three main agencies are aligned at AA- on average, none of them lower, all three on a stable outlook, with the latest move a one-notch upgrade by one of the three on 26 May 2024. Against Australian peers capital is mixed: CET1 of 12.5% is in the top quarter, but leverage of 4.5% is in the bottom quarter. Liquidity is the weaker side, with LCR of 131% in the bottom quarter and NSFR of 113% below the peer median. CET1 has risen 0.6 points since 30 Jun 2025 and the rest has been flat, and the one flagged item, on 12 Sep 2026, is a positive outlook on the New Zealand subsidiary, good news rather than a concern.",
+ "synthesis": "Rated AA- on average across all three, all three on a stable outlook, after a one-notch upgrade by one of the three on 26 May 2024, among the strongest ratings a depositor will find. Capital is mixed against Australian banks: CET1 of 12.5% is in the top quarter but leverage of 4.5% is in the bottom quarter. Liquidity is on the thin side of a tightly bunched peer group, LCR of 131% in the bottom quarter and NSFR of 113% below the median. Since 30 Jun 2025 CET1 has risen 0.6 points and the other ratios have held flat.",
  "inputs": {
   "band": "B",
   "composite": "AA-",
@@ -10,6 +10,6 @@
   "outlooks": "stable, stable, stable",
   "n": 3,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-12"
+  "last_flagged": ""
  }
 }

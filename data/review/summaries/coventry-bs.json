@@ -1,15 +1,15 @@
 {
  "id": "coventry-bs",
- "written": "2026-10-08",
+ "written": "2026-11-06",
  "background": "Coventry Building Society is the second-largest UK building society after Nationwide, a mutual funded by retail savings and lending almost entirely on residential and buy-to-let mortgages, and the owner of The Co-operative Bank.",
- "synthesis": "Rated A- on average across two of the three, both on a stable outlook, the society was downgraded one notch by one of the three on 16 Sep 2026, with the cut tied to a narrowing buffer of capital protecting senior debt. CET1 of 19.6% is in the top quarter of UK building societies, but leverage of 4.8% is in the bottom quarter, which is the weak spot. Liquidity is strong, with LCR of 232% and NSFR of 147% both above their medians. The trend is downward: since 30 Jun 2025 CET1 has fallen 1.6 points, leverage 0.5 points and LCR 19 points, while NSFR has been broadly flat.",
+ "synthesis": "Two of the three main agencies rate the society, A- on average, one on a positive outlook and one on a stable outlook, after a one-notch downgrade by one of the three on 16 Sep 2026 and a move to positive outlook by one on 23 Oct 2026. Capital is strong on a risk-weighted basis, with CET1 of 19.6% in the top quarter of UK building societies, but leverage of 4.8% is in the bottom quarter, the figure to watch. Liquidity is a strength, with LCR of 232% in the top quarter and NSFR of 147% above the median. Since 30 Jun 2025 CET1 has fallen 1.6 points, leverage 0.5 points and LCR 19 points.",
  "inputs": {
-  "band": "B",
+  "band": "A",
   "composite": "A-",
   "worst": "A-",
-  "outlooks": "stable, stable",
+  "outlooks": "positive, stable",
   "n": 2,
   "asof": "2026-06-30",
-  "last_flagged": "2026-09-16"
+  "last_flagged": "2026-10-23"
  }
 }

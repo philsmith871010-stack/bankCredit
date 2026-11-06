@@ -1,15 +1,15 @@
 {
  "id": "erste-group",
- "written": "2026-10-02",
+ "written": "2026-11-06",
  "background": "Erste Group is an Austrian bank with the leading retail franchise across Central and Eastern Europe, funded by local deposits in Austria, the Czech Republic, Slovakia, Romania, Hungary and Croatia, and part-owned by its founding savings-bank foundation.",
- "synthesis": "Erste Group is rated A+ on average across all three main agencies, the weakest of them at A, two on a positive outlook and one on a stable outlook, after a one-notch upgrade by one of the three on 21 Apr 2026. Leverage of 6.6% is above the median for EU and Nordic banks and NSFR of 140% is in the top quarter, but CET1 of 15.2% and LCR of 148% sit just below their medians. The move to watch is capital: since 30 Jun 2025 CET1 has fallen 2.2 points and leverage 1.4 points, while LCR and NSFR have been broadly flat (figures to 30 Jun 2026). Nothing has been flagged in the last 90 days.",
+ "synthesis": "All three main agencies rate the bank, A+ on average with the weakest at A, two on a positive outlook and one on a stable outlook, after a one-notch upgrade by one of the three on 21 Apr 2026. Leverage of 6.6% is above the EU and Nordic peer median and NSFR of 140% in the top quarter, while CET1 of 15.2% and LCR of 148% sit just below the median. Since 30 Jun 2025 CET1 has fallen 2.2 points and leverage 1.4 points (figures to 30 Sep 2026), the move to keep an eye on against the improving outlooks.",
  "inputs": {
-  "band": "B",
+  "band": "A",
   "composite": "A+",
   "worst": "A",
   "outlooks": "positive, positive, stable",
   "n": 3,
-  "asof": "2026-06-30",
+  "asof": "2026-09-30",
   "last_flagged": "2026-04-21"
  }
 }

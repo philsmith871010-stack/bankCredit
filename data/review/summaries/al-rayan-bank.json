@@ -1,15 +1,15 @@
 {
  "id": "al-rayan-bank",
- "written": "2026-09-23",
+ "written": "2026-11-06",
  "background": "Al Rayan Bank is the largest Sharia-compliant bank in the UK, owned by Masraf Al Rayan of Qatar, funded by retail savings and lending mainly on residential and commercial property.",
- "synthesis": "Only one of the three main agencies rates the bank, at A with a stable outlook, and its last move was a one-notch downgrade on 24 May 2024, so the direction of travel has been down rather than up. That grade rests heavily on the Qatari parent, and with no capital or liquidity ratios held here the bank cannot be set against UK peers on the figures. Nothing has been flagged in the last 90 days. A small, single-rated name with parental support as the main comfort.",
+ "synthesis": "Only one of the three main agencies rates the bank, at A on a stable outlook, the last move a one-notch downgrade on 24 May 2024. Capital is the weak spot against UK small banks, with CET1 of 15.4% and leverage of 7.6% both in the bottom quarter. Liquidity is plentiful on the short-term measure, LCR of 481% in the top quarter, though NSFR of 151% is below the peer median. Since 31 Dec 2021 leverage has risen 0.8 points and LCR 124 points, with figures only to 31 Dec 2025.",
  "inputs": {
-  "band": "",
+  "band": "B",
   "composite": "A",
   "worst": "A",
   "outlooks": "stable",
   "n": 1,
-  "asof": "",
+  "asof": "2025-12-31",
   "last_flagged": ""
  }
 }
