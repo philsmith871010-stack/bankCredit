@@ -1,0 +1,12 @@
+{
+ "id": "a2c5f097059a",
+ "entity_id": "citigroup",
+ "url": "https://www.citigroup.com/rcs/citigpa/storage/public/lcr123123.pdf",
+ "page": 4,
+ "reference_date": "2023-12-31",
+ "currency": "USD",
+ "values": {
+  "lcr": 116.1
+ },
+ "note": "Citigroup's file at this URL is the Consolidated Citigroup U.S. Liquidity Coverage Ratio Disclosure for the quarterly period ended December 31, 2023 (cover), not a Pillar 3 capital report: LCR template and liquidity narrative only, no capital ratios, RWA or leverage, so the LCR is the one metric recorded. The PDF has no text layer, so the page was rendered and read visually. The figure is row 35 of the template, the average LCR for the quarter on the U.S. LCR rule: HQLA 560,549 over total adjusted net cash outflow 482,665 = 116.1%. The extractor reported no reference date; the column header reads 12/31/2023."
+}

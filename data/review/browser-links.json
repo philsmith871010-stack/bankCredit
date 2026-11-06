@@ -1,7 +1,7 @@
 {
  "lloyds-banking-group": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -247,7 +247,7 @@
  },
  "lloyds-bank": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -493,7 +493,7 @@
  },
  "bank-of-scotland": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -738,58 +738,254 @@
   ]
  },
  "investec": {
-  "page": "https://www.investec.com/en_gb/welcome-to-investec/about-us/investor-relations.html",
-  "checked": "2026-09-21",
+  "page": "https://www.investec.com/en_gb/welcome-to-investec/about-us/investor-relations/integrated-reporting.html",
+  "checked": "2026-11-06",
   "links": [
    {
-    "url": "https://www.investec.com/content/dam/investor-relations/presentations-and-announcements/investor-briefing/september-2026/Investec-Group-Pre-close-trading-update-Sept-2026.pdf",
-    "text": "Announcement"
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2026/Investec-Bank-Limited-and-Investec-Limited-Pillar-3-disclosure-report-June-2026.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    406.45 KB"
    },
    {
-    "url": "https://www.investec.com/en_gb/focus/private-equity-trends/2025.html?section=Business&category=PE%20Trends%202025%20report",
-    "text": "PE Trends 2025 report"
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2026/Additional-Capital-Disclosure-June-2026-redemption-of-instruments-INL.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    456.13 KB"
    },
    {
-    "url": "https://www.investec.com/en_gb/focus/secondaries-reports/2024-key-findings.html?section=Business&category=Secondaries%20Report%202024",
-    "text": "Secondaries Report 2024"
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2026/Investec-Bank-Limited-and-Investec-Limited-Pillar-3-disclosure-report-March-2026.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    748.83 KB"
    },
    {
-    "url": "https://www.investec.com/en_gb/focus/future-property/2024-report.html?section=Business&category=Future%20Property%20report%202024",
-    "text": "Future Property report 2024"
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2026/INL-Main-features-disclosure-template-Mar-26.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    466.61 KB"
    },
    {
-    "url": "https://www.investec.com/en_gb/welcome-to-investec/about-us/investor-relations/integrated-reporting.html",
-    "text": "View reporting suite"
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2026/Additional-Capital-Disclosure-January-2026-redemption-of-instruments-INL.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    381.38 KB"
    },
    {
-    "url": "https://www.investec.com/en_gb/welcome-to-investec/about-us/investor-relations/financial-information.html",
-    "text": "View reports"
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2026/Additional-Capital-Disclosure-June-2026-redemption-of-instruments-IBL.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    458.32 KB"
    },
    {
-    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=518/content/dam/investor-relations/integrated-reporting-product-listing-image.jpg",
-    "text": ""
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2026/IBL-Main-features-disclosure-template-Mar-26.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    468.87 KB"
    },
    {
-    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=387/content/dam/investor-relations/integrated-reporting-product-listing-image.jpg",
-    "text": ""
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2026/Additional-Capital-Disclosure-January-2026-redemption-of-instruments-IBL.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    383.59 KB"
    },
    {
-    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=347/content/dam/investor-relations/integrated-reporting-product-listing-image.jpg",
-    "text": ""
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2026/Investec-plc-group-Pillar-3-quarterly-disclosure-report-30-June-2026.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    325.21 KB"
    },
    {
-    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=464/content/dam/investor-relations/integrated-reporting-product-listing-image.jpg",
-    "text": ""
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2026/Investec-plc-group-and-Investec-Bank-plc-Pillar-3-disclosure-report-March-2026.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1.13 MB"
    },
    {
-    "url": "https://www.investec.com/cdn-cgi/image/q=80,f=auto,fit=scale-down,onerror=redirect,metadata=none,w=710/content/dam/investor-relations/integrated-reporting-product-listing-image.jpg",
-    "text": ""
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2026/Investec-Bank-Limited-and-Investec-Limited-Pillar-3-quarterly-disclosure-report-31-December-2025.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    442.26 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2025/Main-features-disclosure-Dec-25-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    384.01 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2025/Investec-Bank-Limited-and-Investec-Limited-Pillar-3-Interim-Disclosure-report-Sept-2025.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    598.82 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2025/Main-features-disclosure-Sep25-INL.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    381.62 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2025/Investec-ltd-group-and-Investec-Bank-ltd-Pillar-3-quarterly-disclosure-report-June-2025.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    437.12 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2025/Investec-Bank-Limited-and-Investec-Limited-Pillar-3-Disclosure-report-March-2025.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1013.6 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2025/Main-features-disclosure-Mar-25-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    229.92 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2024/IBL-and-INL-Pillar-3-Disclosure-report-December-2024.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1.12 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2024/Main-features-disclosure-Dec-24-LTD.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    229.85 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2024/Main-features-disclosure-Sep-24-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    226.05 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2024/IBL-and-INL-Pillar-3-Interim-Disclosure-report-September-2024.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1.12 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2024/Additional-Capital-Disclosure-August%202024-redemption-of-instruments-INL.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    227.25 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2024/IBL-and-INL-Pillar-3-Disclosure-report-June-2024.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1.12 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2024/Main-features-disclosure-template-Jun-24-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    230.47 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2024/Main-features-disclosure-template-Mar-24-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    235.53 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2024/Investec-Bank-Limited-and-Investec-Limited-Pillar-3-Disclosure-report-March-2024.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1.37 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2023/Main-features-disclosure-template-Dec-23-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    236.84 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2023/investec-bank-limited-and-investec-limited-pillar-3-disclosure-report-december-2023-final.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    808.51 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2023/Main-features-disclosure-template-Sep-23-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    233.33 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2023/Investec-Bank-Limited-and-Investec-Limited-Pillar-3-interim-disclosure-report-30-September-2023.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1.69 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2023/IBL-and-INL-Pillar-3-Disclosure-report-June-2023.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    807.98 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2023/Main-features-disclosure-template-Jun-23-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    233.65 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2023/Main-features-disclosure-template-May-23-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    229.6 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2023/Investec-Bank-Limited-and-Investec-Limited-Pillar-3-Disclosure-report-March-2023-FINAL.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    2.02 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2023/Main-features-disclosure-template-Mar-23-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    236.68 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2022/IBL-and-INL-Pillar-3-Disclosure-report-December-2022.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    6.22 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2022/Main-features-disclosure-template-Dec-22-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    236.77 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2022/IBL-and-INL-Interim-Pillar-3-disclosure-report-30-September-2022.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    9.28 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2022/Main-features-disclosure-template-Sep-22-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    240.54 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2022/IBL-and-INL-Pillar-3-Disclosure-Report-March-PRINTABLE-2022.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    10.38 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2022/Main-features-disclosure-template-Mar-22-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    246.37 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2022/Main-features-disclosure-template-Jan-22-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    243.55 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2022/IBL-and-INL-Pillar-3-Disclosure-report-June-2022.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    6.22 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2021/Combined-IBL-and-INL-Pillar-Quarterly-Disclosure-Dec-21.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    2.76 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2021/Main-features-disclosure-template-Dec-21-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    256.5 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2021/Main-features-disclosure-template-Nov21-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    250.14 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2021/Investec-INL-and-IBL-Pillar-III-Report-2021.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1.87 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2021/Combined-IBL-and-INL-Pillar-3-Semi-Annual-Disclosure-Sep-21.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1.24 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2021/Investec-Limited-and-Investec-Bank-Limited-group-Quarterly-Pillar-3-disclosure-report-June-2021.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    389.66 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2021/Main-features-disclosure-template-Oct-21-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    259.54 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2021/Main-features-disclosure-template-Sep-21-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    262.5 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2021/Main-features-disclosure-template-Jul-21-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    318.95 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2021/Main-features-disclosure-template-Feb21-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    308.06 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/financial-information/group-financial-results/2020/Investec-Limited-Pillar-III-annual-disclosure-report.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    3.66 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2020/Investec-Limited-group-Basel-Pillar-III-semi-annual-disclosure-report-2020.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    2.53 MB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2020/Investec-Limited-Basel-Pillar-III-quarterly-disclosure-report-31-December-2020.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1019.99 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2020/Investec-Limited-Basel-Pillar-III-quarterly-disclosure-report-June-2020.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    1001.87 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2020/Main-features-disclosure-template-Dec-20-Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    333.04 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/2020/Main-features-disclosure-template-Sep-20-INL.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    277.77 KB"
+   },
+   {
+    "url": "https://www.investec.com/content/dam/investor-relations/basel-pillar-iii-regulatory-disclosures/south-africa/2020/Main%20features%20disclosure%20template%20Jan20%20Ltd.pdf",
+    "text": "PDF\n                                \n\n                                \n                                    317.57 KB"
    }
   ]
  },
  "goldman-sachs-international-bank": {
   "page": "https://www.goldmansachs.com/investor-relations/financials/subsidiary-financial-info/gsib/",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
@@ -1305,7 +1501,7 @@
  },
  "macquarie-bank": {
   "page": "https://www.macquarie.com/au/en/investors/regulatory-disclosures.html",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.macquarie.com/disclosures/document/basel-3-pillar-3-capital",
@@ -1797,7 +1993,7 @@
  },
  "first-abu-dhabi-bank": {
   "page": "https://www.bankfab.com/en-ae/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.bankfab.com/-/media/fab-uds/about-fab/investor-relations/reports-and-presentations/quarterly-and-annual-reports/2026/q1/final-q1-pillar3-report-q1-2026.pdf?view=1",
@@ -2053,7 +2249,7 @@
  },
  "goldman-sachs": {
   "page": "https://www.goldmansachs.com/investor-relations/financials/other-information",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.goldmansachs.com/investor-relations/financials/other-information/2026/2Q26-pillar-3.pdf",
@@ -2443,7 +2639,7 @@
  },
  "state-street": {
   "page": "https://investors.statestreet.com/filings-and-reports/supplemental-public-disclosure-of-basel-iii-regulatory-capital/default.aspx",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://investors.statestreet.com/filings-and-reports/supplemental-public-disclosure-of-basel-iii-regulatory-capital/default.aspx",
@@ -2689,7 +2885,7 @@
  },
  "ubs": {
   "page": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.ubs.com/global/en/investor-relations/financial-information/pillar-3-disclosures.html",
@@ -3141,7 +3337,7 @@
  },
  "goldman-sachs-international-bank > reports": {
   "page": "https://www.goldmansachs.com/insights/reports",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.goldmansachs.com/disclosures",
@@ -3171,7 +3367,7 @@
  },
  "goldman-sachs-international-bank > investor-relations": {
   "page": "https://www.goldmansachs.com/investor-relations",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
@@ -3413,7 +3609,7 @@
  },
  "goldman-sachs-international-bank > corporate-governance": {
   "page": "https://www.goldmansachs.com/investor-relations/corporate-governance",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.goldmansachs.com/disclosures",
@@ -3455,7 +3651,7 @@
  },
  "goldman-sachs-international-bank > creditor-information": {
   "page": "https://www.goldmansachs.com/investor-relations/creditor-information",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.goldmansachs.com/investor-relations/creditor-information/Fixed-Income-Fact-Sheet.pdf",
@@ -6515,7 +6711,7 @@
  },
  "lloyds-bank-corporate-markets": {
   "page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/bank-of-scotland-plc/2026/q1/2026-bos-q1-pillar-3.pdf",
@@ -8400,7 +8596,7 @@
  },
  "sumitomo-mitsui-trust": {
   "page": "https://www.smtg.jp/english/investors/report/basel",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.smtg.jp/english/investors/report/basel",
@@ -10772,7 +10968,7 @@
  },
  "goldman-sachs-international-bank > 2026-10-13-q3-results": {
   "page": "https://www.goldmansachs.com/pressroom/press-releases/2026/2026-10-13-q3-results",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
@@ -10810,7 +11006,7 @@
  },
  "goldman-sachs-international-bank > broadcast-third-quarter-2026": {
   "page": "https://www.goldmansachs.com/investor-relations/presentations/2026/broadcast-third-quarter-2026",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
@@ -11102,7 +11298,7 @@
  },
  "op-corporate-bank": {
   "page": "https://www.op.fi/en/op-financial-group/to-the-media/publications/op-corporate-bank",
-  "checked": "2026-11-03",
+  "checked": "2026-11-06",
   "links": [
    {
     "url": "https://www.op.fi/documents/10197/933601379/requirejs-loader.js/7f190522-a0f0-9857-7338-7d1ab48da3a3?version=7.0&c=de47a0f3a959d0f1d910d74435489f74e0994391a23dcecd1d8bbe5436da704f",

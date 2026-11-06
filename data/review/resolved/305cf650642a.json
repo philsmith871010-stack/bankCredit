@@ -1,0 +1,23 @@
+{
+ "id": "305cf650642a",
+ "entity_id": "credit-mutuel",
+ "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2026/2025-informations-relatives-au-pilier-3-de-bale-III-exercice-2026-30062026.pdf",
+ "page": 3,
+ "reference_date": "2026-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 77474.0,
+  "tier1_capital": 77474.0,
+  "total_capital": 87070.0,
+  "rwa": 394809.0,
+  "cet1_ratio": 19.62,
+  "tier1_ratio": 19.62,
+  "total_capital_ratio": 22.05,
+  "overall_capital_requirement": 13.76,
+  "leverage_exposure": 1043017.0,
+  "leverage_ratio": 7.43,
+  "lcr": 165.0,
+  "nsfr": 116.87
+ },
+ "note": "Groupe Crédit Mutuel (the consolidated CNCM perimeter, the entity this repo tracks as credit-mutuel per the EBA/ESMA name maps 'Confédération Nationale du Crédit Mutuel'), not Crédit Mutuel Alliance Fédérale. Pilier 3 'Exercice juin 2026', Tableau KM1 p3, column a (headed 'T', EUR millions). The table is an embedded image with no text layer, so it was rendered and read visually at high resolution; every figure cross-checks arithmetically. Columns are labelled T..T-4 not dated; column c (77,539 / 378,904 / 20.46) equals the 31/12/2025 column of the year-end 2025 report, so T = 30 June 2026, as the cover and the KM2 narrative ('Au 30 juin 2026') say. LCR printed as whole percent 165% (135,548/82,343 = 164.6%). SREP total rose to 9.85% (P2R 1.85%) this half. Check: CET1 77,474/RWA 394,809 = 19.62% against 19.62%. overall_capital_requirement is row EU 11a 'Exigences globales de fonds propres'."
+}

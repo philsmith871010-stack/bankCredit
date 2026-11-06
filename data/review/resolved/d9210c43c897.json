@@ -1,0 +1,23 @@
+{
+ "id": "d9210c43c897",
+ "entity_id": "nwb-bank",
+ "url": "https://nwbbank.com/application/files/7917/0169/3840/Pillar_3_Half_Year_Disclosure_2023_final.pdf",
+ "page": 6,
+ "reference_date": "2023-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 1916.4,
+  "tier1_capital": 2236.9,
+  "total_capital": 2236.9,
+  "rwa": 5053.9,
+  "cet1_ratio": 37.92,
+  "tier1_ratio": 44.26,
+  "total_capital_ratio": 44.26,
+  "overall_capital_requirement": 13.72,
+  "leverage_exposure": 25995.7,
+  "leverage_ratio": 8.6,
+  "lcr": 406.66,
+  "nsfr": 147.72
+ },
+ "note": "Pillar 3 H1 2023, EU KM1 p6-7 (x EUR 1,000), column a 30 Jun 2023, converted to EUR m. RWA row 4 5,053,852. Check: 1,916,406/5,053,852 = 37.92%. LCR 406.66% as reported in this document (the H1 2024 KM1 later restates this column as 407.08%)."
+}

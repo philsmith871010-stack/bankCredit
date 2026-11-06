@@ -1,0 +1,23 @@
+{
+ "id": "56f53945be5e",
+ "entity_id": "tsb",
+ "url": "https://www.tsb.co.uk/content/dam/tsb-public/documents/investors/rns/LSD-document-Q2-2023.pdf",
+ "page": 4,
+ "reference_date": "2023-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 1859.0,
+  "tier1_capital": 1859.0,
+  "total_capital": 2182.3,
+  "rwa": 10425.7,
+  "cet1_ratio": 17.8,
+  "tier1_ratio": 17.8,
+  "total_capital_ratio": 20.9,
+  "overall_capital_requirement": 13.3,
+  "leverage_exposure": 40560.4,
+  "leverage_ratio": 4.6,
+  "lcr": 175.0,
+  "nsfr": 152.0
+ },
+ "note": "TSB Banking Group plc Pillar 3 Large Subsidiary Disclosures at 30 June 2023 - a full Pillar 3 document, not liquidity-only. Table 1 Key metrics (KM1) on p4, current column 30 June 2023 (comparatives 31 Dec 2022 and 30 Jun 2022), amounts in GBP 000 converted to millions. The extractor missed it because the PDF text puts all figures before the row labels. CET1 = Tier 1 = 1,859,042 (no AT1 at this date), total capital 2,182,320, RWEA 10,425,685, CET1/T1 17.8%, total capital 20.9%, overall capital requirements 13.3%, leverage exposure 40,560,388, leverage 4.6%, LCR 175% (12-month average), NSFR 152% (four-quarter average). Cross-checked against CC1 p5 (rows 29, 59, 60), OV1 p8 total and LR2 p20. Check: 1,859.0/10,425.7 = 17.83%, 2,182.3/10,425.7 = 20.93%. IFRS 9 transitional basis; the document says the fully loaded difference is immaterial (0.6m). Nothing else is loaded for TSB at 2023-06-30."
+}

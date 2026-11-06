@@ -1,0 +1,18 @@
+{
+ "id": "0e8719acf219",
+ "entity_id": "leek-bs",
+ "url": "https://www.leekbs.co.uk/content/images/page/files/Leek%20Building%20Society%20ARA%202025%20-%20Website.pdf",
+ "page": 42,
+ "reference_date": "2025-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 81.6,
+  "total_capital": 82.2,
+  "rwa": 495.0,
+  "cet1_ratio": 16.5,
+  "total_capital_ratio": 16.6,
+  "leverage_ratio": 6.0,
+  "lcr": 241.0
+ },
+ "note": "Leek Building Society Annual Report & Accounts 2025, year to 31 December 2025. Capital structure table in note 23 (PDF p42, printed p82-83), in GBP 000: general and other reserves 84,049 less PVA (117) and intangibles (2,346) = CET1 81,586; Tier 2 collective provision 574; total regulatory capital 82,160. RWA is stated only rounded, 'increased to £495m', in the CFO review (PDF p8), which also gives CET1 ratio 16.5%, leverage ratio 6.0% and LCR 241% at 31 December 2025. Check: 81,586/495,000 = 16.48%. The report states no total capital ratio: 16.6% is its own total capital over its own rounded RWA (82,160/495,000 = 16.60%). No leverage exposure or NSFR stated. Society only."
+}

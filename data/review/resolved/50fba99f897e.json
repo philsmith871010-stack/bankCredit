@@ -1,0 +1,23 @@
+{
+ "id": "50fba99f897e",
+ "entity_id": "nwb-bank",
+ "url": "https://nwbbank.com/application/files/1316/3827/6396/NWB_Bank_Pillar_3_Half_Year_Disclosure_2021.pdf",
+ "page": 5,
+ "reference_date": "2021-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 1762.2,
+  "tier1_capital": 2082.7,
+  "total_capital": 2082.7,
+  "rwa": 4501.8,
+  "cet1_ratio": 39.14,
+  "tier1_ratio": 46.26,
+  "total_capital_ratio": 46.26,
+  "overall_capital_requirement": 12.75,
+  "leverage_exposure": 4253.4,
+  "leverage_ratio": 48.96,
+  "lcr": 200.97,
+  "nsfr": 140.02
+ },
+ "note": "Pillar 3 H1 2021, EU KM1 p5-7 (x EUR 1,000), column a 30 Jun 2021, converted to EUR m. RWA row 4 4,501,816. Check: 1,762,174/4,501,816 = 39.14%. LCR 200.97% as reported in this document; the H1 2022 and FY2021 KMs restate the 30 Jun 2021 LCR as 184.08% - doubtful, the original is kept. NSFR 140.02%."
+}

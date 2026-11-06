@@ -1,0 +1,23 @@
+{
+ "id": "4ac566658ef0",
+ "entity_id": "nwb-bank",
+ "url": "https://nwbbank.com/application/files/9417/4981/1016/Pillar_3_Full_Year_Disclosure_2024.pdf",
+ "page": 7,
+ "reference_date": "2024-12-31",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 1978.5,
+  "tier1_capital": 2299.0,
+  "total_capital": 2299.0,
+  "rwa": 5549.8,
+  "cet1_ratio": 35.65,
+  "tier1_ratio": 41.43,
+  "total_capital_ratio": 41.43,
+  "overall_capital_requirement": 14.7,
+  "leverage_exposure": 9596.1,
+  "leverage_ratio": 23.96,
+  "lcr": 256.79,
+  "nsfr": 134.27
+ },
+ "note": "Pillar 3 FY2024, EU KM1 p7-8 (x 1,000), column a 31 Dec 2024, converted to EUR m. RWA row 4 5,549,767. Check: 1,978,528/5,549,767 = 35.65%. LCR 256.79% is KM1 row 17 (average); note the p6 narrative gives a point-in-time year-end LCR of 183% - the KM1 average is used. Leverage exposure 9,596 excludes promotional public-sector lending."
+}

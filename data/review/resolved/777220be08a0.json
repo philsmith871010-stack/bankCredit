@@ -1,0 +1,23 @@
+{
+ "id": "777220be08a0",
+ "entity_id": "nwb-bank",
+ "url": "https://nwbbank.com/application/files/1017/6338/7950/Pillar_3_Half_Year_Disclosure_2025.pdf",
+ "page": 7,
+ "reference_date": "2025-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 2023.0,
+  "tier1_capital": 2351.6,
+  "total_capital": 2351.6,
+  "rwa": 5737.9,
+  "cet1_ratio": 35.26,
+  "tier1_ratio": 40.98,
+  "total_capital_ratio": 40.98,
+  "overall_capital_requirement": 14.71,
+  "leverage_exposure": 20654.6,
+  "leverage_ratio": 11.39,
+  "lcr": 237.31,
+  "nsfr": 142.64
+ },
+ "note": "Pillar 3 H1 2025, EU KM1 p7-8 (x 1,000), column a 30 Jun 2025, converted to EUR m. Row 4 'Total risk exposure amount' 5,737,862. Check: 2,022,953/5,737,862 = 35.26%. LCR 237.31% is the reported KM1 average ratio (row 17); the HQLA/NCO quotient (178.9%) differs because averages of components are not the average of ratios. Same figures restated as column c in the FY2025 KM1."
+}

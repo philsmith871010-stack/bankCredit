@@ -1,0 +1,19 @@
+{
+ "id": "9c95e9673241",
+ "entity_id": "lloyds-banking-group",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-banking-group-plc/archive/2017/half-year/2017-lbg-hy-pillar3.pdf",
+ "page": 36,
+ "reference_date": "2017-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 29320.0,
+  "tier1_capital": 36103.0,
+  "total_capital": 45203.0,
+  "rwa": 217787.0,
+  "cet1_ratio": 13.5,
+  "tier1_ratio": 16.6,
+  "total_capital_ratio": 20.8,
+  "leverage_ratio": 5.2
+ },
+ "note": "Pre-KM1 document. Key ratios summary on p.4 (printed page 3) plus Table 31 own funds template pp.35-36 (printed 34-35), transitional column at 30 June 2017. The extractor's RWA 147,665 was the 31 Dec 2016 IRB credit-risk line of the RWA flow table, not total RWA; total RWA is 217,787. CET1 29,320/217,787 = 13.46% against the stated 13.5% (reported, not the 13.5% pro forma line); transitional Tier 1 16.6% and total capital 20.8% above CET1. Leverage 5.2% is the modified UK leverage ratio (excluding central bank claims), the basis used for the other Lloyds dates; its exposure measure is not printed in this document (only the CRR measure 714,307 at 4.8%), so leverage_exposure is left out. No LCR in this document. The same figures are already loaded for this date from a later Pillar 3's comparative column, so this agrees with rather than adds to the dataset."
+}

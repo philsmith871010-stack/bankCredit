@@ -1,0 +1,12 @@
+{
+ "id": "2109a96147f7",
+ "entity_id": "progressive-bs",
+ "url": "https://theprogressive.com/media/025gvmtp/021372-pbs-agm-2026-annual-report-web.pdf",
+ "page": 19,
+ "reference_date": "2025-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_ratio": 20.08
+ },
+ "note": "Progressive Building Society Annual Report and Accounts for the year to 31 December 2025. The only regulatory capital figure in the whole document is in the strategic report on p19: 'At 31st December 2025 the CET1 ratio was 20.08%'. No CET1 amount, RWA, total capital, leverage ratio, LCR or NSFR is stated anywhere (searched every page; note 27 'Capital structures' p120 is narrative only, and the annual business statement p124 gives only the statutory gross capital 8.29% and free capital 7.83% of shares and borrowings, which are not regulatory ratios). LCR is described only as 'well in excess of regulatory requirements' (p18). Total reserves £173.8m (p19 chart) are accounting reserves, not CET1, so not used. Note 27 says Pillar 3 disclosures are on the society's website, contrary to the queue reason."
+}

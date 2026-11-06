@@ -1,0 +1,21 @@
+{
+ "id": "fc1162abbcac",
+ "entity_id": "standard-chartered",
+ "url": "https://www.sc.com/en/uploads/sites/66/content/docs/Standard_Chartered_PLC_Pillar3_Full_Year_2018_Report.pdf",
+ "page": 6,
+ "reference_date": "2018-12-31",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 36717.0,
+  "tier1_capital": 43401.0,
+  "total_capital": 55696.0,
+  "rwa": 258297.0,
+  "cet1_ratio": 14.2,
+  "tier1_ratio": 16.8,
+  "total_capital_ratio": 21.6,
+  "leverage_exposure": 740602.0,
+  "leverage_ratio": 5.6,
+  "lcr": 156.0
+ },
+ "note": "Standard Chartered PLC Pillar 3 Disclosures 2018, Table 1 KM1 for the Group, p6 (printed page 02), USD millions. Five columns: 31.12.18 (bold, shaded, current), 30.09.18, 30.06.18, 31.03.18, 31.12.17. The text layer drops the shaded 31.12.18 column entirely, which is why the rules read 30.09.18 (38,340) as current; read from the rendered page instead. Transitional (IFRS 9 relief applied) rows: CET1 36,717, Tier 1 43,401, total capital 55,696, RWA 258,297, CET1 14.2%, Tier 1 16.8%, total 21.6%, UK leverage exposure 740,602, UK leverage ratio 5.6%, LCR 156.0% (HQLA 146,470 / net outflow 94,011). Fully loaded IFRS 9 equivalents: CET1 36,315, 14.1%. Checks: 36,717/258,297 = 14.22%; 43,401/258,297 = 16.80%; 55,696/258,297 = 21.56%; 146,470/94,011 = 155.8%. The UK leverage ratio 5.6% is below Tier 1 over exposure (5.86%) because the UK measure counts only qualifying Tier 1; recorded as printed. No overall capital requirement or NSFR row in this template. Doubt, outside this item: the pdf_rules facts loaded at 2018-06-30 (CET1 38,813, RWA 280,205) are this table's 31.03.18 figures (30.06.18 is 38,512 / 271,867), and those at 2018-03-31 (36,513 / 264,090) equal the 2019-12-31 ones; both look misdated."
+}

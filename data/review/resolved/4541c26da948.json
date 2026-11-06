@@ -1,0 +1,16 @@
+{
+ "id": "4541c26da948",
+ "entity_id": "lloyds-banking-group",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-banking-group-plc/archive/2009/full-year/2009-lbg-pillar3-disclosures.pdf",
+ "page": 21,
+ "reference_date": "2009-12-31",
+ "currency": "GBP",
+ "values": {
+  "tier1_capital": 47530.0,
+  "total_capital": 61077.0,
+  "rwa": 493307.0,
+  "tier1_ratio": 9.6,
+  "total_capital_ratio": 12.4
+ },
+ "note": "Basel II full-year 2009 Pillar 3 (first year after the HBOS acquisition), no KM1. Capital resources table p.21, 'as at 31 December 2009', 2009 column on the traditional presentation (innovative tier 1 within tier 1, the basis of the published ratios): total tier 1 47,530, total capital resources 61,077, RWA 493,307; 47,530/493,307 = 9.63% and 61,077/493,307 = 12.38% against the stated 9.6% and 12.4%. The 2010 report later restated 2009 for an AFS-reserve prior-year adjustment (tier 1 47,399, total capital 60,946, same RWA and ratios); this document's own figures are used. The document presents Core Tier 1 capital 39,935 and a Core Tier 1 ratio of 8.1%. Core Tier 1 is the Basel II/FSA measure, materially more lenient than CRD IV CET1, so it is deliberately not recorded in the cet1 fields (same treatment as the 2012 report and the Bendigo Basel II answers). No leverage ratio or LCR in Basel II-era reports. Tier 1 and total capital are Basel II (GENPRU) measures, not strictly comparable with 2014 onwards."
+}

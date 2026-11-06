@@ -1,0 +1,18 @@
+{
+ "id": "2138cad8e818",
+ "entity_id": "op-corporate-bank",
+ "url": "https://www.op.fi/documents/485141/519065091/OP-Corporate-Bank-plcs-Interim-Report-Q1-2025.pdf/83063745-a1f8-ce3a-7a46-1a63f60fcd2e?t=1746567412724",
+ "page": 30,
+ "reference_date": "2025-03-31",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 4725.0,
+  "tier1_capital": 4725.0,
+  "total_capital": 6546.0,
+  "rwa": 34043.0,
+  "cet1_ratio": 13.9,
+  "tier1_ratio": 13.9,
+  "total_capital_ratio": 19.2
+ },
+ "note": "OP Corporate Bank plc Interim Report 1 January-31 March 2025: not a Pillar 3 document, so no KM1; figures are from the 'Capital adequacy tables' (own funds, total risk exposure amount, ratios) for OP Corporate Bank plc itself as a credit institution, not OP Pohjola. EUR millions, column for 2025-03-31 (the first column; the second is the comparative). CET1 4,725, Tier 1 4,725 (no AT1), total own funds 6,546, total risk exposure amount 34,043; CET1/T1 ratio 13.9%, capital adequacy ratio 19.2%. Check: 4725/34043 = 13.88%, 6546/34043 = 19.23%. No leverage ratio is disclosed for OP Corporate Bank in the report (only its definition in the formulas section), so none is given. The capital requirement table gives EUR 3,672m (10.8% of REA: 8% minimum plus buffers, no Pillar 2 at this level), not recorded as overall_capital_requirement. The report shows transitional and fully loaded ratios; they are identical here (CET1 13.9%, total 19.2%)."
+}

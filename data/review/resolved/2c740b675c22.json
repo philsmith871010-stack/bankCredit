@@ -1,0 +1,20 @@
+{
+ "id": "2c740b675c22",
+ "entity_id": "lloyds-banking-group",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-banking-group-plc/archive/2014/full-year/2014-lbg-pillar3-report.pdf",
+ "page": 24,
+ "reference_date": "2014-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 30689.0,
+  "tier1_capital": 39558.0,
+  "total_capital": 52800.0,
+  "rwa": 239734.0,
+  "cet1_ratio": 12.8,
+  "tier1_ratio": 16.5,
+  "total_capital_ratio": 22.0,
+  "leverage_exposure": 739669.0,
+  "leverage_ratio": 4.9
+ },
+ "note": "Pre-KM1 full-year 2014 Pillar 3 report, first year of CRD IV. Table 4 'Capital resources' p.24 (printed 20), 'as at 31 December 2014', transitional 2014 column: CET1 30,689, Tier 1 39,558, total capital 52,800, RWA 239,734; 30,689/239,734 = 12.80% against the stated 12.8%; Tier 1 16.5% and total capital 22.0% above CET1. The extractor's leverage '2013' was a year header. Leverage from p.27: 4.9% fully loaded on a 739,669 exposure (Basel III January 2014 framework incl. central bank claims; Tier 1 36,044) - not the modified UK basis used from 2016, so not strictly comparable with later Lloyds dates; the 2015 report restates this exposure to 740,692 at the same 4.9%. No LCR figure in the report."
+}

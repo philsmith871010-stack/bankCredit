@@ -1,0 +1,19 @@
+{
+ "id": "5591af9077b0",
+ "entity_id": "lloyds-banking-group",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-banking-group-plc/archive/2016/full-year/2016-lbg-pillar-3-report-v2.pdf",
+ "page": 25,
+ "reference_date": "2016-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 29284.0,
+  "tier1_capital": 36581.0,
+  "total_capital": 46123.0,
+  "rwa": 215534.0,
+  "cet1_ratio": 13.6,
+  "tier1_ratio": 17.0,
+  "total_capital_ratio": 21.4,
+  "leverage_ratio": 5.2
+ },
+ "note": "Pre-KM1 full-year 2016 Pillar 3 report. The reference date is 31 December 2016: the extractor's 2017-02-28 was the publication date, and its '2015' values were the year headers of the p.6 executive-summary charts. Figures from Table 3 'Capital resources' p.25 (printed 21), transitional 2016 column: CET1 29,284, Tier 1 36,581, total capital 46,123, RWA 215,534; 29,284/215,534 = 13.59% against the stated 13.6% (reported, not the 13.8% pro forma); Tier 1 17.0% and total capital 21.4% above CET1. Leverage 5.2% is the modified UK leverage ratio (excluding central bank claims) stated on p.27, the basis used for the other Lloyds dates; its exposure measure is not printed, so leverage_exposure is left out (the CRD IV fully-loaded ratio is 4.9% on 707,108). No LCR figure in this report. Figures agree with the 31 Dec 2016 comparative column of the 2017 half-year report."
+}

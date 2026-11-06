@@ -1,0 +1,23 @@
+{
+ "id": "86744f17aa10",
+ "entity_id": "qib-uk",
+ "url": "https://www.qib-uk.com/-/media/project/uk/files/finance-reports/pillar-3-disclosure-document-2023.pdf?rev=92920adfd6b544c4a39ad38512eee63c",
+ "page": 6,
+ "reference_date": "2022-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 86.739,
+  "tier1_capital": 86.739,
+  "total_capital": 96.585,
+  "rwa": 499.121,
+  "cet1_ratio": 17.38,
+  "tier1_ratio": 17.38,
+  "total_capital_ratio": 19.35,
+  "overall_capital_requirement": 14.8,
+  "leverage_exposure": 1012.682,
+  "leverage_ratio": 8.5,
+  "lcr": 1236.14,
+  "nsfr": 129.18
+ },
+ "note": "QIB (UK) plc Pillar 3 Disclosures 31 December 2022: an image-only scan (Konica Minolta, created July 2023) published under the file name 'pillar-3-disclosure-document-2023', but the cover says 'Pillar 3 Disclosures 31 December 2022', the executive summary calls it 'the Bank's 2022 Pillar 3 disclosures', and KM1 column a is headed 31/12/2022 (column b 31/12/2021). So the reference date is 2022-12-31; the expected 2023-12-31 is wrong, and 2023 is already loaded from its own document with different figures (CET1 98.878m). Figures read from the rendered page image, not the OCR text: KM1 p6-7, column a. Amounts are in GBP thousands (the template does not print a unit; thousands is consistent with the 2021 and 2023 disclosures already in the dataset) and are converted to millions here: CET1 = Tier 1 86,739, total capital 96,585, RWEA 499,121, leverage exposure (excluding central bank claims) 1,012,682, HQLA 143,649, net outflows 11,621, ASF 728,399, RSF 563,857. Ratios as printed: CET1 and Tier 1 17.38%, total 19.35%, OCR 14.80%, LCR 1236.14%, NSFR 129.18%, leverage ratio 8.50%. Checks: 86,739/499,121 = 17.38%; 96,585/499,121 = 19.35%; 143,649/11,621 = 1236.1%; 728,399/563,857 = 129.18%. Doubt: the printed leverage ratio of 8.50% does not equal Tier 1 over the exposure (86,739/1,012,682 = 8.57%), whereas the 2021 column does (8.75%). 8.50% is recorded as printed; the image is clear, so the gap is the bank's, not the reading."
+}

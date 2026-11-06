@@ -1,0 +1,16 @@
+{
+ "id": "4c5a7b412a2c",
+ "entity_id": "gatehouse-bank",
+ "url": "https://gatehousebank.com/downloads/gatehouse-bank-annual-report-2025",
+ "page": 126,
+ "reference_date": "2025-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 92.2,
+  "tier1_capital": 92.2,
+  "total_capital": 111.1,
+  "cet1_ratio": 15.74,
+  "leverage_ratio": 6.53
+ },
+ "note": "Gatehouse Bank plc Annual Report and Financial Statements 2025 (the download is a real PDF, 128 pages, despite the URL having no .pdf extension). Regulatory capital note 36 on p126, in GBP 000: core Tier 1 before deductions 109,790, deductions from CET1 (17,609), so CET1 = 92,181; Tier 2 18,939; total regulatory capital 111,120 (92,181 + 18,939 = 111,120, consistent). No AT1, so Tier 1 = CET1. CET1 ratio 15.74% and leverage ratio 6.53% are the KPIs on p21. RWA is not stated as an amount, only as a KPI 'average risk weight' of 40.97% of total assets; applying that to either the consolidated (1,398.2) or bank (1,407.5) balance sheet total gives about 573-577 and a CET1 ratio near 16.0%, not the stated 15.74%, so RWA and the total capital ratio are left out rather than derived. The implied RWA from the stated ratio would be 92.2/0.1574 = about 586. No LCR or NSFR figure: p20 says only that the LCR stayed 'comfortably above the regulatory threshold'. The annual report says Pillar 3 is 'available on request' only."
+}

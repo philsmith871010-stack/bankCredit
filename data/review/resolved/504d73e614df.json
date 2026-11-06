@@ -1,0 +1,23 @@
+{
+ "id": "504d73e614df",
+ "entity_id": "credit-mutuel",
+ "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2024/2024-informations-relatives-au-pilier-3-de-bale-III-exercice-juin-2024.pdf",
+ "page": 3,
+ "reference_date": "2024-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 68746.0,
+  "tier1_capital": 68746.0,
+  "total_capital": 78128.0,
+  "rwa": 370678.0,
+  "cet1_ratio": 18.55,
+  "tier1_ratio": 18.55,
+  "total_capital_ratio": 21.08,
+  "overall_capital_requirement": 13.64,
+  "leverage_exposure": 956267.0,
+  "leverage_ratio": 7.19,
+  "lcr": 171.0,
+  "nsfr": 119.31
+ },
+ "note": "Groupe Crédit Mutuel (the consolidated CNCM perimeter, the entity this repo tracks as credit-mutuel per the EBA/ESMA name maps 'Confédération Nationale du Crédit Mutuel'), not Crédit Mutuel Alliance Fédérale. Pilier 3 'Exercice juin 2024', Tableau KM1 p3, column a headed 'T'; figures equal the 30/06/2024 column of the year-end 2024 report, so T = 30 June 2024. LCR printed as whole percent 171% (the year-end report gives 170.93 for the same date). Check: CET1 68,746/RWA 370,678 = 18.55% against 18.55%. overall_capital_requirement is row EU 11a 'Exigences globales de fonds propres'."
+}

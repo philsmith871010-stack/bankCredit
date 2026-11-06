@@ -1,0 +1,23 @@
+{
+ "id": "82483333fc0e",
+ "entity_id": "handelsbanken-plc",
+ "url": "http://www.handelsbanken.co.uk/tron/gbpu/info/contents/v1/document/52-175532",
+ "page": 8,
+ "reference_date": "2022-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 2426.0,
+  "tier1_capital": 2426.0,
+  "total_capital": 2826.0,
+  "rwa": 11404.0,
+  "cet1_ratio": 21.3,
+  "tier1_ratio": 21.3,
+  "total_capital_ratio": 24.8,
+  "overall_capital_requirement": 14.3,
+  "leverage_exposure": 25680.0,
+  "leverage_ratio": 9.4,
+  "lcr": 147.0,
+  "nsfr": 130.0
+ },
+ "note": "Handelsbanken plc 'Risk and Capital - Information according to Pillar 3 2022' (downloaded fine with curl, not blocked). This document IS the 2022 year-end disclosure: the cover says 2022 and KM1 (p8) has a single column headed '2022, GBP m'. The queued reference date 2023-03-14 is the board meeting date in the dividend paragraph, not the period. So the figures 'repeat the 2022-12-31 disclosure' because they are the 2022-12-31 disclosure; there is no later column to read. Recorded at 2022-12-31 from the primary document (the facts loaded so far for 2022 came from the comparative column of the 2023 report, 52-223742): CET1 = Tier 1 2,426, total capital 2,826, RWEA 11,404 (agrees with OV1 p9), CET1/T1 21.3%, total 24.8%, OCR 14.3%, leverage exposure 25,680, leverage 9.4%, LCR 147% (HQLA 7,904 / net outflows 5,377 = 147%), NSFR 130% (20,678/15,953 = 129.6%). KM1 is after deducting the proposed GBP 266m dividend. Check: 2,426/11,404 = 21.27%. Doubt: the LCR already loaded for 2022-12-31 from the 2023 report's comparative is 312%; this document's own KM1 says 147% (weighted average HQLA). 147% is recorded as the 2022 report prints it and will replace 312%. Not written as a skip, because a skip would add the URL shape '\\d+-\\d+' to the skip patterns and block every future Handelsbanken document."
+}

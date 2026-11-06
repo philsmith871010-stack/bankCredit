@@ -1,0 +1,19 @@
+{
+ "id": "f5fdd68f4720",
+ "entity_id": "saffron-bs",
+ "url": "https://www.saffronbs.co.uk/sites/default/files/2025-03/Report%20and%20Accounts_v23_web.pdf",
+ "page": 19,
+ "reference_date": "2024-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 80.8,
+  "total_capital": 93.7,
+  "rwa": 533.5,
+  "cet1_ratio": 15.1,
+  "total_capital_ratio": 17.6,
+  "leverage_ratio": 6.0,
+  "lcr": 177.0,
+  "nsfr": 136.1
+ },
+ "note": "Saffron Building Society Annual Report and Accounts 2024, year to 31 December 2024, Group figures. Capital metrics table on p19 (unaudited): RWA 533,464 (GBP 000), CET1 ratio 15.1%, total capital ratio 17.6%, leverage ratio 6.0%. Capital reconciliation note on p56-57: total CET1 80,808, Tier 2 12,844, total regulatory capital 93,652. Check: 80,808/533,464 = 15.15%, 93,652/533,464 = 17.56%. The KPI commentary on p11 says total capital ratio 'increased to 17.5%', but the KPI table (p10), the capital table and the arithmetic all give 17.6%, which is used. LCR 177% and NSFR 136.1% at 31 December 2024 from the financial review p18. The 2025 report's comparatives agree (CET1 80,808, total 93,652, RWA 533,464). No leverage exposure stated."
+}

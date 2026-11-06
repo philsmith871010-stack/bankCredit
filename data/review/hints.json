@@ -25,7 +25,7 @@
    },
    "method": "pdf_rules"
   },
-  "page": 3,
+  "page": 6,
   "currency": "USD",
   "trust_labels": true
  },
@@ -226,7 +226,7 @@
   }
  },
  "tsb": {
-  "page": 70,
+  "page": 4,
   "currency": "GBP",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -285,7 +285,7 @@
   }
  },
  "citigroup": {
-  "page": 8,
+  "page": 4,
   "currency": "USD",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -394,7 +394,7 @@
   "trust_labels": true
  },
  "metro-bank": {
-  "page": 21,
+  "page": 12,
   "currency": "GBP",
   "last_verified": {
    "reference_date": "2026-06-30",
@@ -645,7 +645,8 @@
    "\\d+\\-lbg\\-fy\\-pillar\\d+\\-capital\\-instruments"
   ],
   "page": 5,
-  "currency": "GBP"
+  "currency": "GBP",
+  "trust_labels": true
  },
  "lloyds-bank": {
   "last_verified": {
@@ -678,7 +679,7 @@
   },
   "browser_page": "https://www.lloydsbankinggroup.com/investors/financial-performance/",
   "browser_page_found": "2026-09-08",
-  "page": 4,
+  "page": 5,
   "currency": "GBP"
  },
  "santander-uk": {
@@ -1031,33 +1032,25 @@
     "lcr": 257.3
    },
    "method": "pdf_rules"
-  }
+  },
+  "page": 3,
+  "currency": "GBP"
  },
  "melton-bs": {
   "last_verified": {
-   "reference_date": "2023-12-31",
+   "reference_date": "2025-12-31",
    "values": {
-    "cet1_capital": 40.7,
-    "total_capital": 40.7,
-    "rwa": 286.7,
-    "cet1_ratio": 14.2,
-    "tier1_ratio": 14.2,
-    "total_capital_ratio": 14.2,
-    "total_srep_requirement": 8.0,
-    "combined_buffer": 4.5,
-    "overall_capital_requirement": 12.5,
-    "cet1_headroom": 6.2,
-    "leverage_exposure": 678.6,
-    "leverage_ratio": 6.0,
-    "hqla": 115.6,
-    "net_cash_outflows": 15.8,
-    "lcr": 732.0,
-    "available_stable_funding": 711.6,
-    "required_stable_funding": 467.2,
-    "nsfr": 152.0
+    "cet1_capital": 41.7,
+    "total_capital": 41.7,
+    "cet1_ratio": 13.6,
+    "total_capital_ratio": 13.6,
+    "leverage_ratio": 5.4,
+    "lcr": 393.0
    },
-   "method": "pdf_rules"
-  }
+   "method": "pdf_manual"
+  },
+  "page": 19,
+  "currency": "GBP"
  },
  "monmouthshire-bs": {
   "last_verified": {
@@ -1330,32 +1323,19 @@
   ]
  },
  "gatehouse-bank": {
-  "page": 33,
+  "page": 126,
   "currency": "GBP",
   "trust_labels": true,
   "last_verified": {
-   "reference_date": "2024-12-31",
+   "reference_date": "2025-12-31",
    "values": {
-    "cet1_capital": 108.6,
-    "tier1_capital": 108.6,
-    "total_capital": 127.1,
-    "rwa": 636.7,
-    "cet1_ratio": 17.1,
-    "tier1_ratio": 17.1,
-    "total_capital_ratio": 20.0,
-    "p2r_7a": 7.3,
-    "total_srep_requirement": 13.0,
-    "overall_capital_requirement": 17.0,
-    "leverage_exposure": 1460.6,
-    "leverage_ratio": 7.4,
-    "hqla": 39.8,
-    "net_cash_outflows": 8.9,
-    "lcr": 447.6,
-    "available_stable_funding": 1331.2,
-    "required_stable_funding": 866.9,
-    "nsfr": 153.5
+    "cet1_capital": 92.2,
+    "tier1_capital": 92.2,
+    "total_capital": 111.1,
+    "cet1_ratio": 15.74,
+    "leverage_ratio": 6.53
    },
-   "method": "pdf_rules"
+   "method": "pdf_manual"
   },
   "browser_page": "https://gatehousebank.com/about-us/corporate-governance",
   "browser_page_found": "2026-09-08"
@@ -1838,31 +1818,29 @@
     "nsfr": 130.0
    },
    "method": "pdf_rules"
-  }
+  },
+  "page": 8,
+  "currency": "GBP"
  },
  "west-brom-bs": {
   "last_verified": {
-   "reference_date": "2025-09-30",
+   "reference_date": "2026-03-31",
    "values": {
-    "cet1_capital": 416.4,
-    "tier1_capital": 416.4,
-    "total_capital": 418.4,
-    "rwa": 2534.5,
-    "cet1_ratio": 16.4,
-    "tier1_ratio": 16.4,
-    "total_capital_ratio": 16.5,
-    "total_srep_requirement": 8.6,
-    "combined_buffer": 4.5,
-    "overall_capital_requirement": 13.1,
-    "cet1_headroom": 7.9,
-    "leverage_exposure": 6362.5,
-    "leverage_ratio": 6.5,
-    "hqla": 662.7,
-    "net_cash_outflows": 396.2,
-    "lcr": 167.3
+    "cet1_capital": 436.7,
+    "tier1_capital": 436.7,
+    "total_capital": 438.7,
+    "rwa": 2537.7,
+    "cet1_ratio": 17.2,
+    "tier1_ratio": 17.2,
+    "total_capital_ratio": 17.3,
+    "leverage_exposure": 6418.4,
+    "leverage_ratio": 6.8,
+    "lcr": 141.0
    },
-   "method": "pdf_rules"
-  }
+   "method": "pdf_manual"
+  },
+  "page": 27,
+  "currency": "GBP"
  },
  "suffolk-bs": {
   "page": 79,
@@ -2027,7 +2005,22 @@
  },
  "op-corporate-bank": {
   "browser_page": "https://www.op.fi/en/op-financial-group/to-the-media/publications/op-corporate-bank",
-  "browser_page_found": "2026-11-03"
+  "browser_page_found": "2026-11-03",
+  "page": 27,
+  "currency": "EUR",
+  "last_verified": {
+   "reference_date": "2026-09-30",
+   "values": {
+    "cet1_capital": 5226.0,
+    "tier1_capital": 5226.0,
+    "total_capital": 6038.0,
+    "rwa": 39219.0,
+    "cet1_ratio": 13.3,
+    "tier1_ratio": 13.3,
+    "total_capital_ratio": 15.4
+   },
+   "method": "pdf_manual"
+  }
  },
  "qib-uk": {
   "last_verified": {
@@ -2054,7 +2047,9 @@
     "nsfr": 127.95
    },
    "method": "pdf_rules"
-  }
+  },
+  "page": 6,
+  "currency": "GBP"
  },
  "icbc-london": {
   "page": 34,
@@ -2092,6 +2087,134 @@
     "cet1_ratio": 14.44
    },
    "method": "pdf_rules"
+  }
+ },
+ "credit-mutuel": {
+  "page": 23,
+  "currency": "EUR",
+  "last_verified": {
+   "reference_date": "2026-06-30",
+   "values": {
+    "cet1_capital": 77474.0,
+    "tier1_capital": 77474.0,
+    "total_capital": 87070.0,
+    "rwa": 394809.0,
+    "cet1_ratio": 19.62,
+    "tier1_ratio": 19.62,
+    "total_capital_ratio": 22.05,
+    "overall_capital_requirement": 13.76,
+    "leverage_exposure": 1043017.0,
+    "leverage_ratio": 7.43,
+    "lcr": 165.0,
+    "nsfr": 116.87
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "leek-bs": {
+  "page": 44,
+  "currency": "GBP",
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 81.6,
+    "total_capital": 82.2,
+    "rwa": 495.0,
+    "cet1_ratio": 16.5,
+    "total_capital_ratio": 16.6,
+    "leverage_ratio": 6.0,
+    "lcr": 241.0
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "saffron-bs": {
+  "page": 19,
+  "currency": "GBP",
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 80.4,
+    "total_capital": 93.2,
+    "rwa": 525.2,
+    "cet1_ratio": 15.3,
+    "total_capital_ratio": 17.8,
+    "leverage_ratio": 5.1,
+    "lcr": 194.0,
+    "nsfr": 172.0
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "progressive-bs": {
+  "page": 19,
+  "currency": "GBP",
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_ratio": 20.08
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "bng-bank": {
+  "page": 9,
+  "currency": "EUR",
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 4320.0,
+    "tier1_capital": 4629.0,
+    "total_capital": 4629.0,
+    "rwa": 10324.0,
+    "cet1_ratio": 41.84,
+    "tier1_ratio": 44.84,
+    "total_capital_ratio": 44.84,
+    "overall_capital_requirement": 14.71,
+    "leverage_exposure": 31985.0,
+    "leverage_ratio": 14.47,
+    "lcr": 162.79,
+    "nsfr": 142.98
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "nwb-bank": {
+  "page": 7,
+  "currency": "EUR",
+  "last_verified": {
+   "reference_date": "2025-12-31",
+   "values": {
+    "cet1_capital": 2021.7,
+    "tier1_capital": 2348.9,
+    "total_capital": 2348.9,
+    "rwa": 5490.0,
+    "cet1_ratio": 36.83,
+    "tier1_ratio": 42.78,
+    "total_capital_ratio": 42.78,
+    "overall_capital_requirement": 14.71,
+    "leverage_exposure": 5992.3,
+    "leverage_ratio": 39.2,
+    "lcr": 242.89,
+    "nsfr": 147.63
+   },
+   "method": "pdf_manual"
+  }
+ },
+ "hinckley-and-rugby-bs": {
+  "page": 66,
+  "currency": "GBP",
+  "last_verified": {
+   "reference_date": "2025-11-30",
+   "values": {
+    "cet1_capital": 47.8,
+    "total_capital": 48.4,
+    "rwa": 314.9,
+    "cet1_ratio": 15.2,
+    "total_capital_ratio": 15.4,
+    "leverage_ratio": 5.3
+   },
+   "method": "pdf_manual"
   }
  }
 }

@@ -1,0 +1,17 @@
+{
+ "id": "8b7e96785de2",
+ "entity_id": "hinckley-and-rugby-bs",
+ "url": "https://www.hrbs.co.uk/wp-content/uploads/2025/02/Annual-Accounts-and-Reports-2024-Final.pdf",
+ "page": 70,
+ "reference_date": "2024-11-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 45.8,
+  "total_capital": 46.3,
+  "rwa": 295.2,
+  "cet1_ratio": 15.5,
+  "total_capital_ratio": 15.7,
+  "leverage_ratio": 5.4
+ },
+ "note": "Annual Report and Accounts 2024; the society's financial year ends 30 November, so the reference date is 30 November 2024. Note 28 'Capital adequacy', summary capital position on p70, current column 2024, in GBP 000: total reserves 47,226 less adjustments (1,402) = CET1 45,824; Tier 2 collective provision 518; total regulatory capital 46,342; RWA 295,202 (unaudited); CET1 ratio 15.5%, total capital ratio 15.7%, leverage ratio 5.4%. Check: 45,824/295,202 = 15.52%, 46,342/295,202 = 15.70%. Same figures appear as the comparative column in the 2025 report. No LCR or NSFR figure stated. Society only."
+}

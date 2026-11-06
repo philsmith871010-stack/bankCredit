@@ -1,0 +1,21 @@
+{
+ "id": "bdbd5625ff8a",
+ "entity_id": "west-brom-bs",
+ "url": "https://www.westbrom.co.uk/-/media/wbbs/files/pdfs/financial-information/agm-2026-annual-report-and-accounts.pdf",
+ "page": 27,
+ "reference_date": "2026-03-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 436.7,
+  "tier1_capital": 436.7,
+  "total_capital": 438.7,
+  "rwa": 2537.7,
+  "cet1_ratio": 17.2,
+  "tier1_ratio": 17.2,
+  "total_capital_ratio": 17.3,
+  "leverage_exposure": 6418.4,
+  "leverage_ratio": 6.8,
+  "lcr": 141.0
+ },
+ "note": "Annual report and accounts to 31 March 2026, strategic report capital resources table p27, current column 31 March 2026 in GBP millions. CET1 = Tier 1 = 436.7, Tier 2 2.0, total 438.7, RWA 2,537.7, leverage exposure 6,418.4; CET1/T1 17.2%, total 17.3%, leverage 6.8%. Check: 436.7/2,537.7 = 17.21%, 438.7/2,537.7 = 17.29%, 436.7/6,418.4 = 6.80%. LCR 141% is the 12-month average to 31 March 2026 stated on p26 (2024/25: 186%), not a point-in-time figure. No NSFR stated. The table is not labelled group or society; it is the strategic report's headline position. The PIBS redeemed in April 2026 are after the reference date."
+}

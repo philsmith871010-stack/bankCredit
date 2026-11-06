@@ -1,0 +1,23 @@
+{
+ "id": "27c6fe43086b",
+ "entity_id": "credit-mutuel",
+ "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2021/2020-Informations-relatives-au-Pilier-3-de-Bale-III-Juin-2021.pdf",
+ "page": 3,
+ "reference_date": "2021-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 56083.0,
+  "tier1_capital": 56330.0,
+  "total_capital": 65241.0,
+  "rwa": 306211.0,
+  "cet1_ratio": 18.32,
+  "tier1_ratio": 18.4,
+  "total_capital_ratio": 21.31,
+  "overall_capital_requirement": 12.76,
+  "leverage_exposure": 779513.0,
+  "leverage_ratio": 7.23,
+  "lcr": 188.36,
+  "nsfr": 129.11
+ },
+ "note": "Groupe Crédit Mutuel (the consolidated CNCM perimeter, the entity this repo tracks as credit-mutuel per the EBA/ESMA name maps 'Confédération Nationale du Crédit Mutuel'), not Crédit Mutuel Alliance Fédérale. Despite the '2020-...' file name the cover reads 'Exercice juin 2021' and column a is headed 30/06/2021, so the extractor's 'expected 2020-12-31' warning is a file-name artefact; 2021-06-30 is right. Tableau KM1 p3, EUR millions, transitional CRR own funds. The extractor's 184,303 was HQLA, not a capital figure. Leverage ratio and exposure exclude eligible central-bank exposures (CRR art. 429a(1)(n)). NSFR 129.11 is this report's own; the June 2022 report restates 30/06/2021 NSFR to 128.74. Check: CET1 56,083/RWA 306,211 = 18.32% against 18.32%. overall_capital_requirement is row EU 11a 'Exigences globales de fonds propres'."
+}

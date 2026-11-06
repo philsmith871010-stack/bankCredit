@@ -1,0 +1,23 @@
+{
+ "id": "66b82c0a9cf0",
+ "entity_id": "credit-mutuel",
+ "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2023/2022-informations-relatives-au-pilier-3-de-bale-III-exercice-juin-2023.pdf",
+ "page": 3,
+ "reference_date": "2023-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 65181.0,
+  "tier1_capital": 65187.0,
+  "total_capital": 74111.0,
+  "rwa": 351639.0,
+  "cet1_ratio": 18.54,
+  "tier1_ratio": 18.54,
+  "total_capital_ratio": 21.08,
+  "overall_capital_requirement": 13.22,
+  "leverage_exposure": 942755.0,
+  "leverage_ratio": 6.91,
+  "lcr": 165.0,
+  "nsfr": 116.26
+ },
+ "note": "Groupe Crédit Mutuel (the consolidated CNCM perimeter, the entity this repo tracks as credit-mutuel per the EBA/ESMA name maps 'Confédération Nationale du Crédit Mutuel'), not Crédit Mutuel Alliance Fédérale. Pilier 3 'Exercice juin 2023', Tableau KM1 p3, column a headed 30.06.2023, EUR millions. LCR 165 (153,813/93,377 = 164.7%) is this report's own figure; the year-end 2023 report later shows 156.82 for 30/06/2023 on restated HQLA/outflows, so the two documents disagree on the June 2023 LCR - the capital figures agree. Check: CET1 65,181/RWA 351,639 = 18.54% against 18.54%. overall_capital_requirement is row EU 11a 'Exigences globales de fonds propres'."
+}

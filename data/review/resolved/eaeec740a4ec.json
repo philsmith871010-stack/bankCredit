@@ -1,0 +1,23 @@
+{
+ "id": "eaeec740a4ec",
+ "entity_id": "credit-mutuel",
+ "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2023/2022-Informations-relatives-au-Pilier-3-de-Bale-III-Exercice-2022.pdf",
+ "page": 23,
+ "reference_date": "2022-12-31",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 62679.0,
+  "tier1_capital": 62684.0,
+  "total_capital": 71152.0,
+  "rwa": 333735.0,
+  "cet1_ratio": 18.78,
+  "tier1_ratio": 18.78,
+  "total_capital_ratio": 21.32,
+  "overall_capital_requirement": 12.78,
+  "leverage_exposure": 940252.0,
+  "leverage_ratio": 6.67,
+  "lcr": 157.0,
+  "nsfr": 117.69
+ },
+ "note": "Groupe Crédit Mutuel (the consolidated CNCM perimeter, the entity this repo tracks as credit-mutuel per the EBA/ESMA name maps 'Confédération Nationale du Crédit Mutuel'), not Crédit Mutuel Alliance Fédérale. Year-end 2022 Pilier 3, Tableau 9 'Indicateurs clés (KM1)' p23, column a headed 31.12.2022, EUR millions. LCR printed as whole percent 157% (160,057/102,348 = 156.4%); the June 2023 report later restated 31.12.2022 LCR to 151 on a different averaging, the figure here is this report's own. Check: CET1 62,679/RWA 333,735 = 18.78% against 18.78%. overall_capital_requirement is row EU 11a 'Exigences globales de fonds propres'."
+}

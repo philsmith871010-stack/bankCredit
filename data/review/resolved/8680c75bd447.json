@@ -1,0 +1,17 @@
+{
+ "id": "8680c75bd447",
+ "entity_id": "melton-bs",
+ "url": "https://www.themelton.co.uk/tmbs-content/uploads/2026/04/MBS-Annual-Report-Accounts-2025-1.pdf",
+ "page": 19,
+ "reference_date": "2025-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 41.7,
+  "total_capital": 41.7,
+  "cet1_ratio": 13.6,
+  "total_capital_ratio": 13.6,
+  "leverage_ratio": 5.4,
+  "lcr": 393.0
+ },
+ "note": "Melton Building Society Annual Report and Accounts 2025, year to 31 December 2025, Group. Unlike the 2024 report, this one has no capital table: the business review on p19 states only CET1 capital 'increasing to £41.7m', CET1 ratio 13.6% (down from 14.1%), leverage ratio 'remained at 5.4%' and 'The Society has no tier 2 capital', so total capital equals CET1 and the total capital ratio equals the CET1 ratio (as in the 2024 table). TCR set by the PRA 24.6m. LCR 393% at 31 December from p18. No RWA amount or leverage exposure is stated anywhere in the document (note 31 'Capital' p137 is narrative only); the implied RWA would be about 41.7/0.136 = 307, but it is not recorded since it is not stated. No NSFR."
+}

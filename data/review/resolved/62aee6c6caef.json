@@ -1,0 +1,19 @@
+{
+ "id": "62aee6c6caef",
+ "entity_id": "melton-bs",
+ "url": "https://www.themelton.co.uk/tmbs-content/uploads/2025/03/MBS-Annual-Report-and-Accounts-2024.pdf",
+ "page": 10,
+ "reference_date": "2024-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 40.6,
+  "total_capital": 40.6,
+  "rwa": 288.0,
+  "cet1_ratio": 14.1,
+  "total_capital_ratio": 14.1,
+  "leverage_exposure": 747.9,
+  "leverage_ratio": 5.4,
+  "lcr": 469.0
+ },
+ "note": "Melton Building Society Annual Report and Accounts 2024, year to 31 December 2024, Group. Capital table in the business review on PDF p10 (printed p19), current column 2024, GBP 000: CET1 40,588, total regulatory capital 40,588 (no Tier 2), RWA 288,004 (unaudited), total leverage exposure 747,915 (unaudited), CET1 ratio 14.1%, total capital ratio 14.1%, leverage ratio 5.4%. Check: 40,588/288,004 = 14.09%, 40,588/747,915 = 5.43%. TCR set by the PRA 23.0m. LCR 469% at 31 December 2024 from the business review (PDF p10). No NSFR stated."
+}

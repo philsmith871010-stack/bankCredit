@@ -1,0 +1,23 @@
+{
+ "id": "ec4d0850d3e8",
+ "entity_id": "nwb-bank",
+ "url": "https://nwbbank.com/application/files/8717/9023/4333/Pillar_3_Full_Year_Disclosure_2025.pdf",
+ "page": 7,
+ "reference_date": "2025-12-31",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 2021.7,
+  "tier1_capital": 2348.9,
+  "total_capital": 2348.9,
+  "rwa": 5490.0,
+  "cet1_ratio": 36.83,
+  "tier1_ratio": 42.78,
+  "total_capital_ratio": 42.78,
+  "overall_capital_requirement": 14.71,
+  "leverage_exposure": 5992.3,
+  "leverage_ratio": 39.2,
+  "lcr": 242.89,
+  "nsfr": 147.63
+ },
+ "note": "Pillar 3 FY2025, EU KM1 p7-8, column a (T); the template has no date header, but the narrative on p6 dates the CET1 ratio 36.8% and leverage 39.2% to 31 December 2025. Amounts are printed in full euros (2,021,735,845.00 etc.) and ratios as decimals (0.3683) - converted to EUR m and percent. RWA is row 4 'Total risk-weighted exposure amount' 5,490.0 (pre-floor identical). Check: 2,021.7/5,490.0 = 36.83%. LCR 242.89% is the KM1 12-month average row 17; HQLA/net outflows 15,889/9,084 = 174.9% is the averaged-components quotient, not the reported ratio. Leverage exposure excludes promotional public-sector lending (p6)."
+}

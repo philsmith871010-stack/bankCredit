@@ -1,0 +1,23 @@
+{
+ "id": "436a64035abf",
+ "entity_id": "nwb-bank",
+ "url": "https://nwbbank.com/application/files/4316/6852/3400/Pillar_3_Half_Year_Disclosure_2022.pdf",
+ "page": 5,
+ "reference_date": "2022-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 1835.4,
+  "tier1_capital": 2155.9,
+  "total_capital": 2155.9,
+  "rwa": 5102.5,
+  "cet1_ratio": 35.97,
+  "tier1_ratio": 42.25,
+  "total_capital_ratio": 42.25,
+  "overall_capital_requirement": 12.5,
+  "leverage_exposure": 27084.4,
+  "leverage_ratio": 7.96,
+  "lcr": 329.81,
+  "nsfr": 150.8
+ },
+ "note": "Pillar 3 H1 2022, EU KM1 p5-6 (x EUR 1,000), column a 30 Jun 2022, converted to EUR m. RWA row 4 5,102,491. Check: 1,835,388/5,102,491 = 35.97%. LCR 329.81% and NSFR 150.80% are in the KM1 (rows 17, 20), which the extractor missed. Leverage exposure jumps to 27,084 from 4,124 in Q1 2022; the document gives no reason, figures taken as printed."
+}

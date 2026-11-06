@@ -1,0 +1,23 @@
+{
+ "id": "eaec61f2c42b",
+ "entity_id": "bng-bank",
+ "url": "https://www.bngbank.nl/v3/assets/bltd8a6f23fc3c861a3/blt568ff43f4ba3c093/6a26985396c75ada84cb78aa/Pillar_3_Disclosure_report_BNG_2025-v1.pdf",
+ "page": 9,
+ "reference_date": "2025-12-31",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 4320.0,
+  "tier1_capital": 4629.0,
+  "total_capital": 4629.0,
+  "rwa": 10324.0,
+  "cet1_ratio": 41.84,
+  "tier1_ratio": 44.84,
+  "total_capital_ratio": 44.84,
+  "overall_capital_requirement": 14.71,
+  "leverage_exposure": 31985.0,
+  "leverage_ratio": 14.47,
+  "lcr": 162.79,
+  "nsfr": 142.98
+ },
+ "note": "Pillar 3 disclosure 2025, EU KM1 p9-11, column a headed 31-12-2025, EUR m (no unit stated on the template; magnitudes consistent with BNG's size). RWA row 4 10,324 (pre-floor identical). Check: 4,320/10,324 = 41.84%. LCR 162.79% (row 17) and NSFR 142.98% (row 20) are on p11, which the extractor missed."
+}

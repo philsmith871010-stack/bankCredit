@@ -1,0 +1,23 @@
+{
+ "id": "313ad179d088",
+ "entity_id": "bng-bank",
+ "url": "https://www.bngbank.nl/v3/assets/bltd8a6f23fc3c861a3/blt9e3702d246ce1de8/68d293d4a500fb504f8a1a89/Pillar_3_Disclosure_report_BNG_Bank_2023_dated_June_2024.pdf",
+ "page": 10,
+ "reference_date": "2023-12-31",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 4097.0,
+  "tier1_capital": 4406.0,
+  "total_capital": 4406.0,
+  "rwa": 9564.0,
+  "cet1_ratio": 42.84,
+  "tier1_ratio": 46.07,
+  "total_capital_ratio": 46.07,
+  "overall_capital_requirement": 14.29,
+  "leverage_exposure": 32986.0,
+  "leverage_ratio": 13.36,
+  "lcr": 166.7,
+  "nsfr": 119.22
+ },
+ "note": "Pillar 3 disclosure report 2023 (dated June 2024), EU KM1 p10-11, column a 31-12-2023, EUR m. The PDF's text layer uses a substituted font encoding (letters shifted, digits in private glyphs), which is why the extractor found no KM1; decoded by fixed character mapping and every row cross-checked arithmetically. RWA row 4 9,564. Check: 4,097/9,564 = 42.84%; 4,406/9,564 = 46.07%; 4,406/32,986 = 13.36%. LCR 166.70% is the KM1 average; the p10 narrative gives a point-in-time 142.61%."
+}

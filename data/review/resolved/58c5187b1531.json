@@ -1,0 +1,23 @@
+{
+ "id": "58c5187b1531",
+ "entity_id": "standard-chartered",
+ "url": "https://www.sc.com/en/uploads/sites/66/content/docs/standard-chartered-plc-hy-2025-pillar-3-disclosures.pdf",
+ "page": 6,
+ "reference_date": "2025-06-30",
+ "currency": "USD",
+ "values": {
+  "cet1_capital": 37260.0,
+  "tier1_capital": 43777.0,
+  "total_capital": 53281.0,
+  "rwa": 259684.0,
+  "cet1_ratio": 14.3,
+  "tier1_ratio": 16.9,
+  "total_capital_ratio": 20.5,
+  "overall_capital_requirement": 10.48,
+  "leverage_exposure": 933234.0,
+  "leverage_ratio": 4.7,
+  "lcr": 148.8,
+  "nsfr": 137.4
+ },
+ "note": "Standard Chartered PLC Half Year 2025 Pillar 3, Table 1 UK KM1, p6, USD millions. Columns 30.06.25 (current), 31.03.25, 31.12.24, 30.09.24, 30.06.24. The text layer emits the shaded 30.06.25 column as a separate block ahead of the row labels, so the rules took 31.03.25 (35,122 / 253,596) as current. 30.06.25: CET1 37,260, Tier 1 43,777, total capital 53,281, RWA 259,684, CET1 14.3%, Tier 1 16.9%, total 20.5%, OCR 10.48% (CCB 2.50 + CCyB 0.38 + G-SII 1.00 = CBR 3.88%), leverage exposure 933,234, leverage 4.7%, LCR 148.8% (HQLA 180,147 / net outflows 121,119), NSFR 137.4% (ASF 439,809 / RSF 320,019). Checks: 37,260/259,684 = 14.35%; 43,777/259,684 = 16.86%; 53,281/259,684 = 20.52%; 43,777/933,234 = 4.69%; 180,147/121,119 = 148.7%; 439,809/320,019 = 137.4%. These agree with the 2025-06-30 figures already loaded (CET1 37,260, RWA 259,684, LCR 148.8%, NSFR 137.4%), which differ from 31.03.25, so this is the right period; OCR is new."
+}

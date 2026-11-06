@@ -1,0 +1,23 @@
+{
+ "id": "044f41c30b60",
+ "entity_id": "credit-mutuel",
+ "url": "https://www.creditmutuel.com/partage/fr/CNCM/telechargements/presse-et-publications/publications/2022/2022-Informations-relatives-au-Pilier-3-de-Bale-III-Exercice-juin-2022.pdf",
+ "page": 3,
+ "reference_date": "2022-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 58696.0,
+  "tier1_capital": 58701.0,
+  "total_capital": 67950.0,
+  "rwa": 324666.0,
+  "cet1_ratio": 18.08,
+  "tier1_ratio": 18.08,
+  "total_capital_ratio": 20.93,
+  "overall_capital_requirement": 12.76,
+  "leverage_exposure": 909672.0,
+  "leverage_ratio": 6.45,
+  "lcr": 180.57,
+  "nsfr": 119.69
+ },
+ "note": "Groupe Crédit Mutuel (the consolidated CNCM perimeter, the entity this repo tracks as credit-mutuel per the EBA/ESMA name maps 'Confédération Nationale du Crédit Mutuel'), not Crédit Mutuel Alliance Fédérale. Pilier 3 'Exercice juin 2022', Tableau KM1 p3, column a headed 30/06/2022, EUR millions. Leverage exposure jumps from 772,084 at March because the temporary central-bank exposure exclusion ended. Check: CET1 58,696/RWA 324,666 = 18.08% against 18.08%. overall_capital_requirement is row EU 11a 'Exigences globales de fonds propres'."
+}

@@ -4573,5 +4573,983 @@
   "page_reviewer": 19,
   "date_extractor": null,
   "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:32",
+  "id": "028c5360db8d",
+  "entity_id": "nab",
+  "reason": "error:missing core row cet1_ratio; info:no LCR row (not disclosed at this level,",
+  "skip": false,
+  "compared": 3,
+  "matched": 2,
+  "mismatches": {
+   "tier1_capital": [
+    12.3,
+    49267.0
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2015-12-31",
+  "date_reviewer": "2015-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:32",
+  "id": "044f41c30b60",
+  "entity_id": "credit-mutuel",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2022-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:33",
+  "id": "0e8719acf219",
+  "entity_id": "leek-bs",
+  "reason": "annual report and accounts: read the capital position from the notes, since Leek",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 42,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:34",
+  "id": "15c0c161bcf0",
+  "entity_id": "op-corporate-bank",
+  "reason": "interim report, not a Pillar 3 disclosure: read the capital adequacy section (CE",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 30,
+  "date_extractor": null,
+  "date_reviewer": "2025-09-30"
+ },
+ {
+  "date": "2026-11-06T07:44:34",
+  "id": "1ba4d965f936",
+  "entity_id": "saffron-bs",
+  "reason": "annual report and accounts: read the capital position from the notes, since Saff",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 36,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:35",
+  "id": "2109a96147f7",
+  "entity_id": "progressive-bs",
+  "reason": "annual report and accounts: read the capital position from the notes, since Prog",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 19,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:35",
+  "id": "2138cad8e818",
+  "entity_id": "op-corporate-bank",
+  "reason": "interim report, not a Pillar 3 disclosure: read the capital adequacy section (CE",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 30,
+  "date_extractor": null,
+  "date_reviewer": "2025-03-31"
+ },
+ {
+  "date": "2026-11-06T07:44:35",
+  "id": "27c6fe43086b",
+  "entity_id": "credit-mutuel",
+  "reason": "warn:header date 2021-06-30 disagrees with expected 2020-12-31; error:missing co",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 3,
+  "page_reviewer": 3,
+  "date_extractor": "2021-06-30",
+  "date_reviewer": "2021-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:35",
+  "id": "29142396ceb1",
+  "entity_id": "op-corporate-bank",
+  "reason": "interim report, not a Pillar 3 disclosure: read the capital adequacy section (CE",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 27,
+  "date_extractor": null,
+  "date_reviewer": "2026-03-31"
+ },
+ {
+  "date": "2026-11-06T07:44:36",
+  "id": "29d1371f938b",
+  "entity_id": "leek-bs",
+  "reason": "annual report and accounts: read the capital position from the notes, since Leek",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 44,
+  "date_extractor": null,
+  "date_reviewer": "2024-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:36",
+  "id": "2c740b675c22",
+  "entity_id": "lloyds-banking-group",
+  "reason": "warn:reference date taken from narrative text, not a column header; warn:rows id",
+  "skip": false,
+  "compared": 2,
+  "matched": 1,
+  "mismatches": {
+   "leverage_ratio": [
+    2013.0,
+    4.9
+   ]
+  },
+  "page_extractor": 6,
+  "page_reviewer": 24,
+  "date_extractor": "2014-12-31",
+  "date_reviewer": "2014-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:36",
+  "id": "305cf650642a",
+  "entity_id": "credit-mutuel",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2026-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:36",
+  "id": "313ad179d088",
+  "entity_id": "bng-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 10,
+  "date_extractor": null,
+  "date_reviewer": "2023-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:37",
+  "id": "364d86244b5a",
+  "entity_id": "nwb-bank",
+  "reason": "error:missing core row rwa; warn:lcr 335.9 vs implied 351.2",
+  "skip": false,
+  "compared": 11,
+  "matched": 7,
+  "mismatches": {
+   "cet1_capital": [
+    1914434.0,
+    1914.4
+   ],
+   "tier1_capital": [
+    2234934.0,
+    2234.9
+   ],
+   "total_capital": [
+    2234934.0,
+    2234.9
+   ],
+   "leverage_exposure": [
+    10832270.0,
+    10832.3
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 6,
+  "date_extractor": "2023-12-31",
+  "date_reviewer": "2023-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:37",
+  "id": "391b45a9ea2f",
+  "entity_id": "lloyds-banking-group",
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing ",
+  "skip": false,
+  "compared": 2,
+  "matched": 2,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 22,
+  "date_extractor": "2010-12-31",
+  "date_reviewer": "2010-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:37",
+  "id": "3f1a917ee82c",
+  "entity_id": "nwb-bank",
+  "reason": "warn:amounts far beyond any bank's size (cet1_capital, tier1_capital, total_capi",
+  "skip": false,
+  "compared": 9,
+  "matched": 9,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2021-12-31",
+  "date_reviewer": "2021-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:37",
+  "id": "4125d84afc0f",
+  "entity_id": "nottingham-bs",
+  "reason": "figures repeat an earlier period: read the current column",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": "2023-12-31",
+  "date_reviewer": "2023-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:38",
+  "id": "436a64035abf",
+  "entity_id": "nwb-bank",
+  "reason": "warn:amounts far beyond any bank's size (leverage_exposure, cet1_capital, tier1_",
+  "skip": false,
+  "compared": 9,
+  "matched": 9,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2022-06-30",
+  "date_reviewer": "2022-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:38",
+  "id": "4541c26da948",
+  "entity_id": "lloyds-banking-group",
+  "reason": "warn:reference date taken from narrative text, not a column header; warn:rows id",
+  "skip": false,
+  "compared": 2,
+  "matched": 2,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 21,
+  "date_extractor": "2009-12-31",
+  "date_reviewer": "2009-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:39",
+  "id": "4ac566658ef0",
+  "entity_id": "nwb-bank",
+  "reason": "error:missing core row rwa; warn:lcr 256.8 vs implied 194.6",
+  "skip": false,
+  "compared": 11,
+  "matched": 7,
+  "mismatches": {
+   "cet1_capital": [
+    1978528.0,
+    1978.5
+   ],
+   "tier1_capital": [
+    2299028.0,
+    2299.0
+   ],
+   "total_capital": [
+    2299028.0,
+    2299.0
+   ],
+   "leverage_exposure": [
+    9596138.0,
+    9596.1
+   ]
+  },
+  "page_extractor": 8,
+  "page_reviewer": 7,
+  "date_extractor": "2024-12-31",
+  "date_reviewer": "2024-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:39",
+  "id": "4c5a7b412a2c",
+  "entity_id": "gatehouse-bank",
+  "reason": "annual report, not a Pillar 3 disclosure: read the capital position from the not",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 126,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:39",
+  "id": "504d73e614df",
+  "entity_id": "credit-mutuel",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2024-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:40",
+  "id": "50fba99f897e",
+  "entity_id": "nwb-bank",
+  "reason": "warn:amounts far beyond any bank's size (cet1_capital, tier1_capital, total_capi",
+  "skip": false,
+  "compared": 9,
+  "matched": 9,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2021-06-30",
+  "date_reviewer": "2021-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:40",
+  "id": "5591af9077b0",
+  "entity_id": "lloyds-banking-group",
+  "reason": "warn:reference date taken from narrative text, not a column header; warn:rows id",
+  "skip": false,
+  "compared": 4,
+  "matched": 0,
+  "mismatches": {
+   "rwa": [
+    2015.0,
+    215534.0
+   ],
+   "cet1_ratio": [
+    2015.0,
+    13.6
+   ],
+   "total_capital_ratio": [
+    2015.0,
+    21.4
+   ],
+   "leverage_ratio": [
+    2015.0,
+    5.2
+   ]
+  },
+  "page_extractor": 6,
+  "page_reviewer": 25,
+  "date_extractor": "2017-02-28",
+  "date_reviewer": "2016-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:40",
+  "id": "56f53945be5e",
+  "entity_id": "tsb",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2023-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:40",
+  "id": "58c5187b1531",
+  "entity_id": "standard-chartered",
+  "reason": "figures repeat an earlier period: read the current column",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 6,
+  "date_extractor": "2025-06-30",
+  "date_reviewer": "2025-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:41",
+  "id": "62aee6c6caef",
+  "entity_id": "melton-bs",
+  "reason": "annual report and accounts: read the capital position from the notes, for the ye",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 10,
+  "date_extractor": null,
+  "date_reviewer": "2024-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:41",
+  "id": "66b82c0a9cf0",
+  "entity_id": "credit-mutuel",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2023-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:42",
+  "id": "68ee2c1b23fd",
+  "entity_id": "metro-bank",
+  "reason": "figures repeat an earlier period: read the current column",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 12,
+  "date_extractor": "2023-12-31",
+  "date_reviewer": "2023-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:42",
+  "id": "6f27e75f8ecf",
+  "entity_id": "credit-mutuel",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 23,
+  "date_extractor": null,
+  "date_reviewer": "2024-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:42",
+  "id": "777220be08a0",
+  "entity_id": "nwb-bank",
+  "reason": "error:missing core row rwa; warn:lcr 237.3 vs implied 178.9",
+  "skip": false,
+  "compared": 11,
+  "matched": 7,
+  "mismatches": {
+   "cet1_capital": [
+    2022953.0,
+    2023.0
+   ],
+   "tier1_capital": [
+    2351607.0,
+    2351.6
+   ],
+   "total_capital": [
+    2351607.0,
+    2351.6
+   ],
+   "leverage_exposure": [
+    20654565.0,
+    20654.6
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 7,
+  "date_extractor": "2025-06-30",
+  "date_reviewer": "2025-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:43",
+  "id": "7eda529bcfdb",
+  "entity_id": "op-corporate-bank",
+  "reason": "interim report, not a Pillar 3 disclosure: read the capital adequacy section (CE",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 30,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:43",
+  "id": "7ef0f684eb7f",
+  "entity_id": "lloyds-bank",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2020-06-30",
+  "date_reviewer": "2020-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:43",
+  "id": "7fc483923316",
+  "entity_id": "op-corporate-bank",
+  "reason": "interim report, not a Pillar 3 disclosure: read the capital adequacy section (CE",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 28,
+  "date_extractor": null,
+  "date_reviewer": "2026-09-30"
+ },
+ {
+  "date": "2026-11-06T07:44:43",
+  "id": "82483333fc0e",
+  "entity_id": "handelsbanken-plc",
+  "reason": "figures repeat an earlier period: read the current column",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 8,
+  "date_extractor": "2023-03-14",
+  "date_reviewer": "2022-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:43",
+  "id": "86744f17aa10",
+  "entity_id": "qib-uk",
+  "reason": "warn:text recovered by OCR from an image-only document; warn:header date 2022-12",
+  "skip": false,
+  "compared": 9,
+  "matched": 5,
+  "mismatches": {
+   "cet1_capital": [
+    86739.0,
+    86.739
+   ],
+   "tier1_capital": [
+    86739.0,
+    86.739
+   ],
+   "rwa": [
+    499121.0,
+    499.121
+   ],
+   "leverage_exposure": [
+    1012682.0,
+    1012.682
+   ]
+  },
+  "page_extractor": 6,
+  "page_reviewer": 6,
+  "date_extractor": "2022-12-31",
+  "date_reviewer": "2022-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:43",
+  "id": "8680c75bd447",
+  "entity_id": "melton-bs",
+  "reason": "annual report and accounts: read the capital position from the notes, for the ye",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 19,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:44",
+  "id": "8b7e96785de2",
+  "entity_id": "hinckley-and-rugby-bs",
+  "reason": "annual report and accounts: read the capital position from the notes, since the ",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 70,
+  "date_extractor": null,
+  "date_reviewer": "2024-11-30"
+ },
+ {
+  "date": "2026-11-06T07:44:44",
+  "id": "8e919ca5e216",
+  "entity_id": "credit-mutuel",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 3,
+  "date_extractor": null,
+  "date_reviewer": "2025-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:44",
+  "id": "90aadb108165",
+  "entity_id": "lloyds-banking-group",
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing ",
+  "skip": false,
+  "compared": 3,
+  "matched": 3,
+  "mismatches": {},
+  "page_extractor": 6,
+  "page_reviewer": 21,
+  "date_extractor": "2012-12-31",
+  "date_reviewer": "2012-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:45",
+  "id": "9988b25028b5",
+  "entity_id": "nwb-bank",
+  "reason": "warn:amounts far beyond any bank's size (cet1_capital, tier1_capital, total_capi",
+  "skip": false,
+  "compared": 11,
+  "matched": 11,
+  "mismatches": {},
+  "page_extractor": 7,
+  "page_reviewer": 6,
+  "date_extractor": "2022-12-31",
+  "date_reviewer": "2022-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:46",
+  "id": "9c5dd798e3b6",
+  "entity_id": "nab",
+  "reason": "error:missing core row cet1_ratio; info:no LCR row (not disclosed at this level,",
+  "skip": false,
+  "compared": 3,
+  "matched": 2,
+  "mismatches": {
+   "tier1_capital": [
+    11.5,
+    41901.0
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2016-06-30",
+  "date_reviewer": "2016-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:46",
+  "id": "9c95e9673241",
+  "entity_id": "lloyds-banking-group",
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing ",
+  "skip": false,
+  "compared": 3,
+  "matched": 1,
+  "mismatches": {
+   "rwa": [
+    147665.0,
+    217787.0
+   ],
+   "leverage_ratio": [
+    4.8,
+    5.2
+   ]
+  },
+  "page_extractor": 4,
+  "page_reviewer": 36,
+  "date_extractor": "2017-06-30",
+  "date_reviewer": "2017-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:46",
+  "id": "a2c5f097059a",
+  "entity_id": "citigroup",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 4,
+  "date_extractor": null,
+  "date_reviewer": "2023-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:46",
+  "id": "a731dffc2206",
+  "entity_id": "lloyds-banking-group",
+  "reason": "warn:reference date taken from narrative text, not a column header; warn:rows id",
+  "skip": false,
+  "compared": 4,
+  "matched": 2,
+  "mismatches": {
+   "rwa": [
+    2014.0,
+    222845.0
+   ],
+   "leverage_ratio": [
+    2014.0,
+    4.8
+   ]
+  },
+  "page_extractor": 5,
+  "page_reviewer": 24,
+  "date_extractor": "2016-02-29",
+  "date_reviewer": "2015-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:48",
+  "id": "bdbd5625ff8a",
+  "entity_id": "west-brom-bs",
+  "reason": "annual report and accounts, not a Pillar 3 disclosure: read the capital ratios f",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 27,
+  "date_extractor": null,
+  "date_reviewer": "2026-03-31"
+ },
+ {
+  "date": "2026-11-06T07:44:49",
+  "id": "c2733c484a65",
+  "entity_id": "lloyds-banking-group",
+  "reason": "warn:rows identified by label only (no row numbers in the table); error:missing ",
+  "skip": false,
+  "compared": 2,
+  "matched": 2,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 24,
+  "date_extractor": "2011-12-31",
+  "date_reviewer": "2011-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:49",
+  "id": "c7535570048a",
+  "entity_id": "credit-mutuel",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 23,
+  "date_extractor": null,
+  "date_reviewer": "2023-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:50",
+  "id": "c99685fecbfd",
+  "entity_id": "nwb-bank",
+  "reason": "error:missing core row rwa; warn:lcr 289.5 vs implied 230.9",
+  "skip": false,
+  "compared": 11,
+  "matched": 7,
+  "mismatches": {
+   "cet1_capital": [
+    1979466.0,
+    1979.5
+   ],
+   "tier1_capital": [
+    2299966.0,
+    2300.0
+   ],
+   "total_capital": [
+    2299966.0,
+    2300.0
+   ],
+   "leverage_exposure": [
+    19085587.0,
+    19085.6
+   ]
+  },
+  "page_extractor": 8,
+  "page_reviewer": 7,
+  "date_extractor": "2024-06-30",
+  "date_reviewer": "2024-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:50",
+  "id": "cb96a37caef0",
+  "entity_id": "op-corporate-bank",
+  "reason": "interim report, not a Pillar 3 disclosure: read the capital adequacy section (CE",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 27,
+  "date_extractor": null,
+  "date_reviewer": "2026-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:50",
+  "id": "d55c7793a607",
+  "entity_id": "credit-mutuel",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 25,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:51",
+  "id": "d9210c43c897",
+  "entity_id": "nwb-bank",
+  "reason": "error:missing core row rwa; warn:lcr 406.7 vs implied 334.8",
+  "skip": false,
+  "compared": 11,
+  "matched": 7,
+  "mismatches": {
+   "cet1_capital": [
+    1916406.0,
+    1916.4
+   ],
+   "tier1_capital": [
+    2236906.0,
+    2236.9
+   ],
+   "total_capital": [
+    2236906.0,
+    2236.9
+   ],
+   "leverage_exposure": [
+    25995733.0,
+    25995.7
+   ]
+  },
+  "page_extractor": 7,
+  "page_reviewer": 6,
+  "date_extractor": "2023-06-30",
+  "date_reviewer": "2023-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:52",
+  "id": "ea95341cc3be",
+  "entity_id": "hinckley-and-rugby-bs",
+  "reason": "annual report and accounts: read the capital position from the notes, since the ",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 66,
+  "date_extractor": null,
+  "date_reviewer": "2025-11-30"
+ },
+ {
+  "date": "2026-11-06T07:44:52",
+  "id": "eaec61f2c42b",
+  "entity_id": "bng-bank",
+  "reason": "warn:no period date found in the template header; using the expected date; error",
+  "skip": false,
+  "compared": 9,
+  "matched": 9,
+  "mismatches": {},
+  "page_extractor": 9,
+  "page_reviewer": 9,
+  "date_extractor": "2025-12-31",
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:52",
+  "id": "eaeec740a4ec",
+  "entity_id": "credit-mutuel",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 23,
+  "date_extractor": null,
+  "date_reviewer": "2022-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:52",
+  "id": "ec4d0850d3e8",
+  "entity_id": "nwb-bank",
+  "reason": "no KM1 template found",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 7,
+  "date_extractor": null,
+  "date_reviewer": "2025-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:53",
+  "id": "f5fdd68f4720",
+  "entity_id": "saffron-bs",
+  "reason": "annual report and accounts: read the capital position from the notes, since Saff",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 19,
+  "date_extractor": null,
+  "date_reviewer": "2024-12-31"
+ },
+ {
+  "date": "2026-11-06T07:44:53",
+  "id": "f69c216caa42",
+  "entity_id": "lloyds-banking-group",
+  "reason": "error:missing core row rwa; error:missing core row cet1_ratio; info:no leverage ",
+  "skip": false,
+  "compared": 1,
+  "matched": 1,
+  "mismatches": {},
+  "page_extractor": 5,
+  "page_reviewer": 5,
+  "date_extractor": "2019-06-30",
+  "date_reviewer": "2019-06-30"
+ },
+ {
+  "date": "2026-11-06T07:44:53",
+  "id": "fc1162abbcac",
+  "entity_id": "standard-chartered",
+  "reason": "figures repeat an earlier period: read the current column",
+  "skip": false,
+  "compared": 0,
+  "matched": 0,
+  "mismatches": {},
+  "page_extractor": null,
+  "page_reviewer": 6,
+  "date_extractor": "2018-12-31",
+  "date_reviewer": "2018-12-31"
  }
 ]

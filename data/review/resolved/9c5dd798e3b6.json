@@ -1,0 +1,18 @@
+{
+ "id": "9c5dd798e3b6",
+ "entity_id": "nab",
+ "url": "https://www.nab.com.au/content/dam/nabrwd/documents/reports/financial/june-2016-pillar-3.pdf",
+ "page": 5,
+ "reference_date": "2016-06-30",
+ "currency": "AUD",
+ "values": {
+  "tier1_capital": 41901.0,
+  "rwa": 363550.0,
+  "cet1_ratio": 9.5,
+  "tier1_ratio": 11.5,
+  "total_capital_ratio": 13.2,
+  "leverage_exposure": 855681.0,
+  "leverage_ratio": 4.9
+ },
+ "note": "NAB under APRA's APS 330, Level 2 group, APRA Basel III basis (market-risk RWA on Basel 2.5), AUD millions; no KM1 at this date. Third-quarter (FY2016) Pillar 3 update, capital adequacy table p.5 (printed 3), 'As at 30 Jun 16' column: total RWA 363,550, CET1 9.5%, Tier 1 11.5%, total capital 13.2%; leverage table on the same page: Tier 1 capital 41,901, total exposures 855,681, leverage 4.9%. The extractor's cet1_capital 9.5 and tier1_capital 11.5 were the ratios, corrected here. CET1 and total capital amounts are not stated in this quarterly update, so they are left out rather than derived from the rounded ratios. Check: 41,901/363,550 = 11.53% against Tier 1 11.5%; Tier 1 and total above CET1. The 'Liquidity Coverage Ratio' on p.13 is a glossary entry only - no LCR figure, and no NSFR."
+}

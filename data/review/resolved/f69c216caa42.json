@@ -1,0 +1,21 @@
+{
+ "id": "f69c216caa42",
+ "entity_id": "lloyds-banking-group",
+ "url": "https://www.lloydsbankinggroup.com/assets/pdfs/investors/financial-performance/lloyds-banking-group-plc/2019/half-year/2019-lbg-hy-pillar-3.pdf",
+ "page": 5,
+ "reference_date": "2019-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 28767.0,
+  "tier1_capital": 34506.0,
+  "total_capital": 44708.0,
+  "rwa": 206520.0,
+  "cet1_ratio": 13.9,
+  "tier1_ratio": 16.7,
+  "total_capital_ratio": 21.6,
+  "leverage_exposure": 668207.0,
+  "leverage_ratio": 5.1,
+  "lcr": 130.0
+ },
+ "note": "Table 1 KM1 on page 5 of the LBG 2019 half-year Pillar 3, column T (Q2 2019) = 30 June 2019. Transitional (IFRS 9 applied) rows taken; reported, not the 14.0% pro forma CET1 in footnote 2. CET1 28,767/206,520 = 13.93% against the stated 13.9%; Tier 1 16.7% and total capital 21.6% above CET1. CET1 28,767 matches the prior-period figure already loaded from the FY2019 report. UK leverage ratio 5.1% on the 668,207m UK exposure measure (footnote's CRD IV 4.7% not used). LCR 130% weighted average (HQLA 129,483 / outflows 99,281). No NSFR row. The EBA transparency figures loaded for this date are on a different basis (CET1 32,087, RWA 230,350) and do not match the Pillar 3."
+}

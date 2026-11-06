@@ -1,0 +1,23 @@
+{
+ "id": "68ee2c1b23fd",
+ "entity_id": "metro-bank",
+ "url": "https://www.metrobankonline.co.uk/globalassets/pillar-3-disclosure-2023.pdf",
+ "page": 12,
+ "reference_date": "2023-12-31",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 985.0,
+  "tier1_capital": 985.0,
+  "total_capital": 1135.0,
+  "rwa": 7533.0,
+  "cet1_ratio": 13.1,
+  "tier1_ratio": 13.1,
+  "total_capital_ratio": 15.1,
+  "overall_capital_requirement": 12.9,
+  "leverage_exposure": 18420.0,
+  "leverage_ratio": 5.3,
+  "lcr": 244.0,
+  "nsfr": 136.0
+ },
+ "note": "Metro Bank Holdings PLC Pillar 3 2023, KM1 (Table 4) p12, GBP millions. Three columns: 31 December 2023 (shaded, current), 30 June 2023, 31 December 2022; column a taken. Read from the rendered page because the text layer drops most of the shaded column below row 7. CET1 = Tier 1 985, total capital 1,135, RWEA 7,533, CET1/T1 13.1%, total 15.1%, OCR 12.9%, leverage exposure 18,420, leverage 5.3%, LCR 244% (12-month average), NSFR 136% (4-quarter average). The other columns match what is already loaded (30 Jun 2023: 813/7,802; 31 Dec 2022: 819/7,990), so these are the new period. Checks: 985/7,533 = 13.08%; 1,135/7,533 = 15.07%; 985/18,420 = 5.35%; 5,056/2,079 = 243%; 18,277/13,442 = 136%. Doubt, outside this item: the facts loaded at 2024-12-31 from pillar-3-2024.pdf (985, 7,533, 13.1%) are these 31 Dec 2023 figures - that report's KM1 columns are 31 Dec 2024 (808 / 6,442 / 12.5%), 30 Jun 2024, 31 Dec 2023, so its third column was read as current. The 808 / 6,442 / 12.5% now shown at 2025-12-31 look like the 2024 year end shifted a year as well."
+}

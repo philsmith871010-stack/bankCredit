@@ -1,0 +1,23 @@
+{
+ "id": "c99685fecbfd",
+ "entity_id": "nwb-bank",
+ "url": "https://nwbbank.com/application/files/2017/3141/4909/Pillar_3_Half_Year_Disclosure_2024.pdf",
+ "page": 7,
+ "reference_date": "2024-06-30",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 1979.5,
+  "tier1_capital": 2300.0,
+  "total_capital": 2300.0,
+  "rwa": 5170.8,
+  "cet1_ratio": 38.28,
+  "tier1_ratio": 44.48,
+  "total_capital_ratio": 44.48,
+  "overall_capital_requirement": 14.7,
+  "leverage_exposure": 19085.6,
+  "leverage_ratio": 12.05,
+  "lcr": 289.51,
+  "nsfr": 139.24
+ },
+ "note": "Pillar 3 H1 2024, EU KM1 p7-8 (x 1,000), column a 30 Jun 2024, converted to EUR m. RWA row 4 5,170,831. Check: 1,979,466/5,170,831 = 38.28%. LCR 289.51% is the reported KM1 average ratio; the HQLA/NCO quotient differs by construction."
+}

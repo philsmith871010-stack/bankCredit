@@ -1,0 +1,23 @@
+{
+ "id": "9988b25028b5",
+ "entity_id": "nwb-bank",
+ "url": "https://nwbbank.com/application/files/5716/8871/3726/Pillar_3_Full_Year_Disclosure_2022.pdf",
+ "page": 6,
+ "reference_date": "2022-12-31",
+ "currency": "EUR",
+ "values": {
+  "cet1_capital": 1834.6,
+  "tier1_capital": 2155.1,
+  "total_capital": 2155.1,
+  "rwa": 4792.0,
+  "cet1_ratio": 38.29,
+  "tier1_ratio": 44.97,
+  "total_capital_ratio": 44.97,
+  "overall_capital_requirement": 12.58,
+  "leverage_exposure": 11428.3,
+  "leverage_ratio": 18.86,
+  "lcr": 417.41,
+  "nsfr": 140.59
+ },
+ "note": "Pillar 3 FY2022, EU KM1 p6-7 (x EUR 1,000), column a 31 Dec 2022, converted to EUR m. RWA row 4 4,791,984. Check: 1,834,637/4,791,984 = 38.29%. LCR 417.41% and NSFR 140.59% as reported here (the H1 2023 KM1 restates them as 415.12% / 140.30%)."
+}

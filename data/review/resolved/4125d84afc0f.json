@@ -1,0 +1,19 @@
+{
+ "id": "4125d84afc0f",
+ "entity_id": "nottingham-bs",
+ "url": "https://www.thenottingham.com/media/jlri5sqs/2023-pillar-3-disclosures.pdf",
+ "page": 3,
+ "reference_date": "2023-06-30",
+ "currency": "GBP",
+ "values": {
+  "cet1_capital": 221.5,
+  "tier1_capital": 221.5,
+  "total_capital": 245.4,
+  "overall_capital_requirement": 12.1,
+  "leverage_exposure": 3769.3,
+  "leverage_ratio": 5.9,
+  "lcr": 177.3,
+  "nsfr": 142.1
+ },
+ "note": "Despite the file name '2023-pillar-3-disclosures', this is The Nottingham's Pillar 3 INTERIM disclosure, key metrics at 30 June 2023 (cover, section 1.2 'as at 30th June 2023', KM1 p3 columns 30 June 2023 / 31 December 2022 / 30 June 2022). The queued 2023-12-31 is wrong: column a is 30 June 2023, and that is the period whose figures were already loaded (from the comparative column of the year-end 2023 report, pillar-3-disclosures-2023.pdf), hence the 'repeat'. There is no later column in this document. Column a, GBP millions, transitional: CET1 = Tier 1 221.5, total capital 245.4, OCR 12.1%, leverage exposure 3,769.3, leverage 5.9%, LCR 177.3% (HQLA 638.3 / net outflows 363.6 = 175.6% on the period-end figures; 177.3% is the average as printed), NSFR 142.1%. RWEA and the capital ratios are left out on purpose: this interim prints RWEA 1,354.8, CET1/T1 16.3% and total 18.1% (221.5/1,354.8 = 16.35%), but the year-end 2023 report restates 30 June 2023 RWEA as 1,401.3 (CET1 15.8%, total 17.5%), which is what is loaded now and is internally consistent; leaving them out keeps the restated figures. Doubt: the NSFR rows are mislabelled in the source - 'available stable funding' 2,527.3 and 'required stable funding' 3,589.4 give 70%, while 3,589.4/2,527.3 = 142.0% matches the printed 142.1%, so the two amounts are swapped. Only the ratio is recorded. Not written as a skip because the file-name pattern would also match the society's future 'YYYY-pillar-3-disclosures' files."
+}
