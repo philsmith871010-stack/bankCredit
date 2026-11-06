@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-05",
+ "generated": "2026-11-06",
  "counts": {
   "ok": 127,
   "overdue": 9,
@@ -137,9 +137,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 9,
+   "documents": 10,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "half-yearly",
    "capital_sources": [
     "eba",
@@ -156,9 +156,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 9,
+   "documents": 12,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -176,7 +176,7 @@
    ],
    "documents": 4,
    "capital_as_of": "2024-12-31",
-   "age_days": 674,
+   "age_days": 675,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -193,7 +193,7 @@
    ],
    "documents": 9,
    "capital_as_of": "2023-12-31",
-   "age_days": 1040,
+   "age_days": 1041,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -210,7 +210,7 @@
    ],
    "documents": 1,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "unknown",
    "capital_sources": [
     "pillar3"
@@ -227,7 +227,7 @@
    ],
    "documents": 15,
    "capital_as_of": "2026-03-31",
-   "age_days": 219,
+   "age_days": 220,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -242,9 +242,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 9,
+   "documents": 10,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -262,7 +262,7 @@
    ],
    "documents": 3,
    "capital_as_of": "2025-09-30",
-   "age_days": 401,
+   "age_days": 402,
    "cadence": "unknown",
    "capital_sources": [
     "nsm_release"
@@ -279,7 +279,7 @@
    ],
    "documents": 1,
    "capital_as_of": "2025-11-30",
-   "age_days": 340,
+   "age_days": 341,
    "cadence": "unknown",
    "capital_sources": [
     "pillar3"
@@ -322,7 +322,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-03-31",
-   "age_days": 219,
+   "age_days": 220,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -352,7 +352,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2018-06-30",
-   "age_days": 3050,
+   "age_days": 3051,
    "cadence": "unknown",
    "capital_sources": [
     "eba_te"
@@ -369,7 +369,7 @@
    ],
    "documents": 17,
    "capital_as_of": "2018-06-30",
-   "age_days": 3050,
+   "age_days": 3051,
    "cadence": "annual",
    "capital_sources": [
     "eba_te",
@@ -398,9 +398,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 28,
+   "documents": 31,
    "capital_as_of": "2025-09-30",
-   "age_days": 401,
+   "age_days": 402,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -415,7 +415,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -431,7 +431,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -447,9 +447,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 9,
+   "documents": 12,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -466,7 +466,7 @@
    ],
    "documents": 18,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -483,7 +483,7 @@
    ],
    "documents": 61,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -498,7 +498,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -514,9 +514,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 491,
+   "documents": 497,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -531,7 +531,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "fdic"
@@ -548,7 +548,7 @@
    ],
    "documents": 6,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -563,7 +563,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -579,7 +579,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "fdic"
@@ -596,7 +596,7 @@
    ],
    "documents": 23,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -613,7 +613,7 @@
    ],
    "documents": 11,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -630,7 +630,7 @@
    ],
    "documents": 5,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "annual",
    "capital_sources": [
     "eba_te",
@@ -648,7 +648,7 @@
    ],
    "documents": 8,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -663,7 +663,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -679,7 +679,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -695,7 +695,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -713,7 +713,7 @@
    ],
    "documents": 84,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -730,7 +730,7 @@
    ],
    "documents": 1,
    "capital_as_of": "2026-07-31",
-   "age_days": 97,
+   "age_days": 98,
    "cadence": "unknown",
    "capital_sources": [
     "pillar3"
@@ -745,7 +745,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -761,7 +761,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-03-31",
-   "age_days": 219,
+   "age_days": 220,
    "cadence": "unknown",
    "capital_sources": [
     "eba"
@@ -777,9 +777,9 @@
     "html",
     "pattern"
    ],
-   "documents": 13,
+   "documents": 16,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "edgar",
@@ -795,10 +795,10 @@
    "kinds": [
     "html"
    ],
-   "documents": 13,
+   "documents": 16,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
-   "cadence": "half-yearly",
+   "age_days": 129,
+   "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
    ],
@@ -812,7 +812,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba"
@@ -827,7 +827,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -845,7 +845,7 @@
    ],
    "documents": 11,
    "capital_as_of": "2026-07-31",
-   "age_days": 97,
+   "age_days": 98,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -860,7 +860,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-03-31",
-   "age_days": 219,
+   "age_days": 220,
    "cadence": "unknown",
    "capital_sources": [
     "eba"
@@ -875,7 +875,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "fdic"
@@ -890,9 +890,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 61,
+   "documents": 62,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -909,7 +909,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-07-31",
-   "age_days": 97,
+   "age_days": 98,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -926,7 +926,7 @@
    ],
    "documents": 23,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -941,7 +941,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -959,7 +959,7 @@
    ],
    "documents": 4,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "half-yearly",
    "capital_sources": [
     "pillar3"
@@ -976,7 +976,7 @@
    ],
    "documents": 29,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -991,7 +991,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba"
@@ -1008,7 +1008,7 @@
    ],
    "documents": 4,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "eba",
@@ -1026,7 +1026,7 @@
    ],
    "documents": 18,
    "capital_as_of": "2026-03-31",
-   "age_days": 219,
+   "age_days": 220,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -1041,7 +1041,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1059,7 +1059,7 @@
    ],
    "documents": 8,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -1076,7 +1076,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1091,7 +1091,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1107,7 +1107,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1123,7 +1123,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1141,7 +1141,7 @@
    ],
    "documents": 19,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1156,7 +1156,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1174,7 +1174,7 @@
    ],
    "documents": 4,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -1191,7 +1191,7 @@
    ],
    "documents": 19,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1208,7 +1208,7 @@
    ],
    "documents": 8,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -1225,7 +1225,7 @@
    ],
    "documents": 12,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "edgar",
@@ -1241,7 +1241,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "fdic"
@@ -1258,7 +1258,7 @@
    ],
    "documents": 4,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -1273,7 +1273,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1291,7 +1291,7 @@
    ],
    "documents": 3,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1308,7 +1308,7 @@
    ],
    "documents": 11,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "eba_te",
@@ -1326,7 +1326,7 @@
    ],
    "documents": 21,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1343,7 +1343,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1360,7 +1360,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -1377,7 +1377,7 @@
    ],
    "documents": 3,
    "capital_as_of": "2026-03-31",
-   "age_days": 219,
+   "age_days": 220,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -1392,7 +1392,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1408,7 +1408,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1426,7 +1426,7 @@
    ],
    "documents": 1,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "pillar3"
@@ -1443,7 +1443,7 @@
    ],
    "documents": 1,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "pillar3"
@@ -1458,7 +1458,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "fdic"
@@ -1473,7 +1473,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1489,7 +1489,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1505,7 +1505,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1523,7 +1523,7 @@
    ],
    "documents": 21,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1540,7 +1540,7 @@
    ],
    "documents": 31,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1557,7 +1557,7 @@
    ],
    "documents": 23,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1574,7 +1574,7 @@
    ],
    "documents": 56,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "eba_te",
@@ -1592,7 +1592,7 @@
    ],
    "documents": 15,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "half-yearly",
    "capital_sources": [
     "pillar3"
@@ -1609,7 +1609,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "pillar3"
@@ -1626,7 +1626,7 @@
    ],
    "documents": 6,
    "capital_as_of": "2026-04-30",
-   "age_days": 189,
+   "age_days": 190,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -1643,7 +1643,7 @@
    ],
    "documents": 1,
    "capital_as_of": "2026-03-31",
-   "age_days": 219,
+   "age_days": 220,
    "cadence": "unknown",
    "capital_sources": [
     "pillar3"
@@ -1660,7 +1660,7 @@
    ],
    "documents": 9,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "edgar",
@@ -1676,7 +1676,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "fdic"
@@ -1693,7 +1693,7 @@
    ],
    "documents": 6,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1710,7 +1710,7 @@
    ],
    "documents": 53,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1727,7 +1727,7 @@
    ],
    "documents": 44,
    "capital_as_of": "2026-07-31",
-   "age_days": 97,
+   "age_days": 98,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1744,7 +1744,7 @@
    ],
    "documents": 13,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "eba_te",
@@ -1762,7 +1762,7 @@
    ],
    "documents": 10,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1779,7 +1779,7 @@
    ],
    "documents": 16,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "eba_te",
@@ -1797,7 +1797,7 @@
    ],
    "documents": 16,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1812,9 +1812,9 @@
    "kinds": [
     "html"
    ],
-   "documents": 10,
+   "documents": 13,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "half-yearly",
    "capital_sources": [
     "pillar3"
@@ -1829,7 +1829,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1845,7 +1845,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1861,7 +1861,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "fdic"
@@ -1878,7 +1878,7 @@
    ],
    "documents": 16,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "half-yearly",
    "capital_sources": [
     "pillar3"
@@ -1893,7 +1893,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1911,7 +1911,7 @@
    ],
    "documents": 29,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1926,7 +1926,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -1944,7 +1944,7 @@
    ],
    "documents": 34,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -1961,7 +1961,7 @@
    ],
    "documents": 1,
    "capital_as_of": "2026-03-31",
-   "age_days": 219,
+   "age_days": 220,
    "cadence": "unknown",
    "capital_sources": [
     "pillar3"
@@ -1978,7 +1978,7 @@
    ],
    "documents": 8,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -1995,7 +1995,7 @@
    ],
    "documents": 6,
    "capital_as_of": "2025-12-31",
-   "age_days": 309,
+   "age_days": 310,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -2010,7 +2010,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -2026,7 +2026,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -2044,7 +2044,7 @@
    ],
    "documents": 11,
    "capital_as_of": "2026-07-31",
-   "age_days": 97,
+   "age_days": 98,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2061,7 +2061,7 @@
    ],
    "documents": 44,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2078,7 +2078,7 @@
    ],
    "documents": 12,
    "capital_as_of": "2026-07-31",
-   "age_days": 97,
+   "age_days": 98,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2093,7 +2093,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -2111,7 +2111,7 @@
    ],
    "documents": 4,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "half-yearly",
    "capital_sources": [
     "pillar3"
@@ -2128,7 +2128,7 @@
    ],
    "documents": 15,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -2145,7 +2145,7 @@
    ],
    "documents": 23,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2162,7 +2162,7 @@
    ],
    "documents": 18,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2179,7 +2179,7 @@
    ],
    "documents": 2,
    "capital_as_of": "2026-03-31",
-   "age_days": 219,
+   "age_days": 220,
    "cadence": "unknown",
    "capital_sources": [
     "pillar3"
@@ -2194,7 +2194,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -2212,7 +2212,7 @@
    ],
    "documents": 54,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "eba_te",
@@ -2230,7 +2230,7 @@
    ],
    "documents": 15,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2247,7 +2247,7 @@
    ],
    "documents": 9,
    "capital_as_of": "2026-03-31",
-   "age_days": 219,
+   "age_days": 220,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -2264,7 +2264,7 @@
    ],
    "documents": 22,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2279,7 +2279,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "fdic"
@@ -2296,7 +2296,7 @@
    ],
    "documents": 8,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2311,7 +2311,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -2327,7 +2327,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -2345,7 +2345,7 @@
    ],
    "documents": 5,
    "capital_as_of": "2026-07-31",
-   "age_days": 97,
+   "age_days": 98,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2362,7 +2362,7 @@
    ],
    "documents": 16,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2379,7 +2379,7 @@
    ],
    "documents": 3,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2394,7 +2394,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "eba",
@@ -2412,7 +2412,7 @@
    ],
    "documents": 9,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2429,7 +2429,7 @@
    ],
    "documents": 10,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "half-yearly",
    "capital_sources": [
     "pillar3"
@@ -2446,7 +2446,7 @@
    ],
    "documents": 21,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2461,7 +2461,7 @@
    "kinds": [],
    "documents": 0,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "unknown",
    "capital_sources": [
     "fdic"
@@ -2478,7 +2478,7 @@
    ],
    "documents": 7,
    "capital_as_of": "2025-09-30",
-   "age_days": 401,
+   "age_days": 402,
    "cadence": "annual",
    "capital_sources": [
     "pillar3"
@@ -2495,7 +2495,7 @@
    ],
    "documents": 9,
    "capital_as_of": "2026-09-30",
-   "age_days": 36,
+   "age_days": 37,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
@@ -2512,7 +2512,7 @@
    ],
    "documents": 7,
    "capital_as_of": "2026-06-30",
-   "age_days": 128,
+   "age_days": 129,
    "cadence": "quarterly",
    "capital_sources": [
     "pillar3"
