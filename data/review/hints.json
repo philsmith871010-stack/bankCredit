@@ -288,9 +288,9 @@
   "page": 4,
   "currency": "USD",
   "last_verified": {
-   "reference_date": "2026-06-30",
+   "reference_date": "2026-09-30",
    "values": {
-    "lcr": 113.0
+    "lcr": 113.7
    },
    "method": "pdf_rules"
   },

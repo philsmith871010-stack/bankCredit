@@ -1,1 +1,22 @@
-[]
+[
+ {
+  "id": "aba1171d1fb8",
+  "entity_id": "newcastle-bs",
+  "url": "https://assets-eu-01.kc-usercontent.com:443/8a09b82e-1cf1-011c-1115-9dc18d2d065f/4e1854d6-f21a-403a-b238-35b78e662b16/Pillar-3-Disclosure.pdf",
+  "local": "cache/pdf/newcastle-bs/aba1171d1fb8d5f3.pdf",
+  "title": "Pillar-3-Disclosure.pdf",
+  "page": null,
+  "reference_date": null,
+  "currency": "",
+  "values": {},
+  "checks": [
+   [
+    "error",
+    "no KM1 page found"
+   ]
+  ],
+  "reason": "no KM1 template found",
+  "status": "open",
+  "created": "2026-11-07T05:15:07"
+ }
+]
